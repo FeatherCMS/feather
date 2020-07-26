@@ -1,0 +1,9 @@
+<section>
+    <label for="#import("name")">#import("label")#if(import("required")): <span class="required">(required)</span>#endif</label>
+    <select name="#import("name")">
+        #import("options")
+    </select>
+    #if(import("error")):
+    <span class="error">#import("error")</span>
+    #endif
+</section>

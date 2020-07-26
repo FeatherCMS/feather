@@ -1,0 +1,22 @@
+#extend("Admin/Table"):
+    #export("title", "Posts")
+    #export("toolbar-buttons", "")
+
+    #export("th"):
+        <tr>
+            <th><a href="#sortQuery("image_key")">Image #sortIndicator("image_key")</a></th>
+            <th><a href="#sortQuery("title")">Title #sortIndicator("title")</a></th>
+            <th class="actions">Actions</th>
+        </tr>
+    #endexport
+
+    #export("tb"):
+        #for(item in items):
+            <tr>
+                <td class="image-large"><a href="#path()#(item.id)/"><img src="#resolve(item.imageKey)"></a></td>
+                <td><a href="#path()#(item.id)/">#(item.title)</a></td>
+                #extend("Admin/Actions"):#endextend
+            </tr>
+        #endfor
+    #endexport
+#endextend

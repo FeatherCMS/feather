@@ -1,0 +1,61 @@
+#extend("Admin/Form"):
+    #export("title", "Posts")
+    #export("toolbar-buttons"):
+        #if(edit.contentModel != nil):
+        <li><a href="/admin/frontend/contents/#(edit.contentModel.id)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg></a></li>
+
+        <li><a href="/#(edit.contentModel.slug)/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></li>
+
+        #endif
+    #endexport
+    #export("fields"):
+        #extend("Admin/FormFields/Input"):
+            #export("required", true)
+            #export("name", "title")
+            #export("label", "Title")
+            #export("error", edit.title.error)
+            #export("value", edit.title.value)
+        #endextend
+        #extend("Admin/FormFields/Textarea"):
+            #export("size", "small")
+            #export("name", "excerpt")
+            #export("label", "Excerpt")
+            #export("error", edit.excerpt.error)
+            #export("value", edit.excerpt.value)
+        #endextend
+        #extend("Admin/FormFields/File"):
+            #export("accept", "image/jpeg")
+            #export("name", "image")
+            #export("label", "Image")
+            #export("error", edit.image.error)
+            #export("value", edit.image.value)
+        #endextend
+        #extend("Admin/FormFields/Textarea"):
+            #export("size", "large")
+            #export("name", "content")
+            #export("label", "Content")
+            #export("error", edit.content.error)
+            #export("value", edit.content.value)
+        #endextend
+        #extend("Admin/FormFields/Select"):
+            #export("name", "categoryId")
+            #export("label", "Category")
+            #export("error", edit.categoryId.error)
+            #export("options"):
+            #for(item in edit.categoryId.options):
+            <option #if(item.key == edit.categoryId.value): selected="selected" #endif value="#(item.key)">#(item.label)</option>
+            #endfor
+            #endexport
+        #endextend
+        #extend("Admin/FormFields/Select"):
+            #export("name", "authorId")
+            #export("label", "Author")
+            #export("error", edit.authorId.error)
+            #export("options"):
+            #for(item in edit.authorId.options):
+            <option #if(item.key == edit.authorId.value): selected="selected" #endif value="#(item.key)">#(item.label)</option>
+            #endfor
+            #endexport
+        #endextend
+    #endexport
+#endextend

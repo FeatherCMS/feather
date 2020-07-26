@@ -1,0 +1,87 @@
+#extend("Frontend/Index"):
+    #export("body"):
+        <div id="posts">
+            <div>
+                <h1>#systemVariable("posts.page.title")</h1>
+                <p>#systemVariable("posts.page.description")</p>
+            </div>
+
+            <form id="search-form" action="#path()" method="get">
+                #if(query("limit") != nil):
+                <input type="hidden" id="limit" name="limit" value="#query("limit")">
+                #endif
+                <input type="text" id="search" name="search" placeholder="Search..." value="#query("search")">
+            </form>
+
+            
+            <div class="grid posts">
+                #for(item in body.items):
+                <div>
+                    <a href="/#(item.content.slug)" class="card">
+                        <figure style="background-image: url(#resolve(item.post.imageKey));"></figure>
+                        <article>
+                            <div class="meta">
+                                <span class="category">#(item.category.title)</span>
+                            </div>
+                            <h3>#(item.post.title)</h3>
+                            <p>#(item.post.excerpt)</p>
+                            <time datetime="#(item.date)">#dateFormatter(item.content.date, "y/MM/dd")</time>
+                        </article>
+                    </a>
+                </div>
+                #endfor
+            </div>
+
+            #if(isEmpty(body.items)):
+            <div class="empty">
+                <span>😬</span>
+                <h3>No results.</h3>
+                <p>Maybe you should <a href="#path()">start over</a> the process.</p>
+            </div>
+            #endif
+
+            <div class="pager">
+            #extend("Frontend/Pager"):#endextend
+            </div>
+        </div>
+<script>
+
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+
+    const source = document.getElementById('search');
+    const inputHandler = debounce(function(e) {
+        console.warn(e.target.value);
+        return;
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState != 4 || xmlHttp.status != 200) {
+                return
+            }
+            console.warn(xmlHttp.responseText)
+            var element = document.getElementById(id)
+            var tr = element.parentElement.parentElement
+            tr.parentNode.removeChild(tr)
+        }
+        xmlHttp.open("POST", path + id + "/delete", true);
+        xmlHttp.send(null);
+    }, 250);
+
+    source.addEventListener('input', inputHandler);
+    source.addEventListener('propertychange', inputHandler);
+    // source.addEventListener('change', inputHandler);
+    </script>
+    #endexport
+#endextend

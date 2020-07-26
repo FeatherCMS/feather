@@ -1,0 +1,22 @@
+#extend("Admin/Table"):
+    #export("title", "Variables")
+    #export("toolbar-buttons", "")
+
+    #export("th"):
+        <tr>
+            <th><a href="#sortQuery("key")">Key #sortIndicator("key", true)</a></th>
+            <th><a href="#sortQuery("value")">Value #sortIndicator("value")</a></th>
+            <th>Actions</th>
+        </tr>
+    #endexport
+
+    #export("tb"):
+        #for(item in items):
+            <tr>
+                <td><a href="#path()#(item.id)/">#(item.key)</a></td>
+                <td><a href="#path()#(item.id)/">#(item.value)</a></td>
+                #extend("Admin/Actions"):#endextend
+            </tr>
+        #endfor
+    #endexport
+#endextend

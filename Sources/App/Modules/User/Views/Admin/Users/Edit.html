@@ -1,0 +1,23 @@
+#extend("Admin/Form"):
+    #export("title", "Users")
+    #export("toolbar-buttons"):
+    #endexport
+    #export("fields"):
+        #extend("Admin/FormFields/Input"):
+            #export("required", true)
+            #export("type", "email")
+            #export("name", "email")
+            #export("label", "Email")
+            #export("error", edit.email.error)
+            #export("value", edit.email.value)
+        #endextend
+        #extend("Admin/FormFields/Input"):
+            #export("required", false)
+            #export("type", "password")
+            #export("name", "password")
+            #export("label", "Password")
+            #export("error", edit.password.error)
+            #export("value", edit.password.value)
+        #endextend
+    #endexport
+#endextend

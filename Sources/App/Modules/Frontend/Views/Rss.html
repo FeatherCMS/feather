@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>#systemVariable("site.title")</title>
+        <description>#systemVariable("site.excerpt")</description>
+        <link>#permalink("")</link>
+        <language>en-us</language>
+        <lastBuildDate>#(rss.channel.date)</lastBuildDate>
+        <pubDate>#(rss.channel.date)</pubDate>
+        <ttl>250</ttl>
+        <atom:link href="#permalink()" rel="self" type="application/rss+xml" />
+        #for(item in list):
+        <item>
+            <guid isPermaLink="true">#permalink(item.slug)</guid>
+            <title><![CDATA[#(item.title)]]></title>
+            <description><![CDATA[#(item.excerpt)]]></description>
+            <link>#permalink(item.slug)</link>
+            <pubDate>#dateFormatter(item.date, "EEE, dd MMM y HH:mm:ss Z")</pubDate>
+        </item>
+        #endfor
+    </channel>
+</rss>

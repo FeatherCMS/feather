@@ -1,0 +1,20 @@
+#extend("Admin/Table"):
+    #export("title", "Pages")
+    #export("toolbar-buttons", "")
+
+    #export("th"):
+        <tr>
+            <th><a href="#sortQuery("title")">Title #sortIndicator("title")</a></th>
+            <th class="actions">Actions</th>
+        </tr>
+    #endexport
+
+    #export("tb"):
+        #for(item in items):
+            <tr>
+                <td><a href="#path()#(item.id)/">#(item.title)</a></td>
+                #extend("Admin/Actions"):#endextend
+            </tr>
+        #endfor
+    #endexport
+#endextend

@@ -1,0 +1,15 @@
+Packages
+.build
+xcuserdata
+*.xcodeproj
+DerivedData/
+.DS_Store
+db.sqlite
+.swiftpm
+.env
+.env.development
+.env.testing
+Public/assets
+Resources/Views/*
+Public/css/frontend.min.css
+feather

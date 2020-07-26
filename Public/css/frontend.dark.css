@@ -1,0 +1,128 @@
+@media (prefers-color-scheme: dark) {
+body {
+    background: #2c2c2e;
+    color: #ccc;
+    text-shadow: 0px 1px 0px #222;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #e0e0e0;
+}
+a:link, a:visited {
+    color: #21a9ff;
+}
+a:link:hover, a:visited:hover {
+    color: #fa3ebe;
+}
+pre {
+    background: #1a1a1a;
+    border: 1px solid #161616;
+}
+pre code {
+    color: #ccc;
+}
+pre code .keyword {
+    color: #e73289;
+}
+pre code .type {
+    color: #4fb1cb;
+}
+pre code .call {
+    color: #A167E6;
+}
+pre code .property {
+    color: #67B7A4;
+}
+pre code .number {
+    color: #D0BF69;
+}
+pre code .string {
+    color: #FC6A5D;
+}
+pre code .comment {
+    color: #7f8c99;
+}
+pre code .dotAccess {
+    color: #41A1C0;
+}
+pre code .preprocessing {
+    color: #FD8F3F;
+}
+#header {
+    background: #1c1c1e;
+    border-bottom: 1px solid #2c2c2e;
+}
+#nav li a:link, #nav li a:visited {
+    color: #ccc;
+}
+#nav li a.selected {
+    color: #21a9ff;
+}
+#nav li a:link:hover, #nav li a:visited:hover {
+    color: #fa3ebe;
+}
+#menu-icon span, #menu-icon span:before, #menu-icon span:after {
+    background: #666;
+}
+hr {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+/*blockquote {*/
+/*    color: #ccc;*/
+/*    border-left: 8px solid #DE2451;*/
+/*    box-shadow: 0 6px 12px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.4);*/
+/*    background: #1a1a1a;*/
+/*}*/
+/*blockquote::before {*/
+/*    color: #fff;*/
+/*}*/
+footer {
+    border-top: 1px solid #1a1a1e;
+    background: #222;
+}
+input, textarea, select {
+    border: 2px solid #222;
+    background-color: #333;
+    color: #ccc;
+}
+input:focus, textarea:focus, select:focus {
+    border: 2px solid #222;
+    background-color: #444;
+    color: #fff;
+}
+.card {
+    border: none;
+    background: #1c1c1e;
+    color: #ccc;
+}
+.card:hover {
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+}
+.card p, .excerpt {
+    color: #999;
+}
+
+
+/*.sponsor {*/
+/*    background: #2c2c2e;*/
+/*}*/
+/*.sponsor a.link {*/
+/*    color: #ccc;*/
+/*    background: #2c2c2e;*/
+/*}*/
+form .required, form .error {
+    color: #ee6a5d;
+}
+#login-box {
+    background: #1c1c1e;
+    border: 1px solid #000;
+}
+#login-box p {
+    color: #999;
+}
+#categories li, #authors li {
+    background: #222;
+}
+#categories img, #category img {
+    background: #222;
+    box-shadow: 0px 4px 8px #111;
+}

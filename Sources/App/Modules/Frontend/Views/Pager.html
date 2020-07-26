@@ -1,0 +1,33 @@
+
+#if(body.metadata.total > 1 && body.metadata.page <= body.metadata.total):
+    <hr>
+    <section class="wrapper">
+        #if(body.metadata.page > 1):
+        <a href="#setQuery("page", 1)" class="text-link">◀◀</a>
+        #else:
+        <span class="text-link inactive-link">◀◀</span>
+        #endif
+
+        #if(body.metadata.page > 1):
+        <a href="#setQuery("page", body.metadata.page - 1)" class="text-link">◀</a>
+        #else:
+        <span class="text-link inactive-link">◀</span>
+        #endif
+
+        <span class="pager">
+        page #(body.metadata.page) of #(body.metadata.total)
+        </span>
+
+        #if(body.metadata.page < body.metadata.total):
+        <a href="#setQuery("page", body.metadata.page + 1)" class="text-link">▶</a>
+        #else:
+        <span class="text-link inactive-link">▶</span>
+        #endif
+
+        #if(body.metadata.page < body.metadata.total):
+        <a href="#setQuery("page", body.metadata.total)" class="text-link">▶▶</a>
+        #else:
+        <span class="text-link inactive-link">▶▶</span>
+        #endif
+    </section>
+#endif

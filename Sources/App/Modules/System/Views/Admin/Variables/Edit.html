@@ -1,0 +1,29 @@
+#extend("Admin/Form"):
+    #export("title", "Variables")
+    #export("toolbar-buttons"):
+    #endexport
+    #export("fields"):
+        #extend("Admin/FormFields/Input"):
+            #export("required", true)
+            #export("name", "key")
+            #export("label", "Key")
+            #export("error", edit.key.error)
+            #export("value", edit.key.value)
+        #endextend
+        #extend("Admin/FormFields/Input"):
+            #export("required", true)
+            #export("name", "value")
+            #export("label", "Value")
+            #export("error", edit.value.error)
+            #export("value", edit.value.value)
+        #endextend
+        #extend("Admin/FormFields/Textarea"):
+            #export("size", "small")
+            #export("name", "notes")
+            #export("label", "Notes")
+            #export("error", edit.notes.error)
+            #export("value", edit.notes.value)
+        #endextend
+    #endexport
+#endextend
+
