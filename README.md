@@ -1,6 +1,8 @@
+![Feather CMS](https://raw.githubusercontent.com/binarybirds/feather/main/Assets/Github-Lead.png)
+
 # Feather CMS 🦚
 
-Just another content management system, framework, blog engine and more...
+Feather is a modern Swift-based content management system powered by Vapor 4.
 
 ## Requirements 
 
@@ -27,8 +29,13 @@ BASE_PATH="/path/to/feather/"
 ```
 
 - Created a `Public/assets` directory with write permission for your server (use `chmod` if needed).
-- Build and run the project using Xcode or run the server via the usual Vapor commands (or simply use the `make run` command).
-- Enjoy your Feather powered site at [https://localhost:8080/](https://localhost:8080/)
+- Open the project via the `Package.swift` file using Xcode and set the custom working directory for the `Run` scheme.
+- You don't need to generate an `xcodeproj` file anymore, please always open the `Package.swift` file if possible.
+- You can also compile the project and run the server (without Xcode) using one of the following commands:
+    - `make run`
+    - `swift run Run` 
+    - `vapor build && vapor run serve`
+- Build and run the project and enjoy your Feather powered site at [https://localhost:8080/](https://localhost:8080/)
 - Migration & sample content installation will be performed at the first time when you hit the URL.
 - You can log in to the admin using the `feather@binarybirds.com` & `FeatherCMS` account. 
 - Please change the default email & password using the admin / user menu. 😅
@@ -256,6 +263,25 @@ Views can be loaded using two sources:
 You can copy all the views to the Resources folder by running the `make views` command. 
 The system will try to load the view from the Resources directory first, if it can't find then it'll look for it in the Modules directory.
 
+
+---
+
+## Debug
+
+If you see a `Segmentation fault: 11` error or something similar, you can start the server through the `lldb` debugger. 
+
+```bash
+lldb ./.build/debug/Run
+process launch serve
+
+# print backtrace
+bt
+# look up a symbol
+image lookup -a 0x1000 
+```
+
+Start the debugger and launch the serve command. Then try to repeat the steps that caused the crash.
+You can print out the backtrace using the `bt` command, this can help you to identify the problem.
 
 ---
 

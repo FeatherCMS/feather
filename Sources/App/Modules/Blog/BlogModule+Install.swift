@@ -52,7 +52,7 @@ extension BlogModule {
         let a1 = BlogAuthorModel(id: a1id,
                                  name: "Feather",
                                  imageKey: "blog/authors/\(a1id.uuidString).jpg",
-                                 bio: "Feather is just another CMS.")
+                                 bio: "Feather is a modern Swift-based CMS powered by Vapor 4.")
         
         
         let p1id = UUID()
@@ -63,7 +63,7 @@ extension BlogModule {
         let p1 = BlogPostModel(id: p1id,
                            title: "Welcome to Feather",
                            imageKey: "blog/posts/\(p1id.uuidString).jpg",
-                           excerpt: "Feather is an open source CMS written in Vapor 4 & Swift 5.",
+                           excerpt: "Feather is a modern Swift-based CMS powered by Vapor 4.",
                            content: b1,
                            categoryId: c1.id!,
                            authorId: a1.id!)
