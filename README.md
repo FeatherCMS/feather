@@ -10,6 +10,8 @@ To use Feather CMS you'll have to install Swift 5.2 or greater.
 
 In other words Feather has the exact same system requirements as [Vapor 4](https://docs.vapor.codes/4.0/).
 
+It is recommended that you follow these instructions in the exact order presented.
+
 ## Installation
 
 - Clone or download the source files using this repository
@@ -28,7 +30,7 @@ BASE_URL="http://localhost:8080"
 BASE_PATH="/path/to/feather/" 
 ```
 
-- Created a `Public/assets` directory with write permission for your server (use `chmod` if needed).
+- Created a `Public/assets` directory and ensure that you server has both read and write permissions  (use `chmod` and `chown` if necessary).
 - Open the project via the `Package.swift` file using Xcode and set the custom working directory for the `Run` scheme.
 - You don't need to generate an `xcodeproj` file anymore, please always open the `Package.swift` file if possible.
 - You can also compile the project and run the server (without Xcode) using one of the following commands:
@@ -71,7 +73,7 @@ You should follow the instructions using the official Vapor docs to setup the ri
 
 ## Modules
 
-The architecture of Feather CMS is pretty much the same as the one I described in my [Practical Server Side Swift book](https://gumroad.com/l/practical-server-side-swift) to build a modular blog engine. If you already purchased the book you should be familiar with most of the system. If you want to know more about server side Swift this is a great opportunity to learn more about building backend apps using Vapor 4. By purchasing the book you also support my work and I'm really greatful for that. Thank you. 🙏
+The architecture of Feather CMS is pretty much the same as the one I described in my [Practical Server Side Swift book](https://gumroad.com/l/practical-server-side-swift) to build a modular blog engine. If you already purchased the book you should be familiar with most of the system. If you want to know more about server side Swift this is a great opportunity to learn more about building backend apps using Vapor 4. By purchasing the book you also support my work and I'm really grateful for that. Thank you. 🙏
 
 Most of the functionality you see in Feather is provided by modules. There are two types of modules in the engine.
 
@@ -79,22 +81,22 @@ Most of the functionality you see in Feather is provided by modules. There are t
 
 These modules provide basic core functionality. You should never remove them.
 
-- System - This module is reponsible for the system functionalities.
-- User - This module is reponsible for user authentication.
-- Api - This module is reponsible for the API endpoints.
-- Admin - This module is reponsible for the web-based admin interface.
-- Frontend - This module is reponsible for the web-based frontend layout including page contents.
+- System - This module is responsible for the system functionalities.
+- User - This module is responsible for user authentication.
+- Api - This module is responsible for the API endpoints.
+- Admin - This module is responsible for the web-based admin interface.
+- Frontend - This module is responsible for the web-based frontend layout including page contents.
 
 ### User modules
 
 These modules can be removed if you don't need them. You can create new user modules to extend the system.
 
-- Redirect - This module is reponsible for dynamic URL redirects.
-- Blog - This module is reponsible for providing a simple blog platform.
-- Static - This module is reponsible for the displaying static pages.
-- Markdown - This module is reponsible for displaying markdown via a content filter.
-- Syntax - This module is reponsible for Swift related syntax highlights using a content filter.
-- Sponsor - This module is reponsible for displaying a sponsorship box.
+- Redirect - This module is responsible for dynamic URL redirects.
+- Blog - This module is responsible for providing a simple blog platform.
+- Static - This module is responsible for the displaying static pages.
+- Markdown - This module is responsible for displaying markdown via a content filter.
+- Syntax - This module is responsible for Swift related syntax highlights using a content filter.
+- Sponsor - This module is responsible for displaying a sponsorship box.
 
 --- 
 
@@ -105,7 +107,7 @@ Modules can communicate via hook functions.
 ### System hooks
 
 - install - you can populate the database using the install hook.
-- frontend-page - you can use this hook to display dyanmic content using a specific url pattern (slug)
+- frontend-page - you can use this hook to display dynamic content using a specific url pattern (slug)
 - page-content - you can use this hook to render pages written as Swift functions
 - content-filter - you can apply content filters using this hook
 
