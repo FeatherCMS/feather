@@ -33,6 +33,8 @@ BASE_PATH="/path/to/feather/"
 - Created a `Public/assets` directory and ensure that you server has both read and write permissions  (use `chmod` and `chown` if necessary).
 - Open the project via the `Package.swift` file using Xcode and set the custom working directory for the `Run` scheme.
 - You don't need to generate an `xcodeproj` file anymore, please always open the `Package.swift` file if possible.
+- Before running the project in Xcode, don't forget to set the [Custom Working directory (DerivedData)](https://theswiftdev.com/beginners-guide-to-server-side-swift-using-vapor-4/) to the root of the project. 
+    - In Xcode click on the "Run" target -> Select "Edit Scheme..." -> "Run" -> "Options" tab -> Check the "Use custom working directory:" checkbox and select the root of your Vapor project.
 - You can also compile the project and run the server (without Xcode) using one of the following commands:
     - `make run`
     - `swift run Run` 
