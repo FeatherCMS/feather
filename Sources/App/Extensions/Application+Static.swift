@@ -8,13 +8,14 @@
 import Vapor
 
 extension Application {
-
-    static let baseUrl = Environment.get("BASE_URL")!
-    static let databaseUrl = URL(string: Environment.get("DB_URL")!)!
+    
+    static let baseUrl: String = Environment.fetch("BASE_URL")
+    
+    static let databaseUrl: URL = URL(string: Environment.fetch("DB_URL"))!
     
     // paths are always absolute, with a trailing slash
     struct Paths {
-        static let base: String = Environment.get("BASE_PATH")!
+        static let base: String = Environment.fetch("BASE_PATH")
         static let `public`: String = Paths.base + "Public/"
         static let assets: String = Paths.public + "assets/"
         static let resources: String = Paths.base + "Resources/"
