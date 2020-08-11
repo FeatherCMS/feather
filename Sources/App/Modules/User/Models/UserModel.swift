@@ -25,11 +25,7 @@ final class UserModel: ViperModel {
     /// unique identifier of the model
     @ID() var id: UUID?
     /// email address of the user
-    @Field(key: FieldKeys.email) var email: String {
-        didSet {
-            email = email.lowercased()
-        }
-    }
+    @Field(key: FieldKeys.email) var email: String
     /// hashed password of the user
     @Field(key: FieldKeys.password) var password: String
     
@@ -40,7 +36,7 @@ final class UserModel: ViperModel {
          password: String)
     {
         self.id = id
-        self.email = email.lowercased()
+        self.email = email
         self.password = password
     }
 }

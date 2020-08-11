@@ -19,6 +19,10 @@ final class UserModule: ViperModule {
     var middlewares: [Middleware] = [
         UserModelSessionAuthenticator()
     ]
+    
+    func boot(_ app: Application) throws {
+        app.databases.middleware.use(UserModelContentMiddleware())
+    }
 
     var migrations: [Migration] {
         [
