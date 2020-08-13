@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    public var expandingTildeInPath: String {
+    var expandingTildeInPath: String {
         var path = NSString(string: self).expandingTildeInPath
         
         if self.hasSuffix("/") {
