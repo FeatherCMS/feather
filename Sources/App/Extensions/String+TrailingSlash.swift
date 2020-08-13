@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    public var absolutePath: String {
+    public var withTrailingSlash: String {
         if self.hasSuffix("/") {
             return self
         }

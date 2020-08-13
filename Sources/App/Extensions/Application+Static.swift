@@ -15,7 +15,7 @@ extension Application {
     
     // paths are always absolute, with a trailing slash
     struct Paths {
-        static let base: String = Environment.fetch("BASE_PATH").expandingTildeInPath
+        static let base: String = Environment.path("BASE_PATH")
         static let `public`: String = Paths.base + "Public/"
         static let assets: String = Paths.public + "assets/"
         static let resources: String = Paths.base + "Resources/"
