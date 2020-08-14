@@ -18,4 +18,12 @@ extension Environment {
         }
         return realValue
     }
+    
+    static func path(_ key: String) -> String {
+        let rawPath = fetch(key)
+        let resolved = rawPath.expandingTildeInPath
+        let path = resolved.withTrailingSlash
+        
+        return path
+    }
 }
