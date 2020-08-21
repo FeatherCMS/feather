@@ -87,8 +87,8 @@
         "repositoryURL": "https://github.com/vapor/jwt-kit.git",
         "state": {
           "branch": null,
-          "revision": "3e631a209cd25f78ba5b6187c527f6c1d8c66732",
-          "version": "4.0.1"
+          "revision": "50a46ba65fa4e2c1bb3783ec7464b42232a23ee2",
+          "version": "4.1.0"
         }
       },
       {
@@ -222,8 +222,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "acf5465b5e7fb9aeda54a34d16fb44c31a399715",
-          "version": "2.20.2"
+          "revision": "cf6f2b1807219643270616e03de697b96c46384c",
+          "version": "2.21.0"
         }
       },
       {
@@ -231,8 +231,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-extras.git",
         "state": {
           "branch": null,
-          "revision": "d525d3bbd1321fa928948065fd9a8dc109d5d45b",
-          "version": "1.6.0"
+          "revision": "0b9eb87b227b37544e5b79090bd69e2156efcd24",
+          "version": "1.6.1"
         }
       },
       {
@@ -240,8 +240,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
         "state": {
           "branch": null,
-          "revision": "e9627350bdb85bde7e0dc69a29799e40961ced72",
-          "version": "1.13.0"
+          "revision": "9f4eff06038a9d1301e939a55a0db935634a2f6e",
+          "version": "1.14.0"
         }
       },
       {
@@ -267,8 +267,8 @@
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "c4861a4bf1a254280d402a66d4751d1a150e0ade",
-          "version": "4.27.2"
+          "revision": "d910be46835c4c0c5a432de5012b61bdea4695bb",
+          "version": "4.29.0"
         }
       },
       {

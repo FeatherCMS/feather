@@ -19,10 +19,10 @@ final class AppTests: XCTestCase {
         defer { app.shutdown() }
         try configure(app)
 
-        try app.test(.GET, "/") { res in
+        try app.test(.GET, "/", afterResponse:  { res in
             XCTAssertEqual(res.status, .ok)
             //XCTAssertEqual(res.body.string, "Hello, world!")
-        }
+        })
         //.test(.POST, "todos", json: Todo(title: "Test My App")) { res in
 //            XCTAssertContent(Todo.self, res) {
 //                XCTAssertNotNil($0.id)

@@ -11,7 +11,7 @@ let package = Package(
         .library(name: "App", targets: ["App"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor", from: "4.27.0"),
+        .package(url: "https://github.com/vapor/vapor", from: "4.29.0"),
         .package(url: "https://github.com/vapor/leaf", from: "4.0.0-rc"),
         .package(url: "https://github.com/vapor/fluent", from: "4.0.0"),
         //.package(url: "https://github.com/vapor/fluent-postgres-driver", from: "2.0.0"),
