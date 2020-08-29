@@ -160,7 +160,7 @@ public func configure(_ app: Application) throws {
         RedirectBuilder(),
         SponsorBuilder(),
         StaticBuilder(),
-        //BlogBuilder(),
+        BlogBuilder(),
 
     ].map { $0.build() }
     

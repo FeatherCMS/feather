@@ -42,7 +42,7 @@
         "repositoryURL": "https://github.com/feather-modules/blog",
         "state": {
           "branch": "main",
-          "revision": "72a5f96901ae53322ab9bd91f49dd7fbcd7773f6",
+          "revision": "e06316c8b71b104600bff9bf4897be69389bc0f3",
           "version": null
         }
       },
@@ -69,7 +69,7 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": "main",
-          "revision": "3158502e9e9c7c8d47b0b8c170a6f5576482ed97",
+          "revision": "1169125b4386a5fb179a233ec977a8b7007e29f2",
           "version": null
         }
       },
