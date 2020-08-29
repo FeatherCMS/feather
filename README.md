@@ -270,6 +270,10 @@ The system will try to load the view from the Resources directory first, if it c
 
 ---
 
+## Bcrypt segfault (running from cli using Swift 5.2 & macOS)
+
+There is a [Swift bug](https://bugs.swift.org/browse/SR-12424) that causing the issue, it'll be fixed soon.
+
 ## Debug
 
 If you see a `Segmentation fault: 11` error or something similar, you can start the server through the `lldb` debugger. 

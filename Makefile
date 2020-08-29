@@ -8,6 +8,9 @@ env:
 	echo 'BASE_PATH="$(CUR_DIR)/"' >> .env.development
 	#echo 'DB_URL=postgres://myuser:mypass@localhost:5432/mydb' >> .env.development
 
+test:
+	swift test --enable-test-discovery
+
 views:
 	for f in Sources/App/Modules/*; do  m=$$(basename $$f); cp -r "$${f}/Views/" "Resources/Views/$${m}" 2>/dev/null; done;
 

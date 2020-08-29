@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
@@ -11,48 +11,50 @@ let package = Package(
         .library(name: "App", targets: ["App"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor", from: "4.29.0"),
-        .package(url: "https://github.com/vapor/leaf", from: "4.0.0-rc"),
-        .package(url: "https://github.com/vapor/fluent", from: "4.0.0"),
-        //.package(url: "https://github.com/vapor/fluent-postgres-driver", from: "2.0.0"),
+        .package(url: "https://github.com/binarybirds/feather-core", .branch("main")),
+        /// drivers
         .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
-        .package(url: "https://github.com/vapor/jwt", from: "4.0.0"),
-
-        .package(url: "https://github.com/binarybirds/content-api", from: "1.0.0"),
-        .package(url: "https://github.com/binarybirds/view-kit", from: "1.1.0"),
-        .package(url: "https://github.com/binarybirds/liquid", from: "1.0.0"),
         .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.0.0"),
-        .package(url: "https://github.com/binarybirds/viper-kit", from: "1.3.0"),
+        /// modules
+        .package(name: "user-module", url: "https://github.com/feather-modules/user", .branch("main")),
+        .package(name: "system-module", url: "https://github.com/feather-modules/system", .branch("main")),
         
-        .package(url: "https://github.com/JohnSundell/Splash", from: "0.13.0"),
-        .package(url: "https://github.com/JohnSundell/Ink", from: "0.5.0"),
+        .package(name: "admin-module", url: "https://github.com/feather-modules/admin", .branch("main")),
+        .package(name: "api-module", url: "https://github.com/feather-modules/api", .branch("main")),
+        .package(name: "frontend-module", url: "https://github.com/feather-modules/frontend", .branch("main")),
+        
+        .package(name: "swifty-module", url: "https://github.com/feather-modules/swifty", .branch("main")),
+        .package(name: "markdown-module", url: "https://github.com/feather-modules/markdown", .branch("main")),
+        .package(name: "redirect-module", url: "https://github.com/feather-modules/redirect", .branch("main")),
+        .package(name: "sponsor-module", url: "https://github.com/feather-modules/sponsor", .branch("main")),
     ],
     targets: [
         .target(name: "App", dependencies: [
-            .product(name: "Vapor", package: "vapor"),
-            .product(name: "Leaf", package: "leaf"),
-            .product(name: "Fluent", package: "fluent"),
-            //.product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
+            .product(name: "FeatherCore", package: "feather-core"),
+            /// drivers
             .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver"),
-            .product(name: "JWT", package: "jwt"),
-
-            .product(name: "ContentApi", package: "content-api"),
-            .product(name: "ViewKit", package: "view-kit"),
-            .product(name: "Liquid", package: "liquid"),
             .product(name: "LiquidLocalDriver", package: "liquid-local-driver"),
-            .product(name: "ViperKit", package: "viper-kit"),
-
-            .product(name: "Splash", package: "Splash"),
-            .product(name: "Ink", package: "Ink"),
+            /// modules
+            .product(name: "UserModule", package: "user-module"),
+            .product(name: "SystemModule", package: "system-module"),
+            
+            .product(name: "AdminModule", package: "admin-module"),
+            .product(name: "ApiModule", package: "api-module"),
+            .product(name: "FrontendModule", package: "frontend-module"),
+            
+            .product(name: "SwiftyModule", package: "swifty-module"),
+            .product(name: "MarkdownModule", package: "markdown-module"),
+            .product(name: "RedirectModule", package: "redirect-module"),
+            .product(name: "SponsorModule", package: "sponsor-module"),
         ], swiftSettings: [
             .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
         ]),
         .target(name: "Run", dependencies: [
              .target(name: "App"),
         ]),
-        .testTarget(name: "AppTests", dependencies: [
-            .target(name: "App"),
-            .product(name: "XCTVapor", package: "vapor"),
-        ])
+//        .testTarget(name: "AppTests", dependencies: [
+//            .target(name: "App"),
+//            .product(name: "XCTVapor", package: "vapor"),
+//        ])
     ]
 )
