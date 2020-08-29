@@ -21,6 +21,8 @@ import SwiftyModule
 import MarkdownModule
 import RedirectModule
 import SponsorModule
+import StaticModule
+import BlogModule
 
 struct Feather {
     
@@ -125,8 +127,7 @@ public func configure(_ app: Application) throws {
 
     app.sessions.use(.fluent)
     app.migrations.add(SessionRecord.migration)
-    #warning("public init in fc")
-    //app.middleware.use(SlashMiddleware())
+    app.middleware.use(SlashMiddleware())
     app.middleware.use(app.sessions.middleware)
 
     app.views.use(.leaf)
@@ -158,6 +159,8 @@ public func configure(_ app: Application) throws {
         MarkdownBuilder(),
         RedirectBuilder(),
         SponsorBuilder(),
+        StaticBuilder(),
+        //BlogBuilder(),
 
     ].map { $0.build() }
     

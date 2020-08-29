@@ -27,6 +27,8 @@ let package = Package(
         .package(name: "markdown-module", url: "https://github.com/feather-modules/markdown", .branch("main")),
         .package(name: "redirect-module", url: "https://github.com/feather-modules/redirect", .branch("main")),
         .package(name: "sponsor-module", url: "https://github.com/feather-modules/sponsor", .branch("main")),
+        .package(name: "static-module", url: "https://github.com/feather-modules/static", .branch("main")),
+        .package(name: "blog-module", url: "https://github.com/feather-modules/blog", .branch("main")),
     ],
     targets: [
         .target(name: "App", dependencies: [
@@ -46,6 +48,8 @@ let package = Package(
             .product(name: "MarkdownModule", package: "markdown-module"),
             .product(name: "RedirectModule", package: "redirect-module"),
             .product(name: "SponsorModule", package: "sponsor-module"),
+            .product(name: "StaticModule", package: "static-module"),
+            .product(name: "BlogModule", package: "blog-module"),
         ], swiftSettings: [
             .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
         ]),

@@ -38,6 +38,15 @@
         }
       },
       {
+        "package": "blog-module",
+        "repositoryURL": "https://github.com/feather-modules/blog",
+        "state": {
+          "branch": "main",
+          "revision": "72a5f96901ae53322ab9bd91f49dd7fbcd7773f6",
+          "version": null
+        }
+      },
+      {
         "package": "console-kit",
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
@@ -60,7 +69,7 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": "main",
-          "revision": "dfd249ca716e93ac1a63118abf926a84677528fb",
+          "revision": "3158502e9e9c7c8d47b0b8c170a6f5576482ed97",
           "version": null
         }
       },
@@ -96,7 +105,7 @@
         "repositoryURL": "https://github.com/feather-modules/frontend",
         "state": {
           "branch": "main",
-          "revision": "56f826b5c14391315d9e4626a48fae4255504d47",
+          "revision": "8264666ff96b8288386e4beec925caac3c926cee",
           "version": null
         }
       },
@@ -245,6 +254,15 @@
         }
       },
       {
+        "package": "static-module",
+        "repositoryURL": "https://github.com/feather-modules/static",
+        "state": {
+          "branch": "main",
+          "revision": "4e3d498cd2315044e3f90f52f47fba5cfe225122",
+          "version": null
+        }
+      },
+      {
         "package": "swift-backtrace",
         "repositoryURL": "https://github.com/swift-server/swift-backtrace.git",
         "state": {
@@ -348,7 +366,7 @@
         "repositoryURL": "https://github.com/feather-modules/user",
         "state": {
           "branch": "main",
-          "revision": "1add80eb307027d4fd73175f3d63d9d1671e824b",
+          "revision": "aebba2ab8865ba1c8b10caf9b0dc7cd12da8711d",
           "version": null
         }
       },
