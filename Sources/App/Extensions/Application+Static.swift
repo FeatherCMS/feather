@@ -28,4 +28,6 @@ extension Application {
         static let images: String = "images/"
         static let javascript: String = "javascript/"
     }
+    
+    var isDebug: Bool { !environment.isRelease && environment != .production }
 }

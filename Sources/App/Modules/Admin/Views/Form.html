@@ -1,0 +1,18 @@
+#define(body):
+<div class="wrapper">
+    <h2><a href="#($req.url.path.trimLast())">#(form.title ?? form.key.capitalized())</a> / #(form.id != nil ? "Edit" : "Create")</h2>
+</div>
+
+<form id="#(form.key)-edit-form" class="wrapper" method="post" action="#($req.url.path)"#if(form.multipart ?? false): enctype="multipart/form-data"#endif>
+    #var(field = nil)
+
+    #(field = ["id": "id", "value": form.id])
+    #inline("Admin/Fields/Hidden")
+
+    #fields()
+
+    #(field = ["label": "Save"])
+    #inline("Admin/Fields/Button")
+</form>
+#enddefine
+#inline("Admin/Index")

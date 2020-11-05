@@ -1,0 +1,34 @@
+#define(toolbar):
+    #if(edit.metadata != nil):
+    <li><a href="/admin/frontend/metadatas/#(edit.metadata.id)">#inline("Admin/Icons/Feather", as: raw)</a></li>
+    <li><a href="/#(edit.metadata.slug)/" target="_blank">#inline("Admin/Icons/Eye", as: raw)</a></li>
+    #endif
+    #if(edit.id != nil):
+    <li><a href="/admin/blog/authors/#(edit.id)/links">#inline("Admin/Icons/Link", as: raw)</a></li>
+    #endif
+#enddefine
+#define(fields):
+    #var(field = nil)
+
+    #(field = ["id": "title", "required": true, "data": edit.title])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "excerpt", "size": "small", "data": edit.excerpt])
+    #inline("Admin/Fields/Textarea")
+
+    #(field = ["id": "image", "data": edit.image])
+    #inline("Admin/Fields/File")
+
+    #(field = ["id": "content", "size": "large", "data": edit.content])
+    #inline("Admin/Fields/Textarea")
+
+    #(field = ["id": "categoryId", "label": "Category", "data": edit.categoryId])
+    #inline("Admin/Fields/Selection")
+
+    #(field = ["id": "authorId", "label": "Author", "data": edit.authorId])
+    #inline("Admin/Fields/Selection")
+
+#enddefine
+#let(title = "Posts")
+#let(form = ["key": "posts", "id": edit.id, "multipart": true])
+#inline("Admin/Form")

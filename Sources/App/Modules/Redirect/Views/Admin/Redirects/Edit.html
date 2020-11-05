@@ -1,0 +1,16 @@
+#define(fields):
+    #var(field = nil)
+
+    #(field = ["id": "source", "required": true, "data": edit.source])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "destination", "required": true, "data": edit.destination])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "statusCode", "label": "Status Code", "data": edit.statusCode])
+    #inline("Admin/Fields/Selection")
+
+#enddefine
+#let(title = "Redirects")
+#let(form = ["key": "redirects", "id": edit.id])
+#inline("Admin/Form")

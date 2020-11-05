@@ -1,0 +1,19 @@
+#define(th):
+    #var(link = nil)
+    <tr>
+        #(link = ["key": "email", "default": true])
+        <th>#inline("Admin/SortLink")</th>
+        <th>Actions</th>
+    </tr>
+#enddefine
+#define(tb):
+    #for(item in list.items):
+        <tr>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.email)</a></td>
+            #inline("Admin/Actions")
+        </tr>
+    #endfor
+#enddefine
+#let(title = "Users")
+#inline("Admin/Table")
+

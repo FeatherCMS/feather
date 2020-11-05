@@ -1,0 +1,11 @@
+#if(systemVariable("sponsor.isEnabled") == "true"):
+<section>
+    <div class="sponsor">
+        <img src="#systemVariable("sponsor.image.url")" alt="#systemVariable("sponsor.image.title")">
+        <h3>#systemVariable("sponsor.title")</h3>
+        <p>#systemVariable("sponsor.description")</p>
+        <a class="cta" href="#systemVariable("sponsor.button.url")" target="_blank">#systemVariable("sponsor.button.title")</a>
+        <a class="link" href="#systemVariable("sponsor.more.url")">#systemVariable("sponsor.more.title")</a>
+    </div>
+</section>
+#endif

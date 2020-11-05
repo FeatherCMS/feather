@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>#($vars["site.title"])</title>
+        <description>#($vars["site.excerpt"])</description>
+        <link></link>
+        <language>en-us</language>
+        <lastBuildDate>#Date(timeStamp: Timestamp(), localizedFormat: "EEE, dd MMM y HH:mm:ss Z")</lastBuildDate>
+        <pubDate>#Date(timeStamp: Timestamp(), localizedFormat: "EEE, dd MMM y HH:mm:ss Z")</pubDate>
+        <ttl>250</ttl>
+        <atom:link href="#("")" rel="self" type="application/rss+xml" />
+        #for(item in list):
+        <item>
+            <guid isPermaLink="true">#(item.slug)</guid>
+            <title><![CDATA[#(item.title)]]></title>
+            <description><![CDATA[#(item.excerpt)]]></description>
+            <link>#(item.slug)</link>
+            <pubDate>#Date(timeStamp: item.date, localizedFormat: "EEE, dd MMM y HH:mm:ss Z")</pubDate>
+        </item>
+        #endfor
+    </channel>
+</rss>

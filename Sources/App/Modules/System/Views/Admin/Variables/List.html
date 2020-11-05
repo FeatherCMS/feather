@@ -1,0 +1,21 @@
+#define(th):
+    #var(link = nil)
+    <tr>
+        #(link = ["key": "key", "default": true])
+        <th>#inline("Admin/SortLink")</th>
+        #(link = ["key": "value", "default": true])
+        <th>#inline("Admin/SortLink")</th>
+        <th>Actions</th>
+    </tr>
+#enddefine
+#define(tb):
+    #for(item in list.items):
+        <tr>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.key)</a></td>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.value)</a></td>
+            #inline("Admin/Actions")
+        </tr>
+    #endfor
+#enddefine
+#let(title = "Variables")
+#inline("Admin/Table")

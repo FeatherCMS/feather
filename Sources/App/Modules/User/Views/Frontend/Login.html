@@ -1,0 +1,27 @@
+#let(head = [
+    "title": "Login",
+    "description": "Sign in with your existing account"
+])
+#define(body):
+<div id="login-box">
+<h2>#(head.title)</h2>
+<p>#(head.description)</p>
+
+<form action="#($req.url.path)?redirect=admin" method="post">
+    #var(field = nil)
+    #(field = ["id": "email", "type": "email", "required": true, "data": edit.email, "placeholder": "hello@binarybirds.com"])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["id": "password", "type": "password", "required": true, "data": edit.password])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["label": "Sign in"])
+    #inline("Admin/Fields/Button")
+
+    #if(edit.notification != nil):
+    <p id="notification"><span class="error">#(edit.notification)</span></p>
+    #endif
+</form>
+</div>
+#enddefine
+#inline("Frontend/Index")

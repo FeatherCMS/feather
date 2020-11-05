@@ -1,0 +1,21 @@
+#define(th):
+    #var(link = nil)
+    <tr>
+        #(link = ["key": "image", "default": true])
+        <th>#inline("Admin/SortLink")</th>
+        #(link = ["key": "title"])
+        <th>#inline("Admin/SortLink")</th>
+        <th>Actions</th>
+    </tr>
+#enddefine
+#define(tb):
+    #for(item in list.items):
+        <tr>
+            <td class="small center"><a href="#($req.url.path)#(item.id)/"><img src="resolve(item.imageKey)" alt="#(item.name)"></a></td>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.title)</a></td>
+            #inline("Admin/Actions")
+        </tr>
+    #endfor
+#enddefine
+#let(title = "Posts")
+#inline("Admin/Table")

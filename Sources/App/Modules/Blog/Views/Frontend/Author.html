@@ -1,0 +1,37 @@
+#extend("Frontend/Index"):
+    #export("body"):
+    <br><br>
+
+    <section class="author-box">
+        <img class="rounded" src="#resolve(body.author.profile.imageKey)" alt="Picture of #(body.author.profile.name)" title="#(body.author.profile.name)">
+            <h3>#(body.author.profile.name)</h3>
+            <p>#(body.author.profile.bio)</p>
+
+            #for(link in body.author.links):
+            <a href="#(link.url)" target="_blank">#(link.name)</a> #if(!isLast): &middot; #endif
+            #endfor
+        </p>
+    </section>
+
+<br><br>
+
+    <section id="home" class="grid home">
+        #for(item in body.items):
+        <div>
+            <a href="#(item.content.slug)" class="card">
+                <figure style="background-image: url(#resolve(item.post.imageKey));"></figure>
+                <article>
+                    <div class="meta">
+                        <span class="category">#(item.category.title)</span>
+                    </div>
+                    <h3>#(item.post.title)</h3>
+                    <p>#(item.post.excerpt)</p>
+                    <time datetime="#dateFormatter(item.content.date, "y/MM/dd")">#dateFormatter(item.content.date, "y/MM/dd")</time>
+                </article>
+            </a>
+        </div>
+        #endfor
+    </section>
+
+    #endexport
+#endextend

@@ -130,10 +130,9 @@ Maybe we should prefix these page hooks with the module name later on, what do y
 
 You can hook up routes dynamically via route hooks. Both the frontend, admin and the API module provides some extension points.
 
-- public-admin - publicly available admin pages (usually you don't want to use this)
-- protected-admin - protected admin pages (only available after a session based user auth)
+- admin - protected admin pages (only available after a session based user auth)
 - public-api - public api endpoints (available without user authentication)
-- protected-api - protected api endpoints (user must be authenticated via a token)
+- api - protected api endpoints (user must be authenticated via a token)
 
 ---
 
@@ -231,7 +230,7 @@ final class ExamplePageTemplateModule: ViperModule {
         switch name {
         case "example-page":
             let content = params["page-content"] as! FrontendContentModel
-            return try? self.exampleView(req: req, page: content).map { $0 as Any }
+            return try? exampleView(req: req, page: content).map { $0 as Any }
         
         default:
             return nil

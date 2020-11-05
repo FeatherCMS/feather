@@ -1,0 +1,35 @@
+#extend("Frontend/Index"):
+    #export("body"):
+
+        <article>
+            <header>
+                <section>
+                    <time datetime="#(body.post.date)">#(body.post.date)</time>
+                    <h1 class="title">#(body.post.title)</h1>
+                    <p class="excerpt">#(body.post.excerpt)</p>
+                    <div class="meta">
+                        <span class="category">#(body.category.title)</span>
+                    </div>
+                </section>
+                <figure id="cover-image" style="background-image: url(#resolve(body.post.imageKey));"></figure>
+            </header>
+
+            #(body.post.content)
+        </article>
+
+        <section id="share">
+            <p>Thanks for reading, if you liked this article please <a href="https://twitter.com/intent/tweet?via=tiborbodecs&hashtags=SwiftLang&url=#permalink()" target="_blank">share it on Twitter</a>. 🙏</p>
+        </section>
+
+        <section class="author-box">
+            <img class="rounded" src="#resolve(body.author.profile.imageKey)" alt="Picture of #(body.author.profile.name)" title="#(body.author.profile.name)">
+                <h3>#(body.author.profile.name)</h3>
+                <p>#(body.author.profile.bio)</p>
+                #for(link in body.author.links):
+                <a href="#(link.url)" target="_blank">#(link.title)</a> #if(!isLast): &middot; #endif
+                #endfor
+            </p>
+        </section>
+
+    #endexport
+#endextend

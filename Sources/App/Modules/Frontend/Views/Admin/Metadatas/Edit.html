@@ -1,0 +1,53 @@
+#define(toolbar):
+    #if(edit.id != nil):
+    <li><a href="/admin/#(edit.module.value)/#(edit.model.value)/#(edit.reference.value)">#inline("Admin/Icons/Document", as: raw)</a></li>
+    <li><a href="/#(edit.slug.value)/" target="_blank">#inline("Admin/Icons/Eye", as: raw)</a></li>
+    #endif
+#enddefine
+#define(fields):
+    #var(field = nil)
+
+    #(field = ["id": "slug", "data": edit.slug])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "statusId", "label": "Status", "data": edit.statusId])
+    #inline("Admin/Fields/Selection")
+
+    #(field = ["id": "date", "more": "yyyy/mm/dd", "data": edit.date])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "feedItem", "label": "Feed item", "data": edit.feedItem])
+    #inline("Admin/Fields/Selection")
+
+    #(field = ["id": "filters", "data": edit.filters])
+    #inline("Admin/Fields/Multiselection")
+
+    <hr>
+
+    #(field = ["id": "title", "data": edit.title])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "excerpt", "size": "small", "data": edit.excerpt])
+    #inline("Admin/Fields/Textarea")
+
+    #(field = ["id": "image", "data": edit.image])
+    #inline("Admin/Fields/File")
+
+    #(field = ["id": "canonicalUrl", "label": "Canonical URL", "required": false, "data": edit.title])
+    #inline("Admin/Fields/Text")
+
+    <hr>
+
+    #(field = ["id": "module", "required": true, "data": edit.module])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["id": "model", "required": true, "data": edit.model])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["id": "reference", "required": true, "data": edit.reference])
+    #inline("Admin/Fields/Text")
+
+#enddefine
+#let(title = "Metadata")
+#let(form = ["key": "metadatas", "id": edit.id])
+#inline("Admin/Form")

@@ -1,0 +1,15 @@
+<section>
+    <label for="#(field.id)">#(field.label ?? field.id.capitalized())</label>
+    <div id="image-uploader" class="#(field.class ?? "image-uploader")">
+        #if(field.data.value != ""):
+            <img id="uploaded-image" src="#(field.data.value.resolve())">
+        #endif
+        <a id="choose-button" href="javascript:void(0);" onclick="chooseImage();">Choose</a>
+        <a id="remove-button" href="javascript:void(0);" onclick="removeImage()">Remove</a>
+        <input id="#(field.id)Delete" name="#(field.id)Delete" type="hidden" value="false">
+        <input id="#(field.id)" name="#(field.id)" type="file" accept="image/jpeg" style="display:none;">
+    </div>
+    #if(field.data.error != nil):
+    <span class="error">#(field.data.error)</span>
+    #endif
+</section>

@@ -1,0 +1,13 @@
+#let(head = [
+    "title": $vars["page.not.found.title"],
+    "description": $vars["page.not.found.description"]
+])
+#define(body):
+<section id="page-not-found">
+    <h1>#($vars["page.not.found.icon"])</h1>
+    <h2>#($vars["page.not.found.title"])</h2>
+    <p>#($vars["page.not.found.description"])</p>
+    <a href="/">#($vars["page.not.found.link"])</a>
+</section>
+#enddefine
+#inline("Frontend/Index")

@@ -1,0 +1,24 @@
+#define(th):
+    #var(link = nil)
+    <tr>
+        #(link = ["key": "source", "default": true])
+        <th>#inline("Admin/SortLink")</th>
+        #(link = ["key": "destination"])
+        <th>#inline("Admin/SortLink")</th>
+        #(link = ["key": "status_code", "label": "Status code"])
+        <th class="small center">#inline("Admin/SortLink")</th>
+        <th>Actions</th>
+    </tr>
+#enddefine
+#define(tb):
+    #for(item in list.items):
+        <tr>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.source)</a></td>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.destination)</a></td>
+            <td class="small center"><a href="#($req.url.path)#(item.id)/">#(item.statusCode)</a></td>
+            #inline("Admin/Actions")
+        </tr>
+    #endfor
+#enddefine
+#let(title = "Redirects")
+#inline("Admin/Table")

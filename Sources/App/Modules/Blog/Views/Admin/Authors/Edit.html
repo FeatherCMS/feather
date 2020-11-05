@@ -1,0 +1,25 @@
+#define(toolbar):
+    #if(edit.metadata != nil):
+    <li><a href="/admin/frontend/metadatas/#(edit.metadata.id)">#inline("Admin/Icons/Feather", as: raw)</a></li>
+    <li><a href="/#(edit.metadata.slug)/" target="_blank">#inline("Admin/Icons/Eye", as: raw)</a></li>
+    #endif
+    #if(edit.id != nil):
+    <li><a href="/admin/blog/authors/#(edit.id)/links">#inline("Admin/Icons/Link", as: raw)</a></li>
+    #endif
+#enddefine
+#define(fields):
+    #var(field = nil)
+
+    #(field = ["id": "image", "class": "rounded-image-uploader", "data": edit.image])
+    #inline("Admin/Fields/File")
+
+    #(field = ["id": "name", "required": true, "data": edit.name])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "bio", "size": "small", "data": edit.bio])
+    #inline("Admin/Fields/Textarea")
+
+#enddefine
+#let(title = "Authors")
+#let(form = ["key": "authors", "id": edit.id, "multipart": true])
+#inline("Admin/Form")

@@ -1,0 +1,22 @@
+#extend("Frontend/Index"):
+    #export("body"):
+
+    <section>
+        <h1>#systemVariable("categories.page.title")</h1>
+        <p>#systemVariable("categories.page.description")</p>
+    </section>
+
+    <section id="categories">
+        <ul>
+            #for(item in body.list):
+            <li>
+                <img src="#resolve(item.category.imageKey)">
+                <h3><a href="/#(item.content.slug)">#(item.category.title)</a></h3>
+                <p>#(item.category.excerpt)</p>
+            </li>
+            #endfor
+        </ul>
+    </section>
+
+    #endexport
+#endextend

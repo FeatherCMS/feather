@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+
+    <title>Feather CMS</title>
+
+    #if($app.isDebug):
+    <link rel="stylesheet" href="/css/frontend.css">
+    <link rel="stylesheet" href="/css/frontend.light.css">
+    <link rel="stylesheet" href="/css/frontend.dark.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/admin.light.css">
+    <link rel="stylesheet" href="/css/admin.dark.css">
+    #else:
+    <link rel="stylesheet" href="/css/frontend.min.css">
+    <link rel="stylesheet" href="/css/admin.min.css">
+    #endif
+
+    <link rel="shortcut icon" href="/images/icons/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <header id="header">
+        <input type="checkbox" id="menu-button" class="noselect" />
+        <label for="menu-button" id="menu-icon" class="noselect"><span></span></label>
+
+        <nav id="nav">
+            <li><a href="/admin/">Admin</a></li>
+            #evaluate(breadcrumb ?? "")
+        </nav>
+
+          <a id="site-link" href="/">
+              <img src="/images/logo-text.png" alt="Logo of The.Swift.Dev." title="The.Swift.Dev.">
+          </a>
+
+     <!-- <a id="account" href="/logout/"><img src="https://pbs.twimg.com/profile_images/1108104040846635014/NfSN0ZF0_400x400.png"></a>-->
+          <a id="account" href="/logout/">#inline("Admin/Icons/Logout")</a>
+    </header>
+
+    <div id="toolbar">
+        <nav id="buttons">
+            #evaluate(toolbar ?? "")
+        </nav>
+    </div>
+
+    <main>
+        <div id="content">
+            #body()
+        </div>
+    </main>
+
+    <script src="/javascript/admin.js"></script>
+</body>
+</html>

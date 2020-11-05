@@ -1,0 +1,19 @@
+#define(th):
+    <tr>
+        #let(link = ["key": "title"])
+        <th>#inline("Admin/SortLink")</th>
+        <th class="actions">Actions</th>
+    </tr>
+#enddefine
+
+#define(tb):
+    #for(item in list.items):
+        <tr>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.title)</a></td>
+            #inline("Admin/Actions")
+        </tr>
+    #endfor
+#enddefine
+
+#let(title = "Pages")
+#inline("Admin/Table")

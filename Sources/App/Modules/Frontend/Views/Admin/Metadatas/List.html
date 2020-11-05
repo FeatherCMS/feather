@@ -1,0 +1,33 @@
+
+#let(title = "Contents")
+#let(toolbarButtons = "")
+
+#define(th):
+    #var(link = nil)
+    <tr>
+        #(link = ["key": "slug", "default": true])
+        <th>#inline("Admin/SortLink")</th>
+        #(link = ["key": "module"])
+        <th>#inline("Admin/SortLink")</th>
+        #(link = ["key": "model"])
+        <th>#inline("Admin/SortLink")</th>
+        #(link = ["key": "reference"])
+        <th>#inline("Admin/SortLink")</th>
+        <th>Actions</th>
+    </tr>
+#enddefine
+
+#define(tb):
+    #for(item in list.items):
+        <tr>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.slug)</a></td>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.module)</a></td>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.model)</a></td>
+            <td><a href="#($req.url.path)#(item.id)/">#(item.reference)</a></td>
+            #inline("Admin/Actions")
+        </tr>
+    #endfor
+#enddefine
+
+
+#inline("Admin/Table")

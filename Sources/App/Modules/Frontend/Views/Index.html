@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    #if(!head.indexed ?? false):
+        <meta name="robots" content="noindex">
+    #endif
+
+    <title>#(head.title) - #($vars["site.title"])</title>
+
+    #if($app.isDebug ?? false):
+    <link rel="stylesheet" href="/css/frontend.css">
+    <link rel="stylesheet" href="/css/frontend.light.css">
+    <link rel="stylesheet" href="/css/frontend.dark.css">
+    #else:
+    <link rel="stylesheet" href="/css/frontend.min.css">
+    #endif
+    
+    #inline("Frontend/Icons")
+
+    #if(head.canonicalUrl ?? false):
+        <link rel="canonical" href="#(head.canonicalUrl)">
+    #endif
+        
+        
+    #if(Request(query: "page") != nil || Request(query: "search") != nil):
+        <link rel="canonical" href="#($app.baseUrl)#($req.url.path)">
+    #endif
+</head>
+<body>
+    <header id="header">
+        <a href="/" id="site-link">
+            <img src="/images/logo-text.png" alt="Logo of #($vars["site.title"])" title="#($vars["site.title"])">
+        </a>
+
+        <input type="checkbox" id="menu-button" class="noselect" />
+        <label for="menu-button" id="menu-icon" class="noselect"><span></span></label>
+
+        <nav id="nav">
+            <li><a href="/" class="#if($req.url.path == "/"):selected#endif">Home</a></li>
+            <li><a href="/posts/" class="#if($req.url.path == "/posts/"):selected#endif">Posts</a></li>
+            <li><a href="/categories/" class="#if($req.url.path == "/categories/"):selected#endif">Categories</a></li>
+            <li><a href="/authors/" class="#if($req.url.path == "/authors/"):selected#endif">Authors</a></li>
+            <li><a href="/about" class="#if($req.url.path == "/about/"):selected#endif">About</a></li>
+            #if($user.isAuthenticated):
+            <li><a href="/logout/">Logout</a></li>
+            #else:
+            <li><a href="/login/" class="#if($req.url.path == "/login/"):selected#endif">Login</a></li>
+            #endif
+        </nav>
+    </header>
+    
+    <main>
+        
+        #body()
+    </main>
+    
+    <footer>
+        <section>
+            <img src="/images/icons/icon.png" alt="Logo of #($vars["site.title"])" title="#($vars["site.title"])">
+            
+            <p>This site is powered by <a href="https://github.com/binarybirds/feather" target="_blank">Feather</a> &copy; #Date(timeStamp: Timestamp(), localizedFormat: "y")</p>
+            
+            <p><a href="/admin">Admin</a> &middot; <a href="/sitemap.xml" target="_blank">Sitemap</a> &middot; <a href="/rss.xml" target="_blank">RSS</a></p>
+        </section>
+    </footer>
+</body>
+</html>

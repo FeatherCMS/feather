@@ -1,0 +1,19 @@
+#define(toolbar):
+    #if(edit.metadata != nil):
+    <li><a href="/admin/frontend/metadatas/#(edit.metadata.id)">#inline("Admin/Icons/Feather", as: raw)</a></li>
+    <li><a href="/#(edit.metadata.slug)/" target="_blank">#inline("Admin/Icons/Eye", as: raw)</a></li>
+    #endif
+#enddefine
+#define(fields):
+    #var(field = nil)
+
+    #(field = ["id": "title", "required": true, "data": edit.title])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "content", "size": "large", "data": edit.content])
+    #inline("Admin/Fields/Textarea")
+
+#enddefine
+#let(title = "Pages")
+#let(form = ["key": "pages", "id": edit.id])
+#inline("Admin/Form")
