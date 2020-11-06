@@ -1,6 +1,6 @@
 //
 //  RedirectAdminController.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 03. 26..
 //

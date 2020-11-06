@@ -1,6 +1,6 @@
 //
 //  FrontendContentEditForm.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 06. 09..
 //

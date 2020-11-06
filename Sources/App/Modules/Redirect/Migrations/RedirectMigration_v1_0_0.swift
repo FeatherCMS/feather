@@ -1,6 +1,6 @@
 //
 //  RedirectMigration_v1_0_0.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bödecs on 2020. 05. 30..
 //

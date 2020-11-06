@@ -1,6 +1,6 @@
 //
 //  BlogAuthorModel+Content.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 07. 22..
 //

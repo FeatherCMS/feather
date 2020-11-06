@@ -1,6 +1,6 @@
 //
 //  UserMigration_v1_0_0.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 02. 20..
 //

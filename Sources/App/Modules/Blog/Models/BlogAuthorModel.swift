@@ -1,6 +1,6 @@
 //
 //  BlogAuthorModel.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 01. 26..
 //
@@ -30,7 +30,7 @@ final class BlogAuthorModel: ViperModel {
     @Field(key: FieldKeys.imageKey) var imageKey: String
     @Field(key: FieldKeys.bio) var bio: String
     @Children(for: \.$author) var links: [BlogAuthorLinkModel]
-    @Children(for: \.$author) var Posts: [BlogPostModel]
+    @Children(for: \.$author) var posts: [BlogPostModel]
     
     init() { }
     
@@ -43,26 +43,5 @@ final class BlogAuthorModel: ViperModel {
         self.name = name
         self.imageKey = imageKey
         self.bio = bio
-    }
-}
-
-// MARK: - viewModel
-
-extension BlogAuthorModel: LeafDataRepresentable {
-
-    var leafData: LeafData {
-        .dictionary([
-            "id": id!.uuidString,
-            "name": name,
-            "imageKey": imageKey,
-            "bio": bio,
-        ])
-    }
-}
-
-extension BlogAuthorModel: FormFieldStringOptionRepresentable {
-
-    var formFieldStringOption: FormFieldStringOption {
-        .init(key: id!.uuidString, label: name)
     }
 }

@@ -1,6 +1,6 @@
 //
 //  BlogMigration_v1_0_0.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2019. 12. 17..
 //

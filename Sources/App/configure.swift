@@ -1,6 +1,6 @@
 //
 //  configure.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2019. 12. 17..
 //

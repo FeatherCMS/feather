@@ -1,6 +1,6 @@
 //
 //  UserModel+View.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 06. 02..
 //
@@ -13,7 +13,7 @@ extension UserModel: LeafDataRepresentable {
 
     var leafData: LeafData {
         .dictionary([
-            "id": id!.uuidString,
+            "id": id,
             "email": email,
         ])
     }

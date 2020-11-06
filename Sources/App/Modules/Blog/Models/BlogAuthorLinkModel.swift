@@ -1,6 +1,6 @@
 //
 //  BlogAuthorLinkModel.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 01. 26..
 //
@@ -40,19 +40,5 @@ final class BlogAuthorLinkModel: ViperModel {
         self.url = url
         self.priority = priority
         self.$author.id = authorId
-    }
-}
-
-// MARK: - viewModel
-
-extension BlogAuthorLinkModel: LeafDataRepresentable {
-    
-    var leafData: LeafData {
-        .dictionary([
-            "id": id!.uuidString,
-            "name": name,
-            "url": url,
-            "priority": priority,
-        ])
     }
 }

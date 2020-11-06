@@ -1,6 +1,6 @@
 //
 //  UserModule+Install.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 07. 12..
 //
@@ -20,7 +20,7 @@ extension UserModule {
 
     func installSampleContent(_ req: Request) -> EventLoopFuture<Void> {
         
-        //let u1 = UserModel(email: "feather@binarybirds.com", password: try! Bcrypt.hash("FeatherCMS"))
+        //let u1 = UserModel(email: "feather@binarybirds.com", password: try! Bcrypt.hash("Feather"))
         let u1 = UserModel(email: "feather@binarybirds.com", password: "$2b$12$7RZSLrxoK0/mOIYuNM0g3OKlyxvFlWgp8wYcIbFmWVJRGARlVB01u")
 
         return req.eventLoop.flatten([

@@ -1,6 +1,6 @@
 //
 //  UserLoginForm.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 02. 20..
 //

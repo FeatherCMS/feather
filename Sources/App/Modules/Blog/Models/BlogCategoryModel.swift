@@ -1,6 +1,6 @@
 //
 //  BlogCategoryModel.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 01. 26..
 //
@@ -39,27 +39,5 @@ final class BlogCategoryModel: ViperModel {
         self.imageKey = imageKey
         self.excerpt = excerpt
         self.priority = priority
-    }
-}
-
-// MARK: - viewModel
-
-extension BlogCategoryModel: LeafDataRepresentable {
-
-    var leafData: LeafData {
-        .dictionary([
-            "id": id!.uuidString,
-            "title": title,
-            "imageKey": imageKey,
-            "excerpt": excerpt,
-            "priority": priority,
-        ])
-    }
-}
-
-extension BlogCategoryModel: FormFieldStringOptionRepresentable {
-
-    var formFieldStringOption: FormFieldStringOption {
-        .init(key: id!.uuidString, label: title)
     }
 }

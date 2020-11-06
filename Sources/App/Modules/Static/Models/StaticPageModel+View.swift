@@ -1,6 +1,6 @@
 //
-//  StaticPageModel+Leaf.swift
-//  FeatherCMS
+//  StaticPageModel+View.swift
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 06. 09..
 //

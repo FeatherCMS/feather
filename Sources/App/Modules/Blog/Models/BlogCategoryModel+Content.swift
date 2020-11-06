@@ -1,13 +1,10 @@
 //
 //  BlogCategoryModel+Content.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 07. 22..
 //
 
-import Vapor
-import Fluent
-import ViperKit
 import FeatherCore
 
 extension BlogCategoryModel: MetadataChangeDelegate {

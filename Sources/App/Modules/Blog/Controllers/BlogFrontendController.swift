@@ -1,6 +1,6 @@
 //
 //  BlogFrontendController.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 03. 27..
 //
@@ -11,21 +11,20 @@ import FeatherCore
 struct BlogFrontendController {
 
     func homeView(req: Request, page content: Metadata) throws -> EventLoopFuture<Response> {
-        BlogPostModel.query(on: req.db)
-        .join(Metadata.self, on: \BlogPostModel.$id == \Metadata.$reference, method: .inner)
-        .filter(Metadata.self, \.$status == .published)
-        .sort(Metadata.self, \.$date, .descending)
-        .range(..<17)
-        .with(\.$category)
-        .all()
-        .flatMap { posts -> EventLoopFuture<View> in
-//            let items = posts.map { post -> BlogPostContext in
-//                let content = try! post.joined(Metadata.self)
-//                return .init(post: post.viewContext, category: post.category.viewContext, content: content.viewContext)
-//            }
-            return req.leaf.render(template: "Blog/Frontend/Home", context: [:])
-        }
-        .encodeResponse(for: req)
+        BlogPostModel
+            .query(on: req.db)
+            .join(Metadata.self, on: \BlogPostModel.$id == \Metadata.$reference, method: .inner)
+            .filter(Metadata.self, \.$status == .published)
+            .sort(Metadata.self, \.$date, .descending)
+            .range(..<17)
+            .with(\.$category)
+            .all()
+            .flatMap { posts in
+                return req.leaf.render(template: "Blog/Frontend/Home", context: [
+                    "posts": .array(posts.map { $0.joinedMetadata() }.map(\.leafData))
+                ])
+            }
+            .encodeResponse(for: req)
     }
     
     func postsView(req: Request, page content: Metadata) throws -> EventLoopFuture<Response> {
@@ -61,32 +60,80 @@ struct BlogFrontendController {
     }
     
     func categoriesView(req: Request, page content: Metadata) throws -> EventLoopFuture<Response> {
-        BlogCategoryModel.findMetadata(on: req.db)
-        .filter(Metadata.self, \.$status == .published)
-        .all()
-        .flatMap { categories -> EventLoopFuture<View> in
-            
-//            let items = categories.map { category -> CategoryContext in
-//                let categoryContent = try! category.joined(Metadata.self)
-//                return .init(category: category.viewContext, content: categoryContent.viewContext)
-//            }
-            return req.leaf.render(template: "Blog/Frontend/Categories", context: [:])
-        }
-        .encodeResponse(for: req)
+        BlogCategoryModel
+            .findMetadata(on: req.db)
+            .filter(Metadata.self, \.$status == .published)
+            .all()
+            .flatMap { categories in
+                req.leaf.render(template: "Blog/Frontend/Categories", context: [
+                    "categories": .array(categories.map { $0.joinedMetadata() }.map(\.leafData))
+                ])
+            }
+            .encodeResponse(for: req)
     }
     
     func authorsView(req: Request, page content: Metadata) throws -> EventLoopFuture<Response> {
-        BlogAuthorModel.findMetadata(on: req.db)
-        .filter(Metadata.self, \.$status == .published)
+        BlogAuthorModel
+            .findMetadata(on: req.db)
+            .filter(Metadata.self, \.$status == .published)
+            .all()
+            .flatMap { authors in
+                req.leaf.render(template: "Blog/Frontend/Authors", context: [
+                    "authors": .array(authors.map { $0.joinedMetadata() }.map(\.leafData))
+                ])
+            }
+            .encodeResponse(for: req)
+    }
+    
+    
+    
+    func categoryView(_ req: Request, _ metadata: Metadata) -> EventLoopFuture<View> {
+        BlogPostModel.findMetadata(on: req.db)
+        .filter(\.$category.$id == metadata.reference)
         .all()
-        .flatMap { categories -> EventLoopFuture<View> in
-            
-//            let items = categories.map { author -> AuthorContext in
-//                let authorContent = try! author.joined(Metadata.self)
-//                return .init(author: author.viewContext, content: authorContent.viewContext)
-//            }
-            return req.leaf.render(template: "Blog/Frontend/Authors", context: [:])
+        .and(
+            BlogCategoryModel
+                .find(metadata.reference, on: req.db)
+                .unwrap(or: Abort(.notFound))
+        )
+        .flatMap { posts, category in
+            req.leaf.render(template: "Blog/Frontend/Category", context: [
+                "category": category.leafData,
+                "posts": .array(posts.map { $0.joinedMetadata() })
+            ])
         }
-        .encodeResponse(for: req)
+    }
+    
+    func authorView(_ req: Request, _ metadata: Metadata) -> EventLoopFuture<View> {
+        BlogPostModel
+            .findMetadata(on: req.db)
+            .filter(\.$author.$id == metadata.reference)
+            .with(\.$category)
+            .all()
+            .and(
+                BlogAuthorModel
+                    .query(on: req.db)
+                    .filter(\.$id == metadata.reference)
+                    .with(\.$links)
+                    .first()
+                    .unwrap(or: Abort(.notFound))
+            )
+            .flatMap { posts, author in
+                req.leaf.render(template: "Blog/Frontend/Author", context: [
+                    "author": author.leafData,
+                    "posts": .array(posts.map { $0.joinedMetadata() }),
+                ])
+            }
+    }
+    
+    func postView(_ req: Request, _ metadata: Metadata) -> EventLoopFuture<View> {
+        BlogPostModel
+            .findMetadata(on: req.db)
+            .filter(\.$id == metadata.reference)
+            .with(\.$category)
+            .with(\.$author) { $0.with(\.$links) }
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { req.leaf.render(template: "Blog/Frontend/Post", context: ["post": $0.joinedMetadata()]) }
     }
 }

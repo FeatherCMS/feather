@@ -1,6 +1,6 @@
 //
 //  SponsorModule.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bödecs on 2020. 06. 16..
 //

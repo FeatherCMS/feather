@@ -1,22 +1,23 @@
-#extend("Frontend/Index"):
-    #export("body"):
+#let(head = [
+    "title": $vars["authors.page.title"],
+    "description": $vars["authors.page.description"]
+])
+#define(body):
+<section>
+    <h1>#(head.title)</h1>
+    <p>#(head.description)</p>
+</section>
 
-    <section>
-        <h1>#systemVariable("authors.page.title")</h1>
-        <p>#systemVariable("authors.page.description")</p>
-    </section>
-
-    <section id="authors">
-        <ul>
-            #for(item in body.list):
-            <li>
-                <img class="rounded" src="#resolve(item.author.imageKey)">
-                <h3><a href="/#(item.content.slug)">#(item.author.name)</a></h3>
-                <p>#(item.author.bio)</p>
-            </li>
-            #endfor
-        </ul>
-    </section>
-
-    #endexport
-#endextend
+<section id="authors">
+    <ul>
+        #for(author in authors):
+        <li>
+            <img class="rounded" src="#(author.imageKey.resolve())">
+            <h3><a href="/#(author.metadata.slug)">#(author.name)</a></h3>
+            <p>#(author.bio)</p>
+        </li>
+        #endfor
+    </ul>
+</section>
+#enddefine
+#inline("Frontend/Index")

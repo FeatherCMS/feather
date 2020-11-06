@@ -1,13 +1,11 @@
 //
 //  BlogPostModel.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2019. 12. 17..
 //
 
-import Vapor
-import Fluent
-import ViperKit
+import FeatherCore
 
 final class BlogPostModel: ViperModel {
     typealias Module = BlogModule
@@ -41,7 +39,8 @@ final class BlogPostModel: ViperModel {
          excerpt: String,
          content: String,
          categoryId: UUID,
-         authorId: UUID)
+         authorId: UUID,
+         metadata: Metadata? = nil)
     {
         self.id = id
         self.title = title
