@@ -1,0 +1,33 @@
+#(let pages = list.info ?? nil)
+#if(pages.total > 1 && pages.current < pages.total + 1):
+<hr>
+<section class="wrapper">
+    #if(pages.current > 1):
+    <a href="#Request(setQuery: ["page": 1])" class="text-link">◀◀</a>
+    #else:
+    <span class="text-link inactive-link">◀◀</span>
+    #endif
+
+    #if(pages.current > 1):
+    <a href="#Request(setQuery: ["page": pages.current - 1])" class="text-link">◀</a>
+    #else:
+    <span class="text-link inactive-link">◀</span>
+    #endif
+
+    <span class="pager">
+    page #(pages.current) of #(pages.total)
+    </span>
+
+    #if(pages.current < pages.total):
+    <a href="#Request(setQuery: ["page": pages.current + 1])" class="text-link">▶</a>
+    #else:
+    <span class="text-link inactive-link">▶</span>
+    #endif
+
+    #if(pages.current < pages.total):
+    <a href="#Request(setQuery: ["page": pages.total])" class="text-link">▶▶</a>
+    #else:
+    <span class="text-link inactive-link">▶▶</span>
+    #endif
+</section>
+#endif

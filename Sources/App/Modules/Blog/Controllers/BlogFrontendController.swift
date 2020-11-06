@@ -45,17 +45,11 @@ struct BlogFrontendController {
         let count = qb.count()
         let items = qb.copy().range(start..<end).all()
 
-//        return items.and(count).map { (posts, total) -> ViewKit.Page<BlogPostContext> in
-//            let items = posts.map { post -> BlogPostContext in
-//                let pc = try! post.joined(Metadata.self)
-//                return .init(post: post.viewContext, category: post.category.viewContext, content: pc.viewContext)
-//            }
-//            let totalPages = Int(ceil(Float(total) / Float(limit)))
-//            return PageContext(items: items, metadata: .init(page: page, limit: limit, total: totalPages))
-//        }
-//        .flatMap { ctx -> EventLoopFuture<View> in
-        return req.leaf.render(template: "Blog/Frontend/Posts", context: [:])
-//        }
+        return items.and(count).map { (posts, count) -> ViewKit.Page<LeafData> in
+            let total = Int(ceil(Float(count) / Float(limit)))
+            return .init(posts.map { $0.joinedMetadata() }, info: .init(current: page, limit: limit, total: total))
+        }
+        .flatMap { req.leaf.render(template: "Blog/Frontend/Posts", context: ["list": $0.leafData]) }
         .encodeResponse(for: req)
     }
     
