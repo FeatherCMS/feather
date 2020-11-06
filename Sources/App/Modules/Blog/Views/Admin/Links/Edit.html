@@ -1,7 +1,6 @@
-
-#define(toolbar):
-<li><a href="/admin/blog/authors/#Request(parameter: "id")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a></li>
-<li><a href="/admin/blog/authors/#Request(parameter: "id")/links"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link-2"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></li>
+#define(toolbarButtons):
+<li><a href="/admin/blog/authors/#Request(parameter: "id")">#inline("Admin/Icons/User", as: raw)</a></li>
+<li><a href="/admin/blog/authors/#Request(parameter: "id")/links">#inline("Admin/Icons/Link", as: raw)</line></svg></a></li>
 #enddefine
 #define(fields):
     <input type="hidden" name="authorId" value="#Request(parameter: "id")">

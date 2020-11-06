@@ -1,6 +1,6 @@
-<section>
+<section#if(field.class ?? false): class="#(field.class)"#endif>
     <label for="#(field.id)">#(field.label ?? field.id.capitalized())</label>
-    <div id="image-uploader" class="#(field.class ?? "image-uploader")">
+    <div id="image-uploader" class="image-uploader">
         #if(field.data.value != ""):
             <img id="uploaded-image" src="#(field.data.value.resolve())">
         #endif
