@@ -11,7 +11,7 @@
 #define(tb):
     #for(item in list.items):
         <tr>
-            <td class="small center"><a href="#($req.url.path)#(item.id)/"><img src="resolve(item.imageKey)" alt="#(item.name)"></a></td>
+            <td class="small center"><a href="#($req.url.path)#(item.id)/"><img src="#(item.imageKey.resolve())" alt="#(item.title)"></a></td>
             <td><a href="#($req.url.path)#(item.id)/">#(item.title)</a></td>
             #inline("Admin/Actions")
         </tr>
