@@ -55,6 +55,15 @@ let package = Package(
 //            .product(name: "StaticModule", package: "static-module"),
 //            .product(name: "BlogModule", package: "blog-module"),
             .product(name: "Vapor", package: "vapor"),
+        ], exclude: [
+            "Modules/User/Templates/",
+            "Modules/System/Templates/",
+            "Modules/Admin/Templates/",
+            "Modules/Frontend/Templates/",
+            "Modules/Blog/Templates/",
+            "Modules/Static/Templates/",
+            "Modules/Redirect/Templates/",
+            "Modules/Sponsor/Templates/",
         ], swiftSettings: [
             .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
         ]),

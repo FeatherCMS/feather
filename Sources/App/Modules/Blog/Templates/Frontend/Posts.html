@@ -18,7 +18,7 @@
 
     
     <div class="grid posts">
-        #for(post in list.items):
+        #for(post in page.items):
         <div>
             <a href="/#(post.metadata.slug)" class="card">
                 <figure style="background-image: url(#(post.imageKey.resolve()));"></figure>
@@ -37,7 +37,7 @@
         #endfor
     </div>
 
-    #if(list.items.isEmpty()):
+    #if(page.items.isEmpty()):
     <div class="empty">
         <span>😬</span>
         <h3>No results.</h3>

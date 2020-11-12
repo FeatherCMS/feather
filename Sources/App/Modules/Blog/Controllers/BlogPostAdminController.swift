@@ -13,8 +13,6 @@ struct BlogPostAdminController: ViperAdminViewController {
     typealias Model = BlogPostModel
     typealias EditForm = BlogPostEditForm
     
-    // MARK: - api
-    
     var listSortable: [FieldKey] {
         [
             Model.FieldKeys.imageKey,
@@ -59,10 +57,6 @@ struct BlogPostAdminController: ViperAdminViewController {
         }
         return future
     }
-
-//    func afterCreate(req: Request, form: EditForm, model: Model) -> EventLoopFuture<Response> {
-//        req.redirect(to: req.url.path.replaceLastPath(model.viewIdentifier))
-//    }
     
     func beforeUpdate(req: Request, model: Model, form: EditForm) -> EventLoopFuture<Model> {
         let key = path(model)
@@ -88,7 +82,5 @@ struct BlogPostAdminController: ViperAdminViewController {
     func beforeDelete(req: Request, model: Model) -> EventLoopFuture<Model> {
         req.fs.delete(key: path(model)).map { model }
     }
-    
-    
 
 }

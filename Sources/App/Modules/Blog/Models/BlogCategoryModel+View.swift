@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  BlogCategoryModel+View.swift
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 11. 06..
 //

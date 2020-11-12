@@ -70,7 +70,7 @@ public func configure(_ app: Application) throws {
     let moduleSource = ViperViewFiles(rootDirectory: app.directory.workingDirectory,
                                       modulesDirectory: "Sources/App/Modules",
                                       resourcesDirectory: "Resources",
-                                      viewsFolderName: "Views",
+                                      viewsFolderName: "Templates",
                                       fileExtension: "html",
                                       fileio: app.fileio)
 

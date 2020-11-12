@@ -10,7 +10,7 @@ import Fluent
 struct BlogMigration_v1_0_0: Migration {
 
     func prepare(on db: Database) -> EventLoopFuture<Void> {
-        return db.eventLoop.flatten([
+        db.eventLoop.flatten([
             db.schema(BlogCategoryModel.schema)
                 .id()
                 .field(BlogCategoryModel.FieldKeys.title, .string, .required)
@@ -51,7 +51,7 @@ struct BlogMigration_v1_0_0: Migration {
     }
     
     func revert(on db: Database) -> EventLoopFuture<Void> {
-        return db.eventLoop.flatten([
+        db.eventLoop.flatten([
             db.schema(BlogPostModel.schema).delete(),
             db.schema(BlogCategoryModel.schema).delete(),
             db.schema(BlogAuthorModel.schema).delete(),

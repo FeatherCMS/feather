@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
           "branch": null,
-          "revision": "4b4d6605aa2e4f0c2ae3c7563795ae3bec259fff",
-          "version": "1.2.1"
+          "revision": "0a8dddbe15cd72f7bb5e47951fb7c1eb0836dfc2",
+          "version": "1.2.2"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "6a2650efbafb2c138731b335ffcba66347db6bf6",
-          "version": "1.0.0-beta.2.3"
+          "revision": "a8c6e30f0f1acf18c82c359a2aeca69f5b41daba",
+          "version": "1.0.0-beta.3"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/binarybirds/leaf-foundation",
         "state": {
           "branch": null,
-          "revision": "0af5a1dd27fb0131f8d8d37570e375eff38bfeab",
-          "version": "1.0.0-beta.2.1"
+          "revision": "18c68db97f137b3fd40aa0efed07c7467f1fd180",
+          "version": "1.0.0-beta.3"
         }
       },
       {
@@ -213,8 +213,8 @@
         "repositoryURL": "https://github.com/apple/swift-metrics.git",
         "state": {
           "branch": null,
-          "revision": "f5ed78cb26019b2b85b016f8aa5b1a3427c8251a",
-          "version": "2.1.0"
+          "revision": "e382458581b05839a571c578e90060fff499f101",
+          "version": "2.1.1"
         }
       },
       {
@@ -276,8 +276,8 @@
         "repositoryURL": "https://github.com/binarybirds/view-kit",
         "state": {
           "branch": null,
-          "revision": "e17b75c6e07a49ad22d2dc43f0214accbda18a4f",
-          "version": "1.2.0"
+          "revision": "960462ff9976faa932f809b5323a00ffc0eb2c1f",
+          "version": "1.2.1"
         }
       },
       {
@@ -285,8 +285,8 @@
         "repositoryURL": "https://github.com/binarybirds/viper-kit",
         "state": {
           "branch": null,
-          "revision": "f666bdeea9286a522468e40f7f95bcec856d7826",
-          "version": "1.4.0"
+          "revision": "6b1198af66951c8174c9ccbcf4ac45c077f20659",
+          "version": "1.4.1"
         }
       },
       {

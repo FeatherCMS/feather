@@ -11,7 +11,7 @@ extension BlogAuthorModel: LeafDataRepresentable {
 
     var leafData: LeafData {
         .dictionary([
-            "id": id!.uuidString,
+            "id": id,
             "name": name,
             "imageKey": imageKey,
             "bio": bio,

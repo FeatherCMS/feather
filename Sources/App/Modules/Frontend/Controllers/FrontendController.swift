@@ -14,8 +14,7 @@ import FeatherCore
 struct FrontendController {
     
     func catchAllView(req: Request) throws -> EventLoopFuture<Response> {
-        return req.application.viper.invokeHook(name: "frontend-page", req: req, type: Response.self)
-            .unwrap(or: Abort(.notFound))
+        req.hook("frontend-page", type: Response.self).unwrap(or: Abort(.notFound))
     }
 
     // MARK: - sitemap, rss
@@ -33,7 +32,7 @@ struct FrontendController {
         return qb.all()
         .mapEach(\.leafData)
         .flatMap { req.leaf.render(template: template, context: ["list": .array($0)]) }
-        .flatMap { $0.encodeResponse(status: .ok, headers: ["Content-Type": "text/xml; charset=utf-8"], for: req) }
+        .encodeResponse(status: .ok, headers: ["Content-Type": "text/xml; charset=utf-8"], for: req)
     }
 
     func sitemap(_ req: Request) throws -> EventLoopFuture<Response> {

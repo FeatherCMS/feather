@@ -20,6 +20,6 @@ struct FrontendNotFoundMiddleware: Middleware {
     }
 
     func notFound(_ req: Request) -> EventLoopFuture<Response> {
-        req.leaf.render(template: "Frontend/NotFound").flatMap { $0.encodeResponse(status: .notFound, for: req) }
+        req.leaf.render(template: "Frontend/NotFound").encodeResponse(status: .notFound, for: req)
     }
 }

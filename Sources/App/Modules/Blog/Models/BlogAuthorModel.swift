@@ -5,11 +5,7 @@
 //  Created by Tibor Bodecs on 2020. 01. 26..
 //
 
-import Vapor
-import Fluent
-import ViperKit
-import ViewKit
-import Leaf
+import FeatherCore
 
 final class BlogAuthorModel: ViperModel {
 

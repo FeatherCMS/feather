@@ -5,9 +5,6 @@
 //  Created by Tibor Bodecs on 2020. 03. 23..
 //
 
-import Vapor
-import Fluent
-import ViperKit
 import FeatherCore
 
 struct BlogAuthorAdminController: ViperAdminViewController {

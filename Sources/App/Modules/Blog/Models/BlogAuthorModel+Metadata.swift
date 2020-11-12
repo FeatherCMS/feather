@@ -1,13 +1,10 @@
 //
-//  BlogAuthorModel+Content.swift
+//  BlogAuthorModel+Metadata.swift
 //  Feather
 //
 //  Created by Tibor Bodecs on 2020. 07. 22..
 //
 
-import Vapor
-import Fluent
-import ViperKit
 import FeatherCore
 
 extension BlogAuthorModel: MetadataChangeDelegate {

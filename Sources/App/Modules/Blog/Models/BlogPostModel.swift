@@ -39,8 +39,7 @@ final class BlogPostModel: ViperModel {
          excerpt: String,
          content: String,
          categoryId: UUID,
-         authorId: UUID,
-         metadata: Metadata? = nil)
+         authorId: UUID)
     {
         self.id = id
         self.title = title
