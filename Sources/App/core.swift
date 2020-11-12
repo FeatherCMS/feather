@@ -16,6 +16,11 @@ extension ViperModel where Self: LeafDataRepresentable {
     }
 }
 
+extension Application {
+
+    var isDebug: Bool { !environment.isRelease && environment != .production }
+}
+
 extension Request {
     
     func hookAll<T>(_ name: String, type: T.Type, params: [String : Any] = [:]) -> EventLoopFuture<[T]> {

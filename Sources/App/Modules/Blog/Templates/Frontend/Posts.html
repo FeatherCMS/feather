@@ -3,13 +3,14 @@
     "description": $vars["posts.page.description"]
 ])
 #define(body):
-<div id="posts">
-    <div>
+<div id="posts" class="wrapper w:full m:l">
+
+    <header class="m:b:l center">
         <h1>#(head.title)</h1>
         <p>#(head.description)</p>
-    </div>
-
-    <form id="search-form" action="#($req.url.path)" method="get">
+    </header>
+    
+    <form class="wrapper w m:b:l" id="search-form" action="#($req.url.path)" method="get">
         #if(Request(query: "limit") != nil):
         <input type="hidden" id="limit" name="limit" value="#Request(query: "limit")">
         #endif
@@ -17,7 +18,7 @@
     </form>
 
     
-    <div class="grid posts">
+    <div class="g3 posts">
         #for(post in page.items):
         <div>
             <a href="/#(post.metadata.slug)" class="card">

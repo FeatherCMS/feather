@@ -5,14 +5,13 @@
 //  Created by Tibor Bodecs on 2020. 01. 26..
 //
 
-import Vapor
+import FeatherCore
 
 extension Application {
     
     static let baseUrl: String = Environment.fetch("BASE_URL")
-    
     static let databaseUrl: URL = URL(string: Environment.fetch("DB_URL"))!
-    
+
     // paths are always absolute, with a trailing slash
     struct Paths {
         static let base: String = Environment.path("BASE_PATH")
@@ -28,6 +27,4 @@ extension Application {
         static let images: String = "images/"
         static let javascript: String = "javascript/"
     }
-    
-    var isDebug: Bool { !environment.isRelease && environment != .production }
 }

@@ -3,22 +3,25 @@
     "description": $vars["categories.page.description"]
 ])
 #define(body):
-<section>
-    <h1>#(head.title)</h1>
-    <p>#(head.description)</p>
-</section>
+<div id="categories" class="wrapper w m-l">
+    <header class="m:b:l center">
+        <h1>#(head.title)</h1>
+        <p>#(head.description)</p>
+    </header>
 
-<section id="categories">
-    <ul>
-        #for(category in categories):
-        <li>
-            <img class="rounded" src="#(category.imageKey.resolve())">
-            <h3><a href="/#(category.metadata.slug)">#(category.title)</a></h3>
-            <p>#(category.excerpt)</p>
-        </li>
-        #endfor
-    </ul>
-</section>
+    <section class="m:l">
+        <ul class="p:zero utility-list">
+            #for(category in categories):
+            <li class="p:l br center bg3">
+                <img class="w128 br" src="#(category.imageKey.resolve())">
+                <h3><a href="/#(category.metadata.slug)">#(category.title)</a></h3>
+                <p>#(category.excerpt)</p>
+            </li>
+            #endfor
+        </ul>
+    </section>
+
+</div>
 #enddefine
 #inline("Frontend/Index")
 

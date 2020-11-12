@@ -3,6 +3,11 @@ body {
     color: #333;
     text-shadow: 0px 1px 0px #fff;
 }
+.bg1 { background: #fafafa; }
+.bg2 { background: #fff; }
+.bg3 { background: #fff; }
+
+.border\:primary { border: 1px solid #efefef; }
 h1, h2, h3, h4, h5, h6 {
     color: #2c2c2e;
 }
@@ -11,6 +16,12 @@ a:link, a:visited {
 }
 a:link:hover, a:visited:hover, #nav a:link.selected:hover {
     color: #fa3ebe;
+}
+a p {
+    color: #333;
+}
+.underline {
+    border-bottom: 1px solid #21a9ff;
 }
 pre {
     background: #fff;
@@ -100,7 +111,7 @@ input:focus, textarea:focus, select:focus {
     background: #fff;
     color: #ccc;
 }
-.card:hover {
+.shadow-hover:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
 }
 .card p, .excerpt {
@@ -126,21 +137,10 @@ a.card:link:hover, a.card:visited:hover {
 form .required, form .error {
     color: #ef695e;
 }
-#login-box {
-    background: #fff;
-    border: 1px solid #efefef;
-}
 #login-box p {
     color: #666;
 }
 
-#categories li, #authors li {
-    background: #fff;
-}
-#categories img, #category img {
-    background: #fff;
-    box-shadow: 0px 4px 8px #ddd;
-}
 td.small img {
     width: 64px;
     height: 64px;

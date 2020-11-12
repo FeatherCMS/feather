@@ -28,14 +28,14 @@
         <link rel="canonical" href="#($app.baseUrl)#($req.url.path)">
     #endif
 </head>
-<body>
+<body class="m:zero">
     <header id="header">
         <a href="/" id="site-link">
             <img src="/images/logo-text.png" alt="Logo of #($vars["site.title"])" title="#($vars["site.title"])">
         </a>
 
-        <input type="checkbox" id="menu-button" class="noselect" />
-        <label for="menu-button" id="menu-icon" class="noselect"><span></span></label>
+        <input type="checkbox" id="menu-button" class="selection:off" />
+        <label for="menu-button" id="menu-icon" class="selection:off"><span></span></label>
 
         <nav id="nav">
             <li><a href="/" class="#if($req.url.path == "/"):selected#endif">Home</a></li>
@@ -51,8 +51,7 @@
         </nav>
     </header>
     
-    <main>
-        
+    <main class="container">        
         #body()
     </main>
     

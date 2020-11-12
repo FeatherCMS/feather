@@ -3,38 +3,149 @@
     "description": post.excerpt
 ])
 #define(body):
-<article>
-    <header>
-        <section>
-            <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-            </time>
-            <h1 class="title">#(post.title)</h1>
-            <p class="excerpt">#(post.excerpt)</p>
-            <div class="meta">
-                <span class="category">#(post.category.title)</span>
-            </div>
-        </section>
-        <figure id="cover-image" style="background-image: url(#(post.imageKey.resolve()));"></figure>
-    </header>
 
-    #(post.content)
+<article id="post">
+    <div class="wrapper w:l">
+        <header class="m:xl">
+            <p>
+                <span class="underline">#(post.category.title)</span>
+                &middot;
+                <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
+                    #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
+                </time>
+            </p>
+            <h1>#(post.title)</h1>
+            <p>#(post.excerpt)</p>
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+
+        </header>
+    </div>
+    <div class="wrapper w:full">
+        <section class="m:l">
+            <img class="block br:xs" src="#(post.imageKey.resolve())">
+        </section>
+    </div>
+
+    <div class="wrapper w:l">
+        <section class="m:xl">
+            #(post.content)
+            
+            The SwiftIO board
+            MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, this combination makes it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.
+        </section>
+        <section class="m:xl">
+            <h2>#(post.content)</h2>
+            <p>
+            MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.
+            </p>
+        </section>
+    </div>
+    <div class="wrapper w:xl">
+        <section class="m:l">
+            <img class="block br:xs" src="#(post.imageKey.resolve())">
+        </section>
+    </div>
+    
+    <div class="wrapper w:l">
+        <section class="m:xl">
+            <h2>#(post.content)</h2>
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+            <h3>#(post.content)</h3>
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+            
+            <h1>#(post.content)</h1>
+            <h2>#(post.content)</h2>
+            <h3>#(post.content)</h3>
+            <h4>#(post.content)</h4>
+            <h5>#(post.content)</h5>
+            <h6>#(post.content)</h6>
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a class="u" href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+            
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+            
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+            
+            
+        </section>
+    </div>
+    <div class="wrapper w:l">
+        <section class="m:xl">
+            <h2>#(post.content)</h2>
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+            
+<pre><code class="language-swift"><span class="keyword">import</span> SwiftIO
+<span class="keyword">import</span> SHT3x
+<span class="keyword">import</span> LCD1602
+
+<span class="comment">// Get a number with one decimal place.</span>
+<span class="keyword">extension</span> <span class="type">Float</span> {
+    <span class="keyword">func</span> format(<span class="keyword">_</span> f: <span class="type">Int</span>) -&gt; <span class="type">Float</span> {
+        <span class="keyword">guard</span> f &gt; <span class="number">0</span> <span class="keyword">else</span> {<span class="keyword">return self</span>}
+        <span class="keyword">var</span> mul = <span class="number">10</span>
+        <span class="keyword">for _ in</span> <span class="number">1</span>..&lt;f {
+            mul *= <span class="number">10</span>
+        }
+        <span class="keyword">let</span> data = <span class="type">Int</span>(<span class="keyword">self</span> * <span class="type">Float</span>(mul))
+        <span class="keyword">return</span> <span class="type">Float</span>(data) / <span class="type">Float</span>(mul)
+    }
+}
+
+<span class="comment">// Initialize the LCD and sensor to use the I2C communication.</span>
+<span class="keyword">let</span> i2c = <span class="type">I2C</span>(<span class="type">Id</span>.<span class="type">I2C0</span>)
+<span class="keyword">let</span> lcd = <span class="type">LCD1602</span>(i2c)
+<span class="keyword">let</span> sht = <span class="type">SHT3x</span>(i2c)
+
+<span class="keyword">while true</span>{
+    <span class="comment">// Read and display the temperature on the LCD and update the value every 1s.</span>
+    <span class="keyword">let</span> temp = sht.<span class="call">readTemperature</span>()
+    lcd.<span class="call">write</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, <span class="string">"Temperature:"</span>)
+    lcd.<span class="call">write</span>(x: <span class="number">0</span>, y: <span class="number">1</span>, <span class="type">String</span>(temp.<span class="call">format</span>(<span class="number">1</span>)))
+    lcd.<span class="call">write</span>(x: <span class="number">4</span>, y: <span class="number">1</span>, <span class="string">" "</span>)
+    lcd.<span class="call">write</span>(x: <span class="number">5</span>, y: <span class="number">1</span>, <span class="string">"C"</span>)
+    <span class="call">sleep</span>(ms: <span class="number">1000</span>)
+}</code></pre>
+
+<p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+
+        </section>
+    </div>
+    <div class="wrapper w:l">
+
+        <section class="m:xl">
+            <h2>#(post.content)</h2>
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+            <h3>#(post.content)</h3>
+            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
+        </section>
+    </div>
+    <div class="wrapper w:l">
+        <section class="m:xl">
+            <img class="block br:xs" src="#(post.imageKey.resolve())">
+        </section>
+    </div>
 
 </article>
 
-<section id="share">
-    <p>Thanks for reading, if you liked this article please <a href="https://twitter.com/intent/tweet?via=tiborbodecs&hashtags=SwiftLang&url=#($app.baseUrl)#($req.url.path)" target="_blank">share it on Twitter</a>. 🙏</p>
-</section>
 
-<section class="author-box">
-    <img class="rounded" src="#(post.author.imageKey.resolve())" alt="Picture of #(post.author.name)" title="#(post.author.name)">
+<div class="wrapper w:l center">
+    <section id="share" class="m:xl">
+
+        <p>Thanks for reading, if you liked this article please <a href="https://twitter.com/intent/tweet?via=tiborbodecs&hashtags=SwiftLang&url=#($app.baseUrl)#($req.url.path)" target="_blank">share it on Twitter</a>.</p>
+    </section>
+</div>
+
+
+<div class="wrapper w:l center">
+    <img class="w128 br:circular" src="#(post.author.imageKey.resolve())" alt="Picture of #(post.author.name)" title="#(post.author.name)">
         <h3>#(post.author.name)</h3>
         <p>#(post.author.bio)</p>
         #for(link in post.author.links):
         <a href="#(link.url)" target="_blank">#(link.name)</a> #if(!isLast): &middot; #endif
         #endfor
     </p>
-</section>
+</div>
 #enddefine
 #inline("Frontend/Index")
 

@@ -3,21 +3,23 @@
     "description": $vars["authors.page.description"]
 ])
 #define(body):
-<section>
-    <h1>#(head.title)</h1>
-    <p>#(head.description)</p>
-</section>
+<div id="authors" class="wrapper w m-l">
+    <header class="m:b:l center">
+        <h1>#(head.title)</h1>
+        <p>#(head.description)</p>
+    </header>
 
-<section id="authors">
-    <ul>
+    <section class="m:l">
+        <ul class="p:zero utility-list">
         #for(author in authors):
-        <li>
-            <img class="rounded" src="#(author.imageKey.resolve())">
-            <h3><a href="/#(author.metadata.slug)">#(author.name)</a></h3>
-            <p>#(author.bio)</p>
-        </li>
+            <li class="p:l br center bg3">
+                <img class="w128 br:circular" src="#(author.imageKey.resolve())">
+                <h3><a href="/#(author.metadata.slug)">#(author.name)</a></h3>
+                <p>#(author.bio)</p>
+            </li>
         #endfor
-    </ul>
-</section>
+        </ul>
+    </section>
+</div>
 #enddefine
 #inline("Frontend/Index")

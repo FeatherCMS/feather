@@ -136,7 +136,8 @@ final class SystemModule: ViperModule {
         if req.variables.get("system.installed") == "true" {
             return nil
         }
-        return req.application.viper.invokeAllHooks(name: "install", req: req, type: Void.self)
+
+        return req.hookAll("install", type: Void.self)
         .flatMap { _ in req.variables.set("system.installed", value: "true", hidden: true) }
         .map { _ -> Response? in req.redirect(to: "/") }
         .map { $0 as Any }

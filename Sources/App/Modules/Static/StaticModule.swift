@@ -59,7 +59,7 @@ final class StaticModule: ViperModule {
 
             if page.content.hasPrefix("["), page.content.hasSuffix("]") {
                 let name = String(page.content.dropFirst().dropLast())
-                return req.application.viper.invokeHook(name: name, req: req, type: Response.self, params: ["page-content": content])
+                return req.hook(name, type: Response.self, params: ["page-content": content])
             }
 
             #warning("HEAD has incorrect values!")

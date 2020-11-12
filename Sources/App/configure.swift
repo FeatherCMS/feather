@@ -28,6 +28,29 @@ import LiquidLocalDriver
 public func configure(_ app: Application) throws {
 
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    
+    /*
+    LeafFileMiddleware.defaultMediaType = .html
+    LeafFileMiddleware.processableExtensions = ["leaf", "html", "css", "js"]
+    LeafFileMiddleware[.css] = [
+        "background": "green",
+        "padding": "16px",
+    ]
+    LeafFileMiddleware.contexts = [
+        .css: [
+            "background": "#eee",
+            "padding": "16px",
+        ],
+        .html: [
+            "title": "Hello world!"
+        ],
+    ]
+
+
+    if let lfm = LeafFileMiddleware(publicDirectory: app.directory.publicDirectory) {
+        app.middleware.use(lfm)
+    }
+    */
 
     app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
 

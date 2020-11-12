@@ -3,11 +3,15 @@
     "description": $vars["page.not.found.description"]
 ])
 #define(body):
-<section id="page-not-found">
-    <h1>#($vars["page.not.found.icon"])</h1>
-    <h2>#($vars["page.not.found.title"])</h2>
-    <p>#($vars["page.not.found.description"])</p>
-    <a href="/">#($vars["page.not.found.link"])</a>
-</section>
+<div id="not-found" class="wrapper w-full m-l">
+    
+    <section class="center m:vh:l">
+        <span class="h1">#($vars["page.not.found.icon"])</span>
+        <h1>#(head.title)</h1>
+        <p>#(head.description)</p>
+        <a href="/">#($vars["page.not.found.link"])</a>
+    </section>
+
+</div>
 #enddefine
 #inline("Frontend/Index")
