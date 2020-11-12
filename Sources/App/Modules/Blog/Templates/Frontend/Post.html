@@ -14,14 +14,12 @@
                     #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
                 </time>
             </p>
-            <h1>#(post.title)</h1>
-            <p>#(post.excerpt)</p>
-            <p>MadMachine's SwiftIO board is an Arduino-like system, but it can run Swift code natively on the hardware. Swift is a great programming language for education purposes, it is a modern language with a JavaScript-like syntax that is easy to learn and understand. Swift is safe and efficient, <a href="#">this combination makes</a> it a perfect candidate for embedded systems. The SwiftIO board enables us regular Swift / iOS developers to build IoT projects using our favorite programming language.</p>
-
+            <h1 class="m:b:s">#(post.title)</h1>
+            <p class="m:zero">#(post.excerpt)</p>
         </header>
     </div>
     <div class="wrapper w:full">
-        <section class="m:l">
+        <section class="m:xl">
             <img class="block br:xs" src="#(post.imageKey.resolve())">
         </section>
     </div>

@@ -3,106 +3,163 @@
     "description": $vars["home.page.description"]
 ])
 #define(body):
-<div id="home" class="wrapper w:full m:l">
+<div id="home" class="wrapper w:full m:xl">
 
     <header class="m:b:l center">
         <h1>#(head.title)</h1>
         <p>#(head.description)</p>
     </header>
 
-    <div class="g12 g:gap:xl">
+    <div class="g6 g:gap:l">
     #for((index, post) in posts):
         #var(size = 3)
         #if(index == 0): #var(size = 7) #endif
         #if(index == 1): #var(size = 5) #endif
-        <div class="cell g:col#(size)">
+        <div class="cell g:col6">
             <a href="/#(post.metadata.slug)">
-                <div class="container">
-                    <img class="block br:xs" src="#(post.imageKey.resolve())">
-                    <div class="overlay br:xs"><h2>#(post.title)</h2></div>
+                <div class="g6 g:gap:l g:gap:zero">
+                    <div class="g:col4">
+                        <div class="container">
+                            <img class="block br:xs" src="#(post.imageKey.resolve())">
+                            <div class="overlay br:xs"><h2>#(post.title)</h2></div>
+                        </div>
+                    </div>
+                    <div class="g:col2">
+                        <p>
+                            <span class="underline">#(post.category.title)</span>
+                                &middot;
+                            <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
+                            #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
+                            </time>
+                        </p>
+                        <h3 class="m:zero m:b:xs">#(post.title)</h3>
+                        <p class="m:zero">#(post.excerpt)</p>
+                    </div>
                 </div>
-                <p>
-                    <span class="underline">#(post.category.title)</span>
-                    &middot;
-                    <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                        #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-                    </time>
-                </p>
-                <h3>#(post.title)</h3>
-                <p>#(post.excerpt)</p>
             </a>
         </div>
         
-        <div class="cell g:col5">
+        <div class="cell g:col3">
             <a href="/#(post.metadata.slug)">
-                <div class="container">
-                    <img class="block br:xs" src="#(post.imageKey.resolve())">
-                    <div class="overlay br:xs"><h2>#(post.title)</h2></div>
+                <div class="g1 g:gap:zero">
+                    <div class="g:col1">
+                        <div class="container">
+                            <img class="block br:xs" src="#(post.imageKey.resolve())">
+                            <div class="overlay br:xs"><h2>#(post.title)</h2></div>
+                        </div>
+                    </div>
+                    <div class="g:col1">
+                        <p>
+                            <span class="underline">#(post.category.title)</span>
+                                &middot;
+                            <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
+                            #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
+                            </time>
+                        </p>
+                        <h3 class="m:zero m:b:xs">#(post.title)</h3>
+                        <p class="m:zero">#(post.excerpt)</p>
+                    </div>
                 </div>
-                <p>
-                    <span class="underline">#(post.category.title)</span>
-                    &middot;
-                    <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                        #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-                    </time>
-                </p>
-                <h3>#(post.title)</h3>
-                <p>#(post.excerpt)</p>
             </a>
         </div>
         
-        <div class="cell g:col4">
+        <div class="cell g:col3">
             <a href="/#(post.metadata.slug)">
-                <div class="container">
-                    <img class="block br:xs" src="#(post.imageKey.resolve())">
-                    <div class="overlay br:xs"><h2>#(post.title)</h2></div>
+                <div class="g1 g:gap:zero">
+                    <div class="g:col1">
+                        <div class="container">
+                            <img class="block br:xs" src="#(post.imageKey.resolve())">
+                            <div class="overlay br:xs"><h2>#(post.title)</h2></div>
+                        </div>
+                    </div>
+                    <div class="g:col1">
+                        <p>
+                            <span class="underline">#(post.category.title)</span>
+                                &middot;
+                            <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
+                            #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
+                            </time>
+                        </p>
+                        <h3 class="m:zero m:b:xs">#(post.title)</h3>
+                        <p class="m:zero">#(post.excerpt)</p>
+                    </div>
                 </div>
-                <p>
-                    <span class="underline">#(post.category.title)</span>
-                    &middot;
-                    <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                        #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-                    </time>
-                </p>
-                <h3>#(post.title)</h3>
-                <p>#(post.excerpt)</p>
-            </a>
-        </div>
-        <div class="cell g:col4">
-            <a href="/#(post.metadata.slug)">
-                <div class="container">
-                    <img class="block br:xs" src="#(post.imageKey.resolve())">
-                    <div class="overlay br:xs"><h2>#(post.title)</h2></div>
-                </div>
-                <p>
-                    <span class="underline">#(post.category.title)</span>
-                    &middot;
-                    <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                        #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-                    </time>
-                </p>
-                <h3>#(post.title)</h3>
-                <p>#(post.excerpt)</p>
-            </a>
-        </div>
-        <div class="cell g:col4">
-            <a href="/#(post.metadata.slug)">
-                <div class="container">
-                    <img class="block br:xs" src="#(post.imageKey.resolve())">
-                    <div class="overlay br:xs"><h2>#(post.title)</h2></div>
-                </div>
-                <p>
-                    <span class="underline">#(post.category.title)</span>
-                    &middot;
-                    <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                        #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-                    </time>
-                </p>
-                <h3>#(post.title)</h3>
-                <p>#(post.excerpt)</p>
             </a>
         </div>
         
+        <div class="cell g:col2">
+            <a href="/#(post.metadata.slug)">
+                <div class="g1 g:gap:zero">
+                    <div class="g:col1">
+                        <div class="container">
+                            <img class="block br:xs" src="#(post.imageKey.resolve())">
+                            <div class="overlay br:xs"><h2>#(post.title)</h2></div>
+                        </div>
+                    </div>
+                    <div class="g:col1">
+                        <p>
+                            <span class="underline">#(post.category.title)</span>
+                                &middot;
+                            <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
+                            #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
+                            </time>
+                        </p>
+                        <h3 class="m:zero m:b:xs">#(post.title)</h3>
+                        <p class="m:zero">#(post.excerpt)</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <div class="cell g:col2">
+            <a href="/#(post.metadata.slug)">
+                <div class="g1 g:gap:zero">
+                    <div class="g:col1">
+                        <div class="container">
+                            <img class="block br:xs" src="#(post.imageKey.resolve())">
+                            <div class="overlay br:xs"><h2>#(post.title)</h2></div>
+                        </div>
+                    </div>
+                    <div class="g:col1">
+                        <p>
+                            <span class="underline">#(post.category.title)</span>
+                                &middot;
+                            <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
+                            #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
+                            </time>
+                        </p>
+                        <h3 class="m:zero m:b:xs">#(post.title)</h3>
+                        <p class="m:zero">#(post.excerpt)</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <div class="cell g:col2">
+            <a href="/#(post.metadata.slug)">
+                <div class="g1 g:gap:zero">
+                    <div class="g:col1">
+                        <div class="container">
+                            <img class="block br:xs" src="#(post.imageKey.resolve())">
+                            <div class="overlay br:xs"><h2>#(post.title)</h2></div>
+                        </div>
+                    </div>
+                    <div class="g:col1">
+                        <p>
+                            <span class="underline">#(post.category.title)</span>
+                                &middot;
+                            <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
+                            #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
+                            </time>
+                        </p>
+                        <h3 class="m:zero m:b:xs">#(post.title)</h3>
+                        <p class="m:zero">#(post.excerpt)</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+       
         
         
     #endfor
