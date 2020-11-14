@@ -39,10 +39,17 @@ final class StaticModule: ViperModule {
 
     func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
         switch name {
-        case "install":
-            return installHook(req: req)
         case "frontend-page":
             return frontendPageHook(req: req)
+        default:
+            return nil
+        }
+    }
+    
+    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
+        switch name {
+        case "installer":
+            return StaticInstaller()
         default:
             return nil
         }

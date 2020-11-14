@@ -43,17 +43,17 @@ final class UserModule: ViperModule {
     // MARK: - hook functions
 
     func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
-        
+
         switch name {
-        case "install":
-            return installHook(req: req)
         default:
             return nil
         }
     }
-    
+
     func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
         switch name {
+        case "installer":
+            return UserInstaller()
         case "admin-auth-middlwares":
             return [UserModel.redirectMiddleware(path: "/login")]
         case "api-auth-middlwares":

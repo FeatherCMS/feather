@@ -1,27 +1,31 @@
-#define(toolbarButtons):
-<li><a href="/admin/blog/authors/#Request(parameter: "id")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a></li>
+#define(css):
+@media (min-width: 600px) {
+    .table .th, .table .tr {
+        grid-template-columns: 1fr 1fr 128px 64px 96px;
+    }
+}
+#enddefine
+#define(toolbarRight):
+
+    <a href="/admin/blog/authors/#Request(parameter: "id")/">#svg("link")</a>
 #enddefine
 #define(th):
     #var(link = nil)
-    <tr>
-        #(link = ["key": "name", "default": true])
-        <th>#inline("Admin/SortLink")</th>
-        #(link = ["key": "url"])
-        <th>#inline("Admin/SortLink")</th>
-        #(link = ["key": "priority"])
-        <th>#inline("Admin/SortLink")</th>
-        <th>Actions</th>
-    </tr>
+    <div class="td td:left m:horizontal:s">#(link = ["key": "name", "default": true])#inline("Admin/SortLink")</div>
+    <div class="td td:left">#(link = ["key": "url"])#inline("Admin/SortLink")</div>
+    <div class="td td:center">#(link = ["key": "priority"])#inline("Admin/SortLink")</div>
+    <div class="td td:center">Edit</div>
+    <div class="td td:center">Delete</div>
 #enddefine
-#define(tb):
+#define(tr):
     #for(item in list.items):
-        <tr>
-            <td><a href="#($req.url.path)#(item.id)/">#(item.name)</a></td>
-            <td><a href="#($req.url.path)#(item.id)/">#(item.url)</a></td>
-            <td class="small center"><a href="#($req.url.path)#(item.id)/">#(item.priority)</a></td>
-            #inline("Admin/Actions")
-        </tr>
+<div class="tr">
+    <div class="td td:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.name)</a></div>
+    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.url)</a></div>
+    <div class="td td:center"><a href="#($req.url.path)#(item.id)/">#(item.priority)</a></div>
+    #inline("Admin/Actions")
+</div>
     #endfor
 #enddefine
-#let(title = "Links")
+#let(title = "Author links")
 #inline("Admin/Table")

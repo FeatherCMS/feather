@@ -10,6 +10,7 @@ import Fluent
 import ViperKit
 import FeatherCore
 
+
 final class SystemModule: ViperModule {
 
     static var name: String = "system"
@@ -25,14 +26,11 @@ final class SystemModule: ViperModule {
     
     var middlewares: [Middleware] {
         [
-            RequestVariablesMiddleware()
+            RequestVariablesMiddleware(),
+            SystemInstallGuardMiddleware(),
         ]
     }
 
-//    var tags: [ViperLeafFunction] = [
-//        SystemVariableTag()
-//    ]
-    
     var viewsUrl: URL? {
         nil
 //        Bundle.module.bundleURL
@@ -44,12 +42,9 @@ final class SystemModule: ViperModule {
     // MARK: - hook functions
 
     func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
-        
         switch name {
         case "frontend-page":
             return frontendPageHook(req: req)
-        case "install":
-            return installHook(req: req)
         case "prepare-variables":
             return prepareVariables(req: req, params: params).erase()
         case "set-variable":
@@ -61,7 +56,16 @@ final class SystemModule: ViperModule {
             return nil
         }
     }
-    
+
+    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
+        switch name {
+        case "installer":
+            return SystemInstaller()
+        default:
+            return nil
+        }
+    }
+
     private func prepareVariables(req: Request, params: [String: Any]) -> EventLoopFuture<[String:String]> {
         return SystemVariableModel.query(on: req.db).all()
         .map { variables in
@@ -117,36 +121,58 @@ final class SystemModule: ViperModule {
             .delete()
             .map { true }
     }
-
-    private func installHook(req: Request) -> EventLoopFuture<Any?>? {
-        req.eventLoop.flatten([
-            req.variables.set("site.title", value: "Feather"),
-            req.variables.set("site.excerpt", value: "Welcome to Feather CMS"),
-            
-            req.variables.set("home.page.title", value: "Home page title"),
-            req.variables.set("home.page.description", value: "Home page description"),
-            
-            req.variables.set("page.not.found.icon", value: "🙉"),
-            req.variables.set("page.not.found.title", value: "Page not found"),
-            req.variables.set("page.not.found.description", value: "This page is not available anymore."),
-            req.variables.set("page.not.found.link", value: "Go to the home page →"),
-            
-            req.variables.set("empty.list.icon", value: "🔍"),
-            req.variables.set("empty.list.title", value: "Empty list"),
-            req.variables.set("empty.list.description", value: "Unfortunately there are no results."),
-            req.variables.set("empty.list.link", value: "Try again from scratch →"),
-        ])
-        .map { $0 as Any }
-    }
-
+ 
     private func frontendPageHook(req: Request) -> EventLoopFuture<Any?>? {
         if req.variables.get("system.installed") == "true" {
             return nil
         }
+        guard req.url.path == "/system/install/" else {
+            return req.leaf.render("System/Install/Start").encodeResponse(for: req).erase()
+        }
 
-        return req.hookAll("install", type: Void.self)
+        /// we gather the system variables, based on the dictionary
+        var variables: [SystemVariableModel] = []
+        /// we request the install futures for the database model creation
+        var modelInstallFutures: [EventLoopFuture<Void>] = []
+        
+        /// we request the installer objects, then use them to install everything
+        let installers = req.syncHookAll("installer", type: ViperInstaller.self)
+        for installer in installers {
+            let vars = installer.variables().compactMap { dict -> SystemVariableModel? in
+                guard
+                    let key = dict["key"] as? String, !key.isEmpty,
+                    let value = dict["value"] as? String, !value.isEmpty
+                else {
+                    return nil
+                }
+                let hidden = dict["hidden"] as? Bool ?? false
+                let notes = dict["notes"] as? String
+                return SystemVariableModel(key: key, value: value, hidden: hidden, notes: notes)
+            }
+            variables.append(contentsOf: vars)
+
+            if let future = installer.createModels(req) {
+                modelInstallFutures.append(future)
+            }
+        }
+        /// we combine the existing futures and call them
+        let futures = [variables.create(on: req.db)] + modelInstallFutures
+        return req.eventLoop.flatten(futures)
         .flatMap { _ in req.variables.set("system.installed", value: "true", hidden: true) }
-        .map { _ -> Response? in req.redirect(to: "/") }
-        .map { $0 as Any }
+        .flatMap { _ in req.leaf.render("System/Install/Finish") }
+        .encodeResponse(for: req)
+        .erase()
+    }
+
+    func installAssets() {
+        try! FileManager.default.createDirectory(atPath: Application.Paths.assets + "blog/posts",
+                                                withIntermediateDirectories: true,
+                                                attributes: [.posixPermissions: 0o744])
+        try! FileManager.default.createDirectory(atPath: Application.Paths.assets + "blog/authors",
+                                                withIntermediateDirectories: true,
+                                                attributes: [.posixPermissions: 0o744])
+        try! FileManager.default.createDirectory(atPath: Application.Paths.assets + "blog/categories",
+                                                withIntermediateDirectories: true,
+                                                attributes: [.posixPermissions: 0o744])
     }
 }

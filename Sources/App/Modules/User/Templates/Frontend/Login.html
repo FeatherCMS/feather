@@ -5,7 +5,7 @@
 #define(body):
 <div id="login" class="wrapper w:full m:xl">
 
-    <header class="m:b:l center">
+    <header class="m:bottom:l center">
         <h1>#(head.title)</h1>
         <p>#(head.description)</p>
     </header>
@@ -14,7 +14,7 @@
         
         <form action="#($req.url.path)?redirect=admin" method="post" class="p:l">
             #var(field = nil)
-            #(field = ["id": "email", "type": "email", "required": true, "data": edit.email, "placeholder": "hello@binarybirds.com"])
+            #(field = ["id": "email", "type": "email", "required": true, "data": edit.email, "placeholder": "feather@binarybirds.com"])
             #inline("Admin/Fields/Text")
             
             #(field = ["id": "password", "type": "password", "required": true, "data": edit.password])

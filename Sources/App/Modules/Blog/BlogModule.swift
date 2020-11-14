@@ -39,8 +39,6 @@ final class BlogModule: ViperModule {
 
     func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
         switch name {
-        case "install":
-            return installHook(req: req)
         case "frontend-page":
             return frontendPageHook(req: req)
         case "home-page":
@@ -55,6 +53,15 @@ final class BlogModule: ViperModule {
         case "authors-page":
             let content = params["page-content"] as! Metadata
             return try? _router.frontend.authorsView(req: req, page: content).map { $0 as Any }
+        default:
+            return nil
+        }
+    }
+    
+    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
+        switch name {
+        case "installer":
+            return BlogInstaller()
         default:
             return nil
         }

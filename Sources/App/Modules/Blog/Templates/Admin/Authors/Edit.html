@@ -22,6 +22,5 @@
     #inline("Admin/Fields/Textarea")
 
 #enddefine
-#let(title = "Authors")
-#let(form = ["key": "authors", "id": edit.id, "multipart": true])
+#let(form = ["list": "authors", "key": "author", "id": edit.id, "multipart": true])
 #inline("Admin/Form")

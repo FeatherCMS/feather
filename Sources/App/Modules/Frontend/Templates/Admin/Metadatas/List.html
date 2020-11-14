@@ -1,9 +1,5 @@
 #define(css):
 @media (min-width: 600px) {
-    .tr .td:nth-of-type(1), .th .td:nth-of-type(1) {
-        margin-left: 16px;
-        margin-right: 16px;
-    }
     .table .th, .table .tr {
         grid-template-columns: 1fr 128px 128px 64px 96px;
     }
@@ -11,7 +7,7 @@
 #enddefine
 #define(th):
     #var(link = nil)
-    <div class="td td:left">#(link = ["key": "slug", "default": true])#inline("Admin/SortLink")</div>
+    <div class="td td:left m:horizontal:s">#(link = ["key": "slug", "default": true])#inline("Admin/SortLink")</div>
     <div class="td td:center">#(link = ["key": "module"])#inline("Admin/SortLink")</div>
     <div class="td td:center">#(link = ["key": "model"])#inline("Admin/SortLink")</div>
     <div class="td td:center">Edit</div>
@@ -20,7 +16,7 @@
 #define(tr):
     #for(item in list.items):
 <div class="tr">
-    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.slug.isEmpty() ? "[root]" : item.slug)</a></div>
+    <div class="td td:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.slug.isEmpty() ? "[root]" : item.slug)</a></div>
     <div class="td td:center"><a href="#($req.url.path)#(item.id)/">#(item.module)</a></div>
     <div class="td td:center"><a href="#($req.url.path)#(item.id)/">#(item.model)</a></div>
     #inline("Admin/Actions")

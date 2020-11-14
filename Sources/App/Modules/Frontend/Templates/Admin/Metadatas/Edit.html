@@ -1,8 +1,16 @@
 #define(toolbarLeft):
     #if(edit.id != nil):
-    <a href="/admin/#(edit.module.value)/#(edit.model.value)/#(edit.reference.value)">#svg("file-text")</a>
+    <a href="/admin/#(edit.module.value)/#(edit.model.value)/#(edit.reference.value)">#svg("edit")</a>
     <a href="/#(edit.slug.value)/" target="_blank">#svg("eye")</a>
     #endif
+#enddefine
+#define(toolbarRight):
+<!--
+    setup this after patch status method is available
+    <a href="/#(edit.slug.value)/" target="_blank">#svg("globe")</a>
+    <a href="/#(edit.slug.value)/" target="_blank">#svg("file")</a>
+    <a href="/#(edit.slug.value)/" target="_blank">#svg("archive")</a>
+-->
 #enddefine
 #define(fields):
     #var(field = nil)
@@ -33,7 +41,7 @@
     #(field = ["id": "image", "data": edit.image])
     #inline("Admin/Fields/File")
 
-    #(field = ["id": "canonicalUrl", "label": "Canonical URL", "required": false, "data": edit.title])
+    #(field = ["id": "canonicalUrl", "label": "Canonical URL", "required": false, "data": edit.canonicalUrl])
     #inline("Admin/Fields/Text")
 
     <hr>
@@ -48,6 +56,6 @@
     #inline("Admin/Fields/Text")
 
 #enddefine
-#let(title = "Metadata")
-#let(form = ["key": "metadatas", "id": edit.id])
+
+#let(form = ["list": "metadatas", "key": "metadata", "id": edit.id])
 #inline("Admin/Form")

@@ -111,10 +111,40 @@ hr {
 .m\:xs { margin: 4px; }
 .m\:zero { margin: 0; }
 
-.m\:b\:l, .m\:b\:xl { margin-bottom: 48px; }
-.m\:b { margin-bottom: 32px; }
-.m\:b\:s { margin-bottom: 16px; }
-.m\:b\:xs { margin-bottom: 8px; }
+.m\:top\:l, .m\:t\:xl { margin-top: 48px; }
+.m\:top { margin-top: 32px; }
+.m\:top\:s { margin-top: 16px; }
+.m\:top\:xs { margin-top: 8px; }
+
+.m\:bottom\:l, .m\:b\:xl { margin-bottom: 48px; }
+.m\:bottom { margin-bottom: 32px; }
+.m\:bottom\:s { margin-bottom: 16px; }
+.m\:bottom\:xs { margin-bottom: 8px; }
+
+.m\:left\:xl { margin-left: 64px; }
+.m\:left\:l { margin-left: 48px; }
+.m\:left { margin-left: 32px; }
+.m\:left\:s { margin-left: 16px; }
+.m\:left\:xs { margin-left: 8px; }
+
+.m\:right\:xl { margin-right: 64px; }
+.m\:right\:l { margin-right: 48px; }
+.m\:right { margin-right: 32px; }
+.m\:right\:s { margin-right: 16px; }
+.m\:right\:xs { margin-right: 8px; }
+
+.m\:vertical\:xl { margin-left: 64px; margin-right: 64px; }
+.m\:vertical\:l { margin-left: 48px; margin-right: 48px; }
+.m\:vertical { margin-left: 32px; margin-right: 32px; }
+.m\:vertical\:s { margin-left: 16px; margin-right: 16px; }
+.m\:vertical\:xs { margin-left: 8px; margin-right: 8px; }
+
+.m\:horizontal\:xl { margin-left: 64px; margin-right: 64px; }
+.m\:horizontal\:l { margin-left: 48px; margin-right: 48px; }
+.m\:horizontal { margin-left: 32px; margin-right: 32px; }
+.m\:horizontal\:s { margin-left: 16px; margin-right: 16px }
+.m\:horizontal\:xs { margin-left: 8px; margin-right: 8px; }
+
 
 /* experimental for center aligned short contents */
 .m\:vh\:l { margin: 20vh 16px; }
@@ -353,20 +383,21 @@ input, input:focus, textarea, select {
 
     .m\:xl { margin: 64px; }
     .m\:l { margin: 32px; }
+
     .p\:xl { padding: 64px; }
     .p\:l { padding: 32px; }
     
-    .m\:b\:xl { margin-bottom: 64px; }
-    .m\:b\:l { margin-bottom: 48px; }
-    .m\:b { margin-bottom: 32px; }
-    .m\:b\:s { margin-bottom: 16px; }
-    .m\:b\:xs { margin-bottom: 8px; }
+    .m\:bottom\:xl { margin-bottom: 64px; }
+    .m\:bottom\:l { margin-bottom: 48px; }
+    .m\:bottom { margin-bottom: 32px; }
+    .m\:bottom\:s { margin-bottom: 16px; }
+    .m\:bottom\:xs { margin-bottom: 8px; }
     
-    .m\:t\:xl { margin-bottom: 64px; }
-    .m\:t\:l { margin-bottom: 48px; }
-    .m\:t { margin-bottom: 32px; }
-    .m\:t\:s { margin-bottom: 16px; }
-    .m\:t\:xs { margin-bottom: 8px; }
+    .m\:top\:xl { margin-bottom: 64px; }
+    .m\:top\:l { margin-bottom: 48px; }
+    .m\:top { margin-bottom: 32px; }
+    .m\:top\:s { margin-bottom: 16px; }
+    .m\:top\:xs { margin-bottom: 8px; }
 
 
     .g1 { display: grid; grid-template-columns: repeat(1, 1fr); }

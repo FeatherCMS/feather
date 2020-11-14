@@ -5,12 +5,12 @@
 #define(body):
 <div id="posts" class="wrapper w:full m:xl">
 
-    <header class="m:b:l center">
+    <header class="m:bottom:l center">
         <h1>#(head.title)</h1>
         <p>#(head.description)</p>
     </header>
     
-    <form class="wrapper w m:b:l" id="search-form" action="#($req.url.path)" method="get">
+    <form class="wrapper w m:bottom:l" id="search-form" action="#($req.url.path)" method="get">
         #if(Request(query: "limit") != nil):
         <input type="hidden" id="limit" name="limit" value="#Request(query: "limit")">
         #endif

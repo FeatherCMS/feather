@@ -26,6 +26,5 @@
     #inline("Admin/Fields/Selection")
 
 #enddefine
-#let(title = "Posts")
-#let(form = ["key": "post", "id": edit.id, "multipart": true])
+#let(form = ["list": "posts", "key": "post", "id": edit.id, "multipart": true])
 #inline("Admin/Form")

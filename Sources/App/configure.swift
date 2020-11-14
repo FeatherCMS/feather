@@ -121,7 +121,6 @@ public func configure(_ app: Application) throws {
         LeafRenderer.Option.caching = .bypass
     }
     app.views.use(.leaf)
-
     
     try app.viper.use(modules)
     

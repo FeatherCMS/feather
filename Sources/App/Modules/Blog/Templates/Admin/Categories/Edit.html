@@ -20,6 +20,5 @@
     #inline("Admin/Fields/Text")
 
 #enddefine
-#let(title = "Categories")
-#let(form = ["key": "categories", "id": edit.id, "multipart": true])
+#let(form = ["list": "categories", "key": "category", "id": edit.id, "multipart": true])
 #inline("Admin/Form")

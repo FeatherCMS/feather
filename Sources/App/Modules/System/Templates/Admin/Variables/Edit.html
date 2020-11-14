@@ -11,6 +11,5 @@
     #inline("Admin/Fields/Textarea")
 
 #enddefine
-#let(title = "Variables")
-#let(form = ["key": "categories", "id": edit.id, "url": $req.url.path])
+#let(form = ["list": "variables", "key": "variable", "id": edit.id, "url": $req.url.path])
 #inline("Admin/Form")

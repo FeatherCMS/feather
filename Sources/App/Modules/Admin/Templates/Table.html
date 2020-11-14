@@ -6,7 +6,7 @@
 #enddefine
 #define(body):
 <div class="wrapper w:full m:l table">
-    <form id="search-form" action="#($req.url.path)" method="get" class="m:b">
+    <form id="search-form" action="#($req.url.path)" method="get" class="m:bottom">
         #if(Request(query: "sort") != nil):
         <input type="hidden" id="sort" name="sort" value="#Request(query: "sort")">
         #endif
@@ -17,18 +17,13 @@
     </form>
 
     #if(list.items.isEmpty()):
-    <div class="empty">
-        <span>😬</span>
-        <h3>No results.</h3>
-        <p>Maybe you should <a href="#($req.url.path)">start over</a> the process.</p>
-    </div>
+        #inline("Admin/Empty")
     #else:
     <div class="th">
         #th()
     </div>
     #tr()
     #endif
-    
 
     <div class="pager">
     #inline("Admin/Pagination")

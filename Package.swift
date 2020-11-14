@@ -64,6 +64,7 @@ let package = Package(
             "Modules/Static/Templates/",
             "Modules/Redirect/Templates/",
             "Modules/Sponsor/Templates/",
+            "Modules/Blog/Assets/",
         ], swiftSettings: [
             .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
         ]),
