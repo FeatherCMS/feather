@@ -1,24 +1,32 @@
+#define(css):
+@media (min-width: 600px) {
+    .table .th, .table .tr {
+        grid-template-columns: 96px 1fr 128px 64px 96px;
+    }
+}
+#enddefine
 #define(th):
     #var(link = nil)
-    <tr>
-        #(link = ["key": "image", "default": true])
-        <th>#inline("Admin/SortLink")</th>
-        #(link = ["key": "title"])
-        <th>#inline("Admin/SortLink")</th>
-        #(link = ["key": "priority"])
-        <th>#inline("Admin/SortLink")</th>
-        <th>Actions</th>
-    </tr>
+    <div class="td td:center">Image</div>
+    <div class="td td:left">#(link = ["key": "title", "default": true])#inline("Admin/SortLink")</div>
+    <div class="td td:center">#(link = ["key": "priority"])#inline("Admin/SortLink")</div>
+    <div class="td td:center">Edit</div>
+    <div class="td td:center">Delete</div>
 #enddefine
-#define(tb):
+#define(tr):
     #for(item in list.items):
-        <tr>
-            <td class="small center"><a href="#($req.url.path)#(item.id)/"><img src="#(item.imageKey.resolve())" alt="#(item.title)"></a></td>
-            <td><a href="#($req.url.path)#(item.id)/">#(item.title)</a></td>
-            <td class="small center"><a href="#($req.url.path)#(item.id)/">#(item.priority)</a></td>
-            #inline("Admin/Actions")
-        </tr>
+<div class="tr">
+    <div class="td td:center">
+        <a href="#($req.url.path)#(item.id)/"><img class="w64 br:s" src="#(item.imageKey.resolve())" alt="#(item.title)"></a>
+    </div>
+    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.title)</a></div>
+    <div class="td td:center"><a href="#($req.url.path)#(item.id)/">#(item.priority)</a></div>
+    #inline("Admin/Actions")
+</div>
     #endfor
 #enddefine
 #let(title = "Categories")
 #inline("Admin/Table")
+
+
+

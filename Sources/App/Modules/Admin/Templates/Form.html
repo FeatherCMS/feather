@@ -1,22 +1,23 @@
-#define(toolbar):
-    <li><b>#if(edit.id != nil):Edit#else:Create#endif</b></li>
-    #toolbarButtons()
+#define(toolbarCenter):
+    #if(edit.id != nil):Edit#else:Create#endif #(form.key)
 #enddefine
 #define(breadcrumb):
     <li><a href="#($req.url.path.trimLast())">#(title)</a></li>
 #enddefine
 
 #define(body):
-<form id="#(form.key)-edit-form" class="wrapper" method="post" action="#($req.url.path)"#if(form.multipart ?? false): enctype="multipart/form-data"#endif>
-    #var(field = nil)
+<div id="form" class="wrapper w">
+    <form id="#(form.key)-edit-form" class="m:xl" method="post" action="#($req.url.path)"#if(form.multipart ?? false): enctype="multipart/form-data"#endif>
+        #var(field = nil)
 
-    #(field = ["id": "id", "value": form.id])
-    #inline("Admin/Fields/Hidden")
+        #(field = ["id": "id", "value": form.id])
+        #inline("Admin/Fields/Hidden")
 
-    #fields()
+        #fields()
 
-    #(field = ["label": "Save"])
-    #inline("Admin/Fields/Button")
-</form>
+        #(field = ["label": "Save"])
+        #inline("Admin/Fields/Button")
+    </form>
+</div>
 #enddefine
 #inline("Admin/Index")

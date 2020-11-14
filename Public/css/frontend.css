@@ -13,8 +13,7 @@ body {
 a:link, a:visited {
     text-decoration: none;
 }
-
-
+svg { display: block; }
 
 h1, .h1 { font-size: 2rem; line-height: 2.25rem; margin: 2.5rem 0 1.5rem 0; }
 h2, .h2 { font-size: 1.8rem; line-height: 2rem; margin: 2.5rem 0 1.5rem 0;  }
@@ -35,6 +34,7 @@ pre {
     padding: 1em;
     margin: 3em 0;
     border-radius: 4px;
+    font-size: 14px;
     line-height: 1.2em;
 }
 pre code {
@@ -77,6 +77,8 @@ hr {
 .right { text-align: right; }
 .justify { text-align: justify; }
 
+
+
 /* br = border radius*/
 .br\:circular { border-radius: 50%; }
 .br\:xl { border-radius: 64px; }
@@ -84,7 +86,6 @@ hr {
 .br { border-radius: 16px; }
 .br\:s { border-radius: 8px; }
 .br\:xs { border-radius: 4px; }
-
 
 .wrapper { margin: 0 auto; }
 
@@ -127,19 +128,43 @@ hr {
 /* g = grid template columns */
 .g1, .g2, .g3, .g4, .g5, .g6, .g7, .g8, .g9, .g10, .g11, .g12 { display: grid; grid-template-columns: 1fr; }
 
-.g\:gap\:xl { column-gap: 64px; row-gap: 128px; }
-.g\:gap\:l { column-gap: 32px; row-gap: 64px; }
-.g:\:gap { column-gap: 16px; row-gap: 32px; }
-.g\:gap\:s { column-gap: 8px; row-gap: 16px; }
-.g\:gap\:xs { column-gap: 4px; row-gap: 8px; }
+.g\:gap\:xl { column-gap: 64px; row-gap: 64px; }
+.g\:gap\:l { column-gap: 32px; row-gap: 32px; }
+.g\:gap { column-gap: 16px; row-gap: 16px; }
+.g\:gap\:s { column-gap: 8px; row-gap: 8px; }
+.g\:gap\:xs { column-gap: 4px; row-gap: 4px; }
+
+.g\:gap\:xl\:hd { column-gap: 64px; row-gap: 128px; }
+.g\:gap\:l\:hd { column-gap: 32px; row-gap: 64px; }
+.g:\:gap\:hd { column-gap: 16px; row-gap: 32px; }
+.g\:gap\:s\:hd { column-gap: 8px; row-gap: 16px; }
+.g\:gap\:xs\:hd { column-gap: 4px; row-gap: 8px; }
+
+.g\:gap\:xl\:vd { column-gap: 128px; row-gap: 64px; }
+.g\:gap\:l\:vd { column-gap: 64px; row-gap: 32px; }
+.g:\:gap\:vd { column-gap: 32px; row-gap: 16px; }
+.g\:gap\:s\:vd { column-gap: 16px; row-gap: 8px; }
+.g\:gap\:xs\:vd { column-gap: 8px; row-gap: 4px; }
+
 
 .g\:col1,.g\:col2, .g\:col3, .g\:col4, .g\:col5, .g\:col6, .g\:col7, .g\:col8, .g\:col9, .g\:col10, .g\:col11, .g\:col12 { grid-column: span 1; }
 
+.lst\:none { list-style-type: none; }
 
-.overlay {
-    transition: all .15s ease-in;
+.underline {
+    padding-bottom: 2px;
 }
-.overlay {
+
+.post-cell .container {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+}
+.post-cell .overlay, .post-cell img {
+    transition: all .2s ease-in-out;
+}
+.post-cell .overlay {
     background: #000;
     position: absolute;
     top: 0;
@@ -148,8 +173,9 @@ hr {
     height: 100%;
     opacity: 0;
     text-align: center;
+    box-shadow: inset 0px 0px 16px 32px rgba(0, 0, 0, 1);
 }
-.overlay h2 {
+.post-cell .overlay span {
     margin: 0;
     position: absolute;
     top: 50%;
@@ -158,11 +184,14 @@ hr {
     color: #fff;
     text-shadow: none;
 }
-.cell:hover {
+.post-cell:hover {
     cursor: pointer;
 }
-.cell:hover .overlay {
+.post-cell:hover .overlay {
     opacity: 0.5;
+}
+.post-cell:hover img {
+    filter: blur(15px);
 }
 
 #header {
@@ -246,16 +275,6 @@ hr {
     top: 0;
 }
 
-footer {
-    padding: 2em 0em;
-    margin-top: 2em;
-    text-align: center;
-}
-footer img {
-    width: 64px;
-    margin: 1em auto;
-}
-
 form .error {
     display: block;
 }
@@ -274,6 +293,8 @@ input, textarea, select {
     width: 100%;
 }
 select {
+    /* option list font family can't inehrit custom font, that's why we need this line */
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Helvetica", "Segoe UI", Roboto, Ubuntu;
     padding-right: 24px;
     background-repeat: no-repeat;
     background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
@@ -313,65 +334,6 @@ input, input:focus, textarea, select {
     -webkit-appearance: none;
 }
 
-.card {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-    border-radius: 4px;
-    overflow: hidden;
-}
-.card figure {
-    margin: 0;
-    display: block;
-    padding-bottom: 60%;
-    background-size: cover;
-    background-position: center center;
-}
-.card article {
-    padding: 1em;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.card h3 {
-    margin: 0.6rem 0;
-    
-}
-.card p {
-    flex: 1;
-}
-.meta {
-    margin-bottom: 0em;
-}
-
-.author-box {
-    margin-top: 2em;
-    text-align: center;
-}
-.author-box img {
-    width: 128px;
-    height: 128px;
-}
-.author-box p {
-    max-width: 740px;
-    margin: 16px auto;
-}
-#share {
-    margin-top: 2em;
-}
-
-
-.utility-list {
-    list-style-type: none;
-}
-.pager {
-    text-align: center;
-}
-.empty {
-    text-align: center;
-    padding: 64px;
-}
 /* mobile only styles */
 @media (max-width: 599px) {
     .g\:gap\:zero { column-gap: 0px; row-gap: 0px; }
@@ -397,6 +359,14 @@ input, input:focus, textarea, select {
     .m\:b\:xl { margin-bottom: 64px; }
     .m\:b\:l { margin-bottom: 48px; }
     .m\:b { margin-bottom: 32px; }
+    .m\:b\:s { margin-bottom: 16px; }
+    .m\:b\:xs { margin-bottom: 8px; }
+    
+    .m\:t\:xl { margin-bottom: 64px; }
+    .m\:t\:l { margin-bottom: 48px; }
+    .m\:t { margin-bottom: 32px; }
+    .m\:t\:s { margin-bottom: 16px; }
+    .m\:t\:xs { margin-bottom: 8px; }
 
 
     .g1 { display: grid; grid-template-columns: repeat(1, 1fr); }

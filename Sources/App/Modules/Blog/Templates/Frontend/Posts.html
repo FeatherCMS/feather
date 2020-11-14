@@ -18,31 +18,20 @@
     </form>
 
     
-    <div class="g3 posts">
-        #for(post in page.items):
-        <div>
-            <a href="/#(post.metadata.slug)" class="card">
-                <figure style="background-image: url(#(post.imageKey.resolve()));"></figure>
-                <article>
-                    <div class="meta">
-                        <span class="category">#(post.category.title)</span>
-                    </div>
-                    <h3>#(post.title)</h3>
-                    <p>#(post.excerpt)</p>
-                    <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                        #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-                    </time>
-                </article>
-            </a>
-        </div>
-        #endfor
+    <div class="g3 g:gap:l">
+    #for((index, post) in page.items):
+        #inline("Blog/Frontend/SinglePost")
+    #endfor
     </div>
-
+    
     #if(page.items.isEmpty()):
-    <div class="empty">
-        <span>😬</span>
-        <h3>No results.</h3>
-        <p>Maybe you should <a href="#($req.url.path)">start over</a> the process.</p>
+    <div class="wrapper w center">
+        <div class="m:xl">
+            <span class="h1">#($vars["empty.list.icon"])</span>
+            <p class="h1">#($vars["empty.list.title"])</p>
+            <p>#($vars["empty.list.description"])</p>
+            <p><a href="#($req.url.path)">#($vars["empty.list.link"])</a></p>
+        </div>
     </div>
     #endif
 

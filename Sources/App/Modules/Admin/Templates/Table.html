@@ -1,29 +1,20 @@
-#define(toolbar):
-    <li><b>#(title)</b></li>
-    #toolbarButtons()
-    <li><a href="#($req.url.path)new/">#inline("Admin/Icons/Plus")</a></li>
+#define(toolbarCenter):
+    #(title)
+#enddefine
+#define(toolbarLeft):
+    <a href="#($req.url.path)new/">#svg("plus-circle")</a>
 #enddefine
 #define(body):
-<div id="list">
-    <form id="search-form" action="#($req.url.path)" method="get">
+<div class="wrapper w:full m:l table">
+    <form id="search-form" action="#($req.url.path)" method="get" class="m:b">
         #if(Request(query: "sort") != nil):
         <input type="hidden" id="sort" name="sort" value="#Request(query: "sort")">
         #endif
         #if(Request(query: "order") != nil):
         <input type="hidden" id="order" name="order" value="#Request(query: "order")">
         #endif
-
         <input type="text" id="search" name="search" placeholder="Search..." value="#Request(query: "search")">
     </form>
-
-    <table>
-        <thead>
-            #th()
-        </thead>
-        <tbody>
-            #tb()
-        </tbody>
-    </table>
 
     #if(list.items.isEmpty()):
     <div class="empty">
@@ -31,12 +22,17 @@
         <h3>No results.</h3>
         <p>Maybe you should <a href="#($req.url.path)">start over</a> the process.</p>
     </div>
+    #else:
+    <div class="th">
+        #th()
+    </div>
+    #tr()
     #endif
+    
 
     <div class="pager">
     #inline("Admin/Pagination")
     </div>
 </div>
 #enddefine
-
 #inline("Admin/Index")

@@ -1,24 +1,32 @@
+#define(css):
+@media (min-width: 600px) {
+    .tr .td:nth-of-type(1), .th .td:nth-of-type(1) {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+    .table .th, .table .tr {
+        grid-template-columns: 1fr 1fr 1fr 64px 96px;
+    }
+}
+#enddefine
 #define(th):
     #var(link = nil)
-    <tr>
-        #(link = ["key": "source", "default": true])
-        <th>#inline("Admin/SortLink")</th>
-        #(link = ["key": "destination"])
-        <th>#inline("Admin/SortLink")</th>
-        #(link = ["key": "status_code", "label": "Status code"])
-        <th class="small center">#inline("Admin/SortLink")</th>
-        <th>Actions</th>
-    </tr>
+    <div class="td td:left">#(link = ["key": "source", "default": true])#inline("Admin/SortLink")</div>
+    <div class="td td:left">#(link = ["key": "destination"])#inline("Admin/SortLink")</div>
+    <div class="td td:left">#(link = ["key": "status_code", "label": "Status code"])#inline("Admin/SortLink")</div>
+    <div class="td td:center">Edit</div>
+    <div class="td td:center">Delete</div>
 #enddefine
-#define(tb):
+#define(tr):
     #for(item in list.items):
-        <tr>
-            <td><a href="#($req.url.path)#(item.id)/">#(item.source)</a></td>
-            <td><a href="#($req.url.path)#(item.id)/">#(item.destination)</a></td>
-            <td class="small center"><a href="#($req.url.path)#(item.id)/">#(item.statusCode)</a></td>
-            #inline("Admin/Actions")
-        </tr>
+<div class="tr">
+    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.source)</a></div>
+    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.destination)</a></div>
+    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.statusCode)</a></div>
+    #inline("Admin/Actions")
+</div>
     #endfor
 #enddefine
 #let(title = "Redirects")
 #inline("Admin/Table")
+

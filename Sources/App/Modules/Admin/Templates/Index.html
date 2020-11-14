@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
 
-    <title>Feather CMS</title>
+    <title>#evaluate(toolbarCenter ?? "") - #($vars["site.title"]) &middot; CMS</title>
 
     #if($app.isDebug):
     <link rel="stylesheet" href="/css/frontend.css">
@@ -21,9 +21,14 @@
     #endif
 
     <link rel="shortcut icon" href="/images/icons/favicon.ico" type="image/x-icon">
+        
+    <style>
+        #evaluate(css ?? "")
+    </style>
 </head>
 
-<body>
+<body class="m:zero">
+    
 
     <header id="header">
         <input type="checkbox" id="menu-button" class="noselect" />
@@ -38,20 +43,30 @@
               <img src="/images/logo-text.png" alt="Logo of The.Swift.Dev." title="The.Swift.Dev.">
           </a>
 
-     <!-- <a id="account" href="/logout/"><img src="https://pbs.twimg.com/profile_images/1108104040846635014/NfSN0ZF0_400x400.png"></a>-->
-          <a id="account" href="/logout/">#inline("Admin/Icons/Logout")</a>
+          <a id="account" href="/logout/">#svg("log-out")</a>
     </header>
 
-    <div id="toolbar">
-        <nav id="buttons">
-            #evaluate(toolbar ?? "")
-        </nav>
+    <div id="toolbar" class="g3">
+        <div id="left" class="g:col1">
+            <div class="container">
+                #evaluate(toolbarLeft ?? "")
+            </div>
+        </div>
+        <div id="center" class="g:col1 center">
+            <div class="container">
+                <h3 class="m:s">#evaluate(toolbarCenter ?? "")</h3>
+            </div>
+        </div>
+        <div id="right" class="g:col1">
+            <div class="container">
+                #evaluate(toolbarRight ?? "")
+            </div>
+            
+        </div>
     </div>
 
     <main>
-        <div id="content">
-            #body()
-        </div>
+        #body()
     </main>
 
     <script src="/javascript/admin.js"></script>

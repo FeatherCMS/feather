@@ -1,6 +1,6 @@
 #define(toolbarButtons):
-<li><a href="/admin/blog/authors/#Request(parameter: "id")">#inline("Admin/Icons/User", as: raw)</a></li>
-<li><a href="/admin/blog/authors/#Request(parameter: "id")/links">#inline("Admin/Icons/Link", as: raw)</line></svg></a></li>
+<li><a href="/admin/blog/authors/#Request(parameter: "id")">#svg("user")</a></li>
+<li><a href="/admin/blog/authors/#Request(parameter: "id")/links">#svg("link")</a></li>
 #enddefine
 #define(fields):
     <input type="hidden" name="authorId" value="#Request(parameter: "id")">

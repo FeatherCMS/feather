@@ -115,6 +115,7 @@ public func configure(_ app: Application) throws {
     LeafEngine.sources = multipleSources
     LeafEngine.useLeafFoundation()
     LeafEngine.entities.use(Resolve(), asMethod: "resolve")
+    LeafEngine.entities.use(InlineSvg(), asFunction: "svg")
     
     if app.isDebug {
         LeafRenderer.Option.caching = .bypass

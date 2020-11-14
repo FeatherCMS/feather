@@ -1,4 +1,2 @@
-<td class="actions">
-    <a href="#($req.url.path)#(item.id)/" class="text-link">Edit</a>
-    <a id="#(item.id)" href="#" onClick="confirmDelete('#($req.url.path)', this.id);" class="text-link">Delete</a>
-</td>
+<div class="td td:center"><a href="#($req.url.path)#(item.id)/">#svg("edit-2")</a></div>
+<div class="td td:center"><a id="#(item.id)" href="#" onClick="confirmDelete('#($req.url.path)', this.id);">#svg("trash")</a></div>

@@ -3,14 +3,14 @@
     "description": $vars["authors.page.description"]
 ])
 #define(body):
-<div id="authors" class="wrapper w m-xl">
+<div id="authors" class="wrapper w:full m:xl">
     <header class="m:b:l center">
         <h1>#(head.title)</h1>
         <p>#(head.description)</p>
     </header>
 
     <section class="m:l">
-        <ul class="p:zero utility-list">
+        <ul class="lst:none p:zero">
         #for(author in authors):
             <li class="p:l br center bg3">
                 <img class="w128 br:circular" src="#(author.imageKey.resolve())">

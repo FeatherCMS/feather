@@ -71,6 +71,7 @@ final class SystemVariableEditForm: Form {
         output.key = key.value
         output.value = value.value
         output.notes = notes.value.emptyToNil
+        output.hidden = false
     }
 }
 

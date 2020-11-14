@@ -13,12 +13,8 @@ struct BlogCategoryAdminController: ViperAdminViewController {
     typealias Module = BlogModule
     typealias Model = BlogCategoryModel
     typealias EditForm = BlogCategoryEditForm
-    
-    func listBuilder(req: Request, queryBuilder: QueryBuilder<Model>) throws -> QueryBuilder<Model> {
-        queryBuilder.sort(\Model.$priority, .descending)
-    }
 
-    var listSortable: [FieldKey] {
+    var listOrderBy: [FieldKey] {
         [
             Model.FieldKeys.title,
             Model.FieldKeys.priority,

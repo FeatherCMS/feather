@@ -120,14 +120,21 @@ final class SystemModule: ViperModule {
 
     private func installHook(req: Request) -> EventLoopFuture<Any?>? {
         req.eventLoop.flatten([
+            req.variables.set("site.title", value: "Feather"),
+            req.variables.set("site.excerpt", value: "Welcome to Feather CMS"),
+            
+            req.variables.set("home.page.title", value: "Home page title"),
+            req.variables.set("home.page.description", value: "Home page description"),
+            
             req.variables.set("page.not.found.icon", value: "🙉"),
             req.variables.set("page.not.found.title", value: "Page not found"),
             req.variables.set("page.not.found.description", value: "This page is not available anymore."),
             req.variables.set("page.not.found.link", value: "Go to the home page →"),
-            req.variables.set("site.title", value: "Feather"),
-            req.variables.set("site.excerpt", value: "Welcome to Feather CMS"),
-            req.variables.set("home.page.title", value: "Home page title"),
-            req.variables.set("home.page.description", value: "Home page description"),
+            
+            req.variables.set("empty.list.icon", value: "🔍"),
+            req.variables.set("empty.list.title", value: "Empty list"),
+            req.variables.set("empty.list.description", value: "Unfortunately there are no results."),
+            req.variables.set("empty.list.link", value: "Try again from scratch →"),
         ])
         .map { $0 as Any }
     }

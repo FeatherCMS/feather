@@ -14,7 +14,7 @@ struct UserAdminController: ViperAdminViewController {
     typealias Model = UserModel
     typealias EditForm = UserEditForm
 
-    var listSortable: [FieldKey] {
+    var listOrderBy: [FieldKey] {
         [
             Model.FieldKeys.email,
         ]
@@ -24,7 +24,7 @@ struct UserAdminController: ViperAdminViewController {
         qb.filter(\.$email ~~ searchTerm)
     }
 
-    func listBuilder(req: Request, queryBuilder: QueryBuilder<Model>) throws -> QueryBuilder<Model> {
+    func beforeList(req: Request, queryBuilder: QueryBuilder<Model>) throws -> QueryBuilder<Model> {
         queryBuilder.sort(\Model.$email)
     }
     

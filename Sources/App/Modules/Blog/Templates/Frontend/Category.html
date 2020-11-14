@@ -3,35 +3,22 @@
     "description": category.excerpt
 ])
 #define(body):
-<br><br>
 
-<section id="category">
-    <img src="#(category.imageKey.resolve())">
-    <h2>#(category.title)</h2>
-    <p>#(category.excerpt)</p>
-    <span><b>#(posts.count()) post#if(posts.count() > 1):s#endif</b></span>
-</section>
+<div id="category" class="wrapper w:full m:xl">
 
-<br><br>
-
-<section  class="grid">
-    #for(post in posts):
-    <div>
-        <a href="/#(post.metadata.slug)" class="card">
-            <figure style="background-image: url(#(post.imageKey.resolve()));"></figure>
-            <article>
-                <div class="meta">
-                    <span class="category">#(category.title)</span>
-                </div>
-                <h3>#(post.title)</h3>
-                <p>#(post.excerpt)</p>
-                <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                    #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-                </time>
-            </article>
-        </a>
-    </div>
+    <header class="m:b:l center">
+        <img class="w128 br:s" src="#(category.imageKey.resolve())">
+        <h1>#(head.title)</h1>
+        <p>#(head.description)</p>
+        <span><b>#(posts.count()) post#if(posts.count() > 1):s#endif</b></span>
+    </header>
+    
+    <div class="g3 g:gap:l:hd">
+    #for((index, post) in posts):
+        #inline("Blog/Frontend/SinglePost")
     #endfor
-</section>
+    </div>
+</div>
+
 #enddefine
 #inline("Frontend/Index")

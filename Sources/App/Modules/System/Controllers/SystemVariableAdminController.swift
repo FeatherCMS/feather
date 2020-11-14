@@ -18,7 +18,7 @@ struct SystemVariableAdminController: ViperAdminViewController {
         queryBuilder.filter(\.$hidden == false)
     }
 
-    var listSortable: [FieldKey] {
+    var listOrderBy: [FieldKey] {
         [
             Model.FieldKeys.key,
             Model.FieldKeys.value,

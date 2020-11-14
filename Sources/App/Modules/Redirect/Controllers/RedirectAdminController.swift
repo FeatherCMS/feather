@@ -14,7 +14,7 @@ struct RedirectAdminController: ViperAdminViewController {
     typealias Model = RedirectModel
     typealias EditForm = RedirectEditForm
     
-    var listSortable: [FieldKey] {
+    var listOrderBy: [FieldKey] {
         [
             Model.FieldKeys.source,
             Model.FieldKeys.destination,

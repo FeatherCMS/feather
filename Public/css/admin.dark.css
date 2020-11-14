@@ -1,44 +1,22 @@
 @media (prefers-color-scheme: dark) {
-#dashboard li a:hover {
-    background: rgba(255,255,255,0.04);
+    #dashboard svg {
+        color: #fa3ebe;
+    }
+    #toolbar {
+        background: #1c1c1e;
+        border-bottom: 1px solid #2c2c2e;
+    }
+    .inactive-link {
+        color: #222;
+    }
+    .th {
+        background: #232323;
+    }
+    .tr {
+        background: #1c1c1e;
+    }
+    .th, .tr {
+        border: 1px solid #222;
+    }
 }
-#dashboard .grid-item {
-    background: #222;
-}
-#dashboard .grid-item svg {
-    color: #fa3ebe;
-}
-#toolbar {
-    background: #1c1c1e;
-    border-bottom: 1px solid #2c2c2e;
-}
-#toolbar #buttons li a:hover {
-    background: #333;
-}
-#toolbar #nav li + li:before {
-    color: #21a9ff;
-}
-#account img {
-    border: 2px solid #21a9ff;
-}
-#account img:hover {
-    border: 2px solid #fa3ebe;
-}
-th {
-    background: #232323;
-}
-td {
-    background: #444;
-}
-.inactive-link {
-    color: #222;
-}
-/*.image-uploader img {*/
-/*    background: #222;*/
-/*}*/
-/*tr {*/
-/*    background: #222;*/
-/*}*/
 
-
-}

@@ -14,7 +14,7 @@ struct StaticPageAdminController: ViperAdminViewController {
     typealias Model = StaticPageModel
     typealias EditForm = StaticPageEditForm
     
-    var listSortable: [FieldKey] {
+    var listOrderBy: [FieldKey] {
         [
             Model.FieldKeys.title,
         ]

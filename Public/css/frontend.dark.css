@@ -79,15 +79,6 @@ pre code .preprocessing {
 hr {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
-/*blockquote {*/
-/*    color: #ccc;*/
-/*    border-left: 8px solid #DE2451;*/
-/*    box-shadow: 0 6px 12px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.4);*/
-/*    background: #1a1a1a;*/
-/*}*/
-/*blockquote::before {*/
-/*    color: #fff;*/
-/*}*/
 footer {
     border-top: 1px solid #1a1a1e;
     background: #222;
@@ -102,26 +93,9 @@ input:focus, textarea:focus, select:focus {
     background-color: #444;
     color: #fff;
 }
-.card {
-    border: none;
-    background: #1c1c1e;
-    color: #ccc;
-}
 .shadow-hover:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
-.card p, .excerpt {
-    color: #999;
-}
-
-
-/*.sponsor {*/
-/*    background: #2c2c2e;*/
-/*}*/
-/*.sponsor a.link {*/
-/*    color: #ccc;*/
-/*    background: #2c2c2e;*/
-/*}*/
 form .required, form .error {
     color: #ee6a5d;
 }

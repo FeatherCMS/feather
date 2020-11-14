@@ -73,24 +73,10 @@ pre code .preprocessing {
 #menu-icon span, #menu-icon span:before, #menu-icon span:after {
     background: #666;
 }
-#account img {
-    border: 2px solid #21a9ff;
-}
-#account img:hover {
-    border: 2px solid #fa3ebe;
-}
+
 hr {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
 }
-/*blockquote {*/
-/*    color: #666;*/
-/*    border-left: 8px solid #DE2451;*/
-/*    box-shadow: 0 6px 12px rgba(0,0,0,0.1), 0 4px 8px rgba(255,255,255,0.6);*/
-/*    background: #fff;*/
-/*}*/
-/*blockquote::before {*/
-/*    color: #333;*/
-/*}*/
 footer {
     border-top: 1px solid #efefef;
     background: #fff;
@@ -105,40 +91,11 @@ input:focus, textarea:focus, select:focus {
     background-color: #fff;
     color: #222;
 }
-
-.card {
-    border: 1px solid #f0f0f0;
-    background: #fff;
-    color: #ccc;
-}
 .shadow-hover:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
 }
-.card p, .excerpt {
-    color: #666;
-}
-
-a.card:link:hover, a.card:visited:hover {
-    color: #21a9ff;
-}
-
-
-
-/*.sponsor {*/
-/*    background: #fafafa;*/
-/*}*/
-/*.sponsor a.link {*/
-/*    color: #000;*/
-/*    background: #fafafa;*/
-/*}*/
-/*#apps a.cta, #apps a.cta:hover {*/
-/*    color: #fff;*/
-/*}*/
 form .required, form .error {
     color: #ef695e;
-}
-#login-box p {
-    color: #666;
 }
 
 td.small img {

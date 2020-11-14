@@ -13,7 +13,7 @@ struct BlogPostAdminController: ViperAdminViewController {
     typealias Model = BlogPostModel
     typealias EditForm = BlogPostEditForm
     
-    var listSortable: [FieldKey] {
+    var listOrderBy: [FieldKey] {
         [
             Model.FieldKeys.imageKey,
             Model.FieldKeys.title,

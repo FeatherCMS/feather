@@ -1,19 +1,26 @@
-#define(th):
-    <tr>
-        #let(link = ["key": "title"])
-        <th>#inline("Admin/SortLink")</th>
-        <th class="actions">Actions</th>
-    </tr>
+#define(css):
+@media (min-width: 600px) {
+    .tr .td:nth-of-type(1), .th .td:nth-of-type(1) {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+    .table .th, .table .tr {
+        grid-template-columns: 1fr 64px 96px;
+    }
+}
 #enddefine
-
-#define(tb):
+#define(th):
+    <div class="td td:left">#let(link = ["key": "title"])#inline("Admin/SortLink")</div>
+    <div class="td td:center">Edit</div>
+    <div class="td td:center">Delete</div>
+#enddefine
+#define(tr):
     #for(item in list.items):
-        <tr>
-            <td><a href="#($req.url.path)#(item.id)/">#(item.title)</a></td>
-            #inline("Admin/Actions")
-        </tr>
+<div class="tr">
+    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.title)</a></div>
+    #inline("Admin/Actions")
+</div>
     #endfor
 #enddefine
-
 #let(title = "Pages")
 #inline("Admin/Table")

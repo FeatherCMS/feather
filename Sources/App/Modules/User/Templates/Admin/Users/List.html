@@ -1,19 +1,26 @@
-#define(th):
-    #var(link = nil)
-    <tr>
-        #(link = ["key": "email", "default": true])
-        <th>#inline("Admin/SortLink")</th>
-        <th>Actions</th>
-    </tr>
+#define(css):
+@media (min-width: 600px) {
+    .tr .td:nth-of-type(1), .th .td:nth-of-type(1) {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+    .table .th, .table .tr {
+        grid-template-columns: 1fr 64px 96px;
+    }
+}
 #enddefine
-#define(tb):
+#define(th):
+    <div class="td td:left">#let(link = ["key": "email", "default": true])#inline("Admin/SortLink")</div>
+    <div class="td td:center">Edit</div>
+    <div class="td td:center">Delete</div>
+#enddefine
+#define(tr):
     #for(item in list.items):
-        <tr>
-            <td><a href="#($req.url.path)#(item.id)/">#(item.email)</a></td>
-            #inline("Admin/Actions")
-        </tr>
+<div class="tr">
+    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.email)</a></div>
+    #inline("Admin/Actions")
+</div>
     #endfor
 #enddefine
 #let(title = "Users")
 #inline("Admin/Table")
-
