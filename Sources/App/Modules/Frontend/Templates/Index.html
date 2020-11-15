@@ -43,11 +43,6 @@
             <li><a href="/categories/" class="#if($req.url.path == "/categories/"):selected#endif">Categories</a></li>
             <li><a href="/authors/" class="#if($req.url.path == "/authors/"):selected#endif">Authors</a></li>
             <li><a href="/about" class="#if($req.url.path == "/about/"):selected#endif">About</a></li>
-            #if($user.isAuthenticated):
-            <li><a href="/logout/">Logout</a></li>
-            #else:
-            <li><a href="/login/" class="#if($req.url.path == "/login/"):selected#endif">Login</a></li>
-            #endif
         </nav>
     </header>
     
@@ -61,7 +56,17 @@
 
             <p>This site is powered by <a href="https://github.com/binarybirds/feather" target="_blank">Feather</a> &copy; #Date(timeStamp: Timestamp(), localizedFormat: "y")</p>
             
-            <p><a href="/admin">Admin</a> &middot; <a href="/sitemap.xml" target="_blank">Sitemap</a> &middot; <a href="/rss.xml" target="_blank">RSS</a></p>
+            <p>
+                #if($user.isAuthenticated):
+                <a href="/admin/">Admin</a> &middot; <a href="/logout/">Logout</a>
+                #else:
+                <a href="/login/">Login</a>
+                #endif
+                &middot;
+                <a href="/sitemap.xml" target="_blank">Sitemap</a>
+                &middot;
+                <a href="/rss.xml" target="_blank">RSS</a>
+            </p>
         </section>
     </footer>
 </body>
