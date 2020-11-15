@@ -3,42 +3,47 @@ tr {
     grid-template-columns: 1fr 1fr;
 }
 @media (max-width: 599px) {
-    th:nth-of-type(4), th:nth-of-type(5) {
+    th:nth-of-type(1), th:nth-of-type(5), th:nth-of-type(6) {
         display: none;
     }
-    th:nth-of-type(1), th:nth-of-type(2), th:nth-of-type(3), td:nth-of-type(1), td:nth-of-type(2), td:nth-of-type(3)  {
+    th:nth-of-type(1), th:nth-of-type(2), th:nth-of-type(3), th:nth-of-type(4), td:nth-of-type(1), td:nth-of-type(2), td:nth-of-type(3), td:nth-of-type(4) {
         grid-column: span 2;
     }
-    td:nth-of-type(3) {
+    td:nth-of-type(4) {
         padding-bottom: 16px;
         margin-bottom: 16px;
         border-bottom: 1px solid #e9e9e9;
     }
     @media (prefers-color-scheme: dark) {
-        td:nth-of-type(3) {
+        td:nth-of-type(4) {
             border-bottom: 1px solid #232323;
         }
     }
 }
 @media (min-width: 600px) {
     tr {
-        grid-template-columns: 1fr 1fr 1fr 64px 96px;
+        grid-template-columns: 64px 1fr 1fr 128px 64px 96px;
     }
 }
 #enddefine
+#define(toolbarRight):
+<a href="/admin/menu/menus/#Request(parameter: "id")">#svg("compass")</a>
+#enddefine
 #define(th):
     #var(link = nil)
-    <th class="t:left m:horizontal:s">#(link = ["key": "handle", "default": true])#inline("Admin/SortLink")</th>
-    <th class="t:left">#(link = ["key": "name"])#inline("Admin/SortLink")</th>
-    <th class="t:left">#(link = ["key": "icon"])#inline("Admin/SortLink")</th>
+    <th class="t:center">Icon</th>
+    <th class="t:left m:horizontal:s">#(link = ["key": "label", "default": true])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "url"])#inline("Admin/SortLink")</th>
+    <th class="t:center">#(link = ["key": "priority"])#inline("Admin/SortLink")</th>
     #inline("Admin/TableActionLabels")
 #enddefine
 #define(tr):
     #for(item in list.items):
 <tr>
-    <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.handle)</a></td>
-    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.name)</a></td>
-    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.icon)</a></td>
+    <td class="t:center">#svg(item.icon)</a></td>
+    <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.label)</a></td>
+    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.url)</a></td>
+    <td class="t:center"><a href="#($req.url.path)#(item.id)/">#(item.priority)</a></td>
     #inline("Admin/TableActionButtons")
 </tr>
     #endfor
