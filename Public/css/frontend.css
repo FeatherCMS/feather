@@ -106,7 +106,7 @@ hr {
 .w512 { width: 512px; }
 
 /* m = margin*/
-.m, .m\:l, .m\:xl { margin: 16px; }
+.m, .m\:l, .m\:xl { margin: 32px 16px; }
 .m\:s { margin: 8px; }
 .m\:xs { margin: 4px; }
 .m\:zero { margin: 0; }

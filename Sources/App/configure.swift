@@ -116,7 +116,8 @@ public func configure(_ app: Application) throws {
     LeafEngine.useLeafFoundation()
     LeafEngine.entities.use(Resolve(), asMethod: "resolve")
     LeafEngine.entities.use(InlineSvg(), asFunction: "svg")
-    
+    LeafRenderer.Option.timeout = 0.100 //ms
+
     if app.isDebug {
         LeafRenderer.Option.caching = .bypass
     }

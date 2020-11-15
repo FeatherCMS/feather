@@ -129,6 +129,26 @@ final class SystemModule: ViperModule {
         guard req.url.path == "/system/install/" else {
             return req.leaf.render("System/Install/Start").encodeResponse(for: req).erase()
         }
+        let assetsPath = Application.Paths.assets
+
+        for module in req.application.viper.modules.map(\.name) {
+            let modulePath = Application.Paths.base + "Sources/App/Modules/" + module + "/"
+            let installAsssetsPath = modulePath + "Assets/install/"
+            let destinationPath = assetsPath + module + "/"
+
+            do {
+                try FileManager.default.createDirectory(atPath: Application.Paths.assets,
+                                                        withIntermediateDirectories: true,
+                                                        attributes: [.posixPermissions: 0o744])
+                var isDir : ObjCBool = false
+                if FileManager.default.fileExists(atPath: installAsssetsPath, isDirectory: &isDir), isDir.boolValue {
+                    try FileManager.default.copyItem(atPath: installAsssetsPath, toPath: destinationPath)
+                }
+            }
+            catch {
+                fatalError("Error, please check your Public / assets directories.\n\(error.localizedDescription)")
+            }
+        }
 
         /// we gather the system variables, based on the dictionary
         var variables: [SystemVariableModel] = []
@@ -162,17 +182,5 @@ final class SystemModule: ViperModule {
         .flatMap { _ in req.leaf.render("System/Install/Finish") }
         .encodeResponse(for: req)
         .erase()
-    }
-
-    func installAssets() {
-        try! FileManager.default.createDirectory(atPath: Application.Paths.assets + "blog/posts",
-                                                withIntermediateDirectories: true,
-                                                attributes: [.posixPermissions: 0o744])
-        try! FileManager.default.createDirectory(atPath: Application.Paths.assets + "blog/authors",
-                                                withIntermediateDirectories: true,
-                                                attributes: [.posixPermissions: 0o744])
-        try! FileManager.default.createDirectory(atPath: Application.Paths.assets + "blog/categories",
-                                                withIntermediateDirectories: true,
-                                                attributes: [.posixPermissions: 0o744])
     }
 }

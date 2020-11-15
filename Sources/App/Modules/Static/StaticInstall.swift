@@ -10,7 +10,7 @@ import Fluent
 
 /// installer component for the static module
 struct StaticInstaller: ViperInstaller {
-
+    
     /// we create the sample static page models & publish their metadata objects
     func createModels(_ req: Request) -> EventLoopFuture<Void>? {
         /// NOTE: blog related pages should provided via a hook, but we're good for now...
@@ -19,7 +19,7 @@ struct StaticInstaller: ViperInstaller {
             StaticPageModel(title: "Posts", content: "[posts-page]"),
             StaticPageModel(title: "Categories", content: "[categories-page]"),
             StaticPageModel(title: "Authors", content: "[authors-page]"),
-            StaticPageModel(title: "About", content: "about this page"),
+            StaticPageModel(title: "About", content: StaticModule.sample(asset: "about.html")),
         ]
 
         /// we persist the pages to the database
