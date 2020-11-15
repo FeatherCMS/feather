@@ -17,16 +17,25 @@
     <link rel="stylesheet" href="/css/frontend.min.css">
     #endif
     
+    <style type="text/css">
+        #evaluate(css ?? "")
+        #(head.css ?? "")
+    </style>
+    
     #inline("Frontend/Icons")
 
     #if(head.canonicalUrl ?? false):
         <link rel="canonical" href="#(head.canonicalUrl)">
     #endif
-        
-        
+
     #if(Request(query: "page") != nil || Request(query: "search") != nil):
         <link rel="canonical" href="#($app.baseUrl)#($req.url.path)">
     #endif
+
+    <script type="text/javascript">
+        #evaluate(js ?? "")
+        #(head.js ?? "")
+    </script>
 </head>
 <body class="m:zero">
     <header id="header">

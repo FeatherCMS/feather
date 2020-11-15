@@ -2,6 +2,18 @@
     "title": $vars["home.page.title"],
     "description": $vars["home.page.description"]
 ])
+#define(css):
+@media (min-width: 600px) {
+    #home > div {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+@media (min-width: 900px) {
+    #home > div {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+#enddefine
 #define(body):
 <div id="home" class="wrapper w:full m:xl">
 
@@ -12,7 +24,17 @@
 
     <div class="g6 g:gap:l:hd">
     #for((index, post) in posts):
-        #let(size = index > 1 ? 2 : 3)
+        #var(size = 1)
+        #if(index == 0):
+            #var(size = 4)
+        #endif
+        #if(index == 1):
+            #var(size = 2)
+        #endif
+        #if(index > 1):
+            #var(size = 2)
+        #endif
+        
         #inline("Blog/Frontend/SinglePost")
     #endfor
     </div>
@@ -20,3 +42,4 @@
 </div>
 #enddefine
 #inline("Frontend/Index")
+
