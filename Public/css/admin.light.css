@@ -8,14 +8,10 @@
 .inactive-link {
     color: #ccc;
 }
-.th {
+thead tr {
     background: #efefef;
 }
-.tr {
+tr {
     background: #fff;
-}
-.th, .tr {
     border: 1px solid #e9e9e9;
 }
-
-

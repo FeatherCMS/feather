@@ -308,11 +308,6 @@ hr {
 form .error {
     display: block;
 }
-label {
-    display: block;
-    padding-left: 16px;
-    padding-bottom: 4px;
-}
 input, textarea, select {
     font: inherit;
     line-height: inherit;

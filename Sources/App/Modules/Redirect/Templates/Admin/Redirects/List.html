@@ -1,26 +1,46 @@
 #define(css):
+tr {
+    grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 599px) {
+    th:nth-of-type(4), th:nth-of-type(5) {
+        display: none;
+    }
+    th:nth-of-type(1), th:nth-of-type(2), th:nth-of-type(3), td:nth-of-type(1), td:nth-of-type(2), td:nth-of-type(3)  {
+        grid-column: span 2;
+    }
+    td:nth-of-type(3) {
+        padding-bottom: 16px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #e9e9e9;
+    }
+    @media (prefers-color-scheme: dark) {
+        td:nth-of-type(3) {
+            border-bottom: 1px solid #232323;
+        }
+    }
+}
 @media (min-width: 600px) {
-    .table .th, .table .tr {
+    tr {
         grid-template-columns: 1fr 1fr 1fr 64px 96px;
     }
 }
 #enddefine
 #define(th):
     #var(link = nil)
-    <div class="td td:left m:horizontal:s">#(link = ["key": "source", "default": true])#inline("Admin/SortLink")</div>
-    <div class="td td:left">#(link = ["key": "destination"])#inline("Admin/SortLink")</div>
-    <div class="td td:left">#(link = ["key": "status_code", "label": "Status code"])#inline("Admin/SortLink")</div>
-    <div class="td td:center">Edit</div>
-    <div class="td td:center">Delete</div>
+    <th class="t:left m:horizontal:s">#(link = ["key": "source", "default": true])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "destination"])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "status_code", "label": "Status code"])#inline("Admin/SortLink")</th>
+    #inline("Admin/TableActionLabels")
 #enddefine
 #define(tr):
     #for(item in list.items):
-<div class="tr">
-    <div class="td td:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.source)</a></div>
-    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.destination)</a></div>
-    <div class="td td:left"><a href="#($req.url.path)#(item.id)/">#(item.statusCode)</a></div>
-    #inline("Admin/Actions")
-</div>
+<tr>
+    <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.source)</a></td>
+    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.destination)</a></td>
+    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.statusCode)</a></td>
+    #inline("Admin/TableActionButtons")
+</tr>
     #endfor
 #enddefine
 #let(title = "Redirects")

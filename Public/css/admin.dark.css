@@ -9,13 +9,11 @@
     .inactive-link {
         color: #222;
     }
-    .th {
+    thead tr {
         background: #232323;
     }
-    .tr {
+    tr {
         background: #1c1c1e;
-    }
-    .th, .tr {
         border: 1px solid #222;
     }
 }

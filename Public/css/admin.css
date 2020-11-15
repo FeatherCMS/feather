@@ -1,48 +1,62 @@
 svg {
     margin: 0 auto;
 }
-
-.th, .tr {
+/* table related changes, tables should always should be displayed using grid layout */
+table, thead, tbody, tfoot, tr, th, td {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+tr {
     display: grid;
+    grid-template-columns: 1fr;
     align-items: center;
 }
-.th {
-    background: #efefef;
-}
-.tr {
-    background: #fff;
-}
-.th, .tr {
-    grid-template-columns: 1fr;
-}
-.th {
-    padding: 4px 0px;
-}
-.th, .tr {
-    border: 1px solid #efefef;
+tr {
     border-radius: 4px;
-}
-.tr {
     margin: 8px 0px;
     padding: 16px;
 }
-.td {
+th {
+    padding: 4px 0px;
+}
+td {
     padding: 8px 0px;
 }
-.td img {
+td img {
     display: block;
     margin: 0 auto;
 }
-.td\:left, .td\:center { text-align: center; }
-
+/* table alignments, on mobile everything is centered, otherwise use the proper alignment */
+.t\:left, .t\:center, .t\:right { text-align: center; }
 @media (min-width: 600px) {
-    .td\:left { text-align: left; }
-    .td\:center { text-align: center; }
-    .tr {
-        border: none;
-        padding: 0;
-    }
+    .t\:left { text-align: left; }
+    .t\:center { text-align: center; }
+    .t\:right { text-align: right; }
 }
+/* file uploaders */
+.uploader {
+    text-align: center;
+}
+.uploader img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.small-uploader img {
+    width: 256px;
+    border-radius: 8px;
+    margin: 16px auto;
+}
+.circular-uploader img {
+    width: 256px;
+    border-radius: 50%;
+    margin: 16px auto;
+}
+.large-uploader img {
+    border-radius: 8px;
+}
+
 
 #header {
     border-bottom: none;
@@ -70,21 +84,19 @@ svg {
     padding-right: 0;
     margin-left: 8px;
 }
+
 #account {
     position: absolute;
     top: 20px;
     right: 14px;
 }
-
 #toolbar a {
     display: inline-block;
     padding: 8px 16px;
 }
-
 #toolbar #right .container {
     float: right;
 }
-
 @media (max-width: 599px) {
     #toolbar .center {
         text-align: left;
@@ -105,129 +117,6 @@ svg {
     }
 }
 
-table {
-    width: 100%;
-    border-spacing: 0;
-    border-collapse: separate;
-    border-spacing: 8px;
-}
-tbody, tr, th, td {
-    display: block;
-}
-th[data-title]:before, td[data-title]:before {
-    content: attr(data-title) ":\00A0";
-}
-th {
-    background: #444;
-    background: #efefef;
-    border-radius: 8px;
-    padding: 1em;
-}
-th, th a:link, th a:visited {
-    text-shadow: none;
-/*    color: #cafe00;*/
-    margin-bottom: 4px;
-/*    text-align: left;*/
-}
-tr {
-    margin-bottom: 1em;
-}
-tr .center {
-    text-align: center;
-}
-td {
-    padding: 0.8em 1em;
-    background: #333;
-    background: #fff;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
-td img {
-    border-radius: 4px;
-}
-tr:last-child td {
-    border-bottom: none;
-}
-td.actions {
-    text-align: center;
-}
-td.image-large {
-    line-height: 0;
-}
-td.image-large img {
-    width: 100%;
-}
-td.profile {
-    line-height: 0;
-}
-td.profile img {
-    margin: 1em 0;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-}
-.text-link {
-    padding: 4px 16px;
-    transition: 0.2s;
-}
-.pager {
-    padding: 8px;
-    font-size: 0.8em;
-}
-
-
-
-.image-uploader {
-    text-align: center;
-}
-.image-uploader img {
-    width: 100%;
-    border-radius: 8px;
-    max-height: 450px;
-}
-.image-uploader a {
-    font-size: 0.8em;
-    padding: 4px;
-}
-.square-image-uploader label, .rounded-image-uploader label {
-    display: block;
-    text-align: center;
-}
-.square-image-uploader img, .rounded-image-uploader img {
-    width: 100%;
-    width: 128px;
-    height: 128px;
-    display: block;
-    margin: 0 auto;
-}
-.rounded-image-uploader img {
-    border-radius: 50%;
-    margin: 1em auto;
-}
-@media (min-width: 600px) {
-    tbody {
-        display: table-header-group;
-    }
-    tr {
-        display: table-row;
-        margin-bottom: 0;
-    }
-    th, td {
-        display: table-cell;
-    }
-    tr .small {
-        width: 96px;
-    }
-    th[data-title]:before, td[data-title]:before {
-        content: "";
-    }
-    td.image-large {
-        width: 128px;
-    }
-    td.actions {
-        width: 160px;
-    }
-}
 #notification {
     position: fixed;
     top: 92px;
