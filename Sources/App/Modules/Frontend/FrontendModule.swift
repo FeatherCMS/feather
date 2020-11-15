@@ -28,5 +28,23 @@ public final class FrontendModule: ViperModule {
 //            .appendingPathComponent("Resources")
 //            .appendingPathComponent("Views")
     }
+    
+    public func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
+        switch name {
+        case "leaf-admin-menu":
+            return [
+                "name": "Frontend",
+                "icon": "layout",
+                "items": LeafData.array([
+                    [
+                        "url": "/admin/frontend/metadatas/",
+                        "label": "Metadatas",
+                    ],
+                ])
+            ]
+        default:
+            return nil
+        }
+    }
 }
 

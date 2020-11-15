@@ -12,6 +12,7 @@ import ViperKit
 final class RedirectModule: ViperModule {
 
     static let name = "redirect"
+    var priority: Int { 900 }
 
     var router: ViperRouter? = RedirectRouter()
 
@@ -35,6 +36,24 @@ final class RedirectModule: ViperModule {
         switch name {
         case "frontend-page":
             return frontendPageHook(req: req)
+        default:
+            return nil
+        }
+    }
+    
+    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
+        switch name {
+        case "leaf-admin-menu":
+            return [
+                "name": "Redirect",
+                "icon": "arrow-right",
+                "items": LeafData.array([
+                    [
+                        "url": "/admin/redirect/redirects/",
+                        "label": "Redirects",
+                    ],
+                ])
+            ]
         default:
             return nil
         }

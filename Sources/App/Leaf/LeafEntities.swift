@@ -18,6 +18,32 @@ public struct Resolve: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
     }
 }
 
+public struct Hook: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
+    public var unsafeObjects: UnsafeObjects? = nil
+
+    public static var callSignature: [LeafCallParameter] { [.string] }
+
+    public func evaluate(_ params: LeafCallValues) -> LeafData {
+        guard let req = req else { return .error("Needs unsafe access to Request") }
+        let hookName = "leaf-\(params[0].string!)"
+        return req.syncHook(hookName, type: LeafDataRepresentable.self)?.leafData ?? .trueNil
+    }
+}
+
+public struct HookAll: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
+    public var unsafeObjects: UnsafeObjects? = nil
+
+    public static var callSignature: [LeafCallParameter] { [.string] }
+
+    public func evaluate(_ params: LeafCallValues) -> LeafData {
+        guard let req = req else { return .error("Needs unsafe access to Request") }
+        let hookName = "leaf-\(params[0].string!)"
+        let item = req.syncHookAll(hookName, type: LeafDataRepresentable.self)
+        return .array(item.map(\.leafData))
+    }
+}
+
+
 public struct InlineSvg: LeafNonMutatingMethod, Invariant, StringReturn {
 
     public static var callSignature: [LeafCallParameter] {

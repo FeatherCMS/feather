@@ -61,6 +61,17 @@ final class SystemModule: ViperModule {
         switch name {
         case "installer":
             return SystemInstaller()
+        case "leaf-admin-menu":
+            return [
+                "name": "System",
+                "icon": "settings",
+                "items": LeafData.array([
+                    [
+                        "url": "/admin/system/variables/",
+                        "label": "Variables",
+                    ],
+                ])
+            ]
         default:
             return nil
         }

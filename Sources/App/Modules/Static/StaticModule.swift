@@ -50,6 +50,17 @@ final class StaticModule: ViperModule {
         switch name {
         case "installer":
             return StaticInstaller()
+        case "leaf-admin-menu":
+            return [
+                "name": "Static",
+                "icon": "file-text",
+                "items": LeafData.array([
+                    [
+                        "url": "/admin/static/pages/",
+                        "label": "Pages",
+                    ],
+                ])
+            ]
         default:
             return nil
         }

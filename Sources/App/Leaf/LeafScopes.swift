@@ -48,7 +48,5 @@ extension Request {
             res["email"] = .lazy(LeafData.string(user.email))
         }
         return res
-    }
-    
-    
+    }    
 }

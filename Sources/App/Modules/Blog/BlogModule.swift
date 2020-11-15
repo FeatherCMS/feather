@@ -11,6 +11,7 @@ import FeatherCore
 final class BlogModule: ViperModule {
 
     static let name = "blog"
+    var priority: Int { 1100 }
 
     let _router = BlogRouter()
     var router: ViperRouter? { _router }
@@ -62,6 +63,25 @@ final class BlogModule: ViperModule {
         switch name {
         case "installer":
             return BlogInstaller()
+        case "leaf-admin-menu":
+            return [
+                "name": "Blog",
+                "icon": "book",
+                "items": LeafData.array([
+                    [
+                        "url": "/admin/blog/posts/",
+                        "label": "Posts",
+                    ],
+                    [
+                        "url": "/admin/blog/categories/",
+                        "label": "Categories",
+                    ],
+                    [
+                        "url": "/admin/blog/authors/",
+                        "label": "Authors",
+                    ],
+                ])
+            ]
         default:
             return nil
         }

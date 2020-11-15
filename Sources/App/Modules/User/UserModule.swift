@@ -58,6 +58,17 @@ final class UserModule: ViperModule {
             return [UserModel.redirectMiddleware(path: "/login")]
         case "api-auth-middlwares":
             return [UserTokenModel.authenticator(), UserModel.guardMiddleware()]
+        case "leaf-admin-menu":
+            return [
+                "name": "User",
+                "icon": "user",
+                "items": LeafData.array([
+                    [
+                        "url": "/admin/user/users/",
+                        "label": "Users",
+                    ],
+                ])
+            ]
         default:
             return nil
         }
