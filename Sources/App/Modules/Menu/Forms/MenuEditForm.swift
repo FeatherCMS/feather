@@ -15,8 +15,8 @@ final class MenuEditForm: Form {
     struct Input: Decodable {
         var id: String
         var handle: String
-        var name: String?
-        var icon: String?
+        var name: String
+        var icon: String
     }
 
     var id: String? = nil
@@ -42,8 +42,8 @@ final class MenuEditForm: Form {
         id = context.id.emptyToNil
 
         handle.value = context.handle
-        name.value = context.name ?? ""
-        icon.value = context.icon ?? ""
+        name.value = context.name
+        icon.value = context.icon
     }
     
     func validate(req: Request) -> EventLoopFuture<Bool> {

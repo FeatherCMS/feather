@@ -13,7 +13,7 @@ final class SwiftyModule: ViperModule {
 
     static var name: String = "swifty"
     
-    func invokeSync(name: String, req: Request, params: [String: Any]) -> Any? {
+    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
         switch name {
         case "content-filter":
             return [SwiftyFilter()]

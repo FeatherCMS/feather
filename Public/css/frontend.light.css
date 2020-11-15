@@ -102,3 +102,43 @@ td.small img {
     width: 64px;
     height: 64px;
 }
+
+
+
+
+
+
+pre {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+}
+pre code {
+    color: #0B4F79;
+}
+pre code .keyword {
+    color: #9B2393;
+}
+pre code .type {
+    color: #3900A0;
+}
+pre code .call {
+    color: #326D74;
+}
+pre code .property {
+    color: #6C36A9;
+}
+pre code .number {
+    color: #1C00CF;
+}
+pre code .string {
+    color: #C41A16;
+}
+pre code .comment {
+    color: #5D6C79;
+}
+pre code .dotAccess {
+    color: #0F68A0;
+}
+pre code .preprocessing {
+    color: #643820;
+}

@@ -13,6 +13,19 @@ struct MarkdownFilter: ContentFilter {
     var label: String { "Markdown (Ink)" }
 
     func filter(_ input: String) -> String {
-        "<section>" + MarkdownParser().html(from: input.replacingOccurrences(of: "\r", with: "\n")) + "</section>"
+        var parser = MarkdownParser()
+        let modifier = Modifier(target: .images) { html, markdown in
+            return html.replacingOccurrences(of: "<img src", with: "<img class=\"block br:s\" src")
+        }
+        parser.addModifier(modifier)
+        
+        let result = parser.html(from: input.replacingOccurrences(of: "\r", with: "\n"))
+        return """
+        <div class="wrapper w">
+            <section class="m:xl">
+                \(result)
+            </section>
+        </div>
+        """
     }
 }

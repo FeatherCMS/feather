@@ -13,7 +13,7 @@ final class MarkdownModule: ViperModule {
 
     static var name: String = "markdown"
 
-    func invokeSync(name: String, req: Request, params: [String: Any]) -> Any? {
+    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
         switch name {
         case "content-filter":
             return [MarkdownFilter()]

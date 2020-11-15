@@ -7,15 +7,16 @@
 
 import FeatherCore
 
-extension MenuModel: LeafDataRepresentable {
+extension MenuItemModel: LeafDataRepresentable {
 
     var leafData: LeafData {
         .dictionary([
             "id": id,
-            "handle": handle,
-            "name": name,
             "icon": icon,
-            "items": $items.value != nil ? items : [],
+            "label": label,
+            "url": url,
+            "priority": priority,
+            "targetBlank": targetBlank,
         ])
     }
 }

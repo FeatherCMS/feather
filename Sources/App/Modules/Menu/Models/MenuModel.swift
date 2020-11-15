@@ -24,6 +24,7 @@ final class MenuModel: ViperModel {
     @Field(key: FieldKeys.handle) var handle: String
     @Field(key: FieldKeys.name) var name: String?
     @Field(key: FieldKeys.icon) var icon: String?
+    @Children(for: \.$menu) var items: [MenuItemModel]
     
     init() { }
     

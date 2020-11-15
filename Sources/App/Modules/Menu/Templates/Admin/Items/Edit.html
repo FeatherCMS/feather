@@ -1,0 +1,28 @@
+#define(toolbarButtons):
+<li><a href="/admin/menu/menus/#Request(parameter: "id")">#svg("compass")</a></li>
+<li><a href="/admin/menu/menus/#Request(parameter: "id")/items">#svg("link")</a></li>
+#enddefine
+#define(fields):
+    <input type="hidden" name="menuId" value="#Request(parameter: "id")">
+    #var(field = nil)
+
+    #(field = ["id": "icon", "data": edit.icon])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["id": "label", "required": true, "data": edit.label])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["id": "url", "required": true, "data": edit.url])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "priority", "required": true, "data": edit.priority])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["id": "targetBlank", "label": "Open in new window?", "data": edit.targetBlank])
+    #inline("Admin/Fields/Selection")
+
+#enddefine
+
+#let(form = ["list": "items", "key": "item", "id": edit.id])
+#inline("Admin/Form")
+

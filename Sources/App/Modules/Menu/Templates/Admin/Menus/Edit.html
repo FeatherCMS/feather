@@ -1,3 +1,9 @@
+#define(toolbarRight):
+    #if(edit.id != nil):
+    <a href="/admin/menu/menus/#(edit.id)/items">#svg("link")</a>
+    #endif
+#enddefine
+
 #define(fields):
     #var(field = nil)
 
