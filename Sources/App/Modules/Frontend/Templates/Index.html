@@ -38,6 +38,7 @@
     </script>
 </head>
 <body class="m:zero">
+    
     <header id="header">
         <a href="/" id="site-link">
             <img src="/images/logo-text.png" alt="Logo of #($vars["site.title"])" title="#($vars["site.title"])">
@@ -47,11 +48,13 @@
         <label for="menu-button" id="menu-icon" class="selection:off"><span></span></label>
 
         <nav id="nav">
-            <li><a href="/" class="#if($req.url.path == "/"):selected#endif">Home</a></li>
-            <li><a href="/posts/" class="#if($req.url.path == "/posts/"):selected#endif">Posts</a></li>
-            <li><a href="/categories/" class="#if($req.url.path == "/categories/"):selected#endif">Categories</a></li>
-            <li><a href="/authors/" class="#if($req.url.path == "/authors/"):selected#endif">Authors</a></li>
-            <li><a href="/about" class="#if($req.url.path == "/about/"):selected#endif">About</a></li>
+            #for(item in $menus["main"].items):
+            <li>
+                <a href="#(item.url)" #if($req.url.path == item.url): class="selected"#endif#if(item.targetBlank): target="_blank"#endif>
+                    #if(item.icon != nil):#svg(item.icon)#endif #(item.label)
+                </a>
+            </li>
+            #endfor
         </nav>
     </header>
     

@@ -255,6 +255,12 @@ hr {
 #nav li a {
     padding: 8px;
 }
+#nav li svg {
+    display: inline;
+    position: relative;
+    top: 6px;
+    left: -4px;
+}
 #menu-icon {
    cursor: pointer;
    display: inline-block;

@@ -40,7 +40,7 @@ tr {
 #define(tr):
     #for(item in list.items):
 <tr>
-    <td class="t:center">#svg(item.icon)</a></td>
+    <td class="t:center">#if(item.icon != nil):#svg(item.icon)#endif</a></td>
     <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.label)</a></td>
     <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.url)</a></td>
     <td class="t:center"><a href="#($req.url.path)#(item.id)/">#(item.priority)</a></td>

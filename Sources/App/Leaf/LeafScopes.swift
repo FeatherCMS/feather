@@ -18,6 +18,7 @@ struct LeafFeatherExtensionMiddleware: Middleware {
             try req.leaf.context.register(generators: req.application.leafFeatherVariables, toScope: "app")
             try req.leaf.context.register(generators: req.leafSystemVariables, toScope: "vars")
             try req.leaf.context.register(generators: req.leafUserVariables, toScope: "user")
+            try req.leaf.context.register(generators: req.leafMenuVariables, toScope: "menus")
         }
         catch {
             return req.eventLoop.makeFailedFuture(error)
@@ -37,7 +38,7 @@ extension Application {
 extension Request {
 
     var leafSystemVariables: [String: LeafDataGenerator] {
-        variables.all.mapValues { .immediate(LeafData.string($0)) }
+        variables.all.mapValues { .lazy(LeafData.string($0)) }
     }
     
     var leafUserVariables: [String: LeafDataGenerator] {
@@ -48,5 +49,9 @@ extension Request {
             res["email"] = .lazy(LeafData.string(user.email))
         }
         return res
-    }    
+    }
+    
+    var leafMenuVariables: [String: LeafDataGenerator] {
+        menus.all.mapValues { .lazy(LeafData($0)) }
+    }
 }

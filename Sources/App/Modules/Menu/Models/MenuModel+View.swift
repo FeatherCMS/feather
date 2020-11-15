@@ -15,7 +15,7 @@ extension MenuModel: LeafDataRepresentable {
             "handle": handle,
             "name": name,
             "icon": icon,
-            "items": $items.value != nil ? items : [],
+            "items": $items.value != nil ? items.sorted(by: { $0.priority > $1.priority }) : [],
         ])
     }
 }

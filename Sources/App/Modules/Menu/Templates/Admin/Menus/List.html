@@ -1,13 +1,13 @@
 #define(css):
 tr {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 @media (max-width: 599px) {
-    th:nth-of-type(1), th:nth-of-type(4), th:nth-of-type(5) {
+    th:nth-of-type(1), th:nth-of-type(4), th:nth-of-type(5), th:nth-of-type(6) {
         display: none;
     }
-    th:nth-of-type(1), th:nth-of-type(2), th:nth-of-type(3), td:nth-of-type(1), td:nth-of-type(2), td:nth-of-type(3)  {
-        grid-column: span 2;
+    th:nth-of-type(1), th:nth-of-type(2), th:nth-of-type(3), td:nth-of-type(2), td:nth-of-type(3)  {
+        grid-column: span 3;
     }
     td:nth-of-type(3) {
         padding-bottom: 16px;
@@ -22,7 +22,7 @@ tr {
 }
 @media (min-width: 600px) {
     tr {
-        grid-template-columns: 64px 1fr 1fr 64px 96px;
+        grid-template-columns: 64px 1fr 1fr 96px 64px 96px;
     }
 }
 #enddefine
@@ -31,15 +31,16 @@ tr {
     <th class="t:center">Icon</th>
     <th class="t:left m:horizontal:s">#(link = ["key": "name", "default": true])#inline("Admin/SortLink")</th>
     <th class="t:left">#(link = ["key": "handle"])#inline("Admin/SortLink")</th>
+    <th class="t:center">Items</th>
     #inline("Admin/TableActionLabels")
 #enddefine
 #define(tr):
     #for(item in list.items):
 <tr>
-    <td class="t:center">#svg(item.icon)</a></td>
+    <td class="t:center">#if(item.icon != nil):#svg(item.icon)#endif</a></td>
     <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.name)</a></td>
     <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.handle)</a></td>
-    
+    <td class="t:center"><a href="#($req.url.path)#(item.id)/items/">#svg("link")</a></td>
     #inline("Admin/TableActionButtons")
 </tr>
     #endfor

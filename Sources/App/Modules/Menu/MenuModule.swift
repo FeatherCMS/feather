@@ -20,6 +20,12 @@ final class MenuModule: ViperModule {
             MenuMigration_v1_0_0(),
         ]
     }
+    
+    var middlewares: [Middleware] {
+        [
+            PublicMenusMiddleware(),
+        ]
+    }
 
     var viewsUrl: URL? {
         nil
@@ -30,9 +36,20 @@ final class MenuModule: ViperModule {
     }
     
     // MARK: - hook functions
+    
+    func invoke(name: String, req: Request, params: [String : Any]) -> EventLoopFuture<Any?>? {
+        switch name {
+        case "prepare-menus":
+            return prepareMenus(req: req, params: params).erase()
+        default:
+            return nil
+        }
+    }
 
     func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
         switch name {
+        case "installer":
+            return MenuInstaller()
         case "leaf-admin-menu":
             return [
                 "name": "Menu",
@@ -46,6 +63,19 @@ final class MenuModule: ViperModule {
             ]
         default:
             return nil
+        }
+    }
+    
+    // MARK: - private
+    
+    private func prepareMenus(req: Request, params: [String: Any]) -> EventLoopFuture<[String:LeafDataRepresentable]> {
+        return MenuModel.query(on: req.db).with(\.$items).all()
+        .map { menus in
+            var items: [String: LeafDataRepresentable] = [:]
+            for menu in menus {
+                items[menu.handle] = menu.leafData
+            }
+            return items
         }
     }
 

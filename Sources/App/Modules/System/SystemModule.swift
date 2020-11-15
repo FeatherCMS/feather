@@ -83,7 +83,6 @@ final class SystemModule: ViperModule {
             var items: [String: String] = [:]
             for variable in variables {
                 items[variable.key] = variable.value
-                //req.variables.cache.storage[variable.key] = variable.value
             }
             return items
         }
