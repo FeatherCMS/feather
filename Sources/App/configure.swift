@@ -70,18 +70,17 @@ public func configure(_ app: Application) throws {
     let modules: [ViperModule] = [
         UserBuilder(),
         SystemBuilder(),
-
         AdminBuilder(),
         ApiBuilder(),
         FrontendBuilder(),
-
-//        SwiftyBuilder(),
-//        MarkdownBuilder(),
+        MenuBuilder(),
+        
         RedirectBuilder(),
         SponsorBuilder(),
         StaticBuilder(),
         BlogBuilder(),
-
+        SwiftyBuilder(),
+        MarkdownBuilder(),
     ].map { $0.build() }
     
     let defaultSource = NIOLeafFiles(fileio: app.fileio,

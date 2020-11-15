@@ -8,6 +8,12 @@ env:
 	echo 'BASE_PATH="$(CUR_DIR)/"' >> .env.development
 	#echo 'DB_URL=postgres://myuser:mypass@localhost:5432/mydb' >> .env.development
 
+module:
+	echo "todo"
+	
+clean:
+	echo "todo"
+
 test:
 	swift test --enable-test-discovery
 

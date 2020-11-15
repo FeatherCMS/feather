@@ -1,0 +1,15 @@
+#define(fields):
+    #var(field = nil)
+
+    #(field = ["id": "handle", "required": true, "data": edit.handle])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "name", "data": edit.name])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "icon", "data": edit.icon])
+    #inline("Admin/Fields/Text")
+
+#enddefine
+#let(form = ["list": "menus", "key": "menu", "id": edit.id])
+#inline("Admin/Form")
