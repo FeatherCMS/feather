@@ -30,14 +30,18 @@ extension BlogPostModel {
     
     static func findByAuthor(id: UUID, on req: Request) -> EventLoopFuture<[BlogPostModel]> {
         findMetadata(on: req.db)
+            .filter(Metadata.self, \.$status == .published)
             .filter(\.$author.$id == id)
             .with(\.$category)
+            .sort(Metadata.self, \.$date, .descending)
             .all()
     }
 
     static func findByCategory(id: UUID, on req: Request) -> EventLoopFuture<[BlogPostModel]> {
         findMetadata(on: req.db)
+            .filter(Metadata.self, \.$status == .published)
             .filter(\.$category.$id == id)
+            .sort(Metadata.self, \.$date, .descending)
             .all()
     }
 }
