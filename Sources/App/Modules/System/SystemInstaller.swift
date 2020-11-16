@@ -22,6 +22,16 @@ struct SystemInstaller: ViperInstaller {
                 "note": "Description of the website",
             ],
             [
+                "key": "site.language",
+                "value": "en_US",
+                "note": "Publication language",
+            ],
+            [
+                "key": "site.timezone",
+                "value": "America/Los_Angeles",
+                "note": "Timezone of the website",
+            ],
+            [
                 "key": "site.css",
                 "note": "Global CSS injection for the site",
             ],

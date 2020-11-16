@@ -10,7 +10,6 @@ import FeatherCore
 extension Application {
     
     static let baseUrl: String = Environment.fetch("BASE_URL")
-    static let databaseUrl: URL = URL(string: Environment.fetch("DB_URL"))!
 
     // paths are always absolute, with a trailing slash
     struct Paths {

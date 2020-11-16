@@ -5,8 +5,7 @@ run:
 
 env:
 	echo 'BASE_URL="http://0.0.0.0:8080"' > .env.development
-	echo 'BASE_PATH="$(CUR_DIR)/"' >> .env.development
-	#echo 'DB_URL=postgres://myuser:mypass@localhost:5432/mydb' >> .env.development
+	echo 'BASE_PATH="$(CUR_DIR)/"' >> .env.developmen
 
 module:
 	echo "todo"
