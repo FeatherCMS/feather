@@ -25,7 +25,7 @@ final class SystemVariableModel: ViperModel {
 
     @ID() var id: UUID?
     @Field(key: FieldKeys.key) var key: String
-    @Field(key: FieldKeys.value) var value: String
+    @Field(key: FieldKeys.value) var value: String?
     @Field(key: FieldKeys.hidden) var hidden: Bool
     @Field(key: FieldKeys.notes) var notes: String?
 
@@ -33,7 +33,7 @@ final class SystemVariableModel: ViperModel {
 
     init(id: SystemVariableModel.IDValue? = nil,
          key: String,
-         value: String,
+         value: String? = nil,
          hidden: Bool = false,
          notes: String? = nil)
     {

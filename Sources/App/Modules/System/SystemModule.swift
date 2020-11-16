@@ -169,12 +169,10 @@ final class SystemModule: ViperModule {
         let installers = req.syncHookAll("installer", type: ViperInstaller.self)
         for installer in installers {
             let vars = installer.variables().compactMap { dict -> SystemVariableModel? in
-                guard
-                    let key = dict["key"] as? String, !key.isEmpty,
-                    let value = dict["value"] as? String, !value.isEmpty
-                else {
+                guard let key = dict["key"] as? String, !key.isEmpty else {
                     return nil
                 }
+                let value = dict["value"] as? String
                 let hidden = dict["hidden"] as? Bool ?? false
                 let notes = dict["notes"] as? String
                 return SystemVariableModel(key: key, value: value, hidden: hidden, notes: notes)

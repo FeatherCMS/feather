@@ -15,7 +15,9 @@ struct SystemVariableAdminController: ViperAdminViewController {
     typealias EditForm = SystemVariableEditForm
     
     func beforeList(req: Request, queryBuilder: QueryBuilder<Model>) throws -> QueryBuilder<Model> {
-        queryBuilder.filter(\.$hidden == false)
+        queryBuilder
+            .filter(\.$hidden == false)
+            .sort(\Model.$key)
     }
 
     var listOrderBy: [FieldKey] {

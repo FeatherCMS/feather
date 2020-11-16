@@ -22,6 +22,14 @@ struct SystemInstaller: ViperInstaller {
                 "note": "Description of the website",
             ],
             [
+                "key": "site.css",
+                "note": "Global CSS injection for the site",
+            ],
+            [
+                "key": "site.js",
+                "note": "Global JavaScript injection for the site",
+            ],
+            [
                 "key": "home.page.title",
                 "value": "Home page title",
                 "note": "Title of the home page",

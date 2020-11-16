@@ -52,10 +52,6 @@ final class SystemVariableEditForm: Form {
             key.error = "Key is required"
             valid = false
         }
-        if value.value.isEmpty {
-            value.error = "Value is required"
-            valid = false
-        }
 
         return req.eventLoop.future(valid)
     }
@@ -63,13 +59,13 @@ final class SystemVariableEditForm: Form {
     func read(from input: Model)  {
         id = input.id!.uuidString
         key.value = input.key
-        value.value = input.value
+        value.value = input.value ?? ""
         notes.value = input.notes ?? ""
     }
 
     func write(to output: Model) {
         output.key = key.value
-        output.value = value.value
+        output.value = value.value.emptyToNil
         output.notes = notes.value.emptyToNil
         output.hidden = false
     }

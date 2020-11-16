@@ -19,6 +19,7 @@
     
     <style type="text/css">
         #evaluate(css ?? "")
+        #($vars["site.css"] ?? "")
         #(head.css ?? "")
     </style>
     
@@ -81,6 +82,7 @@
     
     <script type="text/javascript">
         #evaluate(js ?? "")
+        #($vars["site.js"] ?? "")
         #(head.js ?? "")
     </script>
 </body>
