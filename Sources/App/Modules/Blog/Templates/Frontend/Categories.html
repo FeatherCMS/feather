@@ -1,6 +1,8 @@
 #let(head = [
     "title": $vars["categories.page.title"],
-    "description": $vars["categories.page.description"]
+    "description": $vars["categories.page.description"],
+    "css": metadata.css,
+    "js": metadata.js
 ])
 #define(body):
 <div id="categories" class="wrapper w">

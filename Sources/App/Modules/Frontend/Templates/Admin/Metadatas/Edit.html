@@ -1,7 +1,7 @@
 #define(toolbarLeft):
     #if(edit.id != nil):
     <a href="/admin/#(edit.module.value)/#(edit.model.value)/#(edit.reference.value)">#svg("edit")</a>
-    <a href="/#(edit.slug.value)/" target="_blank">#svg("eye")</a>
+    <a href="#if(!edit.slug.value.isEmpty()):/#(edit.slug.value)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
 #enddefine
 #define(toolbarRight):
@@ -15,36 +15,52 @@
 #define(fields):
     #var(field = nil)
 
+<fieldset class="p m:bottom:l br:xs">
+    <legend class="p:horizontal:s">Information</legend>
+
+    #(field = ["id": "image", "class": "large", "data": edit.image])
+    #inline("Admin/Fields/File")
+    
+    #(field = ["id": "title", "data": edit.title])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "excerpt", "size": "small", "data": edit.excerpt])
+    #inline("Admin/Fields/Textarea")
+    
+    #(field = ["id": "date", "more": "yyyy/mm/dd", "data": edit.date])
+    #inline("Admin/Fields/Text")
+</fieldset>
+
+<fieldset class="p m:bottom:l br:xs">
+    <legend class="p:horizontal:s">SEO</legend>
+
     #(field = ["id": "slug", "data": edit.slug])
     #inline("Admin/Fields/Text")
 
     #(field = ["id": "statusId", "label": "Status", "data": edit.statusId])
     #inline("Admin/Fields/Selection")
 
-    #(field = ["id": "date", "more": "yyyy/mm/dd", "data": edit.date])
-    #inline("Admin/Fields/Text")
-
-    #(field = ["id": "feedItem", "label": "Feed item", "data": edit.feedItem])
+    #(field = ["id": "feedItem", "label": "Include in RSS?", "data": edit.feedItem])
     #inline("Admin/Fields/Selection")
+    
+    #(field = ["id": "canonicalUrl", "label": "Canonical URL", "required": false, "data": edit.canonicalUrl])
+    #inline("Admin/Fields/Text")
+</fieldset>
 
+<fieldset class="p m:bottom:l br:xs">
+    <legend class="p:horizontal:s">Content</legend>
     #(field = ["id": "filters", "data": edit.filters])
     #inline("Admin/Fields/Multiselection")
 
-    <hr>
-
-    #(field = ["id": "title", "data": edit.title])
-    #inline("Admin/Fields/Text")
-
-    #(field = ["id": "excerpt", "size": "small", "data": edit.excerpt])
+    #(field = ["id": "css", "label": "CSS", "size": "small", "data": edit.css])
     #inline("Admin/Fields/Textarea")
 
-    #(field = ["id": "image", "class": "large", "data": edit.image])
-    #inline("Admin/Fields/File")
+    #(field = ["id": "js", "label": "JavaScript", "size": "small", "data": edit.js])
+    #inline("Admin/Fields/Textarea")
+</fieldset>
 
-    #(field = ["id": "canonicalUrl", "label": "Canonical URL", "required": false, "data": edit.canonicalUrl])
-    #inline("Admin/Fields/Text")
-
-    <hr>
+<fieldset class="p m:bottom:l br:xs">
+    <legend class="p:horizontal:s">Reference</legend>
 
     #(field = ["id": "module", "required": true, "data": edit.module])
     #inline("Admin/Fields/Text")
@@ -52,8 +68,9 @@
     #(field = ["id": "model", "required": true, "data": edit.model])
     #inline("Admin/Fields/Text")
     
-    #(field = ["id": "reference", "required": true, "data": edit.reference])
+    #(field = ["id": "reference", "label": "Identifier", "required": true, "data": edit.reference])
     #inline("Admin/Fields/Text")
+</fieldset>
 
 #enddefine
 

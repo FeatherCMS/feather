@@ -22,31 +22,50 @@ struct BlogFrontendView {
         return req.leaf.render(template: template, context: context)
     }
 
-    func home(posts: [BlogPostModel]) -> EventLoopFuture<View> {
-        render("home", ["posts": .array(posts.map { $0.joinedMetadata() }.map(\.leafData))])
+    func home(posts: [BlogPostModel], metadata: Metadata) -> EventLoopFuture<View> {
+        render("home", [
+                "metadata": metadata.leafData,
+                "posts": .array(posts.map { $0.leafDataWithMetadata }.map(\.leafData)),
+        ])
     }
 
-    func posts(page: ViewKit.Page<LeafData>) -> EventLoopFuture<View> {
-        render("posts", ["page": page.leafData])
+    func posts(page: ViewKit.Page<LeafData>, metadata: Metadata) -> EventLoopFuture<View> {
+        render("posts", [
+                "metadata": metadata.leafData,
+                "page": page.leafData,
+        ])
     }
     
-    func categories(_ categories: [BlogCategoryModel]) -> EventLoopFuture<View> {
-        render("categories", ["categories": .array(categories.map { $0.joinedMetadata() }.map(\.leafData))])
+    func categories(_ categories: [BlogCategoryModel], metadata: Metadata) -> EventLoopFuture<View> {
+        render("categories", [
+                "metadata": metadata.leafData,
+                "categories": .array(categories.map { $0.leafDataWithMetadata }.map(\.leafData)),
+        ])
     }
     
-    func category(_ category: BlogCategoryModel, posts: [BlogPostModel]) -> EventLoopFuture<View> {
-        render("category", ["category": category.leafData, "posts": .array(posts.map { $0.joinedMetadata() })])
+    func category(_ category: BlogCategoryModel, posts: [BlogPostModel], metadata: Metadata) -> EventLoopFuture<View> {
+        render("category", [
+                "metadata": metadata.leafData,
+                "category": category.leafData, "posts": .array(posts.map { $0.leafDataWithMetadata }),
+        ])
     }
     
-    func authors(_ authors: [BlogAuthorModel]) -> EventLoopFuture<View> {
-        render("authors", ["authors": .array(authors.map { $0.joinedMetadata() }.map(\.leafData))])
+    func authors(_ authors: [BlogAuthorModel], metadata: Metadata) -> EventLoopFuture<View> {
+        render("authors", [
+                "metadata": metadata.leafData,
+                "authors": .array(authors.map { $0.leafDataWithMetadata }.map(\.leafData)),
+        ])
     }
 
-    func author(_ author: BlogAuthorModel, posts: [BlogPostModel]) -> EventLoopFuture<View> {
-        render("author", ["author": author.leafData, "posts": .array(posts.map { $0.joinedMetadata() })])
+    func author(_ author: BlogAuthorModel, posts: [BlogPostModel], metadata: Metadata) -> EventLoopFuture<View> {
+        render("author", [
+                "metadata": metadata.leafData,
+                "author": author.leafData,
+                "posts": .array(posts.map { $0.leafDataWithMetadata }),
+        ])
     }
     
     func post(_ post: BlogPostModel) -> EventLoopFuture<View> {
-        render("post", ["post": post.joinedMetadata()])
+        render("post", ["post": post.leafDataWithMetadata])
     }
 }

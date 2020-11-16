@@ -43,17 +43,17 @@ final class BlogModule: ViperModule {
         case "frontend-page":
             return frontendPageHook(req: req)
         case "home-page":
-            let content = params["page-content"] as! Metadata
-            return try? _router.frontend.homeView(req: req, page: content).map { $0 as Any }
+            let metadata = params["page-metadata"] as! Metadata
+            return _router.frontend.homeView(req: req, metadata).erase()
         case "posts-page":
-            let content = params["page-content"] as! Metadata
-            return try? _router.frontend.postsView(req: req, page: content).map { $0 as Any }
+            let metadata = params["page-metadata"] as! Metadata
+            return _router.frontend.postsView(req: req, metadata).erase()
         case "categories-page":
-            let content = params["page-content"] as! Metadata
-            return try? _router.frontend.categoriesView(req: req, page: content).map { $0 as Any }
+            let metadata = params["page-metadata"] as! Metadata
+            return _router.frontend.categoriesView(req: req, metadata).erase()
         case "authors-page":
-            let content = params["page-content"] as! Metadata
-            return try? _router.frontend.authorsView(req: req, page: content).map { $0 as Any }
+            let metadata = params["page-metadata"] as! Metadata
+            return _router.frontend.authorsView(req: req, metadata).erase()
         default:
             return nil
         }
@@ -91,7 +91,7 @@ final class BlogModule: ViperModule {
         return Metadata.query(on: req.db)
             .filter(Metadata.self, \.$module == BlogModule.name)
             .filter(Metadata.self, \.$model ~~ [BlogPostModel.name, BlogCategoryModel.name, BlogAuthorModel.name])
-            .filter(Metadata.self, \.$slug == req.url.path.safeSlug())
+            .filter(Metadata.self, \.$slug == req.url.path.trimmingSlashes())
             .filter(Metadata.self, \.$status != .archived)
             .first()
             .flatMap { [self] metadata -> EventLoopFuture<Response?> in

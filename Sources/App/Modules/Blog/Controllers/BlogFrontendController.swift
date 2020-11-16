@@ -10,41 +10,47 @@ import FeatherCore
 
 struct BlogFrontendController {
 
-    func homeView(req: Request, page content: Metadata) throws -> EventLoopFuture<Response> {
+    /// renders the [home-page] content
+    func homeView(req: Request, _ metadata: Metadata) -> EventLoopFuture<Response> {
         BlogPostModel
             .home(on: req)
-            .flatMap { BlogFrontendView(req).home(posts: $0) }
+            .flatMap { BlogFrontendView(req).home(posts: $0, metadata: metadata) }
             .encodeResponse(for: req)
     }
     
-    func categoriesView(req: Request, page content: Metadata) throws -> EventLoopFuture<Response> {
+    /// renders the [categories-page] content
+    func categoriesView(req: Request, _ metadata: Metadata) -> EventLoopFuture<Response> {
         BlogCategoryModel
             .findPublished(on: req)
-            .flatMap { BlogFrontendView(req).categories($0) }
+            .flatMap { BlogFrontendView(req).categories($0, metadata: metadata) }
             .encodeResponse(for: req)
     }
     
+    /// single category page
     func categoryView(_ req: Request, _ metadata: Metadata) -> EventLoopFuture<View> {
         BlogCategoryModel
             .findBy(id: metadata.reference, on: req)
             .and(BlogPostModel.findByCategory(id: metadata.reference, on: req))
-            .flatMap { BlogFrontendView(req).category($0, posts: $1) }
+            .flatMap { BlogFrontendView(req).category($0, posts: $1, metadata: metadata) }
     }
     
-    func authorsView(req: Request, page content: Metadata) throws -> EventLoopFuture<Response> {
+    /// renders the [authors-page] content
+    func authorsView(req: Request, _ metadata: Metadata) -> EventLoopFuture<Response> {
         BlogAuthorModel.findPublished(on: req)
-            .flatMap { BlogFrontendView(req).authors($0) }
+            .flatMap { BlogFrontendView(req).authors($0, metadata: metadata) }
             .encodeResponse(for: req)
     }
 
+    /// author profile page
     func authorView(_ req: Request, _ metadata: Metadata) -> EventLoopFuture<View> {
         BlogAuthorModel
             .findBy(id: metadata.reference, on: req)
             .and(BlogPostModel.findByAuthor(id: metadata.reference, on: req))
-            .flatMap { BlogFrontendView(req).author($0, posts: $1) }
+            .flatMap { BlogFrontendView(req).author($0, posts: $1, metadata: metadata) }
     }
     
-    func postsView(req: Request, page content: Metadata) throws -> EventLoopFuture<Response> {
+    /// renders the [posts-page] content
+    func postsView(req: Request, _ metadata: Metadata) -> EventLoopFuture<Response> {
         let search: String? = req.query["search"]
         let limit: Int = req.query["limit"] ?? 10
         let page: Int = max((req.query["page"] ?? 1), 1)
@@ -64,12 +70,13 @@ struct BlogFrontendController {
 
         return items.and(count).map { (posts, count) -> ViewKit.Page<LeafData> in
             let total = Int(ceil(Float(count) / Float(limit)))
-            return .init(posts.map { $0.joinedMetadata() }, info: .init(current: page, limit: limit, total: total))
+            return .init(posts.map { $0.leafDataWithMetadata }, info: .init(current: page, limit: limit, total: total))
         }
-        .flatMap { BlogFrontendView(req).posts(page: $0) }
+        .flatMap { BlogFrontendView(req).posts(page: $0, metadata: metadata) }
         .encodeResponse(for: req)
     }
 
+    /// single post page
     func postView(_ req: Request, _ metadata: Metadata) -> EventLoopFuture<View> {
         BlogPostModel
             .findBy(id: metadata.reference, on: req)

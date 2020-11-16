@@ -12,7 +12,8 @@ module:
 	echo "todo"
 	
 clean:
-	echo "todo"
+	rm ./db.sqlite
+	rm -r ./Public/assets
 
 test:
 	swift test --enable-test-discovery

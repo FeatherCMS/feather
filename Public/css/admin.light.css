@@ -15,3 +15,10 @@ tr {
     background: #fff;
     border: 1px solid #e9e9e9;
 }
+fieldset {
+    border: 2px solid #efefef;
+}
+legend {
+    color: #666;
+}
+

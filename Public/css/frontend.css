@@ -155,6 +155,42 @@ hr {
 .p\:xs { padding: 4px; }
 .p\:zero { padding: 0; }
 
+.p\:top\:l, .p\:t\:xl { padding-top: 48px; }
+.p\:top { padding-top: 32px; }
+.p\:top\:s { padding-top: 16px; }
+.p\:top\:xs { padding-top: 8px; }
+
+.p\:bottop\:l, .p\:b\:xl { padding-bottom: 48px; }
+.p\:bottom { padding-bottom: 32px; }
+.p\:bottop\:s { padding-bottom: 16px; }
+.p\:bottop\:xs { padding-bottom: 8px; }
+
+.p\:left\:xl { padding-left: 64px; }
+.p\:left\:l { padding-left: 48px; }
+.p\:left { padding-left: 32px; }
+.p\:left\:s { padding-left: 16px; }
+.p\:left\:xs { padding-left: 8px; }
+
+.p\:right\:xl { padding-right: 64px; }
+.p\:right\:l { padding-right: 48px; }
+.p\:right { padding-right: 32px; }
+.p\:right\:s { padding-right: 16px; }
+.p\:right\:xs { padding-right: 8px; }
+
+.p\:vertical\:xl { padding-left: 64px; padding-right: 64px; }
+.p\:vertical\:l { padding-left: 48px; padding-right: 48px; }
+.p\:vertical { padding-left: 32px; padding-right: 32px; }
+.p\:vertical\:s { padding-left: 16px; padding-right: 16px; }
+.p\:vertical\:xs { padding-left: 8px; padding-right: 8px; }
+
+.p\:horizontal\:xl { padding-left: 64px; padding-right: 64px; }
+.p\:horizontal\:l { padding-left: 48px; padding-right: 48px; }
+.p\:horizontal { padding-left: 32px; padding-right: 32px; }
+.p\:horizontal\:s { padding-left: 16px; padding-right: 16px }
+.p\:horizontal\:xs { padding-left: 8px; padding-right: 8px; }
+
+
+
 /* g = grid template columns */
 .g1, .g2, .g3, .g4, .g5, .g6, .g7, .g8, .g9, .g10, .g11, .g12 { display: grid; grid-template-columns: 1fr; }
 

@@ -32,10 +32,7 @@
         <link rel="canonical" href="#($app.baseUrl)#($req.url.path)">
     #endif
 
-    <script type="text/javascript">
-        #evaluate(js ?? "")
-        #(head.js ?? "")
-    </script>
+    
 </head>
 <body class="m:zero">
     
@@ -81,5 +78,10 @@
             </p>
         </section>
     </footer>
+    
+    <script type="text/javascript">
+        #evaluate(js ?? "")
+        #(head.js ?? "")
+    </script>
 </body>
 </html>

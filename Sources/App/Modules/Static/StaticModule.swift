@@ -71,20 +71,25 @@ final class StaticModule: ViperModule {
         .filter(Metadata.self, \.$status != .archived)
         .first()
         .flatMap { page -> EventLoopFuture<Response?> in
-            guard let page = page, let content = try? page.joined(Metadata.self) else {
+            guard let page = page, let metadata = try? page.joined(Metadata.self) else {
                 return req.eventLoop.future(nil)
             }
 
+            /// if the page is implemented as a Swift page handler, the page-content hook will take care of the rest.
             if page.content.hasPrefix("["), page.content.hasSuffix("]") {
                 let name = String(page.content.dropFirst().dropLast())
-                return req.hook(name, type: Response.self, params: ["page-content": content])
+                return req.hook(name, type: Response.self, params: ["page-metadata": metadata])
             }
 
-            #warning("HEAD has incorrect values!")
-            let body = content.filter(page.content, req: req)
+            let filteredContent = metadata.filter(page.content, req: req)
+
             return req.leaf.render(template: "Static/Frontend/Page", context: [
-                "head": content.leafData,
-                "body": .string(body)
+                "page": [
+                    "id": LeafData.string(page.id?.uuidString),
+                    "title": LeafData.string(page.title),
+                    "content": LeafData.string(filteredContent),
+                ],
+                "metadata": metadata.leafData,
             ])
             .encodeResponse(for: req).map { $0 as Response? }
         }

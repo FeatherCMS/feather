@@ -229,7 +229,7 @@ final class ExamplePageTemplateModule: ViperModule {
 	func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
         switch name {
         case "example-page":
-            let content = params["page-content"] as! FrontendContentModel
+            let content = params["page-metadata"] as! FrontendContentModel
             return try? exampleView(req: req, page: content).map { $0 as Any }
         
         default:

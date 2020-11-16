@@ -16,5 +16,12 @@
         background: #1c1c1e;
         border: 1px solid #222;
     }
+    fieldset {
+        border: 2px solid #222;
+    }
+    legend {
+        color: #999;
+    }
+
 }
 

@@ -24,6 +24,8 @@ final class FrontendMetadataEditForm: Form {
         var filters: [String]
         var date: String
         var feedItem: String
+        var css: String
+        var js: String
 
         var image: File?
         var imageDelete: Bool?
@@ -42,6 +44,8 @@ final class FrontendMetadataEditForm: Form {
     var filters = StringArraySelectionFormField()
     var date = StringFormField()
     var image = FileFormField()
+    var css = StringFormField()
+    var js = StringFormField()
     var notification: String?
     
     var leafData: LeafData {
@@ -58,6 +62,8 @@ final class FrontendMetadataEditForm: Form {
             "feedItem": feedItem,
             "filters": filters,
             "date": date,
+            "css": css,
+            "js": js,
             "image": image,
             "notification": notification,
         ])
@@ -84,6 +90,8 @@ final class FrontendMetadataEditForm: Form {
         excerpt.value = context.excerpt
         canonicalUrl.value = context.canonicalUrl
         feedItem.value = context.feedItem
+        css.value = context.css
+        js.value = context.js
 
         image.delete = context.imageDelete ?? false
         if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {
@@ -144,6 +152,9 @@ final class FrontendMetadataEditForm: Form {
         excerpt.value = input.excerpt ?? ""
         canonicalUrl.value = input.canonicalUrl ?? ""
         image.value = input.imageKey ?? ""
+        css.value = input.css ?? ""
+        js.value = input.js ?? ""
+        
     }
 
     func write(to output: Model) {
@@ -158,5 +169,7 @@ final class FrontendMetadataEditForm: Form {
         output.title = title.value.emptyToNil
         output.excerpt = excerpt.value.emptyToNil
         output.canonicalUrl = canonicalUrl.value.emptyToNil
+        output.css = css.value.emptyToNil
+        output.js = js.value.emptyToNil
     }
 }

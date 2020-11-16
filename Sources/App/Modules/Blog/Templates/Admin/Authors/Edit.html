@@ -1,7 +1,7 @@
 #define(toolbarLeft):
     #if(edit.id != nil):
     <a href="/admin/frontend/metadatas/#(edit.metadata.id)">#svg("feather")</a>
-    <a href="/#(edit.metadata.slug)/" target="_blank">#svg("eye")</a>
+    <a href="#if(!edit.metadata.slug.isEmpty()):/#(edit.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
 #enddefine
 #define(toolbarRight):

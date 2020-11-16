@@ -1,6 +1,9 @@
 #let(head = [
     "title": $vars["home.page.title"],
-    "description": $vars["home.page.description"]
+    "description": $vars["home.page.description"],
+    "css": metadata.css,
+    "js": metadata.js
+
 ])
 #define(css):
 @media (min-width: 600px) {
