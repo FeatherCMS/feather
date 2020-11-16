@@ -56,8 +56,10 @@ struct BlogFrontendController {
         let page: Int = max((req.query["page"] ?? 1), 1)
 
         var qb = BlogPostModel.findMetadata(on: req.db)
-        .filter(Metadata.self, \.$status == .published)
-        .with(\.$category)
+            .filter(Metadata.self, \.$status == .published)
+            .sort(Metadata.self, \.$date, .descending)
+            .with(\.$category)
+
         if let searchTerm = search, !searchTerm.isEmpty {
             qb = qb.filter(\.$title ~~ searchTerm)
         }
@@ -70,12 +72,7 @@ struct BlogFrontendController {
 
         return items.and(count).map { (posts, count) -> ViewKit.Page<LeafData> in
             let total = Int(ceil(Float(count) / Float(limit)))
-            return .init(posts.sorted(by: { lhs, rhs -> Bool in
-                                let left = try! lhs.joined(Metadata.self)
-                                let right = try! rhs.joined(Metadata.self)
-                                return left.date > right.date
-                            })
-                            .map { $0.leafDataWithMetadata }, info: .init(current: page, limit: limit, total: total))
+            return .init(posts.map { $0.leafDataWithMetadata }, info: .init(current: page, limit: limit, total: total))
         }
         .flatMap { BlogFrontendView(req).posts(page: $0, metadata: metadata) }
         .encodeResponse(for: req)
