@@ -125,13 +125,8 @@ final class FrontendMetadataEditForm: Form {
             model.error = "Model is too long (max 250 characters)"
             valid = false
         }
-        if reference.value.isEmpty {
-            reference.error = "Reference is required"
-            valid = false
-        }
-        #warning("reference should be a UUID")
-        if Validator.count(...250).validate(reference.value).isFailure {
-            reference.error = "Reference is too long (max 250 characters)"
+        if UUID(uuidString: reference.value) == nil {
+            reference.error = "Invalid reference"
             valid = false
         }
         if Bool(feedItem.value) == nil {
