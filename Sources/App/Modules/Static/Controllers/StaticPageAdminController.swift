@@ -14,11 +14,9 @@ struct StaticPageAdminController: ViperAdminViewController {
     typealias Model = StaticPageModel
     typealias EditForm = StaticPageEditForm
     
-    var listOrderBy: [FieldKey] {
-        [
-            Model.FieldKeys.title,
-        ]
-    }
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.title,
+    ]
     
     func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
         qb.filter(\.$title ~~ searchTerm)

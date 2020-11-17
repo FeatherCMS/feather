@@ -14,12 +14,10 @@ struct MenuAdminController: ViperAdminViewController {
     typealias Model = MenuModel
     typealias EditForm = MenuEditForm
     
-    var listOrderBy: [FieldKey] {
-        [
-            Model.FieldKeys.handle,
-            Model.FieldKeys.name,
-        ]
-    }
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.handle,
+        Model.FieldKeys.name,
+    ]
 
     func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
         qb.filter(\.$handle ~~ searchTerm)

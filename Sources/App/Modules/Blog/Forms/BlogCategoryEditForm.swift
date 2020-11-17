@@ -15,6 +15,7 @@ final class BlogCategoryEditForm: Form {
         var id: String
         var title: String
         var excerpt: String
+        var color: String
         var priority: String
         var image: File?
         var imageDelete: Bool?
@@ -23,6 +24,7 @@ final class BlogCategoryEditForm: Form {
     var id: String? = nil
     var title = StringFormField()
     var excerpt = StringFormField()
+    var color = StringFormField()
     var priority = StringFormField()
     var image = FileFormField()
     var metadata: Metadata?
@@ -33,6 +35,7 @@ final class BlogCategoryEditForm: Form {
             "id": id,
             "title": title,
             "excerpt": excerpt,
+            "color": color,
             "priority": priority,
             "image": image,
             "metadata": metadata,
@@ -52,6 +55,7 @@ final class BlogCategoryEditForm: Form {
         title.value = context.title
         priority.value = context.priority
         excerpt.value = context.excerpt
+        color.value = context.color
         image.delete = context.imageDelete ?? false
         if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {
             image.data = data
@@ -89,6 +93,7 @@ final class BlogCategoryEditForm: Form {
         title.value = input.title
         priority.value = String(input.priority)
         excerpt.value = input.excerpt
+        color.value = input.color ?? ""
         image.value = input.imageKey
     }
 
@@ -96,6 +101,7 @@ final class BlogCategoryEditForm: Form {
         output.title = title.value
         output.priority = Int(priority.value)!
         output.excerpt = excerpt.value
+        output.color = color.value.emptyToNil
         if !image.value.isEmpty {
             output.imageKey = image.value
         }

@@ -14,11 +14,10 @@ struct UserAdminController: ViperAdminViewController {
     typealias Model = UserModel
     typealias EditForm = UserEditForm
 
-    var listOrderBy: [FieldKey] {
-        [
-            Model.FieldKeys.email,
-        ]
-    }
+    
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.email,
+    ]
 
     func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
         qb.filter(\.$email ~~ searchTerm)

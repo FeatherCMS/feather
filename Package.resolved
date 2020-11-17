@@ -114,8 +114,8 @@
         "repositoryURL": "https://github.com/binarybirds/leaf-foundation",
         "state": {
           "branch": null,
-          "revision": "18c68db97f137b3fd40aa0efed07c7467f1fd180",
-          "version": "1.0.0-beta.3"
+          "revision": "46cfdd2b9e9c2801e6eafb6a17e569f6262aade7",
+          "version": "1.0.0-beta.4.1"
         }
       },
       {
@@ -294,8 +294,8 @@
         "repositoryURL": "https://github.com/binarybirds/view-kit",
         "state": {
           "branch": null,
-          "revision": "f35c2cb1bf916ea0a88176c2dd18e9358d664e16",
-          "version": "1.3.0-beta.1.3"
+          "revision": "fb6994eb9e9739a52021341e37238b9842a563b3",
+          "version": "1.3.0-beta.1.4.1"
         }
       },
       {

@@ -13,6 +13,10 @@ struct BlogAuthorAdminController: ViperAdminViewController {
     typealias Model = BlogAuthorModel
     typealias EditForm = BlogAuthorEditForm
     
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.name,
+    ]
+
     private func path(_ model: Model) -> String {
         Model.path + model.id!.uuidString + ".jpg"
     }

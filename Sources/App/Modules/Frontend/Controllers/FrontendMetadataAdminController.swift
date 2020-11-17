@@ -19,8 +19,10 @@ struct FrontendMetadataAdminController: ViperAdminViewController {
     typealias Model = Metadata
     typealias EditForm = FrontendMetadataEditForm
     
-    var listOrderBy: [FieldKey] { [ "slug", "module", "model"] }
-    
+    var listAllowedOrders: [FieldKey] = [
+        "slug", "module", "model"
+    ]
+
     private func path(_ model: Model) -> String {
         let date = DateFormatter.asset.string(from: Date())
         return Model.path + model.id!.uuidString + "_" + date + ".jpg"

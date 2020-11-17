@@ -14,13 +14,12 @@ struct RedirectAdminController: ViperAdminViewController {
     typealias Model = RedirectModel
     typealias EditForm = RedirectEditForm
     
-    var listOrderBy: [FieldKey] {
-        [
-            Model.FieldKeys.source,
-            Model.FieldKeys.destination,
-        ]
-    }
-    
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.source,
+        Model.FieldKeys.destination,
+        Model.FieldKeys.statusCode,
+    ]
+
     func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
         qb.filter(\.$source ~~ searchTerm)
         qb.filter(\.$destination ~~ searchTerm)

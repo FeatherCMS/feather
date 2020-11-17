@@ -15,6 +15,16 @@ struct MenuItemAdminController: ViperAdminViewController {
     typealias EditForm = MenuItemEditForm
 
     var idParamKey: String { "itemId" }
+    
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.label,
+        Model.FieldKeys.url,
+    ]
+
+    func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
+        qb.filter(\.$label ~~ searchTerm)
+        qb.filter(\.$url ~~ searchTerm)
+    }
 
     func beforeList(req: Request, queryBuilder: QueryBuilder<Model>) throws -> QueryBuilder<Model> {
         guard let id = req.parameters.get("id"), let uuid = UUID(uuidString: id) else {
@@ -25,16 +35,4 @@ struct MenuItemAdminController: ViperAdminViewController {
             .sort(\Model.$priority, .descending)
     }
     
-    
-    var listOrderBy: [FieldKey] {
-        [
-            Model.FieldKeys.label,
-            Model.FieldKeys.url,
-        ]
-    }
-
-    func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
-        qb.filter(\.$label ~~ searchTerm)
-        qb.filter(\.$url ~~ searchTerm)
-    }
 }

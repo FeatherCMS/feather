@@ -10,7 +10,7 @@
     <div class="wrapper w">
         <header class="m:xl">
             <p>
-                <span class="underline">#(post.category.title)</span>
+                <span class="underline"#if(post.category.color != nil): style="border-color: #(post.category.color);"#endif>#(post.category.title)</span>
                 &middot;
                 <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
                     #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")

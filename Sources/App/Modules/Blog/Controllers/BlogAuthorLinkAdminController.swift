@@ -14,6 +14,12 @@ struct BlogAuthorLinkAdminController: ViperAdminViewController {
     typealias EditForm = BlogAuthorLinkEditForm
     
     var idParamKey: String { "linkId" }
+    
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.name,
+        Model.FieldKeys.url,
+        Model.FieldKeys.priority,
+    ]
 
     func beforeList(req: Request, queryBuilder: QueryBuilder<Model>) throws -> QueryBuilder<Model> {
         guard let id = req.parameters.get("id"), let uuid = UUID(uuidString: id) else {

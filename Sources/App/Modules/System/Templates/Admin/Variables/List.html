@@ -29,7 +29,7 @@ tr {
 #define(th):
     #var(link = nil)
     <th class="t:left m:horizontal:s">#(link = ["key": "key", "default": true])#inline("Admin/SortLink")</th>
-    <th class="t:left">#(link = ["key": "value", "default": true])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "value"])#inline("Admin/SortLink")</th>
     #inline("Admin/TableActionLabels")
 #enddefine
 #define(tr):

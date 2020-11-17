@@ -15,6 +15,7 @@ extension BlogCategoryModel: LeafDataRepresentable {
             "title": title,
             "imageKey": imageKey,
             "excerpt": excerpt,
+            "color": color,
             "priority": priority,
             "posts": $posts.value != nil ? posts : [],
         ])

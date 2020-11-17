@@ -16,6 +16,7 @@ struct BlogMigration_v1_0_0: Migration {
                 .field(BlogCategoryModel.FieldKeys.title, .string, .required)
                 .field(BlogCategoryModel.FieldKeys.imageKey, .string, .required)
                 .field(BlogCategoryModel.FieldKeys.excerpt, .data, .required)
+                .field(BlogCategoryModel.FieldKeys.color, .string)
                 .field(BlogCategoryModel.FieldKeys.priority, .int, .required)
                 .unique(on: BlogCategoryModel.FieldKeys.title)
                 .create(),

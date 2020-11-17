@@ -14,12 +14,10 @@ struct BlogCategoryAdminController: ViperAdminViewController {
     typealias Model = BlogCategoryModel
     typealias EditForm = BlogCategoryEditForm
 
-    var listOrderBy: [FieldKey] {
-        [
-            Model.FieldKeys.title,
-            Model.FieldKeys.priority,
-        ]
-    }
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.title,
+        Model.FieldKeys.priority,
+    ]
 
     func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
         qb.filter(\.$title ~~ searchTerm)

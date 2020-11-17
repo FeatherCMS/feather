@@ -13,20 +13,14 @@ struct BlogPostAdminController: ViperAdminViewController {
     typealias Model = BlogPostModel
     typealias EditForm = BlogPostEditForm
     
-    var listOrderBy: [FieldKey] {
-        [
-            Model.FieldKeys.imageKey,
-            Model.FieldKeys.title,
-        ]
-    }
-
-    var listOrder: String { "desc" }
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.title
+    ]
     
     func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
         qb.filter(\.$title ~~ searchTerm)
-        //qb.filter(\.$imageKey ~~ searchTerm)
     }
-    
+
     private func path(_ model: Model) -> String {
         Model.path + model.id!.uuidString + ".jpg"
     }
