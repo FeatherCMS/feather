@@ -10,12 +10,12 @@ import FeatherCore
 struct FrontendNotFoundMiddleware: Middleware {
 
     /// if we found a .notFound error in the responder chain, we render our custom not found page with a 404 status code
-    public func respond(to request: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
-        next.respond(to: request).flatMapError { error in
+    public func respond(to req: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
+        next.respond(to: req).flatMapError { error in
             if let abort = error as? AbortError, abort.status == .notFound {
-                return notFound(request)
+                return notFound(req)
             }
-            return request.eventLoop.future(error: error)
+            return req.eventLoop.future(error: error)
         }
     }
 

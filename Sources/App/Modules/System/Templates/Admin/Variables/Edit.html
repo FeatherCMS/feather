@@ -1,15 +1,22 @@
 #define(fields):
     #var(field = nil)
 
-    #(field = ["id": "key", "required": true, "data": edit.key])
+    #(field = ["id": "key", "required": true, "data": fields.key])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "value", "size": "small", "data": edit.value])
+    #(field = ["id": "value", "size": "small", "data": fields.value])
     #inline("Admin/Fields/Textarea")
 
-    #(field = ["id": "notes", "size": "small", "data": edit.notes])
+    #(field = ["id": "notes", "size": "small", "data": fields.notes])
     #inline("Admin/Fields/Textarea")
 
 #enddefine
-#let(form = ["list": "variables", "key": "variable", "id": edit.id, "url": $req.url.path])
+
+#let(form = [
+    "list": "variables",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.id,
+    "key": "variable"
+])
 #inline("Admin/Form")

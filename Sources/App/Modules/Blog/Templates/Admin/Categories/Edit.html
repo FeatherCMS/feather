@@ -1,24 +1,31 @@
 #define(toolbarLeft):
-    #if(edit.id != nil):
-    <a href="/admin/frontend/metadatas/#(edit.metadata.id)">#svg("feather")</a>
-    <a href="#if(!edit.metadata.slug.isEmpty()):/#(edit.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
+    #if(fields.id != nil):
+    <a href="/admin/frontend/metadatas/#(fields.metadata.id)">#svg("feather")</a>
+    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
 #enddefine
 #define(fields):
     #var(field = nil)
 
-    #(field = ["id": "image", "class": "small", "data": edit.image])
+    #(field = ["id": "image", "class": "small", "data": fields.image])
     #inline("Admin/Fields/File")
 
-    #(field = ["id": "title", "required": true, "data": edit.title])
+    #(field = ["id": "title", "required": true, "data": fields.title])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "excerpt", "size": "small", "data": edit.excerpt])
+    #(field = ["id": "excerpt", "size": "small", "data": fields.excerpt])
     #inline("Admin/Fields/Textarea")
 
-    #(field = ["id": "priority", "required": true, "data": edit.priority])
+    #(field = ["id": "priority", "required": true, "data": fields.priority])
     #inline("Admin/Fields/Text")
-
 #enddefine
-#let(form = ["list": "categories", "key": "category", "id": edit.id, "multipart": true])
+
+#let(form = [
+    "list": "categories",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.id,
+    "key": "category",
+    "multipart": true
+])
 #inline("Admin/Form")

@@ -1,12 +1,19 @@
 #define(fields):
     #var(field = nil)
 
-    #(field = ["id": "email", "required": true, "data": edit.email])
+    #(field = ["id": "email", "required": true, "data": fields.email])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "password", "type": "password", "data": edit.password])
+    #(field = ["id": "password", "type": "password", "data": fields.password])
     #inline("Admin/Fields/Text")
 
 #enddefine
-#let(form = ["list": "users", "key": "user", "id": edit.id])
+
+#let(form = [
+    "list": "users",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.id,
+    "key": "user"
+])
 #inline("Admin/Form")

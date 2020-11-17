@@ -1,26 +1,34 @@
 #define(toolbarLeft):
-    #if(edit.id != nil):
-    <a href="/admin/frontend/metadatas/#(edit.metadata.id)">#svg("feather")</a>
-    <a href="#if(!edit.metadata.slug.isEmpty()):/#(edit.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
+    #if(fields.id != nil):
+    <a href="/admin/frontend/metadatas/#(fields.metadata.id)">#svg("feather")</a>
+    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
 #enddefine
-#define(toolbarRight):
-    #if(edit.id != nil):
-    <a href="/admin/blog/authors/#(edit.id)/links">#svg("link")</a>
+#define(toolbarRightBefore):
+    #if(fields.id != nil):
+    <a href="/admin/blog/authors/#(fields.id)/links">#svg("link")</a>
     #endif
 #enddefine
 #define(fields):
     #var(field = nil)
 
-    #(field = ["id": "image", "class": "circular", "data": edit.image])
+    #(field = ["id": "image", "class": "circular", "data": fields.image])
     #inline("Admin/Fields/File")
 
-    #(field = ["id": "name", "required": true, "data": edit.name])
+    #(field = ["id": "name", "required": true, "data": fields.name])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "bio", "size": "small", "data": edit.bio])
+    #(field = ["id": "bio", "size": "small", "data": fields.bio])
     #inline("Admin/Fields/Textarea")
 
 #enddefine
-#let(form = ["list": "authors", "key": "author", "id": edit.id, "multipart": true])
+
+#let(form = [
+    "list": "authors",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.id,
+    "key": "author",
+    "multipart": true
+])
 #inline("Admin/Form")

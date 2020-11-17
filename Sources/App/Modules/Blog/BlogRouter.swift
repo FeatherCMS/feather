@@ -22,7 +22,6 @@ struct BlogRouter: ViperRouter {
 
             postAdmin.setupRoutes(on: module, as: BlogPostModel.pathComponent)
             categoryAdmin.setupRoutes(on: module, as: BlogCategoryModel.pathComponent)
-            
 
             authorAdmin.setupRoutes(on: module, as: BlogAuthorModel.pathComponent)
             

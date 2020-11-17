@@ -54,8 +54,9 @@ public struct InlineSvg: LeafNonMutatingMethod, Invariant, StringReturn {
     }
     
     public func evaluate(_ params: LeafCallValues) -> LeafData {
+        let name = params[0].string!
+        let path = Application.Paths.public + Application.Locations.images + "feather-icons/" + name + ".svg"
         do {
-            let path = Application.Paths.public + Application.Locations.images + "feather-icons/" + params[0].string! + ".svg"
             var svg = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
             let cls = params[1].string!
             if !cls.isEmpty {
@@ -64,7 +65,7 @@ public struct InlineSvg: LeafNonMutatingMethod, Invariant, StringReturn {
             return .string(svg)
         }
         catch {
-            return .error(error.localizedDescription)
+            return .string("!\(name)!")
         }
     }
 }

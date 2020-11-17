@@ -57,11 +57,11 @@ final class BlogCategoryEditForm: Form {
             image.data = data
         }
     }
-    
+
     func initialize() {
         priority.value = String(100)
     }
-    
+
     func validate(req: Request) -> EventLoopFuture<Bool> {
         var valid = true
        

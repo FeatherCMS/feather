@@ -1,30 +1,38 @@
 #define(toolbarLeft):
-    #if(edit.metadata != nil):
-    <a href="/admin/frontend/metadatas/#(edit.metadata.id)">#svg("feather")</a>
-    <a href="#if(!edit.metadata.slug.isEmpty()):/#(edit.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
+    #if(fields.metadata != nil):
+    <a href="/admin/frontend/metadatas/#(fields.metadata.id)">#svg("feather")</a>
+    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
 #enddefine
 #define(fields):
     #var(field = nil)
 
-    #(field = ["id": "title", "required": true, "data": edit.title])
+    #(field = ["id": "title", "required": true, "data": fields.title])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "excerpt", "size": "small", "data": edit.excerpt])
+    #(field = ["id": "excerpt", "size": "small", "data": fields.excerpt])
     #inline("Admin/Fields/Textarea")
 
-    #(field = ["id": "image", "class": "large", "data": edit.image])
+    #(field = ["id": "image", "class": "large", "data": fields.image])
     #inline("Admin/Fields/File")
 
-    #(field = ["id": "content", "size": "large", "data": edit.content])
+    #(field = ["id": "content", "size": "large", "data": fields.content])
     #inline("Admin/Fields/Textarea")
 
-    #(field = ["id": "categoryId", "label": "Category", "data": edit.categoryId])
+    #(field = ["id": "categoryId", "label": "Category", "data": fields.categoryId])
     #inline("Admin/Fields/Selection")
 
-    #(field = ["id": "authorId", "label": "Author", "data": edit.authorId])
+    #(field = ["id": "authorId", "label": "Author", "data": fields.authorId])
     #inline("Admin/Fields/Selection")
 
 #enddefine
-#let(form = ["list": "posts", "key": "post", "id": edit.id, "multipart": true])
+
+#let(form = [
+    "list": "posts",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.id,
+    "key": "post",
+    "multipart": true
+])
 #inline("Admin/Form")

@@ -1,15 +1,21 @@
 #define(fields):
     #var(field = nil)
 
-    #(field = ["id": "source", "required": true, "data": edit.source])
+    #(field = ["id": "source", "required": true, "data": fields.source])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "destination", "required": true, "data": edit.destination])
+    #(field = ["id": "destination", "required": true, "data": fields.destination])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "statusCode", "label": "Status Code", "data": edit.statusCode])
+    #(field = ["id": "statusCode", "label": "Status Code", "data": fields.statusCode])
     #inline("Admin/Fields/Selection")
 
 #enddefine
-#let(form = ["list": "redirects", "key": "redirect", "id": edit.id])
+#let(form = [
+    "list": "redirects",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.id,
+    "key": "redirect"
+])
 #inline("Admin/Form")

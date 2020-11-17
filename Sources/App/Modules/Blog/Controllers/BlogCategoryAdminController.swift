@@ -29,6 +29,7 @@ struct BlogCategoryAdminController: ViperAdminViewController {
         Model.path + model.id!.uuidString + ".jpg"
     }
     
+    
     func beforeRender(req: Request, form: EditForm) -> EventLoopFuture<Void> {
         var future: EventLoopFuture<Void> = req.eventLoop.future()
         if let id = form.id, let uuid = UUID(uuidString: id) {
@@ -77,5 +78,5 @@ struct BlogCategoryAdminController: ViperAdminViewController {
     
     func beforeDelete(req: Request, model: Model) -> EventLoopFuture<Model> {
         req.fs.delete(key: path(model)).map { model }
-    }
+    }    
 }

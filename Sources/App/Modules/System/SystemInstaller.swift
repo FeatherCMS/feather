@@ -61,7 +61,7 @@ struct SystemInstaller: ViperInstaller {
             ],
             [
                 "key": "page.not.found.description",
-                "value": "This page is not available anymore.",
+                "value": "Unfortunately the requested page is not available.",
                 "note": "Description of the not found page",
             ],
             [

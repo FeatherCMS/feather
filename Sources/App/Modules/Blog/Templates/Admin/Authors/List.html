@@ -22,7 +22,7 @@ tr {
 }
 @media (min-width: 600px) {
     tr {
-        grid-template-columns: 64px 1fr 64px 96px;
+        grid-template-columns: 64px 1fr 96px 64px 96px;
     }
 }
 #enddefine
@@ -30,6 +30,7 @@ tr {
     #var(link = nil)
     <th class="t:center">Image</th>
     <th class="t:left m:horizontal:s">#(link = ["key": "name", "default": true])#inline("Admin/SortLink")</th>
+    <th class="t:center">Links</th>
     #inline("Admin/TableActionLabels")
 #enddefine
 #define(tr):
@@ -39,6 +40,7 @@ tr {
         <a href="#($req.url.path)#(item.id)/"><img class="w64 br:circular" src="#(item.imageKey.resolve())" alt="#(item.name)"></a>
     </td>
     <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.name)</a></td>
+    <td class="t:center"><a href="#($req.url.path)#(item.id)/links/">#svg("link")</a></td>
     #inline("Admin/TableActionButtons")
 </tr>
     #endfor

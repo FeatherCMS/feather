@@ -1,18 +1,25 @@
 #define(toolbarLeft):
-    #if(edit.id != nil):
-    <a href="/admin/frontend/metadatas/#(edit.metadata.id)">#svg("feather")</a>
-    <a href="#if(!edit.metadata.slug.isEmpty()):/#(edit.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
+    #if(fields.id != nil):
+    <a href="/admin/frontend/metadatas/#(fields.metadata.id)">#svg("feather")</a>
+    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
 #enddefine
 #define(fields):
     #var(field = nil)
 
-    #(field = ["id": "title", "required": true, "data": edit.title])
+    #(field = ["id": "title", "required": true, "data": fields.title])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "content", "size": "large", "data": edit.content])
+    #(field = ["id": "content", "size": "large", "data": fields.content])
     #inline("Admin/Fields/Textarea")
 
 #enddefine
-#let(form = ["list": "pages", "key": "page", "id": edit.id])
+
+#let(form = [
+    "list": "pages",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.id,
+    "key": "page"
+])
 #inline("Admin/Form")
