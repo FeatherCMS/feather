@@ -13,7 +13,6 @@ extension Application {
 
     // paths are always absolute, with a trailing slash
     struct Paths {
-        #warning("sanitize file paths e.g ! or space characters")
         static let base: String = Environment.path("BASE_PATH")
         static let `public`: String = Paths.base + "Public/"
         static let assets: String = Paths.public + "assets/"

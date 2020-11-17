@@ -100,6 +100,16 @@ These modules can be removed if you don't need them. You can create new user mod
 - Syntax - This module is responsible for Swift related syntax highlights using a content filter.
 - Sponsor - This module is responsible for displaying a sponsorship box.
 
+
+### Module template
+
+https://github.com/BinaryBirds/swift-template
+https://github.com/BinaryBirds/vapor-module-template
+
+```
+    swift template generate MyModule -u vapor-module -o Sources/App/Modules 
+```
+
 --- 
 
 ## Hook functions
@@ -298,11 +308,6 @@ You can print out the backtrace using the `bt` command, this can help you to ide
 - [Feather icons](https://feathericons.com) - Feather icons
 - [Ink](https://github.com/johnsundell/ink) - markdown support
 - [Splash](https://github.com/johnsundell/splash) - Swift syntax highlight
-- [Sample image #1](https://unsplash.com/photos/5NE6mX0WVfQ)
-- [Sample image #2](https://unsplash.com/photos/k0rVudBoB4c)
-- [Sample image #3](https://unsplash.com/photos/Mbf3xFiC1Zo)
-- [Sample image #4](https://unsplash.com/photos/wpw8sHoBtSY)
-- [Sample image #5](https://unsplash.com/photos/5Z9GhJJjiCc)
 
 ---
 
