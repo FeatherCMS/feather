@@ -89,27 +89,26 @@ public func configure(_ app: Application) throws {
                                viewDirectory: app.directory.viewsDirectory,
                                defaultExtension: "html")
     
-    let moduleSource = ViperViewFiles(rootDirectory: app.directory.workingDirectory,
-                                      modulesDirectory: "Sources/App/Modules",
-                                      resourcesDirectory: "Resources",
-                                      viewsFolderName: "Templates",
-                                      fileExtension: "html",
-                                      fileio: app.fileio)
+    let moduleSource = ViperLeafSource(workingDirectory: app.directory.workingDirectory,
+                                       modulesLocation: "Sources/App/Modules",
+                                       templatesDirectory: "Templates",
+                                       fileExtension: "html",
+                                       fileio: app.fileio)
 
     let multipleSources = LeafSources()
     try multipleSources.register(using: defaultSource)
     try multipleSources.register(source: "local-modules", using: moduleSource)
 
-    for module in modules {
-        guard let url = module.viewsUrl else { continue }
-
-        let moduleSource = ViperBundledViewFiles(module: module.name,
-                                                 rootDirectory: url.path.withTrailingSlash,
-                                                 fileExtension: "html",
-                                                 fileio: app.fileio)
-
-        try multipleSources.register(source: "\(module.name)-module", using: moduleSource)
-    }
+//    for module in modules {
+//        guard let url = module.bundleUrl else { continue }
+//
+//        let moduleSource = ViperBundledViewFiles(module: module.name,
+//                                                 rootDirectory: url.path.withTrailingSlash,
+//                                                 fileExtension: "html",
+//                                                 fileio: app.fileio)
+//
+//        try multipleSources.register(source: "\(module.name)-module", using: moduleSource)
+//    }
 
     LeafEngine.sources = multipleSources
     LeafEngine.useLeafFoundation()

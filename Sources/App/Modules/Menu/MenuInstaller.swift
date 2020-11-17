@@ -5,8 +5,7 @@
 //  Created by Tibor Bodecs on 2020. 11. 15..
 //
 
-import Vapor
-import Fluent
+import FeatherCore
 
 /// installer component for the menu module
 struct MenuInstaller: ViperInstaller {

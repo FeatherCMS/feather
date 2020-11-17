@@ -5,8 +5,7 @@
 //  Created by Tibor Bodecs on 2020. 07. 12..
 //
 
-import Vapor
-import Fluent
+import FeatherCore
 
 /// installer component for the static module
 struct StaticInstaller: ViperInstaller {
