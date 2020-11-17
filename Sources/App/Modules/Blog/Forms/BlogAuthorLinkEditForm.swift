@@ -62,8 +62,16 @@ final class BlogAuthorLinkEditForm: Form {
             name.error = "Name is required"
             valid = false
         }
+        if Validator.count(...250).validate(name.value).isFailure {
+            name.error = "Name is too long (max 250 characters)"
+            valid = false
+        }
         if url.value.isEmpty {
             url.error = "Url is required"
+            valid = false
+        }
+        if Validator.count(...250).validate(url.value).isFailure {
+            url.error = "URL is too long (max 250 characters)"
             valid = false
         }
         if Int(priority.value) == nil {

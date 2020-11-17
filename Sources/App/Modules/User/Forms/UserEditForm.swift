@@ -47,9 +47,16 @@ final class UserEditForm: Form {
             email.error = "Invalid email"
             valid = false
         }
-
+        if Validator.count(...250).validate(email.value).isFailure {
+            email.error = "Email is too long (max 250 characters)"
+            valid = false
+        }
         if id == nil && Validator.count(8...).validate(password.value).isFailure {
-            password.error = "Password is too short"
+            password.error = "Password is too short (min 8 characters)"
+            valid = false
+        }
+        if Validator.count(...250).validate(password.value).isFailure {
+            password.error = "Password is too long (max 250 characters)"
             valid = false
         }
         return req.eventLoop.future(valid)

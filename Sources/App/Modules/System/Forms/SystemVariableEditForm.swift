@@ -52,6 +52,10 @@ final class SystemVariableEditForm: Form {
             key.error = "Key is required"
             valid = false
         }
+        if Validator.count(...250).validate(key.value).isFailure {
+            key.error = "Key is too long (max 250 characters)"
+            valid = false
+        }
 
         return req.eventLoop.future(valid)
     }

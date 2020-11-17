@@ -61,6 +61,10 @@ final class BlogAuthorEditForm: Form {
             name.error = "Name is required"
             valid = false
         }
+        if Validator.count(...250).validate(name.value).isFailure {
+            name.error = "Name is too long (max 250 characters)"
+            valid = false
+        }
         return req.eventLoop.future(valid)
     }
 

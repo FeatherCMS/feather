@@ -54,6 +54,18 @@ final class MenuEditForm: Form {
             handle.error = "Handle is required"
             valid = false
         }
+        if Validator.count(...250).validate(handle.value).isFailure {
+            handle.error = "Handle is too long (max 250 characters)"
+            valid = false
+        }
+        if Validator.count(...250).validate(name.value).isFailure {
+            name.error = "Name is too long (max 250 characters)"
+            valid = false
+        }
+        if Validator.count(...250).validate(icon.value).isFailure {
+            icon.error = "Icon is too long (max 250 characters)"
+            valid = false
+        }
 
         return req.eventLoop.future(valid)
     }

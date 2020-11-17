@@ -49,6 +49,10 @@ final class StaticPageEditForm: Form {
             title.error = "Title is required"
             valid = false
         }
+        if Validator.count(...250).validate(title.value).isFailure {
+            title.error = "Title is too long (max 250 characters)"
+            valid = false
+        }
         if content.value.isEmpty {
             content.error = "Content is required"
             valid = false

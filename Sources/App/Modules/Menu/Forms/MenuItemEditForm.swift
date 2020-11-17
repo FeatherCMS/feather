@@ -74,8 +74,16 @@ final class MenuItemEditForm: Form {
             label.error = "Label is required"
             valid = false
         }
+        if Validator.count(...250).validate(label.value).isFailure {
+            label.error = "Label is too long (max 250 characters)"
+            valid = false
+        }
         if url.value.isEmpty {
             url.error = "Url is required"
+            valid = false
+        }
+        if Validator.count(...250).validate(url.value).isFailure {
+            url.error = "URL is too long (max 250 characters)"
             valid = false
         }
         if Int(priority.value) == nil {

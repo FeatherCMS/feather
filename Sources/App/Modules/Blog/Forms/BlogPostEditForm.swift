@@ -68,6 +68,10 @@ final class BlogPostEditForm: Form {
             title.error = "Title is required"
             valid = false
         }
+        if Validator.count(...250).validate(title.value).isFailure {
+            title.error = "Title is too long (max 250 characters)"
+            valid = false
+        }
         if UUID(uuidString: categoryId.value) == nil {
             categoryId.error = "Invalid category"
             valid = false

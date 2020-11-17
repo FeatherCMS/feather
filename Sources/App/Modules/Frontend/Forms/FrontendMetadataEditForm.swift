@@ -113,12 +113,25 @@ final class FrontendMetadataEditForm: Form {
             module.error = "Module is required"
             valid = false
         }
+        if Validator.count(...250).validate(module.value).isFailure {
+            module.error = "Module is too long (max 250 characters)"
+            valid = false
+        }
         if model.value.isEmpty {
             model.error = "Model is required"
             valid = false
         }
+        if Validator.count(...250).validate(model.value).isFailure {
+            model.error = "Model is too long (max 250 characters)"
+            valid = false
+        }
         if reference.value.isEmpty {
             reference.error = "Reference is required"
+            valid = false
+        }
+        #warning("reference should be a UUID")
+        if Validator.count(...250).validate(reference.value).isFailure {
+            reference.error = "Reference is too long (max 250 characters)"
             valid = false
         }
         if Bool(feedItem.value) == nil {
@@ -131,6 +144,18 @@ final class FrontendMetadataEditForm: Form {
         }
         if DateFormatter.ymd.date(from: date.value) == nil {
             date.error = "Invalid date"
+            valid = false
+        }
+        if Validator.count(...250).validate(slug.value).isFailure {
+            slug.error = "Slug is too long (max 250 characters)"
+            valid = false
+        }
+        if Validator.count(...250).validate(title.value).isFailure {
+            title.error = "Title is too long (max 250 characters)"
+            valid = false
+        }
+        if Validator.count(...250).validate(canonicalUrl.value).isFailure {
+            canonicalUrl.error = "Canonical URL is too long (max 250 characters)"
             valid = false
         }
         return req.eventLoop.future(valid)

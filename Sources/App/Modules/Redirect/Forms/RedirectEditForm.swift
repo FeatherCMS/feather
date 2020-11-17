@@ -64,8 +64,16 @@ final class RedirectEditForm: Form {
             source.error = "Source is required"
             valid = false
         }
+        if Validator.count(...250).validate(source.value).isFailure {
+            source.error = "Source is too long (max 250 characters)"
+            valid = false
+        }
         if destination.value.isEmpty {
             destination.error = "Destination is required"
+            valid = false
+        }
+        if Validator.count(...250).validate(destination.value).isFailure {
+            destination.error = "Destination is too long (max 250 characters)"
             valid = false
         }
         let code = Int(statusCode.value)

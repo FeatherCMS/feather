@@ -69,6 +69,10 @@ final class BlogCategoryEditForm: Form {
             title.error = "Title is required"
             valid = false
         }
+        if Validator.count(...250).validate(title.value).isFailure {
+            title.error = "Title is too long (max 250 characters)"
+            valid = false
+        }
         if Int(priority.value) == nil {
             priority.error = "Invalid priority value"
             valid = false
