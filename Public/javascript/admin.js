@@ -22,6 +22,8 @@ function chooseImage() {
 function removeImage() {
     document.getElementById('image').value = null;
     document.getElementById('imageDelete').value = true;
+    const placeholder = document.getElementById('placeholder');
+    placeholder.classList.remove('hidden');
     const element = document.getElementById('uploaded-image');
     if (element !== null) {
         element.parentNode.removeChild(element);
@@ -31,6 +33,9 @@ function removeImage() {
 const imageElement = document.getElementById("image")
 if (imageElement !== null) {
     imageElement.onchange = function(event) {
+        const placeholder = document.getElementById('placeholder');
+        placeholder.classList.add('hidden');
+
         const file = event.target.files[0];
         const blobURL = URL.createObjectURL(file);
         let element = document.getElementById('uploaded-image');

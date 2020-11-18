@@ -35,7 +35,7 @@ extension Application {
     }
 }
 
-#warning("this is a module dependency")
+/// NOTE: this is a module dependency, that should be eliminated somehow in the future
 extension Request {
 
     var leafSystemVariables: [String: LeafDataGenerator] {

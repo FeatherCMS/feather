@@ -12,7 +12,7 @@
 #define(fields):
     #var(field = nil)
 
-    #(field = ["id": "image", "class": "circular", "data": fields.image])
+    #(field = ["id": "image", "class": "circular", "data": fields.image, "required": true])
     #inline("Admin/Fields/File")
 
     #(field = ["id": "name", "required": true, "data": fields.name])

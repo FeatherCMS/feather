@@ -7,14 +7,14 @@
 #define(fields):
     #var(field = nil)
 
+    #(field = ["id": "image", "class": "large", "data": fields.image, "required": true])
+    #inline("Admin/Fields/File")
+
     #(field = ["id": "title", "required": true, "data": fields.title])
     #inline("Admin/Fields/Text")
 
     #(field = ["id": "excerpt", "size": "small", "data": fields.excerpt])
     #inline("Admin/Fields/Textarea")
-
-    #(field = ["id": "image", "class": "large", "data": fields.image])
-    #inline("Admin/Fields/File")
 
     #(field = ["id": "content", "size": "large", "data": fields.content])
     #inline("Admin/Fields/Textarea")

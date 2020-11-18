@@ -16,7 +16,6 @@ final class BlogAuthorEditForm: Form {
         var name: String
         var bio: String
         var image: File?
-        var imageDelete: Bool?
     }
 
     var id: String? = nil
@@ -44,7 +43,6 @@ final class BlogAuthorEditForm: Form {
         id = context.id.emptyToNil
         name.value = context.name
         bio.value = context.bio
-        image.delete = context.imageDelete ?? false
         if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {
             image.data = data
         }
@@ -63,6 +61,10 @@ final class BlogAuthorEditForm: Form {
         }
         if Validator.count(...250).validate(name.value).isFailure {
             name.error = "Name is too long (max 250 characters)"
+            valid = false
+        }
+        if id == nil && image.data == nil {
+            image.error = "Image is required"
             valid = false
         }
         return req.eventLoop.future(valid)

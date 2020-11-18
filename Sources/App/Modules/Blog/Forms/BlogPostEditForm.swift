@@ -19,7 +19,6 @@ final class BlogPostEditForm: Form {
         var categoryId: String
         var authorId: String
         var image: File?
-        var imageDelete: Bool?
     }
 
     var id: String? = nil
@@ -56,7 +55,6 @@ final class BlogPostEditForm: Form {
         content.value = context.content
         categoryId.value = context.categoryId
         authorId.value = context.authorId
-        image.delete = context.imageDelete ?? false
         if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {
             image.data = data
         }
@@ -78,6 +76,10 @@ final class BlogPostEditForm: Form {
         }
         if UUID(uuidString: authorId.value) == nil {
             authorId.error = "Invalid author"
+            valid = false
+        }
+        if id == nil && image.data == nil {
+            image.error = "Image is required"
             valid = false
         }
         return req.eventLoop.future(valid)

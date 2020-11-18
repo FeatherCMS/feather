@@ -96,6 +96,9 @@ input:focus, textarea:focus, select:focus {
 .shadow-hover:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
-form .required, form .error {
+form .required {
+    color: #21a9ff;
+}
+form .error {
     color: #ee6a5d;
 }

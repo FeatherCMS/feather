@@ -22,6 +22,8 @@
     legend {
         color: #999;
     }
-
+    #placeholder {
+        color: #000;
+    }
 }
 

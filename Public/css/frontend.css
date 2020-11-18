@@ -71,6 +71,7 @@ hr {
     width: 100%;
     height: auto;
 }
+.hidden { display: none; }
 
 .center { text-align: center; }
 .left { text-align: left; }

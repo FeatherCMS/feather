@@ -21,4 +21,7 @@ fieldset {
 legend {
     color: #666;
 }
+#placeholder {
+    color: #ccc;
+}
 

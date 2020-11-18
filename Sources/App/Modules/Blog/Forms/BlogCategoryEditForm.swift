@@ -18,7 +18,6 @@ final class BlogCategoryEditForm: Form {
         var color: String
         var priority: String
         var image: File?
-        var imageDelete: Bool?
     }
 
     var id: String? = nil
@@ -56,7 +55,7 @@ final class BlogCategoryEditForm: Form {
         priority.value = context.priority
         excerpt.value = context.excerpt
         color.value = context.color
-        image.delete = context.imageDelete ?? false
+
         if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {
             image.data = data
         }
@@ -81,8 +80,8 @@ final class BlogCategoryEditForm: Form {
             priority.error = "Invalid priority value"
             valid = false
         }
-        if excerpt.value.isEmpty {
-            excerpt.error = "Excerpt is required"
+        if id == nil && image.data == nil {
+            image.error = "Image is required"
             valid = false
         }
         return req.eventLoop.future(valid)

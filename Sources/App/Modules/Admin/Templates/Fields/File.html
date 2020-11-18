@@ -1,13 +1,18 @@
 <section class="m:bottom #(field.class ?? "large")-uploader uploader">
-    <label for="#(field.id)">#(field.label ?? field.id.capitalized())</label>
+    <label for="#(field.id)">#(field.label ?? field.id.capitalized())#if(field.required ?? false):<span class="required">*</span>#endif</label>
     <div id="image-uploader" class="image-uploader">
         #if(field.data.value != ""):
             <img id="uploaded-image" src="#(field.data.value.resolve() ?? "")">
+        #else:
+        <div id="placeholder" class="p:l">#svg("image", class: "w64 block")</div>
         #endif
+        
         <a id="choose-button" href="javascript:void(0);" onclick="chooseImage();">Choose</a>
+        #if(!field.required ?? false):
         <a id="remove-button" href="javascript:void(0);" onclick="removeImage()">Remove</a>
+        #endif
         <input id="#(field.id)Delete" name="#(field.id)Delete" type="hidden" value="false">
-        <input id="#(field.id)" name="#(field.id)" type="file" accept="image/jpeg" style="display:none;">
+        <input id="#(field.id)" name="#(field.id)" type="file" accept="image/jpeg" class="hidden"#if(field.required ?? false): aria-required="true"#endif>
     </div>
     #if(field.data.error != nil):
     <span class="error">#(field.data.error)</span>
