@@ -48,17 +48,14 @@ struct BlogFrontendController {
             .and(BlogPostModel.findByAuthor(id: metadata.reference, on: req))
             .flatMap { BlogFrontendView(req).author($0, posts: $1, metadata: metadata) }
     }
-    
+
     /// renders the [posts-page] content
     func postsView(req: Request, _ metadata: Metadata) -> EventLoopFuture<Response> {
+        var qb = BlogPostModel.find(on: req)
+
         let search: String? = req.query["search"]
         let limit: Int = req.query["limit"] ?? 10
         let page: Int = max((req.query["page"] ?? 1), 1)
-
-        var qb = BlogPostModel.findMetadata(on: req.db)
-            .filter(Metadata.self, \.$status == .published)
-            .sort(Metadata.self, \.$date, .descending)
-            .with(\.$category)
 
         if let searchTerm = search, !searchTerm.isEmpty {
             qb = qb.filter(\.$title ~~ searchTerm)
@@ -66,7 +63,7 @@ struct BlogFrontendController {
 
         let start: Int = (page - 1) * limit
         let end: Int = page * limit
-        
+
         let count = qb.count()
         let items = qb.copy().range(start..<end).all()
 

@@ -102,7 +102,7 @@ final class FrontendMetadataEditForm: Form {
     func initialize() {
         statusId.options = Model.Status.allCases.map(\.formFieldStringOption)
         statusId.value = Model.Status.draft.rawValue
-        date.value = DateFormatter.ymd.string(from: Date())
+        date.value = DateFormatter.dateTime.string(from: Date())
         feedItem.options = FormFieldStringOption.trueFalse()
     }
     
@@ -137,7 +137,7 @@ final class FrontendMetadataEditForm: Form {
             statusId.error = "Invalid status"
             valid = false
         }
-        if DateFormatter.ymd.date(from: date.value) == nil {
+        if DateFormatter.dateTime.date(from: date.value) == nil {
             date.error = "Invalid date"
             valid = false
         }
@@ -166,7 +166,7 @@ final class FrontendMetadataEditForm: Form {
         statusId.value = input.status.rawValue
         feedItem.value = String(input.feedItem)
         filters.values = input.filters
-        date.value = DateFormatter.ymd.string(from: input.date)
+        date.value = DateFormatter.dateTime.string(from: input.date)
         
         title.value = input.title ?? ""
         excerpt.value = input.excerpt ?? ""
@@ -174,7 +174,6 @@ final class FrontendMetadataEditForm: Form {
         image.value = input.imageKey ?? ""
         css.value = input.css ?? ""
         js.value = input.js ?? ""
-        
     }
 
     func write(to output: Model) {
@@ -185,7 +184,7 @@ final class FrontendMetadataEditForm: Form {
         output.status = Model.Status(rawValue: statusId.value)!
         output.feedItem = Bool(feedItem.value)!
         output.filters = filters.values
-        output.date = DateFormatter.ymd.date(from: date.value)!
+        output.date = DateFormatter.dateTime.date(from: date.value)!
         output.title = title.value.emptyToNil
         output.excerpt = excerpt.value.emptyToNil
         output.canonicalUrl = canonicalUrl.value.emptyToNil

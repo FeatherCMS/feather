@@ -14,13 +14,6 @@ extension DateFormatter {
         locale = Locale(identifier: "en_US_POSIX")
     }
 
-    static let iso8601Full: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "y-MM-dd'T'HH:mm:ss.SSSZ"
-        formatter.configure()
-        return formatter
-    }()
-
     static let asset: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "y-MM-dd_HH-mm-ss"
@@ -28,16 +21,9 @@ extension DateFormatter {
         return formatter
     }()
 
-    static let ymd: DateFormatter = {
+    static let dateTime: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "y/MM/dd"
-        formatter.configure()
-        return formatter
-    }()
-
-    static let day: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE"
+        formatter.dateFormat = "y/MM/dd HH:mm"
         formatter.configure()
         return formatter
     }()

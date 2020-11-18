@@ -5,6 +5,7 @@
 //  Created by Tibor Bodecs on 2020. 06. 09..
 //
 
+import Fluent
 import FeatherCore
 
 extension Metadata: ViperModel {
@@ -22,7 +23,12 @@ struct FrontendMetadataAdminController: ViperAdminViewController {
     var listAllowedOrders: [FieldKey] = [
         "slug", "module", "model"
     ]
-
+    
+    func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
+        qb.filter(\.$slug ~~ searchTerm)
+        qb.filter(\.$title ~~ searchTerm)
+    }
+    
     private func path(_ model: Model) -> String {
         let date = DateFormatter.asset.string(from: Date())
         return Model.path + model.id!.uuidString + "_" + date + ".jpg"
