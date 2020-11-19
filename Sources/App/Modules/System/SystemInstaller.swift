@@ -172,8 +172,10 @@ struct SystemInstaller: ViperInstaller {
                 "value": "true",
                 "note": "Display post author box if this variable is true",
             ],
-            
-            
+            [
+                "key": "post.footer",
+                "note": "Display the contents of this value under every post entry",
+            ],
         ]
     }
 }
