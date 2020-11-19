@@ -25,5 +25,18 @@
     #placeholder {
         color: #000;
     }
+    #analytics-overview svg {
+        color: #21a9ff;
+    }
+    #analytics-overview .bar-chart {
+        background: #f80759;
+        background: -webkit-linear-gradient(to right, #f80759, #fa3ebe);
+        background: linear-gradient(to right, #f80759, #fa3ebe);
+        border-radius: 4px;
+        margin-bottom: 16px;
+        text-shadow: none;
+        color: #fff;
+    }
+
 }
 

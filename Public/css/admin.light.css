@@ -24,4 +24,15 @@ legend {
 #placeholder {
     color: #ccc;
 }
-
+#analytics-overview svg {
+    color: #fa3ebe;
+}
+#analytics-overview .bar-chart {
+    background: #21a9ff;
+    background: -webkit-linear-gradient(to right, #12c2e9, #21a9ff);
+    background: linear-gradient(to right, #12c2e9, #21a9ff);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    text-shadow: none;
+    color: #000;
+}
