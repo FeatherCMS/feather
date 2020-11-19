@@ -83,7 +83,7 @@
 
             #($vars["site.footer"])
 
-            <p>#($vars["site.copy"]) &copy; #Date(timeStamp: Timestamp(), localizedFormat: "y")</p>
+            <p>#($vars["site.copy"]) &copy; #if($vars["site.copy.year.start"] != nil):#($vars["site.copy.year.start"])-#endif#Date(timeStamp: Timestamp(), localizedFormat: "y")</p>
 
             <p>
                 #if($user.isAuthenticated):
@@ -99,6 +99,9 @@
                 </a>
                 #endfor
             </p>
+            
+            #($vars["site.footer.bottom"])
+
         </section>
     </footer>
     

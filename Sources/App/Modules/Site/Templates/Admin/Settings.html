@@ -71,11 +71,17 @@
             <fieldset class="p m:bottom:l br:xs">
                 <legend class="p:horizontal:s">Footer</legend>
                 
-                #(field = ["id": "footer", "label": "Contents", "size": "small", "data": fields.footer])
+                #(field = ["id": "footer", "label": "Top area", "size": "small", "data": fields.footer])
+                #inline("Admin/Fields/Textarea")
+                
+                #(field = ["id": "footerBottom", "label": "Bottom area", "size": "small", "data": fields.footerBottom])
                 #inline("Admin/Fields/Textarea")
                 
                 #(field = ["id": "copy", "label": "Copyright", "size": "small", "required": true, "data": fields.copy])
                 #inline("Admin/Fields/Textarea")
+                
+                #(field = ["id": "copyYearStart", "label": "Copyright start year", "data": fields.copyYearStart])
+                #inline("Admin/Fields/Text")
             
             </fieldset>
 

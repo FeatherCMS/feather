@@ -1,6 +1,7 @@
-#if($vars["sponsor.isEnabled"] == "true"):
-<section>
-    <div>
+#if($vars["sponsor.isEnabled"] != nil && $vars["sponsor.isEnabled"] == "true"):
+<div class="wrapper w center">
+    <section id="share" class="m:xl">
+        <hr>
         <img src="#($vars["sponsor.image.url"])" alt="#($vars["sponsor.image.alt"])">
         <h3>#($vars["sponsor.title"])</h3>
         <p>#($vars["sponsor.description"])</p>

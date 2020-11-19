@@ -21,7 +21,9 @@ final class SiteSettingsForm: Form {
         var css: String
         var js: String
         var footer: String
+        var footerBottom: String
         var copy: String
+        var copyYearStart: String
         var image: File?
         var imageDelete: Bool?
     }
@@ -37,7 +39,9 @@ final class SiteSettingsForm: Form {
     var css = StringFormField()
     var js = StringFormField()
     var footer = StringFormField()
+    var footerBottom = StringFormField()
     var copy = StringFormField()
+    var copyYearStart = StringFormField()
     var image = FileFormField()
     var notification: String?
 
@@ -54,7 +58,9 @@ final class SiteSettingsForm: Form {
             "css": css,
             "js": js,
             "footer": footer,
+            "footerBottom": footerBottom,
             "copy": copy,
+            "copyYearStart": copyYearStart,
             "image": image,
             "notification": notification,
         ])
@@ -79,7 +85,9 @@ final class SiteSettingsForm: Form {
         css.value = context.css
         js.value = context.js
         footer.value = context.footer
+        footerBottom.value = context.footerBottom
         copy.value = context.copy
+        copyYearStart.value = context.copyYearStart
 
         image.delete = context.imageDelete ?? false
         if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {

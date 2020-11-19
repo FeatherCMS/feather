@@ -31,12 +31,16 @@
 
 </article>
 
+#inline("Sponsor/Box")
+
+#if($vars["share.isEnabled"] != nil && $vars["share.isEnabled"] == "true"):
 <div class="wrapper w center">
     <section id="share" class="m:xl">
         <hr>
-        <p>#($vars["share.text"] ?? "") <a href="https://twitter.com/intent/tweet?via=#($vars["share.author"] ?? "")&hashtags=#($vars["share.hashtags"] ?? "")&url=#($app.baseUrl)#($req.url.path)" target="_blank">#($vars["share.link"] ?? "Share on Twitter")</a></p>
+        <p>#($vars["share.link.prefix"] ?? "") <a href="https://twitter.com/intent/tweet?via=#($vars["share.author"] ?? "")&hashtags=#($vars["share.hashtags"] ?? "")&url=#($app.baseUrl)#($req.url.path)" target="_blank">#($vars["share.link"] ?? "Share on Twitter")</a> #($vars["share.link.suffix"] ?? "")</p>
     </section>
 </div>
+#endif
 
 
 <div class="wrapper w center">

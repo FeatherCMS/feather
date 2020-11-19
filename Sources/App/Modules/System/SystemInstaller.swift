@@ -78,6 +78,16 @@ struct SystemInstaller: ViperInstaller {
                 "hidden": true,
             ],
             [
+                "key": "site.copy.start.year",
+                "note": "Start year placed before the current one in the copy line",
+                "hidden": true,
+            ],
+            [
+                "key": "site.footer.bottom",
+                "note": "Bottom footer content placed under the footer menu",
+                "hidden": true,
+            ],
+            [
                 "key": "home.page.title",
                 "value": "Home page title",
                 "note": "Title of the home page",
@@ -128,14 +138,24 @@ struct SystemInstaller: ViperInstaller {
                 "note": "Start over link text for the empty list box",
             ],
             [
-                "key": "share.text",
+                "key": "share.isEnabled",
+                "value": "true",
+                "note": "The share box is only displayed if this variable is true",
+            ],
+            [
+                "key": "share.link.prefix",
                 "value": "Thanks for reading, if you liked this article please",
-                "note": "Article share text, appears before the share link",
+                "note": "Appears before the share link",
             ],
             [
                 "key": "share.link",
                 "value": "share it on Twitter",
                 "note": "Share link title, will be placed after share text",
+            ],
+            [
+                "key": "share.link.suffix",
+                "value": ".",
+                "note": "Appears after the share link",
             ],
             [
                 "key": "share.author",
