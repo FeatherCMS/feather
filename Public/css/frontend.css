@@ -14,6 +14,7 @@ a:link, a:visited {
     text-decoration: none;
 }
 svg { display: block; }
+footer svg { display: inline-block; position: relative; top: 4px; }
 
 h1, .h1 { font-size: 2rem; line-height: 2.25rem; margin: 2.5rem 0 1.5rem 0; }
 h2, .h2 { font-size: 1.8rem; line-height: 2rem; margin: 2.5rem 0 1.5rem 0;  }
