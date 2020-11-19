@@ -10,22 +10,29 @@ import FeatherCore
 /// installer component for the menu module
 struct MenuInstaller: ViperInstaller {
     
-    /// we create the main menu with some menu items
+    /// we create the menus with the associated menu items
     func createModels(_ req: Request) -> EventLoopFuture<Void>? {
-        let id = UUID()
-        let mainMenu = MenuModel(id: id, handle: "main", name: "Main menu")
+        let mainId = UUID()
+        let mainMenu = MenuModel(id: mainId, handle: "main", name: "Main menu")
 
         let mainItems = [
-            MenuItemModel(label: "Home", url: "/", priority: 1000, menuId: id),
-            MenuItemModel(label: "Posts", url: "/posts/", priority: 900, menuId: id),
-            MenuItemModel(label: "Categories", url: "/categories/", priority: 800, menuId: id),
-            MenuItemModel(label: "Authors", url: "/authors/", priority: 700, menuId: id),
-            MenuItemModel(label: "About", url: "/about/", priority: 600, menuId: id),
+            MenuItemModel(label: "Home", url: "/", priority: 1000, menuId: mainId),
+            MenuItemModel(label: "Posts", url: "/posts/", priority: 900, menuId: mainId),
+            MenuItemModel(label: "Categories", url: "/categories/", priority: 800, menuId: mainId),
+            MenuItemModel(label: "Authors", url: "/authors/", priority: 700, menuId: mainId),
+            MenuItemModel(label: "About", url: "/about/", priority: 600, menuId: mainId),
         ]
-        
-        /// we create the main menu with the associated menu items
-        return mainMenu.create(on: req.db).flatMap {
-            mainItems.create(on: req.db)
+
+        let footerId = UUID()
+        let footerMenu = MenuModel(id: footerId, handle: "footer", name: "Footer menu")
+
+        let footerItems = [
+            MenuItemModel(label: "Sitemap", url: "/sitemap.xml", priority: 1000, targetBlank: true, menuId: footerId),
+            MenuItemModel(label: "RSS", url: "/rss.xml", priority: 900, targetBlank: true, menuId: footerId),
+        ]
+
+        return [mainMenu, footerMenu].create(on: req.db).flatMap {
+            (mainItems + footerItems).create(on: req.db)
         }
     }
 }

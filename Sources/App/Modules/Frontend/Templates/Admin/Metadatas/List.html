@@ -36,7 +36,7 @@ tr {
 #define(tr):
     #for(item in list.items):
 <tr>
-    <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.slug.isEmpty() ? "[root]" : item.slug)</a></td>
+    <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.slug.isEmpty() ? "[home]" : item.slug)</a></td>
     <td class="t:center"><a href="#($req.url.path)#(item.id)/">#(item.module)</a></td>
     <td class="t:center"><a href="#($req.url.path)#(item.id)/">#(item.model)</a></td>
     #inline("Admin/TableActionButtons")

@@ -43,7 +43,6 @@ final class UserModule: ViperModule {
     // MARK: - hook functions
 
     func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
-
         switch name {
         default:
             return nil

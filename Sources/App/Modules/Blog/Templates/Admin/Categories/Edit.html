@@ -1,5 +1,5 @@
 #define(toolbarLeft):
-    #if(fields.id != nil):
+    #if(fields.modelId != nil):
     <a href="/admin/frontend/metadatas/#(fields.metadata.id)">#svg("feather")</a>
     <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
@@ -27,7 +27,7 @@
     "list": "categories",
     "id": formId,
     "token": formToken,
-    "modelId": fields.id,
+    "modelId": fields.modelId,
     "key": "category",
     "multipart": true
 ])

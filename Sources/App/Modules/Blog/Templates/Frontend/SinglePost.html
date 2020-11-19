@@ -1,4 +1,4 @@
-<div class="post-cell g:col#(size ?? 1)">
+<div class="post-cell g:col#(size ?? 1)#if(class != nil): #(class ?? "")#endif">
     <a href="/#(post.metadata.slug)">
         <div class="container br:xs">
             <img class="block" src="#(post.imageKey.resolve())">

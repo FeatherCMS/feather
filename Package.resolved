@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "ALanguageParser",
+        "repositoryURL": "https://github.com/matsoftware/accept-language-parser",
+        "state": {
+          "branch": null,
+          "revision": "0a6d89e0159b2f926b35a9f6ee28b6f9c1e84a1b",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "async-http-client",
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
@@ -42,8 +51,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "39d03ec24a10405ce9c3aba5bd29eeb49ff69856",
-          "version": "1.0.0-beta.7"
+          "revision": "e1d42b07c96cf9e29fa97a4d104c6b2c96658de4",
+          "version": "1.0.0-beta.8"
         }
       },
       {
@@ -60,8 +69,8 @@
         "repositoryURL": "https://github.com/vapor/fluent-kit.git",
         "state": {
           "branch": null,
-          "revision": "31d96b547cc1f869f2885d932a8a9a7ae2103fc6",
-          "version": "1.10.0"
+          "revision": "b6cd7b93ef45b767041efeb83571457658c4acf7",
+          "version": "1.10.1"
         }
       },
       {
@@ -114,8 +123,8 @@
         "repositoryURL": "https://github.com/binarybirds/leaf-foundation",
         "state": {
           "branch": null,
-          "revision": "46cfdd2b9e9c2801e6eafb6a17e569f6262aade7",
-          "version": "1.0.0-beta.4.1"
+          "revision": "2cf2f6ec0822514d5177053f15960771fbc971ee",
+          "version": "1.0.0-beta.5"
         }
       },
       {
@@ -240,8 +249,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "c3e2359c55cd8b47207ab7363b77c9c398a95294",
-          "version": "2.23.0"
+          "revision": "2f9ea477387806a79a8951524ef2d40de917a0e1",
+          "version": "2.24.0"
         }
       },
       {
@@ -281,6 +290,15 @@
         }
       },
       {
+        "package": "UAParserSwift",
+        "repositoryURL": "https://github.com/malcommac/UAParserSwift",
+        "state": {
+          "branch": null,
+          "revision": "48dd6b3dbb96fd8da53e8f71d96c515bf7d7480b",
+          "version": "1.2.0"
+        }
+      },
+      {
         "package": "vapor",
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
@@ -294,8 +312,8 @@
         "repositoryURL": "https://github.com/binarybirds/view-kit",
         "state": {
           "branch": null,
-          "revision": "fb6994eb9e9739a52021341e37238b9842a563b3",
-          "version": "1.3.0-beta.1.4.1"
+          "revision": "0f0ce0ef966ad91ec9e87dd6049850d5dfdea02c",
+          "version": "1.3.0-beta.1.5"
         }
       },
       {
@@ -303,8 +321,8 @@
         "repositoryURL": "https://github.com/binarybirds/viper-kit",
         "state": {
           "branch": null,
-          "revision": "eb46e409a43a41b77f114725d0daf4f8cdf5164a",
-          "version": "1.5.0-beta.1"
+          "revision": "075831b00295ad3d4ca4b879ac9d2665159270e9",
+          "version": "1.5.0-beta.2.1"
         }
       },
       {

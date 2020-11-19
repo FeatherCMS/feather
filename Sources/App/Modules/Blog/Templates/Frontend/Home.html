@@ -7,13 +7,13 @@
 ])
 #define(css):
 @media (min-width: 600px) {
-    #home > div {
-        grid-template-columns: repeat(4, 1fr);
+    .post-cell-1 {
+        grid-column: span 6;
     }
 }
 @media (min-width: 900px) {
-    #home > div {
-        grid-template-columns: repeat(6, 1fr);
+    .post-cell-1, .post-cell-2 {
+        grid-column: span 3;
     }
 }
 #enddefine
@@ -27,15 +27,10 @@
 
     <div class="g6 g:gap:l:hd">
     #for((index, post) in posts):
-        #var(size = 1)
-        #if(index == 0):
-            #var(size = 4)
-        #endif
-        #if(index == 1):
-            #var(size = 2)
-        #endif
-        #if(index > 1):
-            #var(size = 2)
+        #var(size = 2)
+        #var(class = "post-cell-" + index + 1)
+        #if(index < 2):
+            #var(size = 3)
         #endif
         
         #inline("Blog/Frontend/SinglePost")
@@ -45,4 +40,3 @@
 </div>
 #enddefine
 #inline("Frontend/Index")
-

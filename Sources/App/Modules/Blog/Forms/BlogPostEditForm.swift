@@ -7,12 +7,12 @@
 
 import FeatherCore
 
-final class BlogPostEditForm: Form {
+final class BlogPostEditForm: ModelForm {
 
     typealias Model = BlogPostModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var title: String
         var excerpt: String
         var content: String
@@ -21,7 +21,7 @@ final class BlogPostEditForm: Form {
         var image: File?
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var title = StringFormField()
     var excerpt = StringFormField()
     var content = StringFormField()
@@ -33,7 +33,7 @@ final class BlogPostEditForm: Form {
 
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "title": title,
             "excerpt": excerpt,
             "content": content,
@@ -49,7 +49,7 @@ final class BlogPostEditForm: Form {
     
     init(req: Request) throws {
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
+        modelId = context.modelId.emptyToNil
         title.value = context.title
         excerpt.value = context.excerpt
         content.value = context.content
@@ -78,7 +78,7 @@ final class BlogPostEditForm: Form {
             authorId.error = "Invalid author"
             valid = false
         }
-        if id == nil && image.data == nil {
+        if modelId == nil && image.data == nil {
             image.error = "Image is required"
             valid = false
         }
@@ -86,7 +86,7 @@ final class BlogPostEditForm: Form {
     }
     
     func read(from input: Model)  {
-        id = input.id?.uuidString
+        modelId = input.id?.uuidString
         title.value = input.title
         image.value = input.imageKey
         excerpt.value = input.excerpt

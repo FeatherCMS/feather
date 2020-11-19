@@ -4,8 +4,8 @@
     "css": metadata.css,
     "js": metadata.js
 ])
-#define(body):
 
+#define(body):
 <div id="category" class="wrapper w:full m:xl">
 
     <header class="m:bottom:l center">
@@ -15,8 +15,9 @@
         <span><b>#(posts.count()) post#if(posts.count() > 1):s#endif</b></span>
     </header>
     
-    <div class="g3 g:gap:l:hd">
+    <div class="g6 g:gap:l:hd">
     #for((index, post) in posts):
+        #var(size = 2)
         #inline("Blog/Frontend/SinglePost")
     #endfor
     </div>

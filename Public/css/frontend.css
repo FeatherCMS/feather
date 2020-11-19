@@ -221,7 +221,6 @@ hr {
 .underline {
     padding-bottom: 2px;
 }
-
 .post-cell .container {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
@@ -464,6 +463,9 @@ input, input:focus, textarea, select {
     .g\:col11 { grid-column: span 11; }
     .g\:col12 { grid-column: span 12; }
 
+    .post-cell {
+        grid-column: span 3;
+    }
 
 }
 @media (min-width: 900px) {
@@ -477,6 +479,9 @@ input, input:focus, textarea, select {
     }
     #menu-icon {
         display: none;
+    }
+    .post-cell {
+        grid-column: span 2;
     }
 }
 @media (min-width: 1200px) {

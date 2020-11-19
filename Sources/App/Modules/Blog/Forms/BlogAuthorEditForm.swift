@@ -7,18 +7,18 @@
 
 import FeatherCore
 
-final class BlogAuthorEditForm: Form {
+final class BlogAuthorEditForm: ModelForm {
 
     typealias Model = BlogAuthorModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var name: String
         var bio: String
         var image: File?
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var name = StringFormField()
     var bio = StringFormField()
     var image = FileFormField()
@@ -27,7 +27,7 @@ final class BlogAuthorEditForm: Form {
     
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "name": name,
             "bio": bio,
             "image": image,
@@ -40,7 +40,7 @@ final class BlogAuthorEditForm: Form {
     
     init(req: Request) throws {
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
+        modelId = context.modelId.emptyToNil
         name.value = context.name
         bio.value = context.bio
         if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {
@@ -63,7 +63,7 @@ final class BlogAuthorEditForm: Form {
             name.error = "Name is too long (max 250 characters)"
             valid = false
         }
-        if id == nil && image.data == nil {
+        if modelId == nil && image.data == nil {
             image.error = "Image is required"
             valid = false
         }
@@ -71,7 +71,7 @@ final class BlogAuthorEditForm: Form {
     }
 
     func read(from input: Model)  {
-        id = input.id?.uuidString
+        modelId = input.id?.uuidString
         name.value = input.name
         image.value = input.imageKey
         bio.value = input.bio

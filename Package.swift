@@ -31,6 +31,8 @@ let package = Package(
 //        .package(name: "swifty-module", url: "https://github.com/feather-modules/swifty", .branch("main")),
 //        .package(name: "markdown-module", url: "https://github.com/feather-modules/markdown", .branch("main")),
 
+        .package(url: "https://github.com/malcommac/UAParserSwift", from: "1.2.0"),
+        .package(name: "ALanguageParser", url: "https://github.com/matsoftware/accept-language-parser", from: "1.0.0"),
         
         .package(url: "https://github.com/JohnSundell/Splash", from: "0.15.0"),
         .package(url: "https://github.com/JohnSundell/Ink", from: "0.5.0"),
@@ -59,6 +61,9 @@ let package = Package(
 //            .product(name: "MarkdownModule", package: "markdown-module"),
 
 
+            .product(name: "UAParserSwift", package: "UAParserSwift"),
+            .product(name: "ALanguageParser", package: "ALanguageParser"),
+            
             .product(name: "Splash", package: "Splash"),
             .product(name: "Ink", package: "Ink"),
 
@@ -75,6 +80,8 @@ let package = Package(
             "Modules/Menu/Templates/",
             "Modules/Blog/Assets/",
             "Modules/Static/Assets/",
+            "Modules/Site/Templates/",
+            "Modules/Analytics/Templates/",
             
         ], swiftSettings: [
             .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))

@@ -8,18 +8,18 @@
 import Vapor
 import ViewKit
 
-final class SystemVariableEditForm: Form {
+final class SystemVariableEditForm: ModelForm {
 
     typealias Model = SystemVariableModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var key: String
         var value: String
         var notes: String
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var key = StringFormField()
     var value = StringFormField()
     var notes = StringFormField()
@@ -27,7 +27,7 @@ final class SystemVariableEditForm: Form {
     
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "key": key,
             "value": value,
             "notes": notes,
@@ -39,7 +39,7 @@ final class SystemVariableEditForm: Form {
 
     init(req: Request) throws {
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
+        modelId = context.modelId.emptyToNil
         key.value = context.key
         value.value = context.value
         notes.value = context.notes
@@ -61,7 +61,7 @@ final class SystemVariableEditForm: Form {
     }
 
     func read(from input: Model)  {
-        id = input.id!.uuidString
+        modelId = input.id?.uuidString
         key.value = input.key
         value.value = input.value ?? ""
         notes.value = input.notes ?? ""

@@ -1,6 +1,6 @@
 #define(toolbarRight):
-    #if(fields.id != nil):
-    <a href="/admin/menu/menus/#(fields.id)/items">#svg("link")</a>
+    #if(fields.modelId != nil):
+    <a href="/admin/menu/menus/#(fields.modelId)/items">#svg("link")</a>
     #endif
 #enddefine
 
@@ -22,7 +22,7 @@
     "list": "menus",
     "id": formId,
     "token": formToken,
-    "modelId": fields.id,
+    "modelId": fields.modelId,
     "key": "menu"
 ])
 #inline("Admin/Form")

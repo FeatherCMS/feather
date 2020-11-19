@@ -7,7 +7,7 @@
 
 import FeatherCore
 
-struct FrontendNotFoundMiddleware: Middleware {
+public struct FrontendNotFoundMiddleware: Middleware {
 
     /// if we found a .notFound error in the responder chain, we render our custom not found page with a 404 status code
     public func respond(to req: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {

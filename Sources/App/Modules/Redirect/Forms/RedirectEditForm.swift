@@ -8,18 +8,18 @@
 import Vapor
 import ViewKit
 
-final class RedirectEditForm: Form {
+final class RedirectEditForm: ModelForm {
 
     typealias Model = RedirectModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var source: String
         var destination: String
         var statusCode: String
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var source = StringFormField()
     var destination = StringFormField()
     var statusCode = StringSelectionFormField()
@@ -27,7 +27,7 @@ final class RedirectEditForm: Form {
 
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "source": source,
             "destination": destination,
             "statusCode": statusCode,
@@ -45,8 +45,7 @@ final class RedirectEditForm: Form {
         initialize()
 
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
-
+        modelId = context.modelId.emptyToNil
         source.value = context.source
         destination.value = context.destination
         statusCode.value = context.statusCode
@@ -86,7 +85,7 @@ final class RedirectEditForm: Form {
     }
 
     func read(from input: Model)  {
-        id = input.id!.uuidString
+        modelId = input.id?.uuidString
         source.value = input.source
         destination.value = input.destination
         statusCode.value = String(input.statusCode)

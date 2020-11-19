@@ -1,0 +1,118 @@
+//
+//  File.swift
+//  
+//
+//  Created by Tibor Bodecs on 2020. 11. 19..
+//
+
+import FeatherCore
+
+final class SiteSettingsForm: Form {
+
+    struct Input: Decodable {
+        var title: String
+        var excerpt: String
+        var primaryColor: String
+        var secondaryColor: String
+        var fontFamily: String
+        var fontSize: String
+        var locale: String
+        var timezone: String
+        var css: String
+        var js: String
+        var footer: String
+        var copy: String
+        var image: File?
+        var imageDelete: Bool?
+    }
+
+    var title = StringFormField()
+    var excerpt = StringFormField()
+    var primaryColor = StringFormField()
+    var secondaryColor = StringFormField()
+    var fontFamily = StringFormField()
+    var fontSize = StringFormField()
+    var locale = StringSelectionFormField()
+    var timezone = StringSelectionFormField()
+    var css = StringFormField()
+    var js = StringFormField()
+    var footer = StringFormField()
+    var copy = StringFormField()
+    var image = FileFormField()
+    var notification: String?
+
+    var leafData: LeafData {
+        .dictionary([
+            "title": title,
+            "excerpt": excerpt,
+            "primaryColor": primaryColor,
+            "secondaryColor": secondaryColor,
+            "fontFamily": fontFamily,
+            "fontSize": fontSize,
+            "locale": locale,
+            "timezone": timezone,
+            "css": css,
+            "js": js,
+            "footer": footer,
+            "copy": copy,
+            "image": image,
+            "notification": notification,
+        ])
+    }
+
+    init() {
+        initialize()
+    }
+
+    init(req: Request) throws {
+        initialize()
+
+        let context = try req.content.decode(Input.self)
+        title.value = context.title
+        excerpt.value = context.excerpt
+        primaryColor.value = context.primaryColor
+        secondaryColor.value = context.secondaryColor
+        fontFamily.value = context.fontFamily
+        fontSize.value = context.fontSize
+        locale.value = context.locale
+        timezone.value = context.timezone
+        css.value = context.css
+        js.value = context.js
+        footer.value = context.footer
+        copy.value = context.copy
+
+        image.delete = context.imageDelete ?? false
+        if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {
+            image.data = data
+        }
+    }
+
+    func initialize() {
+        locale.options = [
+            .init(key: "en", label: "English")
+        ]
+        timezone.options = [
+            .init(key: "utc", label: "UTC")
+        ]
+    }
+
+    func validate(req: Request) -> EventLoopFuture<Bool> {
+        var valid = true
+       
+        if title.value.isEmpty {
+            title.error = "Title is required"
+            valid = false
+        }
+        if Validator.count(...250).validate(title.value).isFailure {
+            title.error = "Title is too long (max 250 characters)"
+            valid = false
+        }
+
+        if copy.value.isEmpty {
+            copy.error = "Copyright text is required"
+            valid = false
+        }
+        
+        return req.eventLoop.future(valid)
+    }
+}

@@ -7,19 +7,19 @@
 
 import FeatherCore
 
-final class BlogAuthorLinkEditForm: Form {
+final class BlogAuthorLinkEditForm: ModelForm {
 
     typealias Model = BlogAuthorLinkModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var name: String
         var url: String
         var priority: String
         var authorId: String
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var name = StringFormField()
     var url = StringFormField()
     var priority = StringFormField()
@@ -28,7 +28,7 @@ final class BlogAuthorLinkEditForm: Form {
     
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "name": name,
             "url": url,
             "priority": priority,
@@ -44,7 +44,7 @@ final class BlogAuthorLinkEditForm: Form {
     init(req: Request) throws {
         initialize()
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
+        modelId = context.modelId.emptyToNil
         name.value = context.name
         url.value = context.url
         priority.value = context.priority
@@ -83,7 +83,7 @@ final class BlogAuthorLinkEditForm: Form {
     }
     
     func read(from input: Model)  {
-        id = input.id!.uuidString
+        modelId = input.id?.uuidString
         name.value = input.name
         url.value = input.url
         priority.value = String(input.priority)

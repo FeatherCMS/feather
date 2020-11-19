@@ -7,12 +7,12 @@
 
 import FeatherCore
 
-final class FrontendMetadataEditForm: Form {
+final class FrontendMetadataEditForm: ModelForm {
 
     typealias Model = Metadata
     
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var module: String
         var model: String
         var reference: String
@@ -31,7 +31,7 @@ final class FrontendMetadataEditForm: Form {
         var imageDelete: Bool?
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var module = StringFormField()
     var model = StringFormField()
     var reference = StringFormField()
@@ -50,7 +50,7 @@ final class FrontendMetadataEditForm: Form {
     
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "module": module,
             "model": model,
             "reference": reference,
@@ -77,8 +77,7 @@ final class FrontendMetadataEditForm: Form {
         initialize()
 
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
-
+        modelId = context.modelId.emptyToNil
         module.value = context.module
         model.value = context.model
         reference.value = context.reference
@@ -157,8 +156,7 @@ final class FrontendMetadataEditForm: Form {
     }
     
     func read(from input: Model)  {
-        id = input.id!.uuidString
-        
+        modelId = input.id?.uuidString
         module.value = input.module
         model.value = input.model
         reference.value = input.reference.uuidString
@@ -167,7 +165,6 @@ final class FrontendMetadataEditForm: Form {
         feedItem.value = String(input.feedItem)
         filters.values = input.filters
         date.value = DateFormatter.dateTime.string(from: input.date)
-        
         title.value = input.title ?? ""
         excerpt.value = input.excerpt ?? ""
         canonicalUrl.value = input.canonicalUrl ?? ""

@@ -17,7 +17,7 @@
     <form id="#(form.key)-form" class="m:xl" method="post" action="#($req.url.path)"#if(form.multipart ?? false): enctype="multipart/form-data"#endif>
         #var(field = nil)
 
-        #(field = ["id": "id", "value": form.modelId])
+        #(field = ["id": "modelId", "value": form.modelId])
         #inline("Admin/Fields/Hidden")
 
         #(field = ["id": "formId", "value": form.id])

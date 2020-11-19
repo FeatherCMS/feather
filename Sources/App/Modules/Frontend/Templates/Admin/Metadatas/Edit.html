@@ -1,5 +1,5 @@
 #define(toolbarLeft):
-    #if(fields.id != nil):
+    #if(fields.modelId != nil):
     <a href="/admin/#(fields.module.value)/#(fields.model.value)/#(fields.reference.value)">#svg("edit")</a>
     <a href="#if(!fields.slug.value.isEmpty()):/#(fields.slug.value)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
@@ -70,7 +70,7 @@
     "list": "metadatas",
     "id": formId,
     "token": formToken,
-    "modelId": fields.id,
+    "modelId": fields.modelId,
     "key": "metadata",
     "multipart": true
 ])

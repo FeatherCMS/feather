@@ -11,8 +11,10 @@ extension StaticPageModel: MetadataChangeDelegate {
     
     var slug: String { title.slugify() }
     
-    func willUpdate(_ content: Metadata) {
-        content.slug = slug
-        content.title = title
+    func willUpdate(_ metadata: Metadata) {
+        if !metadata.$id.exists || (metadata.$id.exists && !metadata.slug.isEmpty) {
+            metadata.slug = slug
+        }
+        metadata.title = title
     }
 }

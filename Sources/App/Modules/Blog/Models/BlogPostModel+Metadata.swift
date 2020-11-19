@@ -11,11 +11,11 @@ extension BlogPostModel: MetadataChangeDelegate {
     
     var slug: String { title.slugify() }
     
-    func willUpdate(_ content: Metadata) {
-        content.slug = slug
-        content.title = title
-        content.excerpt = excerpt
-        content.imageKey = imageKey
+    func willUpdate(_ metadata: Metadata) {
+        metadata.slug = slug
+        metadata.title = title
+        metadata.excerpt = excerpt
+        metadata.imageKey = imageKey
     }
 }
 

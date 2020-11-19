@@ -7,17 +7,17 @@
 
 import FeatherCore
 
-final class StaticPageEditForm: Form {
+final class StaticPageEditForm: ModelForm {
 
     typealias Model = StaticPageModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var title: String
         var content: String
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var title = StringFormField()
     var content = StringFormField()
     var notification: String?
@@ -25,7 +25,7 @@ final class StaticPageEditForm: Form {
 
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "title": title,
             "content": content,
             "notification": notification,
@@ -37,7 +37,7 @@ final class StaticPageEditForm: Form {
     
     init(req: Request) throws {
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
+        modelId = context.modelId.emptyToNil
         title.value = context.title
         content.value = context.content
     }
@@ -61,7 +61,7 @@ final class StaticPageEditForm: Form {
     }
 
     func read(from input: Model)  {
-        id = input.id?.uuidString
+        modelId = input.id?.uuidString
         title.value = input.title
         content.value = input.content
     }

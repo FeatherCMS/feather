@@ -24,7 +24,7 @@ struct StaticPageAdminController: ViperAdminViewController {
     
     func beforeRender(req: Request, form: EditForm) -> EventLoopFuture<Void> {
         var future: EventLoopFuture<Void> = req.eventLoop.future()
-        if let id = form.id, let uuid = UUID(uuidString: id) {
+        if let id = form.modelId, let uuid = UUID(uuidString: id) {
             future = findMetadata(on: req.db, uuid: uuid).map { form.metadata = $0 }
         }
         return future

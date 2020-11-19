@@ -7,24 +7,24 @@
 
 import FeatherCore
 
-final class UserEditForm: Form {
+final class UserEditForm: ModelForm {
 
     typealias Model = UserModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var email: String
         var password: String
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var email = StringFormField()
     var password = StringFormField()
     var notification: String?
     
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "email": email,
             "password": password,
             "notification": notification,
@@ -35,7 +35,7 @@ final class UserEditForm: Form {
 
     init(req: Request) throws {
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
+        modelId = context.modelId.emptyToNil
         email.value = context.email
         password.value = context.password
     }
@@ -51,7 +51,7 @@ final class UserEditForm: Form {
             email.error = "Email is too long (max 250 characters)"
             valid = false
         }
-        if id == nil && Validator.count(8...).validate(password.value).isFailure {
+        if modelId == nil && Validator.count(8...).validate(password.value).isFailure {
             password.error = "Password is too short (min 8 characters)"
             valid = false
         }
@@ -63,7 +63,7 @@ final class UserEditForm: Form {
     }
 
     func read(from input: Model)  {
-        id = input.id!.uuidString
+        modelId = input.id?.uuidString
         email.value = input.email
         password.value = ""
     }

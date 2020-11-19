@@ -25,8 +25,7 @@ import LiquidLocalDriver
 //import StaticModule
 //import BlogModule
 
-public func configure(_ app: Application) throws {
-    
+public func configure(_ app: Application) throws {    
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     
     /*
@@ -79,6 +78,9 @@ public func configure(_ app: Application) throws {
         SponsorBuilder(),
         StaticBuilder(),
         BlogBuilder(),
+        SiteBuilder(),
+        AnalyticsBuilder(),
+
         SwiftyBuilder(),
         MarkdownBuilder(),
     ].map { $0.build() }
@@ -118,7 +120,6 @@ public func configure(_ app: Application) throws {
     LeafEngine.entities.use(HookAll(), asFunction: "HookAll")
     LeafRenderer.Option.timeout = 0.100 //ms
 
-    
     if app.isDebug {
         LeafRenderer.Option.caching = .bypass
     }

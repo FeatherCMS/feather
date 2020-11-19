@@ -6,7 +6,7 @@
 ])
 #define(body):
 
-<div id="category" class="wrapper w:full m:xl">
+<div id="author" class="wrapper w:full m:xl">
 
     <header class="m:bottom:l center">
         <img class="w128 br:circular" src="#(author.imageKey.resolve())" alt="Picture of #(author.name)" title="#(author.name)">
@@ -16,9 +16,10 @@
         <a href="#(link.url)" target="_blank">#(link.name)</a> #if(!isLast): &middot; #endif
         #endfor
     </header>
-    
-    <div class="g3 g:gap:l:hd">
+
+    <div class="g6 g:gap:l:hd">
     #for((index, post) in posts):
+        #let(size = 2)
         #inline("Blog/Frontend/SinglePost")
     #endfor
     </div>

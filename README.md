@@ -305,7 +305,8 @@ You can print out the backtrace using the `bt` command, this can help you to ide
 ## Credits
 
 - [Vapor](https://vapor.codes) - underlying framework
-- [Feather icons](https://feathericons.com) - Feather icons
+- [Feather icons](https://feathericons.com) - feather icons
+- [UAParserSwift](https://github.com/malcommac/UAParserSwift) - user agent parser
 - [Ink](https://github.com/johnsundell/ink) - markdown support
 - [Splash](https://github.com/johnsundell/splash) - Swift syntax highlight
 

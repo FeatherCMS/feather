@@ -7,12 +7,12 @@
 
 import FeatherCore
 
-final class BlogCategoryEditForm: Form {
+final class BlogCategoryEditForm: ModelForm {
 
     typealias Model = BlogCategoryModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var title: String
         var excerpt: String
         var color: String
@@ -20,7 +20,7 @@ final class BlogCategoryEditForm: Form {
         var image: File?
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var title = StringFormField()
     var excerpt = StringFormField()
     var color = StringFormField()
@@ -31,7 +31,7 @@ final class BlogCategoryEditForm: Form {
 
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "title": title,
             "excerpt": excerpt,
             "color": color,
@@ -50,7 +50,7 @@ final class BlogCategoryEditForm: Form {
         initialize()
 
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
+        modelId = context.modelId.emptyToNil
         title.value = context.title
         priority.value = context.priority
         excerpt.value = context.excerpt
@@ -80,7 +80,7 @@ final class BlogCategoryEditForm: Form {
             priority.error = "Invalid priority value"
             valid = false
         }
-        if id == nil && image.data == nil {
+        if modelId == nil && image.data == nil {
             image.error = "Image is required"
             valid = false
         }
@@ -88,7 +88,7 @@ final class BlogCategoryEditForm: Form {
     }
     
     func read(from input: Model)  {
-        id = input.id!.uuidString
+        modelId = input.id?.uuidString
         title.value = input.title
         priority.value = String(input.priority)
         excerpt.value = input.excerpt

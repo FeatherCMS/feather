@@ -15,7 +15,7 @@ struct UserFrontendController {
 
     private func render(req: Request, model: UserModel? = nil, form: UserLoginForm = .init()) -> EventLoopFuture<Response> {
         if let model = model {
-            form.read(from: model)
+            form.email.value = model.email
         }
         return req.leaf.render(template: "User/Frontend/Login", context: ["edit": form.leafData]).encodeResponse(for: req)
     }

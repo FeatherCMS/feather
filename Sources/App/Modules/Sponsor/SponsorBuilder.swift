@@ -5,8 +5,7 @@
 //  Created by Tibor Bodecs on 2020. 08. 23..
 //
 
-import Foundation
-import ViperKit
+import FeatherCore
 
 @_cdecl("createSponsorModule")
 public func createSponsorModule() -> UnsafeMutableRawPointer {

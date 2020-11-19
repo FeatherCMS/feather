@@ -8,18 +8,18 @@
 import Vapor
 import ViewKit
 
-final class MenuEditForm: Form {
+final class MenuEditForm: ModelForm {
 
     typealias Model = MenuModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var handle: String
         var name: String
         var icon: String
     }
 
-    var id: String? = nil
+    var modelId: String? = nil
     var handle = StringFormField()
     var name = StringFormField()
     var icon = StringFormField()
@@ -27,7 +27,7 @@ final class MenuEditForm: Form {
 
     var leafData: LeafData {
         .dictionary([
-            "id": id,
+            "modelId": modelId,
             "handle": handle,
             "name": name,
             "icon": icon,
@@ -39,8 +39,7 @@ final class MenuEditForm: Form {
 
     init(req: Request) throws {
         let context = try req.content.decode(Input.self)
-        id = context.id.emptyToNil
-
+        modelId = context.modelId.emptyToNil
         handle.value = context.handle
         name.value = context.name
         icon.value = context.icon
@@ -71,7 +70,7 @@ final class MenuEditForm: Form {
     }
 
     func read(from input: Model)  {
-        id = input.id!.uuidString
+        modelId = input.id?.uuidString
         handle.value = input.handle
         name.value = input.name ?? ""
         icon.value = input.icon ?? ""
