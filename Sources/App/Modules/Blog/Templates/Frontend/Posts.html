@@ -41,44 +41,5 @@
     #inline("Frontend/Pagination")
     </div>
 </div>
-<script>
-
-function debounce(func, wait, immediate) {
-var timeout;
-return function() {
-    var context = this, args = arguments;
-    var later = function() {
-        timeout = null;
-        if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-};
-};
-
-const source = document.getElementById('search');
-const inputHandler = debounce(function(e) {
-console.warn(e.target.value);
-return;
-var xmlHttp = new XMLHttpRequest();
-xmlHttp.onreadystatechange = function() {
-    if (xmlHttp.readyState != 4 || xmlHttp.status != 200) {
-        return
-    }
-    console.warn(xmlHttp.responseText)
-    var element = document.getElementById(id)
-    var tr = element.parentElement.parentElement
-    tr.parentNode.removeChild(tr)
-}
-xmlHttp.open("POST", path + id + "/delete", true);
-xmlHttp.send(null);
-}, 250);
-
-source.addEventListener('input', inputHandler);
-source.addEventListener('propertychange', inputHandler);
-// source.addEventListener('change', inputHandler);
-</script>
 #enddefine
 #inline("Frontend/Index")
