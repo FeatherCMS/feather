@@ -67,7 +67,7 @@ struct SystemInstaller: ViperInstaller {
             ],
             [
                 "key": "site.footer",
-                "value": "",
+                "value": "<img class=\"w64\" src=\"/images/icons/icon.png\" alt=\"Logo of Feather\" title=\"Feather\">",
                 "note": "Custom contents for the footer",
                 "hidden": true,
             ],
@@ -126,6 +126,26 @@ struct SystemInstaller: ViperInstaller {
                 "key": "empty.list.link",
                 "value": "Try again from scratch →",
                 "note": "Start over link text for the empty list box",
+            ],
+            [
+                "key": "share.text",
+                "value": "Thanks for reading, if you liked this article please",
+                "note": "Article share text, appears before the share link",
+            ],
+            [
+                "key": "share.link",
+                "value": "share it on Twitter",
+                "note": "Share link title, will be placed after share text",
+            ],
+            [
+                "key": "share.author",
+                "value": "tiborbodecs",
+                "note": "Share author",
+            ],
+            [
+                "key": "share.hashtags",
+                "value": "SwiftLang",
+                "note": "Share hashtasgs",
             ],
         ]
     }

@@ -55,10 +55,9 @@
     
 </head>
 <body class="m:zero">
-    
     <header id="header">
         <a href="/" id="site-link">
-            <img src="/images/logo-text.png" alt="Logo of #($vars["site.title"])" title="#($vars["site.title"])">
+            <img src="#($vars["site.logo"].resolve() ?? "/images/logo-text.png")" alt="Logo of #($vars["site.title"])" title="#($vars["site.title"])">
         </a>
 
         <input type="checkbox" id="menu-button" class="selection:off" />
@@ -82,10 +81,8 @@
     <footer>
         <section class="p:xl center">
 
-            <img class="w64" src="/images/icons/icon.png" alt="Logo of #($vars["site.title"])" title="#($vars["site.title"])">
-
             #($vars["site.footer"])
-                
+
             <p>#($vars["site.copy"]) &copy; #Date(timeStamp: Timestamp(), localizedFormat: "y")</p>
 
             <p>

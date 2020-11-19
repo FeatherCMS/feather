@@ -31,11 +31,10 @@
 
 </article>
 
-
 <div class="wrapper w center">
     <section id="share" class="m:xl">
         <hr>
-        <p>Thanks for reading, if you liked this article please <a href="https://twitter.com/intent/tweet?via=tiborbodecs&hashtags=SwiftLang&url=#($app.baseUrl)#($req.url.path)" target="_blank">share it on Twitter</a>.</p>
+        <p>#($vars["share.text"] ?? "") <a href="https://twitter.com/intent/tweet?via=#($vars["share.author"] ?? "")&hashtags=#($vars["share.hashtags"] ?? "")&url=#($app.baseUrl)#($req.url.path)" target="_blank">#($vars["share.link"] ?? "Share on Twitter")</a></p>
     </section>
 </div>
 

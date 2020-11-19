@@ -22,8 +22,10 @@ function chooseImage() {
 function removeImage() {
     document.getElementById('image').value = null;
     document.getElementById('imageDelete').value = true;
+    
     const placeholder = document.getElementById('placeholder');
     placeholder.classList.remove('hidden');
+
     const element = document.getElementById('uploaded-image');
     if (element !== null) {
         element.parentNode.removeChild(element);

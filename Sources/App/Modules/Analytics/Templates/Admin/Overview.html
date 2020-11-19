@@ -21,8 +21,8 @@
                 <ul class="lst:none p:zero">
                 #for(group in metric.groups):
                     <li>
-                        <span class="block">#(group.name)</span>
-                        <span class="block left bar-chart" style="width: #(group.percent)%;"><span class="p:s">#(group.percent)%</span></span>
+                        <span class="block left">#(group.name) - #(group.percent)%</span>
+                        <span class="block left bar-chart" style="width: #(group.percent)%;"><span class="p:s"></span></span>
                     </li>
                 #endfor
                 </ul>
