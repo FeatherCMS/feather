@@ -1,33 +1,31 @@
 #(let pages = list.info ?? nil)
 #if(pages.total > 1 && pages.current < pages.total + 1):
 <hr>
-<section class="wrapper">
+<section class="wrapper center">
     #if(pages.current > 1):
-    <a href="#Request(setQuery: ["page": 1])" class="text-link">◀◀</a>
+    <span><a href="#Request(setQuery: ["page": 1])" class="text-link">#svg("chevrons-left")</a></span>
     #else:
-    <span class="text-link inactive-link">◀◀</span>
+    <span>#svg("chevrons-left")</span>
     #endif
 
     #if(pages.current > 1):
-    <a href="#Request(setQuery: ["page": pages.current - 1])" class="text-link">◀</a>
+    <span><a href="#Request(setQuery: ["page": pages.current - 1])" class="text-link">#svg("chevron-left")</a></span>
     #else:
-    <span class="text-link inactive-link">◀</span>
+    <span>#svg("chevron-left")</span>
     #endif
 
-    <span class="pager">
-    page #(pages.current) of #(pages.total)
-    </span>
+    <span class="info">Page #(pages.current) of #(pages.total)</span>
 
     #if(pages.current < pages.total):
-    <a href="#Request(setQuery: ["page": pages.current + 1])" class="text-link">▶</a>
+    <span><a href="#Request(setQuery: ["page": pages.current + 1])" class="text-link">#svg("chevron-right")</a></span>
     #else:
-    <span class="text-link inactive-link">▶</span>
+    <span>#svg("chevron-right")</span>
     #endif
 
     #if(pages.current < pages.total):
-    <a href="#Request(setQuery: ["page": pages.total])" class="text-link">▶▶</a>
+    <span><a href="#Request(setQuery: ["page": pages.total])" class="text-link">#svg("chevrons-right")</a></span>
     #else:
-    <span class="text-link inactive-link">▶▶</span>
+    <span>#svg("chevrons-right")</span>
     #endif
 </section>
 #endif

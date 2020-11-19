@@ -102,3 +102,17 @@ form .required {
 form .error {
     color: #ee6a5d;
 }
+#pagination span {
+    color: #666;
+}
+#pagination span.info {
+    color: #999;
+}
+#pagination svg {
+    background: #333;
+    border: 1px solid #222;
+}
+#pagination a:hover svg {
+    background: #222;
+    border: 1px solid #000;
+}
