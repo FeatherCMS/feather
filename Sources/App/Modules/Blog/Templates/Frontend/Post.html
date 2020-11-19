@@ -42,7 +42,7 @@
 </div>
 #endif
 
-
+#if($vars["post.author.isEnabled"] != nil && $vars["post.author.isEnabled"] == "true"):
 <div class="wrapper w center">
     <section class="m:xl">
         <img class="w128 br:circular" src="#(post.author.imageKey.resolve())" alt="Picture of #(post.author.name)" title="#(post.author.name)">
@@ -54,6 +54,7 @@
         </p>
     </section>
 </div>
+#endif
 #enddefine
 #inline("Frontend/Index")
 

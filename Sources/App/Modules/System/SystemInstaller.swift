@@ -167,6 +167,13 @@ struct SystemInstaller: ViperInstaller {
                 "value": "SwiftLang",
                 "note": "Share hashtasgs",
             ],
+            [
+                "key": "post.author.isEnabled",
+                "value": "true",
+                "note": "Display post author box if this variable is true",
+            ],
+            
+            
         ]
     }
 }
