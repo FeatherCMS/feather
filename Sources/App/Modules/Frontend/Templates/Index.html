@@ -95,7 +95,6 @@
                 <a href="/login/">Login</a>
                 #endif
 
-                
                 #for(item in $menus["footer"].items ?? []):
                     &middot;
                 <a href="#(item.url)" #if($req.url.path == item.url): class="selected"#endif#if(item.targetBlank): target="_blank"#endif>

@@ -19,9 +19,9 @@
         <input type="text" id="search" name="search" placeholder="Search..." value="#Request(query: "search")">
     </form>
 
-    
-    <div class="g3 g:gap:l">
-    #for((index, post) in page.items):
+    <div class="g6 g:gap:l">
+    #for(post in page.items):
+        #var(size = 2)
         #inline("Blog/Frontend/SinglePost")
     #endfor
     </div>
