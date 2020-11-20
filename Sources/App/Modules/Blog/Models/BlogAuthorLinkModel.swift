@@ -1,14 +1,11 @@
 //
 //  BlogAuthorLinkModel.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 01. 26..
 //
 
-import Vapor
-import Fluent
-import ViperKit
-import ViewKit
+import FeatherCore
 
 final class BlogAuthorLinkModel: ViperModel {
     typealias Module = BlogModule
@@ -44,25 +41,4 @@ final class BlogAuthorLinkModel: ViperModel {
         self.priority = priority
         self.$author.id = authorId
     }
-}
-
-// MARK: - viewModel
-
-extension BlogAuthorLinkModel: ViewContextRepresentable {
-
-    struct ViewContext: Encodable {
-        var id: String
-        var name: String
-        var url: String
-        var priority: Int
-        
-        init(model: BlogAuthorLinkModel) {
-            self.id = model.id!.uuidString
-            self.name = model.name
-            self.url = model.url
-            self.priority = model.priority
-        }
-    }
-
-    var viewContext: ViewContext { .init(model: self) }
 }

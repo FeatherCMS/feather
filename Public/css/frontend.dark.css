@@ -4,6 +4,13 @@ body {
     color: #ccc;
     text-shadow: 0px 1px 0px #222;
 }
+
+.bg1 { background: #2c2c2e; }
+.bg2 { background: #1c1c1e; }
+.bg3 { background: #222; }
+
+.border1 { border: 1px solid #000; }
+
 h1, h2, h3, h4, h5, h6 {
     color: #e0e0e0;
 }
@@ -12,6 +19,12 @@ a:link, a:visited {
 }
 a:link:hover, a:visited:hover {
     color: #fa3ebe;
+}
+a p {
+    color: #ccc;
+}
+.underline {
+    border-bottom: 1px solid #21a9ff;
 }
 pre {
     background: #1a1a1a;
@@ -66,15 +79,6 @@ pre code .preprocessing {
 hr {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
-/*blockquote {*/
-/*    color: #ccc;*/
-/*    border-left: 8px solid #DE2451;*/
-/*    box-shadow: 0 6px 12px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.4);*/
-/*    background: #1a1a1a;*/
-/*}*/
-/*blockquote::before {*/
-/*    color: #fff;*/
-/*}*/
 footer {
     border-top: 1px solid #1a1a1e;
     background: #222;
@@ -89,40 +93,26 @@ input:focus, textarea:focus, select:focus {
     background-color: #444;
     color: #fff;
 }
-.card {
-    border: none;
-    background: #1c1c1e;
-    color: #ccc;
-}
-.card:hover {
+.shadow-hover:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
-.card p, .excerpt {
-    color: #999;
+form .required {
+    color: #21a9ff;
 }
-
-
-/*.sponsor {*/
-/*    background: #2c2c2e;*/
-/*}*/
-/*.sponsor a.link {*/
-/*    color: #ccc;*/
-/*    background: #2c2c2e;*/
-/*}*/
-form .required, form .error {
+form .error {
     color: #ee6a5d;
 }
-#login-box {
-    background: #1c1c1e;
-    border: 1px solid #000;
+#pagination span {
+    color: #666;
 }
-#login-box p {
+#pagination span.info {
     color: #999;
 }
-#categories li, #authors li {
-    background: #222;
+#pagination svg {
+    background: #333;
+    border: 1px solid #222;
 }
-#categories img, #category img {
+#pagination a:hover svg {
     background: #222;
-    box-shadow: 0px 4px 8px #111;
+    border: 1px solid #000;
 }

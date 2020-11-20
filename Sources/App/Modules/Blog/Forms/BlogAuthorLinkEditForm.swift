@@ -1,86 +1,99 @@
 //
 //  BlogAuthorLinkEditForm.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 03. 23..
 //
 
-import Vapor
-import ViewKit
+import FeatherCore
 
-final class BlogAuthorLinkEditForm: Form {
+final class BlogAuthorLinkEditForm: ModelForm {
 
     typealias Model = BlogAuthorLinkModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var name: String
         var url: String
         var priority: String
         var authorId: String
     }
 
-    var id: String? = nil
-    var name = BasicFormField()
-    var url = BasicFormField()
-    var priority = BasicFormField()
+    var modelId: String? = nil
+    var name = StringFormField()
+    var url = StringFormField()
+    var priority = StringFormField()
     var authorId: String! = nil
-
     var notification: String?
     
+    var leafData: LeafData {
+        .dictionary([
+            "modelId": modelId,
+            "name": name,
+            "url": url,
+            "priority": priority,
+            "authorId": authorId,
+            "notification": notification,
+        ])
+    }
         
     init() {
-        self.initialize()
+        initialize()
     }
 
     init(req: Request) throws {
-        self.initialize()
-
+        initialize()
         let context = try req.content.decode(Input.self)
-        self.id = context.id.emptyToNil
-
-        self.name.value = context.name
-        self.url.value = context.url
-        self.priority.value = context.priority
-        self.authorId = context.authorId
+        modelId = context.modelId.emptyToNil
+        name.value = context.name
+        url.value = context.url
+        priority.value = context.priority
+        authorId = context.authorId
     }
     
     func initialize() {
-        self.priority.value = String(100)
-
+        priority.value = String(100)
     }
     
-    func read(from model: Model)  {
-        self.id = model.id!.uuidString
-        self.name.value = model.name
-        self.url.value = model.url
-        self.priority.value = String(model.priority)
-        self.authorId = model.$author.id.uuidString
-    }
-
     func validate(req: Request) -> EventLoopFuture<Bool> {
         var valid = true
        
-        if self.name.value.isEmpty {
-            self.name.error = "Name is required"
+        if name.value.isEmpty {
+            name.error = "Name is required"
             valid = false
         }
-        if self.url.value.isEmpty {
-            self.url.error = "Url is required"
+        if Validator.count(...250).validate(name.value).isFailure {
+            name.error = "Name is too long (max 250 characters)"
             valid = false
         }
-        if Int(self.priority.value) == nil {
-            self.priority.error = "Invalid priority"
+        if url.value.isEmpty {
+            url.error = "Url is required"
+            valid = false
+        }
+        if Validator.count(...250).validate(url.value).isFailure {
+            url.error = "URL is too long (max 250 characters)"
+            valid = false
+        }
+        if Int(priority.value) == nil {
+            priority.error = "Invalid priority"
             valid = false
         }
 
         return req.eventLoop.future(valid)
     }
     
-    func write(to model: Model) {
-        model.name = self.name.value
-        model.url = self.url.value
-        model.priority = Int(self.priority.value)!
-        model.$author.id = UUID(uuidString: self.authorId)!
+    func read(from input: Model)  {
+        modelId = input.id?.uuidString
+        name.value = input.name
+        url.value = input.url
+        priority.value = String(input.priority)
+        authorId = input.$author.id.uuidString
+    }
+
+    func write(to output: Model) {
+        output.name = name.value
+        output.url = url.value
+        output.priority = Int(priority.value)!
+        output.$author.id = UUID(uuidString: authorId)!
     }
 }

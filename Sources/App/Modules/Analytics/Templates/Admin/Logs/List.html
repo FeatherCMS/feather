@@ -1,0 +1,35 @@
+#define(css):
+@media (min-width: 600px) {
+    tr {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+#enddefine
+#define(th):
+    #var(link = nil)
+    <th class="t:left m:horizontal:s">#(link = ["key": "path", "default": true])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "date"])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "language", "label": "OS name"])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "region", "label": "OS version"])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "os_name", "label": "OS name"])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "os_version", "label": "OS version"])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "browser_name", "label": "Browser name"])#inline("Admin/SortLink")</th>
+    <th class="t:left">#(link = ["key": "browser_version", "label": "Browser version"])#inline("Admin/SortLink")</th>
+#enddefine
+#define(tr):
+    #for(item in list.items):
+<tr>
+    <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.path)</a></td>
+    <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#Date(timeStamp: item.date, fixedFormat: $app.dateFormats.full, timeZone: $app.timezone)</a></td>
+    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.language)</a></td>
+    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.region)</a></td>
+    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.os.name)</a></td>
+    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.os.version)</a></td>
+    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.browser.name)</a></td>
+    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.browser.version)</a></td>
+</tr>
+    #endfor
+#enddefine
+#let(title = "Logs")
+#inline("Admin/Table")
+

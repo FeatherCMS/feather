@@ -1,28 +1,58 @@
 //
 //  configure.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2019. 12. 17..
 //
 
-import Vapor
-import Leaf
-import Fluent
-//import FluentPostgresDriver
+import FeatherCore
+import LeafFoundation
+/// drivers
 import FluentSQLiteDriver
-import Liquid
 import LiquidLocalDriver
-import ViperKit
-import ViewKit
+/// modules
+//import UserModule
+//import SystemModule
+//
+//import AdminModule
+//import ApiModule
+//import FrontendModule
+//
+//import SwiftyModule
+//import MarkdownModule
+//import RedirectModule
+//import SponsorModule
+//import StaticModule
+//import BlogModule
 
-public func configure(_ app: Application) throws {
-    // uncomment to serve files from /Public folder
+public func configure(_ app: Application) throws {    
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    
+    /*
+    LeafFileMiddleware.defaultMediaType = .html
+    LeafFileMiddleware.processableExtensions = ["leaf", "html", "css", "js"]
+    LeafFileMiddleware[.css] = [
+        "background": "green",
+        "padding": "16px",
+    ]
+    LeafFileMiddleware.contexts = [
+        .css: [
+            "background": "#eee",
+            "padding": "16px",
+        ],
+        .html: [
+            "title": "Hello world!"
+        ],
+    ]
 
-    
-    //try app.databases.use(.postgres(url: Application.databaseUrl), as: .psql)
+
+    if let lfm = LeafFileMiddleware(publicDirectory: app.directory.publicDirectory) {
+        app.middleware.use(lfm)
+    }
+    */
+
     app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
-    
+
     app.fileStorages.use(.local(publicUrl: Application.baseUrl,
                                 publicPath: app.directory.publicDirectory,
                                 workDirectory: "assets"), as: .local)
@@ -33,47 +63,71 @@ public func configure(_ app: Application) throws {
     app.migrations.add(SessionRecord.migration)
     app.middleware.use(SlashMiddleware())
     app.middleware.use(app.sessions.middleware)
-
-    app.views.use(.leaf)
-    app.leaf.tags[IsDebugTag.name] = IsDebugTag()
-    app.leaf.tags[PathTag.name] = PathTag()
-    app.leaf.tags[PathDropLastTag.name] = PathDropLastTag()
-    app.leaf.tags[ParameterTag.name] = ParameterTag()
-    app.leaf.tags[PermalinkTag.name] = PermalinkTag()
-    app.leaf.tags[QueryTag.name] = QueryTag()
-    app.leaf.tags[SetQueryTag.name] = SetQueryTag()
-    app.leaf.tags[SortQueryTag.name] = SortQueryTag()
-    app.leaf.tags[SortIndicatorTag.name] = SortIndicatorTag()
-    app.leaf.tags[ResolveTag.name] = ResolveTag()
-    app.leaf.tags[YearTag.name] = YearTag()
-    app.leaf.tags[DateFormatterTag.name] = DateFormatterTag()
-    app.leaf.tags[CountTag.name] = CountTag()
-    app.leaf.tags[IsEmptyTag.name] = IsEmptyTag()
-    app.leaf.tags[ContainsTag.name] = ContainsTag()
-
-    if !app.environment.isRelease && app.environment != .production {
-        app.leaf.cache.isEnabled = false
-        app.leaf.useViperViews(fileExtension: "html")
-    }
+    app.middleware.use(LeafFoundationMiddleware())
     
+
     let modules: [ViperModule] = [
-        // core modules
-        SystemModule(),
-        UserModule(),
-        ApiModule(),
-        AdminModule(),
-        FrontendModule(),
+        UserBuilder(),
+        SystemBuilder(),
+        AdminBuilder(),
+        ApiBuilder(),
+        FrontendBuilder(),
+        MenuBuilder(),
+        
+        RedirectBuilder(),
+        SponsorBuilder(),
+        StaticBuilder(),
+        BlogBuilder(),
+        SiteBuilder(),
+        AnalyticsBuilder(),
 
-        //user modules
-        RedirectModule(),
-        BlogModule(),
-        StaticModule(),
-        SponsorModule(),
-        MarkdownModule(),
-        SplashModule(),
-    ]
+        SwiftyBuilder(),
+        MarkdownBuilder(),
+    ].map { $0.build() }
+    
+    let defaultSource = NIOLeafFiles(fileio: app.fileio,
+                               limits: [.requireExtensions],
+                               sandboxDirectory: app.directory.resourcesDirectory,
+                               viewDirectory: app.directory.viewsDirectory,
+                               defaultExtension: "html")
+    
+    let moduleSource = ViperLeafSource(workingDirectory: app.directory.workingDirectory,
+                                       modulesLocation: "Sources/App/Modules",
+                                       templatesDirectory: "Templates",
+                                       fileExtension: "html",
+                                       fileio: app.fileio)
 
+    let multipleSources = LeafSources()
+    try multipleSources.register(using: defaultSource)
+    try multipleSources.register(source: "local-modules", using: moduleSource)
+
+//    for module in modules {
+//        guard let url = module.bundleUrl else { continue }
+//
+//        let moduleSource = ViperBundledViewFiles(module: module.name,
+//                                                 rootDirectory: url.path.withTrailingSlash,
+//                                                 fileExtension: "html",
+//                                                 fileio: app.fileio)
+//
+//        try multipleSources.register(source: "\(module.name)-module", using: moduleSource)
+//    }
+
+    LeafEngine.sources = multipleSources
+    LeafEngine.useLeafFoundation()
+    LeafEngine.entities.use(Resolve(), asMethod: "resolve")
+    LeafEngine.entities.use(InlineSvg(), asFunction: "svg")
+    LeafEngine.entities.use(Hook(), asFunction: "Hook")
+    LeafEngine.entities.use(HookAll(), asFunction: "HookAll")
+    LeafRenderer.Option.timeout = 1.000 //ms
+
+    if app.isDebug {
+        LeafRenderer.Option.caching = .bypass
+    }
+    app.views.use(.leaf)
+    
     try app.viper.use(modules)
-
+    
+    app.middleware.use(LeafFeatherExtensionMiddleware())
+    
     try app.autoMigrate().wait()
 }

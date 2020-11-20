@@ -1,71 +1,73 @@
 //
 //  StaticPageEditForm.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 06. 09..
 //
 
-import Vapor
-import ViewKit
+import FeatherCore
 
-final class StaticPageEditForm: Form {
+final class StaticPageEditForm: ModelForm {
 
     typealias Model = StaticPageModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var title: String
         var content: String
     }
 
-    var id: String? = nil
-    var title = BasicFormField()
-    var content = BasicFormField()
-    
+    var modelId: String? = nil
+    var title = StringFormField()
+    var content = StringFormField()
     var notification: String?
-    var contentModel: FrontendContentModel.ViewContext?
+    var metadata: Metadata?
 
-    func initialize() {
-        
+    var leafData: LeafData {
+        .dictionary([
+            "modelId": modelId,
+            "title": title,
+            "content": content,
+            "notification": notification,
+            "metadata": metadata,
+        ])
     }
 
-    init() {
-        self.initialize()
-    }
+    init() {}
     
     init(req: Request) throws {
-        self.initialize()
-
         let context = try req.content.decode(Input.self)
-        self.id = context.id.emptyToNil
-
-        self.title.value = context.title
-        self.content.value = context.content
-    }
-
-    func read(from model: Model)  {
-        self.id = model.id?.uuidString
-        
-        self.title.value = model.title
-        self.content.value = model.content
+        modelId = context.modelId.emptyToNil
+        title.value = context.title
+        content.value = context.content
     }
     
-    func write(to model: Model) {
-        model.title = self.title.value
-        model.content = self.content.value
-    }
-
     func validate(req: Request) -> EventLoopFuture<Bool> {
         var valid = true
 
-        if self.title.value.isEmpty {
-            self.title.error = "Title is required"
+        if title.value.isEmpty {
+            title.error = "Title is required"
             valid = false
         }
-        if self.content.value.isEmpty {
-            self.content.error = "Content is required"
+        if Validator.count(...250).validate(title.value).isFailure {
+            title.error = "Title is too long (max 250 characters)"
+            valid = false
+        }
+        if content.value.isEmpty {
+            content.error = "Content is required"
             valid = false
         }
         return req.eventLoop.future(valid)
+    }
+
+    func read(from input: Model)  {
+        modelId = input.id?.uuidString
+        title.value = input.title
+        content.value = input.content
+    }
+    
+    func write(to output: Model) {
+        output.title = title.value
+        output.content = content.value
     }
 }

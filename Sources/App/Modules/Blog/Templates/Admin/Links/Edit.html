@@ -1,0 +1,27 @@
+#define(toolbarLeft):
+    <a href="/admin/blog/authors/#Request(parameter: "id")">#svg("user")</a>
+    <a href="/admin/blog/authors/#Request(parameter: "id")/links">#svg("link")</a>
+#enddefine
+#define(fields):
+    <input type="hidden" name="authorId" value="#Request(parameter: "id")">
+    #var(field = nil)
+
+    #(field = ["id": "name", "required": true, "data": fields.name])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "url", "required": true, "data": fields.url])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "priority", "required": true, "data": fields.priority])
+    #inline("Admin/Fields/Text")
+
+#enddefine
+
+#let(form = [
+    "list": "links",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.modelId,
+    "key": "link"
+])
+#inline("Admin/Form")

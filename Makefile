@@ -6,10 +6,17 @@ run:
 env:
 	echo 'BASE_URL="http://0.0.0.0:8080"' > .env.development
 	echo 'BASE_PATH="$(CUR_DIR)/"' >> .env.development
-	#echo 'DB_URL=postgres://myuser:mypass@localhost:5432/mydb' >> .env.development
+	
+clean:
+	rm ./db.sqlite
+	rm ./Resources/config.json
+	rm -r ./Public/assets
+
+test:
+	swift test --enable-test-discovery
 
 views:
-	for f in Sources/App/Modules/*; do  m=$$(basename $$f); cp -r "$${f}/Views/" "Resources/Views/$${m}" 2>/dev/null; done;
+	for f in Sources/App/Modules/*; do  m=$$(basename $$f); mkdir -p "Resources/Views"; cp -r "$${f}/Templates/" "Resources/Views/$${m}" 2>/dev/null; done;
 
 css:
 	cat Public/css/frontend.css Public/css/frontend.light.css Public/css/frontend.dark.css \

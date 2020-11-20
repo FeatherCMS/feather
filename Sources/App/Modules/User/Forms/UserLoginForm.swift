@@ -1,61 +1,46 @@
 //
 //  UserLoginForm.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 02. 20..
 //
 
-import Vapor
-import ViewKit
+import FeatherCore
 
 final class UserLoginForm: Form {
-    typealias Model = UserModel
 
     struct Input: Decodable {
         var email: String
         var password: String
     }
-
-    var id: String? = nil
-    var email = BasicFormField()
-    var password = BasicFormField()
     
+    var email = StringFormField()
+    var password = StringFormField()
     var notification: String?
 
-    init() {
-        self.initialize()
+    var leafData: LeafData {
+        .dictionary([
+            "email": email,
+            "password": password,
+            "notification": notification,
+        ])
     }
+
+    init() {}
 
     init(req: Request) throws {
-        self.initialize()
-
         let context = try req.content.decode(Input.self)
-        self.email.value = context.email
-        self.password.value = context.password
-    }
-    
-    func initialize() {
-
-    }
-
-    func read(from model: Model)  {
-        self.email.value = model.email
-        self.password.value = ""
+        email.value = context.email
+        password.value = context.password
     }
 
     func validate(req: Request) -> EventLoopFuture<Bool> {
-        let valid = !Validator.email.validate(self.email.value).isFailure &&
-            !Validator.count(8...).validate(self.password.value).isFailure
+        let valid = !Validator.email.validate(email.value).isFailure &&
+            !Validator.count(8...).validate(password.value).isFailure
 
         if !valid {
-            self.notification = "Invalid username or password"
+            notification = "Invalid username or password"
         }
-
         return req.eventLoop.future(valid)
-    }
-    
-    func write(to model: Model) {
-        model.email = self.email.value
-        model.password = try! Bcrypt.hash(self.password.value)
     }
 }

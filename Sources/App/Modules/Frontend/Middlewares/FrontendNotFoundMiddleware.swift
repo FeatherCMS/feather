@@ -1,30 +1,25 @@
 //
 //  FrontendNotFoundMiddleware.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 04. 07..
 //
 
-import Vapor
-import ViewKit
+import FeatherCore
 
-struct FrontendNotFoundMiddleware: Middleware {
+public struct FrontendNotFoundMiddleware: Middleware {
 
-    public func respond(to request: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
-        return next.respond(to: request)
-        .flatMapError { error in
+    /// if we found a .notFound error in the responder chain, we render our custom not found page with a 404 status code
+    public func respond(to req: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
+        next.respond(to: req).flatMapError { error in
             if let abort = error as? AbortError, abort.status == .notFound {
-                return self.notFound(request)
+                return notFound(req)
             }
-            return request.eventLoop.future(error: error)
+            return req.eventLoop.future(error: error)
         }
     }
 
     func notFound(_ req: Request) -> EventLoopFuture<Response> {
-        let title = req.variables.get("page.not.found.title")
-        let excerpt = req.variables.get("page.not.found.description")
-        let head = HeadContext(title: title, excerpt: excerpt, indexed: false)
-        return req.view.render("Frontend/NotFound", HTMLContext(head, ""))
-            .flatMap { $0.encodeResponse(status: .notFound, for: req) }
+        req.leaf.render(template: "Frontend/NotFound").encodeResponse(status: .notFound, for: req)
     }
 }

@@ -1,0 +1,30 @@
+#define(fields):
+    <input type="hidden" name="menuId" value="#Request(parameter: "id")">
+    #var(field = nil)
+
+    #(field = ["id": "icon", "data": fields.icon])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["id": "label", "required": true, "data": fields.label])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["id": "url", "required": true, "data": fields.url])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "priority", "required": true, "data": fields.priority])
+    #inline("Admin/Fields/Text")
+    
+    #(field = ["id": "targetBlank", "label": "Open in new window?", "data": fields.targetBlank])
+    #inline("Admin/Fields/Selection")
+
+#enddefine
+
+#let(form = [
+    "list": "items",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.modelId,
+    "key": "item"
+])
+#inline("Admin/Form")
+

@@ -1,6 +1,6 @@
 //
 //  StaticPageMigration_v1_0_0.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bödecs on 2020. 06. 07..
 //
@@ -14,7 +14,7 @@ struct StaticPageMigration_v1_0_0: Migration {
         db.schema(StaticPageModel.schema)
             .id()
             .field(StaticPageModel.FieldKeys.title, .string, .required)
-            .field(StaticPageModel.FieldKeys.content, .string)
+            .field(StaticPageModel.FieldKeys.content, .data)
             .create()
     }
 

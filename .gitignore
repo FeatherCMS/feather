@@ -11,5 +11,6 @@ db.sqlite
 .env.testing
 Public/assets
 Resources/Views/*
+Resources/config.json
 Public/css/frontend.min.css
 feather

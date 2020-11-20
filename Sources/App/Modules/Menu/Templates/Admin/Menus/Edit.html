@@ -1,0 +1,28 @@
+#define(toolbarRight):
+    #if(fields.modelId != nil):
+    <a href="/admin/menu/menus/#(fields.modelId)/items">#svg("link")</a>
+    #endif
+#enddefine
+
+#define(fields):
+    #var(field = nil)
+
+    #(field = ["id": "handle", "required": true, "data": fields.handle])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "name", "data": fields.name])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "icon", "data": fields.icon])
+    #inline("Admin/Fields/Text")
+
+#enddefine
+
+#let(form = [
+    "list": "menus",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.modelId,
+    "key": "menu"
+])
+#inline("Admin/Form")

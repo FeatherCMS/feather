@@ -1,27 +1,25 @@
 //
 //  RedirectAdminController.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 03. 26..
 //
 
-import Vapor
 import Fluent
-import ViewKit
+import FeatherCore
 
-final class RedirectAdminController: ViperAdminViewController {
+struct RedirectAdminController: ViperAdminViewController {
 
     typealias Module = RedirectModule
     typealias Model = RedirectModel
     typealias EditForm = RedirectEditForm
     
-    var listSortable: [FieldKey] {
-        [
-            Model.FieldKeys.source,
-            Model.FieldKeys.destination,
-        ]
-    }
-    
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.source,
+        Model.FieldKeys.destination,
+        Model.FieldKeys.statusCode,
+    ]
+
     func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
         qb.filter(\.$source ~~ searchTerm)
         qb.filter(\.$destination ~~ searchTerm)

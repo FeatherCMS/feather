@@ -3,6 +3,11 @@ body {
     color: #333;
     text-shadow: 0px 1px 0px #fff;
 }
+.bg1 { background: #fafafa; }
+.bg2 { background: #fff; }
+.bg3 { background: #fff; }
+
+.border\:primary { border: 1px solid #efefef; }
 h1, h2, h3, h4, h5, h6 {
     color: #2c2c2e;
 }
@@ -11,6 +16,12 @@ a:link, a:visited {
 }
 a:link:hover, a:visited:hover, #nav a:link.selected:hover {
     color: #fa3ebe;
+}
+a p {
+    color: #333;
+}
+.underline {
+    border-bottom: 1px solid #21a9ff;
 }
 pre {
     background: #fff;
@@ -62,24 +73,10 @@ pre code .preprocessing {
 #menu-icon span, #menu-icon span:before, #menu-icon span:after {
     background: #666;
 }
-#account img {
-    border: 2px solid #21a9ff;
-}
-#account img:hover {
-    border: 2px solid #fa3ebe;
-}
+
 hr {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
 }
-/*blockquote {*/
-/*    color: #666;*/
-/*    border-left: 8px solid #DE2451;*/
-/*    box-shadow: 0 6px 12px rgba(0,0,0,0.1), 0 4px 8px rgba(255,255,255,0.6);*/
-/*    background: #fff;*/
-/*}*/
-/*blockquote::before {*/
-/*    color: #333;*/
-/*}*/
 footer {
     border-top: 1px solid #efefef;
     background: #fff;
@@ -94,54 +91,30 @@ input:focus, textarea:focus, select:focus {
     background-color: #fff;
     color: #222;
 }
-
-.card {
-    border: 1px solid #f0f0f0;
-    background: #fff;
-    color: #ccc;
-}
-.card:hover {
+.shadow-hover:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
 }
-.card p, .excerpt {
-    color: #666;
-}
-
-a.card:link:hover, a.card:visited:hover {
+form .required {
     color: #21a9ff;
 }
-
-
-
-/*.sponsor {*/
-/*    background: #fafafa;*/
-/*}*/
-/*.sponsor a.link {*/
-/*    color: #000;*/
-/*    background: #fafafa;*/
-/*}*/
-/*#apps a.cta, #apps a.cta:hover {*/
-/*    color: #fff;*/
-/*}*/
-form .required, form .error {
-    color: #ef695e;
+form .error {
+    color: #ef695e;    
 }
-#login-box {
-    background: #fff;
-    border: 1px solid #efefef;
+#pagination span {
+    color: #ccc;
 }
-#login-box p {
+#pagination span.info {
     color: #666;
 }
+#pagination svg {
+    background: #fff;
+    border: 1px solid #e9e9e9;
+}
+#pagination a:hover svg {
+    background: #f0f0f0;
+    border: 1px solid #e0e0e0;
+}
 
-#categories li, #authors li {
-    background: #fff;
-}
-#categories img, #category img {
-    background: #fff;
-    box-shadow: 0px 4px 8px #ddd;
-}
-td.small img {
-    width: 64px;
-    height: 64px;
-}
+
+
+

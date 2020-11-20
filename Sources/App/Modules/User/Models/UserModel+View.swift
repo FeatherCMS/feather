@@ -1,31 +1,27 @@
 //
 //  UserModel+View.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 06. 02..
 //
 
 import Vapor
+import Leaf
 import ViewKit
 
-extension UserModel: ViewContextRepresentable {
+extension UserModel: LeafDataRepresentable {
 
-    struct ViewContext: Encodable {
-        let id: String
-        let email: String
-        
-        init(model: UserModel) {
-            self.id = model.id!.uuidString
-            self.email = model.email
-        }
+    var leafData: LeafData {
+        .dictionary([
+            "id": id,
+            "email": email,
+        ])
     }
-
-    var viewContext: ViewContext { .init(model: self) }
 }
 
-extension UserModel: FormFieldOptionRepresentable {
+extension UserModel: FormFieldStringOptionRepresentable {
 
-    var formFieldOption: FormFieldOption {
-        .init(key: self.viewIdentifier, label: self.email)
+    var formFieldStringOption: FormFieldStringOption {
+        .init(key: id!.uuidString, label: email)
     }
 }

@@ -1,0 +1,32 @@
+#let(head = [
+    "title": $vars["categories.page.title"],
+    "description": $vars["categories.page.description"],
+    "css": metadata.css,
+    "js": metadata.js
+])
+#define(body):
+<div id="categories" class="wrapper w">
+    <div class="m:xl">
+        <header class="m:bottom:l center">
+            <h1>#(head.title)</h1>
+            <p>#(head.description)</p>
+        </header>
+
+        <section class="m:l">
+            <ul class="lst:none p:zero">
+                #for(category in categories):
+                <li class="p:l br center bg3 m:bottom:l">
+                    <a href="/#(category.metadata.slug)">
+                        <img class="w128 br" src="#(category.imageKey.resolve())">
+                    </a>
+                    <h3><a href="/#(category.metadata.slug)">#(category.title)</a></h3>
+                    <p>#(category.excerpt)</p>
+                </li>
+                #endfor
+            </ul>
+        </section>
+    </div>
+</div>
+#enddefine
+#inline("Frontend/Index")
+

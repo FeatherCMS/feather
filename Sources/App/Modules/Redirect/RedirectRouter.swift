@@ -1,6 +1,6 @@
 //
 //  RedirectRouter.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 01. 24..
 //
@@ -14,9 +14,9 @@ struct RedirectRouter: ViperRouter {
 
     func hook(name: String, routes: RoutesBuilder, app: Application) throws {
         switch name {
-        case "protected-admin":
+        case "admin":
             let adminModule = routes.grouped(.init(stringLiteral: RedirectModule.name))
-            self.adminController.setupRoutes(routes: adminModule, on: .init(stringLiteral: RedirectModel.name))
+            adminController.setupRoutes(on: adminModule, as: RedirectModel.pathComponent)
         default:
             break;
         }

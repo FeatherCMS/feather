@@ -1,6 +1,6 @@
 //
 //  StaticRouter.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bödecs on 2020. 06. 07..
 //
@@ -14,9 +14,9 @@ final class StaticRouter: ViperRouter {
 
     func hook(name: String, routes: RoutesBuilder, app: Application) throws {
         switch name {
-        case "protected-admin":
+        case "admin":
             let module = routes.grouped(.init(stringLiteral: StaticModule.name))
-            self.adminController.setupRoutes(routes: module, on: .init(stringLiteral: StaticPageModel.name))
+            adminController.setupRoutes(on: module, as: StaticPageModel.pathComponent)
         default:
             break;
         }

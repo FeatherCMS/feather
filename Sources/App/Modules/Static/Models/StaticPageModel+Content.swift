@@ -1,21 +1,20 @@
 //
 //  StaticPageModel+Content.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 07. 22..
 //
 
-import Vapor
-import Fluent
-import ViperKit
+import FeatherCore
 
-extension StaticPageModel: FrontendContentModelDelegate {
+extension StaticPageModel: MetadataChangeDelegate {
     
-    var slug: String { self.title.slugify() }
+    var slug: String { title.slugify() }
     
-    func willUpdate(_ content: FrontendContentModel) {
-        content.slug = self.slug
-        content.title = self.title
+    func willUpdate(_ metadata: Metadata) {
+        if !metadata.$id.exists || (metadata.$id.exists && !metadata.slug.isEmpty) {
+            metadata.slug = slug
+        }
+        metadata.title = title
     }
 }
-

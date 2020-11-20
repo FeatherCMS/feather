@@ -1,6 +1,6 @@
 //
 //  BlogMigration_v1_0_0.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2019. 12. 17..
 //
@@ -10,12 +10,13 @@ import Fluent
 struct BlogMigration_v1_0_0: Migration {
 
     func prepare(on db: Database) -> EventLoopFuture<Void> {
-        return db.eventLoop.flatten([
+        db.eventLoop.flatten([
             db.schema(BlogCategoryModel.schema)
                 .id()
                 .field(BlogCategoryModel.FieldKeys.title, .string, .required)
                 .field(BlogCategoryModel.FieldKeys.imageKey, .string, .required)
-                .field(BlogCategoryModel.FieldKeys.excerpt, .string, .required)
+                .field(BlogCategoryModel.FieldKeys.excerpt, .data, .required)
+                .field(BlogCategoryModel.FieldKeys.color, .string)
                 .field(BlogCategoryModel.FieldKeys.priority, .int, .required)
                 .unique(on: BlogCategoryModel.FieldKeys.title)
                 .create(),
@@ -24,15 +25,15 @@ struct BlogMigration_v1_0_0: Migration {
                 .id()
                 .field(BlogAuthorModel.FieldKeys.name, .string, .required)
                 .field(BlogAuthorModel.FieldKeys.imageKey, .string, .required)
-                .field(BlogAuthorModel.FieldKeys.bio, .string, .required)
+                .field(BlogAuthorModel.FieldKeys.bio, .data, .required)
                 .create(),
             
             db.schema(BlogPostModel.schema)
                 .id()
                 .field(BlogPostModel.FieldKeys.title, .string, .required)
                 .field(BlogPostModel.FieldKeys.imageKey, .string, .required)
-                .field(BlogPostModel.FieldKeys.excerpt, .string, .required)
-                .field(BlogPostModel.FieldKeys.content, .string, .required)
+                .field(BlogPostModel.FieldKeys.excerpt, .data, .required)
+                .field(BlogPostModel.FieldKeys.content, .data, .required)
                 .field(BlogPostModel.FieldKeys.categoryId, .uuid, .required)
                 .field(BlogPostModel.FieldKeys.authorId, .uuid, .required)
                 .foreignKey(BlogPostModel.FieldKeys.categoryId, references: BlogCategoryModel.schema, .id)
@@ -51,7 +52,7 @@ struct BlogMigration_v1_0_0: Migration {
     }
     
     func revert(on db: Database) -> EventLoopFuture<Void> {
-        return db.eventLoop.flatten([
+        db.eventLoop.flatten([
             db.schema(BlogPostModel.schema).delete(),
             db.schema(BlogCategoryModel.schema).delete(),
             db.schema(BlogAuthorModel.schema).delete(),

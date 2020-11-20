@@ -1,0 +1,45 @@
+#let(head = [
+    "title": $vars["posts.page.title"],
+    "description": $vars["posts.page.description"],
+    "css": metadata.css,
+    "js": metadata.js
+])
+#define(body):
+<div id="posts" class="wrapper w:full m:xl">
+
+    <header class="m:bottom:l center">
+        <h1>#(head.title)</h1>
+        <p>#(head.description)</p>
+    </header>
+    
+    <form class="wrapper w m:bottom:l" id="search-form" action="#($req.url.path)" method="get">
+        #if(Request(query: "limit") != nil):
+        <input type="hidden" id="limit" name="limit" value="#Request(query: "limit")">
+        #endif
+        <input type="text" id="search" name="search" placeholder="Search..." value="#Request(query: "search")">
+    </form>
+
+    <div class="g6 g:gap:l">
+    #for(post in page.items):
+        #var(size = 2)
+        #inline("Blog/Frontend/SinglePost")
+    #endfor
+    </div>
+    
+    #if(page.items.isEmpty()):
+    <div class="wrapper w center">
+        <div class="m:xl">
+            <span class="h1">#($vars["empty.list.icon"])</span>
+            <p class="h1">#($vars["empty.list.title"])</p>
+            <p>#($vars["empty.list.description"])</p>
+            <p><a href="#($req.url.path)">#($vars["empty.list.link"])</a></p>
+        </div>
+    </div>
+    #endif
+
+    <div id="pagination">
+    #inline("Frontend/Pagination")
+    </div>
+</div>
+#enddefine
+#inline("Frontend/Index")

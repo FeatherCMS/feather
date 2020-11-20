@@ -1,13 +1,11 @@
 //
 //  RedirectModel.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bödecs on 2020. 05. 30..
 //
 
-import Vapor
-import Fluent
-import ViperKit
+import FeatherCore
 
 final class RedirectModel: ViperModel {
     typealias Module = RedirectModule
@@ -41,7 +39,7 @@ final class RedirectModel: ViperModel {
     }
 
     var type: RedirectType {
-        switch self.statusCode {
+        switch statusCode {
         case 301:
             return .permanent
         case 307:

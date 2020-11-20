@@ -1,0 +1,27 @@
+#let(head = [
+    "title": category.title,
+    "description": category.excerpt,
+    "css": metadata.css,
+    "js": metadata.js
+])
+
+#define(body):
+<div id="category" class="wrapper w:full m:xl">
+
+    <header class="m:bottom:l center">
+        <img class="w128 br:s" src="#(category.imageKey.resolve())">
+        <h1>#(head.title)</h1>
+        <p>#(head.description)</p>
+        <span><b>#(posts.count()) post#if(posts.count() > 1):s#endif</b></span>
+    </header>
+    
+    <div class="g6 g:gap:l:hd">
+    #for(post in posts):
+        #var(size = 2)
+        #inline("Blog/Frontend/SinglePost")
+    #endfor
+    </div>
+</div>
+
+#enddefine
+#inline("Frontend/Index")

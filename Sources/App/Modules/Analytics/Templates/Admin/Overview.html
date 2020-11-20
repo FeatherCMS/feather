@@ -1,0 +1,36 @@
+#define(toolbarCenter):
+    Analytics overview
+#enddefine
+#define(body):
+
+<div id="analytics-overview" class="wrapper w m:bottom:l">
+    <div class="m">
+
+        <h2>Metrics</h2>
+        <div class="g2 g:gap:l center">
+            <div class="g:col2 bg2 p:l br:s border1">
+                <span>#svg("eye", class: "block w64")</span>
+                <h3>Total page views</h3>
+                <p class="h1">#(totalPageViews)</p>
+            </div>
+
+            #for(metric in metrics):
+            <div class="g:col1 bg2 p:l br:s border1">
+                <span>#svg(metric.icon, class: "block w64")</span>
+                <h3>#(metric.name)</h3>
+                <ul class="lst:none p:zero">
+                #for(group in metric.groups):
+                    <li>
+                        <span class="block left">#(group.name) - #(group.percent)%</span>
+                        <span class="block left bar-chart" style="width: #(group.percent)%;"><span class="p:s"></span></span>
+                    </li>
+                #endfor
+                </ul>
+            </div>
+            #endfor
+        </div>
+
+    </div>
+</div>
+#enddefine
+#inline("Admin/Index")

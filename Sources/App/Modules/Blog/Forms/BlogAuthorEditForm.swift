@@ -1,80 +1,90 @@
 //
 //  BlogAuthorEditForm.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 03. 23..
 //
 
-import Vapor
-import ViewKit
+import FeatherCore
 
-final class BlogAuthorEditForm: Form {
+final class BlogAuthorEditForm: ModelForm {
 
     typealias Model = BlogAuthorModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var name: String
         var bio: String
-
         var image: File?
-        var imageDelete: Bool?
     }
 
-    var id: String? = nil
-    var name = BasicFormField()
-    var bio = BasicFormField()
+    var modelId: String? = nil
+    var name = StringFormField()
+    var bio = StringFormField()
     var image = FileFormField()
-    
-    var contentModel: FrontendContentModel.ViewContext?
+    var metadata: Metadata?
     var notification: String?
+    
+    var leafData: LeafData {
+        .dictionary([
+            "modelId": modelId,
+            "name": name,
+            "bio": bio,
+            "image": image,
+            "metadata": metadata,
+            "notification": notification,
+        ])
+    }
 
     init() {}
     
     init(req: Request) throws {
         let context = try req.content.decode(Input.self)
-        self.id = context.id.emptyToNil
-        
-        self.name.value = context.name
-        self.bio.value = context.bio
-
-        self.image.delete = context.imageDelete ?? false
-        if let image = context.image {
-            if let data = image.data.getData(at: 0, length: image.data.readableBytes), !data.isEmpty {
-                self.image.data = data
-            }
+        modelId = context.modelId.emptyToNil
+        name.value = context.name
+        bio.value = context.bio
+        if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {
+            image.data = data
         }
-    }
-
-    func read(from model: Model)  {
-        self.id = model.id?.uuidString
-        self.name.value = model.name
-        self.image.value = model.imageKey
-        self.bio.value = model.bio
     }
     
     func validate(req: Request) -> EventLoopFuture<Bool> {
         var valid = true
 
-        if let data = self.image.data, data.isEmpty {
-            self.image.error = "Image is required"
+        if let data = image.data, data.isEmpty {
+            image.error = "Image is required"
             valid = false
         }
-        if self.name.value.isEmpty {
-            self.name.error = "Name is required"
+        if name.value.isEmpty {
+            name.error = "Name is required"
+            valid = false
+        }
+        if Validator.count(...250).validate(name.value).isFailure {
+            name.error = "Name is too long (max 250 characters)"
+            valid = false
+        }
+        if modelId == nil && image.data == nil {
+            image.error = "Image is required"
             valid = false
         }
         return req.eventLoop.future(valid)
     }
 
-    func write(to model: Model) {
-        model.name = self.name.value
-        if !self.image.value.isEmpty {
-            model.imageKey = self.image.value
+    func read(from input: Model)  {
+        modelId = input.id?.uuidString
+        name.value = input.name
+        image.value = input.imageKey
+        bio.value = input.bio
+    }
+
+    func write(to output: Model) {
+        output.name = name.value
+        if !image.value.isEmpty {
+            output.imageKey = image.value
         }
-        if self.image.delete {
-            model.imageKey = ""
+        if image.delete {
+            output.imageKey = ""
         }
-        model.bio = self.bio.value
+        output.bio = bio.value
     }
 }

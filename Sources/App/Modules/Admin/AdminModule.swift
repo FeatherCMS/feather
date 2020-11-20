@@ -1,6 +1,6 @@
 //
 //  AdminModule.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 03. 28..
 //
@@ -15,4 +15,12 @@ final class AdminModule: ViperModule {
     var priority: Int { 100 }
     
     var router: ViperRouter? = AdminRouter()
+    
+    var viewsUrl: URL? {
+        nil
+//        Bundle.module.bundleURL
+//            .appendingPathComponent("Contents")
+//            .appendingPathComponent("Resources")
+//            .appendingPathComponent("Views")
+    }
 }

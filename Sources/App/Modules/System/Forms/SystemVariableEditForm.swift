@@ -1,6 +1,6 @@
 //
 //  SystemVariableEditForm.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 06. 10..
 //
@@ -8,69 +8,70 @@
 import Vapor
 import ViewKit
 
-final class SystemVariableEditForm: Form {
+final class SystemVariableEditForm: ModelForm {
 
     typealias Model = SystemVariableModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var key: String
         var value: String
         var notes: String
     }
 
-    var id: String? = nil
-    var key = BasicFormField()
-    var value = BasicFormField()
-    var notes = BasicFormField()
-    
+    var modelId: String? = nil
+    var key = StringFormField()
+    var value = StringFormField()
+    var notes = StringFormField()
     var notification: String?
-
-        
-    init() {
-        self.initialize()
+    
+    var leafData: LeafData {
+        .dictionary([
+            "modelId": modelId,
+            "key": key,
+            "value": value,
+            "notes": notes,
+            "notification": notification,
+        ])
     }
+
+    init() {}
 
     init(req: Request) throws {
-        self.initialize()
-
         let context = try req.content.decode(Input.self)
-        self.id = context.id.emptyToNil
-
-        self.key.value = context.key
-        self.value.value = context.value
-        self.notes.value = context.notes
+        modelId = context.modelId.emptyToNil
+        key.value = context.key
+        value.value = context.value
+        notes.value = context.notes
     }
     
-    func initialize() {
-
-    }
-    
-    func read(from model: Model)  {
-        self.id = model.id!.uuidString
-        self.key.value = model.key
-        self.value.value = model.value
-        self.notes.value = model.notes ?? ""
-    }
-
     func validate(req: Request) -> EventLoopFuture<Bool> {
         var valid = true
        
-        if self.key.value.isEmpty {
-            self.key.error = "Key is required"
+        if key.value.isEmpty {
+            key.error = "Key is required"
             valid = false
         }
-        if self.value.value.isEmpty {
-            self.value.error = "Value is required"
+        if Validator.count(...250).validate(key.value).isFailure {
+            key.error = "Key is too long (max 250 characters)"
             valid = false
         }
 
         return req.eventLoop.future(valid)
     }
-    
-    func write(to model: Model) {
-        model.key = self.key.value
-        model.value = self.value.value
-        model.notes = self.notes.value.emptyToNil
+
+    func read(from input: Model)  {
+        modelId = input.id?.uuidString
+        key.value = input.key
+        value.value = input.value ?? ""
+        notes.value = input.notes ?? ""
+    }
+
+    func write(to output: Model) {
+        output.key = key.value
+        output.value = value.value.emptyToNil
+        output.notes = notes.value.emptyToNil
+        output.hidden = false
     }
 }
+

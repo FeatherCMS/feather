@@ -1,30 +1,23 @@
 //
 //  BlogCategoryAdminController.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 03. 23..
 //
 
-import Vapor
 import Fluent
-import ViperKit
+import FeatherCore
 
-final class BlogCategoryAdminController: ViperAdminViewController {
+struct BlogCategoryAdminController: ViperAdminViewController {
 
     typealias Module = BlogModule
     typealias Model = BlogCategoryModel
     typealias EditForm = BlogCategoryEditForm
-    
-    func listBuilder(req: Request, queryBuilder: QueryBuilder<Model>) throws -> QueryBuilder<Model> {
-        queryBuilder.sort(\Model.$priority, .descending)
-    }
 
-    var listSortable: [FieldKey] {
-        [
-            Model.FieldKeys.title,
-            Model.FieldKeys.priority,
-        ]
-    }
+    var listAllowedOrders: [FieldKey] = [
+        Model.FieldKeys.title,
+        Model.FieldKeys.priority,
+    ]
 
     func search(using qb: QueryBuilder<Model>, for searchTerm: String) {
         qb.filter(\.$title ~~ searchTerm)
@@ -34,15 +27,11 @@ final class BlogCategoryAdminController: ViperAdminViewController {
         Model.path + model.id!.uuidString + ".jpg"
     }
     
+    
     func beforeRender(req: Request, form: EditForm) -> EventLoopFuture<Void> {
         var future: EventLoopFuture<Void> = req.eventLoop.future()
-        if let id = form.id, let uuid = UUID(uuidString: id) {
-            future = FrontendContentModel.query(on: req.db)
-                .filter(\.$module == Module.name)
-                .filter(\.$model == Model.name)
-                .filter(\.$reference == uuid)
-                .first()
-                .map { form.contentModel = $0?.viewContext }
+        if let id = form.modelId, let uuid = UUID(uuidString: id) {
+            future = findMetadata(on: req.db, uuid: uuid).map { form.metadata = $0 }
         }
         return future
     }
@@ -51,7 +40,7 @@ final class BlogCategoryAdminController: ViperAdminViewController {
         model.id = UUID()
         var future: EventLoopFuture<Model> = req.eventLoop.future(model)
         if let data = form.image.data {
-            let key = self.path(model)
+            let key = path(model)
             future = req.fs.upload(key: key, data: data).map { url in
                 //form.image.value = url
                 model.imageKey = key
@@ -62,7 +51,7 @@ final class BlogCategoryAdminController: ViperAdminViewController {
     }
     
     func beforeUpdate(req: Request, model: Model, form: EditForm) -> EventLoopFuture<Model> {
-        let key = self.path(model)
+        let key = path(model)
         var future: EventLoopFuture<Model> = req.eventLoop.future(model)
         if
             (form.image.delete || form.image.data != nil),
@@ -86,6 +75,6 @@ final class BlogCategoryAdminController: ViperAdminViewController {
     }
     
     func beforeDelete(req: Request, model: Model) -> EventLoopFuture<Model> {
-        req.fs.delete(key: self.path(model)).map { model }
-    }
+        req.fs.delete(key: path(model)).map { model }
+    }    
 }

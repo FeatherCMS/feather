@@ -1,3 +1,63 @@
+svg {
+    margin: 0 auto;
+}
+/* table related changes, tables should always should be displayed using grid layout */
+table, thead, tbody, tfoot, tr, th, td {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+tr {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+}
+tr {
+    border-radius: 4px;
+    margin: 8px 0px;
+    padding: 16px;
+}
+th {
+    padding: 4px 0px;
+}
+td {
+    padding: 8px 0px;
+}
+td img {
+    display: block;
+    margin: 0 auto;
+}
+/* table alignments, on mobile everything is centered, otherwise use the proper alignment */
+.t\:left, .t\:center, .t\:right { text-align: center; }
+@media (min-width: 600px) {
+    .t\:left { text-align: left; }
+    .t\:center { text-align: center; }
+    .t\:right { text-align: right; }
+}
+/* file uploaders */
+.uploader {
+    text-align: center;
+}
+.uploader img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.small-uploader img {
+    width: 256px;
+    border-radius: 8px;
+    margin: 16px auto;
+}
+.circular-uploader img {
+    width: 256px;
+    border-radius: 50%;
+    margin: 16px auto;
+}
+.large-uploader img {
+    border-radius: 8px;
+}
+
+
 #header {
     border-bottom: none;
 }
@@ -11,7 +71,6 @@
 #header #nav a:link:hover, #header #nav a:visited:hover, #header #nav a:link.selected:hover {
     color: #fa3ebe;
 }
-
 #header #menu-icon {
     float: left;
 }
@@ -25,226 +84,36 @@
     padding-right: 0;
     margin-left: 8px;
 }
+
 #account {
     position: absolute;
     top: 20px;
     right: 14px;
 }
-#account img {
-    display: block;
-    width: 32px;
-    height: 32px;
-    border-radius: 32px;
-}
-#toolbar:after {
-   content: '';
-   display: block;
-   clear: both;
-}
-
-#toolbar #buttons {
-    padding: 14px 16px;
-    float: left;
-    list-style-type: none;
-}
-#toolbar #buttons li b {
-    font-size: 28px;
-    margin: 0px 8px;
-    margin-right: 16px;
-}
-#toolbar #buttons li {
-    float: left;
-}
-#toolbar #buttons li a {
-    display: block;
-    padding: 4px 16px;
-    transition: 0.2s;
-    border-radius: 8px;
-}
-#toolbar #buttons li a svg {
-    position: relative;
-    top: 2px;
-}
-
-/*#toolbar #buttons li {*/
-/*    display: none;*/
-/*}*/
-/*#toolbar #buttons li:first-child, #toolbar #buttons li:first-child + li {*/
-/*    display: block;*/
-/*}*/
-
-#list {
-    margin: 1em;
-}
-
-#search-form {
-    margin: 1em 0.5em;
-}
-table {
-    width: 100%;
-    border-spacing: 0;
-    border-collapse: separate;
-    border-spacing: 8px;
-}
-tbody, tr, th, td {
-    display: block;
-}
-th[data-title]:before, td[data-title]:before {
-    content: attr(data-title) ":\00A0";
-}
-th {
-    background: #444;
-    background: #efefef;
-    border-radius: 8px;
-    padding: 1em;
-}
-th, th a:link, th a:visited {
-    text-shadow: none;
-/*    color: #cafe00;*/
-    margin-bottom: 4px;
-/*    text-align: left;*/
-}
-tr {
-    margin-bottom: 1em;
-}
-tr .center {
-    text-align: center;
-}
-td {
-    padding: 0.8em 1em;
-    background: #333;
-    background: #fff;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
-td img {
-    border-radius: 4px;
-}
-tr:last-child td {
-    border-bottom: none;
-}
-td.actions {
-    text-align: center;
-}
-td.image-large {
-    line-height: 0;
-}
-td.image-large img {
-    width: 100%;
-}
-td.profile {
-    line-height: 0;
-}
-td.profile img {
-    margin: 1em 0;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-}
-.text-link {
-    padding: 4px 16px;
-    transition: 0.2s;
-}
-.pager {
-    padding: 8px;
-    font-size: 0.8em;
-}
-
-#dashboard {
-    margin: 3em 1em 2em 1em;
-}
-#dashboard ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-#dashboard li {
-    text-align: center;
-    padding: 16px;
-}
-#dashboard li a {
+#toolbar a {
+    display: inline-block;
     padding: 8px 16px;
 }
-#dashboard li a:hover {
-    border-radius: 8px;
+#toolbar #right .container {
+    float: right;
 }
-#dashboard h3 {
-    text-align: center;
-}
-#dashboard .grid {
-    grid-template-columns: 1fr;
-}
-#dashboard .grid-item {
-    display: flex;
-    flex-direction: column;
-}
-#dashboard .grid-item div {
-    padding: 1em;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-#dashboard span {
-    margin-top: 2em;
-    color: #ddd;
-    text-align: center;
-    display: block;
-}
-
-
-.image-uploader {
-    text-align: center;
-}
-.image-uploader img {
-    width: 100%;
-    border-radius: 8px;
-    max-height: 450px;
-}
-.image-uploader a {
-    font-size: 0.8em;
-    padding: 4px;
-}
-.square-image-uploader label, .rounded-image-uploader label {
-    display: block;
-    text-align: center;
-}
-.square-image-uploader img, .rounded-image-uploader img {
-    width: 100%;
-    width: 128px;
-    height: 128px;
-    display: block;
-    margin: 0 auto;
-}
-.rounded-image-uploader img {
-    border-radius: 50%;
-    margin: 1em auto;
-}
-@media (min-width: 600px) {
-    #dashboard .grid {
+@media (max-width: 599px) {
+    #toolbar .center {
+        text-align: left;
+        padding-left: 8px;
+    }
+    #toolbar {
         grid-template-columns: 1fr 1fr;
     }
-    tbody {
-        display: table-header-group;
+    #toolbar .g\:col1:nth-of-type(1) {
+        order: 2;
     }
-    tr {
-        display: table-row;
-        margin-bottom: 0;
+    #toolbar .g\:col1:nth-of-type(2) {
+        grid-column: span 2;
+        order: 1;
     }
-    th, td {
-        display: table-cell;
-    }
-    tr .small {
-        width: 96px;
-    }
-    th[data-title]:before, td[data-title]:before {
-        content: "";
-    }
-    td.image-large {
-        width: 128px;
-    }
-    td.actions {
-        width: 160px;
+    #toolbar .g\:col1:nth-of-type(3) {
+        order: 3;
     }
 }
 
@@ -272,15 +141,9 @@ td.profile img {
 }
 
 @media (min-width: 900px) {
-    #dashboard .grid {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
     #header #nav li {
         margin-left: 0px;
     }
-/*    #toolbar #buttons li {*/
-/*        display: block;*/
-/*    }*/
     #header #nav li + li:before {
         content: "//";
     }

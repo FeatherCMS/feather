@@ -1,6 +1,6 @@
 //
 //  SystemMigration_v1_0_0.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bödecs on 2020. 06. 10..
 //
@@ -14,9 +14,9 @@ struct SystemMigration_v1_0_0: Migration {
         db.schema(SystemVariableModel.schema)
             .id()
             .field(SystemVariableModel.FieldKeys.key, .string, .required)
-            .field(SystemVariableModel.FieldKeys.value, .string, .required)
+            .field(SystemVariableModel.FieldKeys.value, .data)
             .field(SystemVariableModel.FieldKeys.hidden, .bool, .required)
-            .field(SystemVariableModel.FieldKeys.notes, .string)
+            .field(SystemVariableModel.FieldKeys.notes, .data)
             .unique(on: SystemVariableModel.FieldKeys.key)
             .create()
     }

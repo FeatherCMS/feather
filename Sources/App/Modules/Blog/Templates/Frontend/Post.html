@@ -1,0 +1,62 @@
+#let(head = [
+    "title": post.title,
+    "description": post.excerpt,
+    "css": post.metadata.css,
+    "js": post.metadata.js
+])
+#define(body):
+
+<article id="post">
+    <div class="wrapper w">
+        <header class="m:xl">
+            <p>
+                <span class="underline"#if(post.category.color != nil): style="border-color: #(post.category.color);"#endif>#(post.category.title)</span>
+                &middot;
+                #let(dateString = Date(timeStamp: post.metadata.date, fixedFormat: $app.dateFormats.date, timeZone: $app.timezone))
+                <time datetime="#(dateString)">#(dateString)</time>
+            </p>
+            <h1 class="m:bottom:s">#(post.title)</h1>
+            <p class="m:zero">#(post.excerpt)</p>
+        </header>
+    </div>
+
+    <div class="wrapper w:full">
+        <section class="m:xl">
+            <img class="block br:s" style="box-shadow: 0 8px 38px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.12);" src="#(post.imageKey.resolve())">
+        </section>
+    </div>
+
+    #(post.content)
+
+</article>
+
+#inline("Sponsor/Box")
+
+#if($vars["share.isEnabled"] != nil && $vars["share.isEnabled"] == "true"):
+<div class="wrapper w center">
+    <section id="share" class="m:xl">
+        <hr>
+        <p>#($vars["share.link.prefix"] ?? "") <a href="https://twitter.com/intent/tweet?via=#($vars["share.author"] ?? "")&hashtags=#($vars["share.hashtags"] ?? "")&url=#($app.baseUrl)#($req.url.path)" target="_blank">#($vars["share.link"] ?? "Share on Twitter")</a> #($vars["share.link.suffix"] ?? "")</p>
+    </section>
+</div>
+#endif
+
+#if($vars["post.author.isEnabled"] != nil && $vars["post.author.isEnabled"] == "true"):
+<div class="wrapper w center">
+    <section class="m:xl">
+        <img class="w128 br:circular" src="#(post.author.imageKey.resolve())" alt="Picture of #(post.author.name)" title="#(post.author.name)">
+        <h3 class="m:top:s">#(post.author.name)</h3>
+        <p>#(post.author.bio)</p>
+        #for(link in post.author.links):
+        <a href="#(link.url)" target="_blank">#(link.name)</a> #if(!isLast): &middot; #endif
+        #endfor
+        </p>
+    </section>
+</div>
+#endif
+
+#($vars["post.footer"] ?? "")
+
+#enddefine
+#inline("Frontend/Index")
+

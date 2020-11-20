@@ -5,10 +5,6 @@ document.addEventListener("keydown", function(e) {
     }
 }, false);
 
-document.addEventListener("DOMContentLoaded", function() {
-    
-});
-
 window.addEventListener('load', function() {
     var elem = document.getElementById('notification');
     if (elem != null) {
@@ -19,33 +15,6 @@ window.addEventListener('load', function() {
     }
 });
 
-function toggleNavigation() {
-    var x = document.getElementById("tray");
-    if (x.className === "opened") {
-        x.className = "closed";
-    }
-    else {
-        x.className = "opened";
-    }
-}
-
-function confirmDelete(path, id) {
-  if (confirm("Press ok to confirm delete.")) {
-     var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState != 4 || xmlHttp.status != 200) {
-                return
-            }
-            console.warn(xmlHttp.responseText)
-            var element = document.getElementById(id)
-            var tr = element.parentElement.parentElement
-            tr.parentNode.removeChild(tr)
-        }
-        xmlHttp.open("POST", path + id + "/delete/", true);
-        xmlHttp.send(null);
-  }
-}
-
 function chooseImage() {
     document.getElementById('imageDelete').value = false;
     document.getElementById('image').click();
@@ -53,6 +22,10 @@ function chooseImage() {
 function removeImage() {
     document.getElementById('image').value = null;
     document.getElementById('imageDelete').value = true;
+    
+    const placeholder = document.getElementById('placeholder');
+    placeholder.classList.remove('hidden');
+
     const element = document.getElementById('uploaded-image');
     if (element !== null) {
         element.parentNode.removeChild(element);
@@ -62,6 +35,9 @@ function removeImage() {
 const imageElement = document.getElementById("image")
 if (imageElement !== null) {
     imageElement.onchange = function(event) {
+        const placeholder = document.getElementById('placeholder');
+        placeholder.classList.add('hidden');
+
         const file = event.target.files[0];
         const blobURL = URL.createObjectURL(file);
         let element = document.getElementById('uploaded-image');

@@ -1,0 +1,34 @@
+#define(toolbarLeft):
+    #if(fields.modelId != nil):
+    <a href="/admin/frontend/metadatas/#(fields.metadata.id)">#svg("feather")</a>
+    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
+    #endif
+#enddefine
+#define(fields):
+    #var(field = nil)
+
+    #(field = ["id": "image", "class": "small", "data": fields.image, "required": true, "accept": "image/jpeg"])
+    #inline("Admin/Fields/File")
+
+    #(field = ["id": "title", "required": true, "data": fields.title])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "excerpt", "size": "small", "data": fields.excerpt])
+    #inline("Admin/Fields/Textarea")
+
+    #(field = ["id": "color", "more": "e.g #cafe00", "data": fields.color])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "priority", "required": true, "data": fields.priority])
+    #inline("Admin/Fields/Text")
+#enddefine
+
+#let(form = [
+    "list": "categories",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.modelId,
+    "key": "category",
+    "multipart": true
+])
+#inline("Admin/Form")

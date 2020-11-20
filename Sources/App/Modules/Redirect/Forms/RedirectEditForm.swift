@@ -1,6 +1,6 @@
 //
 //  RedirectEditForm.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 02. 17..
 //
@@ -8,77 +8,92 @@
 import Vapor
 import ViewKit
 
-final class RedirectEditForm: Form {
+final class RedirectEditForm: ModelForm {
 
     typealias Model = RedirectModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var source: String
         var destination: String
         var statusCode: String
     }
 
-    var id: String? = nil
-    var source = BasicFormField()
-    var destination = BasicFormField()
-    var statusCode = SelectionFormField()
-    
+    var modelId: String? = nil
+    var source = StringFormField()
+    var destination = StringFormField()
+    var statusCode = StringSelectionFormField()
     var notification: String?
+
+    var leafData: LeafData {
+        .dictionary([
+            "modelId": modelId,
+            "source": source,
+            "destination": destination,
+            "statusCode": statusCode,
+            "notification": notification,
+        ])
+    }
     
     private let validCodes = [301, 303, 307]
         
     init() {
-        self.initialize()
+        initialize()
     }
 
     init(req: Request) throws {
-        self.initialize()
+        initialize()
 
         let context = try req.content.decode(Input.self)
-        self.id = context.id.emptyToNil
-
-        self.source.value = context.source
-        self.destination.value = context.destination
-        self.statusCode.value = context.statusCode
+        modelId = context.modelId.emptyToNil
+        source.value = context.source
+        destination.value = context.destination
+        statusCode.value = context.statusCode
     }
     
     func initialize() {
-        self.statusCode.options = FormFieldOption.numbers(self.validCodes)
-        self.statusCode.value = String(self.validCodes[0])
-    }
-    
-    func read(from model: Model)  {
-        
-        self.id = model.id!.uuidString
-        self.source.value = model.source
-        self.destination.value = model.destination
-        self.statusCode.value = String(model.statusCode)
+        statusCode.options = FormFieldStringOption.numbers(validCodes)
+        statusCode.value = String(validCodes[0])
     }
 
     func validate(req: Request) -> EventLoopFuture<Bool> {
         var valid = true
        
-        if self.source.value.isEmpty {
-            self.source.error = "Source is required"
+        if source.value.isEmpty {
+            source.error = "Source is required"
             valid = false
         }
-        if self.destination.value.isEmpty {
-            self.destination.error = "Destination is required"
+        if Validator.count(...250).validate(source.value).isFailure {
+            source.error = "Source is too long (max 250 characters)"
             valid = false
         }
-        let statusCode = Int(self.statusCode.value)
-        if self.statusCode.value.isEmpty || statusCode == nil || !self.validCodes.contains(statusCode!) {
-            self.statusCode.error = "Invalid status code"
+        if destination.value.isEmpty {
+            destination.error = "Destination is required"
+            valid = false
+        }
+        if Validator.count(...250).validate(destination.value).isFailure {
+            destination.error = "Destination is too long (max 250 characters)"
+            valid = false
+        }
+        let code = Int(statusCode.value)
+        if statusCode.value.isEmpty || code == nil || !validCodes.contains(code!) {
+            statusCode.error = "Invalid status code"
             valid = false
         }
 
         return req.eventLoop.future(valid)
     }
-    
-    func write(to model: Model) {
-        model.source = self.source.value
-        model.destination = self.destination.value
-        model.statusCode = Int(self.statusCode.value)!
+
+    func read(from input: Model)  {
+        modelId = input.id?.uuidString
+        source.value = input.source
+        destination.value = input.destination
+        statusCode.value = String(input.statusCode)
+    }
+
+    func write(to output: Model) {
+        output.source = source.value
+        output.destination = destination.value
+        output.statusCode = Int(statusCode.value)!
     }
 }

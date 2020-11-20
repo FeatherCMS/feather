@@ -1,0 +1,42 @@
+#let(head = [
+    "title": $vars["home.page.title"],
+    "description": $vars["home.page.description"],
+    "css": metadata.css,
+    "js": metadata.js
+
+])
+#define(css):
+@media (min-width: 600px) {
+    .post-cell-1 {
+        grid-column: span 6;
+    }
+}
+@media (min-width: 900px) {
+    .post-cell-1, .post-cell-2 {
+        grid-column: span 3;
+    }
+}
+#enddefine
+#define(body):
+<div id="home" class="wrapper w:full m:xl">
+
+    <header class="m:bottom:l center">
+        <h1>#(head.title)</h1>
+        <p>#(head.description)</p>
+    </header>
+
+    <div class="g6 g:gap:l:hd">
+    #for((index, post) in posts):
+        #var(size = 2)
+        #var(class = "post-cell-" + index + 1)
+        #if(index < 2):
+            #var(size = 3)
+        #endif
+        
+        #inline("Blog/Frontend/SinglePost")
+    #endfor
+    </div>
+
+</div>
+#enddefine
+#inline("Frontend/Index")

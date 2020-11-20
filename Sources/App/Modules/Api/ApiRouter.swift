@@ -1,6 +1,6 @@
 //
 //  ApiRouter.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bödecs on 2020. 06. 09..
 //
@@ -12,10 +12,17 @@ final class ApiRouter: ViperRouter {
 
     func boot(routes: RoutesBuilder, app: Application) throws {
         let publicApi = routes.grouped("api")
-        let protectedApi = routes.grouped(UserTokenModel.authenticator(),
-                                          UserModel.guardMiddleware())
 
-        try self.invoke(name: "public-api", routes: publicApi, app: app)
-        try self.invoke(name: "protected-api", routes: protectedApi, app: app)
+        /// register publicly available api routes
+        try invoke(name: "public-api", routes: publicApi, app: app)
+
+        /// guard the api with auth middlewares, if there was no auth middlewares returned we simply stop the registration
+        guard let middlewares = app.viper.invokeSyncHook(name: "api-auth-middlwares", type: [Middleware].self) else {
+            return
+        }
+
+        /// register protected api endpoints
+        let protectedApi = publicApi.grouped(middlewares)
+        try invoke(name: "api", routes: protectedApi, app: app)
     }
 }

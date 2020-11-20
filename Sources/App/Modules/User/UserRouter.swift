@@ -1,6 +1,6 @@
 //
 //  UserRouter.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 01. 24..
 //
@@ -12,22 +12,23 @@ struct UserRouter: ViperRouter {
     
     let userFrontendController = UserFrontendController()
     let userAdminController = UserAdminController()
-    
+
     func boot(routes: RoutesBuilder, app: Application) throws {
-        routes.get("login", use: self.userFrontendController.loginView)
-        routes.grouped(UserModelCredentialsAuthenticator()).post("login", use: self.userFrontendController.login)
-        routes.get("logout", use: self.userFrontendController.logout)
+        routes.get("login", use: userFrontendController.loginView)
+        routes.grouped(UserModelCredentialsAuthenticator()).post("login", use: userFrontendController.login)
+        routes.get("logout", use: userFrontendController.logout)
     }
 
     func hook(name: String, routes: RoutesBuilder, app: Application) throws {
         switch name {
-        case "protected-admin":
+        case "admin":
             let adminModule = routes.grouped(.init(stringLiteral: UserModule.name))
-            self.userAdminController.setupRoutes(routes: adminModule, on: .init(stringLiteral: UserModel.name))
+
+            userAdminController.setupRoutes(on: adminModule, as: .init(stringLiteral: UserModel.name))
 //        case "protected-api":
 //            let apiModule = routes.grouped("users")
-//            apiModule.get("users", use: self.userApiController.users)
-//            apiModule.post("users", use: self.userApiController.createUser)
+//            apiModule.get("users", use: userApiController.users)
+//            apiModule.post("users", use: userApiController.createUser)
         default:
             break;
         }

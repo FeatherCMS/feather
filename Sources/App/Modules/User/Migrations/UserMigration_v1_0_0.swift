@@ -1,6 +1,6 @@
 //
 //  UserMigration_v1_0_0.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 02. 20..
 //
@@ -29,7 +29,7 @@ struct UserMigration_v1_0_0: Migration {
     }
     
     func revert(on db: Database) -> EventLoopFuture<Void> {
-        return db.eventLoop.flatten([
+        db.eventLoop.flatten([
             db.schema(UserModel.schema).delete(),
             db.schema(UserTokenModel.schema).delete(),
         ])

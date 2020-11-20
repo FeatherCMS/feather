@@ -1,6 +1,6 @@
 //
 //  StaticModule.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bödecs on 2020. 06. 07..
 //
@@ -9,6 +9,7 @@ import Vapor
 import Fluent
 import ViperKit
 import ViewKit
+import FeatherCore
 
 final class StaticModule: ViperModule {
 
@@ -17,7 +18,7 @@ final class StaticModule: ViperModule {
     var router: ViperRouter? { StaticRouter() }
 
     func boot(_ app: Application) throws {
-        app.databases.middleware.use(FrontendContentModelMiddleware<StaticPageModel>())
+        app.databases.middleware.use(MetadataMiddleware<StaticPageModel>())
     }
 
     var migrations: [Migration] {
@@ -26,36 +27,71 @@ final class StaticModule: ViperModule {
         ]
     }
 
+    var viewsUrl: URL? {
+        nil
+//        Bundle.module.bundleURL
+//            .appendingPathComponent("Contents")
+//            .appendingPathComponent("Resources")
+//            .appendingPathComponent("Views")
+    }
+
     // MARK: - hook functions
 
     func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
         switch name {
-        case "install":
-            return self.installHook(req: req)
         case "frontend-page":
-            return self.frontendPageHook(req: req)
+            return frontendPageHook(req: req)
+        default:
+            return nil
+        }
+    }
+    
+    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
+        switch name {
+        case "installer":
+            return StaticInstaller()
+        case "leaf-admin-menu":
+            return [
+                "name": "Static",
+                "icon": "file-text",
+                "items": LeafData.array([
+                    [
+                        "url": "/admin/static/pages/",
+                        "label": "Pages",
+                    ],
+                ])
+            ]
         default:
             return nil
         }
     }
 
     private func frontendPageHook(req: Request) -> EventLoopFuture<Any?>? {
-        StaticPageModel.joinedFrontendContentQuery(on: req.db, path: req.url.path)
-        .filter(FrontendContentModel.self, \.$status != .archived)
+        StaticPageModel.findMetadata(on: req.db, path: req.url.path)
+        .filter(Metadata.self, \.$status != .archived)
         .first()
         .flatMap { page -> EventLoopFuture<Response?> in
-            guard let page = page, let content = try? page.joined(FrontendContentModel.self) else {
+            guard let page = page, let metadata = try? page.joined(Metadata.self) else {
                 return req.eventLoop.future(nil)
             }
 
+            /// if the page is implemented as a Swift page handler, the page-content hook will take care of the rest.
             if page.content.hasPrefix("["), page.content.hasSuffix("]") {
                 let name = String(page.content.dropFirst().dropLast())
-                return req.application.viper.invokeHook(name: name, req: req, type: Response.self, params: ["page-content": content])
+                return req.hook(name, type: Response.self, params: ["page-metadata": metadata])
             }
 
-            let context = HTMLContext(content.headContext, content.filter(page.content, req: req))
-            return req.view.render("Static/Frontend/Page", context)
-                    .encodeResponse(for: req).map { $0 as Response? }
+            let filteredContent = metadata.filter(page.content, req: req)
+
+            return req.leaf.render(template: "Static/Frontend/Page", context: [
+                "page": [
+                    "id": LeafData.string(page.id?.uuidString),
+                    "title": LeafData.string(page.title),
+                    "content": LeafData.string(filteredContent),
+                ],
+                "metadata": metadata.leafData,
+            ])
+            .encodeResponse(for: req).map { $0 as Response? }
         }
         .map { $0 as Any }
     }

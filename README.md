@@ -100,6 +100,16 @@ These modules can be removed if you don't need them. You can create new user mod
 - Syntax - This module is responsible for Swift related syntax highlights using a content filter.
 - Sponsor - This module is responsible for displaying a sponsorship box.
 
+
+### Module template
+
+https://github.com/BinaryBirds/swift-template
+https://github.com/BinaryBirds/vapor-module-template
+
+```
+    swift template generate MyModule -u vapor-module -o Sources/App/Modules 
+```
+
 --- 
 
 ## Hook functions
@@ -130,10 +140,9 @@ Maybe we should prefix these page hooks with the module name later on, what do y
 
 You can hook up routes dynamically via route hooks. Both the frontend, admin and the API module provides some extension points.
 
-- public-admin - publicly available admin pages (usually you don't want to use this)
-- protected-admin - protected admin pages (only available after a session based user auth)
+- admin - protected admin pages (only available after a session based user auth)
 - public-api - public api endpoints (available without user authentication)
-- protected-api - protected api endpoints (user must be authenticated via a token)
+- api - protected api endpoints (user must be authenticated via a token)
 
 ---
 
@@ -230,8 +239,8 @@ final class ExamplePageTemplateModule: ViperModule {
 	func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
         switch name {
         case "example-page":
-            let content = params["page-content"] as! FrontendContentModel
-            return try? self.exampleView(req: req, page: content).map { $0 as Any }
+            let content = params["page-metadata"] as! FrontendContentModel
+            return try? exampleView(req: req, page: content).map { $0 as Any }
         
         default:
             return nil
@@ -270,6 +279,10 @@ The system will try to load the view from the Resources directory first, if it c
 
 ---
 
+## Bcrypt segfault (running from cli using Swift 5.2 & macOS)
+
+There is a [Swift bug](https://bugs.swift.org/browse/SR-12424) that causing the issue, it'll be fixed soon.
+
 ## Debug
 
 If you see a `Segmentation fault: 11` error or something similar, you can start the server through the `lldb` debugger. 
@@ -292,14 +305,10 @@ You can print out the backtrace using the `bt` command, this can help you to ide
 ## Credits
 
 - [Vapor](https://vapor.codes) - underlying framework
-- [Feather icons](https://feathericons.com) - Feather icons
+- [Feather icons](https://feathericons.com) - feather icons
+- [UAParserSwift](https://github.com/malcommac/UAParserSwift) - user agent parser
 - [Ink](https://github.com/johnsundell/ink) - markdown support
 - [Splash](https://github.com/johnsundell/splash) - Swift syntax highlight
-- [Sample image #1](https://unsplash.com/photos/5NE6mX0WVfQ)
-- [Sample image #2](https://unsplash.com/photos/k0rVudBoB4c)
-- [Sample image #3](https://unsplash.com/photos/Mbf3xFiC1Zo)
-- [Sample image #4](https://unsplash.com/photos/wpw8sHoBtSY)
-- [Sample image #5](https://unsplash.com/photos/5Z9GhJJjiCc)
 
 ---
 

@@ -1,0 +1,34 @@
+#define(toolbarLeft):
+    #if(fields.modelId != nil):
+    <a href="/admin/frontend/metadatas/#(fields.metadata.id)">#svg("feather")</a>
+    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
+    #endif
+#enddefine
+#define(toolbarRightBefore):
+    #if(fields.modelId != nil):
+    <a href="/admin/blog/authors/#(fields.modelId)/links">#svg("link")</a>
+    #endif
+#enddefine
+#define(fields):
+    #var(field = nil)
+
+    #(field = ["id": "image", "class": "circular", "data": fields.image, "required": true, "accept": "image/jpeg"])
+    #inline("Admin/Fields/File")
+
+    #(field = ["id": "name", "required": true, "data": fields.name])
+    #inline("Admin/Fields/Text")
+
+    #(field = ["id": "bio", "size": "small", "data": fields.bio])
+    #inline("Admin/Fields/Textarea")
+
+#enddefine
+
+#let(form = [
+    "list": "authors",
+    "id": formId,
+    "token": formToken,
+    "modelId": fields.modelId,
+    "key": "author",
+    "multipart": true
+])
+#inline("Admin/Form")

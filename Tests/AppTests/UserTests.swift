@@ -65,7 +65,7 @@ final class UserTests: XCTestCase {
         try configure(app)
         
         try app.test(.POST, loginPath, beforeRequest: { req in
-            try login(&req, username: "feather@binarybirds.com", password: "FeatherCMS")
+            try login(&req, username: "feather@binarybirds.com", password: "Feather")
         }, afterResponse: { res in
             XCTAssertTrue(res.headers.setCookie != nil)
             XCTAssertEqual(res.status, .ok)
@@ -78,7 +78,7 @@ final class UserTests: XCTestCase {
         try configure(app)
         
         try app.test(.POST, loginPath, beforeRequest: { req in
-            try login(&req, username: "feAtHeR@BinArYBirDS.Com", password: "FeatherCMS")
+            try login(&req, username: "feAtHeR@BinArYBirDS.Com", password: "Feather")
         }, afterResponse: { res in
             XCTAssertEqual(res.status, .ok)
         })
@@ -93,7 +93,7 @@ final class UserTests: XCTestCase {
         
         try app.test(.POST, loginPath,
                      beforeRequest: { req in
-                        try login(&req, username: "feather@binarybirds.com", password: "FeatherCMS")
+                        try login(&req, username: "feather@binarybirds.com", password: "Feather")
                      },
                      afterResponse: { res in
                         guard let firstCookie = res.headers.setCookie?["vapor-session"] else {

@@ -1,30 +1,23 @@
 //
 //  BlogPostModel+View.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 06. 13..
 //
 
-import Vapor
-import ViewKit
+import FeatherCore
 
-extension BlogPostModel: ViewContextRepresentable {
+extension BlogPostModel: LeafDataRepresentable {
 
-    struct ViewContext: Encodable {
-        var id: String
-        var title: String
-        var imageKey: String
-        var excerpt: String
-        var content: String
-
-        init(model: BlogPostModel) {
-            self.id = model.id!.uuidString
-            self.title = model.title
-            self.imageKey = model.imageKey
-            self.excerpt = model.excerpt
-            self.content = model.content
-        }
+    var leafData: LeafData {
+        .dictionary([
+            "id": id,
+            "title": title,
+            "imageKey": imageKey,
+            "excerpt": excerpt,
+            "content": content,
+            "category": $category.value != nil ? category : nil,
+            "author": $author.value != nil ? author : nil,
+        ])
     }
-
-    var viewContext: ViewContext { .init(model: self) }
 }

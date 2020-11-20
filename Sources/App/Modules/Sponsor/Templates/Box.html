@@ -1,0 +1,12 @@
+#if($vars["sponsor.isEnabled"] != nil && $vars["sponsor.isEnabled"] == "true"):
+<div class="wrapper w center">
+    <section id="share" class="m:xl">
+        <hr>
+        <img src="#($vars["sponsor.image.url"])" alt="#($vars["sponsor.image.alt"])">
+        <h3>#($vars["sponsor.title"])</h3>
+        <p>#($vars["sponsor.description"])</p>
+        <a class="cta" href="#($vars["sponsor.button.url"])" target="_blank">#($vars["sponsor.button.title"])</a>
+        <a class="link" href="#($vars["sponsor.more.url"])">#($vars["sponsor.more.title"])</a>
+    </div>
+</section>
+#endif

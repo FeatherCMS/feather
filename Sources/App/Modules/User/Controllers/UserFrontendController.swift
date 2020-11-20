@@ -1,6 +1,6 @@
 //
 //  UserFrontendController.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 03. 27..
 //
@@ -9,22 +9,20 @@ import Vapor
 import Fluent
 import ViperKit
 import ViewKit
+import FeatherCore
 
 struct UserFrontendController {
 
     private func render(req: Request, model: UserModel? = nil, form: UserLoginForm = .init()) -> EventLoopFuture<Response> {
         if let model = model {
-            form.read(from: model)
+            form.email.value = model.email
         }
-
-        let head = HeadContext(title: "user_login_page_title", excerpt: "user_login_page_description")
-        let context = HTMLContext(head, EditContext(form))
-        return req.view.render("User/Frontend/Login", context).encodeResponse(for: req)
+        return req.leaf.render(template: "User/Frontend/Login", context: ["edit": form.leafData]).encodeResponse(for: req)
     }
     
     func loginView(req: Request) throws -> EventLoopFuture<Response> {
         guard req.auth.has(UserModel.self) else {
-            return self.render(req: req)
+            return render(req: req)
         }
         let redirectPath = "/" + (req.query["redirect"] ?? "admin") + "/"
         let response = req.redirect(to: redirectPath, type: .normal)
@@ -42,7 +40,7 @@ struct UserFrontendController {
         return form.validate(req: req)
         .flatMap { _ in
             form.notification = "Invalid username or password"
-            return self.render(req: req, form: form)
+            return render(req: req, form: form)
         }
     }
     

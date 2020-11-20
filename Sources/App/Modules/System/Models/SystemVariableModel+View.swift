@@ -1,30 +1,21 @@
 //
 //  SystemVariableModel+View.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 06. 10..
 //
 
-import Vapor
-import ViewKit
+import Leaf
 
-extension SystemVariableModel: ViewContextRepresentable {
+extension SystemVariableModel: LeafDataRepresentable {
 
-    struct ViewContext: Encodable {
-        var id: String
-        var key: String
-        var value: String
-        var hidden: Bool
-        var notes: String?
-        
-        init(model: SystemVariableModel) {
-            self.id = model.id!.uuidString
-            self.key = model.key
-            self.value = model.value
-            self.hidden = model.hidden
-            self.notes = model.notes
-        }
+    var leafData: LeafData {
+        .dictionary([
+            "id": id,
+            "key": key,
+            "value": value,
+            "hidden": hidden,
+            "notes": notes,
+        ])
     }
-
-    var viewContext: ViewContext { .init(model: self) }
 }

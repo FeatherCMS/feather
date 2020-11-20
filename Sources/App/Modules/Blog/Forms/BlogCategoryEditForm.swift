@@ -1,97 +1,111 @@
 //
 //  BlogCategoryEditForm.swift
-//  FeatherCMS
+//  Feather
 //
 //  Created by Tibor Bodecs on 2020. 03. 22..
 //
 
-import Vapor
-import ViewKit
+import FeatherCore
 
-final class BlogCategoryEditForm: Form {
+final class BlogCategoryEditForm: ModelForm {
 
     typealias Model = BlogCategoryModel
 
     struct Input: Decodable {
-        var id: String
+        var modelId: String
         var title: String
         var excerpt: String
+        var color: String
         var priority: String
-
         var image: File?
-        var imageDelete: Bool?
     }
 
-    var id: String? = nil
-    var title = BasicFormField()
-    var excerpt = BasicFormField()
-    var priority = BasicFormField()
+    var modelId: String? = nil
+    var title = StringFormField()
+    var excerpt = StringFormField()
+    var color = StringFormField()
+    var priority = StringFormField()
     var image = FileFormField()
-    
-    var contentModel: FrontendContentModel.ViewContext?
+    var metadata: Metadata?
     var notification: String?
-        
+
+    var leafData: LeafData {
+        .dictionary([
+            "modelId": modelId,
+            "title": title,
+            "excerpt": excerpt,
+            "color": color,
+            "priority": priority,
+            "image": image,
+            "metadata": metadata,
+            "notification": notification,
+        ])
+    }
+
     init() {
-        self.initialize()
+        initialize()
     }
 
     init(req: Request) throws {
-        self.initialize()
+        initialize()
 
         let context = try req.content.decode(Input.self)
-        self.id = context.id.emptyToNil
-        
-        self.title.value = context.title
-        self.priority.value = context.priority
-        self.excerpt.value = context.excerpt
+        modelId = context.modelId.emptyToNil
+        title.value = context.title
+        priority.value = context.priority
+        excerpt.value = context.excerpt
+        color.value = context.color
 
-        self.image.delete = context.imageDelete ?? false
-        if let image = context.image {
-            if let data = image.data.getData(at: 0, length: image.data.readableBytes), !data.isEmpty {
-                self.image.data = data
-            }
+        if let img = context.image, let data = img.data.getData(at: 0, length: img.data.readableBytes), !data.isEmpty {
+            image.data = data
         }
     }
-    
+
     func initialize() {
-        self.priority.value = String(100)
-    }
-    
-    func read(from model: Model)  {
-        self.id = model.id!.uuidString
-        self.title.value = model.title
-        self.priority.value = String(model.priority)
-        self.excerpt.value = model.excerpt
-        self.image.value = model.imageKey
+        priority.value = String(100)
     }
 
     func validate(req: Request) -> EventLoopFuture<Bool> {
         var valid = true
        
-        if self.title.value.isEmpty {
-            self.title.error = "Title is required"
+        if title.value.isEmpty {
+            title.error = "Title is required"
             valid = false
         }
-        if Int(self.priority.value) == nil {
-            self.priority.error = "Invalid priority value"
+        if Validator.count(...250).validate(title.value).isFailure {
+            title.error = "Title is too long (max 250 characters)"
             valid = false
         }
-        if self.excerpt.value.isEmpty {
-            self.excerpt.error = "Excerpt is required"
+        if Int(priority.value) == nil {
+            priority.error = "Invalid priority value"
+            valid = false
+        }
+        if modelId == nil && image.data == nil {
+            image.error = "Image is required"
             valid = false
         }
         return req.eventLoop.future(valid)
     }
     
-    func write(to model: Model) {
-        model.title = self.title.value
-        model.priority = Int(self.priority.value)!
-        model.excerpt = self.excerpt.value
-        if !self.image.value.isEmpty {
-            model.imageKey = self.image.value
+    func read(from input: Model)  {
+        modelId = input.id?.uuidString
+        title.value = input.title
+        priority.value = String(input.priority)
+        excerpt.value = input.excerpt
+        color.value = input.color ?? ""
+        image.value = input.imageKey
+    }
+
+    func write(to output: Model) {
+        output.title = title.value
+        output.priority = Int(priority.value)!
+        output.excerpt = excerpt.value
+        output.color = color.value.emptyToNil
+        if !image.value.isEmpty {
+            output.imageKey = image.value
         }
-        if self.image.delete {
-            model.imageKey = ""
+        if image.delete {
+            output.imageKey = ""
         }
     }
 }
