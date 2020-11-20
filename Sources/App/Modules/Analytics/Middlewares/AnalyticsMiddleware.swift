@@ -12,13 +12,6 @@ import ALanguageParser
 struct AnalyticsMiddleware: Middleware {
 
     func respond(to req: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
-//        let array = TimeZone.knownTimeZoneIdentifiers
-//        print(array)
-//
-//        for id in Locale.availableIdentifiers {
-//            print(Locale.current.localizedString(forIdentifier: id) ?? id)
-//        }
-
         let referer = req.headers.first(name: "referer")
         let origin = req.headers.first(name: "origin")
         let ip = req.headers.first(name: "X-Forwarded-For")

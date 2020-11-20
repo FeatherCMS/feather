@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="#($app.locale)">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -83,7 +83,7 @@
 
             #($vars["site.footer"])
 
-            <p>#($vars["site.copy"]) &copy; #if($vars["site.copy.year.start"] != nil):#($vars["site.copy.year.start"])-#endif#Date(timeStamp: Timestamp(), localizedFormat: "y")</p>
+            <p>#($vars["site.copy"]) &copy; #if($vars["site.copy.year.start"] != nil):#($vars["site.copy.year.start"])-#endif#Date(timeStamp: Timestamp(), fixedFormat: "y")</p>
 
             <p>
                 #if($user.isAuthenticated):

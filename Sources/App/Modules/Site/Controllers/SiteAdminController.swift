@@ -21,8 +21,8 @@ final class SiteAdminController {
         form.secondaryColor.value = req.variables.get("site.color.secondary") ?? ""
         form.fontFamily.value = req.variables.get("site.font.family") ?? ""
         form.fontSize.value = req.variables.get("site.font.size") ?? ""
-        form.locale.value = req.variables.get("site.locale") ?? ""
-        form.timezone.value = req.variables.get("site.timezone") ?? ""
+        form.locale.value = Application.Config.locale.identifier
+        form.timezone.value = Application.Config.timezone.identifier
         form.css.value = req.variables.get("site.css") ?? ""
         form.js.value = req.variables.get("site.js") ?? ""
         form.footer.value = req.variables.get("site.footer") ?? ""
@@ -74,6 +74,9 @@ final class SiteAdminController {
                 }
             }
 
+            Application.Config.set("site.locale", value: form.locale.value)
+            Application.Config.set("site.timezone", value: form.timezone.value)
+
             return req.eventLoop.flatten([
                 req.variables.set("site.title", value: form.title.value),
                 req.variables.set("site.excerpt", value: form.excerpt.value),
@@ -81,8 +84,6 @@ final class SiteAdminController {
                 req.variables.set("site.color.secondary", value: form.secondaryColor.value),
                 req.variables.set("site.font.family", value: form.fontFamily.value),
                 req.variables.set("site.font.size", value: form.fontSize.value),
-                req.variables.set("site.locale", value: form.locale.value),
-                req.variables.set("site.timezone", value: form.timezone.value),
                 req.variables.set("site.css", value: form.css.value),
                 req.variables.set("site.js", value: form.js.value),
                 req.variables.set("site.footer", value: form.footer.value),

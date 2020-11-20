@@ -44,18 +44,6 @@ struct SystemInstaller: ViperInstaller {
                 "hidden": true,
             ],
             [
-                "key": "site.locale",
-                "value": "en_US",
-                "note": "Locale code of the website (eg. en_US)",
-                "hidden": true,
-            ],
-            [
-                "key": "site.timezone",
-                "value": "America/Los_Angeles",
-                "note": "Timezone of the website (eg. America/Los_Angeles)",
-                "hidden": true,
-            ],
-            [
                 "key": "site.css",
                 "note": "Global CSS injection for the site",
                 "hidden": true,

@@ -12,9 +12,8 @@
             <p>
                 <span class="underline"#if(post.category.color != nil): style="border-color: #(post.category.color);"#endif>#(post.category.title)</span>
                 &middot;
-                <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                    #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-                </time>
+                #let(dateString = Date(timeStamp: post.metadata.date, fixedFormat: $app.dateFormats.date, timeZone: $app.timezone))
+                <time datetime="#(dateString)">#(dateString)</time>
             </p>
             <h1 class="m:bottom:s">#(post.title)</h1>
             <p class="m:zero">#(post.excerpt)</p>

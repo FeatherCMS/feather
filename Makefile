@@ -5,10 +5,11 @@ run:
 
 env:
 	echo 'BASE_URL="http://0.0.0.0:8080"' > .env.development
-	echo 'BASE_PATH="$(CUR_DIR)/"' >> .env.developmen
+	echo 'BASE_PATH="$(CUR_DIR)/"' >> .env.development
 	
 clean:
 	rm ./db.sqlite
+	rm ./Resources/config.json
 	rm -r ./Public/assets
 
 test:

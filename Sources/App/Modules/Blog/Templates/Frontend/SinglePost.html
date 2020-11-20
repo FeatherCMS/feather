@@ -8,9 +8,8 @@
             <p>
                 <span class="underline"#if(post.category.color != nil || category.color != nil): style="border-color: #(post.category.color ?? category.color ?? "");"#endif>#(post.category.title ?? category.title ?? "")</span>
                     &middot;
-                <time datetime="#Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")">
-                #Date(timeStamp: post.metadata.date, localizedFormat: "y/MM/dd")
-                </time>
+                #let(dateString = Date(timeStamp: post.metadata.date, fixedFormat: $app.dateFormats.date, timeZone: $app.timezone))
+                <time datetime="#(dateString)">#(dateString)</time>
             </p>
             <h2 class="m:zero m:bottom:xs">#(post.title)</h2>
             <p class="m:zero">#(post.excerpt)</p>

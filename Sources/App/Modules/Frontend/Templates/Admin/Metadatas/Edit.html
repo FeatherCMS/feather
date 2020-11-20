@@ -19,7 +19,8 @@
     #(field = ["id": "excerpt", "size": "small", "data": fields.excerpt])
     #inline("Admin/Fields/Textarea")
     
-    #(field = ["id": "date", "more": "yyyy/mm/dd hh:MM", "data": fields.date])
+    
+    #(field = ["id": "date", "more": fields.dateFormat, "data": fields.date])
     #inline("Admin/Fields/Text")
 </fieldset>
 

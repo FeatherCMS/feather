@@ -47,6 +47,7 @@ final class FrontendMetadataEditForm: ModelForm {
     var css = StringFormField()
     var js = StringFormField()
     var notification: String?
+    var dateFormat: String?
     
     var leafData: LeafData {
         .dictionary([
@@ -66,6 +67,7 @@ final class FrontendMetadataEditForm: ModelForm {
             "js": js,
             "image": image,
             "notification": notification,
+            "dateFormat": dateFormat,
         ])
     }
 
@@ -99,9 +101,10 @@ final class FrontendMetadataEditForm: ModelForm {
     }
 
     func initialize() {
+        dateFormat = Application.Config.dateFormatter().dateFormat
         statusId.options = Model.Status.allCases.map(\.formFieldStringOption)
         statusId.value = Model.Status.draft.rawValue
-        date.value = DateFormatter.dateTime.string(from: Date())
+        date.value = Application.Config.dateFormatter().string(from: Date())
         feedItem.options = FormFieldStringOption.trueFalse()
     }
     
@@ -136,7 +139,7 @@ final class FrontendMetadataEditForm: ModelForm {
             statusId.error = "Invalid status"
             valid = false
         }
-        if DateFormatter.dateTime.date(from: date.value) == nil {
+        if Application.Config.dateFormatter().date(from: date.value) == nil {
             date.error = "Invalid date"
             valid = false
         }
@@ -164,7 +167,7 @@ final class FrontendMetadataEditForm: ModelForm {
         statusId.value = input.status.rawValue
         feedItem.value = String(input.feedItem)
         filters.values = input.filters
-        date.value = DateFormatter.dateTime.string(from: input.date)
+        date.value = Application.Config.dateFormatter().string(from: input.date)
         title.value = input.title ?? ""
         excerpt.value = input.excerpt ?? ""
         canonicalUrl.value = input.canonicalUrl ?? ""
@@ -181,7 +184,7 @@ final class FrontendMetadataEditForm: ModelForm {
         output.status = Model.Status(rawValue: statusId.value)!
         output.feedItem = Bool(feedItem.value)!
         output.filters = filters.values
-        output.date = DateFormatter.dateTime.date(from: date.value)!
+        output.date = Application.Config.dateFormatter().date(from: date.value)!
         output.title = title.value.emptyToNil
         output.excerpt = excerpt.value.emptyToNil
         output.canonicalUrl = canonicalUrl.value.emptyToNil

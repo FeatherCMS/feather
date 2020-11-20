@@ -30,7 +30,14 @@ struct LeafFeatherExtensionMiddleware: Middleware {
 extension Application {
     var leafFeatherVariables: [String: LeafDataGenerator] {
         [
-            "baseUrl": .immediate(LeafData.string(Application.baseUrl))
+            "baseUrl": .immediate(LeafData.string(Application.baseUrl)),
+            "timezone": .lazy(Application.Config.timezone.identifier),
+            "locale": .lazy(Application.Config.locale.identifier),
+            "dateFormats": .lazy([
+                "full": LeafData.string(Application.Config.dateFormatter().dateFormat),
+                "date": LeafData.string(Application.Config.dateFormatter(timeStyle: .none).dateFormat),
+                "time": LeafData.string(Application.Config.dateFormatter(dateStyle: .none).dateFormat),
+            ]),
         ]
     }
 }

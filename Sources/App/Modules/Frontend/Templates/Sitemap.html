@@ -2,8 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 #for(item in list):
 <url>
-    <loc>#(item.slug)</loc>
-    <lastmod>#Date(timeStamp: item.date, localizedFormat: "y-MM-dd")</lastmod>
+    <loc>#($app.baseUrl)/#if(item.slug != nil && item.slug != ""):#(item.slug)/#endif</loc>
+    <lastmod>#Date(timeStamp: item.date, fixedFormat: "y-MM-dd", timeZone: $app.timezone)</lastmod>
 </url>
 #endfor
 </urlset>

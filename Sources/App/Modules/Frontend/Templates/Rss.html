@@ -4,18 +4,18 @@
         <title>#($vars["site.title"])</title>
         <description>#($vars["site.excerpt"])</description>
         <link></link>
-        <language>en-us</language>
-        <lastBuildDate>#Date(timeStamp: Timestamp(), localizedFormat: "EEE, dd MMM y HH:mm:ss Z")</lastBuildDate>
-        <pubDate>#Date(timeStamp: Timestamp(), localizedFormat: "EEE, dd MMM y HH:mm:ss Z")</pubDate>
+        <language>#($app.locale)</language>
+        <lastBuildDate>#Date(timeStamp: Timestamp(), fixedFormat: "EEE, dd MMM y HH:mm:ss Z", timeZone: $app.timezone)</lastBuildDate>
+        <pubDate>#Date(timeStamp: Timestamp(), fixedFormat: "EEE, dd MMM y HH:mm:ss Z", timeZone: $app.timezone)</pubDate>
         <ttl>250</ttl>
-        <atom:link href="#("")" rel="self" type="application/rss+xml" />
+        <atom:link href="#($app.baseUrl)/rss.xml" rel="self" type="application/rss+xml" />
         #for(item in list):
         <item>
-            <guid isPermaLink="true">#(item.slug)</guid>
+            <guid isPermaLink="true">#($app.baseUrl)/#if(item.slug != nil && item.slug != ""):#(item.slug)/#endif</guid>
             <title><![CDATA[#(item.title)]]></title>
             <description><![CDATA[#(item.excerpt)]]></description>
-            <link>#(item.slug)</link>
-            <pubDate>#Date(timeStamp: item.date, localizedFormat: "EEE, dd MMM y HH:mm:ss Z")</pubDate>
+            <link>#($app.baseUrl)/#if(item.slug != nil && item.slug != ""):#(item.slug)/#endif</link>
+            <pubDate>#Date(timeStamp: item.date, fixedFormat: "EEE, dd MMM y HH:mm:ss Z", timeZone: $app.timezone)</pubDate>
         </item>
         #endfor
     </channel>

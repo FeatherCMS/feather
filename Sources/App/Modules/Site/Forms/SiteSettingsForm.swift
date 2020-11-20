@@ -96,12 +96,8 @@ final class SiteSettingsForm: Form {
     }
 
     func initialize() {
-        locale.options = [
-            .init(key: "en", label: "English")
-        ]
-        timezone.options = [
-            .init(key: "utc", label: "UTC")
-        ]
+        locale.options = FormFieldStringOption.locales
+        timezone.options = FormFieldStringOption.gmtTimezones
     }
 
     func validate(req: Request) -> EventLoopFuture<Bool> {

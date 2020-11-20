@@ -20,11 +20,4 @@ extension DateFormatter {
         formatter.configure()
         return formatter
     }()
-
-    static let dateTime: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "y/MM/dd HH:mm"
-        formatter.configure()
-        return formatter
-    }()
 }
