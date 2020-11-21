@@ -66,7 +66,7 @@ struct BlogInstaller: ViperInstaller {
             BlogPostModel(title: "Binary Birds",
                           imageKey: "blog/posts/0ff020a2-3977-484d-b636-11348a67b4f7.jpg",
                           excerpt: "Feather is a modern Swift-based CMS powered by Vapor 4.",
-                          content: BlogModule.sample(asset: "binary-birds.html"),
+                          content: BlogModule.sample(asset: "birds.html"),
                           categoryId: categoryId,
                           authorId: authorId),
             BlogPostModel(title: "Feather API",

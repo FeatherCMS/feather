@@ -1,7 +1,0 @@
-<section class="m:bottom">
-    <label for="#(field.id)">#(field.label ?? field.id.capitalized())#if(field.required ?? false):<span class="required">*</span>#endif#if(field.more ?? false): <span class="more">(#(field.more))</span>#endif</label>
-    <textarea name="#(field.id)" class="#(field.size)"#if(field.required ?? false): aria-required="true"#endif>#(field.data.value)</textarea>
-    #if(field.data.error != nil):
-    <span class="error">#(field.data.error)</span>
-    #endif
-</section>

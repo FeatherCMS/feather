@@ -25,15 +25,14 @@ final class UserTests: XCTestCase {
         defer { app.shutdown() }
         try configure(app)
 
-        try app.test(.GET, "/login/",
-                     afterResponse:  { res in
+        try app.test(.GET, "/login/") { res in
             guard let contentType = res.content.contentType else {
                 XCTFail("Content must have a contentType")
                 return
             }
             XCTAssertEqual(contentType, htmlMediaType)
             XCTAssertEqual(res.status, .ok)
-        })
+        }
     }
     
     fileprivate func login(_ req: inout XCTHTTPRequest, username: String, password: String) throws {

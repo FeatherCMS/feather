@@ -5,8 +5,7 @@
 //  Created by Tibor Bödecs on 2020. 11. 19..
 //
 
-import Vapor
-import Fluent
+import FeatherCore
 
 struct AnalyticsMigration_v1_0_0: Migration {
 

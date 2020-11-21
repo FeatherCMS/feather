@@ -5,8 +5,7 @@
 //  Created by Tibor Bodecs on 2020. 11. 15..
 //
 
-import Foundation
-import ViperKit
+import FeatherCore
 
 @_cdecl("createMenuModule")
 public func createMenuModule() -> UnsafeMutableRawPointer {

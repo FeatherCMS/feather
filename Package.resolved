@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "9d04d6f32ee3b9d74b43cc485498091144672041",
-          "version": "1.0.0-beta.9"
+          "revision": "ec4412f136f37fe69e0efd876aaa78e390686f2e",
+          "version": "1.0.0-beta.10"
         }
       },
       {
@@ -321,8 +321,8 @@
         "repositoryURL": "https://github.com/binarybirds/viper-kit",
         "state": {
           "branch": null,
-          "revision": "075831b00295ad3d4ca4b879ac9d2665159270e9",
-          "version": "1.5.0-beta.2.1"
+          "revision": "56f1404e64ede213c399f5a33aaa60b1ff5adddf",
+          "version": "1.5.0-beta.6"
         }
       },
       {

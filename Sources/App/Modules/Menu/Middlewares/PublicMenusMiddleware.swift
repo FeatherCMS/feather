@@ -5,18 +5,18 @@
 //  Created by Tibor Bodecs on 2020. 11. 15..
 //
 
-import Vapor
-import Fluent
-import Leaf
+import FeatherCore
 
 public struct PublicMenusMiddleware: Middleware {
     
     public init() {}
     
     public func respond(to req: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
-        req.application.viper.invokeHook(name: "prepare-menus", req: req, type: [String:LeafDataRepresentable].self)
-        .flatMap { items in
-            for variable in items ?? [:] {
+        guard let future: EventLoopFuture<[String:LeafDataRepresentable]> = req.invoke("prepare-menus") else {
+            return next.respond(to: req)
+        }
+        return future.flatMap { items in
+            for variable in items {
                 req.menus.cache.storage[variable.key] = variable.value
             }
             return next.respond(to: req)

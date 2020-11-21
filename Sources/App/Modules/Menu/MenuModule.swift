@@ -5,9 +5,7 @@
 //  Created by Tibor Bodecs on 2020. 11. 15..
 //
 
-import Vapor
-import Fluent
-import ViperKit
+import FeatherCore
 
 final class MenuModule: ViperModule {
 
@@ -27,48 +25,43 @@ final class MenuModule: ViperModule {
         ]
     }
 
-    var viewsUrl: URL? {
-        nil
-//        Bundle.module.bundleURL
-//            .appendingPathComponent("Contents")
-//            .appendingPathComponent("Resources")
-//            .appendingPathComponent("Views")
+    static var bundleUrl: URL? {
+        URL(fileURLWithPath: Application.Paths.base)
+            .appendingPathComponent("Sources")
+            .appendingPathComponent("App")
+            .appendingPathComponent("Modules")
+            .appendingPathComponent("Menu")
+            .appendingPathComponent("Bundle")
     }
     
-    // MARK: - hook functions
-    
-    func invoke(name: String, req: Request, params: [String : Any]) -> EventLoopFuture<Any?>? {
-        switch name {
-        case "prepare-menus":
-            return prepareMenus(req: req, params: params).erase()
-        default:
-            return nil
-        }
+    func boot(_ app: Application) throws {
+        app.hooks.register("admin", use: (router as! MenuRouter).adminRoutesHook)
+        app.hooks.register("installer", use: installerHook)
+        app.hooks.register("prepare-menus", use: prepareMenusHook)
+        app.hooks.register("leaf-admin-menu", use: leafAdminMenuHook)
     }
 
-    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
-        switch name {
-        case "installer":
-            return MenuInstaller()
-        case "leaf-admin-menu":
-            return [
-                "name": "Menu",
-                "icon": "compass",
-                "items": LeafData.array([
-                    [
-                        "url": "/admin/menu/menus/",
-                        "label": "Menus",
-                    ],
-                ])
-            ]
-        default:
-            return nil
-        }
+    // MARK: - hooks
+
+    func leafAdminMenuHook(args: HookArguments) -> LeafDataRepresentable {
+        [
+            "name": "Menu",
+            "icon": "compass",
+            "items": LeafData.array([
+                [
+                    "url": "/admin/menu/menus/",
+                    "label": "Menus",
+                ],
+            ])
+        ]
     }
     
-    // MARK: - private
+    func installerHook(args: HookArguments) -> ViperInstaller {
+        MenuInstaller()
+    }
     
-    private func prepareMenus(req: Request, params: [String: Any]) -> EventLoopFuture<[String:LeafDataRepresentable]> {
+    func prepareMenusHook(args: HookArguments) -> EventLoopFuture<[String:LeafDataRepresentable]> {
+        let req = args["req"] as! Request
         return MenuModel.query(on: req.db).with(\.$items).all()
         .map { menus in
             var items: [String: LeafDataRepresentable] = [:]

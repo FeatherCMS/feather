@@ -5,7 +5,6 @@
 //  Created by Tibor Bodecs on 2020. 07. 18..
 //
 
-import Foundation
 import FeatherCore
 import Splash
 

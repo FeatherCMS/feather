@@ -11,15 +11,12 @@ final class SiteRouter: ViperRouter {
 
     let adminController = SiteAdminController()
 
+    func adminRoutesHook(args: HookArguments) {
+        let routes = args["routes"] as! RoutesBuilder
 
-    func hook(name: String, routes: RoutesBuilder, app: Application) throws {
-        switch name {
-        case "admin":
-            let adminModule = routes.grouped(SiteModule.pathComponent)
-            adminModule.get("settings", use: adminController.settingsView)
-            adminModule.post("settings", use: adminController.updateSettings)
-        default:
-            break;
-        }
+        let adminModule = routes.grouped(SiteModule.pathComponent)
+        adminModule.get("settings", use: adminController.settingsView)
+        adminModule.post("settings", use: adminController.updateSettings)
     }
+    
 }

@@ -9,19 +9,16 @@ import FeatherCore
 
 final class AnalyticsRouter: ViperRouter {
 
-    let overviewController = AnalyticsOverviewAdminController()
-    let logController = AnalyticsLogAdminController()
+    let adminOverview = AnalyticsOverviewAdminController()
+    let adminLog = AnalyticsLogAdminController()
 
-    func hook(name: String, routes: RoutesBuilder, app: Application) throws {
-        switch name {
-        case "admin":
-            let adminModule = routes.grouped(.init(stringLiteral: AnalyticsModule.name))
-            let logs = adminModule.grouped(AnalyticsLogModel.pathComponent)
-            logController.setupListRoute(on: logs)
-
-            adminModule.get("overview", use: overviewController.overviewView)
-        default:
-            break;
-        }
+    func adminRoutesHook(args: HookArguments) {
+        let routes = args["routes"] as! RoutesBuilder
+        
+        let modulePath = routes.grouped(AnalyticsModule.pathComponent)
+        let logs = modulePath.grouped(AnalyticsLogModel.pathComponent)
+        adminLog.setupListRoute(on: logs)
+        modulePath.get("overview", use: adminOverview.overviewView)
     }
+
 }

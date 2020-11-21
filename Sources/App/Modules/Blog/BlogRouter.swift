@@ -15,22 +15,19 @@ struct BlogRouter: ViperRouter {
     let linkAdmin = BlogAuthorLinkAdminController()
     let frontend = BlogFrontendController()
 
-    func hook(name: String, routes: RoutesBuilder, app: Application) throws {
-        switch name {
-        case "admin":
-            let module = routes.grouped(.init(stringLiteral: BlogModule.name))
+    func adminRoutesHook(args: HookArguments) {
+        let routes = args["routes"] as! RoutesBuilder
 
-            postAdmin.setupRoutes(on: module, as: BlogPostModel.pathComponent)
-            categoryAdmin.setupRoutes(on: module, as: BlogCategoryModel.pathComponent)
+        let modulePath = routes.grouped(BlogModule.pathComponent)
 
-            authorAdmin.setupRoutes(on: module, as: BlogAuthorModel.pathComponent)
-            
-            let adminAuthor = module.grouped(.init(stringLiteral: BlogAuthorModel.name),
-                                             .init(stringLiteral: ":" + authorAdmin.idParamKey))
-            linkAdmin.setupRoutes(on: adminAuthor, as: BlogAuthorLinkModel.pathComponent)
-        default:
-            break;
-        }
+        postAdmin.setupRoutes(on: modulePath, as: BlogPostModel.pathComponent)
+        categoryAdmin.setupRoutes(on: modulePath, as: BlogCategoryModel.pathComponent)
+
+        authorAdmin.setupRoutes(on: modulePath, as: BlogAuthorModel.pathComponent)
+
+        let adminAuthor = modulePath.grouped(BlogAuthorModel.pathComponent, authorAdmin.idPathComponent)
+        linkAdmin.setupRoutes(on: adminAuthor, as: BlogAuthorLinkModel.pathComponent)
+        
     }
 }
 

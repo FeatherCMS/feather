@@ -11,13 +11,6 @@ import LeafFoundation
 import FluentSQLiteDriver
 import LiquidLocalDriver
 /// modules
-//import UserModule
-//import SystemModule
-//
-//import AdminModule
-//import ApiModule
-//import FrontendModule
-//
 //import SwiftyModule
 //import MarkdownModule
 //import RedirectModule
@@ -25,9 +18,9 @@ import LiquidLocalDriver
 //import StaticModule
 //import BlogModule
 
-public func configure(_ app: Application) throws {    
+public func configure(_ app: Application) throws {
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
-    
+
     /*
     LeafFileMiddleware.defaultMediaType = .html
     LeafFileMiddleware.processableExtensions = ["leaf", "html", "css", "js"]
@@ -72,15 +65,14 @@ public func configure(_ app: Application) throws {
         AdminBuilder(),
         ApiBuilder(),
         FrontendBuilder(),
+
         MenuBuilder(),
-        
         RedirectBuilder(),
-        SponsorBuilder(),
         StaticBuilder(),
         BlogBuilder(),
         SiteBuilder(),
         AnalyticsBuilder(),
-
+        SponsorBuilder(),
         SwiftyBuilder(),
         MarkdownBuilder(),
     ].map { $0.build() }
@@ -90,34 +82,28 @@ public func configure(_ app: Application) throws {
                                sandboxDirectory: app.directory.resourcesDirectory,
                                viewDirectory: app.directory.viewsDirectory,
                                defaultExtension: "html")
-    
-    let moduleSource = ViperLeafSource(workingDirectory: app.directory.workingDirectory,
-                                       modulesLocation: "Sources/App/Modules",
-                                       templatesDirectory: "Templates",
-                                       fileExtension: "html",
-                                       fileio: app.fileio)
 
     let multipleSources = LeafSources()
     try multipleSources.register(using: defaultSource)
-    try multipleSources.register(source: "local-modules", using: moduleSource)
 
-//    for module in modules {
-//        guard let url = module.bundleUrl else { continue }
-//
-//        let moduleSource = ViperBundledViewFiles(module: module.name,
-//                                                 rootDirectory: url.path.withTrailingSlash,
-//                                                 fileExtension: "html",
-//                                                 fileio: app.fileio)
-//
-//        try multipleSources.register(source: "\(module.name)-module", using: moduleSource)
-//    }
+    for module in modules {
+        guard let url = module.bundleUrl else { continue }
+
+        let moduleSource = ViperBundledLeafSource(module: module.name,
+                                                  rootDirectory: url.path.withTrailingSlash,
+                                                  templatesDirectory: "Templates",
+                                                  fileExtension: "html",
+                                                  fileio: app.fileio)
+
+        try multipleSources.register(source: "\(module.name)-module-bundle", using: moduleSource)
+    }
 
     LeafEngine.sources = multipleSources
     LeafEngine.useLeafFoundation()
-    LeafEngine.entities.use(Resolve(), asMethod: "resolve")
+    LeafEngine.entities.use(ResolveLeafEntity(), asMethod: "resolve")
+    LeafEngine.entities.use(InvokeHookLeafEntity(), asFunction: "InvokeHook")
+    LeafEngine.entities.use(InvokeAllHooksLeafEntity(), asFunction: "InvokeAllHooks")
     LeafEngine.entities.use(InlineSvg(), asFunction: "svg")
-    LeafEngine.entities.use(Hook(), asFunction: "Hook")
-    LeafEngine.entities.use(HookAll(), asFunction: "HookAll")
     LeafRenderer.Option.timeout = 1.000 //ms
 
     if app.isDebug {
@@ -126,8 +112,9 @@ public func configure(_ app: Application) throws {
     app.views.use(.leaf)
     
     try app.viper.use(modules)
-    
+
+    app.middleware.use(FeatherCoreLeafExtensionMiddleware())
     app.middleware.use(LeafFeatherExtensionMiddleware())
-    
+
     try app.autoMigrate().wait()
 }

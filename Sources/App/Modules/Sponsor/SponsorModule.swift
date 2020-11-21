@@ -11,22 +11,23 @@ final class SponsorModule: ViperModule {
 
     static var name: String = "sponsor"
 
-    var viewsUrl: URL? {
-        nil
-//        Bundle.module.bundleURL
-//            .appendingPathComponent("Contents")
-//            .appendingPathComponent("Resources")
-//            .appendingPathComponent("Views")
+    static var bundleUrl: URL? {
+        URL(fileURLWithPath: Application.Paths.base)
+            .appendingPathComponent("Sources")
+            .appendingPathComponent("App")
+            .appendingPathComponent("Modules")
+            .appendingPathComponent("Sponsor")
+            .appendingPathComponent("Bundle")
     }
     
-    // MARK: - hook functions
+    func boot(_ app: Application) throws {
+        app.hooks.register("installer", use: installerHook)
+        
+    }
 
-    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
-        switch name {
-        case "installer":
-            return SponsorInstaller()
-        default:
-            return nil
-        }
+    // MARK: - hooks
+    
+    func installerHook(args: HookArguments) -> ViperInstaller {
+        SponsorInstaller()
     }
 }

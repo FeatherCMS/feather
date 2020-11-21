@@ -5,10 +5,6 @@
 //  Created by Tibor Bödecs on 2020. 06. 07..
 //
 
-import Vapor
-import Fluent
-import ViperKit
-import ViewKit
 import FeatherCore
 
 final class StaticModule: ViperModule {
@@ -17,57 +13,53 @@ final class StaticModule: ViperModule {
 
     var router: ViperRouter? { StaticRouter() }
 
-    func boot(_ app: Application) throws {
-        app.databases.middleware.use(MetadataMiddleware<StaticPageModel>())
-    }
-
     var migrations: [Migration] {
         [
             StaticPageMigration_v1_0_0(),
         ]
     }
-
-    var viewsUrl: URL? {
-        nil
-//        Bundle.module.bundleURL
-//            .appendingPathComponent("Contents")
-//            .appendingPathComponent("Resources")
-//            .appendingPathComponent("Views")
-    }
-
-    // MARK: - hook functions
-
-    func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
-        switch name {
-        case "frontend-page":
-            return frontendPageHook(req: req)
-        default:
-            return nil
-        }
+    
+    static var bundleUrl: URL? {
+        URL(fileURLWithPath: Application.Paths.base)
+            .appendingPathComponent("Sources")
+            .appendingPathComponent("App")
+            .appendingPathComponent("Modules")
+            .appendingPathComponent("Static")
+            .appendingPathComponent("Bundle")
     }
     
-    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
-        switch name {
-        case "installer":
-            return StaticInstaller()
-        case "leaf-admin-menu":
-            return [
-                "name": "Static",
-                "icon": "file-text",
-                "items": LeafData.array([
-                    [
-                        "url": "/admin/static/pages/",
-                        "label": "Pages",
-                    ],
-                ])
-            ]
-        default:
-            return nil
-        }
+    func boot(_ app: Application) throws {
+        app.databases.middleware.use(MetadataMiddleware<StaticPageModel>())
+
+        app.hooks.register("admin", use: (router as! StaticRouter).adminRoutesHook)
+        app.hooks.register("installer", use: installerHook)
+        app.hooks.register("frontend-page", use: frontendPageHook)
+        app.hooks.register("leaf-admin-menu", use: leafAdminMenuHook)
     }
 
-    private func frontendPageHook(req: Request) -> EventLoopFuture<Any?>? {
-        StaticPageModel.findMetadata(on: req.db, path: req.url.path)
+    // MARK: - hooks
+
+    func leafAdminMenuHook(args: HookArguments) -> LeafDataRepresentable {
+        [
+            "name": "Static",
+            "icon": "file-text",
+            "items": LeafData.array([
+                [
+                    "url": "/admin/static/pages/",
+                    "label": "Pages",
+                ],
+            ])
+        ]
+    }
+    
+    func installerHook(args: HookArguments) -> ViperInstaller {
+        StaticInstaller()
+    }
+
+    func frontendPageHook(args: HookArguments) -> EventLoopFuture<Response?> {
+        let req = args["req"] as! Request
+
+        return StaticPageModel.findMetadata(on: req.db, path: req.url.path)
         .filter(Metadata.self, \.$status != .archived)
         .first()
         .flatMap { page -> EventLoopFuture<Response?> in
@@ -78,7 +70,8 @@ final class StaticModule: ViperModule {
             /// if the page is implemented as a Swift page handler, the page-content hook will take care of the rest.
             if page.content.hasPrefix("["), page.content.hasSuffix("]") {
                 let name = String(page.content.dropFirst().dropLast())
-                return req.hook(name, type: Response.self, params: ["page-metadata": metadata])
+                let futures: [EventLoopFuture<Response?>] = req.invokeAll(name, args: ["page-metadata": metadata])
+                return req.eventLoop.findFirstValue(futures)
             }
 
             let filteredContent = metadata.filter(page.content, req: req)
@@ -91,9 +84,8 @@ final class StaticModule: ViperModule {
                 ],
                 "metadata": metadata.leafData,
             ])
-            .encodeResponse(for: req).map { $0 as Response? }
+            .encodeOptionalResponse(for: req)
         }
-        .map { $0 as Any }
     }
 
 }

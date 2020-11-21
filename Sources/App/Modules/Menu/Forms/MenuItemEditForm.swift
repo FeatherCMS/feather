@@ -5,8 +5,7 @@
 //  Created by Tibor Bodecs on 2020. 11. 15..
 //
 
-import Vapor
-import ViewKit
+import FeatherCore
 
 final class MenuItemEditForm: ModelForm {
 

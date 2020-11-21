@@ -5,8 +5,7 @@
 //  Created by Tibor Bodecs on 2020. 02. 17..
 //
 
-import Vapor
-import ViewKit
+import FeatherCore
 
 final class RedirectEditForm: ModelForm {
 

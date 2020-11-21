@@ -5,14 +5,12 @@
 //  Created by Tibor Bodecs on 2020. 01. 25..
 //
 
-import Vapor
-import Fluent
-import ViperKit
+import FeatherCore
 
 final class RedirectModule: ViperModule {
 
     static let name = "redirect"
-    var priority: Int { 900 }
+    var priority: Int { 2000 }
 
     var router: ViperRouter? = RedirectRouter()
 
@@ -22,53 +20,47 @@ final class RedirectModule: ViperModule {
         ]
     }
 
-    var viewsUrl: URL? {
-        nil
-//        Bundle.module.bundleURL
-//            .appendingPathComponent("Contents")
-//            .appendingPathComponent("Resources")
-//            .appendingPathComponent("Views")
+    static var bundleUrl: URL? {
+        URL(fileURLWithPath: Application.Paths.base)
+            .appendingPathComponent("Sources")
+            .appendingPathComponent("App")
+            .appendingPathComponent("Modules")
+            .appendingPathComponent("Redirect")
+            .appendingPathComponent("Bundle")
     }
-    
-    // MARK: - hook functions
-    
-    func invoke(name: String, req: Request, params: [String : Any] = [:]) -> EventLoopFuture<Any?>? {
-        switch name {
-        case "frontend-page":
-            return frontendPageHook(req: req)
-        default:
-            return nil
-        }
-    }
-    
-    func invokeSync(name: String, req: Request?, params: [String : Any]) -> Any? {
-        switch name {
-        case "leaf-admin-menu":
-            return [
-                "name": "Redirect",
-                "icon": "arrow-right",
-                "items": LeafData.array([
-                    [
-                        "url": "/admin/redirect/redirects/",
-                        "label": "Redirects",
-                    ],
-                ])
-            ]
-        default:
-            return nil
-        }
+   
+    func boot(_ app: Application) throws {
+        app.hooks.register("admin", use: (router as! RedirectRouter).adminRoutesHook)
+        app.hooks.register("frontend-page", use: frontendPageHook)
+        app.hooks.register("leaf-admin-menu", use: leafAdminMenuHook)
     }
 
-    private func frontendPageHook(req: Request) -> EventLoopFuture<Any?>? {
-        RedirectModel
-        .query(on: req.db)
-        .filter(\.$source == req.url.path)
-        .first()
-        .map {
-            guard let model = $0 else {
-                return nil
+    // MARK: - hooks
+
+    func leafAdminMenuHook(args: HookArguments) -> LeafDataRepresentable {
+        [
+            "name": "Redirect",
+            "icon": "arrow-right",
+            "items": LeafData.array([
+                [
+                    "url": "/admin/redirect/redirects/",
+                    "label": "Redirects",
+                ],
+            ])
+        ]
+    }
+
+    func frontendPageHook(args: HookArguments) -> EventLoopFuture<Response?>? {
+        let req = args["req"] as! Request
+        return RedirectModel
+            .query(on: req.db)
+            .filter(\.$source == req.url.path)
+            .first()
+            .map {
+                guard let model = $0 else {
+                    return nil
+                }
+                return req.redirect(to: model.destination, type: model.type)
             }
-            return req.redirect(to: model.destination, type: model.type)
-        }
     }
 }
