@@ -11,13 +11,16 @@ import LeafFoundation
 import FluentSQLiteDriver
 import LiquidLocalDriver
 /// modules
+//import RedirectModule
+//import StaticModule
+//import BlogModule
+//import SiteModule
+//import MenuModule
 import SwiftyModule
 import MarkdownModule
 import AnalyticsModule
-//import RedirectModule
-//import SponsorModule
-//import StaticModule
-//import BlogModule
+import SponsorModule
+
 
 public func configure(_ app: Application) throws {
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))

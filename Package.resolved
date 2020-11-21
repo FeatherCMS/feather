@@ -200,6 +200,15 @@
         }
       },
       {
+        "package": "sponsor-module",
+        "repositoryURL": "https://github.com/feather-modules/sponsor",
+        "state": {
+          "branch": null,
+          "revision": "67178b4c81a4bcabb09e12818f9d0c46f4bb4ab1",
+          "version": "1.0.0-beta.1"
+        }
+      },
+      {
         "package": "sql-kit",
         "repositoryURL": "https://github.com/vapor/sql-kit.git",
         "state": {
