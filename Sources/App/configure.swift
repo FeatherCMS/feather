@@ -107,7 +107,7 @@ public func configure(_ app: Application) throws {
     LeafEngine.entities.use(ResolveLeafEntity(), asMethod: "resolve")
     LeafEngine.entities.use(InvokeHookLeafEntity(), asFunction: "InvokeHook")
     LeafEngine.entities.use(InvokeAllHooksLeafEntity(), asFunction: "InvokeAllHooks")
-    LeafEngine.entities.use(InlineSvg(), asFunction: "svg")
+    LeafEngine.entities.use(InlineSvg(iconset: "feather-icons"), asFunction: "svg")
     LeafRenderer.Option.timeout = 1.000 //ms
 
     if app.isDebug {
@@ -118,7 +118,7 @@ public func configure(_ app: Application) throws {
     try app.viper.use(modules)
 
     app.middleware.use(FeatherCoreLeafExtensionMiddleware())
-    app.middleware.use(LeafFeatherExtensionMiddleware())
+    app.middleware.use(ViperLeafScopesMiddleware())
 
     try app.autoMigrate().wait()
 }

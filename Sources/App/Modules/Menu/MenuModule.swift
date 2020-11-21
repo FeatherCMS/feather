@@ -33,7 +33,12 @@ final class MenuModule: ViperModule {
             .appendingPathComponent("Menu")
             .appendingPathComponent("Bundle")
     }
-    
+
+    // NOTE: this is a core dependency -> FeatherCore?
+    func leafDataGenerator(for req: Request) -> [String: LeafDataGenerator]? {
+        req.menus.all.mapValues { .lazy(LeafData($0)) }
+    }
+
     func boot(_ app: Application) throws {
         app.hooks.register("admin", use: (router as! MenuRouter).adminRoutesHook)
         app.hooks.register("installer", use: installerHook)

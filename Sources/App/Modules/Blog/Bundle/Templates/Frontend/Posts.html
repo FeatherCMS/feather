@@ -1,6 +1,6 @@
 #let(head = [
-    "title": $vars["posts.page.title"],
-    "description": $vars["posts.page.description"],
+    "title": $system["posts.page.title"],
+    "description": $system["posts.page.description"],
     "css": metadata.css,
     "js": metadata.js
 ])
@@ -29,10 +29,10 @@
     #if(page.items.isEmpty()):
     <div class="wrapper w center">
         <div class="m:xl">
-            <span class="h1">#($vars["empty.list.icon"])</span>
-            <p class="h1">#($vars["empty.list.title"])</p>
-            <p>#($vars["empty.list.description"])</p>
-            <p><a href="#($req.url.path)">#($vars["empty.list.link"])</a></p>
+            <span class="h1">#($system["empty.list.icon"])</span>
+            <p class="h1">#($system["empty.list.title"])</p>
+            <p>#($system["empty.list.description"])</p>
+            <p><a href="#($req.url.path)">#($system["empty.list.link"])</a></p>
         </div>
     </div>
     #endif
