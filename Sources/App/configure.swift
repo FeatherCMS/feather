@@ -11,8 +11,9 @@ import LeafFoundation
 import FluentSQLiteDriver
 import LiquidLocalDriver
 /// modules
-//import SwiftyModule
-//import MarkdownModule
+import SwiftyModule
+import MarkdownModule
+import AnalyticsModule
 //import RedirectModule
 //import SponsorModule
 //import StaticModule
