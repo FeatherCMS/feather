@@ -32,9 +32,11 @@
             <fieldset class="p m:bottom:l br:xs">
                 <legend class="p:horizontal:s">#($system.localization ?? "Localization")</legend>
                 
-                #(field = ["id": "locale", "label": $system.locale ?? "Locale", "required": true, "data": fields.locale])
+                #(field = ["id": "clientlocale", "label": $system.settings.clientlocale ?? "Discover client browser Locale", "required": false, "data": fields.clientlocale])
                 #inline("Admin/Fields/Selection")
-                
+
+                #(field = ["id": "locale", "label": $system.locale ?? "Default Locale", "required": true, "data": fields.locale])
+                #inline("Admin/Fields/Selection")
                 
                 #(field = ["id": "timezone", "label": $system.timezone ?? "Timezone", "required": true, "data": fields.timezone])
                 #inline("Admin/Fields/Selection")

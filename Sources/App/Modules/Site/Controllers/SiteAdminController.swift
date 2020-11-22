@@ -22,6 +22,7 @@ final class SiteAdminController {
         form.fontFamily.value = req.variables.get("site.font.family") ?? ""
         form.fontSize.value = req.variables.get("site.font.size") ?? ""
         form.locale.value = Application.Config.locale.identifier
+        form.clientlocale.value = Application.Config.clientlocale ? "true" : "false"
         form.timezone.value = Application.Config.timezone.identifier
         form.css.value = req.variables.get("site.css") ?? ""
         form.js.value = req.variables.get("site.js") ?? ""
@@ -75,6 +76,7 @@ final class SiteAdminController {
             }
 
             Application.Config.set("site.locale", value: form.locale.value)
+            Application.Config.set("site.clientlocale", value: form.clientlocale.value)
             Application.Config.set("site.timezone", value: form.timezone.value)
 
             return req.eventLoop.flatten([

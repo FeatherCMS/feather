@@ -17,6 +17,7 @@ final class SiteSettingsForm: Form {
         var fontFamily: String
         var fontSize: String
         var locale: String
+        var clientlocale: String
         var timezone: String
         var css: String
         var js: String
@@ -35,6 +36,7 @@ final class SiteSettingsForm: Form {
     var fontFamily = StringFormField()
     var fontSize = StringFormField()
     var locale = StringSelectionFormField()
+    var clientlocale = StringSelectionFormField()
     var timezone = StringSelectionFormField()
     var css = StringFormField()
     var js = StringFormField()
@@ -54,6 +56,7 @@ final class SiteSettingsForm: Form {
             "fontFamily": fontFamily,
             "fontSize": fontSize,
             "locale": locale,
+            "clientlocale": clientlocale,
             "timezone": timezone,
             "css": css,
             "js": js,
@@ -81,6 +84,7 @@ final class SiteSettingsForm: Form {
         fontFamily.value = context.fontFamily
         fontSize.value = context.fontSize
         locale.value = context.locale
+        clientlocale.value = context.clientlocale
         timezone.value = context.timezone
         css.value = context.css
         js.value = context.js
@@ -97,6 +101,10 @@ final class SiteSettingsForm: Form {
 
     func initialize() {
         locale.options = FormFieldStringOption.locales
+        clientlocale.options = [
+            FormFieldStringOption.init(key: "false", label: "Ignore browser settings"),
+            FormFieldStringOption.init(key: "true", label: "Use client browser settings"),
+        ]
         timezone.options = FormFieldStringOption.gmtTimezones
     }
 
