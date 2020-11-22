@@ -11,7 +11,11 @@
     #inline("Admin/Fields/Text")
 
     #(field = ["id": "content", "size": "large", "data": fields.content])
+    #if($system["site.tiny.apikey"]):
+    #inline("Admin/Fields/Textarea-tinymce")
+    #else:
     #inline("Admin/Fields/Textarea")
+    #endif
 
 #enddefine
 

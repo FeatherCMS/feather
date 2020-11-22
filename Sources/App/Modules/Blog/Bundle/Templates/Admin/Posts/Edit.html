@@ -17,7 +17,11 @@
     #inline("Admin/Fields/Textarea")
 
     #(field = ["id": "content", "size": "large", "data": fields.content])
+    #if($system["site.tiny.apikey"]):
+    #inline("Admin/Fields/Textarea-tinymce")
+    #else:
     #inline("Admin/Fields/Textarea")
+    #endif
 
     #(field = ["id": "categoryId", "label": "Category", "data": fields.categoryId])
     #inline("Admin/Fields/Selection")
