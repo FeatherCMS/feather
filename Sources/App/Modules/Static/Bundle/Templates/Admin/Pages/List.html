@@ -27,13 +27,13 @@ tr {
 }
 #enddefine
 #define(th):
-    <th class="t:left m:horizontal:s">#let(link = ["key": "title"])#inline("Admin/SortLink")</th>
+    <th class="td:left m:h:s">#let(link = ["key": "title"])#inline("Admin/SortLink")</th>
     #inline("Admin/TableActionLabels")
 #enddefine
 #define(tr):
     #for(item in list.items):
 <tr>
-    <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.title)</a></td>
+    <td class="td:left m:h:s"><a href="#($req.url.path)#(item.id)/">#(item.title)</a></td>
     #inline("Admin/TableActionButtons")
 </tr>
     #endfor

@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/feather-modules/analytics",
         "state": {
           "branch": null,
-          "revision": "5095e8c924cc67952567c39d50e3267cc7cf0168",
-          "version": "1.0.0-beta.2"
+          "revision": "9413466ff29e3e284a8c6938e1e3c57e6b370747",
+          "version": "1.0.0-beta.3.1"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "f216d47612ff366656698e466bf6c70db25be7ac",
-          "version": "1.0.0-beta.12"
+          "revision": "41909328b680b52d58a56757cebb0174c68278ab",
+          "version": "1.0.0-beta.13.1"
         }
       },
       {
@@ -204,8 +204,8 @@
         "repositoryURL": "https://github.com/feather-modules/sponsor",
         "state": {
           "branch": null,
-          "revision": "42e2cfea1062376b17d51fecfef8ca3af4ee7716",
-          "version": "1.0.0-beta.2"
+          "revision": "ae77962524f253625da22f15ec5e9ae730599904",
+          "version": "1.0.0-beta.3.2"
         }
       },
       {
@@ -312,8 +312,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-transport-services.git",
         "state": {
           "branch": null,
-          "revision": "bb56586c4cab9a79dce6ec4738baddb5802c5de7",
-          "version": "1.9.0"
+          "revision": "5a352330c09a323e59ebd99afdf4ca3964c217bc",
+          "version": "1.9.1"
         }
       },
       {
@@ -327,10 +327,10 @@
       },
       {
         "package": "UAParserSwift",
-        "repositoryURL": "https://github.com/binarybirds/UAParserSwift",
+        "repositoryURL": "https://github.com/malcommac/UAParserSwift",
         "state": {
           "branch": null,
-          "revision": "6c378ca652c3c01d71efc167d47e0517be86bf9f",
+          "revision": "a8057c7cff60db2cdf31d0a0a68ce430754ab64e",
           "version": "1.2.1"
         }
       },

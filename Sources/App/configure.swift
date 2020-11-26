@@ -42,7 +42,6 @@ public func configure(_ app: Application) throws {
         ],
     ]
 
-
     if let lfm = LeafFileMiddleware(publicDirectory: app.directory.publicDirectory) {
         app.middleware.use(lfm)
     }

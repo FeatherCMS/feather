@@ -1,12 +1,12 @@
 ![Feather CMS](https://github.com/BinaryBirds/feather/blob/main/Assets/GitHub-Lead.png?raw=true)
 
-# Feather CMS 🦚
+# Feather CMS 🪶
 
 Feather is a modern Swift-based content management system powered by Vapor 4.
 
 ## Requirements 
 
-To use Feather CMS you'll have to install Swift 5.2 or greater. 
+To use Feather CMS you'll have to install Swift 5.3 or greater. 
 
 In other words Feather has the exact same system requirements as [Vapor 4](https://docs.vapor.codes/4.0/).
 
@@ -41,7 +41,7 @@ BASE_PATH="/path/to/feather/"
     - `vapor build && vapor run serve`
 - Build and run the project and enjoy your Feather powered site at [https://localhost:8080/](https://localhost:8080/)
 - Migration & sample content installation will be performed at the first time when you hit the URL.
-- You can log in to the admin using the `feather@binarybirds.com` & `FeatherCMS` account. 
+- You can log in to the admin using the `feather@binarybirds.com` & `Feather` account. 
 - Please change the default email & password using the admin / user menu. 😅
 
 ### nginx
@@ -306,9 +306,6 @@ You can print out the backtrace using the `bt` command, this can help you to ide
 
 - [Vapor](https://vapor.codes) - underlying framework
 - [Feather icons](https://feathericons.com) - feather icons
-- [UAParserSwift](https://github.com/malcommac/UAParserSwift) - user agent parser
-- [Ink](https://github.com/johnsundell/ink) - markdown support
-- [Splash](https://github.com/johnsundell/splash) - Swift syntax highlight
 
 ---
 

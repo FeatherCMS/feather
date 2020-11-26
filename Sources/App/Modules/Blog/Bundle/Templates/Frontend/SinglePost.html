@@ -1,17 +1,17 @@
 <div class="post-cell g:col#(size ?? 1)#if(class != nil): #(class ?? "")#endif">
     <a href="/#(post.metadata.slug)">
-        <div class="container br:xs">
-            <img class="block" src="#(post.imageKey.resolve())">
-            <div class="overlay"><span class="h2">Read now</span></div>
+        <div class="container r:xs">
+            <img class="block w:full" src="#(post.imageKey.resolve())">
+            <div class="overlay"><span class="h3">Read now</span></div>
         </div>
         <div>
-            <p>
-                <span class="underline"#if(post.category.color != nil || category.color != nil): style="border-color: #(post.category.color ?? category.color ?? "");"#endif>#(post.category.title ?? category.title ?? "")</span>
+            <p class="m:v:xs">
+                <span class="c:underline:accent"#if(post.category.color != nil || category.color != nil): style="border-color: #(post.category.color ?? category.color ?? "");"#endif>#(post.category.title ?? category.title ?? "")</span>
                     &middot;
                 #let(dateString = Date(timeStamp: post.metadata.date, fixedFormat: $app.dateFormats.date, timeZone: $app.timezone))
                 <time datetime="#(dateString)">#(dateString)</time>
             </p>
-            <h2 class="m:zero m:bottom:xs">#(post.title)</h2>
+            <h2 class="h3 m:zero m:b:xs">#(post.title)</h2>
             <p class="m:zero">#(post.excerpt)</p>
         </div>
     </a>

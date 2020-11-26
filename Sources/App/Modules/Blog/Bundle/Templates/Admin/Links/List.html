@@ -31,17 +31,17 @@ tr {
 #enddefine
 #define(th):
     #var(link = nil)
-    <th class="t:left m:horizontal:s">#(link = ["key": "name", "default": true])#inline("Admin/SortLink")</th>
-    <th class="t:left">#(link = ["key": "url"])#inline("Admin/SortLink")</th>
-    <th class="t:center">#(link = ["key": "priority"])#inline("Admin/SortLink")</th>
+    <th class="td:left m:h:s">#(link = ["key": "name", "default": true])#inline("Admin/SortLink")</th>
+    <th class="td:left">#(link = ["key": "url"])#inline("Admin/SortLink")</th>
+    <th class="td:center">#(link = ["key": "priority"])#inline("Admin/SortLink")</th>
     #inline("Admin/TableActionLabels")
 #enddefine
 #define(tr):
     #for(item in list.items):
 <tr>
-    <td class="t:left m:horizontal:s"><a href="#($req.url.path)#(item.id)/">#(item.name)</a></td>
-    <td class="t:left"><a href="#($req.url.path)#(item.id)/">#(item.url)</a></td>
-    <td class="t:center"><a href="#($req.url.path)#(item.id)/">#(item.priority)</a></td>
+    <td class="td:left m:h:s"><a href="#($req.url.path)#(item.id)/">#(item.name)</a></td>
+    <td class="td:left"><a href="#($req.url.path)#(item.id)/">#(item.url)</a></td>
+    <td class="td:center"><a href="#($req.url.path)#(item.id)/">#(item.priority)</a></td>
     #inline("Admin/TableActionButtons")
 </tr>
     #endfor

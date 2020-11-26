@@ -5,26 +5,23 @@
     "js": metadata.js
 ])
 #define(body):
-<div id="authors" class="wrapper w">
-    <div class="m:xl">
-        <header class="m:bottom:l center">
-            <h1>#(head.title)</h1>
-            <p>#(head.description)</p>
-        </header>
+<div id="posts" class="m">
 
-        <section class="m:l">
-            <ul class="lst:none p:zero">
-            #for(author in authors):
-                <li class="p:l br center bg3 m:bottom:l">
-                    <a href="/#(author.metadata.slug)">
-                        <img class="w128 br:circular" src="#(author.imageKey.resolve())">
-                    </a>
-                    <h3><a href="/#(author.metadata.slug)">#(author.name)</a></h3>
-                    <p>#(author.bio)</p>
-                </li>
-            #endfor
-            </ul>
-        </section>
+    <header class="t:center m:b:xl">
+        <h1 class="m:t">#(head.title)</h1>
+        <p>#(head.description)</p>
+    </header>
+
+    <div class="g1 g:gap:col g:gap:row:xl">
+        #for(author in authors):
+            <div class="g:col1 t:center">
+                <a href="/#(author.metadata.slug)">
+                    <img class="s128 r:circular" src="#(author.imageKey.resolve())">
+                </a>
+                <h3 class="m:t"><a href="/#(author.metadata.slug)">#(author.name)</a></h3>
+                <p>#(author.bio)</p>
+            </div>
+        #endfor
     </div>
 </div>
 #enddefine
