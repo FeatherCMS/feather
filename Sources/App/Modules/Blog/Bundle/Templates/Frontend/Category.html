@@ -6,20 +6,19 @@
 ])
 
 #define(body):
-<div id="category" class="wrapper w:full m:xl">
-
-    <header class="m:bottom:l center">
-        <img class="w128 br:s" src="#(category.imageKey.resolve())">
-        <h1>#(head.title)</h1>
+<div id="posts" class="m">
+    <header class="t:center m:b:xl">
+        <img class="s128 r:xs" src="#(category.imageKey.resolve())">
+        <h1 class="m:t">#(head.title)</h1>
         <p>#(head.description)</p>
-        <span><b>#(posts.count()) post#if(posts.count() > 1):s#endif</b></span>
-    </header>
-    
-    <div class="g6 g:gap:l:hd">
-    #for(post in posts):
-        #var(size = 2)
+        <span><strong>#(posts.count()) post#if(posts.count() > 1):s#endif</strong></span>
+            </header>
+
+    <div class="g321 g:gap:col g:gap:row:xl">
+        #for(post in posts):
+        #var(size = 1)
         #inline("Blog/Frontend/SinglePost")
-    #endfor
+        #endfor
     </div>
 </div>
 

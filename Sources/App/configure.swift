@@ -11,12 +11,16 @@ import LeafFoundation
 import FluentSQLiteDriver
 import LiquidLocalDriver
 /// modules
-//import SwiftyModule
-//import MarkdownModule
 //import RedirectModule
-//import SponsorModule
 //import StaticModule
 //import BlogModule
+//import SiteModule
+//import MenuModule
+import SwiftyModule
+import MarkdownModule
+import AnalyticsModule
+import SponsorModule
+
 
 public func configure(_ app: Application) throws {
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
@@ -37,7 +41,6 @@ public func configure(_ app: Application) throws {
             "title": "Hello world!"
         ],
     ]
-
 
     if let lfm = LeafFileMiddleware(publicDirectory: app.directory.publicDirectory) {
         app.middleware.use(lfm)
@@ -103,7 +106,7 @@ public func configure(_ app: Application) throws {
     LeafEngine.entities.use(ResolveLeafEntity(), asMethod: "resolve")
     LeafEngine.entities.use(InvokeHookLeafEntity(), asFunction: "InvokeHook")
     LeafEngine.entities.use(InvokeAllHooksLeafEntity(), asFunction: "InvokeAllHooks")
-    LeafEngine.entities.use(InlineSvg(), asFunction: "svg")
+    LeafEngine.entities.use(InlineSvg(iconset: "feather-icons"), asFunction: "svg")
     LeafRenderer.Option.timeout = 1.000 //ms
 
     if app.isDebug {
@@ -114,7 +117,7 @@ public func configure(_ app: Application) throws {
     try app.viper.use(modules)
 
     app.middleware.use(FeatherCoreLeafExtensionMiddleware())
-    app.middleware.use(LeafFeatherExtensionMiddleware())
+    app.middleware.use(ViperLeafScopesMiddleware())
 
     try app.autoMigrate().wait()
 }

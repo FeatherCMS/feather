@@ -1,7 +1,11 @@
-#define(toolbarLeft):
+#define(toolbarLeftAfter):
+    #if(fields.modelId != nil):
+    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
+    #endif
+#enddefine
+#define(toolbarRightBefore):
     #if(fields.modelId != nil):
     <a href="/admin/frontend/metadatas/#(fields.metadata.id)">#svg("feather")</a>
-    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
 #enddefine
 #define(fields):
@@ -13,7 +17,7 @@
     #(field = ["id": "title", "required": true, "data": fields.title])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "excerpt", "size": "small", "data": fields.excerpt])
+    #(field = ["id": "excerpt", "size": "s", "data": fields.excerpt])
     #inline("Admin/Fields/Textarea")
 
     #(field = ["id": "color", "more": "e.g #cafe00", "data": fields.color])

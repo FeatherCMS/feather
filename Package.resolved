@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "analytics-module",
+        "repositoryURL": "https://github.com/feather-modules/analytics",
+        "state": {
+          "branch": null,
+          "revision": "9413466ff29e3e284a8c6938e1e3c57e6b370747",
+          "version": "1.0.0-beta.3.1"
+        }
+      },
+      {
         "package": "async-http-client",
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
@@ -51,8 +60,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "ec4412f136f37fe69e0efd876aaa78e390686f2e",
-          "version": "1.0.0-beta.10"
+          "revision": "41909328b680b52d58a56757cebb0174c68278ab",
+          "version": "1.0.0-beta.13.1"
         }
       },
       {
@@ -164,6 +173,15 @@
         }
       },
       {
+        "package": "markdown-module",
+        "repositoryURL": "https://github.com/feather-modules/markdown",
+        "state": {
+          "branch": null,
+          "revision": "94db5406c156ff6408850dc62c89e000aa440254",
+          "version": "1.0.0-beta.1"
+        }
+      },
+      {
         "package": "routing-kit",
         "repositoryURL": "https://github.com/vapor/routing-kit.git",
         "state": {
@@ -179,6 +197,15 @@
           "branch": null,
           "revision": "81de0389558ad40579027735841593b21a511fa8",
           "version": "0.15.0"
+        }
+      },
+      {
+        "package": "sponsor-module",
+        "repositoryURL": "https://github.com/feather-modules/sponsor",
+        "state": {
+          "branch": null,
+          "revision": "ae77962524f253625da22f15ec5e9ae730599904",
+          "version": "1.0.0-beta.3.2"
         }
       },
       {
@@ -285,8 +312,17 @@
         "repositoryURL": "https://github.com/apple/swift-nio-transport-services.git",
         "state": {
           "branch": null,
-          "revision": "bb56586c4cab9a79dce6ec4738baddb5802c5de7",
-          "version": "1.9.0"
+          "revision": "5a352330c09a323e59ebd99afdf4ca3964c217bc",
+          "version": "1.9.1"
+        }
+      },
+      {
+        "package": "swifty-module",
+        "repositoryURL": "https://github.com/feather-modules/swifty",
+        "state": {
+          "branch": null,
+          "revision": "cdead1a40f3d6eb0bdbeb1304527660cf4c18ed5",
+          "version": "1.0.0-beta.1"
         }
       },
       {
@@ -294,8 +330,8 @@
         "repositoryURL": "https://github.com/malcommac/UAParserSwift",
         "state": {
           "branch": null,
-          "revision": "48dd6b3dbb96fd8da53e8f71d96c515bf7d7480b",
-          "version": "1.2.0"
+          "revision": "a8057c7cff60db2cdf31d0a0a68ce430754ab64e",
+          "version": "1.2.1"
         }
       },
       {
@@ -321,8 +357,8 @@
         "repositoryURL": "https://github.com/binarybirds/viper-kit",
         "state": {
           "branch": null,
-          "revision": "56f1404e64ede213c399f5a33aaa60b1ff5adddf",
-          "version": "1.5.0-beta.6"
+          "revision": "dc4598b3a2bf882af7759ddb54081c9f84bbd93e",
+          "version": "1.5.0-beta.7"
         }
       },
       {

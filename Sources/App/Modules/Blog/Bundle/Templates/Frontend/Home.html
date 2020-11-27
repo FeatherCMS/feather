@@ -1,42 +1,31 @@
 #let(head = [
-    "title": $vars["home.page.title"],
-    "description": $vars["home.page.description"],
+    "title": $system["home.page.title"],
+    "description": $system["home.page.description"],
     "css": metadata.css,
     "js": metadata.js
 
 ])
 #define(css):
-@media (min-width: 600px) {
-    .post-cell-1 {
-        grid-column: span 6;
-    }
-}
-@media (min-width: 900px) {
-    .post-cell-1, .post-cell-2 {
-        grid-column: span 3;
-    }
-}
+
 #enddefine
 #define(body):
-<div id="home" class="wrapper w:full m:xl">
-
-    <header class="m:bottom:l center">
-        <h1>#(head.title)</h1>
+<div id="home" class="m">
+    <header class="t:center m:b:xl">
+        <h1 class="m:t">#(head.title)</h1>
         <p>#(head.description)</p>
     </header>
 
-    <div class="g6 g:gap:l:hd">
+    <div class="g321 g:gap:col g:gap:row:xl">
     #for((index, post) in posts):
-        #var(size = 2)
+        #var(size = 1)
         #var(class = "post-cell-" + index + 1)
         #if(index < 2):
-            #var(size = 3)
+            #var(size = 1)
         #endif
         
         #inline("Blog/Frontend/SinglePost")
     #endfor
     </div>
-
 </div>
 #enddefine
 #inline("Frontend/Index")

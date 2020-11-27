@@ -1,40 +1,3 @@
-svg {
-    margin: 0 auto;
-}
-/* table related changes, tables should always should be displayed using grid layout */
-table, thead, tbody, tfoot, tr, th, td {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-tr {
-    display: grid;
-    grid-template-columns: 1fr;
-    align-items: center;
-}
-tr {
-    border-radius: 4px;
-    margin: 8px 0px;
-    padding: 16px;
-}
-th {
-    padding: 4px 0px;
-}
-td {
-    padding: 8px 0px;
-}
-td img {
-    display: block;
-    margin: 0 auto;
-}
-/* table alignments, on mobile everything is centered, otherwise use the proper alignment */
-.t\:left, .t\:center, .t\:right { text-align: center; }
-@media (min-width: 600px) {
-    .t\:left { text-align: left; }
-    .t\:center { text-align: center; }
-    .t\:right { text-align: right; }
-}
-/* file uploaders */
 .uploader {
     text-align: center;
 }
@@ -44,79 +7,18 @@ td img {
     height: auto;
 }
 .small-uploader img {
-    width: 256px;
-    border-radius: 8px;
-    margin: 16px auto;
+    width: 10rem;
+    border-radius: 0.5rem;
+    margin: 1rem auto;
 }
 .circular-uploader img {
-    width: 256px;
+    width: 10rem;
     border-radius: 50%;
-    margin: 16px auto;
+    margin: 1rem auto;
 }
 .large-uploader img {
-    border-radius: 8px;
+    border-radius: 0.5rem;
 }
-
-
-#header {
-    border-bottom: none;
-}
-#header #nav {
-    float: left;
-    padding-left: 8px;
-}
-#header #nav a:link, #header #nav a:visited {
-    color: #21a9ff;
-}
-#header #nav a:link:hover, #header #nav a:visited:hover, #header #nav a:link.selected:hover {
-    color: #fa3ebe;
-}
-#header #menu-icon {
-    float: left;
-}
-#site-link {
-    position: absolute;
-    left: 50%;
-    margin-left: -80px;
-}
-#header #nav li {
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: 8px;
-}
-
-#account {
-    position: absolute;
-    top: 20px;
-    right: 14px;
-}
-#toolbar a {
-    display: inline-block;
-    padding: 8px 16px;
-}
-#toolbar #right .container {
-    float: right;
-}
-@media (max-width: 599px) {
-    #toolbar .center {
-        text-align: left;
-        padding-left: 8px;
-    }
-    #toolbar {
-        grid-template-columns: 1fr 1fr;
-    }
-    #toolbar .g\:col1:nth-of-type(1) {
-        order: 2;
-    }
-    #toolbar .g\:col1:nth-of-type(2) {
-        grid-column: span 2;
-        order: 1;
-    }
-    #toolbar .g\:col1:nth-of-type(3) {
-        order: 3;
-    }
-}
-
 #notification {
     position: fixed;
     top: 92px;
@@ -133,26 +35,62 @@ td img {
     opacity: 0;
 }
 
+#toolbar button {
+    padding: 0;
+    background: none;
+    display: inline;
+}
+#toolbar a svg, #toolbar button svg {
+    border-radius: 0.5em;
+    padding: 0.5rem 1rem;
+}
+#toolbar {
+    margin: 1rem 0rem;
+    margin-bottom: 2rem;
+}
+#toolbar #left {
+    margin-left: 0.5rem;
+}
+#toolbar #left a, #toolbar #left button {
+    margin-right: 0.5rem;
+}
+#toolbar #right a, #toolbar #right button {
+    margin-left: 0.5rem;
+}
+
 @media (max-width: 599px) {
-    
-}
-@media (min-width: 600px) {
-    
-}
-
-@media (min-width: 900px) {
-    #header #nav li {
-        margin-left: 0px;
+    #toolbar {
+        grid-template-columns: 1fr 1fr;
+        margin: 0;
+        margin-bottom: 1rem;
     }
-    #header #nav li + li:before {
-        content: "//";
+    #toolbar #left {
+        order: 2;
+    }
+    #toolbar #center {
+        grid-column: span 2;
+        order: 1;
+        text-align: left;
+        margin: 1rem 0.5rem;
+    }
+    #toolbar #right {
+        order: 3;
     }
 }
 
-@media (min-width: 1200px) {
-    
+#toolbar a svg, #toolbar button svg {
+    background: #fff;
+    color: #21a9ff;
 }
-
-@media (min-width: 1800px) {
-
+#toolbar a:hover svg, #toolbar button:hover svg {
+    background: #efefef;
+    color: #fa3ebe;
+}
+@media (prefers-color-scheme: dark) {
+    #toolbar a svg, #toolbar button svg {
+        background: #0c0c0c;
+    }
+    #toolbar a:hover svg, #toolbar button:hover svg {
+        background: #333;
+    }
 }

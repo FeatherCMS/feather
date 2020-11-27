@@ -1,7 +1,9 @@
-#define(toolbarLeft):
+#define(toolbarLeftAfter):
+    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
+#enddefine
+#define(toolbarRightBefore):
     #if(fields.metadata != nil):
     <a href="/admin/frontend/metadatas/#(fields.metadata.id)">#svg("feather")</a>
-    <a href="#if(!fields.metadata.slug.isEmpty()):/#(fields.metadata.slug)/#else:/#endif" target="_blank">#svg("eye")</a>
     #endif
 #enddefine
 #define(fields):
@@ -13,10 +15,10 @@
     #(field = ["id": "title", "required": true, "data": fields.title])
     #inline("Admin/Fields/Text")
 
-    #(field = ["id": "excerpt", "size": "small", "data": fields.excerpt])
+    #(field = ["id": "excerpt", "size": "s", "data": fields.excerpt])
     #inline("Admin/Fields/Textarea")
 
-    #(field = ["id": "content", "size": "large", "data": fields.content])
+    #(field = ["id": "content", "size": "l", "data": fields.content])
     #inline("Admin/Fields/Textarea")
 
     #(field = ["id": "categoryId", "label": "Category", "data": fields.categoryId])

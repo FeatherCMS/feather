@@ -1,7 +1,7 @@
 CUR_DIR = $(CURDIR)
 
 run:
-	swift run Run serve --port 8080
+	swift run Run
 
 env:
 	echo 'BASE_URL="http://0.0.0.0:8080"' > .env.development
