@@ -11,11 +11,10 @@ import LeafFoundation
 import FluentSQLiteDriver
 import LiquidLocalDriver
 /// modules
-//import RedirectModule
-//import StaticModule
-//import BlogModule
-//import SiteModule
-//import MenuModule
+import RedirectModule
+import StaticModule
+import BlogModule
+import SiteModule
 import SwiftyModule
 import MarkdownModule
 import AnalyticsModule
@@ -63,13 +62,14 @@ public func configure(_ app: Application) throws {
     
 
     let modules: [ViperModule] = [
+        ///core modules (do not remove them)
         UserBuilder(),
         SystemBuilder(),
+        MenuBuilder(),
         AdminBuilder(),
         ApiBuilder(),
         FrontendBuilder(),
-
-        MenuBuilder(),
+        /// user modules (feel free to add / remove)
         RedirectBuilder(),
         StaticBuilder(),
         BlogBuilder(),
@@ -107,7 +107,7 @@ public func configure(_ app: Application) throws {
     LeafEngine.entities.use(InvokeHookLeafEntity(), asFunction: "InvokeHook")
     LeafEngine.entities.use(InvokeAllHooksLeafEntity(), asFunction: "InvokeAllHooks")
     LeafEngine.entities.use(InlineSvg(iconset: "feather-icons"), asFunction: "svg")
-    LeafRenderer.Option.timeout = 1.000 //ms
+    LeafRenderer.Option.timeout = 1.000 // 1000ms
 
     if app.isDebug {
         LeafRenderer.Option.caching = .bypass

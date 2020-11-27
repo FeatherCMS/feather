@@ -38,6 +38,15 @@
         }
       },
       {
+        "package": "blog-module",
+        "repositoryURL": "https://github.com/feather-modules/blog",
+        "state": {
+          "branch": null,
+          "revision": "676d10aa19133d78a160a509e5f480f176b6b8a6",
+          "version": "1.0.0-beta.1"
+        }
+      },
+      {
         "package": "console-kit",
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
@@ -182,12 +191,30 @@
         }
       },
       {
+        "package": "redirect-module",
+        "repositoryURL": "https://github.com/feather-modules/redirect",
+        "state": {
+          "branch": null,
+          "revision": "4d0880dbef942ee0b6111704ac9d19fb0d9ebe16",
+          "version": "1.0.0-beta.2"
+        }
+      },
+      {
         "package": "routing-kit",
         "repositoryURL": "https://github.com/vapor/routing-kit.git",
         "state": {
           "branch": null,
           "revision": "4cf052b78aebaf1b23f2264ce04d57b4b6eb5254",
           "version": "4.2.0"
+        }
+      },
+      {
+        "package": "site-module",
+        "repositoryURL": "https://github.com/feather-modules/site",
+        "state": {
+          "branch": null,
+          "revision": "b3a3df9af1f33fc5824ff7453d279dd83640d8bc",
+          "version": "1.0.0-beta.1"
         }
       },
       {
@@ -233,6 +260,15 @@
           "branch": null,
           "revision": "6481dd0b01112d082dd7eb362782126e81964138",
           "version": "1.1.0"
+        }
+      },
+      {
+        "package": "static-module",
+        "repositoryURL": "https://github.com/feather-modules/static",
+        "state": {
+          "branch": null,
+          "revision": "937b601a690b11678bd019e55fe3b1620ab0aa01",
+          "version": "1.0.0-beta.1"
         }
       },
       {
@@ -348,8 +384,8 @@
         "repositoryURL": "https://github.com/binarybirds/view-kit",
         "state": {
           "branch": null,
-          "revision": "0f0ce0ef966ad91ec9e87dd6049850d5dfdea02c",
-          "version": "1.3.0-beta.1.5"
+          "revision": "b7b30588918bde7dcc460b455e72be654c92c7f1",
+          "version": "1.3.0-beta.1.6"
         }
       },
       {
