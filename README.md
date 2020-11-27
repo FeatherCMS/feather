@@ -1,4 +1,4 @@
-![Feather CMS](https://github.com/BinaryBirds/feather/blob/main/Assets/github-lead.png?raw=true)
+![Feather CMS](https://github.com/BinaryBirds/feather/blob/main/Assets/GitHub-Lead.png?raw=true)
 
 # Feather CMS 🪶
 
