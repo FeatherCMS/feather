@@ -4,7 +4,6 @@
 
 Feather is a modern Swift-based content management system powered by Vapor 4.
 
----
 
 ## Requirements 
 
@@ -12,7 +11,6 @@ To use Feather it is recommended to install Swift 5.3 or greater.
 
 If you need help installing Swift, then you should follow the instructions on [swift.org](https://swift.org/download/#releases). 
 
----
 
 ## Installation
 
@@ -42,7 +40,6 @@ BASE_PATH="/path/to/feather/"
 - If needed setup a [post-action script](https://theswiftdev.com/10-short-advices-that-will-make-you-a-better-vapor-developer-right-away/) to automatically shut-down previous server instances.
 - Build and run the project as usual and enjoy your Feather powered site.
 
----
 
 ## Configuration
 
@@ -85,7 +82,6 @@ Feather core gives you just a few standard modules that you can also disable (e.
 
 Every other module can be completely removed (just alter the SPM dependency & configuration file), feel free to build your own configuration for your needs. 
 
----
 
 ## Using Feather CMS
 
@@ -111,7 +107,6 @@ The following Feather modules are currently available:
 
 Feel free to build & share your own modules to extend the functionality of the core system.
 
---- 
 
 ## Contributions and support
 
@@ -121,7 +116,6 @@ If you wish to make a change, please open a [Pull Request](https://github.com/Bi
 
 Please don't hesitate to send your feedbacks, thoughts and ideas about Feather.
 
---- 
 
 ## Known issues
 
@@ -150,14 +144,12 @@ image lookup -a 0x1000
 Start the debugger and launch the serve command. Then try to repeat the steps that caused the crash.
 You can print out the backtrace using the `bt` command, this can help you to identify the problem.
 
----
 
 ## Credits
 
 - [Vapor](https://vapor.codes) - underlying framework
 - [Feather icons](https://feathericons.com) - feather icons
 
----
 
 ### License
 
