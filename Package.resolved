@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/feather-modules/analytics",
         "state": {
           "branch": null,
-          "revision": "9413466ff29e3e284a8c6938e1e3c57e6b370747",
-          "version": "1.0.0-beta.3.1"
+          "revision": "7c5e7d61d6b5a20a1ebf02b0260315ed09473a1b",
+          "version": "1.0.0-beta.6"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/vapor/async-kit.git",
         "state": {
           "branch": null,
-          "revision": "7457413e57dbfac762b32dd30c1caf2c55a02a3d",
-          "version": "1.2.0"
+          "revision": "ff6deaafeea8e9ec2b64e8ae00297a3fa2ae25a9",
+          "version": "1.2.1"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/feather-modules/blog",
         "state": {
           "branch": null,
-          "revision": "676d10aa19133d78a160a509e5f480f176b6b8a6",
-          "version": "1.0.0-beta.1"
+          "revision": "1cd052a9b361f33abe3f0bfe2a422a0971dd844d",
+          "version": "1.0.0-beta.4"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "41909328b680b52d58a56757cebb0174c68278ab",
-          "version": "1.0.0-beta.13.1"
+          "revision": "fa6e1000e69d3e29b37268f9321e82ee99910872",
+          "version": "1.0.0-beta.16"
         }
       },
       {
@@ -195,8 +195,8 @@
         "repositoryURL": "https://github.com/feather-modules/redirect",
         "state": {
           "branch": null,
-          "revision": "4d0880dbef942ee0b6111704ac9d19fb0d9ebe16",
-          "version": "1.0.0-beta.2"
+          "revision": "23574404278de79f74db48f56ae52937546fe62d",
+          "version": "1.0.0-beta.5"
         }
       },
       {
@@ -213,8 +213,8 @@
         "repositoryURL": "https://github.com/feather-modules/site",
         "state": {
           "branch": null,
-          "revision": "b3a3df9af1f33fc5824ff7453d279dd83640d8bc",
-          "version": "1.0.0-beta.1"
+          "revision": "ebb0018a25483929547f700335486f8bbf14e8d4",
+          "version": "1.0.0-beta.4"
         }
       },
       {
@@ -231,8 +231,8 @@
         "repositoryURL": "https://github.com/feather-modules/sponsor",
         "state": {
           "branch": null,
-          "revision": "ae77962524f253625da22f15ec5e9ae730599904",
-          "version": "1.0.0-beta.3.2"
+          "revision": "2d165587f14125a372f617ecadfea9807fc12bbd",
+          "version": "1.0.0-beta.6"
         }
       },
       {
@@ -267,8 +267,8 @@
         "repositoryURL": "https://github.com/feather-modules/static",
         "state": {
           "branch": null,
-          "revision": "937b601a690b11678bd019e55fe3b1620ab0aa01",
-          "version": "1.0.0-beta.1"
+          "revision": "e8c1a7237c5b92815139a06a23a9e49e083c6e0f",
+          "version": "1.0.0-beta.4"
         }
       },
       {
@@ -375,8 +375,8 @@
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "b040f90b80ac5906fcf1476a46d360c159f01892",
-          "version": "4.35.0"
+          "revision": "2b222a632deb580cfd5122f46481df3a69ff99f1",
+          "version": "4.36.0"
         }
       },
       {

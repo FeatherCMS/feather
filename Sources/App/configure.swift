@@ -117,7 +117,7 @@ public func configure(_ app: Application) throws {
     try app.viper.use(modules)
 
     app.middleware.use(FeatherCoreLeafExtensionMiddleware())
-    app.middleware.use(ViperLeafScopesMiddleware())
-
+    app.middleware.use(ViperLeafScopesMiddleware())    
+    
     try app.autoMigrate().wait()
 }
