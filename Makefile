@@ -13,11 +13,8 @@ clean:
 test:
 	swift test --enable-test-discovery
 
-views:
-	for f in Sources/App/Modules/*; do  m=$$(basename $$f); mkdir -p "Resources/Views"; cp -r "$${f}/Templates/" "Resources/Views/$${m}" 2>/dev/null; done;
-
 css:
-	cat Public/css/frontend.css Public/css/frontend.light.css Public/css/frontend.dark.css \
+	cat Public/css/frontend.css \
 		| tr -d '\n' \
 		| tr -d '\t' \
 		| tr -s ' ' \
@@ -29,12 +26,11 @@ css:
 		| sed -E 's/[[:space:]]*;[[:space:]]*/;/g' \
 		> Public/css/frontend.min.css
 
-install: views css
+install: css
 	swift package update
 	swift build -c release
 	install .build/Release/Feather ./feather #./usr/local/bin/feather
-	
+
 uninstall:
-	rm -r Resources/Views/*
 	rm Public/css/frontend.min.css
 	rm ./feather
