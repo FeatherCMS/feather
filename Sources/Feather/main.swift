@@ -4,7 +4,6 @@
 //
 //  Created by Tibor Bodecs on 2019. 12. 17..
 //
-import App
 import Vapor
 
 var env = try Environment.detect()

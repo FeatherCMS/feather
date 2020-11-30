@@ -1,14 +1,14 @@
 CUR_DIR = $(CURDIR)
 
 run:
-	swift run Run
+	swift run Feather
 
 env:
 	echo 'BASE_URL="http://0.0.0.0:8080"' > .env.development
 	echo 'BASE_PATH="$(CUR_DIR)/"' >> .env.development
 	
 clean:
-	rm -r ./db.sqlite ./Resources/config.json ./Public/assets
+	rm -rf ./db.sqlite ./Resources/config.json ./Public/assets
 
 test:
 	swift test --enable-test-discovery
@@ -32,7 +32,7 @@ css:
 install: views css
 	swift package update
 	swift build -c release
-	install .build/Release/Run ./feather #./usr/local/bin/feather
+	install .build/Release/Feather ./feather #./usr/local/bin/feather
 	
 uninstall:
 	rm -r Resources/Views/*

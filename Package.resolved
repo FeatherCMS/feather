@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/feather-modules/blog",
         "state": {
           "branch": null,
-          "revision": "1cd052a9b361f33abe3f0bfe2a422a0971dd844d",
-          "version": "1.0.0-beta.4"
+          "revision": "06a5d2b4d3b433ef60ffe0aec8b9d66f11beaa79",
+          "version": "1.0.0-beta.6"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "fa6e1000e69d3e29b37268f9321e82ee99910872",
-          "version": "1.0.0-beta.16"
+          "revision": "69afc253ce16842af6621cdd80a5e7be5375cb40",
+          "version": "1.0.0-beta.17"
         }
       },
       {
@@ -213,8 +213,8 @@
         "repositoryURL": "https://github.com/feather-modules/site",
         "state": {
           "branch": null,
-          "revision": "ebb0018a25483929547f700335486f8bbf14e8d4",
-          "version": "1.0.0-beta.4"
+          "revision": "a2f7cb7cdabb5fdd796cded469ebf0ca63f12d4d",
+          "version": "1.0.0-beta.5"
         }
       },
       {
@@ -267,8 +267,8 @@
         "repositoryURL": "https://github.com/feather-modules/static",
         "state": {
           "branch": null,
-          "revision": "e8c1a7237c5b92815139a06a23a9e49e083c6e0f",
-          "version": "1.0.0-beta.4"
+          "revision": "5cac1256d95a290848d42f19554a2d70cacc35e7",
+          "version": "1.0.0-beta.6"
         }
       },
       {
@@ -384,8 +384,8 @@
         "repositoryURL": "https://github.com/binarybirds/view-kit",
         "state": {
           "branch": null,
-          "revision": "b7b30588918bde7dcc460b455e72be654c92c7f1",
-          "version": "1.3.0-beta.1.6"
+          "revision": "f5d20540a836c03ff81d7664d15b11c3f948f5d7",
+          "version": "1.3.0-beta.2"
         }
       },
       {

@@ -8,7 +8,7 @@
 import XCTVapor
 @testable import App
 
-final class AppTests: XCTestCase {
+final class FeatherTests: XCTestCase {
 
     static var allTests = [
         ("testApplication", testApplication),

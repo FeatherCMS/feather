@@ -7,8 +7,7 @@ let package = Package(
        .macOS(.v10_15)
     ],
     products: [
-        .executable(name: "Run", targets: ["Run"]),
-        .library(name: "App", targets: ["App"]),
+        .executable(name: "Feather", targets: ["Feather"]),
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor", from: "4.34.0"),
@@ -28,7 +27,7 @@ let package = Package(
         .package(name: "sponsor-module", url: "https://github.com/feather-modules/sponsor", from: "1.0.0-beta"),
     ],
     targets: [
-        .target(name: "App", dependencies: [
+        .target(name: "Feather", dependencies: [
             .product(name: "FeatherCore", package: "feather-core"),
             .product(name: "LeafFoundation", package: "leaf-foundation"),
             /// drivers
@@ -50,11 +49,8 @@ let package = Package(
         ], swiftSettings: [
             .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
         ]),
-        .target(name: "Run", dependencies: [
-             .target(name: "App"),
-        ]),
-//        .testTarget(name: "AppTests", dependencies: [
-//            .target(name: "App"),
+//        .testTarget(name: "FeatherTests", dependencies: [
+//            .target(name: "Feather"),
 //            .product(name: "XCTVapor", package: "vapor"),
 //        ])
     ]
