@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/vapor/async-kit.git",
         "state": {
           "branch": null,
-          "revision": "ff6deaafeea8e9ec2b64e8ae00297a3fa2ae25a9",
-          "version": "1.2.1"
+          "revision": "5760c79afb8ebc24fd3251fdd9724af225fdf1f9",
+          "version": "1.3.0"
         }
       },
       {
@@ -69,8 +69,17 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "69afc253ce16842af6621cdd80a5e7be5375cb40",
-          "version": "1.0.0-beta.17"
+          "revision": "844612f47c64a85757661571c470756f14ef4b76",
+          "version": "1.0.0-beta.20"
+        }
+      },
+      {
+        "package": "file-module",
+        "repositoryURL": "https://github.com/feather-modules/file",
+        "state": {
+          "branch": null,
+          "revision": "958908de1ee79b9dc61dcdec0a8ffb34baf31735",
+          "version": "1.0.0-beta.1"
         }
       },
       {
@@ -128,6 +137,15 @@
         }
       },
       {
+        "package": "Kanna",
+        "repositoryURL": "https://github.com/tid-kijyun/Kanna.git",
+        "state": {
+          "branch": null,
+          "revision": "4a80ebe93b6966d5083394fcaaaff57a2fcec935",
+          "version": "5.2.3"
+        }
+      },
+      {
         "package": "leaf",
         "repositoryURL": "https://github.com/vapor/leaf",
         "state": {
@@ -159,8 +177,8 @@
         "repositoryURL": "https://github.com/binarybirds/liquid",
         "state": {
           "branch": null,
-          "revision": "daf9dee3a5aa7e056603a454c183999a3c0fde92",
-          "version": "1.1.0"
+          "revision": "092ec3bd50ef68627c80416ad7f4394a3c240389",
+          "version": "1.2.0-beta.2"
         }
       },
       {
@@ -168,8 +186,8 @@
         "repositoryURL": "https://github.com/binarybirds/liquid-kit.git",
         "state": {
           "branch": null,
-          "revision": "7784afbeed9a86f672f99453dd0c80941000c323",
-          "version": "1.1.1"
+          "revision": "a50084b7892bbd8975e25d0a053fd40a542541a4",
+          "version": "1.2.0-beta.4"
         }
       },
       {
@@ -177,8 +195,8 @@
         "repositoryURL": "https://github.com/binarybirds/liquid-local-driver",
         "state": {
           "branch": null,
-          "revision": "92f64afaab979e2c11543164fc661c66982a7f2a",
-          "version": "1.1.0"
+          "revision": "c2be0a2a9eac8f40abd069259345e4c30f10971e",
+          "version": "1.2.0-beta.4"
         }
       },
       {
@@ -312,8 +330,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "2f9ea477387806a79a8951524ef2d40de917a0e1",
-          "version": "2.24.0"
+          "revision": "2bae395344d41710dffab456265d534d7dc34ab8",
+          "version": "2.25.0"
         }
       },
       {
@@ -330,8 +348,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
         "state": {
           "branch": null,
-          "revision": "78ddbdfca10f64e4399da37c63372fd8db232152",
-          "version": "1.15.0"
+          "revision": "2f3c6e742317cdf2bbe89ac802b6187b1420e0f3",
+          "version": "1.16.0"
         }
       },
       {
@@ -339,8 +357,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
         "state": {
           "branch": null,
-          "revision": "eb102ad32add8638410e37a69bc815ea11379813",
-          "version": "2.10.0"
+          "revision": "901a01423316c4ce672b1b58ce62aecb8069cb1f",
+          "version": "2.10.1"
         }
       },
       {
@@ -384,8 +402,8 @@
         "repositoryURL": "https://github.com/binarybirds/view-kit",
         "state": {
           "branch": null,
-          "revision": "f5d20540a836c03ff81d7664d15b11c3f948f5d7",
-          "version": "1.3.0-beta.2"
+          "revision": "015ad9ed4667af6076570b3c397582622d3608f2",
+          "version": "1.3.0-beta.3"
         }
       },
       {
