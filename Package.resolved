@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/feather-modules/blog",
         "state": {
           "branch": null,
-          "revision": "06a5d2b4d3b433ef60ffe0aec8b9d66f11beaa79",
-          "version": "1.0.0-beta.6"
+          "revision": "807435d6776ad2bf7a0c8074dca6e03f2dcab839",
+          "version": "1.0.0-beta.7"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "844612f47c64a85757661571c470756f14ef4b76",
-          "version": "1.0.0-beta.20"
+          "revision": "f08fd4eaa747c1f71f3b19b467c0db3926b1a50a",
+          "version": "1.0.0-beta.22"
         }
       },
       {
@@ -134,15 +134,6 @@
           "branch": null,
           "revision": "6055fe8439769aa3646a3c797d573ce7305849c8",
           "version": "4.2.0"
-        }
-      },
-      {
-        "package": "Kanna",
-        "repositoryURL": "https://github.com/tid-kijyun/Kanna.git",
-        "state": {
-          "branch": null,
-          "revision": "4a80ebe93b6966d5083394fcaaaff57a2fcec935",
-          "version": "5.2.3"
         }
       },
       {
@@ -285,8 +276,8 @@
         "repositoryURL": "https://github.com/feather-modules/static",
         "state": {
           "branch": null,
-          "revision": "5cac1256d95a290848d42f19554a2d70cacc35e7",
-          "version": "1.0.0-beta.6"
+          "revision": "d13f9069ea56b5761b3a5cd59ab0ee02aa535e19",
+          "version": "1.0.0-beta.7"
         }
       },
       {
@@ -348,8 +339,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
         "state": {
           "branch": null,
-          "revision": "2f3c6e742317cdf2bbe89ac802b6187b1420e0f3",
-          "version": "1.16.0"
+          "revision": "f4b49cbed134db2c5132ffba1876e2814845a569",
+          "version": "1.16.1"
         }
       },
       {
@@ -402,8 +393,8 @@
         "repositoryURL": "https://github.com/binarybirds/view-kit",
         "state": {
           "branch": null,
-          "revision": "015ad9ed4667af6076570b3c397582622d3608f2",
-          "version": "1.3.0-beta.3"
+          "revision": "9066d435b75454c21ad13114dca526ca2ffc5c4f",
+          "version": "1.3.0-beta.4"
         }
       },
       {

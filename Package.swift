@@ -26,8 +26,7 @@ let package = Package(
         .package(name: "markdown-module", url: "https://github.com/feather-modules/markdown", from: "1.0.0-beta"),
         .package(name: "analytics-module", url: "https://github.com/feather-modules/analytics", from: "1.0.0-beta"),
         .package(name: "sponsor-module", url: "https://github.com/feather-modules/sponsor", from: "1.0.0-beta"),
-        
-        .package(url: "https://github.com/tid-kijyun/Kanna.git", from: "5.2.3"),
+        //.package(name: "aggregator-module", url: "https://github.com/feather-modules/aggregator", from: "1.0.0-beta"),
     ],
     targets: [
         .target(name: "Feather", dependencies: [
@@ -46,8 +45,8 @@ let package = Package(
             .product(name: "MarkdownModule", package: "markdown-module"),
             .product(name: "AnalyticsModule", package: "analytics-module"),
             .product(name: "SponsorModule", package: "sponsor-module"),
-            
-            .product(name: "Kanna", package: "Kanna"),
+            //.product(name: "AggregatorModule", package: "aggregator-module"),
+
             /// yeah we only need this here, because SPM in Xcode 12 still can't resolve stuff...
             .product(name: "Vapor", package: "vapor"),
         ], exclude: [

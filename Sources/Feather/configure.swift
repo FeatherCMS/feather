@@ -20,32 +20,10 @@ import SwiftyModule
 import MarkdownModule
 import AnalyticsModule
 import SponsorModule
-
+//import AggregatorModule
 
 public func configure(_ app: Application) throws {
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
-
-    /*
-    LeafFileMiddleware.defaultMediaType = .html
-    LeafFileMiddleware.processableExtensions = ["leaf", "html", "css", "js"]
-    LeafFileMiddleware[.css] = [
-        "background": "green",
-        "padding": "16px",
-    ]
-    LeafFileMiddleware.contexts = [
-        .css: [
-            "background": "#eee",
-            "padding": "16px",
-        ],
-        .html: [
-            "title": "Hello world!"
-        ],
-    ]
-
-    if let lfm = LeafFileMiddleware(publicDirectory: app.directory.publicDirectory) {
-        app.middleware.use(lfm)
-    }
-    */
 
     app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
 
@@ -80,6 +58,7 @@ public func configure(_ app: Application) throws {
         SponsorBuilder(),
         SwiftyBuilder(),
         MarkdownBuilder(),
+        //AggregatorBuilder(),
     ].map { $0.build() }
     
     let defaultSource = NIOLeafFiles(fileio: app.fileio,
@@ -109,6 +88,7 @@ public func configure(_ app: Application) throws {
     LeafEngine.entities.use(InvokeHookLeafEntity(), asFunction: "InvokeHook")
     LeafEngine.entities.use(InvokeAllHooksLeafEntity(), asFunction: "InvokeAllHooks")
     LeafEngine.entities.use(InlineSvg(iconset: "feather-icons"), asFunction: "svg")
+    LeafEngine.entities.use(UserHasPermissionLeafEntity(), asFunction: "UserHasPermission")
     LeafRenderer.Option.timeout = 1.000 // 1000ms
 
     if app.isDebug {
