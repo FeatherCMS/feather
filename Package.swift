@@ -16,6 +16,8 @@ let package = Package(
         /// drivers
         .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
         .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.2.0-beta"),
+        .package(url: "https://github.com/vapor/fluent-mysql-driver.git", from: "4.0.0"),
+        .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.0.0"),
         /// modules
         .package(name: "file-module", url: "https://github.com/feather-modules/file", from: "1.0.0-beta"),
         .package(name: "redirect-module", url: "https://github.com/feather-modules/redirect", from: "1.0.0-beta"),
@@ -34,6 +36,8 @@ let package = Package(
             .product(name: "LeafFoundation", package: "leaf-foundation"),
             /// drivers
             .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver"),
+            .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),
+            .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
             .product(name: "LiquidLocalDriver", package: "liquid-local-driver"),
             /// modules
             .product(name: "FileModule", package: "file-module"),

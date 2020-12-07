@@ -8,6 +8,8 @@
 import FeatherCore
 import LeafFoundation
 /// drivers
+import FluentMySQLDriver
+import FluentPostgresDriver
 import FluentSQLiteDriver
 import LiquidLocalDriver
 /// modules
@@ -24,14 +26,37 @@ import SponsorModule
 
 public func configure(_ app: Application) throws {
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
-
-    app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
+    
+    let dbtype = Environment.get("DBTYPE") ?? "sqlite"
+    
+    switch dbtype {
+        case "mysql":
+            app.databases.use(.mysql(hostname: Environment.fetch("SQL_HOST"),
+                                     port: Int(Environment.get("SQL_PORT") ?? "3306")!,
+                                     username: Environment.fetch("SQL_USER"),
+                                     password: Environment.fetch("SQL_PASSWORD"),
+                                     database: Environment.fetch("SQL_DATABASE"),
+                                     tlsConfiguration: .forClient(certificateVerification: .none)),
+                              as: .mysql)
+            break
+        case "postgres":
+            app.databases.use(.postgres(hostname: Environment.fetch("SQL_HOST"),
+                                        port: Int(Environment.get("SQL_PORT") ?? "5432")!,
+                                        username: Environment.fetch("SQL_USER"),
+                                        password: Environment.fetch("SQL_PASSWORD"),
+                                        database: Environment.fetch("SQL_DATABASE")),
+                              as: .psql)
+            break
+        default:
+            app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
+            break
+    }
 
     app.fileStorages.use(.local(publicUrl: Application.baseUrl,
                                 publicPath: app.directory.publicDirectory,
                                 workDirectory: "assets"), as: .local)
 
-    app.routes.defaultMaxBodySize = "10mb"
+    app.routes.defaultMaxBodySize = ByteCount(stringLiteral: Environment.get("MAX_BODYSIZE") ?? "10mb")
 
     app.sessions.use(.fluent)
     app.migrations.add(SessionRecord.migration)
@@ -58,7 +83,6 @@ public func configure(_ app: Application) throws {
         SponsorBuilder(),
         SwiftyBuilder(),
         MarkdownBuilder(),
-        //AggregatorBuilder(),
     ].map { $0.build() }
     
     let defaultSource = NIOLeafFiles(fileio: app.fileio,

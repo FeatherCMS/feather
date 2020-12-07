@@ -14,3 +14,4 @@ Resources/Views/*
 Resources/config.json
 Public/css/frontend.min.css
 ./feather
+docker/docker-feather-data
