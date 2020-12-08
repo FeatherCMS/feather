@@ -18,8 +18,8 @@ set MYSQLFEATHERUSER=feather
 set MYSQLFEATHERPW=feather
 
 
-REM MariaDB SQL
-REM We will use this network for our app, so opening port 8080 here
+REM MariaDB SQL (You can use mysql if you want)
+REM We will use this network for our app, so opening port 8081 here
 docker stop %SQL_NAME%
 docker rm %SQL_NAME%
 docker run -d --name=%SQL_NAME% -p %MYSQLPORT%:3306 -p 8081:8081 -v %BASE_PATH%\mysql\datadir:/var/lib/mysql -v %BASE_PATH%\mysql\log:/var/log/mysql -e MYSQL_ROOT_PASSWORD=%MYSQLROOTPW% -e MYSQL_ROOT_HOST=%% --restart=unless-stopped mariadb:latest

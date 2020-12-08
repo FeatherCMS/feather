@@ -17,8 +17,8 @@ export MYSQLFEATHERUSER=feather
 export MYSQLFEATHERPW=feather
 
 
-### MariaDB SQL
-### We will use this network for our app, so opening port 8080 here
+### MariaDB SQL (You can use mysql if you want)
+### We will use this network for our app, so opening port 8081 here
 docker stop $SQL_NAME
 docker rm $SQL_NAME
 docker run -d --name=$SQL_NAME \

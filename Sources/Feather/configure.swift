@@ -83,6 +83,7 @@ public func configure(_ app: Application) throws {
         SponsorBuilder(),
         SwiftyBuilder(),
         MarkdownBuilder(),
+        //AggregatorBuilder(),
     ].map { $0.build() }
     
     let defaultSource = NIOLeafFiles(fileio: app.fileio,

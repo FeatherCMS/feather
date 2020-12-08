@@ -58,9 +58,9 @@ ENV BASE_PATH="/var/feather"
 ENV DBTYPE="sqlite"
 ENV MAX_BODYSIZE="10mb"
 
-## Using mysql/mariadb
+## Using mysql/mariadb/postgres
 ENV SQL_HOST="localhost"
-# ENV SQL_PORT=3306 or 5432
+# ENV SQL_PORT=3306 or 5432 # The port will use the default one, if you use a custom port, set this env variable
 ENV SQL_USER="feather"
 ENV SQL_PASSWORD="feather"
 ENV SQL_DATABASE="feather"

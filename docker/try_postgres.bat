@@ -14,8 +14,8 @@ set POSTGRES_USER=feather
 set POSTGRES_PASSWORD=feather
 set POSTGRES_DB=feather
 
-REM  MariaDB SQL
-REM  We will use this network for our app, so opening port 8080 here
+REM  Postgres SQL
+REM  We will use this network for our app, so opening port 8082 here
 docker stop %SQL_NAME%
 docker rm %SQL_NAME%
 docker run -d --name=%SQL_NAME% --restart=unless-stopped -p %POSTGRESPORT%:5432 -p 8082:8082 -v %BASE_PATH%\postgresql\data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=%POSTGRES_ROOTPW% -d postgres

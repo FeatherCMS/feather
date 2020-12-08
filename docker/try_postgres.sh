@@ -14,8 +14,8 @@ export POSTGRES_USER=feather
 export POSTGRES_PASSWORD=feather
 export POSTGRES_DB=feather
 
-### MariaDB SQL
-### We will use this network for our app, so opening port 8080 here
+### Postgres SQL
+### We will use this network for our app, so opening port 8082 here
 docker stop $SQL_NAME
 docker rm $SQL_NAME
 docker run -d --name=$SQL_NAME \
