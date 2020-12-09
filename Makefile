@@ -8,7 +8,7 @@ env:
 	echo 'BASE_PATH="$(CUR_DIR)/"' >> .env.development
 	
 clean:
-	rm -rf ./db.sqlite ./Resources/config.json ./Public/assets
+	rm -rf ./db.sqlite ./Resources/ ./Public/
 
 test:
 	swift test --enable-test-discovery
