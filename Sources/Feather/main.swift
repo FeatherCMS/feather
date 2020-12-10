@@ -53,6 +53,7 @@ try feather.configure(database: dbconfig,
                       databaseId: dbID,
                       fileStorage: .local(publicUrl: Application.baseUrl, publicPath: Application.Paths.public, workDirectory: "assets"),
                       fileStorageId: .local,
+                      maxUploadSize: ByteCount(stringLiteral: Environment.get("MAX_BODYSIZE") ?? "10mb"),
                       modules: [
                         FileBuilder(),
                         RedirectBuilder(),
