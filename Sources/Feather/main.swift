@@ -12,7 +12,7 @@ import LiquidLocalDriver
 import FileModule
 import RedirectModule
 import BlogModule
-//import AnalyticsModule
+import AnalyticsModule
 //import AggregatorModule
 import SponsorModule
 import SwiftyModule
@@ -29,7 +29,7 @@ try feather.configure(database: .sqlite(.file("db.sqlite")),
                         FileBuilder(),
                         RedirectBuilder(),
                         BlogBuilder(),
-//                        AnalyticsBuilder(),
+                        AnalyticsBuilder(),
 //                        AggregatorBuilder(),
                         SponsorBuilder(),
                         SwiftyBuilder(),
