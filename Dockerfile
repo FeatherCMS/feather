@@ -59,7 +59,7 @@ bin/Feather serve --hostname 0.0.0.0 &
 ## If you alredy provided those file minified, remove it
 
 ## Prepare Public folder template (We will minify any CSS/Javascript)
-RUN sleep 5; && rm -rf */**/.DS_Store
+RUN sleep 5; rm -rf */**/.DS_Store
 RUN echo "---> Minify css" &&\
 for filename in Public/css/*.css; do \
     name=$(echo "$filename" | cut -f 1 -d '.'); \
