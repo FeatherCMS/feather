@@ -8,12 +8,12 @@ RUN mkdir -p /tmp/app
 
 ## Prepare entry point
 RUN \
-echo "# #!/bin/bash --env" >> /tmp/app/init.sh &&\
+echo -e '#!/bin/bash' > /tmp/app/init.sh &&\
 echo "[ ! -d \"\${BASE_PATH}/Public\" ] && cp -pr /opt/feather/Public \${BASE_PATH}/" >> /tmp/app/init.sh &&\
 echo "Feather serve --hostname 0.0.0.0 --port \${BASE_PORT}" >> /tmp/app/init.sh
 RUN chmod 550 /tmp/app/init.sh
 
-## Install required dependencies for the buil
+## Install required dependencies for the build
 RUN apt-get update && apt-get install minify libxml2-dev libsqlite3-dev -y
 
 ## Allow the usage of private repository
