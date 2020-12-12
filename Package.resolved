@@ -2,6 +2,24 @@
   "object": {
     "pins": [
       {
+        "package": "ALanguageParser",
+        "repositoryURL": "https://github.com/matsoftware/accept-language-parser",
+        "state": {
+          "branch": null,
+          "revision": "0a6d89e0159b2f926b35a9f6ee28b6f9c1e84a1b",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "analytics-module",
+        "repositoryURL": "https://github.com/feather-modules/analytics",
+        "state": {
+          "branch": null,
+          "revision": "273c2c98e448798eba309c845f2d6d45a715c849",
+          "version": "1.0.0-beta.7"
+        }
+      },
+      {
         "package": "async-http-client",
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
@@ -24,8 +42,8 @@
         "repositoryURL": "https://github.com/feather-modules/blog",
         "state": {
           "branch": null,
-          "revision": "b80fd76c1f374813a5e433e65ce04aae37b30ef6",
-          "version": "1.0.0-beta.8"
+          "revision": "655d626512f0fd49879aca446961867b3d5298d6",
+          "version": "1.0.0-beta.10"
         }
       },
       {
@@ -51,8 +69,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "ab65070bff1dfce64981a210ffa4ddd8e3aceafd",
-          "version": "1.0.0-beta.26.1"
+          "revision": "3863cf0f556bf7f704ed4135a10c76e8ed0f7139",
+          "version": "1.0.0-beta.28"
         }
       },
       {
@@ -389,12 +407,21 @@
         }
       },
       {
+        "package": "UAParserSwift",
+        "repositoryURL": "https://github.com/malcommac/UAParserSwift",
+        "state": {
+          "branch": null,
+          "revision": "a8057c7cff60db2cdf31d0a0a68ce430754ab64e",
+          "version": "1.2.1"
+        }
+      },
+      {
         "package": "vapor",
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "2b222a632deb580cfd5122f46481df3a69ff99f1",
-          "version": "4.36.0"
+          "revision": "5148f02e42149f73f6616452062cf96b64afbda6",
+          "version": "4.36.2"
         }
       },
       {
