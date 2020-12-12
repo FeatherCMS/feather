@@ -46,7 +46,7 @@ RUN mv .build/x86_64-unknown-linux-gnu/release bin
 ## Check if the db.sqlite is  present.
 ## It means the user may have prepare feather locally, in that case we will copy the db.sqlite to the template folder
 ## So the user will keep what he prepared
-RUN [ -f db.sqlite ] && cp -pr db.sqlite /tmp/app
+RUN if [ -f "db.sqlite" ]; then cp -pr db.sqlite /tmp/app; fi
 
 ## Create the Default - Public folder (if it wasn't already provided)
 ENV BASE_URL="http://localhost:8080"
