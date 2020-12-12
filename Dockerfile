@@ -60,20 +60,20 @@ bin/Feather serve --hostname 0.0.0.0 &
 
 ## Prepare Public folder template (We will minify any CSS/Javascript)
 RUN sleep 5; rm -rf */**/.DS_Store
-RUN echo "---> Minify css" &&\
+RUN echo "---> Minify css"; \
 for filename in Public/css/*.css; do \
     name=$(echo "$filename" | cut -f 1 -d '.'); \
-    [ ! -f Public/css/$name.min.css ] && minify --all Public/css/$name.css > Public/css/$name.min.css; \
-    [ -f Public/css/$name.min.css ] && rm Public/css/$name.css; \
+    [ ! -f $name.min.css ] && minify --all $name.css > $name.min.css; \
+    [ -f $name.min.css ] && rm $name.css; \
 done
 
 ## Please note that the default application is not using <name>.min.js file
 ## if you want to minify your js, they should be stored as <name>.js
-RUN echo "---> Minify javascript" &&\
+RUN echo "---> Minify javascript"; \
 for filename in Public/javascript/*.js; do \
     name=$(echo "$filename" | cut -f 1 -d '.'); \
-    [ ! -f Public/javascript/$name.min.js ] && minify --all Public/javascript/$name.js > Public/javascript/$name.min.js; \
-    [ -f Public/javascript/$name.min.js ] && mv Public/javascript/$name.min.js Public/javascript/$name.js; \
+    [ ! -f $name.min.js ] && minify --all $name.js > $name.min.js; \
+    [ -f $name.min.js ] && mv $name.min.js $name.js; \
 done
 
 ## Clean up
