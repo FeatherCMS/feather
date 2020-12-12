@@ -52,14 +52,14 @@ RUN if [ -f "db.sqlite" ]; then cp -pr db.sqlite /tmp/app; fi
 ENV BASE_URL="http://localhost:8080"
 ENV BASE_PATH="/opt/feather"
 RUN echo "---> Get current Public folder" &&\
-bin/Feather serve --hostname 0.0.0.0 & &&\ 
-sleep 5;
+bin/Feather serve --hostname 0.0.0.0 &
+
 
 ### In this part we will minify CSS & JS
 ## If you alredy provided those file minified, remove it
 
 ## Prepare Public folder template (We will minify any CSS/Javascript)
-RUN  rm -rf */**/.DS_Store
+RUN sleep 5; && rm -rf */**/.DS_Store
 RUN echo "---> Minify css" &&\
 for filename in Public/css/*.css; do \
     name=$(echo "$filename" | cut -f 1 -d '.'); \
