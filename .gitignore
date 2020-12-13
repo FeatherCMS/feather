@@ -12,5 +12,7 @@ db.sqlite
 Public
 Resources
 ./feather
+.build/
+.swiftpm/
 docker/docker-feather-data
 ssh
