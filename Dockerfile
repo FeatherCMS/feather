@@ -112,5 +112,5 @@ ENV SQL_USER="feather"
 ENV SQL_PASSWORD="feather"
 ENV SQL_DATABASE="feather"
 
-CMD [ "sh", "/opt/feather/start" ]
+CMD [ "bash", "/opt/feather/start" ]
 
