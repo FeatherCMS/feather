@@ -1,17 +1,7 @@
-FROM swift:latest as builder
+FROM swift:5.3.1-focal as builder
 WORKDIR /opt/feather
 
 COPY . .
-
-## Temp folder
-RUN mkdir -p /tmp/app
-
-## Prepare entry point
-RUN \
-echo -e '#!/bin/bash' > /tmp/app/init.sh &&\
-echo "[ ! -d \"\${BASE_PATH}/Public\" ] && cp -pr /opt/feather/Public \${BASE_PATH}/" >> /tmp/app/init.sh &&\
-echo "Feather serve --hostname 0.0.0.0 --port \${BASE_PORT}" >> /tmp/app/init.sh
-RUN chmod 550 /tmp/app/init.sh
 
 ## Install required dependencies for the build
 RUN apt-get update && apt-get install minify libxml2-dev libsqlite3-dev -y
@@ -41,43 +31,50 @@ if [ -d "ssh" ]; then \
 else \
     swift build -c release; \
 fi
-RUN mv .build/x86_64-unknown-linux-gnu/release bin
 
-## Check if the db.sqlite is  present.
-## It means the user may have prepare feather locally, in that case we will copy the db.sqlite to the template folder
+RUN rm -rf */**/.DS_Store
+
+## Minify default template from feather-core_FeatherCore.resources as we are using release
+RUN cd /opt/feather/.build/x86_64-unknown-linux-gnu/release/feather-core_FeatherCore.resources/Bundles/Core/Public/css/; for filename in $(ls *.css); do \
+    name=$(echo "${filename}" | cut -f 1 -d '.'); \
+    minify --all "${filename}" -o $name.min.css; \
+done
+# RUN cd /opt/feather/.build/x86_64-unknown-linux-gnu/release/feather-core_FeatherCore.resources/Bundles/Core/Public/javascript/; for filename in $(ls *.js); do \
+#     minify --all "${filename}" -o "${filename}"; \
+# done
+
+## Organizing things up
+RUN mkdir -p /tmp/app
+
+## Check if the folder contains preexising DB/Folders.
+## It means the user may have prepare Feather-CMS locally, in that case we will copy its content to the template folder
 ## So the user will keep what he prepared
-RUN if [ -f "db.sqlite" ]; then cp -pr db.sqlite /tmp/app; fi
+RUN cd /opt/feather; if [ -f "db.sqlite" ]; then cp -pr db.sqlite /tmp/app; fi
+RUN cd /opt/feather; if [ -d "Public" ]; then cp -pr Public /tmp/app; fi
+RUN cd /opt/feather; if [ -d "Resources" ]; then cp -pr Resources /tmp/app; fi
 
-## Create the Default - Public folder (if it wasn't already provided)
-ENV BASE_URL="http://localhost:8080"
-ENV BASE_PATH="/opt/feather"
-RUN echo "---> Get current Public folder" &&\
-bin/Feather serve --hostname 0.0.0.0 &
+## Prepare entry point
+RUN \
+echo '#!/bin/bash' > /tmp/app/start &&\
+echo "[[ ! -d \"\${BASE_PATH}/db.sqlite\" && -d /opt/feather/db.sqlite ]] && cp -pr /opt/feather/db.sqlite \${BASE_PATH}/" >> /tmp/app/start &&\
+echo "[[ ! -d \"\${BASE_PATH}/Public\" && -d /opt/feather/Public ]] && cp -pr /opt/feather/Public \${BASE_PATH}/" >> /tmp/app/start &&\
+echo "[[ ! -d \"\${BASE_PATH}/Resources\" && -d /opt/feather/Resources ]] && cp -pr /opt/feather/Resources \${BASE_PATH}/" >> /tmp/app/start &&\
+echo "Feather serve --hostname 0.0.0.0 --port \${BASE_PORT}" >> /tmp/app/start
+RUN chmod 550 /tmp/app/start
 
+## Keep only executables & resources (will be available in /opt/feather/bin )
+RUN mv /opt/feather/.build/x86_64-unknown-linux-gnu/release /tmp/app/bin
 
-### In this part we will minify CSS & JS
-## If you alredy provided those file minified, remove it
+## Copy any custom scripts under the `customscripts` folder
+## If the user decide to use a diffent enty point from start, he can create hsi own scripts. 
+## Ex. We could imagine, starting 10 servers in one docker. The script would set, different folders, env variables. It will not work with embeded DB here...
+## docker run -d -p 8080-8090:8080-8090 feather start_10_apps
+RUN if [ -d "/opt/feather/customscripts" ]; then  \
+ chmod 550 /opt/feather/customscripts/*; \
+ cp -pr /opt/feather/customscripts/* /tmp/app/; \
+fi
 
-## Prepare Public folder template (We will minify any CSS/Javascript)
-RUN sleep 5; rm -rf */**/.DS_Store
-RUN echo "---> Minify css"; \
-for filename in Public/css/*.css; do \
-    name=$(echo "$filename" | cut -f 1 -d '.'); \
-    [ ! -f $name.min.css ] && minify --all $name.css > $name.min.css; \
-    [ -f $name.min.css ] && rm $name.css; \
-done
-
-## Please note that the default application is not using <name>.min.js file
-## if you want to minify your js, they should be stored as <name>.js
-RUN echo "---> Minify javascript"; \
-for filename in Public/javascript/*.js; do \
-    name=$(echo "$filename" | cut -f 1 -d '.'); \
-    [ ! -f $name.min.js ] && minify --all $name.js > $name.min.js; \
-    [ -f $name.min.js ] && mv $name.min.js $name.js; \
-done
-
-## Clean up
-RUN mv Public /tmp/app && mv bin /tmp/app
+## Clean up & keep only executbale from the build
 RUN cd /; rm -rf /opt/feather; mv /tmp/app /opt/feather
 
 ## User feather
@@ -88,7 +85,7 @@ RUN chmod 550 /opt/feather/bin/Feather
 
 
 ## Slim version of the container
-FROM swift:slim
+FROM swift:5.3.1-focal-slim
 WORKDIR /var/feather
 COPY --from=builder /opt/feather /opt/feather
 
@@ -115,5 +112,5 @@ ENV SQL_USER="feather"
 ENV SQL_PASSWORD="feather"
 ENV SQL_DATABASE="feather"
 
-CMD [ "sh", "/opt/feather/init.sh" ]
+CMD [ "sh", "/opt/feather/start" ]
 
