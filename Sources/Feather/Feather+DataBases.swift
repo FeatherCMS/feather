@@ -45,7 +45,6 @@ extension Feather {
     ///
     /// - parameters:
     ///     - modules: An Array containing intances of type [ViperBuilder](https://github.com/BinaryBirds/viper-kit)
-    ///     - usePublicFileMiddleware: (Optional) A **Bool** to deactivate the MiddleWare, if you implemented your own -  Default **true**
     ///
     public func configureWithEnv(modules userModules: [ViperBuilder] = []) throws {
         
