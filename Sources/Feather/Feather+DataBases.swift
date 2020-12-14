@@ -74,13 +74,17 @@ extension Feather {
             break
         }
         
+        var middleWare = true
+        if let provideMiddleWare = Environment.get("PROVIDE_MIDDLEWARE") {
+            middleWare = Bool(provideMiddleWare) ?? true
+        }
         try feather.configure(database: dbconfig,
                               databaseId: dbID,
                               fileStorage: .local(publicUrl: Application.baseUrl, publicPath: Application.Paths.public, workDirectory: "assets"),
                               fileStorageId: .local,
                               maxUploadSize: ByteCount(stringLiteral: Environment.get("MAX_BODYSIZE") ?? "10mb"),
                               modules: userModules,
-                              usePublicFileMiddleware: Bool(Environment.get("PROVIDE_MIDDLEWARE") ?? true)!
+                              usePublicFileMiddleware: middleWare
                               )
     }
     
