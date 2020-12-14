@@ -104,6 +104,7 @@ ENV BASE_PATH="/var/feather"
 ## Default sqlite
 ENV DBTYPE="sqlite"
 ENV MAX_BODYSIZE="10mb"
+ENV PROVIDE_MIDDLEWARE="true"
 
 ## Using mysql/mariadb/postgres
 ENV SQL_HOST="localhost"

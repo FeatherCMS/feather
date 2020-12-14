@@ -27,16 +27,17 @@ extension Feather {
     /// ~~~
     /// # Optional:
     /// ~~~
-    /// MAX_BODYSIZE="10mb" # Default: 10mb - Required format: XXmb
+    /// MAX_BODYSIZE="10mb" (default) - Required format: XXmb
+    /// PROVIDE_MIDDLEWARE="true" (default) - Required format: true/false
     ///
-    /// DBTYPE="mysql" # Available:  sqlite(default) / mysql / postgres
+    /// DBTYPE="mysql" # Available:  sqlite (default) / mysql / postgres
     /// SQL_HOST="127.0.0.1"
     /// SQL_USER="feather"
     /// SQL_PASSWORD="feather"
     /// SQL_DATABASE="feather"
     ///
     /// # Optional: For DBTYPE = "mysql" | "postgres"
-    /// SQL_PORT=3306 #  mysql: 3306(default) - postgres: 5432(default)
+    /// SQL_PORT=3306 #  mysql: 3306 (default) - postgres: 5432(default)
     /// ~~~
     ///
 
@@ -46,8 +47,7 @@ extension Feather {
     ///     - modules: An Array containing intances of type [ViperBuilder](https://github.com/BinaryBirds/viper-kit)
     ///     - usePublicFileMiddleware: (Optional) A **Bool** to deactivate the MiddleWare, if you implemented your own -  Default **true**
     ///
-    public func configureWithEnv(modules userModules: [ViperBuilder] = [],
-                                 usePublicFileMiddleware: Bool = true) throws {
+    public func configureWithEnv(modules userModules: [ViperBuilder] = []) throws {
         
         let dbconfig: DatabaseConfigurationFactory
         let dbID: DatabaseID
@@ -81,7 +81,7 @@ extension Feather {
                               fileStorageId: .local,
                               maxUploadSize: ByteCount(stringLiteral: Environment.get("MAX_BODYSIZE") ?? "10mb"),
                               modules: userModules,
-                              usePublicFileMiddleware: usePublicFileMiddleware
+                              usePublicFileMiddleware: Bool(Environment.get("PROVIDE_MIDDLEWARE") ?? true)!
                               )
     }
     
