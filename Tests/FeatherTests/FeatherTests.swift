@@ -5,33 +5,45 @@
 //  Created by Tibor Bodecs on 2020. 01. 24..
 //
 
+import XCTest
 import XCTVapor
-@testable import App
+import Spec
+import FluentSQLiteDriver
+import LiquidLocalDriver
+import FeatherCore
+@testable import Feather
+
 
 final class FeatherTests: XCTestCase {
 
-    static var allTests = [
-        ("testApplication", testApplication),
-    ]
-    
-    func testApplication() throws {
-        let app = Application(.testing)
-        defer { app.shutdown() }
-        try configure(app)
+    private func featherInstall() throws -> Feather {
+        let feather = try Feather(env: .testing)
+        try feather.configure(database: .sqlite(.memory),
+                              databaseId: .sqlite,
+                              fileStorage: .local(publicUrl: Application.baseUrl, publicPath: Application.Paths.public, workDirectory: "assets"),
+                              fileStorageId: .local,
+                              modules: [])
 
-        try app.test(.GET, "/", afterResponse:  { res in
-            XCTAssertEqual(res.status, .ok)
-            //XCTAssertEqual(res.body.string, "Hello, world!")
-        })
-        //.test(.POST, "todos", json: Todo(title: "Test My App")) { res in
-//            XCTAssertContent(Todo.self, res) {
-//                XCTAssertNotNil($0.id)
-//                XCTAssertEqual($0.title, "Test My App")
-//            }
-//        }.test(.GET, "todos") { res in
-//            XCTAssertContent([Todo].self, res) {
-//                XCTAssertEqual($0.count, 1)
-//            }
-//        }
+        try feather.app.describe("System install must succeed")
+            .get("/system/install/")
+            .expect(.ok)
+            .expect(.html)
+            .test(.inMemory)
+
+        return feather
+    }
+    
+    func testSystemInstall() throws {
+        let feather = try featherInstall()
+        defer { feather.stop() }
+
+        try feather.app.describe("Welcome page must present after install")
+            .get("/")
+            .expect(.ok)
+            .expect(.html)
+            .expect { value in
+                XCTAssertTrue(value.body.string.contains("Welcome"))
+            }
+            .test(.inMemory)
     }
 }

@@ -19,10 +19,13 @@ let package = Package(
         .package(name: "redirect-module", url: "https://github.com/feather-modules/redirect", from: "1.0.0-beta"),
         .package(name: "blog-module", url: "https://github.com/feather-modules/blog", from: "1.0.0-beta"),
         .package(name: "analytics-module", url: "https://github.com/feather-modules/analytics", from: "1.0.0-beta"),
-//        .package(name: "aggregator-module", url: "https://github.com/feather-modules/aggregator", from: "1.0.0-beta"),
+        .package(name: "aggregator-module", url: "https://github.com/feather-modules/aggregator", from: "1.0.0-beta"),
         .package(name: "sponsor-module", url: "https://github.com/feather-modules/sponsor", from: "1.0.0-beta"),
         .package(name: "swifty-module", url: "https://github.com/feather-modules/swifty", from: "1.0.0-beta"),
         .package(name: "markdown-module", url: "https://github.com/feather-modules/markdown", from: "1.0.0-beta"),
+        /// tests
+        .package(url: "https://github.com/vapor/vapor", from: "4.34.0"),
+        .package(url: "https://github.com/binarybirds/spec.git", from: "1.2.0-beta"),
     ],
     targets: [
         .target(name: "Feather", dependencies: [
@@ -35,7 +38,7 @@ let package = Package(
             .product(name: "RedirectModule", package: "redirect-module"),
             .product(name: "BlogModule", package: "blog-module"),
             .product(name: "AnalyticsModule", package: "analytics-module"),
-//            .product(name: "AggregatorModule", package: "aggregator-module"),
+            .product(name: "AggregatorModule", package: "aggregator-module"),
             .product(name: "SponsorModule", package: "sponsor-module"),
             .product(name: "SwiftyModule", package: "swifty-module"),
             .product(name: "MarkdownModule", package: "markdown-module"),
@@ -44,9 +47,11 @@ let package = Package(
         ], swiftSettings: [
             .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
         ]),
-//        .testTarget(name: "FeatherTests", dependencies: [
-//            .target(name: "Feather"),
-//            .product(name: "XCTVapor", package: "vapor"),
-//        ])
+        .testTarget(name: "FeatherTests", dependencies: [
+            .target(name: "Feather"),
+
+            .product(name: "XCTVapor", package: "vapor"),
+            .product(name: "Spec", package: "spec"),
+        ])
     ]
 )

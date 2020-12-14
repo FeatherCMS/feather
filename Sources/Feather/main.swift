@@ -13,12 +13,14 @@ import FileModule
 import RedirectModule
 import BlogModule
 import AnalyticsModule
-//import AggregatorModule
+import AggregatorModule
 import SponsorModule
 import SwiftyModule
 import MarkdownModule
 
-let feather = try Feather()
+var env = try Environment.detect()
+try LoggingSystem.bootstrap(from: &env)
+let feather = try Feather(env: env)
 defer { feather.stop() }
 
 try feather.configure(database: .sqlite(.file("db.sqlite")),
@@ -30,7 +32,7 @@ try feather.configure(database: .sqlite(.file("db.sqlite")),
                         RedirectBuilder(),
                         BlogBuilder(),
                         AnalyticsBuilder(),
-//                        AggregatorBuilder(),
+                        AggregatorBuilder(),
                         SponsorBuilder(),
                         SwiftyBuilder(),
                         MarkdownBuilder(),

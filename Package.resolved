@@ -11,12 +11,21 @@
         }
       },
       {
+        "package": "aggregator-module",
+        "repositoryURL": "https://github.com/feather-modules/aggregator",
+        "state": {
+          "branch": null,
+          "revision": "011eb985c98e70b94c1dd9b6be3a9de44ba2e456",
+          "version": "1.0.0-beta.2"
+        }
+      },
+      {
         "package": "analytics-module",
         "repositoryURL": "https://github.com/feather-modules/analytics",
         "state": {
           "branch": null,
-          "revision": "273c2c98e448798eba309c845f2d6d45a715c849",
-          "version": "1.0.0-beta.7"
+          "revision": "4875988c1a43975df2ee2d596bd5d859959bd4e5",
+          "version": "1.0.0-beta.8"
         }
       },
       {
@@ -42,8 +51,8 @@
         "repositoryURL": "https://github.com/feather-modules/blog",
         "state": {
           "branch": null,
-          "revision": "655d626512f0fd49879aca446961867b3d5298d6",
-          "version": "1.0.0-beta.10"
+          "revision": "93db0c4dfaa0dcc9ab730448120292a4f515d4ab",
+          "version": "1.0.0-beta.12"
         }
       },
       {
@@ -69,8 +78,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "3863cf0f556bf7f704ed4135a10c76e8ed0f7139",
-          "version": "1.0.0-beta.28"
+          "revision": "244533c9172bd16663faec15720373aa7d4ae43e",
+          "version": "1.0.0-beta.29.1"
         }
       },
       {
@@ -78,8 +87,8 @@
         "repositoryURL": "https://github.com/feather-modules/file",
         "state": {
           "branch": null,
-          "revision": "6a3e8dea0e6eb38a58af183e5a6b0cbf3618c893",
-          "version": "1.0.0-beta.2"
+          "revision": "539fa395982906c3d25680991afbae8677a00d2d",
+          "version": "1.0.0-beta.3"
         }
       },
       {
@@ -134,6 +143,15 @@
           "branch": null,
           "revision": "6055fe8439769aa3646a3c797d573ce7305849c8",
           "version": "4.2.0"
+        }
+      },
+      {
+        "package": "Kanna",
+        "repositoryURL": "https://github.com/tid-kijyun/Kanna.git",
+        "state": {
+          "branch": null,
+          "revision": "4a80ebe93b6966d5083394fcaaaff57a2fcec935",
+          "version": "5.2.3"
         }
       },
       {
@@ -195,8 +213,8 @@
         "repositoryURL": "https://github.com/feather-modules/markdown",
         "state": {
           "branch": null,
-          "revision": "94db5406c156ff6408850dc62c89e000aa440254",
-          "version": "1.0.0-beta.1"
+          "revision": "8338a2fcd28cc43c8c7b7e3af552181fd999c078",
+          "version": "1.0.0-beta.2"
         }
       },
       {
@@ -204,8 +222,8 @@
         "repositoryURL": "https://github.com/feather-modules/redirect",
         "state": {
           "branch": null,
-          "revision": "458a57fb33eeec5e91f3b6d8d5876243e7eb0f35",
-          "version": "1.0.0-beta.8"
+          "revision": "61a86e1c90da0c025dc7122b842b5a1561e4a31e",
+          "version": "1.0.0-beta.9"
         }
       },
       {
@@ -215,6 +233,15 @@
           "branch": null,
           "revision": "4cf052b78aebaf1b23f2264ce04d57b4b6eb5254",
           "version": "4.2.0"
+        }
+      },
+      {
+        "package": "spec",
+        "repositoryURL": "https://github.com/binarybirds/spec.git",
+        "state": {
+          "branch": null,
+          "revision": "74ec16a463499b61f5e081c9bdaa724bcdb1be3e",
+          "version": "1.2.0-beta.1"
         }
       },
       {
@@ -231,8 +258,8 @@
         "repositoryURL": "https://github.com/feather-modules/sponsor",
         "state": {
           "branch": null,
-          "revision": "d2a74b5c287b9417881e7f4d732272e064e23e1d",
-          "version": "1.0.0-beta.7"
+          "revision": "553c62bf4036177777ffa8ee385f64e5ab97d1fd",
+          "version": "1.0.0-beta.8"
         }
       },
       {
@@ -348,8 +375,8 @@
         "repositoryURL": "https://github.com/feather-modules/swifty",
         "state": {
           "branch": null,
-          "revision": "cdead1a40f3d6eb0bdbeb1304527660cf4c18ed5",
-          "version": "1.0.0-beta.1"
+          "revision": "65387ad975c75490c5e8931c1ba3a70f148e08f7",
+          "version": "1.0.0-beta.2"
         }
       },
       {
