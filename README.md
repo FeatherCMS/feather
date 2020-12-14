@@ -4,7 +4,7 @@
 
 Feather is a modern Swift-based content management system powered by Vapor 4.
 
-Click to join chat on [Discord](https://discord.gg/P4k4HzEE).
+Click to join chat on [Discord](https://discord.gg/wMSkxCUXAD).
 
 
 ## Requirements 
