@@ -110,6 +110,24 @@
         }
       },
       {
+        "package": "fluent-mysql-driver",
+        "repositoryURL": "https://github.com/vapor/fluent-mysql-driver.git",
+        "state": {
+          "branch": null,
+          "revision": "699e164880387349bf04c2329fe53097524a5904",
+          "version": "4.0.0"
+        }
+      },
+      {
+        "package": "fluent-postgres-driver",
+        "repositoryURL": "https://github.com/vapor/fluent-postgres-driver.git",
+        "state": {
+          "branch": null,
+          "revision": "11d4fce0c5d8a027a5d131439c9c94dd3230cb8e",
+          "version": "2.1.2"
+        }
+      },
+      {
         "package": "fluent-sqlite-driver",
         "repositoryURL": "https://github.com/vapor/fluent-sqlite-driver",
         "state": {
@@ -215,6 +233,42 @@
           "branch": null,
           "revision": "8338a2fcd28cc43c8c7b7e3af552181fd999c078",
           "version": "1.0.0-beta.2"
+        }
+      },
+      {
+        "package": "mysql-kit",
+        "repositoryURL": "https://github.com/vapor/mysql-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "fe836ecd52815ed1399e654b5365c108ff1638fd",
+          "version": "4.1.0"
+        }
+      },
+      {
+        "package": "mysql-nio",
+        "repositoryURL": "https://github.com/vapor/mysql-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "4cbef4c0903c9792ff1f8dc4b55532276fa70c99",
+          "version": "1.3.2"
+        }
+      },
+      {
+        "package": "postgres-kit",
+        "repositoryURL": "https://github.com/vapor/postgres-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "13f6c735cf9a9053011d03e77e2a81802ad6c680",
+          "version": "2.3.0"
+        }
+      },
+      {
+        "package": "postgres-nio",
+        "repositoryURL": "https://github.com/vapor/postgres-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "2808c4ff334c20073de92e735dac5587ba398b0d",
+          "version": "1.4.1"
         }
       },
       {
