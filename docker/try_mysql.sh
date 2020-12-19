@@ -55,12 +55,12 @@ docker run -d --name $APP_NAME \
     -v $BASE_PATH:/var/feather \
     -e BASE_URL="http://localhost:8081" \
     -e BASE_PORT=8081 \
-    -e DBTYPE=mysql \
-    -e SQL_HOST=127.0.0.1 \
-    -e SQL_PORT=3306 \
-    -e SQL_DATABASE=$MYSQLFEATHERTABLE \
-    -e SQL_USER=$MYSQLFEATHERUSER \
-    -e SQL_PASSWORD=$MYSQLFEATHERPW \
+    -e DB_TYPE=mysql \
+    -e DB_HOST=127.0.0.1 \
+    -e DB_PORT=3306 \
+    -e DB_NAME=$MYSQLFEATHERTABLE \
+    -e DB_USER=$MYSQLFEATHERUSER \
+    -e DB_PASS=$MYSQLFEATHERPW \
     -e MAX_BODYSIZE="10mb" \
     -d feather
 

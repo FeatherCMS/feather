@@ -93,16 +93,16 @@ ENV BASE_PORT=8080
 ENV BASE_PATH="/var/feather"
 
 ## Default sqlite
-ENV DBTYPE="sqlite"
+ENV DB_TYPE="sqlite"
 ENV MAX_BODYSIZE="10mb"
-ENV PROVIDE_MIDDLEWARE="true"
+ENV USE_FILE_MIDDLEWARE="true"
 
 ## Using mysql/mariadb/postgres
-ENV SQL_HOST="localhost"
-# ENV SQL_PORT=3306 or 5432 # The port will use the default one, if you use a custom port, set this env variable
-ENV SQL_USER="feather"
-ENV SQL_PASSWORD="feather"
-ENV SQL_DATABASE="feather"
+ENV DB_HOST="localhost"
+# ENV DB_PORT=3306 or 5432 # The port will use the default one, if you use a custom port, set this env variable
+ENV DB_USER="feather"
+ENV DB_PASS="feather"
+ENV DB_NAME="feather"
 
 CMD [ "bash", "/opt/feather/start" ]
 

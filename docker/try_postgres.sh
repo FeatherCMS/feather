@@ -48,12 +48,12 @@ docker run -d --name $APP_NAME \
     -v $BASE_PATH:/var/feather \
     -e BASE_URL="http://localhost:8082" \
     -e BASE_PORT=8082 \
-    -e DBTYPE=postgres \
-    -e SQL_HOST=127.0.0.1 \
-    -e SQL_PORT=5432 \
-    -e SQL_DATABASE=$POSTGRES_DB \
-    -e SQL_USER=$POSTGRES_USER \
-    -e SQL_PASSWORD=$POSTGRES_PASSWORD \
+    -e DB_TYPE=postgres \
+    -e DB_HOST=127.0.0.1 \
+    -e DB_PORT=5432 \
+    -e DB_NAME=$POSTGRES_DB \
+    -e DB_USER=$POSTGRES_USER \
+    -e DB_PASS=$POSTGRES_PASSWORD \
     -e MAX_BODYSIZE="10mb" \
     -d feather
 
