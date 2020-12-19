@@ -16,7 +16,14 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-mysql-driver.git", from: "4.0.0"),
         .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.0.0"),
         .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.2.0-beta"),
-        /// modules
+
+        /// core modules
+        .package(name: "system-module", url: "https://github.com/feather-modules/system", from: "1.0.0-beta"),
+        .package(name: "user-module", url: "https://github.com/feather-modules/user", from: "1.0.0-beta"),
+        .package(name: "api-module", url: "https://github.com/feather-modules/api", from: "1.0.0-beta"),
+        .package(name: "admin-module", url: "https://github.com/feather-modules/admin", from: "1.0.0-beta"),
+        .package(name: "frontend-module", url: "https://github.com/feather-modules/frontend", from: "1.0.0-beta"),
+        /// other modules
         .package(name: "file-module", url: "https://github.com/feather-modules/file", from: "1.0.0-beta"),
         .package(name: "redirect-module", url: "https://github.com/feather-modules/redirect", from: "1.0.0-beta"),
         .package(name: "blog-module", url: "https://github.com/feather-modules/blog", from: "1.0.0-beta"),
@@ -37,10 +44,17 @@ let package = Package(
             .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),
             .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
             .product(name: "LiquidLocalDriver", package: "liquid-local-driver"),
-            /// modules
+            
+            /// core modules
+            .product(name: "SystemModule", package: "system-module"),
+            .product(name: "UserModule", package: "user-module"),
+            .product(name: "ApiModule", package: "api-module"),
+            .product(name: "AdminModule", package: "admin-module"),
+            .product(name: "FrontendModule", package: "frontend-module"),
+            /// other modules
             .product(name: "FileModule", package: "file-module"),
             .product(name: "RedirectModule", package: "redirect-module"),
-            .product(name: "BlogModule", package: "blog-module"),
+//            .product(name: "BlogModule", package: "blog-module"),
             .product(name: "AnalyticsModule", package: "analytics-module"),
             .product(name: "AggregatorModule", package: "aggregator-module"),
             .product(name: "SponsorModule", package: "sponsor-module"),
