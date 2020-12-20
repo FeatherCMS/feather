@@ -10,37 +10,37 @@ let package = Package(
         .executable(name: "Feather", targets: ["Feather"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/binarybirds/feather-core", from: "1.0.0-beta"),
-        /// drivers
-        .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
-        .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.2.0-beta"),
-
-        /// core modules
-        .package(name: "system-module", url: "https://github.com/feather-modules/system", from: "1.0.0-beta"),
-        .package(name: "user-module", url: "https://github.com/feather-modules/user", from: "1.0.0-beta"),
-        .package(name: "api-module", url: "https://github.com/feather-modules/api", from: "1.0.0-beta"),
-        .package(name: "admin-module", url: "https://github.com/feather-modules/admin", from: "1.0.0-beta"),
-        .package(name: "frontend-module", url: "https://github.com/feather-modules/frontend", from: "1.0.0-beta"),
-        /// other modules
-        .package(name: "file-module", url: "https://github.com/feather-modules/file", from: "1.0.0-beta"),
-        .package(name: "redirect-module", url: "https://github.com/feather-modules/redirect", from: "1.0.0-beta"),
-        .package(name: "blog-module", url: "https://github.com/feather-modules/blog", from: "1.0.0-beta"),
-        .package(name: "analytics-module", url: "https://github.com/feather-modules/analytics", from: "1.0.0-beta"),
-        .package(name: "aggregator-module", url: "https://github.com/feather-modules/aggregator", from: "1.0.0-beta"),
-        .package(name: "sponsor-module", url: "https://github.com/feather-modules/sponsor", from: "1.0.0-beta"),
-        .package(name: "swifty-module", url: "https://github.com/feather-modules/swifty", from: "1.0.0-beta"),
-        .package(name: "markdown-module", url: "https://github.com/feather-modules/markdown", from: "1.0.0-beta"),
         /// tests
         .package(url: "https://github.com/vapor/vapor", from: "4.34.0"),
         .package(url: "https://github.com/binarybirds/spec.git", from: "1.2.0-beta"),
+        /// drivers
+        .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
+        .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.2.0-beta"),
+        /// feather core
+        .package(url: "https://github.com/FeatherCMS/feather-core", from: "1.0.0-beta"),
+        /// core modules
+        .package(url: "https://github.com/FeatherCMS/system-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/user-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/api-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/admin-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/frontend-module", from: "1.0.0-beta"),
+        /// other modules
+        .package(url: "https://github.com/FeatherCMS/file-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/redirect-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/blog-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/analytics-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/aggregator-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/sponsor-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/swifty-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/markdown-module", from: "1.0.0-beta"),        
     ],
     targets: [
         .target(name: "Feather", dependencies: [
-            .product(name: "FeatherCore", package: "feather-core"),
             /// drivers
             .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver"),
             .product(name: "LiquidLocalDriver", package: "liquid-local-driver"),
-            
+            /// feather
+            .product(name: "FeatherCore", package: "feather-core"),
             /// core modules
             .product(name: "SystemModule", package: "system-module"),
             .product(name: "UserModule", package: "user-module"),
@@ -50,7 +50,7 @@ let package = Package(
             /// other modules
             .product(name: "FileModule", package: "file-module"),
             .product(name: "RedirectModule", package: "redirect-module"),
-//            .product(name: "BlogModule", package: "blog-module"),
+            .product(name: "BlogModule", package: "blog-module"),
             .product(name: "AnalyticsModule", package: "analytics-module"),
             .product(name: "AggregatorModule", package: "aggregator-module"),
             .product(name: "SponsorModule", package: "sponsor-module"),

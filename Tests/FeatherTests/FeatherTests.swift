@@ -11,8 +11,6 @@ import Spec
 import FluentSQLiteDriver
 import LiquidLocalDriver
 import FeatherCore
-@testable import Feather
-
 
 final class FeatherTests: XCTestCase {
 
