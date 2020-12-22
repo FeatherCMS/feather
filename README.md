@@ -93,20 +93,16 @@ For security reasons, please change the default email & password using the admin
 
 ### Feather modules
 
-There is an official [GitHub](https://github.com/feather-modules/) organization. 
+Under the official [GitHub](https://github.com/FeatherCMS/) organization you'll find the following modules: 
 
-The following Feather modules are currently available: 
-
-- Redirect - This module is responsible for dynamic URL redirects.
-- Blog - This module is responsible for providing a simple blog platform.
-- Static - This module is responsible for the displaying static pages.
-- Markdown - This module is responsible for displaying markdown via a content filter.
-- Swifty - This module is responsible for Swift related syntax highlights using a content filter.
-- Sponsor - This module is responsible for displaying a sponsorship box.
-- Analytics -  This module is reponsible for providing basic analytics for Feather.
+- [Redirect](https://github.com/FeatherCMS/redirect-module/) - This module is responsible for dynamic URL redirects.
+- [Blog](https://github.com/FeatherCMS/blog-module/) - This module is responsible for providing a simple blog platform.
+- [Markdown](https://github.com/FeatherCMS/markdown-module/) - This module is responsible for displaying markdown via a content filter.
+- [Swifty](https://github.com/FeatherCMS/swifty-module/) - This module is responsible for Swift related syntax highlights using a content filter.
+- [Sponsor](https://github.com/FeatherCMS/sponsor-module/) - This module is responsible for displaying a sponsorship box.
+- [Analytics](https://github.com/FeatherCMS/analytics-module/) -  This module is reponsible for providing basic analytics for Feather.
 
 Feel free to build & share your own modules to extend the functionality of the core system.
-
 
 ## Contributions and support
 
