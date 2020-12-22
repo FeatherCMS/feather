@@ -37,6 +37,7 @@ BASE_PATH="/path/to/feather/"
 
 ### Using Xcode
 
+- ⚠️ Warning: DO NOT USE the `swift package generate-xcodeproj` command.  
 - Make sure that you open the project by double clicking the `Package.swift` file.
 - Set the [custom working directory](https://theswiftdev.com/beginners-guide-to-server-side-swift-using-vapor-4/) for the `Run` scheme to the root of the project directory.
 - If needed setup a [post-action script](https://theswiftdev.com/10-short-advices-that-will-make-you-a-better-vapor-developer-right-away/) to automatically shut-down previous server instances.
@@ -68,7 +69,7 @@ The [Liquid framework](https://github.com/binarybirds/liquid/) is an abstract fi
 You can replace the default local driver with the [S3 driver](https://github.com/BinaryBirds/liquid-aws-s3-driver), which is powered by the [Soto for AWS](https://github.com/soto-project/soto) SDK.
 
 
-### Modules
+### Core Feather Modules
 
 Feather is a modular CMS system, this means that you can add new modules as Swift Package dependencies and build custom ones using the [Feather Core](https://github.com/FeatherCMS/feather-core) framework. 
 
@@ -91,7 +92,7 @@ You can log in to the admin interface using the `root@feathercms.com` & `Feather
 For security reasons, please change the default email & password using the admin user menu ASAP.
 
 
-### Feather modules
+### Other Feather modules
 
 Under the official [GitHub](https://github.com/FeatherCMS/) organization you'll find the following modules: 
 
