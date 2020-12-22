@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/admin-module",
         "state": {
           "branch": null,
-          "revision": "11ab6c20e87cabc57a42cfd3300a1a360354e343",
-          "version": "1.0.0-beta.1"
+          "revision": "2894d0a46151ad5d64b92a804508c3ad87f09b18",
+          "version": "1.0.0-beta.2"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/api-module",
         "state": {
           "branch": null,
-          "revision": "da124c5dc5661ccdada986736d22c753b6e507d3",
-          "version": "1.0.0-beta.1"
+          "revision": "13e2836f2a610f87e4638f9ff081f6432b56979b",
+          "version": "1.0.0-beta.2"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/blog-module",
         "state": {
           "branch": null,
-          "revision": "b569a92587115167bf9d8268fff47cb917ae2975",
-          "version": "1.0.0-beta.16"
+          "revision": "da7e0a6b241ed284ee852f6acffc725f11b4b903",
+          "version": "1.0.0-beta.18"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/feather-core",
         "state": {
           "branch": null,
-          "revision": "d9bea823f3270ea4ce380c77e3357d03207a7029",
-          "version": "1.0.0-beta.36"
+          "revision": "41bbbbe3e1549b78229b368ff05d0c9b221d43a1",
+          "version": "1.0.0-beta.37"
         }
       },
       {
@@ -141,8 +141,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/frontend-module",
         "state": {
           "branch": null,
-          "revision": "6c1f74319cea345e369c44028f234458877087b8",
-          "version": "1.0.0-beta.4"
+          "revision": "2a487176277cdbfbe8c9e305f950a3384bf61194",
+          "version": "1.0.0-beta.7"
         }
       },
       {
@@ -411,8 +411,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/system-module",
         "state": {
           "branch": null,
-          "revision": "0f181d86df51b276bb3ac7ccf2a15468db5b8f18",
-          "version": "1.0.0-beta.3"
+          "revision": "5d6804551621f154aeb11aaec88870b58bcdee80",
+          "version": "1.0.0-beta.6"
         }
       },
       {
@@ -429,8 +429,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/user-module",
         "state": {
           "branch": null,
-          "revision": "8141842d74c6915f02b66128f5cc024ade9c779b",
-          "version": "1.0.0-beta.1"
+          "revision": "0744eb0f3f619745aaaa7c0b6d095ff84c6ae75f",
+          "version": "1.0.0-beta.4"
         }
       },
       {

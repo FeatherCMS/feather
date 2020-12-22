@@ -1,4 +1,4 @@
-![Feather CMS](https://github.com/BinaryBirds/feather/blob/main/Assets/GitHub-Lead.png?raw=true)
+![Feather CMS](https://github.com/FeatherCMS/feather/blob/main/Assets/GitHub-Lead.png?raw=true)
 
 # Feather CMS 🪶
 
@@ -19,7 +19,7 @@ If you need help installing Swift, then you should follow the instructions on [s
 - Clone or download the source files.
 
 ```bash
-git clone https://github.com/BinaryBirds/feather.git
+git clone https://github.com/FeatherCMS/feather.git
 ```
 
 - Setup the `.env.development` file using the `make env` command or config the following values by hand:
@@ -70,17 +70,15 @@ You can replace the default local driver with the [S3 driver](https://github.com
 
 ### Modules
 
-Feather is a modular CMS system, this means that you can add new modules as Swift Package dependencies and build custom ones using the [Feather Core](https://github.com/binarybirds/feather-core) framework. 
+Feather is a modular CMS system, this means that you can add new modules as Swift Package dependencies and build custom ones using the [Feather Core](https://github.com/FeatherCMS/feather-core) framework. 
 
 Feather core gives you just a few standard modules that you can also disable (e.g you only need an API, without web frontend or admin interface), but it is recommended to keep them around.
 
-- System - This module is responsible for the system functionalities.
-- Menu - This module is responsible for the standard menu system.
-- User - This module is responsible for user authentication.
-
-- Api - This module is responsible for the API endpoints.
-- Admin - This module is responsible for the web-based admin interface.
-- Frontend - This module is responsible for the web-based frontend layout including page contents.
+- [System](https://github.com/FeatherCMS/system-module) - System functionalities, variables, run modes (install) and (later on) module management.
+- [User](https://github.com/FeatherCMS/user-module) - User authentication and role & permission based access control system.
+- [Api](https://github.com/FeatherCMS/api-module) - The API module is responsible for hooking up the public and private API endpoints.
+- [Admin](https://github.com/FeatherCMS/admin-module) - This module contains standard admin related interface elements and tools.
+- [Frontend](https://github.com/FeatherCMS/frontend-module) - Provides the frontend layout including web page and menu management.
 
 Every other module can be completely removed (just alter the SPM dependency & configuration file), feel free to build your own configuration for your needs. 
 
@@ -89,7 +87,7 @@ Every other module can be completely removed (just alter the SPM dependency & co
 
 ### Admin credentials
 
-You can log in to the admin interface using the `feather@binarybirds.com` & `FeatherCMS` account. 
+You can log in to the admin interface using the `root@feathercms.com` & `FeatherCMS` account. 
 For security reasons, please change the default email & password using the admin user menu ASAP.
 
 
@@ -114,7 +112,7 @@ Feel free to build & share your own modules to extend the functionality of the c
 
 Feather is an open source software and your contributions are more than welcome.
 
-If you wish to make a change, please open a [Pull Request](https://github.com/BinaryBirds/feather/pulls).
+If you wish to make a change, please open a [Pull Request](https://github.com/FeatherCMS/feather/pulls).
 
 Please don't hesitate to send your feedbacks, thoughts and ideas about Feather.
 
