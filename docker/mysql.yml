@@ -40,4 +40,4 @@ services:
     volumes:
       - "./datadir/mysql:/var/feather"
       - "./scripts/waitfor:/opt/feather/waitfor"
-    command: sh -c "/opt/feather/waitfor database && /opt/feather/start"
+    command: sh -c "/opt/feather/waitfor database 30 && /opt/feather/start"
