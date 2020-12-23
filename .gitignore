@@ -12,5 +12,5 @@ db.sqlite
 Public
 Resources
 ./feather
-docker/docker-feather-data
+docker/datadir
 ssh

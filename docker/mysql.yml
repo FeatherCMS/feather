@@ -8,6 +8,7 @@ services:
     image: mariadb
     command: --default-authentication-plugin=mysql_native_password
     volumes:
+      - "./datadir/mysql/db:/var/lib/mysql"
       - "./scripts/1-mysql-init.sql:/docker-entrypoint-initdb.d/1.sql"
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -37,6 +38,6 @@ services:
       DB_PASS: "feather"
       DB_NAME: "feather"
     volumes:
-      - ./docker-feather-data/mysql:/var/feather
-      - ./scripts/waitfor:/opt/feather/waitfor
+      - "./datadir/mysql:/var/feather"
+      - "./scripts/waitfor:/opt/feather/waitfor"
     command: sh -c "/opt/feather/waitfor database && /opt/feather/start"

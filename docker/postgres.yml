@@ -7,6 +7,7 @@ services:
     container_name: postgres
     image: postgres
     volumes:
+      - "./datadir/mysql/db:/var/lib/postgresql/data"
       - "./scripts/1-postgres-init.sql:/docker-entrypoint-initdb.d/1.sql"
     environment:
       POSTGRES_PASSWORD: postgres
@@ -35,6 +36,6 @@ services:
       DB_PASS: "feather"
       DB_NAME: "feather"
     volumes:
-      - ./docker-feather-data/postgres:/var/feather
-      - ./scripts/waitfor:/opt/feather/waitfor
+      - "./datadir/postgres:/var/feather"
+      - "./scripts/waitfor:/opt/feather/waitfor"
     command: sh -c "/opt/feather/waitfor database && /opt/feather/start"
