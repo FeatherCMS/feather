@@ -1,0 +1,3 @@
+CREATE DATABASE feather; 
+CREATE USER feather WITH PASSWORD 'feather'; 
+GRANT ALL PRIVILEGES ON DATABASE feather TO feather;

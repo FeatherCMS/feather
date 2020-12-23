@@ -1,0 +1,40 @@
+version: "3.9"
+## docker-compose -f postgres.yml up
+services:
+
+  ## Database
+  database:
+    container_name: postgres
+    image: postgres
+    volumes:
+      - "./scripts/1-postgres-init.sql:/docker-entrypoint-initdb.d/1.sql"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+
+  ## Application
+  feather:
+    depends_on:
+      - database
+    container_name: feather-postgres
+    build: ..
+    ports:
+      - "8082:8082"
+    expose:
+      - 8082
+    environment:
+      BASE_URL: "http://localhost:8082"
+      BASE_PORT: 8082
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_TYPE: postgres
+      DB_USER: "feather"
+      DB_PASS: "feather"
+      DB_NAME: "feather"
+    volumes:
+      - ./docker-feather-data/postgres:/var/feather
+      - ./scripts/waitfor:/opt/feather/waitfor
+    command: sh -c "/opt/feather/waitfor database && /opt/feather/start"

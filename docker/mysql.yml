@@ -1,0 +1,42 @@
+version: "3.9"
+## docker-compose -f mysql.yml up
+services:
+
+  ## Database
+  database:
+    container_name: mariadb
+    image: mariadb
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - "./scripts/1-mysql-init.sql:/docker-entrypoint-initdb.d/1.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+
+  ## Application
+  feather:
+    depends_on:
+      - database
+    container_name: feather-mariadb
+    build: ..
+    ports:
+      - "8081:8081"
+    expose:
+      - 8081
+    environment:
+      BASE_URL: "http://localhost:8081"
+      BASE_PORT: 8081
+      DB_HOST: database
+      DB_PORT: 3306
+      DB_TYPE: mysql
+      DB_USER: "feather"
+      DB_PASS: "feather"
+      DB_NAME: "feather"
+    volumes:
+      - ./docker-feather-data/mysql:/var/feather
+      - ./scripts/waitfor:/opt/feather/waitfor
+    command: sh -c "/opt/feather/waitfor database && /opt/feather/start"
