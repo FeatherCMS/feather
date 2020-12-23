@@ -17,7 +17,7 @@ import FrontendModule
 
 import FileModule
 import RedirectModule
-//import BlogModule
+import BlogModule
 import AnalyticsModule
 import AggregatorModule
 import SponsorModule
@@ -98,7 +98,7 @@ try feather.configure(database: dbconfig,
 
                         FileBuilder(),
                         RedirectBuilder(),
-//                        BlogBuilder(),
+                        BlogBuilder(),
                         AnalyticsBuilder(),
                         AggregatorBuilder(),
                         SponsorBuilder(),

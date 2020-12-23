@@ -1,4 +1,4 @@
-![Feather CMS](https://github.com/BinaryBirds/feather/blob/main/Assets/GitHub-Lead.png?raw=true)
+![Feather CMS](https://github.com/FeatherCMS/feather/blob/main/Assets/GitHub-Lead.png?raw=true)
 
 # Feather CMS 🪶
 
@@ -19,7 +19,7 @@ If you need help installing Swift, then you should follow the instructions on [s
 - Clone or download the source files.
 
 ```bash
-git clone https://github.com/BinaryBirds/feather.git
+git clone https://github.com/FeatherCMS/feather.git
 ```
 
 - Setup the `.env.development` file using the `make env` command or config the following values by hand:
@@ -37,8 +37,9 @@ BASE_PATH="/path/to/feather/"
 
 ### Using Xcode
 
+- ⚠️ Warning: DO NOT USE the `swift package generate-xcodeproj` command.  
 - Make sure that you open the project by double clicking the `Package.swift` file.
-- Set the [custom working directory](https://theswiftdev.com/beginners-guide-to-server-side-swift-using-vapor-4/) for the `Run` scheme to the root of the project directory.
+- ⚠️ Set the [custom working directory](https://theswiftdev.com/beginners-guide-to-server-side-swift-using-vapor-4/) for the `Feather` scheme to the root of the project directory.
 - If needed setup a [post-action script](https://theswiftdev.com/10-short-advices-that-will-make-you-a-better-vapor-developer-right-away/) to automatically shut-down previous server instances.
 - Build and run the project as usual and enjoy your Feather powered site.
 
@@ -68,19 +69,17 @@ The [Liquid framework](https://github.com/binarybirds/liquid/) is an abstract fi
 You can replace the default local driver with the [S3 driver](https://github.com/BinaryBirds/liquid-aws-s3-driver), which is powered by the [Soto for AWS](https://github.com/soto-project/soto) SDK.
 
 
-### Modules
+### Core Feather Modules
 
-Feather is a modular CMS system, this means that you can add new modules as Swift Package dependencies and build custom ones using the [Feather Core](https://github.com/binarybirds/feather-core) framework. 
+Feather is a modular CMS system, this means that you can add new modules as Swift Package dependencies and build custom ones using the [Feather Core](https://github.com/FeatherCMS/feather-core) framework. 
 
 Feather core gives you just a few standard modules that you can also disable (e.g you only need an API, without web frontend or admin interface), but it is recommended to keep them around.
 
-- System - This module is responsible for the system functionalities.
-- Menu - This module is responsible for the standard menu system.
-- User - This module is responsible for user authentication.
-
-- Api - This module is responsible for the API endpoints.
-- Admin - This module is responsible for the web-based admin interface.
-- Frontend - This module is responsible for the web-based frontend layout including page contents.
+- [System](https://github.com/FeatherCMS/system-module) - System functionalities, variables, run modes (install) and (later on) module management.
+- [User](https://github.com/FeatherCMS/user-module) - User authentication and role & permission based access control system.
+- [Api](https://github.com/FeatherCMS/api-module) - The API module is responsible for hooking up the public and private API endpoints.
+- [Admin](https://github.com/FeatherCMS/admin-module) - This module contains standard admin related interface elements and tools.
+- [Frontend](https://github.com/FeatherCMS/frontend-module) - Provides the frontend layout including web page and menu management.
 
 Every other module can be completely removed (just alter the SPM dependency & configuration file), feel free to build your own configuration for your needs. 
 
@@ -89,32 +88,28 @@ Every other module can be completely removed (just alter the SPM dependency & co
 
 ### Admin credentials
 
-You can log in to the admin interface using the `feather@binarybirds.com` & `FeatherCMS` account. 
+You can log in to the admin interface using the `root@feathercms.com` & `FeatherCMS` account. 
 For security reasons, please change the default email & password using the admin user menu ASAP.
 
 
-### Feather modules
+### Other Feather modules
 
-There is an official [GitHub](https://github.com/feather-modules/) organization. 
+Under the official [GitHub](https://github.com/FeatherCMS/) organization you'll find the following modules: 
 
-The following Feather modules are currently available: 
-
-- Redirect - This module is responsible for dynamic URL redirects.
-- Blog - This module is responsible for providing a simple blog platform.
-- Static - This module is responsible for the displaying static pages.
-- Markdown - This module is responsible for displaying markdown via a content filter.
-- Swifty - This module is responsible for Swift related syntax highlights using a content filter.
-- Sponsor - This module is responsible for displaying a sponsorship box.
-- Analytics -  This module is reponsible for providing basic analytics for Feather.
+- [Redirect](https://github.com/FeatherCMS/redirect-module/) - This module is responsible for dynamic URL redirects.
+- [Blog](https://github.com/FeatherCMS/blog-module/) - This module is responsible for providing a simple blog platform.
+- [Markdown](https://github.com/FeatherCMS/markdown-module/) - This module is responsible for displaying markdown via a content filter.
+- [Swifty](https://github.com/FeatherCMS/swifty-module/) - This module is responsible for Swift related syntax highlights using a content filter.
+- [Sponsor](https://github.com/FeatherCMS/sponsor-module/) - This module is responsible for displaying a sponsorship box.
+- [Analytics](https://github.com/FeatherCMS/analytics-module/) -  This module is reponsible for providing basic analytics for Feather.
 
 Feel free to build & share your own modules to extend the functionality of the core system.
-
 
 ## Contributions and support
 
 Feather is an open source software and your contributions are more than welcome.
 
-If you wish to make a change, please open a [Pull Request](https://github.com/BinaryBirds/feather/pulls).
+If you wish to make a change, please open a [Pull Request](https://github.com/FeatherCMS/feather/pulls).
 
 Please don't hesitate to send your feedbacks, thoughts and ideas about Feather.
 
