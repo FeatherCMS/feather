@@ -7,6 +7,8 @@
 
 import FeatherCore
 import FluentSQLiteDriver
+import FluentMySQLDriver
+import FluentPostgresDriver
 import LiquidLocalDriver
 
 import SystemModule
@@ -27,6 +29,27 @@ import MarkdownModule
 /// setup metadata delegate object
 Feather.metadataDelegate = FrontendMetadataDelegate()
 
+/// Detect the DB type from .env.development or the environement variables
+/// # Required:
+/// ~~~
+/// BASE_URL="http://127.0.0.1:8080"
+/// BASE_PATH="/Repo/feather"
+/// ~~~
+/// # Optional:
+/// ~~~
+/// MAX_BODYSIZE="10mb" (default) - Required format: XXmb
+/// USE_FILE_MIDDLEWARE="true" (default) - Required format: true/false
+///
+/// DB_TYPE="mysql" # Available:  sqlite (default) / mysql / postgres
+/// DB_HOST="127.0.0.1"
+/// DB_USER="feather"
+/// DB_PASS="feather"
+/// DB_NAME="feather"
+///
+/// # Optional: For DB_TYPE = "mysql" | "postgres"
+/// DB_PORT=3306 #  mysql: 3306 (default) - postgres: 5432(default)
+/// ~~~
+///
 var env = try Environment.detect()
 try LoggingSystem.bootstrap(from: &env)
 let feather = try Feather(env: env)
@@ -62,27 +85,6 @@ var middleWare = true
 if let provideMiddleWare = Environment.get("USE_FILE_MIDDLEWARE") {
     middleWare = Bool(provideMiddleWare) ?? true
 }
-
-/// # Required:
-/// ~~~
-/// BASE_URL="http://127.0.0.1:8080"
-/// BASE_PATH="/Repo/feather"
-/// ~~~
-/// # Optional:
-/// ~~~
-/// MAX_BODYSIZE="10mb" (default) - Required format: XXmb
-/// USE_FILE_MIDDLEWARE="true" (default) - Required format: true/false
-///
-/// DB_TYPE="mysql" # Available:  sqlite (default) / mysql / postgres
-/// DB_HOST="127.0.0.1"
-/// DB_USER="feather"
-/// DB_PASS="feather"
-/// DB_NAME="feather"
-///
-/// # Optional: For DB_TYPE = "mysql" | "postgres"
-/// DB_PORT=3306 #  mysql: 3306 (default) - postgres: 5432(default)
-/// ~~~
-///
 
 try feather.configure(database: dbconfig,
                       databaseId: dbID,
