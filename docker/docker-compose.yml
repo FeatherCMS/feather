@@ -1,0 +1,9 @@
+version: "3.9"
+## docker-compose up
+services:
+  feather:
+    build: ..
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./datadir/sqlite:/var/feather"
