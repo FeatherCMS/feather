@@ -13,6 +13,15 @@ To use Feather it is recommended to install Swift 5.3 or greater.
 
 If you need help installing Swift, then you should follow the instructions on [swift.org](https://swift.org/download/#releases). 
 
+## Docker
+
+Feather is available on [DockerHub](https://hub.docker.com/r/feathercms/feathercms)
+```
+docker pull feathercms/feathercms:latest
+```
+
+You can also build your own images using `docker-compose`
+for more information check the [docker folder](https://github.com/FeatherCMS/feather/tree/main/docker)
 
 ## Installation
 
