@@ -9,8 +9,8 @@ db.sqlite
 .env
 .env.development
 .env.testing
-Public
-Resources
+/Public
+/Resources
 ./feather
 docker/datadir
 ssh

@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
           "branch": null,
-          "revision": "0a8dddbe15cd72f7bb5e47951fb7c1eb0836dfc2",
-          "version": "1.2.2"
+          "revision": "a72c5adce3986ff6b5092ae0464a8f2675087860",
+          "version": "1.2.3"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/feather-core",
         "state": {
           "branch": null,
-          "revision": "41bbbbe3e1549b78229b368ff05d0c9b221d43a1",
-          "version": "1.0.0-beta.37"
+          "revision": "c58dc8e1916f05fb44c5696296928dbcbf770e0d",
+          "version": "1.0.0-beta.38"
         }
       },
       {
