@@ -65,7 +65,7 @@ try feather.configure([
     MarkdownBuilder(),
 ])
 
-/// reset resources folder if we're in debug mode
+/// reset resources & public folder if we're in debug mode
 if feather.app.isDebug {
     try feather.reset(resourcesOnly: true)
 }

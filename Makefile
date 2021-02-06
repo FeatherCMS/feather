@@ -17,20 +17,7 @@ clean:
 test: env.testing
 	swift test --enable-test-discovery
 
-css:
-	cat Public/css/frontend.css \
-		| tr -d '\n' \
-		| tr -d '\t' \
-		| tr -s ' ' \
-		| sed -E 's/[[:space:]]*:[[:space:]]*/:/g' \
-		| sed -E 's/[[:space:]]*,[[:space:]]*/,/g' \
-		| sed -E 's/[[:space:]]*\{[[:space:]]*/{/g' \
-		| sed -E 's/[[:space:]]*\}[[:space:]]*/}/g' \
-		| sed -E 's/[[:space:]]*>[[:space:]]*/>/g' \
-		| sed -E 's/[[:space:]]*;[[:space:]]*/;/g' \
-		> Public/css/frontend.min.css
-
-install: css
+install:
 	swift package update
 	swift build -c release
 	install .build/Release/Feather ./feather #./usr/local/bin/feather

@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/admin-module",
         "state": {
           "branch": null,
-          "revision": "2894d0a46151ad5d64b92a804508c3ad87f09b18",
-          "version": "1.0.0-beta.2"
+          "revision": "1bdf60b78e4b09c1fe23c8281d9fe97cd3b9f3c7",
+          "version": "1.0.0-beta.10.6"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/aggregator-module",
         "state": {
           "branch": null,
-          "revision": "76380961cc052afcc74fc7bb2550bed70db22c8e",
-          "version": "1.0.0-beta.3"
+          "revision": "62e1be8d938f05f468f98fa50746e86fabdd0017",
+          "version": "1.0.0-beta.5"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/analytics-module",
         "state": {
           "branch": null,
-          "revision": "2f33fb1b5637ea6eda615599e94127b4f66209a2",
-          "version": "1.0.0-beta.11"
+          "revision": "06b4cbae8f121b60a7ef9d41e28d11e3f7d6248f",
+          "version": "1.0.0-beta.13"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/api-module",
         "state": {
           "branch": null,
-          "revision": "13e2836f2a610f87e4638f9ff081f6432b56979b",
-          "version": "1.0.0-beta.2"
+          "revision": "11805a20be1ee8776c6aead8fc8349fae7d5c85e",
+          "version": "1.0.0-beta.3"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/blog-module",
         "state": {
           "branch": null,
-          "revision": "da7e0a6b241ed284ee852f6acffc725f11b4b903",
-          "version": "1.0.0-beta.18"
+          "revision": "74038f817be05df356c0b892f7f51f5e6d293812",
+          "version": "1.0.0-beta.19"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
           "branch": null,
-          "revision": "7454e839bc5ae0e75c3946d2613e442fd342fe6b",
-          "version": "4.2.4"
+          "revision": "08f36a30e0893e6a52fefbf1c2db4a6bc1288ba2",
+          "version": "4.2.5"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/feather-core",
         "state": {
           "branch": null,
-          "revision": "c58dc8e1916f05fb44c5696296928dbcbf770e0d",
-          "version": "1.0.0-beta.38"
+          "revision": "014ffbed0ef0c82c5b06aef4c54f9f21af99ac2a",
+          "version": "1.0.0-beta.39.2"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/file-module",
         "state": {
           "branch": null,
-          "revision": "a585cb9c583c095a8db58582f183406153902671",
-          "version": "1.0.0-beta.4"
+          "revision": "262eb26ce6dbfe3f20d669d2577241575676c953",
+          "version": "1.0.0-beta.5"
         }
       },
       {
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/vapor/fluent-kit.git",
         "state": {
           "branch": null,
-          "revision": "86ebecdb98981b7a242746209b4335770bf0bd11",
-          "version": "1.10.2"
+          "revision": "7f1a5fe1effeee258ef0012def798e4bad43303d",
+          "version": "1.10.3"
         }
       },
       {
@@ -159,8 +159,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/frontend-module",
         "state": {
           "branch": null,
-          "revision": "2a487176277cdbfbe8c9e305f950a3384bf61194",
-          "version": "1.0.0-beta.7"
+          "revision": "0b1518f76bf0c88eacd012b5f3d2e6ced424c86b",
+          "version": "1.0.0-beta.15"
         }
       },
       {
@@ -170,24 +170,6 @@
           "branch": null,
           "revision": "bd223a2482449507bd3286cb262c962d32d81e4b",
           "version": "0.5.0"
-        }
-      },
-      {
-        "package": "jwt",
-        "repositoryURL": "https://github.com/vapor/jwt",
-        "state": {
-          "branch": null,
-          "revision": "46eddb526fa70fd9d765a3bdffac73b2be487cfc",
-          "version": "4.0.0"
-        }
-      },
-      {
-        "package": "jwt-kit",
-        "repositoryURL": "https://github.com/vapor/jwt-kit.git",
-        "state": {
-          "branch": null,
-          "revision": "6055fe8439769aa3646a3c797d573ce7305849c8",
-          "version": "4.2.0"
         }
       },
       {
@@ -258,8 +240,17 @@
         "repositoryURL": "https://github.com/FeatherCMS/markdown-module",
         "state": {
           "branch": null,
-          "revision": "067b0361c81ccbed698723d90d5d15f0924ce7d9",
-          "version": "1.0.0-beta.3"
+          "revision": "c91584eb6e02be13601ce170c6c427366311ab72",
+          "version": "1.0.0-beta.4"
+        }
+      },
+      {
+        "package": "multipart-kit",
+        "repositoryURL": "https://github.com/vapor/multipart-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "73706f1883f2ba950d41f18aec7e3a53766d4a6d",
+          "version": "4.0.0"
         }
       },
       {
@@ -294,8 +285,8 @@
         "repositoryURL": "https://github.com/vapor/postgres-nio.git",
         "state": {
           "branch": null,
-          "revision": "2808c4ff334c20073de92e735dac5587ba398b0d",
-          "version": "1.4.1"
+          "revision": "072b6850fff26f5dc11caa4d4813da8cf45455fa",
+          "version": "1.4.2"
         }
       },
       {
@@ -303,8 +294,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/redirect-module",
         "state": {
           "branch": null,
-          "revision": "c202d9ec042266e89bfa33d98118d7e2460ad7d0",
-          "version": "1.0.0-beta.12"
+          "revision": "7661f0f1dbc37e812863625c3705ed30c75d1c32",
+          "version": "1.0.0-beta.14"
         }
       },
       {
@@ -339,8 +330,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/sponsor-module",
         "state": {
           "branch": null,
-          "revision": "cb7930f666ebcf96b06d19ec9945ca1452c24e4d",
-          "version": "1.0.0-beta.9"
+          "revision": "2ba6677423d08b94602cce1905f213d813655b0b",
+          "version": "1.0.0-beta.10"
         }
       },
       {
@@ -348,8 +339,8 @@
         "repositoryURL": "https://github.com/vapor/sql-kit.git",
         "state": {
           "branch": null,
-          "revision": "ea9928b7f4a801b175a00b982034d9c54ecb6167",
-          "version": "3.7.0"
+          "revision": "3453fd7573b3c1c666d5db38788163308a696193",
+          "version": "3.7.1"
         }
       },
       {
@@ -456,8 +447,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/swifty-module",
         "state": {
           "branch": null,
-          "revision": "08da933608b53cdbde0746956af261e0bb0b86b7",
-          "version": "1.0.0-beta.3"
+          "revision": "10c13259d69c453265b431b67914a9043f663a2f",
+          "version": "1.0.0-beta.4"
         }
       },
       {
@@ -465,8 +456,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/system-module",
         "state": {
           "branch": null,
-          "revision": "216b046ded5a3a51a47214636c9498a4c9c69d0f",
-          "version": "1.0.0-beta.9"
+          "revision": "713701c6d5bbcf135765bc8ab94668dc592b0eab",
+          "version": "1.0.0-beta.12"
         }
       },
       {
@@ -483,8 +474,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/user-module",
         "state": {
           "branch": null,
-          "revision": "0744eb0f3f619745aaaa7c0b6d095ff84c6ae75f",
-          "version": "1.0.0-beta.4"
+          "revision": "fea3ea4276d7c94a2a4465d211a9475747d32a28",
+          "version": "1.0.0-beta.7"
         }
       },
       {
@@ -492,8 +483,8 @@
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "5148f02e42149f73f6616452062cf96b64afbda6",
-          "version": "4.36.2"
+          "revision": "bb87dcff4cf6d86d386308b4cb1393cefa4891a4",
+          "version": "4.39.2"
         }
       },
       {
