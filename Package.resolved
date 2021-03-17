@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/admin-module",
         "state": {
           "branch": null,
-          "revision": "1bdf60b78e4b09c1fe23c8281d9fe97cd3b9f3c7",
-          "version": "1.0.0-beta.10.6"
+          "revision": "8d67eaf27a17003962483b51473e20f443f91758",
+          "version": "1.0.0-beta.12.5"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/aggregator-module",
         "state": {
           "branch": null,
-          "revision": "62e1be8d938f05f468f98fa50746e86fabdd0017",
-          "version": "1.0.0-beta.5"
+          "revision": "6255791412ba7bab6569a6305588d6e5d947b97a",
+          "version": "1.0.0-beta.6"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/analytics-module",
         "state": {
           "branch": null,
-          "revision": "06b4cbae8f121b60a7ef9d41e28d11e3f7d6248f",
-          "version": "1.0.0-beta.13"
+          "revision": "22423172e1b22bb950bc6af43a979e1eecc73be4",
+          "version": "1.0.0-beta.14"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/api-module",
         "state": {
           "branch": null,
-          "revision": "11805a20be1ee8776c6aead8fc8349fae7d5c85e",
-          "version": "1.0.0-beta.3"
+          "revision": "d12686ca881f90a0d5582db33800a7799065535f",
+          "version": "1.0.0-beta.5"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
           "branch": null,
-          "revision": "a72c5adce3986ff6b5092ae0464a8f2675087860",
-          "version": "1.2.3"
+          "revision": "0dda95cffcdf3d96ca551e5701efd1661cf31374",
+          "version": "1.2.5"
         }
       },
       {
@@ -69,8 +69,17 @@
         "repositoryURL": "https://github.com/FeatherCMS/blog-module",
         "state": {
           "branch": null,
-          "revision": "74038f817be05df356c0b892f7f51f5e6d293812",
-          "version": "1.0.0-beta.19"
+          "revision": "8f0a83f15791b2d3b11f7898cc9c823504acee07",
+          "version": "1.0.0-beta.21.1"
+        }
+      },
+      {
+        "package": "common-module",
+        "repositoryURL": "https://github.com/FeatherCMS/common-module",
+        "state": {
+          "branch": null,
+          "revision": "97383a31f4db23507766389028c6946d11fd160b",
+          "version": "1.0.0-beta.2"
         }
       },
       {
@@ -87,8 +96,8 @@
         "repositoryURL": "https://github.com/binarybirds/content-api",
         "state": {
           "branch": null,
-          "revision": "cfdc392c845bfd0f57d5b6589574708f4b99dcd8",
-          "version": "1.1.0-beta.2"
+          "revision": "89432f0a1fc4e1418d626acfdb371b38deee5244",
+          "version": "1.1.0-rc.1"
         }
       },
       {
@@ -96,8 +105,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/feather-core",
         "state": {
           "branch": null,
-          "revision": "014ffbed0ef0c82c5b06aef4c54f9f21af99ac2a",
-          "version": "1.0.0-beta.39.2"
+          "revision": "1cb22fa84ccdcf8b8f85016fd326499eae43b68a",
+          "version": "1.0.0-beta.41"
         }
       },
       {
@@ -105,8 +114,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/file-module",
         "state": {
           "branch": null,
-          "revision": "262eb26ce6dbfe3f20d669d2577241575676c953",
-          "version": "1.0.0-beta.5"
+          "revision": "df273106f98730e3dd05ec4128345e541b2992d5",
+          "version": "1.0.0-beta.7"
         }
       },
       {
@@ -114,8 +123,8 @@
         "repositoryURL": "https://github.com/vapor/fluent",
         "state": {
           "branch": null,
-          "revision": "855cd81cd129675dcb9adadeca2286281dbc0190",
-          "version": "4.1.0"
+          "revision": "4004e926cdef1fbb937501c8a60554349cced675",
+          "version": "4.2.0"
         }
       },
       {
@@ -123,8 +132,8 @@
         "repositoryURL": "https://github.com/vapor/fluent-kit.git",
         "state": {
           "branch": null,
-          "revision": "7f1a5fe1effeee258ef0012def798e4bad43303d",
-          "version": "1.10.3"
+          "revision": "9d47c328bf83999968c12a3bc94ead1d706ad4a9",
+          "version": "1.11.0"
         }
       },
       {
@@ -159,8 +168,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/frontend-module",
         "state": {
           "branch": null,
-          "revision": "0b1518f76bf0c88eacd012b5f3d2e6ced424c86b",
-          "version": "1.0.0-beta.15"
+          "revision": "0e295fa9a7c49eca40c915166f3e244f752ceefa",
+          "version": "1.0.0-beta.17.1"
         }
       },
       {
@@ -182,39 +191,12 @@
         }
       },
       {
-        "package": "leaf",
-        "repositoryURL": "https://github.com/vapor/leaf",
-        "state": {
-          "branch": null,
-          "revision": "a8348b682ec14a863cc470a2da8f0ebc262c6088",
-          "version": "4.0.0-tau.1"
-        }
-      },
-      {
-        "package": "leaf-foundation",
-        "repositoryURL": "https://github.com/binarybirds/leaf-foundation",
-        "state": {
-          "branch": null,
-          "revision": "eb1b7ce84c89cc1e209299f0b543a96e0ab2ba79",
-          "version": "1.0.0-beta.8.1"
-        }
-      },
-      {
-        "package": "leaf-kit",
-        "repositoryURL": "https://github.com/vapor/leaf-kit",
-        "state": {
-          "branch": null,
-          "revision": "8b965e6e2eadfe5914ea133669368aceb2b89ccb",
-          "version": "1.0.0-tau.1.1"
-        }
-      },
-      {
         "package": "liquid",
         "repositoryURL": "https://github.com/binarybirds/liquid",
         "state": {
           "branch": null,
-          "revision": "092ec3bd50ef68627c80416ad7f4394a3c240389",
-          "version": "1.2.0-beta.2"
+          "revision": "40a755fc63a3125a436160838914b7ae91335597",
+          "version": "1.2.0"
         }
       },
       {
@@ -222,8 +204,8 @@
         "repositoryURL": "https://github.com/binarybirds/liquid-kit.git",
         "state": {
           "branch": null,
-          "revision": "c32f534f2e401f6ee422abbd0d1b9c0ec4422500",
-          "version": "1.2.0-beta.6"
+          "revision": "1a765f00acd7743878b871c9841507e85d37c567",
+          "version": "1.2.0"
         }
       },
       {
@@ -231,8 +213,8 @@
         "repositoryURL": "https://github.com/binarybirds/liquid-local-driver",
         "state": {
           "branch": null,
-          "revision": "83b74c43f6445e7feed666139ada23b28719b920",
-          "version": "1.2.0-beta.8"
+          "revision": "0a496aad8f8e544e150f2df74db52cbd44f32509",
+          "version": "1.2.0"
         }
       },
       {
@@ -240,8 +222,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/markdown-module",
         "state": {
           "branch": null,
-          "revision": "c91584eb6e02be13601ce170c6c427366311ab72",
-          "version": "1.0.0-beta.4"
+          "revision": "09bc494c14179b69b2273ebe6a44c2f81d4c0ed8",
+          "version": "1.0.0-beta.5"
         }
       },
       {
@@ -285,8 +267,8 @@
         "repositoryURL": "https://github.com/vapor/postgres-nio.git",
         "state": {
           "branch": null,
-          "revision": "072b6850fff26f5dc11caa4d4813da8cf45455fa",
-          "version": "1.4.2"
+          "revision": "fa93d76b3fcddcd62a996d645a7971f2003c9b84",
+          "version": "1.5.1"
         }
       },
       {
@@ -294,8 +276,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/redirect-module",
         "state": {
           "branch": null,
-          "revision": "7661f0f1dbc37e812863625c3705ed30c75d1c32",
-          "version": "1.0.0-beta.14"
+          "revision": "d0e2a50a7d39235130fcd410a3ddb35876643430",
+          "version": "1.0.0-beta.16.1"
         }
       },
       {
@@ -312,8 +294,8 @@
         "repositoryURL": "https://github.com/binarybirds/spec.git",
         "state": {
           "branch": null,
-          "revision": "74ec16a463499b61f5e081c9bdaa724bcdb1be3e",
-          "version": "1.2.0-beta.1"
+          "revision": "d9f2467d8f3e4d333cdb5b66df21bf82b9914709",
+          "version": "1.2.0"
         }
       },
       {
@@ -330,8 +312,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/sponsor-module",
         "state": {
           "branch": null,
-          "revision": "2ba6677423d08b94602cce1905f213d813655b0b",
-          "version": "1.0.0-beta.10"
+          "revision": "a18328af68509f50aa314147f7a57f63d1b45091",
+          "version": "1.0.0-beta.11"
         }
       },
       {
@@ -339,8 +321,8 @@
         "repositoryURL": "https://github.com/vapor/sql-kit.git",
         "state": {
           "branch": null,
-          "revision": "3453fd7573b3c1c666d5db38788163308a696193",
-          "version": "3.7.1"
+          "revision": "2e1ffbfa5ec6c87f6c932ecebbc11c7a5bc0115d",
+          "version": "3.8.1"
         }
       },
       {
@@ -366,8 +348,8 @@
         "repositoryURL": "https://github.com/swift-server/swift-backtrace.git",
         "state": {
           "branch": null,
-          "revision": "f2fd8c4845a123419c348e0bc4b3839c414077d5",
-          "version": "1.2.0"
+          "revision": "93b3d9a76454e05379a32a2f3b2a1f5a7794b414",
+          "version": "1.2.1"
         }
       },
       {
@@ -375,8 +357,8 @@
         "repositoryURL": "https://github.com/apple/swift-crypto.git",
         "state": {
           "branch": null,
-          "revision": "8f4bfa5bc1951440c15710e9e893721aa4b2765c",
-          "version": "1.1.3"
+          "revision": "3bea268b223651c4ab7b7b9ad62ef9b2d4143eb6",
+          "version": "1.1.6"
         }
       },
       {
@@ -384,8 +366,8 @@
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {
           "branch": null,
-          "revision": "173f567a2dfec11d74588eea82cecea555bdc0bc",
-          "version": "1.4.0"
+          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
+          "version": "1.4.2"
         }
       },
       {
@@ -402,8 +384,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "43931b7a7daf8120a487601530c8bc03ce711992",
-          "version": "2.25.1"
+          "revision": "3be4e0980075de10a4bc8dee07491d49175cfd7a",
+          "version": "2.27.0"
         }
       },
       {
@@ -411,8 +393,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-extras.git",
         "state": {
           "branch": null,
-          "revision": "e5b5d191a80667a14827bfeb0ae4a511f7677942",
-          "version": "1.7.0"
+          "revision": "de1c80ad1fdff1ba772bcef6b392c3ef735f39a6",
+          "version": "1.8.0"
         }
       },
       {
@@ -420,8 +402,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
         "state": {
           "branch": null,
-          "revision": "d4060ac4d056a48d946298f04968f6f6080cc618",
-          "version": "1.16.2"
+          "revision": "f4736a3b78a2bbe3feb7fc0f33f6683a8c27974c",
+          "version": "1.16.3"
         }
       },
       {
@@ -429,8 +411,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
         "state": {
           "branch": null,
-          "revision": "62bf5083df970e67c886210fa5b857eacf044b7c",
-          "version": "2.10.2"
+          "revision": "6b6c0582d626f1999c52217458cb99dc03fa2721",
+          "version": "2.10.5"
         }
       },
       {
@@ -438,8 +420,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-transport-services.git",
         "state": {
           "branch": null,
-          "revision": "5a352330c09a323e59ebd99afdf4ca3964c217bc",
-          "version": "1.9.1"
+          "revision": "1d28d48e071727f4558a8a4bb1894472abc47a58",
+          "version": "1.9.2"
         }
       },
       {
@@ -447,8 +429,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/swifty-module",
         "state": {
           "branch": null,
-          "revision": "10c13259d69c453265b431b67914a9043f663a2f",
-          "version": "1.0.0-beta.4"
+          "revision": "38d15e131e69c8172daa77c8c128780b5dbcf070",
+          "version": "1.0.0-beta.5"
         }
       },
       {
@@ -456,8 +438,35 @@
         "repositoryURL": "https://github.com/FeatherCMS/system-module",
         "state": {
           "branch": null,
-          "revision": "713701c6d5bbcf135765bc8ab94668dc592b0eab",
-          "version": "1.0.0-beta.12"
+          "revision": "5bd1a597e9345e65778a7dc2eef48b2de4333cef",
+          "version": "1.0.0-beta.15.3"
+        }
+      },
+      {
+        "package": "tau",
+        "repositoryURL": "https://github.com/binarybirds/tau",
+        "state": {
+          "branch": null,
+          "revision": "935292e605b815833629ba31a82480a7c8b23217",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "tau-foundation",
+        "repositoryURL": "https://github.com/binarybirds/tau-foundation",
+        "state": {
+          "branch": null,
+          "revision": "ff5429d511cc3c877bb9f0554ded4c0ebd2dd205",
+          "version": "1.0.0-rc.1"
+        }
+      },
+      {
+        "package": "tau-kit",
+        "repositoryURL": "https://github.com/binarybirds/tau-kit",
+        "state": {
+          "branch": null,
+          "revision": "71e14868c88d16e32fc355a894398f7f877e58ee",
+          "version": "1.1.0"
         }
       },
       {
@@ -474,8 +483,8 @@
         "repositoryURL": "https://github.com/FeatherCMS/user-module",
         "state": {
           "branch": null,
-          "revision": "fea3ea4276d7c94a2a4465d211a9475747d32a28",
-          "version": "1.0.0-beta.7"
+          "revision": "a90e0f7dff5755df76d5195e9604c6a204ddd12f",
+          "version": "1.0.0-beta.9.2"
         }
       },
       {
@@ -483,8 +492,8 @@
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "bb87dcff4cf6d86d386308b4cb1393cefa4891a4",
-          "version": "4.39.2"
+          "revision": "062a4088a26ff9e41daacb8aa311f0289232d814",
+          "version": "4.41.4"
         }
       },
       {
@@ -492,8 +501,8 @@
         "repositoryURL": "https://github.com/binarybirds/view-kit",
         "state": {
           "branch": null,
-          "revision": "2e7a0384d8694923e59f3d7ba66344a47c2b8c4f",
-          "version": "1.3.0-beta.28"
+          "revision": "f44a4a7ee5e56d8cff2273d7ecb4fb0a4b60d2e9",
+          "version": "1.3.0-rc.1"
         }
       },
       {
@@ -501,8 +510,8 @@
         "repositoryURL": "https://github.com/binarybirds/viper-kit",
         "state": {
           "branch": null,
-          "revision": "a7ce44e9ba96eddfc60299c2067ddf057d9da351",
-          "version": "1.5.0-beta.8"
+          "revision": "bac0f07af9bc1731a24ff6da573c838ed1f47afb",
+          "version": "1.5.0-rc.1.1"
         }
       },
       {

@@ -17,10 +17,11 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
         .package(url: "https://github.com/vapor/fluent-mysql-driver", from: "4.0.0"),
         .package(url: "https://github.com/vapor/fluent-postgres-driver", from: "2.0.0"),
-        .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.2.0-beta"),
+        .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.2.0"),
         /// feather core
         .package(url: "https://github.com/FeatherCMS/feather-core", from: "1.0.0-beta"),
         /// core modules
+        .package(url: "https://github.com/FeatherCMS/common-module", from: "1.0.0-beta"),
         .package(url: "https://github.com/FeatherCMS/system-module", from: "1.0.0-beta"),
         .package(url: "https://github.com/FeatherCMS/user-module", from: "1.0.0-beta"),
         .package(url: "https://github.com/FeatherCMS/api-module", from: "1.0.0-beta"),
@@ -46,6 +47,7 @@ let package = Package(
             /// feather
             .product(name: "FeatherCore", package: "feather-core"),
             /// core modules
+            .product(name: "CommonModule", package: "common-module"),
             .product(name: "SystemModule", package: "system-module"),
             .product(name: "UserModule", package: "user-module"),
             .product(name: "ApiModule", package: "api-module"),

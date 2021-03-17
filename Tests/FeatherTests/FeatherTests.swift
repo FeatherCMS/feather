@@ -25,8 +25,8 @@ final class FeatherTests: XCTestCase {
         feather.usePublicFileMiddleware()
         feather.use(database: .sqlite(.memory), databaseId: .sqlite)
         feather.use(fileStorage: .local(publicUrl: Application.baseUrl,
-                                        publicPath: Application.Paths.public,
-                                        workDirectory: "assets"),
+                                        publicPath: Application.Paths.public.path,
+                                        workDirectory: Application.Directories.assets),
                     fileStorageId: .local)
 
         try feather.configure([

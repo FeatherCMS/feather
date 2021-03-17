@@ -7,6 +7,7 @@
 
 import FeatherCore
 
+import CommonModule
 import SystemModule
 import UserModule
 import ApiModule
@@ -49,6 +50,7 @@ if Bool(Environment.get("USE_FILES_MIDDLEWARE") ?? "true")! {
 
 try feather.configure([
     /// core
+    CommonBuilder(),
     SystemBuilder(),
     UserBuilder(),
     ApiBuilder(),
@@ -67,7 +69,8 @@ try feather.configure([
 
 /// reset resources & public folder if we're in debug mode
 if feather.app.isDebug {
-    try feather.reset(resourcesOnly: true)
+    try feather.resetPublicFiles()
+//    try feather.copyTemplatesIfNeeded()
 }
 
 try feather.start()
