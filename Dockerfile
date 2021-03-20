@@ -1,4 +1,4 @@
-FROM swift:5.3.1-focal as builder
+FROM swift:5.3.3-focal as builder
 WORKDIR /opt/feather
 
 COPY . .
@@ -76,7 +76,7 @@ RUN chmod 550 /opt/feather/bin/Feather
 
 
 ## Slim version of the container
-FROM swift:5.3.1-focal-slim
+FROM swift:5.3.3-focal-slim
 WORKDIR /var/feather
 COPY --from=builder /opt/feather /opt/feather
 
