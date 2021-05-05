@@ -10,11 +10,10 @@ import LiquidLocalDriver
 
 extension Feather {
 
-    func useLocalFileStorage() {
-        use(fileStorage: .local(publicUrl: Application.baseUrl,
-                                publicPath: Application.Paths.public.path,
-                                workDirectory: Application.Directories.assets),
-            fileStorageId: .local)
+    static func useLocalFileStorage(_ app: Application) {
+        app.fileStorages.use(.local(publicUrl: Application.baseUrl,
+                                    publicPath: Application.Paths.public.path,
+                                    workDirectory: Application.Directories.assets), as: .local)
     }
 }
 
