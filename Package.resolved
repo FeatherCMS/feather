@@ -2,6 +2,33 @@
   "object": {
     "pins": [
       {
+        "package": "ALanguageParser",
+        "repositoryURL": "https://github.com/matsoftware/accept-language-parser",
+        "state": {
+          "branch": null,
+          "revision": "0a6d89e0159b2f926b35a9f6ee28b6f9c1e84a1b",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "aggregator-module",
+        "repositoryURL": "https://github.com/FeatherCMS/aggregator-module",
+        "state": {
+          "branch": "main",
+          "revision": "d42a218c42e50a84c142e35f6ad8d47a472fc6b2",
+          "version": null
+        }
+      },
+      {
+        "package": "analytics-module",
+        "repositoryURL": "https://github.com/FeatherCMS/analytics-module",
+        "state": {
+          "branch": "main",
+          "revision": "4be6cbda79004863d8459a73dedb2431997647c8",
+          "version": null
+        }
+      },
+      {
         "package": "async-http-client",
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
@@ -107,6 +134,15 @@
           "branch": null,
           "revision": "77c3d8953374a9cf5418ef0bd7108524999de85a",
           "version": "0.5.1"
+        }
+      },
+      {
+        "package": "Kanna",
+        "repositoryURL": "https://github.com/tid-kijyun/Kanna.git",
+        "state": {
+          "branch": null,
+          "revision": "c657fb9f5827ef138068215c76ad0bb62bbc92da",
+          "version": "5.2.4"
         }
       },
       {
@@ -368,6 +404,15 @@
           "branch": null,
           "revision": "c1b38ed81b235188276977b674ffe9c9532edb86",
           "version": "1.1.4"
+        }
+      },
+      {
+        "package": "UAParserSwift",
+        "repositoryURL": "https://github.com/malcommac/UAParserSwift",
+        "state": {
+          "branch": null,
+          "revision": "a8057c7cff60db2cdf31d0a0a68ce430754ab64e",
+          "version": "1.2.1"
         }
       },
       {

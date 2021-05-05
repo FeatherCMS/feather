@@ -20,8 +20,8 @@ let package = Package(
         /// modules
         .package(url: "https://github.com/FeatherCMS/redirect-module", .branch("main")),//from: "1.0.0-beta"),
         .package(url: "https://github.com/FeatherCMS/blog-module", .branch("main")),//from: "1.0.0-beta"),
-//        .package(url: "https://github.com/FeatherCMS/analytics-module", from: "1.0.0-beta"),
-//        .package(url: "https://github.com/FeatherCMS/aggregator-module", from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/analytics-module", .branch("main")),//from: "1.0.0-beta"),
+        .package(url: "https://github.com/FeatherCMS/aggregator-module", .branch("main")),//from: "1.0.0-beta"),
         .package(url: "https://github.com/FeatherCMS/sponsor-module", .branch("main")),//from: "1.0.0-beta"),
         .package(url: "https://github.com/FeatherCMS/swifty-module", .branch("main")),//from: "1.0.0-beta"),
         .package(url: "https://github.com/FeatherCMS/markdown-module", .branch("main")),//from: "1.0.0-beta"),
@@ -38,8 +38,8 @@ let package = Package(
             /// other modules
             .product(name: "RedirectModule", package: "redirect-module"),
             .product(name: "BlogModule", package: "blog-module"),
-//            .product(name: "AnalyticsModule", package: "analytics-module"),
-//            .product(name: "AggregatorModule", package: "aggregator-module"),
+            .product(name: "AnalyticsModule", package: "analytics-module"),
+            .product(name: "AggregatorModule", package: "aggregator-module"),
             .product(name: "SponsorModule", package: "sponsor-module"),
             .product(name: "SwiftyModule", package: "swifty-module"),
             .product(name: "MarkdownModule", package: "markdown-module"),

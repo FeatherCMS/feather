@@ -9,8 +9,8 @@ import FeatherCore
 
 import RedirectModule
 import BlogModule
-//import AnalyticsModule
-//import AggregatorModule
+import AnalyticsModule
+import AggregatorModule
 import SponsorModule
 import SwiftyModule
 import MarkdownModule
@@ -46,8 +46,8 @@ Feather.useLocalFileStorage(app)
 app.feather.use([
     RedirectBuilder().build(),
     BlogBuilder().build(),
-//    AnalyticsBuilder().build(),
-//    AggregatorBuilder().build(),
+    AnalyticsBuilder().build(),
+    AggregatorBuilder().build(),
     SponsorBuilder().build(),
     SwiftyBuilder().build(),
     MarkdownBuilder().build(),
