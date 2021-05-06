@@ -35,26 +35,32 @@ cd feather
 Create a dotenv file ( `.env` or `.env.development`) based on your environment) and config the following values.
 
 ```shell
-# the base url of your web server
-BASE_URL="http://localhost:8080"
-
 # the base path (absolute) of the working directory
-BASE_PATH="/path/to/feather/" 
+FEATHER_WORK_DIR="/path/to/feather/" 
 
+# Optional Feather related env variables
 
-# Optional environmental variables
+# the hostname (domain) of your web server, default localhost
+FEATHER_HOSTNAME=feathercms.com
+# the port to listen on, default 8080
+FEATHER_PORT=80
+# use HTTPS, default false (needs cert & key setup on the Vapor app)
+FEATHER_HTTPS=true
+# maximum body size for file uploads
+FEATHER_MAX_BODY_SIZE=10mb
+# disable file middleware, default false (if disabled you can serve files with nginx)
+FEATHER_DISABLE_FILE_MIDDLEWARE=true
 
-# MAX_UPLOAD_SIZE="10mb"
-# USE_FILES_MIDDLEWARE="true"
+# Database related env variables
 
 # Available database types: sqlite (default) / mysql / postgres
-# DB_TYPE="mysql" 
-# DB_HOST="127.0.0.1"
-# DB_USER="feather"
-# DB_PASS="feather"
-# DB_NAME="feather"
+DB_TYPE="mysql" 
+DB_HOST="127.0.0.1"
+DB_USER="feather"
+DB_PASS="feather"
+DB_NAME="feather"
 # Default port numbers: mysql - 3306 / postgres - 5432
-# DB_PORT=3306 
+DB_PORT=3306 
 
 ```
 
@@ -112,17 +118,9 @@ You can replace the default local driver with the [S3 driver](https://github.com
 
 Feather is a modular CMS system, you can add new modules as Swift package dependencies or place them under the Modules directory.
 
-Feather gives you just a few **core modules** that you can also disable, but it is recommended to keep them around.
+Feather gives you just a few **core modules**, they provide basic functionalies such as the route system, web frontend, admin interface or API layer.
 
-(e.g you only need an API, without web frontend or admin interface)
-
-- [System](https://github.com/FeatherCMS/system-module) - System functionalities, variables, run modes (install) and (later on) module management.
-- [User](https://github.com/FeatherCMS/user-module) - User authentication and role & permission based access control system.
-- [Api](https://github.com/FeatherCMS/api-module) - The API module is responsible for hooking up the public and private API endpoints.
-- [Admin](https://github.com/FeatherCMS/admin-module) - This module contains standard admin related interface elements and tools.
-- [Frontend](https://github.com/FeatherCMS/frontend-module) - Provides the frontend layout including web page and menu management.
-
-Every [other module](https://github.com/FeatherCMS?q=-module&type=&language=) can be completely removed (just alter the SPM dependency & configuration file). 
+The usage of [other modules](https://github.com/FeatherCMS?q=-module&type=&language=) can be completely customized (just alter the SPM dependency & configuration file). 
 
 💡 Feel free to fork this repository and create your own configuration as per needed. 
 
@@ -163,13 +161,15 @@ You can read more about how to use Feather in the [wiki](https://github.com/Feat
 
 You can create your very own stylesheet by overriding the files inside the `Public` folder.
 
-It is also possible to create custom theme for Feather by altering the templates inside the `Resources` folder.
+It is also possible to create custom theme for Feather by altering the templates inside the `Resources/Templates/Default` folder.
 
 ⚠️ Keep in mind that these files are ignored from the git repository by default. 
 
 👻 You might want to change this behavior by updating your `.gitignore` file.
 
 ⭐️ If you delete a file from these folders the next time you run Feather it'll be restored automatically.
+
+You can also add your own template directory and use that instead of the `Default` one, you can configure this using the Settings admin menu.
 
 
 
@@ -186,13 +186,4 @@ It is also possible to create custom theme for Feather by altering the templates
 ## Credits
 
 - [Vapor](https://vapor.codes/) - underlying framework
-- [Feather icons](https://feathericons.com/) - feather icons
-
-
-
-## License
-
-[WTFPL](https://github.com/FeatherCMS/feather/blob/main/LICENSE) - Do What The Fuck You Want Public License
-
-
-
+- [Feather icons](https://feathericons.com/) - Simply beautiful open source icons

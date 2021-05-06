@@ -15,9 +15,6 @@ import SponsorModule
 import SwiftyModule
 import MarkdownModule
 
-
-import FeatherCore
-
 var env = try Environment.detect()
 try LoggingSystem.bootstrap(from: &env)
 let app = Application(env)
@@ -31,17 +28,6 @@ default: Feather.useSQLiteDatabase(app)
 }
 
 Feather.useLocalFileStorage(app)
-
-/// set max upload size
-//feather.setMaxUploadSize(ByteCount(stringLiteral: Environment.get("MAX_UPLOAD_SIZE") ?? "10mb"))
-//
-//if Bool(Environment.get("USE_FILES_MIDDLEWARE") ?? "true")! {
-//    feather.usePublicFileMiddleware()
-//}
-//
-//if let hostname = Environment.get("SERVER_HOSTNAME") {
-//    feather.app.http.server.configuration.hostname = hostname
-//}
 
 app.feather.use([
     RedirectBuilder().build(),
