@@ -6,7 +6,6 @@
 🪶 Feather is a modern Swift-based content management system powered by Vapor 4. 
 
 
-
 💬 Click to join the chat on [Discord](https://discord.gg/wMSkxCUXAD). 
 
 
@@ -17,9 +16,11 @@ To use Feather you'll have to install **Swift 5.3** or greater (using Linux or m
 
 If you need help installing Swift, you should follow the official instructions available on [swift.org](https://swift.org/download/#releases).
 
+Please note that the currently recommended Swift version is: **Swift 5.4** 
 
 
-## Installation
+
+## Setup & environment
 
 Clone or download the source files using the [Feather](https://github.com/feathercms/feather/) repository. 
 
@@ -50,6 +51,8 @@ FEATHER_HTTPS=true
 FEATHER_MAX_BODY_SIZE=10mb
 # disable file middleware, default false (if disabled you can serve files with nginx)
 FEATHER_DISABLE_FILE_MIDDLEWARE=true
+# disable the session auth middleware for api endpoints (recommended for production)
+FEATHER_DISABLE_API_SESSION_AUTH_MIDDLEWARE=true
 
 # Database related env variables
 
@@ -128,27 +131,20 @@ The usage of [other modules](https://github.com/FeatherCMS?q=-module&type=&langu
 
 ## Using Feather CMS
 
-After the server is running Feather will setup everything you need to run your site. 
+### Installation
 
+The first time when you open your page Feather will run in a "system install" mode. 
+
+During this phase (behind the scenes):
+- all the required database structures will be created (database migration will run automatically).
 - Bundled resources (public files and templates) will be copied to the project folder (if needed).
+- All the necesseary models will be installed (persisted) using the configured database driver.
+- All the required assets will be uploaded to the file storage (using the configured storage driver).
+- The "root" user account will be created, you have to provide yor own credentials during this step.
+- Sample content for the blog module will be created (you can opt-out from this).
+- You'll be redirected to the welcome page. 
 
-- The first time when you open your page Feather will run in a "system install" mode, during this process:
-
-  - All the necesseary models will be saved to the configured database
-  - All the seed assets will be uploaded to the file storage
-  - The "root" user account will be created
-  - Sample content will be created
-
-- You are ready to use your Feather-based website.
-
-  
-
-#### Root user account
-
-You can log in to the admin interface using the `root@feathercms.com` & `FeatherCMS` user account. 
-
-⚠️ For security reasons, please change the default email & password using the user menu after the first login.
-
+Now you are ready to use your Feather-based website.
 
 
 #### User guide

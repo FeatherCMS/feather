@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/FeatherCMS/aggregator-module",
         "state": {
           "branch": "main",
-          "revision": "d42a218c42e50a84c142e35f6ad8d47a472fc6b2",
+          "revision": "c621b4656321772a5d9eaf1f9a10c6931bb47ec0",
           "version": null
         }
       },
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/FeatherCMS/analytics-module",
         "state": {
           "branch": "main",
-          "revision": "4be6cbda79004863d8459a73dedb2431997647c8",
+          "revision": "bee0f185f708d672b96e14fef36b8862c8f41b5e",
           "version": null
         }
       },
@@ -51,7 +51,7 @@
         "repositoryURL": "https://github.com/FeatherCMS/blog-module",
         "state": {
           "branch": "main",
-          "revision": "95caf2333b34af0eb87b607eb5bcf066837f1046",
+          "revision": "b6d1cd6fb75d916b9f3837f96614b64cb0e1443a",
           "version": null
         }
       },
@@ -69,7 +69,7 @@
         "repositoryURL": "https://github.com/FeatherCMS/feather-core",
         "state": {
           "branch": "main",
-          "revision": "abd04fd6e4322020671eea6000f05f45039b84a5",
+          "revision": "ec008f2996317c65d0b941f1f4ff6e7e1895f8da",
           "version": null
         }
       },
@@ -177,7 +177,7 @@
         "repositoryURL": "https://github.com/FeatherCMS/markdown-module",
         "state": {
           "branch": "main",
-          "revision": "905f2ac800ce07d925450df7b6c33e41304a0b3c",
+          "revision": "0660f6a378734bb590add25864dbd62d263f0fad",
           "version": null
         }
       },
@@ -231,7 +231,7 @@
         "repositoryURL": "https://github.com/FeatherCMS/redirect-module",
         "state": {
           "branch": "main",
-          "revision": "e95edae2ce934ddd97b9056dbe1022100f49bebf",
+          "revision": "caf1ee77070e8fdbb70373ec540955ea01d5d422",
           "version": null
         }
       },
@@ -267,7 +267,7 @@
         "repositoryURL": "https://github.com/FeatherCMS/sponsor-module",
         "state": {
           "branch": "main",
-          "revision": "96db0bece56c97af54f38eb9636b6a0f1f1177e3",
+          "revision": "e017b6e65c431509160ae307a68b9633c9d3d012",
           "version": null
         }
       },
@@ -339,8 +339,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "21782f3bdc9581148d38d0ccaab6ec952ccda56b",
-          "version": "2.28.0"
+          "revision": "d161bf658780b209c185994528e7e24376cf7283",
+          "version": "2.29.0"
         }
       },
       {
@@ -366,8 +366,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
         "state": {
           "branch": null,
-          "revision": "3d576964a1ace80d2a3f8bab96cab03e5ee074dc",
-          "version": "2.12.0"
+          "revision": "b2f8f353262a554d7f6598c17775c1e28d8a46f1",
+          "version": "2.13.0"
         }
       },
       {
@@ -384,7 +384,7 @@
         "repositoryURL": "https://github.com/FeatherCMS/swifty-module",
         "state": {
           "branch": "main",
-          "revision": "64d726f321c9ec57c211372716b4893b572b6c91",
+          "revision": "b13c81bb8334939b8c9582012a138dcd86a36249",
           "version": null
         }
       },
@@ -402,8 +402,8 @@
         "repositoryURL": "https://github.com/binarybirds/tau-kit",
         "state": {
           "branch": null,
-          "revision": "c1b38ed81b235188276977b674ffe9c9532edb86",
-          "version": "1.1.4"
+          "revision": "ab00f65e727de95f5cf195ad982cc57cb6bfcfaa",
+          "version": "1.1.6"
         }
       },
       {
@@ -420,8 +420,8 @@
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "07a105b295a0b191e69761feede58edb2ebeb580",
-          "version": "4.45.0"
+          "revision": "ea60bf2ee23379d295d3262409cdf7f1a2428ed4",
+          "version": "4.45.1"
         }
       },
       {

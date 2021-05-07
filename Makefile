@@ -27,5 +27,4 @@ install:
 	install .build/Release/Feather ./feather #./usr/local/bin/feather
 
 uninstall:
-	rm Public/css/frontend.min.css
 	rm ./feather
