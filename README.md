@@ -1,3 +1,12 @@
+## ⚠️⚠️⚠️ Under construction ⚠️⚠️⚠️
+
+Feather CMS is currently under construction, just a few things about the new version:
+
+- 100% async / await support (requires macOS 12+ or Linux)
+- Leaf / Tau is completely replaced with [SwiftHtml](https://github.com/binarybirds/swift-html)
+- Simplified core library [FeatherCore](https://github.com/feathercms/feather-core)
+
+
 ![Feather CMS](https://github.com/FeatherCMS/feather/blob/main/Assets/GitHub-Lead.png?raw=true)
 
 # Feather CMS 🪶
@@ -12,15 +21,6 @@
 To use Feather you'll have to install **Swift 5.5** or greater.
 
 If you need help installing Swift, you should follow the official instructions available on [swift.org](https://swift.org/download/#releases).
-
-
-## ⚠️⚠️⚠️ Under construction ⚠️⚠️⚠️
-
-Feather CMS is currently under construction, just a few things about the new version:
-
-- 100% async / await support (requires macOS 12+ or Linux)
-- Leaf / Tau is completely replaced with [SwiftHtml](https://github.com/binarybirds/swift-html)
-- Simplified core library [FeatherCore](https://github.com/feathercms/feather-core)
 
 
 ## Setup & environment
