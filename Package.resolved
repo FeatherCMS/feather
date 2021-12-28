@@ -1,0 +1,358 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "ALanguageParser",
+        "repositoryURL": "https://github.com/matsoftware/accept-language-parser",
+        "state": {
+          "branch": null,
+          "revision": "0a6d89e0159b2f926b35a9f6ee28b6f9c1e84a1b",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "aggregator-module",
+        "repositoryURL": "https://github.com/feathercms/aggregator-module",
+        "state": {
+          "branch": "dev",
+          "revision": "e54a8274f5c823b71eb133e597d64a4983cfd429",
+          "version": null
+        }
+      },
+      {
+        "package": "analytics-module",
+        "repositoryURL": "https://github.com/feathercms/analytics-module",
+        "state": {
+          "branch": "dev",
+          "revision": "e75600248d1985bf4ff5764d226fbdfeeaf17872",
+          "version": null
+        }
+      },
+      {
+        "package": "async-http-client",
+        "repositoryURL": "https://github.com/swift-server/async-http-client.git",
+        "state": {
+          "branch": null,
+          "revision": "70826d038d5bdc3142a386b735792d87ef7a5dfc",
+          "version": "1.8.1"
+        }
+      },
+      {
+        "package": "async-kit",
+        "repositoryURL": "https://github.com/vapor/async-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "3b1e7e9069a62295151c6c1609050cd38a0a7af5",
+          "version": "1.11.0"
+        }
+      },
+      {
+        "package": "blog-module",
+        "repositoryURL": "https://github.com/feathercms/blog-module",
+        "state": {
+          "branch": "dev",
+          "revision": "b97237ee8292084ac81efa9f5ad2725ad18ce637",
+          "version": null
+        }
+      },
+      {
+        "package": "console-kit",
+        "repositoryURL": "https://github.com/vapor/console-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "75ea3b627d88221440b878e5dfccc73fd06842ed",
+          "version": "4.2.7"
+        }
+      },
+      {
+        "package": "feather-core",
+        "repositoryURL": "https://github.com/feathercms/feather-core",
+        "state": {
+          "branch": "dev",
+          "revision": "4ecc419fe8f9d1c917856d39a426a33ebc04e46f",
+          "version": null
+        }
+      },
+      {
+        "package": "fluent",
+        "repositoryURL": "https://github.com/vapor/fluent",
+        "state": {
+          "branch": null,
+          "revision": "ea707ee318066a073c95b2b2df1aa640fcb67f9e",
+          "version": "4.4.0"
+        }
+      },
+      {
+        "package": "fluent-kit",
+        "repositoryURL": "https://github.com/vapor/fluent-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "2f1af22f4d495bc6f35365e537c4bb5eb60c5f17",
+          "version": "1.18.0"
+        }
+      },
+      {
+        "package": "fluent-sqlite-driver",
+        "repositoryURL": "https://github.com/vapor/fluent-sqlite-driver",
+        "state": {
+          "branch": null,
+          "revision": "6f29f6f182c812075f09c7575c18ac5535c26824",
+          "version": "4.0.1"
+        }
+      },
+      {
+        "package": "Ink",
+        "repositoryURL": "https://github.com/JohnSundell/Ink",
+        "state": {
+          "branch": null,
+          "revision": "77c3d8953374a9cf5418ef0bd7108524999de85a",
+          "version": "0.5.1"
+        }
+      },
+      {
+        "package": "Kanna",
+        "repositoryURL": "https://github.com/tid-kijyun/Kanna.git",
+        "state": {
+          "branch": null,
+          "revision": "f9e4922223dd0d3dfbf02ca70812cf5531fc0593",
+          "version": "5.2.7"
+        }
+      },
+      {
+        "package": "liquid",
+        "repositoryURL": "https://github.com/binarybirds/liquid",
+        "state": {
+          "branch": null,
+          "revision": "865eca0fd64273fd4352c26db6f0019d254102cb",
+          "version": "1.3.2"
+        }
+      },
+      {
+        "package": "liquid-kit",
+        "repositoryURL": "https://github.com/binarybirds/liquid-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "1bd90b3170cefecd3460f00e1c9725bb42c23c01",
+          "version": "1.3.3"
+        }
+      },
+      {
+        "package": "liquid-local-driver",
+        "repositoryURL": "https://github.com/binarybirds/liquid-local-driver",
+        "state": {
+          "branch": null,
+          "revision": "b068a1ab399d21f5d4b60eb4b0568fad4c398a59",
+          "version": "1.3.2"
+        }
+      },
+      {
+        "package": "markdown-module",
+        "repositoryURL": "https://github.com/feathercms/markdown-module",
+        "state": {
+          "branch": "dev",
+          "revision": "e1b808ec82dc5c0e947c9216bcffb15e795e24ba",
+          "version": null
+        }
+      },
+      {
+        "package": "multipart-kit",
+        "repositoryURL": "https://github.com/vapor/multipart-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "2dd9368a3c9580792b77c7ef364f3735909d9996",
+          "version": "4.5.1"
+        }
+      },
+      {
+        "package": "redirect-module",
+        "repositoryURL": "https://github.com/feathercms/redirect-module",
+        "state": {
+          "branch": "dev",
+          "revision": "feebf7a89ef2ea15b124b6ea913ad83563005ed7",
+          "version": null
+        }
+      },
+      {
+        "package": "routing-kit",
+        "repositoryURL": "https://github.com/vapor/routing-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "5603b81ceb744b8318feab1e60943704977a866b",
+          "version": "4.3.1"
+        }
+      },
+      {
+        "package": "Splash",
+        "repositoryURL": "https://github.com/JohnSundell/Splash",
+        "state": {
+          "branch": null,
+          "revision": "7f4df436eb78fe64fe2c32c58006e9949fa28ad8",
+          "version": "0.16.0"
+        }
+      },
+      {
+        "package": "sql-kit",
+        "repositoryURL": "https://github.com/vapor/sql-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "07f3fc3b9179fce604a0c1672eaf8502e66a4af4",
+          "version": "3.8.2"
+        }
+      },
+      {
+        "package": "sqlite-kit",
+        "repositoryURL": "https://github.com/vapor/sqlite-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "2ec279b9c845cec254646834b66338551a024561",
+          "version": "4.0.2"
+        }
+      },
+      {
+        "package": "sqlite-nio",
+        "repositoryURL": "https://github.com/vapor/sqlite-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "6481dd0b01112d082dd7eb362782126e81964138",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "swift-backtrace",
+        "repositoryURL": "https://github.com/swift-server/swift-backtrace.git",
+        "state": {
+          "branch": null,
+          "revision": "d3e04a9d4b3833363fb6192065b763310b156d54",
+          "version": "1.3.1"
+        }
+      },
+      {
+        "package": "swift-crypto",
+        "repositoryURL": "https://github.com/apple/swift-crypto.git",
+        "state": {
+          "branch": null,
+          "revision": "9c53b7a758bb849a7df1bd2314395f5f0c14306f",
+          "version": "2.0.3"
+        }
+      },
+      {
+        "package": "swift-css",
+        "repositoryURL": "https://github.com/binarybirds/swift-css",
+        "state": {
+          "branch": null,
+          "revision": "c5a1741c83ca7eb6dcd0aec0eeefb7a0ca5d8d43",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "package": "swift-html",
+        "repositoryURL": "https://github.com/binarybirds/swift-html",
+        "state": {
+          "branch": null,
+          "revision": "46702bedacb8e829f6ae1890ef6daa873d8ffe40",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "swift-log",
+        "repositoryURL": "https://github.com/apple/swift-log.git",
+        "state": {
+          "branch": null,
+          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
+          "version": "1.4.2"
+        }
+      },
+      {
+        "package": "swift-metrics",
+        "repositoryURL": "https://github.com/apple/swift-metrics.git",
+        "state": {
+          "branch": null,
+          "revision": "3edd2f57afc4e68e23c3e4956bc8b65ca6b5b2ff",
+          "version": "2.2.0"
+        }
+      },
+      {
+        "package": "swift-nio",
+        "repositoryURL": "https://github.com/apple/swift-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "213eb6887e526e0dfac526a2eae559a1893ebbac",
+          "version": "2.36.0"
+        }
+      },
+      {
+        "package": "swift-nio-extras",
+        "repositoryURL": "https://github.com/apple/swift-nio-extras.git",
+        "state": {
+          "branch": null,
+          "revision": "f73ca5ee9c6806800243f1ac415fcf82de9a4c91",
+          "version": "1.10.2"
+        }
+      },
+      {
+        "package": "swift-nio-http2",
+        "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
+        "state": {
+          "branch": null,
+          "revision": "6e94a7be32891d1b303a3fcfde8b5bf64d162e74",
+          "version": "1.19.1"
+        }
+      },
+      {
+        "package": "swift-nio-ssl",
+        "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
+        "state": {
+          "branch": null,
+          "revision": "2b329e37e9dd34fb382655181a680261d58cbbf1",
+          "version": "2.17.1"
+        }
+      },
+      {
+        "package": "swift-nio-transport-services",
+        "repositoryURL": "https://github.com/apple/swift-nio-transport-services.git",
+        "state": {
+          "branch": null,
+          "revision": "e7f5278a26442dc46783ba7e063643d524e414a0",
+          "version": "1.11.3"
+        }
+      },
+      {
+        "package": "swifty-module",
+        "repositoryURL": "https://github.com/feathercms/swifty-module",
+        "state": {
+          "branch": "dev",
+          "revision": "ba61cb345489042eb96cdcb7ceed7bc5c971f7cc",
+          "version": null
+        }
+      },
+      {
+        "package": "UAParserSwift",
+        "repositoryURL": "https://github.com/malcommac/UAParserSwift",
+        "state": {
+          "branch": null,
+          "revision": "a8057c7cff60db2cdf31d0a0a68ce430754ab64e",
+          "version": "1.2.1"
+        }
+      },
+      {
+        "package": "vapor",
+        "repositoryURL": "https://github.com/vapor/vapor",
+        "state": {
+          "branch": null,
+          "revision": "34bf1b303623de04801d2b9bef5b2ed48b3e9319",
+          "version": "4.54.0"
+        }
+      },
+      {
+        "package": "websocket-kit",
+        "repositoryURL": "https://github.com/vapor/websocket-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "ff8fbce837ef01a93d49c6fb49a72be0f150dac7",
+          "version": "2.3.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
