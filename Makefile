@@ -53,3 +53,14 @@ dev:
 	git clone --branch dev git@github.com:FeatherCMS/redirect-module.git && \
 	git clone --branch dev git@github.com:FeatherCMS/swifty-module.git && \
 	cd feather
+
+update:
+	cd .. && \
+	cd feather-core && git pull && cd .. && \
+	cd analytics-module && git pull && cd .. && \
+	cd aggregator-module && git pull && cd .. && \
+	cd blog-module && git pull && cd .. && \
+	cd markdown-module && git pull && cd .. && \
+	cd redirect-module && git pull && cd .. && \
+	cd swifty-module && git pull && cd .. && \
+	cd feather
