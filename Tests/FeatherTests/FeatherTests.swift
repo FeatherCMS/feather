@@ -25,4 +25,20 @@ final class FeatherTests: XCTestCase {
             .test()
 
     }
+    
+    func testAuthentication() async throws {
+        let feather = TestApp()
+        try feather.setUp()
+        defer { feather.tearDown() }
+
+        try feather.authenticate()
+        try feather.app.describe("Admin screen should work")
+            .get("/admin/")
+            .cookie(feather.cookies)
+            .expect { res in
+                XCTAssertEqual(res.status, .ok)
+            }
+            .test()
+
+    }
 }
