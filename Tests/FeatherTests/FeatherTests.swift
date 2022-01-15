@@ -23,7 +23,6 @@ final class FeatherTests: XCTestCase {
                 XCTAssertEqual(res.status, .ok)
             }
             .test()
-
     }
     
     func testAuthentication() async throws {
@@ -39,6 +38,5 @@ final class FeatherTests: XCTestCase {
                 XCTAssertEqual(res.status, .ok)
             }
             .test()
-
     }
 }

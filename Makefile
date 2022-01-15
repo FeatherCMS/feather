@@ -64,3 +64,6 @@ update:
 	cd redirect-module && git pull && cd .. && \
 	cd swifty-module && git pull && cd .. && \
 	cd feather
+
+wrk:
+	wrk -t12 -c400 -d30s http://localhost:8080/  
