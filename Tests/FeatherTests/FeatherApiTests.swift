@@ -1,8 +1,8 @@
 //
 //  File.swift
+//  
 //
-//
-//  Created by Tibor Bodecs on 2020. 01. 24..
+//  Created by Tibor Bodecs on 2022. 01. 15..
 //
 
 import XCTest
@@ -10,17 +10,18 @@ import XCTFeather
 import FeatherCore
 @testable import Feather
 
-final class FeatherTests: XCTestCase {
+final class FeatherApiTests: XCTestCase {
 
-    func testHomeScreen() async throws {
+    func testApiStatus() async throws {
         let feather = TestApp()
         try feather.setUp()
         defer { feather.tearDown() }
 
-        try feather.app.describe("Home screen should work")
-            .get("/")
+        try feather.app.describe("API status should work")
+            .get("/api/status/")
             .expect { res in
                 XCTAssertEqual(res.status, .ok)
+                XCTAssertEqual(res.body.string, "ok")
             }
             .test()
 

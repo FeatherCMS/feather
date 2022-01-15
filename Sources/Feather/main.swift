@@ -16,11 +16,12 @@ import RedirectModule
 import SwiftyModule
 
 public func configure(_ app: Application) throws {
+    app.feather.boot()
 
-    app.databases.use(.sqlite(.file(Feather.Directories.resources + "/db.sqlite")), as: .sqlite)
+    app.databases.use(.sqlite(.file(app.feather.paths.resources.path + "/db.sqlite")), as: .sqlite)
     
-    app.fileStorages.use(.local(publicUrl: Feather.baseUrl,
-                                publicPath: Feather.Paths.public.path,
+    app.fileStorages.use(.local(publicUrl: app.feather.baseUrl,
+                                publicPath: app.feather.paths.public.path,
                                 workDirectory: Feather.Directories.assets), as: .local)
     
     let modules: [FeatherModule] = [
