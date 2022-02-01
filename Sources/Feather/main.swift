@@ -5,7 +5,7 @@
 //  Created by Tibor Bodecs on 2019. 12. 17..
 //
 
-import FeatherCore
+@_exported import FeatherCore
 import FluentSQLiteDriver
 import LiquidLocalDriver
 import AnalyticsModule
@@ -14,6 +14,14 @@ import BlogModule
 import MarkdownModule
 import RedirectModule
 import SwiftyModule
+
+/// https://github.com/vapor/fluent/blob/main/Sources/Fluent/Exports.swift
+infix operator ~~
+infix operator =~
+infix operator !~
+infix operator !=~
+infix operator !~=
+
 
 public func configure(_ app: Application) throws {
     app.feather.boot()
