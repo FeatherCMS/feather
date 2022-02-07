@@ -138,7 +138,15 @@ You can read more about how to use Feather in the [wiki](https://github.com/Feat
 
 🙏 Please don't hesitate to send your feedbacks, thoughts and ideas about Feather.
 
+## Address already in use error
 
+You can use the following command to kill the process listening on the 8080 port. 
+
+```shell
+lsof -i :8080 -sTCP:LISTEN |awk 'NR > 1 {print $2}'|xargs kill -15
+```
+
+Tip: when using Xcode, edit the scheme and add this as a pre-action script. 
 
 ## Credits
 

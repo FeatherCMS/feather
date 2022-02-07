@@ -33,13 +33,13 @@ public func configure(_ app: Application) throws {
                                 workDirectory: Feather.Directories.assets), as: .local)
     
     let modules: [FeatherModule] = [
-        AnalyticsBuilder().build(),
-        AggregatorBuilder().build(),
-        BlogBuilder().build(),
-        MarkdownBuilder().build(),
-        RedirectBuilder().build(),
-        SwiftyBuilder().build(),
-    ]
+        AnalyticsBuilder(),
+        AggregatorBuilder(),
+        BlogBuilder(),
+        MarkdownBuilder(),
+        RedirectBuilder(),
+        SwiftyBuilder(),
+    ].map { $0.build() }
     
     try app.feather.start(modules)
 }
