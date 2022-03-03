@@ -46,6 +46,8 @@ uninstall:
 dev:
 	cd .. && \
 	git clone --branch dev git@github.com:FeatherCMS/feather-core.git && \
+	git clone --branch dev git@github.com:FeatherCMS/user-module.git && \
+	git clone --branch dev git@github.com:FeatherCMS/web-module.git && \
 	git clone --branch dev git@github.com:FeatherCMS/analytics-module.git && \
 	git clone --branch dev git@github.com:FeatherCMS/aggregator-module.git && \
 	git clone --branch dev git@github.com:FeatherCMS/blog-module.git && \
@@ -57,6 +59,8 @@ dev:
 update:
 	cd .. && \
 	cd feather-core && git pull && cd .. && \
+	cd user-module && git pull && cd .. && \
+	cd web-module && git pull && cd .. && \
 	cd analytics-module && git pull && cd .. && \
 	cd aggregator-module && git pull && cd .. && \
 	cd blog-module && git pull && cd .. && \

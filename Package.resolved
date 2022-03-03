@@ -29,6 +29,24 @@
         }
       },
       {
+        "package": "feather-api",
+        "repositoryURL": "https://github.com/feathercms/feather-api",
+        "state": {
+          "branch": "main",
+          "revision": "2f55946211f59ce0bacd1274a3a30fc2d22262ac",
+          "version": null
+        }
+      },
+      {
+        "package": "feather-icons",
+        "repositoryURL": "https://github.com/feathercms/feather-icons",
+        "state": {
+          "branch": "main",
+          "revision": "2d1e6715ad6f6a810434f1306d5d94691d1338d7",
+          "version": null
+        }
+      },
+      {
         "package": "fluent",
         "repositoryURL": "https://github.com/vapor/fluent",
         "state": {
