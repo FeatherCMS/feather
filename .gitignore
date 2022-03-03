@@ -11,6 +11,5 @@ db.sqlite
 .env.testing
 /Public
 /Resources
-./feather
-docker/datadir
-ssh
+/Tests/Public
+/Tests/Resources

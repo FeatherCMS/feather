@@ -1,19 +1,20 @@
 //
-//  main.swift
-//  Feather
+//  File.swift
+//  
 //
-//  Created by Tibor Bodecs on 2019. 12. 17..
+//  Created by Tibor Bodecs on 2022. 02. 23..
 //
 
-@_exported import FeatherCore
+@_exported import FeatherRestKit
+
+import Feather
+
 import FluentSQLiteDriver
 import LiquidLocalDriver
-import AnalyticsModule
-import AggregatorModule
-import BlogModule
-import MarkdownModule
-import RedirectModule
-import SwiftyModule
+import MailAwsDriver
+
+import WebModule
+import UserModule
 
 /// https://github.com/vapor/fluent/blob/main/Sources/Fluent/Exports.swift
 infix operator ~~
@@ -21,7 +22,6 @@ infix operator =~
 infix operator !~
 infix operator !=~
 infix operator !~=
-
 
 public func configure(_ app: Application) throws {
     app.feather.boot()
@@ -31,17 +31,13 @@ public func configure(_ app: Application) throws {
     app.fileStorages.use(.local(publicUrl: app.feather.baseUrl,
                                 publicPath: app.feather.paths.public.path,
                                 workDirectory: Feather.Directories.assets), as: .local)
-    
-    let modules: [FeatherModule] = [
-        AnalyticsBuilder(),
-        AggregatorBuilder(),
-        BlogBuilder(),
-        MarkdownBuilder(),
-        RedirectBuilder(),
-        SwiftyBuilder(),
-    ].map { $0.build() }
-    
-    try app.feather.start(modules)
+
+    app.mailProviders.use(.ses(credentialProvider: .default, region: .eucentral1), as: .ses)
+
+    try app.feather.start([
+        UserBuilder().build(),
+        WebBuilder().build(),
+    ])
 }
 
 var env = try Environment.detect()
