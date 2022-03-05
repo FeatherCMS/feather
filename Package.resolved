@@ -29,6 +29,24 @@
         }
       },
       {
+        "package": "feather-api",
+        "repositoryURL": "https://github.com/feathercms/feather-api",
+        "state": {
+          "branch": "main",
+          "revision": "1154ba656bf90297e2189f5f572498a53fbed0af",
+          "version": null
+        }
+      },
+      {
+        "package": "feather-core",
+        "repositoryURL": "https://github.com/feathercms/feather-core",
+        "state": {
+          "branch": "dev",
+          "revision": "d751b291eba6a386f64cbc38b4b85dac4cdc1a43",
+          "version": null
+        }
+      },
+      {
         "package": "feather-icons",
         "repositoryURL": "https://github.com/feathercms/feather-icons",
         "state": {
@@ -281,12 +299,39 @@
         }
       },
       {
+        "package": "user-api",
+        "repositoryURL": "https://github.com/feathercms/user-api",
+        "state": {
+          "branch": "main",
+          "revision": "e48cbf004b6c66185df702a3e3bc78cc2e11c7f9",
+          "version": null
+        }
+      },
+      {
+        "package": "user-module",
+        "repositoryURL": "https://github.com/feathercms/user-module",
+        "state": {
+          "branch": "main",
+          "revision": "c1a2eeb0bb0de3c41596660211878168bed3664b",
+          "version": null
+        }
+      },
+      {
         "package": "vapor",
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "18e9419cae5049e43ca1e8002ca3cf0449f2c8ed",
-          "version": "4.55.0"
+          "revision": "e0fd4f3d76469dd6a0efb2be5c0b2f96b7581187",
+          "version": "4.55.1"
+        }
+      },
+      {
+        "package": "web-module",
+        "repositoryURL": "https://github.com/feathercms/web-module",
+        "state": {
+          "branch": "main",
+          "revision": "f8b103ec6a729b498111d553c0fd1d797193e2a6",
+          "version": null
         }
       },
       {
