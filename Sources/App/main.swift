@@ -5,21 +5,18 @@
 //  Created by Tibor Bodecs on 2022. 02. 23..
 //
 
-import Feather
-
+import Vapor
+import Fluent
 import FluentSQLiteDriver
+import Liquid
 import LiquidLocalDriver
+import Mail
 import MailAwsDriver
+import Feather
 
 import WebModule
 import UserModule
 
-/// https://github.com/vapor/fluent/blob/main/Sources/Fluent/Exports.swift
-infix operator ~~
-infix operator =~
-infix operator !~
-infix operator !=~
-infix operator !~=
 
 public func configure(_ app: Application) throws {
     app.feather.boot()

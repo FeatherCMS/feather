@@ -33,7 +33,7 @@
         "repositoryURL": "https://github.com/feathercms/feather-api",
         "state": {
           "branch": "main",
-          "revision": "5f8dd68ce533d22412515354e832bf4fe6d7e415",
+          "revision": "6ae9bdcb77312ac9ea0db2da59f8e5f654198ab3",
           "version": null
         }
       },
@@ -42,7 +42,7 @@
         "repositoryURL": "https://github.com/feathercms/feather-core",
         "state": {
           "branch": "dev",
-          "revision": "9eab76d54d5d9629f11949d5d503dcf09fb2254e",
+          "revision": "0002d66b6888d0db7e765049802a7b5682615105",
           "version": null
         }
       },
@@ -312,7 +312,7 @@
         "repositoryURL": "https://github.com/feathercms/user-module",
         "state": {
           "branch": "main",
-          "revision": "c507c812e9e1d7db23e2193b9b75d3d5479d262e",
+          "revision": "5891a9eced066538ea3f0c03c94c3764e160d71e",
           "version": null
         }
       },
@@ -330,7 +330,7 @@
         "repositoryURL": "https://github.com/feathercms/web-module",
         "state": {
           "branch": "main",
-          "revision": "55d529b393b4e1d7441d2a40b30457f481d16804",
+          "revision": "cdb87c301efe9b62beb50922e2b9dc915cea17aa",
           "version": null
         }
       },
