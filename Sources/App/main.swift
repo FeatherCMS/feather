@@ -23,7 +23,7 @@ public func configure(_ app: Application) throws {
 
     app.databases.use(.sqlite(.file(app.feather.paths.resources.path + "/db.sqlite")), as: .sqlite)
     
-    app.fileStorages.use(.local(publicUrl: "http://test.binarybirds.com", //app.feather.baseUrl,
+    app.fileStorages.use(.local(publicUrl: app.feather.publicUrl,
                                 publicPath: app.feather.paths.public.path,
                                 workDirectory: Feather.Directories.assets), as: .local)
 
