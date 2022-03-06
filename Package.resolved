@@ -33,7 +33,7 @@
         "repositoryURL": "https://github.com/feathercms/feather-api",
         "state": {
           "branch": "main",
-          "revision": "c44df7c5cf19ee53a4fd8542bbc4fdb323769366",
+          "revision": "52723c644a2f5b8b680f8b62f9fae2a8cf07cc6d",
           "version": null
         }
       },
@@ -42,7 +42,7 @@
         "repositoryURL": "https://github.com/feathercms/feather-core",
         "state": {
           "branch": "dev",
-          "revision": "18a283b873e15e8f39258c50463a6e07384dde77",
+          "revision": "3f322d9e9af41d2a8420d08ef40b7c1584ebc462",
           "version": null
         }
       },
