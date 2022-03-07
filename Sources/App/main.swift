@@ -16,6 +16,7 @@ import Feather
 
 import WebModule
 import UserModule
+import RedirectModule
 
 
 public func configure(_ app: Application) throws {
@@ -30,9 +31,10 @@ public func configure(_ app: Application) throws {
     app.mailProviders.use(.ses(credentialProvider: .default, region: .eucentral1), as: .ses)
 
     try app.feather.start([
-        UserBuilder().build(),
-        WebBuilder().build(),
-    ])
+        UserBuilder(),
+        WebBuilder(),
+        RedirectBuilder(),
+    ].map { $0.build() })
 }
 
 var env = try Environment.detect()

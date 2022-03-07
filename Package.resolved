@@ -29,15 +29,6 @@
         }
       },
       {
-        "package": "feather-api",
-        "repositoryURL": "https://github.com/feathercms/feather-api",
-        "state": {
-          "branch": "main",
-          "revision": "52723c644a2f5b8b680f8b62f9fae2a8cf07cc6d",
-          "version": null
-        }
-      },
-      {
         "package": "feather-core",
         "repositoryURL": "https://github.com/feathercms/feather-core",
         "state": {
@@ -152,6 +143,24 @@
           "branch": null,
           "revision": "2dd9368a3c9580792b77c7ef364f3735909d9996",
           "version": "4.5.1"
+        }
+      },
+      {
+        "package": "redirect-api",
+        "repositoryURL": "https://github.com/FeatherCMS/redirect-api",
+        "state": {
+          "branch": "main",
+          "revision": "cf9ab3893c5e7d8f62f3a9eec6072be98ddf55fc",
+          "version": null
+        }
+      },
+      {
+        "package": "redirect-module",
+        "repositoryURL": "https://github.com/feathercms/redirect-module",
+        "state": {
+          "branch": "dev",
+          "revision": "dbbab05f360d8c069794deff7bbe5aa6dcd2d39f",
+          "version": null
         }
       },
       {
