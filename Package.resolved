@@ -29,20 +29,20 @@
         }
       },
       {
-        "package": "feather-core",
-        "repositoryURL": "https://github.com/feathercms/feather-core",
-        "state": {
-          "branch": "dev",
-          "revision": "3f322d9e9af41d2a8420d08ef40b7c1584ebc462",
-          "version": null
-        }
-      },
-      {
         "package": "feather-icons",
         "repositoryURL": "https://github.com/feathercms/feather-icons",
         "state": {
           "branch": "main",
           "revision": "2d1e6715ad6f6a810434f1306d5d94691d1338d7",
+          "version": null
+        }
+      },
+      {
+        "package": "feather-objects",
+        "repositoryURL": "https://github.com/feathercms/feather-objects",
+        "state": {
+          "branch": "main",
+          "revision": "169386ce3bf664fa768186467e4aec1caaee0fcf",
           "version": null
         }
       },
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/vapor/fluent-kit.git",
         "state": {
           "branch": null,
-          "revision": "9c7fbdc931ef6afa2dcd45edf253d25cadbbd5fc",
-          "version": "1.22.0"
+          "revision": "53a7276e577d0dd192dc551c3d0908dcc85af88f",
+          "version": "1.23.1"
         }
       },
       {
@@ -146,20 +146,11 @@
         }
       },
       {
-        "package": "redirect-api",
-        "repositoryURL": "https://github.com/FeatherCMS/redirect-api",
+        "package": "redirect-objects",
+        "repositoryURL": "https://github.com/FeatherCMS/redirect-objects",
         "state": {
           "branch": "main",
-          "revision": "cf9ab3893c5e7d8f62f3a9eec6072be98ddf55fc",
-          "version": null
-        }
-      },
-      {
-        "package": "redirect-module",
-        "repositoryURL": "https://github.com/feathercms/redirect-module",
-        "state": {
-          "branch": "dev",
-          "revision": "dbbab05f360d8c069794deff7bbe5aa6dcd2d39f",
+          "revision": "366d92331b4b22031997b90fcec425c2c7ab1a0f",
           "version": null
         }
       },
@@ -186,8 +177,8 @@
         "repositoryURL": "https://github.com/soto-project/soto-core.git",
         "state": {
           "branch": null,
-          "revision": "a216ea49b9ff2480ccbc5880b1aa648032433798",
-          "version": "5.9.2"
+          "revision": "3079d17f2576cff5f2a3f68865629af455c673d1",
+          "version": "5.9.3"
         }
       },
       {
@@ -240,8 +231,8 @@
         "repositoryURL": "https://github.com/binarybirds/swift-html",
         "state": {
           "branch": null,
-          "revision": "b2620a6747fd664c892cfd20ff38d4c445bfa0d3",
-          "version": "1.6.8"
+          "revision": "e07678a77d296e66fa891a9d4d08acc4471d1783",
+          "version": "1.6.11"
         }
       },
       {
@@ -258,8 +249,8 @@
         "repositoryURL": "https://github.com/apple/swift-metrics.git",
         "state": {
           "branch": null,
-          "revision": "3edd2f57afc4e68e23c3e4956bc8b65ca6b5b2ff",
-          "version": "2.2.0"
+          "revision": "eadb828f878fed144387e3845866225bb7082c56",
+          "version": "2.3.0"
         }
       },
       {
@@ -285,8 +276,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
         "state": {
           "branch": null,
-          "revision": "000ca94f9de92c95b9ac85d44600b7b0fe25a3e5",
-          "version": "1.19.2"
+          "revision": "ac2a5afce3dbb6795b4f78ec3f19726dc28f5617",
+          "version": "1.20.0"
         }
       },
       {
@@ -308,20 +299,11 @@
         }
       },
       {
-        "package": "user-api",
-        "repositoryURL": "https://github.com/feathercms/user-api",
+        "package": "user-objects",
+        "repositoryURL": "https://github.com/feathercms/user-objects",
         "state": {
           "branch": "main",
-          "revision": "774afbc355df3fbef2e6abe9c5b8685ee921a9fd",
-          "version": null
-        }
-      },
-      {
-        "package": "user-module",
-        "repositoryURL": "https://github.com/feathercms/user-module",
-        "state": {
-          "branch": "main",
-          "revision": "fab9ed8a054bd30695ee3808c5f7e5397909be77",
+          "revision": "40678ce332a158f42b2cedab39ea049ee56ddc87",
           "version": null
         }
       },
@@ -330,16 +312,16 @@
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "e0fd4f3d76469dd6a0efb2be5c0b2f96b7581187",
-          "version": "4.55.1"
+          "revision": "5861bf9e2cff2c4cb0dcfb0c15ecfaa8bc5630e0",
+          "version": "4.55.3"
         }
       },
       {
-        "package": "web-module",
-        "repositoryURL": "https://github.com/feathercms/web-module",
+        "package": "web-objects",
+        "repositoryURL": "https://github.com/feathercms/web-objects",
         "state": {
           "branch": "main",
-          "revision": "55f771d11ac3f050cb8879b96d616095848ec353",
+          "revision": "fef5a6fef17c4b0037405adff199afa47a0389dd",
           "version": null
         }
       },

@@ -10,10 +10,15 @@ let package = Package(
         
     ],
     dependencies: [
-        .package(url: "https://github.com/feathercms/feather-core", .branch("dev")),
-        .package(url: "https://github.com/feathercms/user-module", .branch("main")),
-        .package(url: "https://github.com/feathercms/web-module", .branch("main")),
-        .package(url: "https://github.com/feathercms/redirect-module", .branch("dev")),
+        .package(path: "../feather-core"),
+        .package(path: "../user-module"),
+        .package(path: "../web-module"),
+        .package(path: "../redirect-module"),
+        
+//        .package(url: "https://github.com/feathercms/feather-core", .branch("dev")),
+//        .package(url: "https://github.com/feathercms/user-module", .branch("main")),
+//        .package(url: "https://github.com/feathercms/web-module", .branch("main")),
+//        .package(url: "https://github.com/feathercms/redirect-module", .branch("dev")),
 
         .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
         .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.3.0"),

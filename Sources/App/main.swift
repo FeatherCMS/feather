@@ -31,10 +31,10 @@ public func configure(_ app: Application) throws {
     app.mailProviders.use(.ses(credentialProvider: .default, region: .eucentral1), as: .ses)
 
     try app.feather.start([
-        UserBuilder(),
-        WebBuilder(),
-        RedirectBuilder(),
-    ].map { $0.build() })
+        UserBuilder().build(template: nil),
+        WebBuilder().build(),
+        RedirectBuilder().build(),
+    ])
 }
 
 var env = try Environment.detect()
