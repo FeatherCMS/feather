@@ -11,7 +11,7 @@ clean:
 	rm -rf ./Resources/ ./Public/
 
 run:
-	swift run Feather
+	swift run App
 
 # =====================================================================
 # 	testing
@@ -34,10 +34,10 @@ test: clean.testing env.testing
 install:
 	swift package update
 	swift build -c release
-	install .build/Release/Feather ./feather #./usr/local/bin/feather
+	install .build/Release/App ./app #./usr/local/bin/app
 
 uninstall:
-	rm ./feather
+	rm ./app
 
 # =====================================================================
 # 	dev
