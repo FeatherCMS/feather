@@ -7,7 +7,7 @@ let package = Package(
        .macOS(.v12)
     ],
     products: [
-        
+        .executable(name: "App", targets: ["App"])
     ],
     dependencies: [
         .package(path: "../feather-core"),
