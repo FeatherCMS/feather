@@ -43,17 +43,18 @@ uninstall:
 # 	dev
 # =====================================================================
 
+
 dev:
 	cd .. && \
-	git clone --branch dev git@github.com:FeatherCMS/feather-core.git && \
-	git clone --branch dev git@github.com:FeatherCMS/user-module.git && \
-	git clone --branch dev git@github.com:FeatherCMS/web-module.git && \
-	git clone --branch dev git@github.com:FeatherCMS/analytics-module.git && \
-	git clone --branch dev git@github.com:FeatherCMS/aggregator-module.git && \
-	git clone --branch dev git@github.com:FeatherCMS/blog-module.git && \
-	git clone --branch dev git@github.com:FeatherCMS/markdown-module.git && \
-	git clone --branch dev git@github.com:FeatherCMS/redirect-module.git && \
-	git clone --branch dev git@github.com:FeatherCMS/swifty-module.git && \
+	git clone --branch dev https://github.com/FeatherCMS/feather-core && \
+	git clone --branch dev https://github.com/FeatherCMS/user-module && \
+	git clone --branch dev https://github.com/FeatherCMS/web-module && \
+	git clone --branch dev https://github.com/FeatherCMS/analytics-module && \
+	git clone --branch dev https://github.com/FeatherCMS/aggregator-module && \
+	git clone --branch dev https://github.com/FeatherCMS/blog-module && \
+	git clone --branch dev https://github.com/FeatherCMS/markdown-module && \
+	git clone --branch dev https://github.com/FeatherCMS/redirect-module && \
+	git clone --branch dev https://github.com/FeatherCMS/swifty-module && \
 	cd feather
 
 update:

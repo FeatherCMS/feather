@@ -16,8 +16,8 @@ let package = Package(
         .package(path: "../redirect-module"),
         
 //        .package(url: "https://github.com/feathercms/feather-core", .branch("dev")),
-//        .package(url: "https://github.com/feathercms/user-module", .branch("main")),
-//        .package(url: "https://github.com/feathercms/web-module", .branch("main")),
+//        .package(url: "https://github.com/feathercms/user-module", .branch("dev")),
+//        .package(url: "https://github.com/feathercms/web-module", .branch("dev")),
 //        .package(url: "https://github.com/feathercms/redirect-module", .branch("dev")),
 
         .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
