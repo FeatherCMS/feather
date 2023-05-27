@@ -15,7 +15,7 @@ let package = Package(
 //        .package(path: "../web-module"),
 //        .package(path: "../redirect-module"),
 		
-		.package(url: "https://github.com/Rando-Coderissian/feather-core", .branch("test-refactor-modules")),
+		.package(url: "https://github.com/Rando-Coderissian/feather-core", .branch("test-refactored-modules")),
 		.package(url: "https://github.com/Rando-Coderissian/user-module", .branch("test-refactor-modules")),
 		.package(url: "https://github.com/Rando-Coderissian/web-module", .branch("test-refactor-modules")),
 		.package(url: "https://github.com/Rando-Coderissian/redirect-module", .branch("test-refactor-modules")),
@@ -36,7 +36,7 @@ let package = Package(
 		.package(url: "https://github.com/Rando-Coderissian/blog-module", .branch("test-refactor-modules")),
 		.package(url: "https://github.com/Rando-Coderissian/markdown-module", .branch("test-refactor-modules")),
 		.package(url: "https://github.com/Rando-Coderissian/swifty-module", .branch("test-refactor-modules")),
-		.package(url: "https://github.com/Rando-Coderissian/aggregator-module", .branch("test-refactor-modules")),
+//		.package(url: "https://github.com/Rando-Coderissian/aggregator-module", .branch("test-refactor-modules")),
 		
         .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
         .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.3.0"),
