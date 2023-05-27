@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
           "branch": null,
-          "revision": "fc510a39cff61b849bf5cdff17eb2bd6d0777b49",
-          "version": "1.11.5"
+          "revision": "78db67e5bf4a8543075787f228e8920097319281",
+          "version": "1.18.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
           "branch": null,
-          "revision": "a7e67a1719933318b5ab7eaaed355cde020465b1",
-          "version": "4.5.0"
+          "revision": "447f1046fb4e9df40973fe426ecb24a6f0e8d3b4",
+          "version": "4.6.0"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/vapor/fluent",
         "state": {
           "branch": null,
-          "revision": "26c446002f03c5ab34b20d86873014ef3d92d0da",
-          "version": "4.5.0"
+          "revision": "4b4d8bf15a06fd60137e9c543e5503c4b842654e",
+          "version": "4.8.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/vapor/fluent-kit.git",
         "state": {
           "branch": null,
-          "revision": "3c06388997a1ee72e97bcd752aff47d5b64722f5",
-          "version": "1.23.2"
+          "revision": "e53acf986e32c54fe522b2c12f737baa01828c1c",
+          "version": "1.42.2"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/vapor/fluent-sqlite-driver",
         "state": {
           "branch": null,
-          "revision": "9ca34be792979fb0f1dbd8e45b8af9f1e1440474",
-          "version": "4.1.0"
+          "revision": "33e920bd53c9a3a77f82733aaf26a82495afddd4",
+          "version": "4.4.0"
         }
       },
       {
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/binarybirds/mail-aws-driver",
         "state": {
           "branch": null,
-          "revision": "8fa1e8056a44170f2baef95fb06da609986180e9",
-          "version": "0.0.1"
+          "revision": "6a03e874b7ea88872926d84c70cc5196b1de59e9",
+          "version": "0.0.2"
         }
       },
       {
@@ -159,8 +159,8 @@
         "repositoryURL": "https://github.com/soto-project/soto.git",
         "state": {
           "branch": null,
-          "revision": "b98994beabdced18cbedbe50e947e6f2c8e0d602",
-          "version": "5.12.1"
+          "revision": "18184ba84e97e598ee6c5a7b803851e049e6eab5",
+          "version": "6.6.0"
         }
       },
       {
@@ -168,8 +168,8 @@
         "repositoryURL": "https://github.com/soto-project/soto-core.git",
         "state": {
           "branch": null,
-          "revision": "3079d17f2576cff5f2a3f68865629af455c673d1",
-          "version": "5.9.3"
+          "revision": "3462ca704a43ded3b5a2903f5df3280dd5fa6b1f",
+          "version": "6.5.0"
         }
       },
       {
@@ -186,8 +186,8 @@
         "repositoryURL": "https://github.com/vapor/sql-kit.git",
         "state": {
           "branch": null,
-          "revision": "9cc30f8cef132e91a07e36005612b37f918731fc",
-          "version": "3.16.0"
+          "revision": "5026e7c0f2e464ea1af9f5948701aa8922ab14eb",
+          "version": "3.27.0"
         }
       },
       {
@@ -195,8 +195,8 @@
         "repositoryURL": "https://github.com/vapor/sqlite-kit.git",
         "state": {
           "branch": null,
-          "revision": "0b3b12b032991de3ab5999b428a652ec29139746",
-          "version": "4.1.0"
+          "revision": "f66ddded9a330454856f5ba272cccc9e0c995b17",
+          "version": "4.3.0"
         }
       },
       {
@@ -204,8 +204,8 @@
         "repositoryURL": "https://github.com/vapor/sqlite-nio.git",
         "state": {
           "branch": null,
-          "revision": "6481dd0b01112d082dd7eb362782126e81964138",
-          "version": "1.1.0"
+          "revision": "2b7bcf3d2e4d2f68d52a66d12d2057867cee383a",
+          "version": "1.5.2"
         }
       },
       {
@@ -267,8 +267,8 @@
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {
           "branch": null,
-          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
-          "version": "1.4.2"
+          "revision": "32e8d724467f8fe623624570367e3d50c5638e46",
+          "version": "1.5.2"
         }
       },
       {
