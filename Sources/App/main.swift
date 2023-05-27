@@ -12,7 +12,7 @@ import Liquid
 import LiquidLocalDriver
 import Mail
 import MailAwsDriver
-import Feather
+import FeatherCore
 
 import WebModule
 import UserModule

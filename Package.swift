@@ -14,6 +14,13 @@ let package = Package(
         .package(path: "../user-module"),
         .package(path: "../web-module"),
         .package(path: "../redirect-module"),
+		
+		.package(path: "../analytics-module"),
+//		.package(path: "../aggregator-module"),
+		.package(path: "../blog-module"),
+		.package(path: "../markdown-module"),
+		.package(path: "../swifty-module"),
+
         
 //        .package(url: "https://github.com/feathercms/feather-core", .branch("dev")),
 //        .package(url: "https://github.com/feathercms/user-module", .branch("dev")),
@@ -26,11 +33,17 @@ let package = Package(
     ],
     targets: [
         .executableTarget(name: "App", dependencies: [
-            .product(name: "Feather", package: "feather-core"),
+            .product(name: "FeatherCore", package: "feather-core"),
             .product(name: "UserModule", package: "user-module"),
             .product(name: "WebModule", package: "web-module"),
             .product(name: "RedirectModule", package: "redirect-module"),
             
+			.product(name: "AnalyticsModule", package: "analytics-module"),
+//			.product(name: "AggregatorModule", package: "aggregator-module"),
+			.product(name: "BlogModule", package: "blog-module"),
+			.product(name: "SwiftyModule", package: "swifty-module"),
+			.product(name: "MarkdownModule", package: "markdown-module"),
+			
             .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver"),
             .product(name: "LiquidLocalDriver", package: "liquid-local-driver"),
             .product(name: "MailAwsDriver", package: "mail-aws-driver"),
