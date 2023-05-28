@@ -11,6 +11,24 @@
         }
       },
       {
+        "package": "analytics-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/analytics-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "b36df7903c5f45d1481abde8ee0392e04274cfe8",
+          "version": null
+        }
+      },
+      {
+        "package": "analytics-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/analytics-objects",
+        "state": {
+          "branch": "test-custom-config",
+          "revision": "30029cf04db8211d1c803925e594495c1259e26e",
+          "version": null
+        }
+      },
+      {
         "package": "async-http-client",
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
@@ -29,12 +47,57 @@
         }
       },
       {
+        "package": "blog-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/blog-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "e5b4c72b7b5058352e2542dca266a5acd38d9a24",
+          "version": null
+        }
+      },
+      {
+        "package": "blog-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/blog-objects",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "e292777a21418b23031fda9fce34df5911a71305",
+          "version": null
+        }
+      },
+      {
         "package": "console-kit",
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
           "branch": null,
           "revision": "447f1046fb4e9df40973fe426ecb24a6f0e8d3b4",
           "version": "4.6.0"
+        }
+      },
+      {
+        "package": "feather-core",
+        "repositoryURL": "https://github.com/Rando-Coderissian/feather-core",
+        "state": {
+          "branch": "test-refactored-modules",
+          "revision": "7a352c919180a9c6f05bc05f1ba86936d8d11e56",
+          "version": null
+        }
+      },
+      {
+        "package": "feather-icons",
+        "repositoryURL": "https://github.com/feathercms/feather-icons",
+        "state": {
+          "branch": "main",
+          "revision": "2d1e6715ad6f6a810434f1306d5d94691d1338d7",
+          "version": null
+        }
+      },
+      {
+        "package": "feather-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/feather-objects",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "169386ce3bf664fa768186467e4aec1caaee0fcf",
+          "version": null
         }
       },
       {
@@ -137,12 +200,39 @@
         }
       },
       {
+        "package": "markdown-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/markdown-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "c7ceeef5f5a36ba4d82b5c0788ba1fa94ce51aca",
+          "version": null
+        }
+      },
+      {
         "package": "multipart-kit",
         "repositoryURL": "https://github.com/vapor/multipart-kit.git",
         "state": {
           "branch": null,
           "revision": "1adfd69df2da08f7931d4281b257475e32c96734",
           "version": "4.5.4"
+        }
+      },
+      {
+        "package": "redirect-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/redirect-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "6907ca9ea8524756fc5ebb55f59b5cff7e3d2390",
+          "version": null
+        }
+      },
+      {
+        "package": "redirect-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/redirect-objects",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "e5b04680c0ef58fa35abc8e198d3f9682417cc74",
+          "version": null
         }
       },
       {
@@ -335,6 +425,15 @@
         }
       },
       {
+        "package": "swifty-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/swifty-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "24431cba084252880427b830ec265fae505d1c13",
+          "version": null
+        }
+      },
+      {
         "package": "UAParserSwift",
         "repositoryURL": "https://github.com/malcommac/UAParserSwift",
         "state": {
@@ -344,12 +443,48 @@
         }
       },
       {
+        "package": "user-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/user-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "a2f4fba8ab81433fab414d7752cdb80cfdc6ec0d",
+          "version": null
+        }
+      },
+      {
+        "package": "user-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/user-objects",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "ac2fa6f42b5f17c12202e9f0cdab1eb4f5913743",
+          "version": null
+        }
+      },
+      {
         "package": "vapor",
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
           "revision": "8b79ff0bd264a33bd0b7471dcf50dd1be983f992",
           "version": "4.76.3"
+        }
+      },
+      {
+        "package": "web-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/web-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "0d6d1c28944466172228b8a43b7f6c92e8ef871d",
+          "version": null
+        }
+      },
+      {
+        "package": "web-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/web-objects",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "4066d2e8a63b6f7b9f5a364d0c46a88deeb4ab21",
+          "version": null
         }
       },
       {
