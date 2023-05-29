@@ -2,12 +2,39 @@
   "object": {
     "pins": [
       {
+        "package": "ALanguageParser",
+        "repositoryURL": "https://github.com/matsoftware/accept-language-parser",
+        "state": {
+          "branch": null,
+          "revision": "5f4992a66df9232cfc60af8f6bb4179b854551d4",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "analytics-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/analytics-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "b36df7903c5f45d1481abde8ee0392e04274cfe8",
+          "version": null
+        }
+      },
+      {
+        "package": "analytics-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/analytics-objects",
+        "state": {
+          "branch": "test-custom-config",
+          "revision": "30029cf04db8211d1c803925e594495c1259e26e",
+          "version": null
+        }
+      },
+      {
         "package": "async-http-client",
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
           "branch": null,
-          "revision": "7a4dfe026f6ee0f8ad741b58df74c60af296365d",
-          "version": "1.9.0"
+          "revision": "78db67e5bf4a8543075787f228e8920097319281",
+          "version": "1.18.0"
         }
       },
       {
@@ -15,8 +42,26 @@
         "repositoryURL": "https://github.com/vapor/async-kit.git",
         "state": {
           "branch": null,
-          "revision": "e2f741640364c1d271405da637029ea6a33f754e",
-          "version": "1.11.1"
+          "revision": "a61da00d404ec91d12766f1b9aac7d90777b484d",
+          "version": "1.17.0"
+        }
+      },
+      {
+        "package": "blog-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/blog-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "e5b4c72b7b5058352e2542dca266a5acd38d9a24",
+          "version": null
+        }
+      },
+      {
+        "package": "blog-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/blog-objects",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "e292777a21418b23031fda9fce34df5911a71305",
+          "version": null
         }
       },
       {
@@ -24,8 +69,17 @@
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
           "branch": null,
-          "revision": "75ea3b627d88221440b878e5dfccc73fd06842ed",
-          "version": "4.2.7"
+          "revision": "447f1046fb4e9df40973fe426ecb24a6f0e8d3b4",
+          "version": "4.6.0"
+        }
+      },
+      {
+        "package": "feather-core",
+        "repositoryURL": "https://github.com/Rando-Coderissian/feather-core",
+        "state": {
+          "branch": "test-refactored-modules",
+          "revision": "7a352c919180a9c6f05bc05f1ba86936d8d11e56",
+          "version": null
         }
       },
       {
@@ -39,9 +93,9 @@
       },
       {
         "package": "feather-objects",
-        "repositoryURL": "https://github.com/feathercms/feather-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/feather-objects",
         "state": {
-          "branch": "main",
+          "branch": "test-refactor-modules",
           "revision": "169386ce3bf664fa768186467e4aec1caaee0fcf",
           "version": null
         }
@@ -51,8 +105,8 @@
         "repositoryURL": "https://github.com/vapor/fluent",
         "state": {
           "branch": null,
-          "revision": "ea707ee318066a073c95b2b2df1aa640fcb67f9e",
-          "version": "4.4.0"
+          "revision": "4b4d8bf15a06fd60137e9c543e5503c4b842654e",
+          "version": "4.8.0"
         }
       },
       {
@@ -60,8 +114,8 @@
         "repositoryURL": "https://github.com/vapor/fluent-kit.git",
         "state": {
           "branch": null,
-          "revision": "3c06388997a1ee72e97bcd752aff47d5b64722f5",
-          "version": "1.23.2"
+          "revision": "e53acf986e32c54fe522b2c12f737baa01828c1c",
+          "version": "1.42.2"
         }
       },
       {
@@ -69,8 +123,17 @@
         "repositoryURL": "https://github.com/vapor/fluent-sqlite-driver",
         "state": {
           "branch": null,
-          "revision": "9ca34be792979fb0f1dbd8e45b8af9f1e1440474",
-          "version": "4.1.0"
+          "revision": "33e920bd53c9a3a77f82733aaf26a82495afddd4",
+          "version": "4.4.0"
+        }
+      },
+      {
+        "package": "Ink",
+        "repositoryURL": "https://github.com/JohnSundell/Ink",
+        "state": {
+          "branch": null,
+          "revision": "bcc9f219900a62c4210e6db726035d7f03ae757b",
+          "version": "0.6.0"
         }
       },
       {
@@ -123,8 +186,8 @@
         "repositoryURL": "https://github.com/binarybirds/mail-aws-driver",
         "state": {
           "branch": null,
-          "revision": "8fa1e8056a44170f2baef95fb06da609986180e9",
-          "version": "0.0.1"
+          "revision": "6a03e874b7ea88872926d84c70cc5196b1de59e9",
+          "version": "0.0.2"
         }
       },
       {
@@ -137,20 +200,38 @@
         }
       },
       {
+        "package": "markdown-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/markdown-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "c7ceeef5f5a36ba4d82b5c0788ba1fa94ce51aca",
+          "version": null
+        }
+      },
+      {
         "package": "multipart-kit",
         "repositoryURL": "https://github.com/vapor/multipart-kit.git",
         "state": {
           "branch": null,
-          "revision": "2dd9368a3c9580792b77c7ef364f3735909d9996",
-          "version": "4.5.1"
+          "revision": "1adfd69df2da08f7931d4281b257475e32c96734",
+          "version": "4.5.4"
+        }
+      },
+      {
+        "package": "redirect-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/redirect-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "6907ca9ea8524756fc5ebb55f59b5cff7e3d2390",
+          "version": null
         }
       },
       {
         "package": "redirect-objects",
-        "repositoryURL": "https://github.com/FeatherCMS/redirect-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/redirect-objects",
         "state": {
-          "branch": "main",
-          "revision": "366d92331b4b22031997b90fcec425c2c7ab1a0f",
+          "branch": "test-refactor-modules",
+          "revision": "e5b04680c0ef58fa35abc8e198d3f9682417cc74",
           "version": null
         }
       },
@@ -159,8 +240,8 @@
         "repositoryURL": "https://github.com/vapor/routing-kit.git",
         "state": {
           "branch": null,
-          "revision": "5603b81ceb744b8318feab1e60943704977a866b",
-          "version": "4.3.1"
+          "revision": "611bc45c5dfb1f54b84d99b89d1f72191fb6b71b",
+          "version": "4.7.2"
         }
       },
       {
@@ -168,8 +249,8 @@
         "repositoryURL": "https://github.com/soto-project/soto.git",
         "state": {
           "branch": null,
-          "revision": "b98994beabdced18cbedbe50e947e6f2c8e0d602",
-          "version": "5.12.1"
+          "revision": "18184ba84e97e598ee6c5a7b803851e049e6eab5",
+          "version": "6.6.0"
         }
       },
       {
@@ -177,8 +258,17 @@
         "repositoryURL": "https://github.com/soto-project/soto-core.git",
         "state": {
           "branch": null,
-          "revision": "3079d17f2576cff5f2a3f68865629af455c673d1",
-          "version": "5.9.3"
+          "revision": "3462ca704a43ded3b5a2903f5df3280dd5fa6b1f",
+          "version": "6.5.0"
+        }
+      },
+      {
+        "package": "Splash",
+        "repositoryURL": "https://github.com/JohnSundell/Splash",
+        "state": {
+          "branch": null,
+          "revision": "7f4df436eb78fe64fe2c32c58006e9949fa28ad8",
+          "version": "0.16.0"
         }
       },
       {
@@ -186,8 +276,8 @@
         "repositoryURL": "https://github.com/vapor/sql-kit.git",
         "state": {
           "branch": null,
-          "revision": "9cc30f8cef132e91a07e36005612b37f918731fc",
-          "version": "3.16.0"
+          "revision": "5026e7c0f2e464ea1af9f5948701aa8922ab14eb",
+          "version": "3.27.0"
         }
       },
       {
@@ -195,8 +285,8 @@
         "repositoryURL": "https://github.com/vapor/sqlite-kit.git",
         "state": {
           "branch": null,
-          "revision": "0b3b12b032991de3ab5999b428a652ec29139746",
-          "version": "4.1.0"
+          "revision": "f66ddded9a330454856f5ba272cccc9e0c995b17",
+          "version": "4.3.0"
         }
       },
       {
@@ -204,7 +294,25 @@
         "repositoryURL": "https://github.com/vapor/sqlite-nio.git",
         "state": {
           "branch": null,
-          "revision": "6481dd0b01112d082dd7eb362782126e81964138",
+          "revision": "2b7bcf3d2e4d2f68d52a66d12d2057867cee383a",
+          "version": "1.5.2"
+        }
+      },
+      {
+        "package": "swift-algorithms",
+        "repositoryURL": "https://github.com/apple/swift-algorithms.git",
+        "state": {
+          "branch": null,
+          "revision": "b14b7f4c528c942f121c8b860b9410b2bf57825e",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "swift-atomics",
+        "repositoryURL": "https://github.com/apple/swift-atomics.git",
+        "state": {
+          "branch": null,
+          "revision": "6c89474e62719ddcc1e9614989fff2f68208fe10",
           "version": "1.1.0"
         }
       },
@@ -213,8 +321,17 @@
         "repositoryURL": "https://github.com/swift-server/swift-backtrace.git",
         "state": {
           "branch": null,
-          "revision": "d3e04a9d4b3833363fb6192065b763310b156d54",
-          "version": "1.3.1"
+          "revision": "f25620d5d05e2f1ba27154b40cafea2b67566956",
+          "version": "1.3.3"
+        }
+      },
+      {
+        "package": "swift-collections",
+        "repositoryURL": "https://github.com/apple/swift-collections.git",
+        "state": {
+          "branch": null,
+          "revision": "937e904258d22af6e447a0b72c0bc67583ef64a2",
+          "version": "1.0.4"
         }
       },
       {
@@ -222,8 +339,8 @@
         "repositoryURL": "https://github.com/apple/swift-crypto.git",
         "state": {
           "branch": null,
-          "revision": "067254c79435de759aeef4a6a03e43d087d61312",
-          "version": "2.0.5"
+          "revision": "33a20e650c33f6d72d822d558333f2085effa3dc",
+          "version": "2.5.0"
         }
       },
       {
@@ -231,8 +348,8 @@
         "repositoryURL": "https://github.com/binarybirds/swift-html",
         "state": {
           "branch": null,
-          "revision": "e07678a77d296e66fa891a9d4d08acc4471d1783",
-          "version": "1.6.11"
+          "revision": "f4fa5bc83fbee8dbd301c6fbb3969437415adad0",
+          "version": "1.7.0"
         }
       },
       {
@@ -240,8 +357,8 @@
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {
           "branch": null,
-          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
-          "version": "1.4.2"
+          "revision": "32e8d724467f8fe623624570367e3d50c5638e46",
+          "version": "1.5.2"
         }
       },
       {
@@ -249,8 +366,8 @@
         "repositoryURL": "https://github.com/apple/swift-metrics.git",
         "state": {
           "branch": null,
-          "revision": "eadb828f878fed144387e3845866225bb7082c56",
-          "version": "2.3.0"
+          "revision": "e8bced74bc6d747745935e469f45d03f048d6cbd",
+          "version": "2.3.4"
         }
       },
       {
@@ -258,8 +375,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "d6e3762e0a5f7ede652559f53623baf11006e17c",
-          "version": "2.39.0"
+          "revision": "2d8e6ca36fe3e8ed74b0883f593757a45463c34d",
+          "version": "2.53.0"
         }
       },
       {
@@ -267,8 +384,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-extras.git",
         "state": {
           "branch": null,
-          "revision": "f73ca5ee9c6806800243f1ac415fcf82de9a4c91",
-          "version": "1.10.2"
+          "revision": "0e0d0aab665ff1a0659ce75ac003081f2b1c8997",
+          "version": "1.19.0"
         }
       },
       {
@@ -276,8 +393,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
         "state": {
           "branch": null,
-          "revision": "50c25c132b140e62b45e90b5a76f13ded02c8a46",
-          "version": "1.20.1"
+          "revision": "6d021a48483dbb273a9be43f65234bdc9185b364",
+          "version": "1.26.0"
         }
       },
       {
@@ -285,8 +402,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
         "state": {
           "branch": null,
-          "revision": "b5260a31c2a72a89fa684f5efb3054d8725a2316",
-          "version": "2.18.0"
+          "revision": "e866a626e105042a6a72a870c88b4c531ba05f83",
+          "version": "2.24.0"
         }
       },
       {
@@ -294,16 +411,52 @@
         "repositoryURL": "https://github.com/apple/swift-nio-transport-services.git",
         "state": {
           "branch": null,
-          "revision": "8ab824b140d0ebcd87e9149266ddc353e3705a3e",
-          "version": "1.11.4"
+          "revision": "41f4098903878418537020075a4d8a6e20a0b182",
+          "version": "1.17.0"
+        }
+      },
+      {
+        "package": "swift-numerics",
+        "repositoryURL": "https://github.com/apple/swift-numerics",
+        "state": {
+          "branch": null,
+          "revision": "0a5bc04095a675662cf24757cc0640aa2204253b",
+          "version": "1.0.2"
+        }
+      },
+      {
+        "package": "swifty-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/swifty-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "24431cba084252880427b830ec265fae505d1c13",
+          "version": null
+        }
+      },
+      {
+        "package": "UAParserSwift",
+        "repositoryURL": "https://github.com/malcommac/UAParserSwift",
+        "state": {
+          "branch": null,
+          "revision": "a8057c7cff60db2cdf31d0a0a68ce430754ab64e",
+          "version": "1.2.1"
+        }
+      },
+      {
+        "package": "user-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/user-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "a2f4fba8ab81433fab414d7752cdb80cfdc6ec0d",
+          "version": null
         }
       },
       {
         "package": "user-objects",
-        "repositoryURL": "https://github.com/feathercms/user-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/user-objects",
         "state": {
-          "branch": "main",
-          "revision": "7ffe36b06b753e906a263e4864d8ff3bdc6830d7",
+          "branch": "test-refactor-modules",
+          "revision": "ac2fa6f42b5f17c12202e9f0cdab1eb4f5913743",
           "version": null
         }
       },
@@ -312,16 +465,25 @@
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "5861bf9e2cff2c4cb0dcfb0c15ecfaa8bc5630e0",
-          "version": "4.55.3"
+          "revision": "8b79ff0bd264a33bd0b7471dcf50dd1be983f992",
+          "version": "4.76.3"
+        }
+      },
+      {
+        "package": "web-module",
+        "repositoryURL": "https://github.com/Rando-Coderissian/web-module",
+        "state": {
+          "branch": "test-refactor-modules",
+          "revision": "0d6d1c28944466172228b8a43b7f6c92e8ef871d",
+          "version": null
         }
       },
       {
         "package": "web-objects",
-        "repositoryURL": "https://github.com/feathercms/web-objects",
+        "repositoryURL": "https://github.com/Rando-Coderissian/web-objects",
         "state": {
-          "branch": "main",
-          "revision": "fef5a6fef17c4b0037405adff199afa47a0389dd",
+          "branch": "test-refactor-modules",
+          "revision": "4066d2e8a63b6f7b9f5a364d0c46a88deeb4ab21",
           "version": null
         }
       },
@@ -330,8 +492,8 @@
         "repositoryURL": "https://github.com/vapor/websocket-kit.git",
         "state": {
           "branch": null,
-          "revision": "ff8fbce837ef01a93d49c6fb49a72be0f150dac7",
-          "version": "2.3.0"
+          "revision": "2ec14506d5f8199926906dc5a620ac22b147db86",
+          "version": "2.13.0"
         }
       }
     ]
