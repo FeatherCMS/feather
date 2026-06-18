@@ -1,0 +1,33 @@
+import AdminOpenAPI
+import UserApplication
+import Application
+
+extension AdminAPI {
+
+    func userRolePatch(
+        _ input: Operations.UserRolePatch.Input
+    ) async throws -> Operations.UserRolePatch.Output {
+        let body: Components.Schemas.UserRolePatchSchema
+        switch input.body {
+        case let .json(value):
+            body = value
+        }
+
+        let subject = try await CurrentSubject.require()
+        let useCase = modules.user.makeEditRole()
+        let result = try await useCase.execute(
+            subject: subject,
+            input: .init(
+                id: input.path.userRoleId,
+                name: body.name,
+                notes: body.notes
+            )
+        )
+
+        return .ok(
+            .init(
+                body: .json(map(result))
+            )
+        )
+    }
+}

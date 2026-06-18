@@ -1,0 +1,14 @@
+{{& page.contents.html}}
+
+<div id="tags" class="wrapper">
+    {{#context.tags}}
+    <div class="grid grid-321">
+    {{#context.tags}}
+        {{> partials/blog/tag}}
+    {{/context.tags}}
+    </div>
+    {{/context.tags}}
+    {{^context.tags}}
+    <p>Empty.</p>
+    {{/context.tags}}
+</div>

@@ -1,0 +1,101 @@
+a:link {
+    color: var(--link-color);
+}
+a:visited {
+    color: var(--link-color-visited);
+}
+a:hover {
+    color: var(--link-color-hover);
+}
+a:active {
+    color: var(--link-color-active);
+}
+body {
+    background: var(--background-color);
+    color: var(--text-color);
+}
+h1 {
+    font-size: 2.5rem;
+    line-height: 3rem;
+}
+h2 {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+    margin-top: 1.5rem;
+}
+h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-top: 1.5rem;
+}
+h4 {
+    font-size: 1.25rem;
+    line-height: 1.75;
+}
+h5 {
+    font-size: 1.125rem;
+    line-height: 1.625rem;
+}
+h6 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+pre {
+    font-size: 0.8rem;
+    line-height: 1.25rem;
+    background: var(--background-color);
+    margin: 2rem auto;
+    border: 3px solid var(--background-color-1);
+}
+pre code {
+    text-shadow: none;
+    font-family: monospace;
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+}
+pre code a {
+    border-bottom: 1px dotted var(--text-color);
+}
+pre.snippet {
+    margin-bottom: 0;
+}
+a.source.github::before {
+    content: 'Source: ';
+    font-weight: bold;
+}
+a.source.github {
+    display: block;
+    margin-top: 4px;
+    margin-left: 16px;
+    margin-bottom: 32px;
+}
+
+li {
+    margin-bottom: 16px;
+}
+p code, li code {
+    font-family: monospace;
+    font-weight: bold;
+}
+p code a, li code a {
+    font-weight: normal;
+}
+li p {
+    margin: 0;
+}
+p code a, li code a {
+    border-bottom: 1px dotted var(--text-color);
+}
+hr {
+    border: none;
+    border-bottom: 3px solid var(--link-color);
+    width: 64px;
+}

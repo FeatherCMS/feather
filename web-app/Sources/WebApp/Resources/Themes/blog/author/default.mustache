@@ -1,0 +1,20 @@
+<div id="author-page">
+    <header>
+        {{#page.image}}<img class="large rounded" src="{{.}}" alt="{{page.title}}">{{/page.image}}
+        <h1>{{page.title}}</h1>
+        {{& page.contents.html}}
+    </header>
+
+    {{#page.postCountLabel}}<p><br>{{.}}</p>{{/page.postCountLabel}}
+
+    {{#page.posts}}
+    <div class="grid grid-321">
+    {{#page.posts}}
+        {{> partials/blog/post}}
+    {{/page.posts}}
+    </div>
+    {{/page.posts}}
+    {{^page.posts}}
+    <p>Empty.</p>
+    {{/page.posts}}
+</div>

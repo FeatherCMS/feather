@@ -1,0 +1,22 @@
+<div id="tag">
+    <header>
+        {{#page.image}}<img class="medium" src="{{.}}" alt="{{page.title}}">{{/page.image}}
+        <h1>{{page.title}}</h1>
+        <p>{{page.description}}</p>
+    </header>
+
+    {{& page.contents.html}}
+
+    {{#page.postCountLabel}}<p>{{.}}</p>{{/page.postCountLabel}}
+
+    {{#page.posts}}
+    <div class="grid grid-321">
+    {{#page.posts}}
+        {{> partials/blog/post}}
+    {{/page.posts}}
+    </div>
+    {{/page.posts}}
+    {{^page.posts}}
+    <p>Empty.</p>
+    {{/page.posts}}
+</div>

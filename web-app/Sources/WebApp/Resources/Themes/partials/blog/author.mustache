@@ -1,0 +1,6 @@
+<div class="card author">
+    {{#hasImage}}<a href="{{permalink}}"><img class="large rounded" src="{{image}}" alt="{{title}}"></a>{{/hasImage}}
+    <h2><a href="{{permalink}}">{{title}}</a></h2>
+    {{#postCountLabel}}<p>{{.}}</p>{{/postCountLabel}}
+    {{^postCountLabel}}<p>{{description}}</p>{{/postCountLabel}}
+</div>

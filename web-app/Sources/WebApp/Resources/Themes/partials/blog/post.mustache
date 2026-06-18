@@ -1,0 +1,27 @@
+<div class="card">
+    {{#hasImage}}<img src="{{image}}" alt="{{title}}">{{/hasImage}}
+
+    <div class="author-list">
+    {{#authors}}
+        <a href="{{permalink}}">
+        {{#image}}<img class="small rounded" src="{{.}}" alt="{{title}}">{{/image}}
+        </a>
+    {{/authors}}
+    </div>
+
+    {{#publicationLabel}}
+    <div class="meta">
+        <time>{{.}}</time>
+    </div>
+    {{/publicationLabel}}
+
+    <h2 class="title"><a href="{{permalink}}">{{title}}</a></h2>
+    <hr>
+    <p>{{description}}</p>
+
+    <div class="tag-list">
+    {{#tags}}
+        <a href="{{permalink}}"><small>{{title}}</small></a>
+    {{/tags}}
+    </div>
+</div>

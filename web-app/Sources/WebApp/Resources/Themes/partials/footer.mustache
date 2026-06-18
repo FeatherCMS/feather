@@ -1,0 +1,48 @@
+<footer id="site-footer">
+    <div class="grid grid-421">
+        <picture>
+            <img
+                id="logo-image"
+                src="{{baseUrl}}/images/logos/logo-large.png"
+                alt="Logo of {{site.name}}"
+                title="{{site.name}}"
+            >
+        </picture>
+
+        <div>
+            <span style="display: block; height: 32px;">&nbsp;</span>
+            <h4>{{site.name}}</h4>
+            {{#site.description}}<p><small>{{.}}</small></p>{{/site.description}}
+            <ul>
+                {{#site.navigation}}
+                <li><a href="{{url}}"{{#isBlank}} target="_blank" rel="noreferrer"{{/isBlank}}>{{label}}</a></li>
+                {{/site.navigation}}
+            </ul>
+        </div>
+
+        <div>
+            {{#auth.isSignedIn}}
+            <ul>
+                <li><a href="{{auth.adminURL}}">Admin</a></li>
+                <li><a href="{{auth.logoutURL}}">Sign out</a></li>
+            </ul>
+            {{/auth.isSignedIn}}
+            {{^auth.isSignedIn}}
+            <ul>
+                <li><a href="{{auth.loginURL}}">Sign in</a></li>
+            </ul>
+            {{/auth.isSignedIn}}
+        </div>
+
+        <div>
+            {{#page.image}}<img class="small rounded" src="{{.}}" alt="{{page.title}}">{{/page.image}}
+            <h4>{{page.title}}</h4>
+            <p><small>{{site.language}}</small></p>
+        </div>
+    </div>
+
+    <section class="grid grid-221">
+        <small>&copy; {{generation.year}} {{site.name}}</small>
+        <small>This site was generated using <a href="https://swift.org/" target="_blank">Swift</a> &amp; Feather CMS.</small>
+    </section>
+</footer>

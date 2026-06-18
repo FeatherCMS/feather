@@ -1,0 +1,15 @@
+{{& page.contents.html}}
+
+<div id="blog" class="wrapper">
+    <h4>Latest posts</h4>
+    {{#context.posts}}
+    <div class="grid grid-321">
+    {{#context.posts}}
+        {{> partials/blog/post}}
+    {{/context.posts}}
+    </div>
+    {{/context.posts}}
+    {{^context.posts}}
+    <p>Empty.</p>
+    {{/context.posts}}
+</div>

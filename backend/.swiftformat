@@ -1,0 +1,16 @@
+--swift-version 6
+--enable indent
+--indent 4
+--max-width 80
+
+--wrap-arguments before-first
+--wrap-parameters before-first
+--wrap-collections before-first
+--closing-paren balanced
+--call-site-paren balanced
+--wrap-return-type preserve
+--wrap-conditions before-first
+--wrap-type-aliases before-first
+--wrap-effects never
+--wrap-string-interpolation default
+--allow-partial-wrapping false

@@ -1,0 +1,12 @@
+.git
+**/.git
+.DS_Store
+**/.DS_Store
+**/.build
+**/.swiftpm
+**/.vscode
+**/node_modules
+**/.idea
+.docker-cache
+.agents
+.codex

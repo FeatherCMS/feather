@@ -1,0 +1,322 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+}
+.top-bar h1 {
+    font-size: 24px;
+}
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+nav li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+}
+nav ul li {
+    list-style-type: none;
+}
+.menu-groups,
+.menu-groups .sub-menu {
+    margin: 0;
+    padding: 0;
+}
+.group-label {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 16px;
+    padding-bottom: 8px;
+}
+.submenu-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+.submenu-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    padding: 16px;
+    cursor: pointer;
+}
+.menu-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--cms-menu-icon);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+.submenu-label::after {
+    content: "";
+    position: absolute;
+    color: var(--cms-menu-icon);
+    right: 16px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-50%) rotate(-45deg);
+    transition: transform 0.25s ease-in-out;
+}
+.submenu-toggle:checked + .submenu-label::after {
+    transform: translateY(-50%) rotate(45deg);
+}
+.submenu-toggle + .submenu-label + .sub-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease-in-out;
+}
+.submenu-toggle:checked + .submenu-label + .sub-menu {
+    max-height: 100vh;
+}
+.top-bar {
+    margin: 0px;
+    margin-bottom: 0;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+.top-bar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.top-bar-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: calc(100% - 120px);
+}
+.top-bar-title h1 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.top-bar-title-link {
+    color: inherit;
+}
+.menu-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 2px;
+}
+.menu-trigger-icon {
+    display: block;
+}
+.menu-trigger-mobile line {
+    transition: transform 0.32s ease 0s;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+.top-bar-actions {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Override the shared table styles from the static base stylesheet. */
+.cms-table th:first-child,
+.cms-table td:first-child,
+.action-table th:first-child,
+.action-table td:first-child {
+    text-align: left !important;
+}
+
+#accountToggle,
+#accountToggle + .account-trigger {
+    cursor: pointer;
+}
+#accountToggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+.account-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+.account-trigger img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+}
+.account-menu {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    min-width: 140px;
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+    display: none;
+    z-index: 20;
+}
+.account-menu li a {
+    display: block;
+    padding: 8px 12px;
+    color: inherit;
+}
+#accountToggle:checked + .account-trigger + .account-menu {
+    display: block;
+}
+.container {
+    display: grid;
+    column-gap: 0px;
+    row-gap: 0px;
+    padding: 0px;
+    grid-column: span 1;
+    grid-template-columns: 1fr;
+}
+.container > * {
+    min-width: 0;
+}
+.grid > * {
+    overflow: hidden;
+}
+
+main {
+    min-height: 100vh;
+}
+
+main .panel {
+    padding: 16px;
+}
+
+
+
+#menuToggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+.menu {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.32s ease 0s;
+}
+#menuToggle:checked ~ .menu {
+    max-height: 80dvh;
+    
+}
+.menu-trigger-desktop {
+    display: none;
+}
+.menu-trigger-mobile {
+    display: block;
+    transition: transform 0.32s ease 0s;
+    transform-origin: 50% 50%;
+}
+body:has(#menuToggle:checked) .menu-trigger-mobile line:nth-child(1) {
+    transform: translateX(-50px);
+}
+body:has(#menuToggle:checked) .menu-trigger-mobile line:nth-child(2) {
+    transform: translateY(6px) rotate(45deg);
+}
+body:has(#menuToggle:checked) .menu-trigger-mobile line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (min-width: 600px) {
+    .container {
+        grid-template-columns: auto 1fr;
+        align-items: start;
+    }
+    .menu {
+        width: 250px;
+        max-height: none;
+        overflow: hidden;
+    }
+    .menu .group-label {
+        overflow: hidden;
+        white-space: nowrap;
+        max-height: none;
+        opacity: 1;
+        transform: translateX(0);
+    }
+    .menu .submenu-label span,
+    .menu li a span {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 140px;
+        opacity: 1;
+        transform: translateX(0);
+    }
+    .menu .submenu-label::after {
+        transition: transform 0.25s ease-in-out;
+    }
+    #menuToggle:checked ~ .menu {
+        width: 60px;
+    }
+    #menuToggle:checked ~ .menu .group-label {
+        max-height: 0;
+        opacity: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        transform: translateX(-6px);
+    }
+    #menuToggle:checked ~ .menu .submenu-label span,
+    #menuToggle:checked ~ .menu li a span {
+        max-width: 0;
+        opacity: 0;
+        transform: translateX(-4px);
+    }
+    #menuToggle:checked ~ .menu .submenu-label::after {
+        opacity: 0;
+    }
+    #menuToggle:checked ~ .menu .submenu-label,
+    #menuToggle:checked ~ .menu li a {
+        justify-content: center;
+        gap: 0;
+        padding: 16px;
+    }
+    
+    .menu-trigger-desktop {
+        display: block;
+        transition: transform 0.32s ease;
+    }
+    .menu-trigger-mobile {
+        display: none;
+    }
+}

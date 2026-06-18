@@ -1,0 +1,14 @@
+{{& page.contents.html}}
+
+<div id="posts" class="wrapper">
+    {{#iterator.items}}
+    <div class="grid grid-321">
+    {{#iterator.items}}
+        {{> partials/blog/post}}
+    {{/iterator.items}}
+    </div>
+    {{/iterator.items}}
+    {{^iterator.items}}
+    <p>Empty.</p>
+    {{/iterator.items}}
+</div>

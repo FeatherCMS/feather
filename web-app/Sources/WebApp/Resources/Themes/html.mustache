@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html {{#site.language}}lang="{{.}}"{{/site.language}}>
+<head>
+    <meta charset="utf-8">
+    {{#page.noindex}}<meta name="robots" content="noindex">{{/page.noindex}}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="canonical" href="{{page.permalink}}">
+    {{#page.prev}}<link rel="prev" href="{{permalink}}">{{/page.prev}}
+    {{#page.next}}<link rel="next" href="{{permalink}}">{{/page.next}}
+
+    <title>{{page.title}} - {{site.name}}</title>
+    <meta name="description" content="{{page.description}}">
+
+    <meta property="og:url" content="{{page.permalink}}">
+    <meta property="og:title" content="{{page.title}} - {{site.name}}">
+    <meta property="og:description" content="{{page.description}}">
+    {{#page.image}}<meta property="og:image" content="{{.}}" />{{/page.image}}
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{page.title}} - {{site.name}}">
+    <meta name="twitter:description" content="{{page.description}}">
+    {{#page.image}}<meta name="twitter:image" content="{{.}}">{{/page.image}}
+
+    <link rel="stylesheet" href="{{baseUrl}}/css/modern-normalize.css">
+    <link rel="stylesheet" href="{{baseUrl}}/css/modern-base.css">
+    <link rel="stylesheet" href="{{baseUrl}}/css/variables.css">
+    <link rel="stylesheet" href="{{baseUrl}}/css/base.css">
+    <link rel="stylesheet" href="{{baseUrl}}/css/grid.css">
+    <link rel="stylesheet" href="{{baseUrl}}/css/navigation.css">
+    <link rel="stylesheet" href="{{baseUrl}}/css/footer.css">
+    {{#page.css}}<link rel="stylesheet" href="{{.}}">{{/page.css}}
+
+    {{> partials/icons}}
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+        media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+        media="(prefers-color-scheme: dark)"
+    >
+    <link rel="stylesheet" href="{{baseUrl}}/css/style.css">
+    {{&site.cssCodeInjection}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+    <div id="site-container">
+        {{> partials/navigation}}
+        <main id="page-container">
+            {{& body}}
+        </main>
+        {{> partials/footer}}
+    </div>
+    {{#page.js}}<script src="{{.}}" async></script>{{/page.js}}
+    {{&site.javascriptCodeInjection}}
+</body>
+</html>

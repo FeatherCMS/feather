@@ -1,0 +1,1280 @@
+openapi: 3.2.0
+info:
+  title: App API
+  version: 0.1.0
+tags:
+- name: Analytics
+- name: Blog
+  description: Public app blog endpoints
+- name: Web
+  description: Public app web endpoints
+- name: Auth
+  description: Authentication endpoints.
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/analytics/logs/track:
+    post:
+      tags:
+      - Analytics
+      operationId: analyticsLogTrack
+      requestBody:
+        $ref: '#/components/requestBodies/AnalyticsLogTrackRequestBody'
+      responses:
+        204:
+          description: Analytics log tracked
+  /api/v1/blog/settings:
+    get:
+      tags:
+      - Blog
+      operationId: blogRouteSettings
+      responses:
+        200:
+          $ref: '#/components/responses/BlogRouteSettingsResponse'
+  /api/v1/web/settings:
+    get:
+      tags:
+      - Web
+      operationId: webSiteSettings
+      responses:
+        200:
+          $ref: '#/components/responses/WebSiteSettingsResponse'
+  /api/v1/web/menus:
+    get:
+      tags:
+      - Web
+      operationId: webMenuList
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuListResponse'
+  /api/v1/web/routes/{slug}:
+    get:
+      tags:
+      - Web
+      operationId: webMetadataGet
+      parameters:
+      - $ref: '#/components/parameters/WebMetadataSlugParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMetadataResponse'
+        404:
+          description: Web metadata not found
+  /api/v1/blog/posts:
+    get:
+      tags:
+      - Blog
+      operationId: blogPostList
+      responses:
+        200:
+          $ref: '#/components/responses/BlogPostListResponse'
+  /api/v1/blog/posts/{id}:
+    get:
+      tags:
+      - Blog
+      operationId: blogPostGet
+      parameters:
+      - $ref: '#/components/parameters/BlogPostIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/BlogPostDetailResponse'
+        404:
+          description: Blog post not found
+  /api/v1/blog/authors:
+    get:
+      tags:
+      - Blog
+      operationId: blogAuthorList
+      responses:
+        200:
+          $ref: '#/components/responses/BlogAuthorListResponse'
+  /api/v1/blog/authors/{id}:
+    get:
+      tags:
+      - Blog
+      operationId: blogAuthorGet
+      parameters:
+      - $ref: '#/components/parameters/BlogAuthorIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/BlogAuthorDetailResponse'
+        404:
+          description: Blog author not found
+  /api/v1/blog/tags:
+    get:
+      tags:
+      - Blog
+      operationId: blogTagList
+      responses:
+        200:
+          $ref: '#/components/responses/BlogTagListResponse'
+  /api/v1/blog/tags/{id}:
+    get:
+      tags:
+      - Blog
+      operationId: blogTagGet
+      parameters:
+      - $ref: '#/components/parameters/BlogTagIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/BlogTagDetailResponse'
+        404:
+          description: Blog tag not found
+  /api/v1/redirect/rules:
+    get:
+      operationId: redirectRuleGet
+      parameters:
+      - $ref: '#/components/parameters/RedirectSourceParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/RedirectRuleResponse'
+        404:
+          description: Redirect rule not found
+  /api/v1/web/pages/{id}:
+    get:
+      tags:
+      - Web
+      operationId: webPageGet
+      parameters:
+      - $ref: '#/components/parameters/WebMetadataIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebPageDetailResponse'
+        404:
+          description: Web page not found
+  /api/v1/auth/me:
+    get:
+      tags:
+      - Auth
+      operationId: authMe
+      responses:
+        200:
+          $ref: '#/components/responses/AuthMeResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/auth/register:
+    post:
+      tags:
+      - Auth
+      operationId: authRegister
+      requestBody:
+        $ref: '#/components/requestBodies/AuthRegisterRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AuthMeResponse'
+  /api/v1/auth/login:
+    post:
+      tags:
+      - Auth
+      operationId: authLogin
+      requestBody:
+        $ref: '#/components/requestBodies/AuthLoginRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthResponse'
+  /api/v1/auth/logout:
+    post:
+      tags:
+      - Auth
+      operationId: authLogout
+      responses:
+        204:
+          description: Logged out
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/auth/magic-link:
+    post:
+      tags:
+      - Auth
+      operationId: authMagicLink
+      requestBody:
+        $ref: '#/components/requestBodies/AuthMagicLinkRequestBody'
+      responses:
+        204:
+          description: Magic link requested
+  /api/v1/auth/magic-link/verify:
+    post:
+      tags:
+      - Auth
+      operationId: authMagicLinkVerify
+      requestBody:
+        $ref: '#/components/requestBodies/AuthMagicLinkVerifyRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthResponse'
+components:
+  schemas:
+    AppAnalyticsLogTrackSchema:
+      type: object
+      properties:
+        method:
+          type: string
+          examples:
+          - GET
+        url:
+          type: string
+          examples:
+          - /admin/user/accounts/?page=1
+        headers:
+          type: string
+          examples:
+          - '{"accept":"text/html"}'
+        ip:
+          type: string
+          examples:
+          - 203.0.113.10
+        path:
+          type: string
+          examples:
+          - /admin/user/accounts/
+        referer:
+          type: string
+          examples:
+          - https://example.com/login
+        origin:
+          type: string
+          examples:
+          - https://example.com
+        acceptLanguage:
+          type: string
+          examples:
+          - en-US,en;q=0.9
+        userAgent:
+          type: string
+          examples:
+          - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+        responseCode:
+          type: integer
+          examples:
+          - 200
+      required:
+      - method
+      - url
+      - headers
+      - ip
+      - path
+      - referer
+      - origin
+      - acceptLanguage
+      - userAgent
+      - responseCode
+      minProperties: 10
+    BlogRouteSettingsSchema:
+      type: object
+      properties:
+        postListPath:
+          $ref: '#/components/schemas/BlogSettingsPostListPathField'
+        authorListPath:
+          $ref: '#/components/schemas/BlogSettingsAuthorListPathField'
+        tagListPath:
+          $ref: '#/components/schemas/BlogSettingsTagListPathField'
+        postPathPrefix:
+          $ref: '#/components/schemas/BlogSettingsPostPathPrefixField'
+        authorPathPrefix:
+          $ref: '#/components/schemas/BlogSettingsAuthorPathPrefixField'
+        tagPathPrefix:
+          $ref: '#/components/schemas/BlogSettingsTagPathPrefixField'
+        siteNoIndex:
+          $ref: '#/components/schemas/BlogSettingsSiteNoIndexField'
+      required:
+      - postListPath
+      - authorListPath
+      - tagListPath
+      - postPathPrefix
+      - authorPathPrefix
+      - tagPathPrefix
+      - siteNoIndex
+      minProperties: 7
+    BlogSettingsPostListPathField:
+      type: string
+      examples:
+      - blog
+    BlogSettingsAuthorListPathField:
+      type: string
+      examples:
+      - authors
+    BlogSettingsTagListPathField:
+      type: string
+      examples:
+      - tags
+    BlogSettingsPostPathPrefixField:
+      type: string
+      examples:
+      - posts
+    BlogSettingsAuthorPathPrefixField:
+      type: string
+      examples:
+      - authors
+    BlogSettingsTagPathPrefixField:
+      type: string
+      examples:
+      - tags
+    BlogSettingsSiteNoIndexField:
+      type: boolean
+      examples:
+      - false
+    WebSiteSettingsSchema:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/WebSiteSettingsTitleField'
+        excerpt:
+          $ref: '#/components/schemas/WebSiteSettingsExcerptField'
+        locale:
+          $ref: '#/components/schemas/WebSiteSettingsLocaleField'
+        noIndex:
+          $ref: '#/components/schemas/WebSiteSettingsNoIndexField'
+        logo:
+          $ref: '#/components/schemas/WebSiteSettingsLogoField'
+        logoDark:
+          $ref: '#/components/schemas/WebSiteSettingsLogoDarkField'
+        metaImage:
+          $ref: '#/components/schemas/WebSiteSettingsMetaImageField'
+        primaryColor:
+          $ref: '#/components/schemas/WebSiteSettingsPrimaryColorField'
+        secondaryColor:
+          $ref: '#/components/schemas/WebSiteSettingsSecondaryColorField'
+        tertiaryColor:
+          $ref: '#/components/schemas/WebSiteSettingsTertiaryColorField'
+        primaryFont:
+          $ref: '#/components/schemas/WebSiteSettingsPrimaryFontField'
+        secondaryFont:
+          $ref: '#/components/schemas/WebSiteSettingsSecondaryFontField'
+        homePageId:
+          $ref: '#/components/schemas/WebSiteSettingsHomePageIDField'
+        css:
+          $ref: '#/components/schemas/WebSiteSettingsCSSField'
+        js:
+          $ref: '#/components/schemas/WebSiteSettingsJSField'
+      required:
+      - title
+      - excerpt
+      - locale
+      - noIndex
+      - logo
+      - logoDark
+      - metaImage
+      - primaryColor
+      - secondaryColor
+      - tertiaryColor
+      - primaryFont
+      - secondaryFont
+      - css
+      - js
+      minProperties: 14
+    WebSiteSettingsTitleField:
+      type: string
+      examples:
+      - Example Site
+    WebSiteSettingsExcerptField:
+      type: string
+      examples:
+      - A concise site description.
+    WebSiteSettingsLocaleField:
+      type: string
+      examples:
+      - en_us
+    WebSiteSettingsNoIndexField:
+      type: boolean
+      examples:
+      - false
+    WebSiteSettingsLogoField:
+      type: string
+      examples:
+      - /images/logo.svg
+    WebSiteSettingsLogoDarkField:
+      type: string
+      examples:
+      - /images/logo-dark.svg
+    WebSiteSettingsMetaImageField:
+      type: string
+      examples:
+      - /media/assets/default-meta-image.webp
+    WebSiteSettingsPrimaryColorField:
+      type: string
+      examples:
+      - '#1d4ed8'
+    WebSiteSettingsSecondaryColorField:
+      type: string
+      examples:
+      - '#0f172a'
+    WebSiteSettingsTertiaryColorField:
+      type: string
+      examples:
+      - '#e2e8f0'
+    WebSiteSettingsPrimaryFontField:
+      type: string
+      examples:
+      - Geist
+    WebSiteSettingsSecondaryFontField:
+      type: string
+      examples:
+      - Merriweather
+    WebSiteSettingsHomePageIDField:
+      type: string
+      examples:
+      - web_page_1
+    WebSiteSettingsCSSField:
+      type: string
+      examples:
+      - body { }
+    WebSiteSettingsJSField:
+      type: string
+      examples:
+      - console.log('web');
+    WebMenuListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebMenuSchema'
+      minItems: 0
+      uniqueItems: false
+    WebMenuSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebMenuIdField'
+        key:
+          $ref: '#/components/schemas/WebMenuKeyField'
+        name:
+          $ref: '#/components/schemas/WebMenuNameField'
+        items:
+          $ref: '#/components/schemas/WebMenuItemListSchema'
+      required:
+      - id
+      - key
+      - name
+      - items
+      minProperties: 4
+    WebMenuIdField:
+      type: string
+      examples:
+      - wm_header
+    WebMenuKeyField:
+      type: string
+      examples:
+      - header
+    WebMenuNameField:
+      type: string
+      examples:
+      - Header menu
+    WebMenuItemListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebMenuItemSchema'
+      minItems: 0
+      uniqueItems: false
+    WebMenuItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebMenuItemIdField'
+        label:
+          $ref: '#/components/schemas/WebMenuItemLabelField'
+        url:
+          $ref: '#/components/schemas/WebMenuItemURLField'
+        priority:
+          $ref: '#/components/schemas/WebMenuItemPriorityField'
+        isBlank:
+          $ref: '#/components/schemas/WebMenuItemIsBlankField'
+      required:
+      - id
+      - label
+      - url
+      - priority
+      - isBlank
+      minProperties: 5
+    WebMenuItemIdField:
+      type: string
+      examples:
+      - wmi_home
+    WebMenuItemLabelField:
+      type: string
+      examples:
+      - Home
+    WebMenuItemURLField:
+      type: string
+      examples:
+      - /
+    WebMenuItemPriorityField:
+      type: integer
+      examples:
+      - 10
+    WebMenuItemIsBlankField:
+      type: boolean
+      examples:
+      - false
+    WebMetadataSlugField:
+      type: string
+      examples:
+      - homepage
+    WebMetadataSchema:
+      type: object
+      properties:
+        referenceType:
+          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+        referenceId:
+          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+        slug:
+          $ref: '#/components/schemas/WebMetadataSlugField'
+      required:
+      - referenceType
+      - referenceId
+      - slug
+      minProperties: 3
+    WebMetadataReferenceTypeField:
+      type: string
+      examples:
+      - web.page
+    WebMetadataReferenceIDField:
+      type: string
+      examples:
+      - wp_home
+    BlogPostListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogPostSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogPostSummarySchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostIdField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        imageURL:
+          $ref: '#/components/schemas/BlogPostImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+      required:
+      - id
+      - excerpt
+      - imageURL
+      - metadata
+      minProperties: 4
+    BlogPostIdField:
+      type: string
+      examples:
+      - blog_post_1
+    BlogPostExcerptField:
+      type: string
+      examples:
+      - Short post summary.
+    BlogPostImageURLField:
+      type: string
+      examples:
+      - /media/assets/blog-post.png
+    MediaAssetSchema:
+      type: object
+      properties:
+        assetId:
+          $ref: '#/components/schemas/MediaAssetIdField'
+        originalURL:
+          $ref: '#/components/schemas/MediaAssetURLField'
+        defaultURL:
+          $ref: '#/components/schemas/MediaAssetURLField'
+        variants:
+          $ref: '#/components/schemas/MediaAssetVariantListSchema'
+      required:
+      - assetId
+      - originalURL
+      - defaultURL
+      - variants
+      minProperties: 4
+    MediaAssetIdField:
+      type: string
+      examples:
+      - media_asset_1
+    MediaAssetURLField:
+      type: string
+      examples:
+      - /media/assets/example.png
+    MediaAssetVariantListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MediaAssetVariantSchema'
+      minItems: 0
+      uniqueItems: false
+    MediaAssetVariantSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaAssetIdField'
+        url:
+          $ref: '#/components/schemas/MediaAssetURLField'
+        type:
+          $ref: '#/components/schemas/MediaAssetTypeField'
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int64
+      required:
+      - id
+      - url
+      - type
+      minProperties: 3
+    MediaAssetTypeField:
+      type: string
+      examples:
+      - png
+    WebMetadataContentSchema:
+      type: object
+      properties:
+        slug:
+          $ref: '#/components/schemas/WebMetadataSlugField'
+        publicationDate:
+          $ref: '#/components/schemas/WebMetadataTimestampField'
+        expirationDate:
+          $ref: '#/components/schemas/WebMetadataTimestampField'
+        status:
+          $ref: '#/components/schemas/WebMetadataStatusField'
+        title:
+          $ref: '#/components/schemas/WebMetadataTitleField'
+        excerpt:
+          $ref: '#/components/schemas/WebMetadataExcerptField'
+        imageURL:
+          $ref: '#/components/schemas/WebMetadataImageURLField'
+        canonicalURL:
+          $ref: '#/components/schemas/WebMetadataCanonicalURLField'
+        noIndex:
+          $ref: '#/components/schemas/WebMetadataNoIndexField'
+        cssCodeInjection:
+          $ref: '#/components/schemas/WebMetadataCodeInjectionField'
+        javascriptCodeInjection:
+          $ref: '#/components/schemas/WebMetadataCodeInjectionField'
+        structuredDataCodeInjection:
+          $ref: '#/components/schemas/WebMetadataCodeInjectionField'
+      required:
+      - slug
+      - status
+      - title
+      - excerpt
+      - imageURL
+      - canonicalURL
+      - noIndex
+      - cssCodeInjection
+      - javascriptCodeInjection
+      - structuredDataCodeInjection
+      minProperties: 10
+    WebMetadataTimestampField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    WebMetadataStatusField:
+      type: string
+      examples:
+      - published
+    WebMetadataTitleField:
+      type: string
+      examples:
+      - Hello world
+    WebMetadataExcerptField:
+      type: string
+      examples:
+      - Short summary
+    WebMetadataImageURLField:
+      type: string
+      examples:
+      - /media/assets/example.png
+    WebMetadataCanonicalURLField:
+      type: string
+      examples:
+      - https://example.com/posts/hello-world
+    WebMetadataNoIndexField:
+      type: boolean
+      examples:
+      - false
+    WebMetadataCodeInjectionField:
+      type: string
+      examples:
+      - <p>Hello world</p>
+    BlogPostDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostIdField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogPostContentField'
+        imageURL:
+          $ref: '#/components/schemas/BlogPostImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+        authors:
+          $ref: '#/components/schemas/BlogAuthorSummaryListSchema'
+        tags:
+          $ref: '#/components/schemas/BlogTagSummaryListSchema'
+      required:
+      - id
+      - excerpt
+      - content
+      - imageURL
+      - metadata
+      - authors
+      - tags
+      minProperties: 7
+    BlogPostContentField:
+      type: string
+      examples:
+      - <p>Hello world</p>
+    BlogAuthorSummaryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogAuthorSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogAuthorSummarySchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogAuthorIdField'
+        name:
+          $ref: '#/components/schemas/BlogAuthorNameField'
+        excerpt:
+          $ref: '#/components/schemas/BlogAuthorExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogAuthorContentField'
+        imageURL:
+          $ref: '#/components/schemas/BlogAuthorImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+      required:
+      - id
+      - name
+      - excerpt
+      - content
+      - imageURL
+      - metadata
+      minProperties: 6
+    BlogAuthorIdField:
+      type: string
+      examples:
+      - blog_author_1
+    BlogAuthorNameField:
+      type: string
+      examples:
+      - Jane Doe
+    BlogAuthorExcerptField:
+      type: string
+      examples:
+      - Short author summary.
+    BlogAuthorContentField:
+      type: string
+      examples:
+      - <p>Author bio</p>
+    BlogAuthorImageURLField:
+      type: string
+      examples:
+      - /media/assets/author.png
+    BlogTagSummaryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogTagSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogTagSummarySchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogTagIdField'
+        excerpt:
+          $ref: '#/components/schemas/BlogTagExcerptField'
+        imageURL:
+          $ref: '#/components/schemas/BlogTagImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+      required:
+      - id
+      - excerpt
+      - imageURL
+      - metadata
+      minProperties: 4
+    BlogTagIdField:
+      type: string
+      examples:
+      - blog_tag_1
+    BlogTagExcerptField:
+      type: string
+      examples:
+      - Short tag summary.
+    BlogTagImageURLField:
+      type: string
+      examples:
+      - /media/assets/tag.png
+    BlogAuthorListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogAuthorSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogAuthorDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogAuthorIdField'
+        name:
+          $ref: '#/components/schemas/BlogAuthorNameField'
+        excerpt:
+          $ref: '#/components/schemas/BlogAuthorExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogAuthorContentField'
+        imageURL:
+          $ref: '#/components/schemas/BlogAuthorImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+        links:
+          $ref: '#/components/schemas/BlogAuthorLinkListSchema'
+        posts:
+          $ref: '#/components/schemas/BlogPostSummaryListSchema'
+      required:
+      - id
+      - name
+      - excerpt
+      - content
+      - imageURL
+      - metadata
+      - links
+      - posts
+      minProperties: 8
+    BlogAuthorLinkListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogAuthorLinkSchema'
+      minItems: 0
+      uniqueItems: false
+    BlogAuthorLinkSchema:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/BlogAuthorLinkLabelField'
+        url:
+          $ref: '#/components/schemas/BlogAuthorLinkURLField'
+        isBlank:
+          $ref: '#/components/schemas/BlogAuthorLinkIsBlankField'
+      required:
+      - label
+      - url
+      - isBlank
+      minProperties: 3
+    BlogAuthorLinkLabelField:
+      type: string
+      examples:
+      - Website
+    BlogAuthorLinkURLField:
+      type: string
+      examples:
+      - https://example.com
+    BlogAuthorLinkIsBlankField:
+      type: boolean
+      examples:
+      - false
+    BlogPostSummaryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogPostSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogTagListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogTagSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogTagDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogTagIdField'
+        excerpt:
+          $ref: '#/components/schemas/BlogTagExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogTagContentField'
+        imageURL:
+          $ref: '#/components/schemas/BlogTagImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+        posts:
+          $ref: '#/components/schemas/BlogPostSummaryListSchema'
+      required:
+      - id
+      - excerpt
+      - content
+      - imageURL
+      - metadata
+      - posts
+      minProperties: 6
+    BlogTagContentField:
+      type: string
+      examples:
+      - <p>Tag description</p>
+    RedirectSourceField:
+      type: string
+      examples:
+      - /from-here/
+    RedirectRuleSchema:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/RedirectSourceField'
+        destination:
+          $ref: '#/components/schemas/RedirectDestinationField'
+        statusCode:
+          $ref: '#/components/schemas/RedirectStatusCodeField'
+      required:
+      - source
+      - destination
+      - statusCode
+      minProperties: 3
+    RedirectDestinationField:
+      type: string
+      examples:
+      - /to-there/
+    RedirectStatusCodeField:
+      type: integer
+      examples:
+      - 301
+    WebPageDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebPageIdField'
+        excerpt:
+          $ref: '#/components/schemas/WebPageExcerptField'
+        content:
+          $ref: '#/components/schemas/WebPageContentField'
+        imageURL:
+          $ref: '#/components/schemas/WebPageImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+      required:
+      - id
+      - excerpt
+      - content
+      - imageURL
+      - metadata
+      minProperties: 5
+    WebPageIdField:
+      type: string
+      examples:
+      - wp_home
+    WebPageExcerptField:
+      type: string
+      examples:
+      - Short page summary.
+    WebPageContentField:
+      type: string
+      examples:
+      - <h1>Homepage</h1>
+    WebPageImageURLField:
+      type: string
+      examples:
+      - /media/assets/homepage.png
+    AuthResponseSchema:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserAccountDetailSchema'
+        roles:
+          type: array
+          items:
+            type: string
+          minItems: 0
+          uniqueItems: false
+        permissions:
+          type: array
+          items:
+            type: string
+          minItems: 0
+          uniqueItems: false
+        token:
+          $ref: '#/components/schemas/UserAuthTokenField'
+      required:
+      - user
+      - roles
+      - permissions
+      - token
+      minProperties: 4
+    UserAccountDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UserAccountIDField'
+        email:
+          $ref: '#/components/schemas/UserAccountEmailField'
+        roleIds:
+          $ref: '#/components/schemas/UserAccountRoleIDListSchema'
+      required:
+      - id
+      - email
+      minProperties: 2
+    UserAccountIDField:
+      type: string
+      examples:
+      - usr_a9x1f7Qk2m
+    UserAccountEmailField:
+      type: string
+      examples:
+      - admin@example.com
+    UserAccountRoleIDListSchema:
+      type: array
+      items:
+        type: string
+      minItems: 0
+      uniqueItems: false
+    UserAuthTokenField:
+      type: string
+      examples:
+      - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    AuthRegisterSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/UserAccountEmailField'
+        password:
+          $ref: '#/components/schemas/UserAccountPasswordField'
+      required:
+      - email
+      - password
+      minProperties: 2
+    UserAccountPasswordField:
+      type: string
+      examples:
+      - root
+    AuthLoginRequestSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/UserAccountEmailField'
+        password:
+          $ref: '#/components/schemas/UserAccountPasswordField'
+        isPersistent:
+          $ref: '#/components/schemas/UserAuthIsPersistentField'
+      required:
+      - email
+      - password
+      - isPersistent
+      minProperties: 3
+    UserAuthIsPersistentField:
+      type: boolean
+      examples:
+      - true
+    AuthMagicLinkRequestSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          examples:
+          - admin@example.com
+        isPersistent:
+          type: boolean
+          examples:
+          - true
+      required:
+      - email
+      - isPersistent
+      minProperties: 2
+    AuthMagicLinkVerifyRequestSchema:
+      type: object
+      properties:
+        token:
+          type: string
+          examples:
+          - mgl_3XbY...
+      required:
+      - token
+      minProperties: 1
+  responses:
+    BlogRouteSettingsResponse:
+      description: Blog route settings
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogRouteSettingsSchema'
+    WebSiteSettingsResponse:
+      description: Web site settings
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebSiteSettingsSchema'
+    WebMenuListResponse:
+      description: Web menu list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuListSchema'
+    WebMetadataResponse:
+      description: Web metadata resolution
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataSchema'
+    BlogPostListResponse:
+      description: Blog post list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostListSchema'
+    BlogPostDetailResponse:
+      description: Blog post detail
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostDetailSchema'
+    BlogAuthorListResponse:
+      description: Blog author list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogAuthorListSchema'
+    BlogAuthorDetailResponse:
+      description: Blog author detail
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogAuthorDetailSchema'
+    BlogTagListResponse:
+      description: Blog tag list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogTagListSchema'
+    BlogTagDetailResponse:
+      description: Blog tag detail
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogTagDetailSchema'
+    RedirectRuleResponse:
+      description: Redirect rule response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectRuleSchema'
+    WebPageDetailResponse:
+      description: Web page detail
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebPageDetailSchema'
+    AuthMeResponse:
+      description: Auth response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthResponseSchema'
+    AuthResponse:
+      description: Auth response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthResponseSchema'
+  parameters:
+    WebMetadataSlugParameter:
+      name: slug
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMetadataSlugField'
+      description: Web metadata slug
+    BlogPostIdParameter:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogPostIdField'
+      description: Blog post identifier
+    BlogAuthorIdParameter:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogAuthorIdField'
+      description: Blog author identifier
+    BlogTagIdParameter:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogTagIdField'
+      description: Blog tag identifier
+    RedirectSourceParameter:
+      name: source
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/RedirectSourceField'
+      description: Public redirect source path
+    WebMetadataIdParameter:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMetadataReferenceIDField'
+      description: Web metadata identifier
+  requestBodies:
+    AnalyticsLogTrackRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppAnalyticsLogTrackSchema'
+      required: true
+    AuthRegisterRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthRegisterSchema'
+      required: true
+    AuthLoginRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthLoginRequestSchema'
+      required: true
+    AuthMagicLinkRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthMagicLinkRequestSchema'
+      required: true
+    AuthMagicLinkVerifyRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthMagicLinkVerifyRequestSchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API documentation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/swagger-ui/min.css" rel="stylesheet">
+</head>
+<body onload="render()">
+    <div id="swagger-ui"></div>
+    <script src="/swagger-ui/bundle.min.js"></script>
+    <script>
+        function render() {
+            var defaultSpecByPort = {
+                "8888": "/openapi/app.yaml",
+                "8889": "/openapi/admin.yaml"
+            };
+            var params = new URLSearchParams(window.location.search);
+            var specUrl = params.get("url") || defaultSpecByPort[window.location.port] || "/openapi/admin.yaml";
+            var ui = SwaggerUIBundle({
+                url: specUrl,
+                dom_id: '#swagger-ui',
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIBundle.SwaggerUIStandalonePreset,
+                ]
+            });
+        }
+    </script>
+</body>
+</html>

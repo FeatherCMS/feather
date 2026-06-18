@@ -1,0 +1,31 @@
+<div class="article-with-toc">
+    <div>
+        <article class="post">
+            <div class="meta">
+                {{#page.publicationLabel}}<time>{{.}}</time>{{/page.publicationLabel}}
+            </div>
+            <h1>{{page.title}}</h1>
+            <hr>
+            <p>{{page.description}}</p>
+            <section>
+                {{& page.contents.html}}
+            </section>
+            <footer>
+                <br>
+                {{#page.publicationLabel}}<time>{{.}}</time>{{/page.publicationLabel}}
+                <div class="author-list">
+                {{#page.authors}}
+                    <a href="{{permalink}}">
+                    {{#hasImage}}<img class="small rounded" src="{{image}}" alt="{{title}}">{{/hasImage}}
+                    </a>
+                {{/page.authors}}
+                </div>
+                <div class="tag-list">
+                {{#page.tags}}
+                    <a href="{{permalink}}"><small>{{title}}</small></a>
+                {{/page.tags}}
+                </div>
+            </footer>
+        </article>
+    </div>
+</div>

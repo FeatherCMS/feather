@@ -1,0 +1,65 @@
+services:
+    certificates:
+        build:
+            context: .
+            dockerfile: docker/certificates/Dockerfile
+        volumes:
+            - 'certificates:/certs'
+        restart: "no"
+
+    postgres:
+        build:
+            context: .
+            dockerfile: docker/postgres/Dockerfile
+        depends_on:
+            certificates:
+                condition: service_completed_successfully
+        volumes:
+            - 'certificates:/certs'
+            - 'postgres_data:/var/lib/postgresql'
+        ports:
+            - '55433:5432'
+        restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+        healthcheck:
+            test:
+                - CMD-SHELL
+                - |
+                    sh -c "pg_isready -d '
+                      host=127.0.0.1
+                      sslmode=verify-ca
+                      sslrootcert=/certs/ca.pem
+                      user=28830{POSTGRES_USER}
+                      password=28830{POSTGRES_PASSWORD}
+                      dbname=28830{POSTGRES_DB}
+                    '"
+            interval: 1s
+            timeout: 5s
+            retries: 10
+
+    tests:
+        build:
+            context: .
+            dockerfile: docker/tests/Dockerfile
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            POSTGRES_HOST: postgres
+            POSTGRES_PORT: "5432"
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+        command:
+            - swift
+            - test
+            - --parallel
+
+volumes:
+    certificates:
+        name: app_user_module_certificates
+    postgres_data:
+        name: app_user_module_postgres_data

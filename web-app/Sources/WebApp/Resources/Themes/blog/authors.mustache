@@ -1,0 +1,14 @@
+{{& page.contents.html}}
+
+<div id="authors" class="wrapper">
+    {{#context.authors}}
+    <div class="grid grid-221">
+    {{#context.authors}}
+        {{> partials/blog/author}}
+    {{/context.authors}}
+    </div>
+    {{/context.authors}}
+    {{^context.authors}}
+    <p>Empty.</p>
+    {{/context.authors}}
+</div>

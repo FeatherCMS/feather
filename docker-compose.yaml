@@ -1,0 +1,222 @@
+name: feather-cms
+
+services:
+  certificates:
+    build:
+      context: .
+      dockerfile: ./docker/certificates/Dockerfile
+    volumes:
+      - certificates:/certs
+    restart: "no"
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile
+    depends_on:
+      certificates:
+        condition: service_completed_successfully
+    volumes:
+      - certificates:/certs
+      - postgres-data:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - |
+          sh -c "pg_isready -d '
+            host=127.0.0.1
+            sslmode=verify-ca
+            sslrootcert=/certs/ca.pem
+            user=$${POSTGRES_USER}
+            password=$${POSTGRES_PASSWORD}
+            dbname=$${POSTGRES_DB}
+          '"
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  server:
+    image: feather-cms-server
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+      target: server
+      cache_from:
+        - type=local,src=.docker-cache/server
+      cache_to:
+        - type=local,dest=.docker-cache/server,mode=max
+    depends_on:
+      certificates:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
+    user: "0:0"
+    volumes:
+      - certificates:/certs
+      - file-storage:/media
+    ports:
+      - "8080:8080"
+    environment:
+      SERVER_HTTP_HOST: 0.0.0.0
+      SERVER_HTTP_PORT: 8080
+      SERVER_QUEUE_NAME: feather-cms-worker
+      SERVER_QUEUE_POLL_TIME_MS: 100
+      MEDIA_STORAGE_ROOT_PATH: /media
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
+      POSTGRES_ROOT_CA_PATH: /certs/does-not-exist.pem
+
+  migrator:
+    image: feather-cms-migrator
+    depends_on:
+      certificates:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+      target: migrator
+      cache_from:
+        - type=local,src=.docker-cache/migrator
+      cache_to:
+        - type=local,dest=.docker-cache/migrator,mode=max
+    user: "0:0"
+    volumes:
+      - certificates:/certs
+      - file-storage:/media
+    restart: "no"
+    environment:
+      MEDIA_STORAGE_ROOT_PATH: /media
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
+      POSTGRES_ROOT_CA_PATH: /certs/does-not-exist.pem
+
+  worker:
+    image: feather-cms-worker
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+      target: worker
+      cache_from:
+        - type=local,src=.docker-cache/worker
+      cache_to:
+        - type=local,dest=.docker-cache/worker,mode=max
+    depends_on:
+      certificates:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
+    user: "0:0"
+    volumes:
+      - certificates:/certs
+      - file-storage:/media
+    entrypoint:
+      - /app/Worker
+    restart: always
+    environment:
+      WORKER_QUEUE_NAME: feather-cms-worker
+      WORKER_POLL_TIME_MS: 100
+      WORKER_NUM_WORKERS: 16
+      WORKER_GRACEFUL_SHUTDOWN_TIMEOUT_SECONDS: 10
+      WORKER_SCHEDULER_NAME: feather-cms-worker
+      WORKER_CLEANUP_COMPLETED_MAX_AGE_SECONDS: 86400
+      WORKER_CLEANUP_HOURLY_MINUTE: 52
+      WORKER_CLEANUP_PROCESSING_INTERVAL_MINUTES: 5
+      WORKER_CLEANUP_PROCESSING_MAX_JOBS: 100
+      WORKER_SCHEDULER_LOCK_EVERY_SECONDS: 300
+      WORKER_SCHEDULER_LOCK_FOR_SECONDS: 360
+      WORKER_RUN_MIGRATIONS: "true"
+      MEDIA_STORAGE_ROOT_PATH: /media
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
+      POSTGRES_ROOT_CA_PATH: /certs/does-not-exist.pem
+
+  web-app:
+    build:
+      context: .
+      dockerfile: ./docker/web-app/Dockerfile
+      cache_from:
+        - type=local,src=.docker-cache/web-app
+      cache_to:
+        - type=local,dest=.docker-cache/web-app,mode=max
+    depends_on:
+      - server
+    ports:
+      - "3456:3456"
+    environment:
+      HTTP_HOST: 0.0.0.0
+      HTTP_PORT: 3456
+      API_BASE_URL: http://server:8080
+      WEB_PUBLIC_BASE_URL: ${WEB_PUBLIC_BASE_URL:-http://localhost:3456}
+      STATIC_PUBLIC_BASE_URL: ${STATIC_PUBLIC_BASE_URL:-http://localhost:4567}
+      MEDIA_PUBLIC_BASE_URL: ${MEDIA_PUBLIC_BASE_URL:-http://localhost:8080}
+
+  web-static:
+    build:
+      context: .
+      dockerfile: ./docker/web-static/Dockerfile
+      cache_from:
+        - type=local,src=.docker-cache/web-static
+      cache_to:
+        - type=local,dest=.docker-cache/web-static,mode=max
+    ports:
+      - "4567:4567"
+
+  openapi-app:
+    image: feather-cms-openapi-app
+    build:
+      context: .
+      dockerfile: ./docker/openapi/Dockerfile
+    ports:
+      - "8888:80"
+    environment:
+      NGINX_PORT: 80
+    volumes:
+      - ./docker/openapi/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/openapi/www/index.html:/usr/share/nginx/html/index.html:ro
+      - ./docker/openapi/www/swagger-ui/:/usr/share/nginx/html/swagger-ui/:ro
+      - ./openapi/openapi/:/usr/share/nginx/html/openapi/:ro
+
+  openapi-admin:
+    image: feather-cms-openapi-admin
+    build:
+      context: .
+      dockerfile: ./docker/openapi/Dockerfile
+    ports:
+      - "8889:80"
+    environment:
+      NGINX_PORT: 80
+    volumes:
+      - ./docker/openapi/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/openapi/www/index.html:/usr/share/nginx/html/index.html:ro
+      - ./docker/openapi/www/swagger-ui/:/usr/share/nginx/html/swagger-ui/:ro
+      - ./openapi/openapi/:/usr/share/nginx/html/openapi/:ro
+
+volumes:
+  certificates:
+    name: feather-cms-certificates
+  postgres-data:
+    name: feather-cms-postgres-data
+  file-storage:
+    name: feather-cms-file-storage
