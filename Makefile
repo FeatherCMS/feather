@@ -3,11 +3,12 @@ SHELL := /bin/bash
 COMPOSE := docker compose -f docker-compose.yaml
 DEPS_SERVICES := certificates postgres migrator
 BACKEND_SERVICES := $(DEPS_SERVICES) server worker
+BACKEND_STATIC_SERVICES := $(BACKEND_SERVICES) web-static
 ALL_SERVICES := certificates postgres migrator server worker web-static openapi-app openapi-admin web-app
 POSTGRES_VOLUME := feather-cms-postgres-data
 MEDIA_VOLUME := feather-cms-file-storage
 
-.PHONY: up up-build down stop logs ps restart pull config clean reset deps all backend all-up backend-up backend-logs backend-down backend-rebuild web-static-rebuild clean-backend
+.PHONY: up up-build down stop logs ps restart pull config clean reset deps all backend web-static backend-logs backend-down backend-rebuild web-static-rebuild clean-backend $(ALL_SERVICES)
 
 define detect_lan_host
 iface="$$(route -n get default 2>/dev/null | awk '/interface: / { print $$2; exit }')"; \
@@ -74,14 +75,11 @@ deps:
 all:
 	$(run_all_services_with_public_origins)
 
-all-up:
-	$(run_all_services_with_public_origins)
-
 backend:
 	$(COMPOSE) up --build $(BACKEND_SERVICES)
 
-backend-up:
-	$(COMPOSE) up --build $(BACKEND_SERVICES)
+web-static:
+	$(COMPOSE) up --build $(BACKEND_STATIC_SERVICES)
 
 backend-logs:
 	$(COMPOSE) logs -f migrator server worker web-static openapi-app openapi-admin
@@ -99,3 +97,6 @@ web-static-rebuild:
 
 clean-backend:
 	$(MAKE) clean backend
+
+$(ALL_SERVICES):
+	$(COMPOSE) up --build $@

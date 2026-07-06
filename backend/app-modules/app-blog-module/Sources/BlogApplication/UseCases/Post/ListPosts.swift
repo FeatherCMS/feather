@@ -6,6 +6,8 @@ import BlogDomain
 public struct ListPosts: UseCase {
     struct Action: PermissionAction {
         let key = BlogPermissions.Posts.list
+
+
     }
 
     let authorizer: any Authorizer

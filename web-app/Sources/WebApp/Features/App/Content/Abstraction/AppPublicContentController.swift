@@ -1,6 +1,7 @@
 import Hummingbird
 
 protocol AppPublicContentController: Sendable {
+
     func getSingleSegment(
         request: Request,
         context: AppRequestContext
