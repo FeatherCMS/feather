@@ -88,6 +88,30 @@ Compose defaults:
 - [ ] 404 items should have a create redirect button to simplify redirect creation
 - [ ] redirect rules should have match count and last matched timestamp 
 
+### Analytics module
+- [ ] should parse user agent header and display bot & crawler traffic
+- [ ] should hide / redact bearer token information & sensitive data
+
+### Web module
+- [ ] should have drag & drop option for menu items (instead of priority field)
+- [ ] should have permission picker instead of manual permission input
+- [ ] should hide metadata menu item? or find a purpose for it?
+- [ ] should use web settings to set logo, colors, etc.
+
+### Blog module
+- [ ] add post, tag, author slug vs edit slug UI is inconsistent
+
+### UI
+- [ ] proper detail page for all the models (now it's too rough / raw)
+- [ ] proper date picker field for publication date & time
+- [ ] limit selection field by X amount of items
+- [ ] should come up with better UI for Metadata, social & advanced (sidebar?)
+
+### General
+- [ ] consider using Postgres instead of Valkey for jobs 
+- [ ] consider using SQLite as primary database? (jobs issue?)
+- [ ] split web frontend by modules
+- [ ] proper mustache rendering with context & pipeline
 
 ## OpenAPI Generator
 
