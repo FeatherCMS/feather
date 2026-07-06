@@ -9,13 +9,11 @@
 
     {{#page.postCountLabel}}<p>{{.}}</p>{{/page.postCountLabel}}
 
-    {{#page.posts}}
     <div class="grid grid-321">
     {{#page.posts}}
         {{> partials/blog/post}}
     {{/page.posts}}
     </div>
-    {{/page.posts}}
     {{^page.posts}}
     <p>Empty.</p>
     {{/page.posts}}
