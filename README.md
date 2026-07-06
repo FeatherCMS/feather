@@ -67,6 +67,28 @@ Compose defaults:
 - [ ] cleanup css setAttribute calls
 - [ ] review architecture boundaries (frontend, backend)
 
+### User module
+- [ ] user invitation should have role(s)
+- [ ] current signed in user should have a profile picture
+- [ ] user accounts should be just an identifier?
+- [ ] auth magic link should have an user id? (or user selector)
+- [ ] there should be an email + passsword menu under auth? Credentials?
+- [ ] user account = id + email? + profile picture?
+- [ ] user email + password should be a different table? 
+- [ ] user magic link sign in should be a different table?
+- [ ] user settings + profile settings should work
+- [ ] root role & root user should be permanent. (no deletion)
+- [ ] invitation should use an email template
+- [ ] invitation links should work
+- [ ] magic links should work
+- [ ] user session should store device or some extra information
+- [ ] how to extend user data with additional fields? e.g. first name, last name, etc.
+
+### Redirect module
+- [ ] 404 items should have a create redirect button to simplify redirect creation
+- [ ] redirect rules should have match count and last matched timestamp 
+
+
 ## OpenAPI Generator
 
 The Swift OpenAPI generator package lives at `openapi-generator`.
