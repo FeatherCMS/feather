@@ -66,6 +66,7 @@ Compose defaults:
 - [ ] split openapi into modules
 - [ ] cleanup css setAttribute calls
 - [ ] review architecture boundaries (frontend, backend)
+- [ ] check screens on mobile
 
 ### User module
 - [ ] user invitation should have role(s)
@@ -114,7 +115,6 @@ Compose defaults:
 - [ ] rich editor for web pages / content?
 - [ ] slider, color picker, etc.
 - [ ] better confirmation dialogs?
-
 
 ### General
 - [ ] nonce support for CSRF protection
