@@ -3,8 +3,7 @@ import Hummingbird
 struct AdminListRedirectRuleDefaultController:
     AdminListRedirectRuleController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminListRedirectRuleInteractor,
             presenter: any AdminListRedirectRulePresenter
         )

@@ -5,8 +5,7 @@ import Hummingbird
 struct AdminEditWebPageDefaultController:
     AdminEditWebPageController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditWebPageInteractor,
             presenter: any AdminEditWebPagePresenter
         )

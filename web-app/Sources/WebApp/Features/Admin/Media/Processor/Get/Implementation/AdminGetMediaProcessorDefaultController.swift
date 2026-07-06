@@ -2,8 +2,7 @@ import Hummingbird
 
 struct AdminGetMediaProcessorDefaultController: AdminGetMediaProcessorController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetMediaProcessorInteractor,
             presenter: any AdminGetMediaProcessorPresenter
         )

@@ -2,8 +2,7 @@ import AdminOpenAPI
 import Hummingbird
 
 struct AdminListUserRoleDefaultController: AdminListUserRoleController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminListUserRoleInteractor,
             presenter: any AdminListUserRolePresenter
         )

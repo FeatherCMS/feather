@@ -4,8 +4,7 @@ import Hummingbird
 
 struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminAddBlogAuthorLinkInteractor,
             presenter: any AdminAddBlogAuthorLinkPresenter
         )

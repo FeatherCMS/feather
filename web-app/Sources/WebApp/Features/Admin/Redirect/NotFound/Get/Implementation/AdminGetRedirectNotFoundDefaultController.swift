@@ -4,8 +4,7 @@ import Hummingbird
 struct AdminGetRedirectNotFoundDefaultController:
     AdminGetRedirectNotFoundController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetRedirectNotFoundInteractor,
             presenter: any AdminGetRedirectNotFoundPresenter
         )

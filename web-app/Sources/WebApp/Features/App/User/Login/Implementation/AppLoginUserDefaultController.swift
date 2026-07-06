@@ -4,8 +4,7 @@ import Hummingbird
 import SGML
 
 struct AppLoginUserDefaultController: AppLoginUserController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AppLoginUserInteractor,
             presenter: any AppLoginUserPresenter
         )

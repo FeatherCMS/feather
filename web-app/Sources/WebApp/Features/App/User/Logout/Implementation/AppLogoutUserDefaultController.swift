@@ -1,8 +1,7 @@
 import Hummingbird
 
 struct AppLogoutUserDefaultController: AppLogoutUserController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AppLogoutUserInteractor,
             presenter: any AppLogoutUserPresenter
         )

@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-baseUrl = https://raw.githubusercontent.com/BinaryBirds/github-workflows/refs/heads/main/scripts
+baseUrl = https://raw.githubusercontent.com/BinaryBirds/github-workflows/main/scripts
 GENERATOR_SCRIPT := ./scripts/generator.sh
 
 .DEFAULT_GOAL := help
@@ -10,40 +10,40 @@ GENERATOR_SCRIPT := ./scripts/generator.sh
 check: symlinks language deps lint headers docc-warnings package
 
 package:
-	curl -s $(baseUrl)/check-swift-package.sh | bash
+	curl -fsSL $(baseUrl)/check-swift-package.sh | bash
 
 breakage:
-	curl -s $(baseUrl)/check-api-breakage.sh | bash
+	curl -fsSL $(baseUrl)/check-api-breakage.sh | bash
 
 symlinks:
-	curl -s $(baseUrl)/check-broken-symlinks.sh | bash
+	curl -fsSL $(baseUrl)/check-broken-symlinks.sh | bash
 
 language:
-	curl -s $(baseUrl)/check-unacceptable-language.sh | bash
+	curl -fsSL $(baseUrl)/check-unacceptable-language.sh | bash
 
 deps:
-	curl -s $(baseUrl)/check-local-swift-dependencies.sh | bash
+	curl -fsSL $(baseUrl)/check-local-swift-dependencies.sh | bash
 
 lint:
-	curl -s $(baseUrl)/run-swift-format.sh | bash
+	curl -fsSL $(baseUrl)/run-swift-format.sh | bash
 
 format:
-	curl -s $(baseUrl)/run-swift-format.sh | bash -s -- --fix
+	curl -fsSL $(baseUrl)/run-swift-format.sh | bash -s -- --fix
 
 docc-local:
-	curl -s $(baseUrl)/generate-docc.sh | bash -s -- --local
+	curl -fsSL $(baseUrl)/generate-docc.sh | bash -s -- --local
 
 run-docc:
-	curl -s $(baseUrl)/run-docc-docker.sh | bash
+	curl -fsSL $(baseUrl)/run-docc-docker.sh | bash
 
 docc-warnings:
-	curl -s $(baseUrl)/check-docc-warnings.sh | bash
+	curl -fsSL $(baseUrl)/check-docc-warnings.sh | bash
 
 headers:
-	curl -s $(baseUrl)/check-swift-headers.sh | bash
+	curl -fsSL $(baseUrl)/check-swift-headers.sh | bash
 
 fix-headers:
-	curl -s $(baseUrl)/check-swift-headers.sh | bash -s -- --fix
+	curl -fsSL $(baseUrl)/check-swift-headers.sh | bash -s -- --fix
 
 test:
 	swift test --parallel

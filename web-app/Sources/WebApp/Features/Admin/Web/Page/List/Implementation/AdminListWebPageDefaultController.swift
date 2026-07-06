@@ -3,8 +3,7 @@ import Hummingbird
 struct AdminListWebPageDefaultController:
     AdminListWebPageController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminListWebPageInteractor,
             presenter: any AdminListWebPagePresenter
         )

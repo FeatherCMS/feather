@@ -2,11 +2,10 @@ import HTML
 import Hummingbird
 
 struct AdminGetAnalyticsLogDefaultController: AdminGetAnalyticsLogController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
-            interactor: any AdminGetAnalyticsLogInteractor,
-            presenter: any AdminGetAnalyticsLogPresenter
-        )
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+        interactor: any AdminGetAnalyticsLogInteractor,
+        presenter: any AdminGetAnalyticsLogPresenter
+    )
 
     func getAnalyticsLog(
         request: Request,

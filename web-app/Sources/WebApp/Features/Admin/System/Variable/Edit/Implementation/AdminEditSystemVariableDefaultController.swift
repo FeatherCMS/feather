@@ -5,8 +5,7 @@ import Hummingbird
 struct AdminEditSystemVariableDefaultController:
     AdminEditSystemVariableController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditSystemVariableInteractor,
             presenter: any AdminEditSystemVariablePresenter
         )

@@ -2,8 +2,7 @@ import HTML
 import Hummingbird
 
 struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminRemoveUserRoleInteractor,
             presenter: any AdminRemoveUserRolePresenter
         )

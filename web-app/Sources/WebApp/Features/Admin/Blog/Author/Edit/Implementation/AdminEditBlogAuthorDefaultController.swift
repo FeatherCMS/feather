@@ -5,8 +5,7 @@ import Hummingbird
 struct AdminEditBlogAuthorDefaultController:
     AdminEditBlogAuthorController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditBlogAuthorInteractor,
             presenter: any AdminEditBlogAuthorPresenter
         )

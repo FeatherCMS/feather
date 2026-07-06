@@ -4,8 +4,7 @@ import Hummingbird
 struct AdminRemoveBlogAuthorLinkDefaultController:
     AdminRemoveBlogAuthorLinkController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminRemoveBlogAuthorLinkInteractor,
             presenter: any AdminRemoveBlogAuthorLinkPresenter
         )

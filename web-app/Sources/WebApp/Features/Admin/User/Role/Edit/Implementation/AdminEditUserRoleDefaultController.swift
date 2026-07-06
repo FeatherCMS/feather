@@ -3,8 +3,7 @@ import HTML
 import Hummingbird
 
 struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditUserRoleInteractor,
             presenter: any AdminEditUserRolePresenter
         )

@@ -2,8 +2,7 @@ import HTML
 import Hummingbird
 
 struct AdminGetWebPageDefaultController: AdminGetWebPageController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetWebPageInteractor,
             presenter: any AdminGetWebPagePresenter
         )

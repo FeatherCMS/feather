@@ -4,8 +4,7 @@ import Hummingbird
 struct AdminRemoveUserInvitationDefaultController:
     AdminRemoveUserInvitationController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminRemoveUserInvitationInteractor,
             presenter: any AdminRemoveUserInvitationPresenter
         )

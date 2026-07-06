@@ -4,8 +4,7 @@ import Hummingbird
 struct AdminRemoveSystemVariableDefaultController:
     AdminRemoveSystemVariableController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminRemoveSystemVariableInteractor,
             presenter: any AdminRemoveSystemVariablePresenter
         )

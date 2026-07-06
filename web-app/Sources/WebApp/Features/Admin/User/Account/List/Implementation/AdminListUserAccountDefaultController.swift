@@ -2,8 +2,7 @@ import HTML
 import Hummingbird
 
 struct AdminListUserAccountDefaultController: AdminListUserAccountController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminListUserAccountInteractor,
             presenter: any AdminListUserAccountPresenter
         )

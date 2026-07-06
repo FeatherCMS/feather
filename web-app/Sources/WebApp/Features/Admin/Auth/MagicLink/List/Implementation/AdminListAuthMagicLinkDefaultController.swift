@@ -3,8 +3,7 @@ import Hummingbird
 
 struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminListAuthMagicLinkInteractor,
             presenter: any AdminListAuthMagicLinkPresenter
         )

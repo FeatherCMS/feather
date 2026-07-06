@@ -5,8 +5,7 @@ import Hummingbird
 struct AdminEditAuthProfileDefaultController:
     AdminEditAuthProfileController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditAuthProfileInteractor,
             presenter: any AdminEditAuthProfilePresenter
         )

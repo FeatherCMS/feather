@@ -1,8 +1,7 @@
 import Hummingbird
 
 struct AdminGetHomeDefaultController: AdminGetHomeController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetHomeInteractor,
             presenter: any AdminGetHomePresenter
         )

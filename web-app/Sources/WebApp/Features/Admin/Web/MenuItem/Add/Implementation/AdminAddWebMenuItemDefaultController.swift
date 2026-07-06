@@ -3,8 +3,7 @@ import HTML
 import Hummingbird
 
 struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminAddWebMenuItemInteractor,
             presenter: any AdminAddWebMenuItemPresenter
         )

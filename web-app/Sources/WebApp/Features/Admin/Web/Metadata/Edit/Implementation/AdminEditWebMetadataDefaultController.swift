@@ -5,8 +5,7 @@ import Hummingbird
 struct AdminEditWebMetadataDefaultController:
     AdminEditWebMetadataController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditWebMetadataInteractor,
             presenter: any AdminEditWebMetadataPresenter
         )

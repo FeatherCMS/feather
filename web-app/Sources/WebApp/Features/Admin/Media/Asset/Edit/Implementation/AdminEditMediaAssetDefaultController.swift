@@ -1,8 +1,7 @@
 import Hummingbird
 
 struct AdminEditMediaAssetDefaultController: AdminEditMediaAssetController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditMediaAssetInteractor,
             presenter: any AdminEditMediaAssetPresenter
         )

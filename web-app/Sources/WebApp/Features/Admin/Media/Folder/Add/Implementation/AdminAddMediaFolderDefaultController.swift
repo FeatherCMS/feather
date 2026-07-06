@@ -2,8 +2,7 @@ import Foundation
 import Hummingbird
 
 struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminAddMediaFolderInteractor,
             presenter: any AdminAddMediaFolderPresenter
         )

@@ -4,8 +4,7 @@ import Hummingbird
 struct AdminRemoveWebMenuDefaultController:
     AdminRemoveWebMenuController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminRemoveWebMenuInteractor,
             presenter: any AdminRemoveWebMenuPresenter
         )

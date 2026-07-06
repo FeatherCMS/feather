@@ -3,8 +3,7 @@ import Hummingbird
 struct AdminRemoveSystemPermissionDefaultController:
     AdminRemoveSystemPermissionController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminRemoveSystemPermissionInteractor,
             presenter: any AdminRemoveSystemPermissionPresenter
         )

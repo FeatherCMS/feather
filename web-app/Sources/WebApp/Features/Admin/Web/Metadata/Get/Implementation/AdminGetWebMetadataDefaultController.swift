@@ -2,8 +2,7 @@ import HTML
 import Hummingbird
 
 struct AdminGetWebMetadataDefaultController: AdminGetWebMetadataController {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetWebMetadataInteractor,
             presenter: any AdminGetWebMetadataPresenter
         )

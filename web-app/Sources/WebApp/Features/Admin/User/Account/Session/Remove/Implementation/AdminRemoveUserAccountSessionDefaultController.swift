@@ -4,8 +4,7 @@ import Hummingbird
 struct AdminRemoveUserAccountSessionDefaultController:
     AdminRemoveUserAccountSessionController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminRemoveUserAccountSessionInteractor,
             presenter: any AdminRemoveUserAccountSessionPresenter
         )

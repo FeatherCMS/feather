@@ -3,8 +3,7 @@ import Hummingbird
 struct AdminEditMediaProcessorDefaultController:
     AdminEditMediaProcessorController
 {
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditMediaProcessorInteractor,
             presenter: any AdminEditMediaProcessorPresenter
         )
