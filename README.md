@@ -84,6 +84,12 @@ Compose defaults:
 - [ ] magic links should work
 - [ ] user session should store device or some extra information
 - [ ] how to extend user data with additional fields? e.g. first name, last name, etc.
+- [ ] settings to enable different login methods (credentials, magic links, social, etc.)
+- [ ] oauth2 + oidc support
+- [ ] Sign in with Apple support
+- [ ] Sign in with Google support
+- [ ] Sign in with Meta support
+- [ ] Sign in with Auth0 support?
 
 ### Redirect module
 - [ ] 404 items should have a create redirect button to simplify redirect creation
