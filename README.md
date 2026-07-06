@@ -75,6 +75,7 @@ Compose defaults:
 - [ ] auth magic link should have an user id? (or user selector)
 - [ ] there should be an email + passsword menu under auth? Credentials?
 - [ ] user account = id + email? + profile picture?
+- [ ] user account filter by role(s)
 - [ ] user email + password should be a different table? 
 - [ ] user magic link sign in should be a different table?
 - [ ] user settings + profile settings should work
