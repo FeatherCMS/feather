@@ -107,6 +107,7 @@ Compose defaults:
 
 ### Blog module
 - [ ] add post, tag, author slug vs edit slug UI is inconsistent
+- [ ] blog author vs user account relation?
 
 ### UI
 - [ ] proper detail page for all the models (now it's too rough / raw)
