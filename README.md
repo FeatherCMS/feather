@@ -130,6 +130,10 @@ Compose defaults:
 - [ ] split web frontend by modules
 - [ ] proper mustache rendering with context & pipeline
 
+## Contact module
+- [ ] form support?
+- [ ] newsletter support?
+
 ## OpenAPI Generator
 
 The Swift OpenAPI generator package lives at `openapi-generator`.
