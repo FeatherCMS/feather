@@ -106,8 +106,18 @@ Compose defaults:
 - [ ] proper date picker field for publication date & time
 - [ ] limit selection field by X amount of items
 - [ ] should come up with better UI for Metadata, social & advanced (sidebar?)
+- [ ] better UI for media asset upload (segmented control vs same page)
+- [ ] popup for adding simple models?
+- [ ] coordinate picker / location support
+- [ ] multi-field support? repeat X elements on the same page?
+- [ ] markdown editor for content
+- [ ] rich editor for web pages / content?
+- [ ] slider, color picker, etc.
+- [ ] better confirmation dialogs?
+
 
 ### General
+- [ ] nonce support for CSRF protection
 - [ ] consider using Postgres instead of Valkey for jobs 
 - [ ] consider using SQLite as primary database? (jobs issue?)
 - [ ] split web frontend by modules
