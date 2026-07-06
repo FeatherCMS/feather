@@ -7,18 +7,15 @@ struct AppPublicContentDefaultController: AppPublicContentController {
             presenter: any AppPublicContentPresenter
         )
 
-    func getSingleSegment(
+    func getContent(
         request: Request,
         context: AppRequestContext
     ) async throws -> Response {
-        try await render(path: request.uri.path, request: request, context: context)
-    }
-
-    func getDoubleSegment(
-        request: Request,
-        context: AppRequestContext
-    ) async throws -> Response {
-        try await render(path: request.uri.path, request: request, context: context)
+        try await render(
+            path: request.uri.path,
+            request: request,
+            context: context
+        )
     }
 }
 
