@@ -111,6 +111,7 @@ Compose defaults:
 - [ ] blog author vs user account relation?
 
 ### UI
+- [ ] multi asset (image) / gallery support for models
 - [ ] proper detail page for all the models (now it's too rough / raw)
 - [ ] proper date picker field for publication date & time
 - [ ] limit selection field by X amount of items
