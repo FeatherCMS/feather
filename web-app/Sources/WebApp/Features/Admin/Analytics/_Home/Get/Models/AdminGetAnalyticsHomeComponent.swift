@@ -45,9 +45,7 @@ struct AdminGetAnalyticsHomeComponent: Component {
                     href: "/admin/analytics/logs/"
                 )
             }
-            .setAttribute(
-                name: "style",
-                value:
+            .style(
                     "display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px;"
             )
         }
@@ -62,15 +60,12 @@ struct AdminGetAnalyticsHomeComponent: Component {
         A {
             Strong(title)
             P(description)
-                .setAttribute(
-                    name: "style",
-                    value: "margin:10px 0 0 0;color:inherit;"
+                .style(
+                    "margin:10px 0 0 0;color:inherit;"
                 )
         }
         .href(href)
-        .setAttribute(
-            name: "style",
-            value:
+.style(
                 "display:block;padding:18px;border:1px solid rgba(0,0,0,0.12);border-radius:12px;background:#fff;color:inherit;text-decoration:none;"
         )
     }

@@ -37,7 +37,7 @@ struct BlogAuthorDetails: Component {
                                 ?? profileImage.id
                         )
                         .href(previewLink(for: profileImage.storageKey))
-                        .setAttribute(name: "target", value: "_blank")
+                        .target(.blank)
                     }
                     .class("admin-details-field__value")
                 }
@@ -77,7 +77,7 @@ struct BlogAuthorDetails: Component {
                 if let previewPath = previewPath {
                     A("Preview")
                         .href(previewPath)
-                        .setAttribute(name: "target", value: "_blank")
+                        .target(.blank)
                         .class("secondary")
                 }
                 if state.permissions.contains(

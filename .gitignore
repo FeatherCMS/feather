@@ -14,3 +14,4 @@ db.sqlite
 .env
 .env.*
 sidebar-menu
+*.code-workspace

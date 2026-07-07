@@ -40,7 +40,7 @@ struct ListTableBulkRemoveForm<Table: FlowContent>: Component, FlowContent {
                 Div {
                     Button(state.buttonTitle)
                         .type(.submit)
-                        .setAttribute(name: "disabled", value: "")
+                        .disabled()
                         .class("bulk-remove-submit")
                         .class("row-btn", "delete")
                 }

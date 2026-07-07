@@ -54,7 +54,7 @@ struct AssetDetailsView: Component {
                         .href(
                             previewLink(for: item.storageKey, isVariant: false)
                         )
-                        .setAttribute(name: "target", value: "_blank")
+                        .target(.blank)
                 }
                 .class("admin-details-field__value")
             }
@@ -94,10 +94,7 @@ struct AssetDetailsView: Component {
                                                     isVariant: true
                                                 )
                                             )
-                                            .setAttribute(
-                                                name: "target",
-                                                value: "_blank"
-                                            )
+                                            .target(.blank)
                                             .class("row-btn")
                                     }
                                 }

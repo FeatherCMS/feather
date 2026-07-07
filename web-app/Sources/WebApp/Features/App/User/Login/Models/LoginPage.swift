@@ -143,6 +143,6 @@ struct LoginPage: Component, FlowContent {
             .class("login-card")
         }
         .class("login-shell")
-        .setAttribute(name: "role", value: "main")
+        .role("main")
     }
 }

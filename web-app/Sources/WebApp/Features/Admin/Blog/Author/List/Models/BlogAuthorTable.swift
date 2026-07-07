@@ -315,11 +315,8 @@ struct BlogAuthorTable: Component {
                         Icon(svg: FeatherIcons.externalLink())
                     }
                     .href(previewPath)
-                    .setAttribute(name: "target", value: "_blank")
-                    .setAttribute(
-                        name: "aria-label",
-                        value: "Preview \(item.name)"
-                    )
+                    .target(.blank)
+                    .ariaLabel("Preview \(item.name)")
                     .style(
                         "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;"
                     )

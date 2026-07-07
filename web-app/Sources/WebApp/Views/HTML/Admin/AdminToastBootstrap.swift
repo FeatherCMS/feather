@@ -10,7 +10,7 @@ struct AdminToastBootstrap: Component, FlowContent {
             // empty
         }
         .id("admin-toast")
-        .setAttribute(name: "hidden", value: "")
+        .hidden()
         .setAttribute(name: "data-toast-type", value: payload.type)
         .setAttribute(name: "data-toast-title", value: payload.title)
         .setAttribute(name: "data-toast-message", value: payload.message)

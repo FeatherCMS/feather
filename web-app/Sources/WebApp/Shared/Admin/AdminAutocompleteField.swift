@@ -211,56 +211,26 @@ struct AdminAutocompleteField: Component, FlowContent {
                             Input()
                                 .type(.text)
                                 .class("multiselect__input")
-                                .setAttribute(
-                                    name: "autocomplete",
-                                    value: "off"
-                                )
-                                .setAttribute(
-                                    name: "placeholder",
-                                    value: state.placeholder
-                                )
-                                .setAttribute(
-                                    name: "role",
-                                    value: "combobox"
-                                )
-                                .setAttribute(
-                                    name: "aria-autocomplete",
-                                    value: "list"
-                                )
-                                .setAttribute(
-                                    name: "aria-activedescendant",
-                                    value: ""
-                                )
-                                .setAttribute(
-                                    name: "aria-expanded",
-                                    value: "false"
-                                )
-                                .setAttribute(
-                                    name: "aria-haspopup",
-                                    value: "listbox"
-                                )
+                                .autocomplete(.off)
+                                .placeholder(state.placeholder)
+                                .role("combobox")
+                                .ariaAutoComplete(.list)
+                                .ariaActiveDescendant("")
+                                .ariaExpanded("false")
+                                .ariaHasPopup(.listbox)
                             Button {
                                 Span {}.class("multiselect__chevron")
                             }
                             .type(.button)
                             .class("multiselect__toggle")
-                            .setAttribute(
-                                name: "aria-label",
-                                value: "Toggle options"
-                            )
-                            .setAttribute(
-                                name: "aria-expanded",
-                                value: "false"
-                            )
+                            .ariaLabel("Toggle options")
+                            .ariaExpanded("false")
                         }
                         .class("multiselect__control")
 
                         Ul {}.class("multiselect__dropdown")
-                            .setAttribute(name: "role", value: "listbox")
-                            .setAttribute(
-                                name: "aria-label",
-                                value: state.label
-                            )
+                            .role("listbox")
+                            .ariaLabel(state.label)
                     }
                     .class("multiselect__menu")
 
@@ -277,9 +247,9 @@ struct AdminAutocompleteField: Component, FlowContent {
 
                     Div {}
                         .class("multiselect__status")
-                        .setAttribute(name: "role", value: "status")
-                        .setAttribute(name: "aria-live", value: "polite")
-                        .setAttribute(name: "aria-atomic", value: "true")
+                        .role("status")
+                        .ariaLive(.polite)
+                        .ariaAtomic("true")
 
                     Script(encodeOptions(state.options))
                         .type("application/json")
@@ -303,7 +273,7 @@ struct AdminAutocompleteField: Component, FlowContent {
                         .value(
                             selectedOptions.map(\.label).joined(separator: ", ")
                         )
-                        .setAttribute(name: "disabled", value: "")
+                        .disabled()
                 }
             }
 

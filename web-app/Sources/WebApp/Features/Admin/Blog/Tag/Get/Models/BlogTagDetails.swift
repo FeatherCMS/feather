@@ -43,7 +43,7 @@ struct BlogTagDetails: Component {
                 if let previewPath = previewPath {
                     A("Preview")
                         .href(previewPath)
-                        .setAttribute(name: "target", value: "_blank")
+                        .target(.blank)
                         .class("secondary")
                 }
                 if state.permissions.contains(

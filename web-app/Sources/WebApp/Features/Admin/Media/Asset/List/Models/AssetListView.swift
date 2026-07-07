@@ -800,7 +800,7 @@ extension AssetListView {
                     .class("media-assets-card-preview")
                 }
                 .href(originalURL)
-                .setAttribute(name: "target", value: "_blank")
+                .target(.blank)
             }
 
             Div {
@@ -1094,11 +1094,11 @@ extension AssetListView {
                 .class("media-assets-folder-icon")
             }
             .href(href)
-            .setAttribute(name: "aria-label", value: "Open parent folder")
+            .ariaLabel("Open parent folder")
         }
         .class("media-assets-table-preview")
         .setAttribute(name: "data-label", value: "Preview")
-        .setAttribute(name: "aria-label", value: "Parent folder")
+        .ariaLabel("Parent folder")
     }
 
     fileprivate func folderPreviewCell(
@@ -1113,11 +1113,11 @@ extension AssetListView {
                 .class("media-assets-folder-icon")
             }
             .href(href)
-            .setAttribute(name: "aria-label", value: "Open \(label)")
+            .ariaLabel("Open \(label)")
         }
         .class("media-assets-table-preview")
         .setAttribute(name: "data-label", value: "Preview")
-        .setAttribute(name: "aria-label", value: label)
+        .ariaLabel(label)
     }
 
     fileprivate func assetPreviewCell(
@@ -1138,11 +1138,8 @@ extension AssetListView {
                 }
             }
             .href(originalURL)
-            .setAttribute(name: "target", value: "_blank")
-            .setAttribute(
-                name: "aria-label",
-                value: "Open \(displayTitle(for: item.asset))"
-            )
+            .target(.blank)
+            .ariaLabel("Open \(displayTitle(for: item.asset))")
         }
         .class("media-assets-table-preview")
         .setAttribute(name: "data-label", value: "Preview")
@@ -1166,20 +1163,14 @@ extension AssetListView {
             Span {
                 A(fileName(for: item.asset))
                     .href(originalURL)
-                    .setAttribute(name: "target", value: "_blank")
-                    .setAttribute(
-                        name: "aria-label",
-                        value: "Open \(displayTitle(for: item.asset))"
-                    )
+                    .target(.blank)
+                    .ariaLabel("Open \(displayTitle(for: item.asset))")
                 A {
                     Icon(svg: FeatherIcons.externalLink())
                 }
                 .href(originalURL)
-                .setAttribute(name: "target", value: "_blank")
-                .setAttribute(
-                    name: "aria-label",
-                    value: "Open \(displayTitle(for: item.asset))"
-                )
+                .target(.blank)
+                .ariaLabel("Open \(displayTitle(for: item.asset))")
                 .style(
                     "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;"
                 )

@@ -46,7 +46,7 @@ struct AuthSettingsForm: Component, FlowContent {
                         .value(state.language.value)
                         .placeholder("Language code, e.g. en")
                         .if(!state.canEdit) {
-                            $0.setAttribute(name: "disabled", value: "")
+                            $0.disabled()
                         }
                 }
                 if let error = state.language.error {
@@ -67,7 +67,7 @@ struct AuthSettingsForm: Component, FlowContent {
                         .value(state.timezone.value)
                         .placeholder("Timezone, e.g. Europe/Budapest")
                         .if(!state.canEdit) {
-                            $0.setAttribute(name: "disabled", value: "")
+                            $0.disabled()
                         }
                 }
                 if let error = state.timezone.error {
@@ -98,7 +98,7 @@ struct AuthSettingsForm: Component, FlowContent {
                     .name(state.pageSize.key)
                     .class("text-input", "page-size-select")
                     .if(!state.canEdit) {
-                        $0.setAttribute(name: "disabled", value: "")
+                        $0.disabled()
                     }
                 }
                 if let error = state.pageSize.error {

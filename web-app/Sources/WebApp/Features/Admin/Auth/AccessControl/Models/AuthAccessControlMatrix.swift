@@ -48,9 +48,8 @@ struct AuthAccessControlMatrix: Component {
                     )
                 )
             }
-            .setAttribute(
-                name: "style",
-                value: "margin: 1.5rem 0 0.75rem;"
+            .style(
+                "margin: 1.5rem 0 0.75rem;"
             )
 
             if state.roles.isEmpty || state.permissions.isEmpty {
@@ -144,15 +143,10 @@ extension AuthAccessControlMatrix {
                                     )
                                     .if(allSelected) { $0.checked() }
                                     .if(state.canEdit == false) {
-                                        $0.setAttribute(
-                                            name: "disabled",
-                                            value: ""
-                                        )
+                                        $0.disabled()
                                     }
-                                    .setAttribute(
-                                        name: "onchange",
-                                        value:
-                                            "this.closest('form').querySelectorAll('input.\(rowClass)').forEach(function(input) { input.checked = this.checked; }, this)"
+                                    .onChange(
+                                        "this.closest('form').querySelectorAll('input.\(rowClass)').forEach(function(input) { input.checked = this.checked; }, this)"
                                     )
                             }
                             .class(
@@ -186,10 +180,7 @@ extension AuthAccessControlMatrix {
                                             state.selectedPairs.contains(pair)
                                         ) { $0.checked() }
                                         .if(state.canEdit == false) {
-                                            $0.setAttribute(
-                                                name: "disabled",
-                                                value: ""
-                                            )
+                                            $0.disabled()
                                         }
                                 }
                                 .class("role-permission-matrix-checkbox")

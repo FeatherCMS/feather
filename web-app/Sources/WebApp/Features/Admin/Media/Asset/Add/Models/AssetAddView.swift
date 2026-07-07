@@ -61,7 +61,7 @@ struct AssetAddView: Component {
                         name: "data-media-picker-selected-status",
                         value: selectedAsset.status
                     )
-                    .setAttribute(name: "hidden", value: "")
+                    .hidden()
             }
             if state.form.isPicker {
                 pickerUploadContainer()
@@ -190,7 +190,7 @@ struct AssetAddView: Component {
                     AdminFieldLabel(label: "File", required: true)
                     Input().type(.file).class("text-input").name("file")
                         .id("file")
-                        .setAttribute(name: "required", value: "")
+                        .required()
                 }
                 Input().type(.hidden).name("data").id("data")
                     .value(state.form.data)
@@ -238,7 +238,7 @@ struct AssetAddView: Component {
                     AdminFieldLabel(label: "File", required: true)
                     Input().type(.file).class("text-input").name("file")
                         .id("file")
-                        .setAttribute(name: "required", value: "")
+                        .required()
                 }
                 Input().type(.hidden).name("data").id("data")
                     .value(state.form.data)

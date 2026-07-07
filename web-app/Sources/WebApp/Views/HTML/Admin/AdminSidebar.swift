@@ -110,11 +110,7 @@ struct AdminSidebar: Component, FlowContent {
                                                 }
                                             }
                                             .title(menu.current.label)
-                                            .setAttribute(
-                                                name: "for",
-                                                value:
-                                                    "applicationMenu\(idx)Toggle"
-                                            )
+                                            .for("applicationMenu\(idx)Toggle")
                                             .class("submenu-label")
                                             .if(menu.current.isCurrent) {
                                                 $0.addClass("isCurrent")
