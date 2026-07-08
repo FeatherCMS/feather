@@ -42,7 +42,7 @@ struct ListTableRowActions: Component {
                 }
             }
         }
-        .setAttribute(name: "data-label", value: state.label)
+        .data("label", state.label)
         .class("action-cell")
     }
 }

@@ -16,15 +16,9 @@ struct AdminGetHomeComponent: Component {
             )
             H1("Dashboard")
             P(model.summary)
-                .setAttribute(
-                    name: "style",
-                    value: "margin:0 0 16px 0;"
-                )
+                .style("margin:0 0 16px 0;")
             H2("Last week")
-                .setAttribute(
-                    name: "style",
-                    value: "margin:0 0 16px 0;"
-                )
+                .style("margin:0 0 16px 0;")
             contentStats
             secondarySection
         }
@@ -42,9 +36,7 @@ struct AdminGetHomeComponent: Component {
                 }
             }
         }
-        .setAttribute(
-            name: "style",
-            value:
+        .style(
                 "display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0;"
         )
     }
@@ -56,10 +48,7 @@ struct AdminGetHomeComponent: Component {
             }
             webInsightsGrid
             H2("Quick actions")
-                .setAttribute(
-                    name: "style",
-                    value: "margin:0 0 16px 0;"
-                )
+                .style("margin:0 0 16px 0;")
             quickActionsGrid
         }
     }
@@ -69,15 +58,10 @@ struct AdminGetHomeComponent: Component {
     ) -> some FlowContent {
         Div {
             H3("Daily traffic")
-                .setAttribute(
-                    name: "style",
-                    value: "margin:0 0 16px 0;"
-                )
+                .style("margin:0 0 16px 0;")
             trafficChartSVG(points)
         }
-        .setAttribute(
-            name: "style",
-            value:
+        .style(
                 "margin:0 0 16px 0;padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
@@ -92,9 +76,7 @@ struct AdminGetHomeComponent: Component {
             }
         }
         .class("grid", "grid-321")
-        .setAttribute(
-            name: "style",
-            value:
+        .style(
                 "display:grid;column-gap:16px;row-gap:16px;margin:0 0 16px 0;"
         )
     }
@@ -105,19 +87,11 @@ struct AdminGetHomeComponent: Component {
     ) -> some FlowContent {
         Div {
             P(label)
-                .setAttribute(
-                    name: "style",
-                    value: "margin:0 0 6px 0;font-size:0.9rem;opacity:0.7;"
-                )
+                .style("margin:0 0 6px 0;font-size:0.9rem;opacity:0.7;")
             Strong(value)
-                .setAttribute(
-                    name: "style",
-                    value: "font-size:1.4rem;"
-                )
+                .style("font-size:1.4rem;")
         }
-        .setAttribute(
-            name: "style",
-            value:
+        .style(
                 "border:1px solid var(--cms-gray-3);border-radius:10px;padding:14px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
@@ -134,10 +108,7 @@ struct AdminGetHomeComponent: Component {
             }
         }
         .class("grid", "grid-321")
-        .setAttribute(
-            name: "style",
-            value: "display:grid;column-gap:16px;row-gap:16px;margin-top:16px;"
-        )
+        .style( "display:grid;column-gap:16px;row-gap:16px;margin-top:16px;")
     }
 
     private func quickActionCard(
@@ -145,10 +116,7 @@ struct AdminGetHomeComponent: Component {
     ) -> some FlowContent {
         Div {
             H3(group.label)
-                .setAttribute(
-                    name: "style",
-                    value: "margin:0 0 12px 0;font-size:1.15rem;"
-                )
+                .style("margin:0 0 12px 0;font-size:1.15rem;")
             Div {
                 for action in group.actions {
                     A(action.label)
@@ -158,9 +126,7 @@ struct AdminGetHomeComponent: Component {
             }
             .class("button-row")
         }
-        .setAttribute(
-            name: "style",
-            value:
+        .style(
                 "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
@@ -171,10 +137,7 @@ struct AdminGetHomeComponent: Component {
     ) -> some FlowContent {
         Div {
             H3(title)
-                .setAttribute(
-                    name: "style",
-                    value: "margin:0 0 16px 0;"
-                )
+                .style("margin:0 0 16px 0;")
             if items.isEmpty {
                 P("No data in this window.")
             }
@@ -183,46 +146,30 @@ struct AdminGetHomeComponent: Component {
                     Div {
                         Div {
                             Span(item.label)
-                                .setAttribute(
-                                    name: "style",
-                                    value:
-                                        "display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
-                                )
+                                .style("display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;")
                             Span("\(item.count)")
-                                .setAttribute(
-                                    name: "style",
-                                    value: "flex-shrink:0;"
-                                )
+                                .style("flex-shrink:0;")
                         }
-                        .setAttribute(
-                            name: "style",
-                            value:
-                                "display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:0.95rem;min-width:0;"
+                        .style(
+                            "display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:0.95rem;min-width:0;"
                         )
                         Div {
                             Div {}
-                                .setAttribute(
-                                    name: "style",
-                                    value:
-                                        "display:block;width:\(max(3, Int(item.share * 100)))%;height:10px;border-radius:999px;background:\(chartPrimaryColor);"
+                                .style(
+                                    "display:block;width:\(max(3, Int(item.share * 100)))%;height:10px;border-radius:999px;background:\(chartPrimaryColor);"
                                 )
                         }
-                        .setAttribute(
-                            name: "style",
-                            value:
+                        .style(
                                 "margin-top:6px;background:var(--cms-gray-2);border-radius:999px;overflow:hidden;"
                         )
                     }
-                    .setAttribute(
-                        name: "style",
-                        value: "margin:0 0 12px 0;"
+                    .style(
+                        "margin:0 0 12px 0;"
                     )
                 }
             }
         }
-        .setAttribute(
-            name: "style",
-            value:
+    .style(
                 "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
@@ -329,8 +276,7 @@ struct AdminGetHomeComponent: Component {
         }
         .setAttribute(
             name: "style",
-            value:
-                "display:block;width:100%;height:auto;border-radius:10px;overflow:hidden;"
+            value: "display:block;width:100%;height:auto;border-radius:10px;overflow:hidden;"
         )
         .width(width)
         .height(height)
@@ -372,9 +318,7 @@ struct AdminGetHomeComponent: Component {
         Div {
             P(message)
         }
-        .setAttribute(
-            name: "style",
-            value:
+        .style(
                 "border:1px solid var(--cms-gray-3);border-radius:10px;padding:14px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }

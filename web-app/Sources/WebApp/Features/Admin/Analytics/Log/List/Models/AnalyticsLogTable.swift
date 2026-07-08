@@ -175,34 +175,19 @@ struct AnalyticsLogTable: Component {
                                 for log in state.logs {
                                     Tr {
                                         Td(log.method)
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Method"
-                                            )
+                                            .data("label", "Method")
                                         Td("\(log.responseCode)")
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Status"
-                                            )
+                                            .data("label", "Status")
                                         Td(log.source)
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Source"
-                                            )
+                                            .data("label", "Source")
                                         Td(log.path)
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Path"
-                                            )
+                                            .data("label", "Path")
                                         Td(
                                             DateFormatting.formatUnixTimestamp(
                                                 log.createdAt
                                             )
                                         )
-                                        .setAttribute(
-                                            name: "data-label",
-                                            value: "Created"
-                                        )
+                                        .data("label", "Created")
                                         ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",

@@ -87,7 +87,7 @@ struct BlogSettingsForm: Component, FlowContent {
                     .name(field.key)
                     .value(field.value)
                     .if(!state.canEdit) {
-                        $0.setAttribute(name: "disabled", value: "")
+                        $0.disabled()
                     }
             }
             if let error = field.error {

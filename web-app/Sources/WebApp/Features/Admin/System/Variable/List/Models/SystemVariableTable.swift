@@ -127,15 +127,15 @@ struct SystemVariableTable: Component {
                                                 )
                                             }
                                             Td(variable.name)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Name"
+                                                .data(
+                                                    "label",
+                                                    "Name"
                                                 )
                                                 .columnWidth(percent: 50)
                                             Td(variable.value)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Value"
+                                                .data(
+                                                    "label",
+                                                    "Value"
                                                 )
                                                 .columnWidth(percent: 50)
                                             ListTableRowActions(

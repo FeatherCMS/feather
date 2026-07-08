@@ -122,9 +122,9 @@ struct UserRoleTable: Component {
                                                 )
                                             }
                                             Td(role.name)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Name"
+                                                .data(
+                                                    "label",
+                                                    "Name"
                                                 )
                                             ListTableRowActions(
                                                 state: .init(

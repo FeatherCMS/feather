@@ -35,7 +35,7 @@ struct MediaFolderAddView: Component {
                         AdminFieldLabel(label: "Folder name", required: true)
                         Input().type(.text).class("text-input").name("name")
                             .value(state.form.name).id("name")
-                            .setAttribute(name: "required", value: "")
+                            .required()
                     }
                 }
 

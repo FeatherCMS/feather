@@ -19,7 +19,7 @@ struct ListTableRowSelectCheckbox: Component {
                 .ariaLabel("Select row")
                 .class("bulk-select-row")
         }
-        .setAttribute(name: "data-label", value: "Select")
+        .data("label", "Select")
         .class("bulk-select-cell")
     }
 }

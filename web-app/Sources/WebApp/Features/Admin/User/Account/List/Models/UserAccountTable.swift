@@ -124,9 +124,9 @@ struct UserAccountTable: Component {
                                                 )
                                             }
                                             Td(account.email)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Email"
+                                                .data(
+                                                    "label",
+                                                    "Email"
                                                 )
                                             ListTableRowActions(
                                                 state: .init(

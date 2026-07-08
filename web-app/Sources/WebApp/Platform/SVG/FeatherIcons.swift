@@ -15,7 +15,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-activity")
+        .class("feather feather-activity")
     }
 
     static func airplay() -> SVG {
@@ -34,7 +34,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-airplay")
+        .class("feather feather-airplay")
     }
 
     static func alertCircle() -> SVG {
@@ -52,7 +52,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-alert-circle")
+        .class("feather feather-alert-circle")
     }
 
     static func alertOctagon() -> SVG {
@@ -73,7 +73,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-alert-octagon")
+        .class("feather feather-alert-octagon")
     }
 
     static func alertTriangle() -> SVG {
@@ -93,7 +93,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-alert-triangle")
+        .class("feather feather-alert-triangle")
     }
 
     static func alignCenter() -> SVG {
@@ -112,7 +112,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-align-center")
+        .class("feather feather-align-center")
     }
 
     static func alignJustify() -> SVG {
@@ -131,7 +131,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-align-justify")
+        .class("feather feather-align-justify")
     }
 
     static func alignLeft() -> SVG {
@@ -150,7 +150,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-align-left")
+        .class("feather feather-align-left")
     }
 
     static func alignRight() -> SVG {
@@ -169,7 +169,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-align-right")
+        .class("feather feather-align-right")
     }
 
     static func anchor() -> SVG {
@@ -187,7 +187,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-anchor")
+        .class("feather feather-anchor")
     }
 
     static func aperture() -> SVG {
@@ -209,7 +209,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-aperture")
+        .class("feather feather-aperture")
     }
 
     static func archive() -> SVG {
@@ -227,7 +227,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-archive")
+        .class("feather feather-archive")
     }
 
     static func arrowDownCircle() -> SVG {
@@ -245,7 +245,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-down-circle")
+        .class("feather feather-arrow-down-circle")
     }
 
     static func arrowDownLeft() -> SVG {
@@ -262,7 +262,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-down-left")
+        .class("feather feather-arrow-down-left")
     }
 
     static func arrowDownRight() -> SVG {
@@ -279,7 +279,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-down-right")
+        .class("feather feather-arrow-down-right")
     }
 
     static func arrowDown() -> SVG {
@@ -296,7 +296,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-down")
+        .class("feather feather-arrow-down")
     }
 
     static func arrowLeftCircle() -> SVG {
@@ -314,7 +314,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-left-circle")
+        .class("feather feather-arrow-left-circle")
     }
 
     static func arrowLeft() -> SVG {
@@ -331,7 +331,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-left")
+        .class("feather feather-arrow-left")
     }
 
     static func arrowRightCircle() -> SVG {
@@ -349,10 +349,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(
-            name: "class",
-            value: "feather feather-arrow-right-circle"
-        )
+        .class("feather feather-arrow-right-circle")
     }
 
     static func arrowRight() -> SVG {
@@ -369,7 +366,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-right")
+        .class("feather feather-arrow-right")
     }
 
     static func arrowUpCircle() -> SVG {
@@ -387,7 +384,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-up-circle")
+        .class("feather feather-arrow-up-circle")
     }
 
     static func arrowUpLeft() -> SVG {
@@ -404,7 +401,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-up-left")
+        .class("feather feather-arrow-up-left")
     }
 
     static func arrowUpRight() -> SVG {
@@ -421,7 +418,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-up-right")
+        .class("feather feather-arrow-up-right")
     }
 
     static func arrowUp() -> SVG {
@@ -438,7 +435,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-arrow-up")
+        .class("feather feather-arrow-up")
     }
 
     static func atSign() -> SVG {
@@ -455,7 +452,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-at-sign")
+        .class("feather feather-at-sign")
     }
 
     static func award() -> SVG {
@@ -472,7 +469,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-award")
+        .class("feather feather-award")
     }
 
     static func barChart2() -> SVG {
@@ -490,7 +487,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-bar-chart-2")
+        .class("feather feather-bar-chart-2")
     }
 
     static func barChart() -> SVG {
@@ -508,7 +505,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-bar-chart")
+        .class("feather feather-bar-chart")
     }
 
     static func batteryCharging() -> SVG {
@@ -528,7 +525,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-battery-charging")
+        .class("feather feather-battery-charging")
     }
 
     static func battery() -> SVG {
@@ -545,7 +542,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-battery")
+        .class("feather feather-battery")
     }
 
     static func bellOff() -> SVG {
@@ -565,7 +562,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-bell-off")
+        .class("feather feather-bell-off")
     }
 
     static func bell() -> SVG {
@@ -582,7 +579,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-bell")
+        .class("feather feather-bell")
     }
 
     static func bluetooth() -> SVG {
@@ -600,7 +597,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-bluetooth")
+        .class("feather feather-bluetooth")
     }
 
     static func bold() -> SVG {
@@ -617,7 +614,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-bold")
+        .class("feather feather-bold")
     }
 
     static func bookOpen() -> SVG {
@@ -634,7 +631,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-book-open")
+        .class("feather feather-book-open")
     }
 
     static func book() -> SVG {
@@ -653,7 +650,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-book")
+        .class("feather feather-book")
     }
 
     static func bookmark() -> SVG {
@@ -669,7 +666,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-bookmark")
+        .class("feather feather-bookmark")
     }
 
     static func box() -> SVG {
@@ -689,7 +686,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-box")
+        .class("feather feather-box")
     }
 
     static func briefcase() -> SVG {
@@ -706,7 +703,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-briefcase")
+        .class("feather feather-briefcase")
     }
 
     static func calendar() -> SVG {
@@ -725,7 +722,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-calendar")
+        .class("feather feather-calendar")
     }
 
     static func cameraOff() -> SVG {
@@ -744,7 +741,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-camera-off")
+        .class("feather feather-camera-off")
     }
 
     static func camera() -> SVG {
@@ -763,7 +760,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-camera")
+        .class("feather feather-camera")
     }
 
     static func cast() -> SVG {
@@ -782,7 +779,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-cast")
+        .class("feather feather-cast")
     }
 
     static func checkCircle() -> SVG {
@@ -799,7 +796,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-check-circle")
+        .class("feather feather-check-circle")
     }
 
     static func checkSquare() -> SVG {
@@ -816,7 +813,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-check-square")
+        .class("feather feather-check-square")
     }
 
     static func check() -> SVG {
@@ -832,7 +829,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-check")
+        .class("feather feather-check")
     }
 
     static func chevronDown() -> SVG {
@@ -848,7 +845,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-chevron-down")
+        .class("feather feather-chevron-down")
     }
 
     static func chevronLeft() -> SVG {
@@ -864,7 +861,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-chevron-left")
+        .class("feather feather-chevron-left")
     }
 
     static func chevronRight() -> SVG {
@@ -880,7 +877,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-chevron-right")
+        .class("feather feather-chevron-right")
     }
 
     static func chevronUp() -> SVG {
@@ -896,7 +893,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-chevron-up")
+        .class("feather feather-chevron-up")
     }
 
     static func chevronsDown() -> SVG {
@@ -913,7 +910,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-chevrons-down")
+        .class("feather feather-chevrons-down")
     }
 
     static func chevronsLeft() -> SVG {
@@ -930,7 +927,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-chevrons-left")
+        .class("feather feather-chevrons-left")
     }
 
     static func chevronsRight() -> SVG {
@@ -947,7 +944,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-chevrons-right")
+        .class("feather feather-chevrons-right")
     }
 
     static func chevronsUp() -> SVG {
@@ -964,7 +961,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-chevrons-up")
+        .class("feather feather-chevrons-up")
     }
 
     static func chrome() -> SVG {
@@ -984,7 +981,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-chrome")
+        .class("feather feather-chrome")
     }
 
     static func circle() -> SVG {
@@ -1000,7 +997,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-circle")
+        .class("feather feather-circle")
     }
 
     static func clipboard() -> SVG {
@@ -1019,7 +1016,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-clipboard")
+        .class("feather feather-clipboard")
     }
 
     static func clock() -> SVG {
@@ -1036,7 +1033,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-clock")
+        .class("feather feather-clock")
     }
 
     static func cloudDrizzle() -> SVG {
@@ -1058,7 +1055,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-cloud-drizzle")
+        .class("feather feather-cloud-drizzle")
     }
 
     static func cloudLightning() -> SVG {
@@ -1075,7 +1072,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-cloud-lightning")
+        .class("feather feather-cloud-lightning")
     }
 
     static func cloudOff() -> SVG {
@@ -1094,7 +1091,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-cloud-off")
+        .class("feather feather-cloud-off")
     }
 
     static func cloudRain() -> SVG {
@@ -1113,7 +1110,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-cloud-rain")
+        .class("feather feather-cloud-rain")
     }
 
     static func cloudSnow() -> SVG {
@@ -1135,7 +1132,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-cloud-snow")
+        .class("feather feather-cloud-snow")
     }
 
     static func cloud() -> SVG {
@@ -1151,7 +1148,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-cloud")
+        .class("feather feather-cloud")
     }
 
     static func code() -> SVG {
@@ -1168,7 +1165,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-code")
+        .class("feather feather-code")
     }
 
     static func codepen() -> SVG {
@@ -1188,7 +1185,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-codepen")
+        .class("feather feather-codepen")
     }
 
     static func codesandbox() -> SVG {
@@ -1211,7 +1208,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-codesandbox")
+        .class("feather feather-codesandbox")
     }
 
     static func coffee() -> SVG {
@@ -1231,7 +1228,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-coffee")
+        .class("feather feather-coffee")
     }
 
     static func columns() -> SVG {
@@ -1249,7 +1246,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-columns")
+        .class("feather feather-columns")
     }
 
     static func command() -> SVG {
@@ -1267,7 +1264,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-command")
+        .class("feather feather-command")
     }
 
     static func compass() -> SVG {
@@ -1286,7 +1283,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-compass")
+        .class("feather feather-compass")
     }
 
     static func copy() -> SVG {
@@ -1303,7 +1300,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-copy")
+        .class("feather feather-copy")
     }
 
     static func cornerDownLeft() -> SVG {
@@ -1320,7 +1317,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-corner-down-left")
+        .class("feather feather-corner-down-left")
     }
 
     static func cornerDownRight() -> SVG {
@@ -1337,7 +1334,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-corner-down-right")
+        .class("feather feather-corner-down-right")
     }
 
     static func cornerLeftDown() -> SVG {
@@ -1354,7 +1351,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-corner-left-down")
+        .class("feather feather-corner-left-down")
     }
 
     static func cornerLeftUp() -> SVG {
@@ -1371,7 +1368,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-corner-left-up")
+        .class("feather feather-corner-left-up")
     }
 
     static func cornerRightDown() -> SVG {
@@ -1388,7 +1385,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-corner-right-down")
+        .class("feather feather-corner-right-down")
     }
 
     static func cornerRightUp() -> SVG {
@@ -1405,7 +1402,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-corner-right-up")
+        .class("feather feather-corner-right-up")
     }
 
     static func cornerUpLeft() -> SVG {
@@ -1422,7 +1419,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-corner-up-left")
+        .class("feather feather-corner-up-left")
     }
 
     static func cornerUpRight() -> SVG {
@@ -1439,7 +1436,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-corner-up-right")
+        .class("feather feather-corner-up-right")
     }
 
     static func cpu() -> SVG {
@@ -1464,7 +1461,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-cpu")
+        .class("feather feather-cpu")
     }
 
     static func creditCard() -> SVG {
@@ -1481,7 +1478,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-credit-card")
+        .class("feather feather-credit-card")
     }
 
     static func crop() -> SVG {
@@ -1498,7 +1495,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-crop")
+        .class("feather feather-crop")
     }
 
     static func crosshair() -> SVG {
@@ -1518,7 +1515,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-crosshair")
+        .class("feather feather-crosshair")
     }
 
     static func database() -> SVG {
@@ -1536,7 +1533,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-database")
+        .class("feather feather-database")
     }
 
     static func delete() -> SVG {
@@ -1554,7 +1551,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-delete")
+        .class("feather feather-delete")
     }
 
     static func disc() -> SVG {
@@ -1571,7 +1568,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-disc")
+        .class("feather feather-disc")
     }
 
     static func divideCircle() -> SVG {
@@ -1590,7 +1587,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-divide-circle")
+        .class("feather feather-divide-circle")
     }
 
     static func divideSquare() -> SVG {
@@ -1609,7 +1606,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-divide-square")
+        .class("feather feather-divide-square")
     }
 
     static func divide() -> SVG {
@@ -1627,7 +1624,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-divide")
+        .class("feather feather-divide")
     }
 
     static func dollarSign() -> SVG {
@@ -1644,7 +1641,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-dollar-sign")
+        .class("feather feather-dollar-sign")
     }
 
     static func downloadCloud() -> SVG {
@@ -1662,7 +1659,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-download-cloud")
+        .class("feather feather-download-cloud")
     }
 
     static func download() -> SVG {
@@ -1680,7 +1677,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-download")
+        .class("feather feather-download")
     }
 
     static func dribbble() -> SVG {
@@ -1699,7 +1696,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-dribbble")
+        .class("feather feather-dribbble")
     }
 
     static func droplet() -> SVG {
@@ -1715,7 +1712,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-droplet")
+        .class("feather feather-droplet")
     }
 
     static func edit2() -> SVG {
@@ -1731,7 +1728,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-edit-2")
+        .class("feather feather-edit-2")
     }
 
     static func edit3() -> SVG {
@@ -1748,7 +1745,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-edit-3")
+        .class("feather feather-edit-3")
     }
 
     static func edit() -> SVG {
@@ -1765,7 +1762,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-edit")
+        .class("feather feather-edit")
     }
 
     static func externalLink() -> SVG {
@@ -1783,7 +1780,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-external-link")
+        .class("feather feather-external-link")
     }
 
     static func eyeOff() -> SVG {
@@ -1802,7 +1799,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-eye-off")
+        .class("feather feather-eye-off")
     }
 
     static func eye() -> SVG {
@@ -1819,7 +1816,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-eye")
+        .class("feather feather-eye")
     }
 
     static func facebook() -> SVG {
@@ -1837,7 +1834,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-facebook")
+        .class("feather feather-facebook")
     }
 
     static func fastForward() -> SVG {
@@ -1854,7 +1851,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-fast-forward")
+        .class("feather feather-fast-forward")
     }
 
     static func feather() -> SVG {
@@ -1872,7 +1869,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-feather")
+        .class("feather feather-feather")
     }
 
     static func figma() -> SVG {
@@ -1892,7 +1889,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-figma")
+        .class("feather feather-figma")
     }
 
     static func fileMinus() -> SVG {
@@ -1910,7 +1907,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-file-minus")
+        .class("feather feather-file-minus")
     }
 
     static func filePlus() -> SVG {
@@ -1929,7 +1926,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-file-plus")
+        .class("feather feather-file-plus")
     }
 
     static func fileText() -> SVG {
@@ -1949,7 +1946,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-file-text")
+        .class("feather feather-file-text")
     }
 
     static func file() -> SVG {
@@ -1966,7 +1963,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-file")
+        .class("feather feather-file")
     }
 
     static func film() -> SVG {
@@ -1989,7 +1986,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-film")
+        .class("feather feather-film")
     }
 
     static func filter() -> SVG {
@@ -2005,7 +2002,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-filter")
+        .class("feather feather-filter")
     }
 
     static func flag() -> SVG {
@@ -2022,7 +2019,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-flag")
+        .class("feather feather-flag")
     }
 
     static func folderMinus() -> SVG {
@@ -2041,7 +2038,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-folder-minus")
+        .class("feather feather-folder-minus")
     }
 
     static func folderPlus() -> SVG {
@@ -2061,7 +2058,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-folder-plus")
+        .class("feather feather-folder-plus")
     }
 
     static func folder() -> SVG {
@@ -2079,7 +2076,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-folder")
+        .class("feather feather-folder")
     }
 
     static func framer() -> SVG {
@@ -2095,7 +2092,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-framer")
+        .class("feather feather-framer")
     }
 
     static func frown() -> SVG {
@@ -2114,7 +2111,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-frown")
+        .class("feather feather-frown")
     }
 
     static func gift() -> SVG {
@@ -2134,7 +2131,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-gift")
+        .class("feather feather-gift")
     }
 
     static func gitBranch() -> SVG {
@@ -2153,7 +2150,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-git-branch")
+        .class("feather feather-git-branch")
     }
 
     static func gitCommit() -> SVG {
@@ -2171,7 +2168,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-git-commit")
+        .class("feather feather-git-commit")
     }
 
     static func gitMerge() -> SVG {
@@ -2189,7 +2186,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-git-merge")
+        .class("feather feather-git-merge")
     }
 
     static func gitPullRequest() -> SVG {
@@ -2208,7 +2205,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-git-pull-request")
+        .class("feather feather-git-pull-request")
     }
 
     static func github() -> SVG {
@@ -2226,7 +2223,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-github")
+        .class("feather feather-github")
     }
 
     static func gitlab() -> SVG {
@@ -2244,7 +2241,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-gitlab")
+        .class("feather feather-gitlab")
     }
 
     static func globe() -> SVG {
@@ -2264,7 +2261,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-globe")
+        .class("feather feather-globe")
     }
 
     static func grid() -> SVG {
@@ -2283,7 +2280,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-grid")
+        .class("feather feather-grid")
     }
 
     static func hardDrive() -> SVG {
@@ -2304,7 +2301,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-hard-drive")
+        .class("feather feather-hard-drive")
     }
 
     static func hash() -> SVG {
@@ -2323,7 +2320,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-hash")
+        .class("feather feather-hash")
     }
 
     static func headphones() -> SVG {
@@ -2342,7 +2339,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-headphones")
+        .class("feather feather-headphones")
     }
 
     static func heart() -> SVG {
@@ -2360,7 +2357,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-heart")
+        .class("feather feather-heart")
     }
 
     static func helpCircle() -> SVG {
@@ -2378,7 +2375,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-help-circle")
+        .class("feather feather-help-circle")
     }
 
     static func hexagon() -> SVG {
@@ -2396,7 +2393,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-hexagon")
+        .class("feather feather-hexagon")
     }
 
     static func home() -> SVG {
@@ -2413,7 +2410,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-home")
+        .class("feather feather-home")
     }
 
     static func image() -> SVG {
@@ -2431,7 +2428,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-image")
+        .class("feather feather-image")
     }
 
     static func inbox() -> SVG {
@@ -2450,7 +2447,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-inbox")
+        .class("feather feather-inbox")
     }
 
     static func info() -> SVG {
@@ -2468,7 +2465,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-info")
+        .class("feather feather-info")
     }
 
     static func instagram() -> SVG {
@@ -2486,7 +2483,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-instagram")
+        .class("feather feather-instagram")
     }
 
     static func italic() -> SVG {
@@ -2504,7 +2501,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-italic")
+        .class("feather feather-italic")
     }
 
     static func key() -> SVG {
@@ -2522,7 +2519,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-key")
+        .class("feather feather-key")
     }
 
     static func layers() -> SVG {
@@ -2540,7 +2537,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-layers")
+        .class("feather feather-layers")
     }
 
     static func layout() -> SVG {
@@ -2558,7 +2555,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-layout")
+        .class("feather feather-layout")
     }
 
     static func lifeBuoy() -> SVG {
@@ -2580,7 +2577,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-life-buoy")
+        .class("feather feather-life-buoy")
     }
 
     static func link2() -> SVG {
@@ -2599,7 +2596,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-link-2")
+        .class("feather feather-link-2")
     }
 
     static func link() -> SVG {
@@ -2616,7 +2613,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-link")
+        .class("feather feather-link")
     }
 
     static func linkedin() -> SVG {
@@ -2636,7 +2633,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-linkedin")
+        .class("feather feather-linkedin")
     }
 
     static func list() -> SVG {
@@ -2657,7 +2654,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-list")
+        .class("feather feather-list")
     }
 
     static func loader() -> SVG {
@@ -2680,7 +2677,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-loader")
+        .class("feather feather-loader")
     }
 
     static func lock() -> SVG {
@@ -2697,7 +2694,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-lock")
+        .class("feather feather-lock")
     }
 
     static func logIn() -> SVG {
@@ -2715,7 +2712,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-log-in")
+        .class("feather feather-log-in")
     }
 
     static func logOut() -> SVG {
@@ -2733,7 +2730,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-log-out")
+        .class("feather feather-log-out")
     }
 
     static func mail() -> SVG {
@@ -2752,7 +2749,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-mail")
+        .class("feather feather-mail")
     }
 
     static func mapPin() -> SVG {
@@ -2769,7 +2766,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-map-pin")
+        .class("feather feather-map-pin")
     }
 
     static func map() -> SVG {
@@ -2789,7 +2786,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-map")
+        .class("feather feather-map")
     }
 
     static func maximize2() -> SVG {
@@ -2808,7 +2805,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-maximize-2")
+        .class("feather feather-maximize-2")
     }
 
     static func maximize() -> SVG {
@@ -2826,7 +2823,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-maximize")
+        .class("feather feather-maximize")
     }
 
     static func meh() -> SVG {
@@ -2845,7 +2842,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-meh")
+        .class("feather feather-meh")
     }
 
     static func menu() -> SVG {
@@ -2863,7 +2860,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-menu")
+        .class("feather feather-menu")
     }
 
     static func messageCircle() -> SVG {
@@ -2881,7 +2878,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-message-circle")
+        .class("feather feather-message-circle")
     }
 
     static func messageSquare() -> SVG {
@@ -2899,7 +2896,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-message-square")
+        .class("feather feather-message-square")
     }
 
     static func micOff() -> SVG {
@@ -2919,7 +2916,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-mic-off")
+        .class("feather feather-mic-off")
     }
 
     static func mic() -> SVG {
@@ -2938,7 +2935,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-mic")
+        .class("feather feather-mic")
     }
 
     static func minimize2() -> SVG {
@@ -2957,7 +2954,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-minimize-2")
+        .class("feather feather-minimize-2")
     }
 
     static func minimize() -> SVG {
@@ -2975,7 +2972,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-minimize")
+        .class("feather feather-minimize")
     }
 
     static func minusCircle() -> SVG {
@@ -2992,7 +2989,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-minus-circle")
+        .class("feather feather-minus-circle")
     }
 
     static func minusSquare() -> SVG {
@@ -3009,7 +3006,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-minus-square")
+        .class("feather feather-minus-square")
     }
 
     static func minus() -> SVG {
@@ -3025,7 +3022,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-minus")
+        .class("feather feather-minus")
     }
 
     static func monitor() -> SVG {
@@ -3043,7 +3040,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-monitor")
+        .class("feather feather-monitor")
     }
 
     static func moon() -> SVG {
@@ -3059,7 +3056,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-moon")
+        .class("feather feather-moon")
     }
 
     static func moreHorizontal() -> SVG {
@@ -3077,7 +3074,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-more-horizontal")
+        .class("feather feather-more-horizontal")
     }
 
     static func moreVertical() -> SVG {
@@ -3095,7 +3092,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-more-vertical")
+        .class("feather feather-more-vertical")
     }
 
     static func mousePointer() -> SVG {
@@ -3112,7 +3109,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-mouse-pointer")
+        .class("feather feather-mouse-pointer")
     }
 
     static func move() -> SVG {
@@ -3133,7 +3130,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-move")
+        .class("feather feather-move")
     }
 
     static func music() -> SVG {
@@ -3151,7 +3148,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-music")
+        .class("feather feather-music")
     }
 
     static func navigation2() -> SVG {
@@ -3167,7 +3164,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-navigation-2")
+        .class("feather feather-navigation-2")
     }
 
     static func navigation() -> SVG {
@@ -3183,7 +3180,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-navigation")
+        .class("feather feather-navigation")
     }
 
     static func octagon() -> SVG {
@@ -3202,7 +3199,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-octagon")
+        .class("feather feather-octagon")
     }
 
     static func package() -> SVG {
@@ -3223,7 +3220,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-package")
+        .class("feather feather-package")
     }
 
     static func paperclip() -> SVG {
@@ -3241,7 +3238,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-paperclip")
+        .class("feather feather-paperclip")
     }
 
     static func pauseCircle() -> SVG {
@@ -3259,7 +3256,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-pause-circle")
+        .class("feather feather-pause-circle")
     }
 
     static func pause() -> SVG {
@@ -3276,7 +3273,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-pause")
+        .class("feather feather-pause")
     }
 
     static func penTool() -> SVG {
@@ -3295,7 +3292,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-pen-tool")
+        .class("feather feather-pen-tool")
     }
 
     static func percent() -> SVG {
@@ -3313,7 +3310,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-percent")
+        .class("feather feather-percent")
     }
 
     static func phoneCall() -> SVG {
@@ -3331,7 +3328,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-phone-call")
+        .class("feather feather-phone-call")
     }
 
     static func phoneForwarded() -> SVG {
@@ -3351,7 +3348,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-phone-forwarded")
+        .class("feather feather-phone-forwarded")
     }
 
     static func phoneIncoming() -> SVG {
@@ -3371,7 +3368,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-phone-incoming")
+        .class("feather feather-phone-incoming")
     }
 
     static func phoneMissed() -> SVG {
@@ -3391,7 +3388,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-phone-missed")
+        .class("feather feather-phone-missed")
     }
 
     static func phoneOff() -> SVG {
@@ -3410,7 +3407,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-phone-off")
+        .class("feather feather-phone-off")
     }
 
     static func phoneOutgoing() -> SVG {
@@ -3430,7 +3427,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-phone-outgoing")
+        .class("feather feather-phone-outgoing")
     }
 
     static func phone() -> SVG {
@@ -3448,7 +3445,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-phone")
+        .class("feather feather-phone")
     }
 
     static func pieChart() -> SVG {
@@ -3465,7 +3462,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-pie-chart")
+        .class("feather feather-pie-chart")
     }
 
     static func playCircle() -> SVG {
@@ -3482,7 +3479,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-play-circle")
+        .class("feather feather-play-circle")
     }
 
     static func play() -> SVG {
@@ -3498,7 +3495,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-play")
+        .class("feather feather-play")
     }
 
     static func plusCircle() -> SVG {
@@ -3516,7 +3513,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-plus-circle")
+        .class("feather feather-plus-circle")
     }
 
     static func plusSquare() -> SVG {
@@ -3534,7 +3531,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-plus-square")
+        .class("feather feather-plus-square")
     }
 
     static func plus() -> SVG {
@@ -3551,7 +3548,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-plus")
+        .class("feather feather-plus")
     }
 
     static func pocket() -> SVG {
@@ -3570,7 +3567,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-pocket")
+        .class("feather feather-pocket")
     }
 
     static func power() -> SVG {
@@ -3587,7 +3584,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-power")
+        .class("feather feather-power")
     }
 
     static func printer() -> SVG {
@@ -3607,7 +3604,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-printer")
+        .class("feather feather-printer")
     }
 
     static func radio() -> SVG {
@@ -3626,7 +3623,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-radio")
+        .class("feather feather-radio")
     }
 
     static func refreshCcw() -> SVG {
@@ -3646,7 +3643,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-refresh-ccw")
+        .class("feather feather-refresh-ccw")
     }
 
     static func refreshCw() -> SVG {
@@ -3666,7 +3663,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-refresh-cw")
+        .class("feather feather-refresh-cw")
     }
 
     static func `repeat`() -> SVG {
@@ -3685,7 +3682,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-repeat")
+        .class("feather feather-repeat")
     }
 
     static func rewind() -> SVG {
@@ -3702,7 +3699,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-rewind")
+        .class("feather feather-rewind")
     }
 
     static func rotateCcw() -> SVG {
@@ -3719,7 +3716,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-rotate-ccw")
+        .class("feather feather-rotate-ccw")
     }
 
     static func rotateCw() -> SVG {
@@ -3736,7 +3733,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-rotate-cw")
+        .class("feather feather-rotate-cw")
     }
 
     static func rss() -> SVG {
@@ -3754,7 +3751,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-rss")
+        .class("feather feather-rss")
     }
 
     static func save() -> SVG {
@@ -3774,7 +3771,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-save")
+        .class("feather feather-save")
     }
 
     static func scissors() -> SVG {
@@ -3794,7 +3791,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-scissors")
+        .class("feather feather-scissors")
     }
 
     static func search() -> SVG {
@@ -3811,7 +3808,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-search")
+        .class("feather feather-search")
     }
 
     static func send() -> SVG {
@@ -3828,7 +3825,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-send")
+        .class("feather feather-send")
     }
 
     static func server() -> SVG {
@@ -3847,7 +3844,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-server")
+        .class("feather feather-server")
     }
 
     static func settings() -> SVG {
@@ -3866,7 +3863,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-settings")
+        .class("feather feather-settings")
     }
 
     static func share2() -> SVG {
@@ -3886,7 +3883,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-share-2")
+        .class("feather feather-share-2")
     }
 
     static func share() -> SVG {
@@ -3904,7 +3901,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-share")
+        .class("feather feather-share")
     }
 
     static func shieldOff() -> SVG {
@@ -3922,7 +3919,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-shield-off")
+        .class("feather feather-shield-off")
     }
 
     static func shield() -> SVG {
@@ -3938,7 +3935,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-shield")
+        .class("feather feather-shield")
     }
 
     static func shoppingBag() -> SVG {
@@ -3956,7 +3953,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-shopping-bag")
+        .class("feather feather-shopping-bag")
     }
 
     static func shoppingCart() -> SVG {
@@ -3976,7 +3973,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-shopping-cart")
+        .class("feather feather-shopping-cart")
     }
 
     static func shuffle() -> SVG {
@@ -3996,7 +3993,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-shuffle")
+        .class("feather feather-shuffle")
     }
 
     static func sidebar() -> SVG {
@@ -4013,7 +4010,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-sidebar")
+        .class("feather feather-sidebar")
     }
 
     static func skipBack() -> SVG {
@@ -4030,7 +4027,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-skip-back")
+        .class("feather feather-skip-back")
     }
 
     static func skipForward() -> SVG {
@@ -4047,7 +4044,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-skip-forward")
+        .class("feather feather-skip-forward")
     }
 
     static func slack() -> SVG {
@@ -4086,7 +4083,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-slack")
+        .class("feather feather-slack")
     }
 
     static func slash() -> SVG {
@@ -4103,7 +4100,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-slash")
+        .class("feather feather-slash")
     }
 
     static func sliders() -> SVG {
@@ -4127,7 +4124,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-sliders")
+        .class("feather feather-sliders")
     }
 
     static func smartphone() -> SVG {
@@ -4144,7 +4141,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-smartphone")
+        .class("feather feather-smartphone")
     }
 
     static func smile() -> SVG {
@@ -4163,7 +4160,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-smile")
+        .class("feather feather-smile")
     }
 
     static func speaker() -> SVG {
@@ -4181,7 +4178,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-speaker")
+        .class("feather feather-speaker")
     }
 
     static func square() -> SVG {
@@ -4197,7 +4194,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-square")
+        .class("feather feather-square")
     }
 
     static func star() -> SVG {
@@ -4216,7 +4213,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-star")
+        .class("feather feather-star")
     }
 
     static func stopCircle() -> SVG {
@@ -4233,7 +4230,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-stop-circle")
+        .class("feather feather-stop-circle")
     }
 
     static func sun() -> SVG {
@@ -4257,7 +4254,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-sun")
+        .class("feather feather-sun")
     }
 
     static func sunrise() -> SVG {
@@ -4280,7 +4277,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-sunrise")
+        .class("feather feather-sunrise")
     }
 
     static func sunset() -> SVG {
@@ -4303,7 +4300,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-sunset")
+        .class("feather feather-sunset")
     }
 
     static func table() -> SVG {
@@ -4321,7 +4318,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-table")
+        .class("feather feather-table")
     }
 
     static func tablet() -> SVG {
@@ -4338,7 +4335,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-tablet")
+        .class("feather feather-tablet")
     }
 
     static func tag() -> SVG {
@@ -4357,7 +4354,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-tag")
+        .class("feather feather-tag")
     }
 
     static func target() -> SVG {
@@ -4375,7 +4372,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-target")
+        .class("feather feather-target")
     }
 
     static func terminal() -> SVG {
@@ -4392,7 +4389,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-terminal")
+        .class("feather feather-terminal")
     }
 
     static func thermometer() -> SVG {
@@ -4408,7 +4405,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-thermometer")
+        .class("feather feather-thermometer")
     }
 
     static func thumbsDown() -> SVG {
@@ -4426,7 +4423,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-thumbs-down")
+        .class("feather feather-thumbs-down")
     }
 
     static func thumbsUp() -> SVG {
@@ -4444,7 +4441,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-thumbs-up")
+        .class("feather feather-thumbs-up")
     }
 
     static func toggleLeft() -> SVG {
@@ -4461,7 +4458,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-toggle-left")
+        .class("feather feather-toggle-left")
     }
 
     static func toggleRight() -> SVG {
@@ -4478,7 +4475,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-toggle-right")
+        .class("feather feather-toggle-right")
     }
 
     static func tool() -> SVG {
@@ -4496,7 +4493,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-tool")
+        .class("feather feather-tool")
     }
 
     static func trash2() -> SVG {
@@ -4517,7 +4514,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-trash-2")
+        .class("feather feather-trash-2")
     }
 
     static func trash() -> SVG {
@@ -4536,7 +4533,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-trash")
+        .class("feather feather-trash")
     }
 
     static func trello() -> SVG {
@@ -4554,7 +4551,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-trello")
+        .class("feather feather-trello")
     }
 
     static func trendingDown() -> SVG {
@@ -4571,7 +4568,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-trending-down")
+        .class("feather feather-trending-down")
     }
 
     static func trendingUp() -> SVG {
@@ -4588,7 +4585,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-trending-up")
+        .class("feather feather-trending-up")
     }
 
     static func triangle() -> SVG {
@@ -4606,7 +4603,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-triangle")
+        .class("feather feather-triangle")
     }
 
     static func truck() -> SVG {
@@ -4625,7 +4622,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-truck")
+        .class("feather feather-truck")
     }
 
     static func tv() -> SVG {
@@ -4642,7 +4639,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-tv")
+        .class("feather feather-tv")
     }
 
     static func twitch() -> SVG {
@@ -4658,7 +4655,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-twitch")
+        .class("feather feather-twitch")
     }
 
     static func twitter() -> SVG {
@@ -4676,7 +4673,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-twitter")
+        .class("feather feather-twitter")
     }
 
     static func type() -> SVG {
@@ -4694,7 +4691,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-type")
+        .class("feather feather-type")
     }
 
     static func umbrella() -> SVG {
@@ -4710,7 +4707,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-umbrella")
+        .class("feather feather-umbrella")
     }
 
     static func underline() -> SVG {
@@ -4727,7 +4724,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-underline")
+        .class("feather feather-underline")
     }
 
     static func unlock() -> SVG {
@@ -4744,7 +4741,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-unlock")
+        .class("feather feather-unlock")
     }
 
     static func uploadCloud() -> SVG {
@@ -4763,7 +4760,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-upload-cloud")
+        .class("feather feather-upload-cloud")
     }
 
     static func upload() -> SVG {
@@ -4781,7 +4778,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-upload")
+        .class("feather feather-upload")
     }
 
     static func userCheck() -> SVG {
@@ -4799,7 +4796,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-user-check")
+        .class("feather feather-user-check")
     }
 
     static func userMinus() -> SVG {
@@ -4817,7 +4814,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-user-minus")
+        .class("feather feather-user-minus")
     }
 
     static func userPlus() -> SVG {
@@ -4836,7 +4833,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-user-plus")
+        .class("feather feather-user-plus")
     }
 
     static func userX() -> SVG {
@@ -4855,7 +4852,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-user-x")
+        .class("feather feather-user-x")
     }
 
     static func user() -> SVG {
@@ -4872,7 +4869,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-user")
+        .class("feather feather-user")
     }
 
     static func users() -> SVG {
@@ -4891,7 +4888,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-users")
+        .class("feather feather-users")
     }
 
     static func videoOff() -> SVG {
@@ -4910,7 +4907,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-video-off")
+        .class("feather feather-video-off")
     }
 
     static func video() -> SVG {
@@ -4927,7 +4924,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-video")
+        .class("feather feather-video")
     }
 
     static func voicemail() -> SVG {
@@ -4945,7 +4942,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-voicemail")
+        .class("feather feather-voicemail")
     }
 
     static func volume1() -> SVG {
@@ -4962,7 +4959,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-volume-1")
+        .class("feather feather-volume-1")
     }
 
     static func volume2() -> SVG {
@@ -4979,7 +4976,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-volume-2")
+        .class("feather feather-volume-2")
     }
 
     static func volumeX() -> SVG {
@@ -4997,7 +4994,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-volume-x")
+        .class("feather feather-volume-x")
     }
 
     static func volume() -> SVG {
@@ -5013,7 +5010,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-volume")
+        .class("feather feather-volume")
     }
 
     static func watch() -> SVG {
@@ -5033,7 +5030,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-watch")
+        .class("feather feather-watch")
     }
 
     static func wifiOff() -> SVG {
@@ -5055,7 +5052,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-wifi-off")
+        .class("feather feather-wifi-off")
     }
 
     static func wifi() -> SVG {
@@ -5074,7 +5071,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-wifi")
+        .class("feather feather-wifi")
     }
 
     static func wind() -> SVG {
@@ -5092,7 +5089,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-wind")
+        .class("feather feather-wind")
     }
 
     static func xCircle() -> SVG {
@@ -5110,7 +5107,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-x-circle")
+        .class("feather feather-x-circle")
     }
 
     static func xOctagon() -> SVG {
@@ -5131,7 +5128,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-x-octagon")
+        .class("feather feather-x-octagon")
     }
 
     static func xSquare() -> SVG {
@@ -5149,7 +5146,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-x-square")
+        .class("feather feather-x-square")
     }
 
     static func x() -> SVG {
@@ -5166,7 +5163,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-x")
+        .class("feather feather-x")
     }
 
     static func youtube() -> SVG {
@@ -5185,7 +5182,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-youtube")
+        .class("feather feather-youtube")
     }
 
     static func zapOff() -> SVG {
@@ -5204,7 +5201,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-zap-off")
+        .class("feather feather-zap-off")
     }
 
     static func zap() -> SVG {
@@ -5220,7 +5217,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-zap")
+        .class("feather feather-zap")
     }
 
     static func zoomIn() -> SVG {
@@ -5239,7 +5236,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-zoom-in")
+        .class("feather feather-zoom-in")
     }
 
     static func zoomOut() -> SVG {
@@ -5257,7 +5254,7 @@ enum FeatherIcons {
         .strokeLinecap("round")
         .strokeLinejoin("round")
         .setAttribute(name: "aria-hidden", value: "true")
-        .setAttribute(name: "class", value: "feather feather-zoom-out")
+        .class("feather feather-zoom-out")
     }
 
 }

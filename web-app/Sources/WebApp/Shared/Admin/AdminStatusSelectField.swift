@@ -28,10 +28,9 @@ struct AdminStatusSelectField: Component, FlowContent {
             }
         }
         .name("status")
-        .setAttribute(name: "form", value: formID)
-        .setAttribute(
-            name: "onchange",
-            value: "document.getElementById('\(formID)').requestSubmit();"
+        .form(formID)
+        .onChange(
+            "document.getElementById('\(formID)').requestSubmit();"
         )
         .class("table-status-select")
         .style(

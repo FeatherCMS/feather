@@ -254,9 +254,9 @@ struct AssetListView: Component {
         }
         .class("cms-section")
         .if(state.picker.isEnabled) {
-            $0.setAttribute(
-                name: "data-admin-media-picker-section",
-                value: "gallery"
+            $0.data(
+                "admin-media-picker-section",
+                "gallery"
             )
         }
     }
@@ -532,24 +532,24 @@ extension AssetListView {
                 .type(.search)
                 .value(state.search)
                 .placeholder("Quick search assets")
-                .setAttribute(
-                    name: "data-admin-media-picker-search-input",
-                    value: "1"
+                .data(
+                    "admin-media-picker-search-input",
+                    "1"
                 )
             Button("Search")
                 .type(.button)
-                .setAttribute(
-                    name: "data-admin-media-picker-search-submit",
-                    value: "1"
+                .data(
+                    "admin-media-picker-search-submit",
+                    "1"
                 )
             A("Reset")
                 .href(browsePath(parentId: state.parentId))
                 .class("table-search-reset")
         }
         .class("table-search-form")
-        .setAttribute(
-            name: "data-admin-media-picker-search-path",
-            value: browsePath(parentId: state.parentId)
+        .data(
+            "admin-media-picker-search-path",
+            browsePath(parentId: state.parentId)
         )
     }
 
@@ -757,29 +757,14 @@ extension AssetListView {
                 }
                 .type(.button)
                 .class("media-assets-card-preview-button")
-                .setAttribute(name: "data-picker-select", value: item.asset.id)
-                .setAttribute(name: "data-picker-field", value: field)
-                .setAttribute(
-                    name: "data-picker-storage-key",
-                    value: item.asset.storageKey
-                )
-                .setAttribute(
-                    name: "data-picker-base-name",
-                    value: item.asset.baseName
-                )
-                .setAttribute(name: "data-picker-type", value: item.asset._type)
-                .setAttribute(
-                    name: "data-picker-title",
-                    value: item.asset.title ?? ""
-                )
-                .setAttribute(
-                    name: "data-picker-alt-text",
-                    value: item.asset.altText ?? ""
-                )
-                .setAttribute(
-                    name: "data-picker-status",
-                    value: item.asset.status
-                )
+                .data("picker-select", item.asset.id)
+                .data("picker-field", field)
+                .data("picker-storage-key", item.asset.storageKey)
+                .data("picker-base-name", item.asset.baseName)
+                .data("picker-type", item.asset._type)
+                .data("picker-title", item.asset.title ?? "")
+                .data("picker-alt-text", item.asset.altText ?? "")
+                .data("picker-status", item.asset.status)
             }
             else {
                 A {
@@ -800,7 +785,7 @@ extension AssetListView {
                     .class("media-assets-card-preview")
                 }
                 .href(originalURL)
-                .setAttribute(name: "target", value: "_blank")
+                .target(.blank)
             }
 
             Div {
@@ -814,35 +799,14 @@ extension AssetListView {
                     Button("Select")
                         .type(.button)
                         .class("row-btn")
-                        .setAttribute(
-                            name: "data-picker-select",
-                            value: item.asset.id
-                        )
-                        .setAttribute(name: "data-picker-field", value: field)
-                        .setAttribute(
-                            name: "data-picker-storage-key",
-                            value: item.asset.storageKey
-                        )
-                        .setAttribute(
-                            name: "data-picker-base-name",
-                            value: item.asset.baseName
-                        )
-                        .setAttribute(
-                            name: "data-picker-type",
-                            value: item.asset._type
-                        )
-                        .setAttribute(
-                            name: "data-picker-title",
-                            value: item.asset.title ?? ""
-                        )
-                        .setAttribute(
-                            name: "data-picker-alt-text",
-                            value: item.asset.altText ?? ""
-                        )
-                        .setAttribute(
-                            name: "data-picker-status",
-                            value: item.asset.status
-                        )
+                        .data("picker-select", item.asset.id)
+                        .data("picker-field", field)
+                        .data("picker-storage-key", item.asset.storageKey)
+                        .data("picker-base-name", item.asset.baseName)
+                        .data("picker-type", item.asset._type)
+                        .data("picker-title", item.asset.title ?? "")
+                        .data("picker-alt-text", item.asset.altText ?? "")
+                        .data("picker-status", item.asset.status)
                 }
                 else if state.permissions.contains(
                     AdminMedia.Scope.assets.permission(for: .read)
@@ -885,15 +849,15 @@ extension AssetListView {
             Td {
                 A("Up to parent").href(browsePath(parentId: parentId))
             }
-            .setAttribute(name: "data-label", value: "File name")
+            .data("label", "File name")
             Td("")
-                .setAttribute(name: "data-label", value: "Type")
+                .data("label", "Type")
             Td("-")
-                .setAttribute(name: "data-label", value: "Size")
+                .data("label", "Size")
             Td {
                 A("Open").href(browsePath(parentId: parentId)).class("row-btn")
             }
-            .setAttribute(name: "data-label", value: "Actions")
+            .data("label", "Actions")
             .class("action-cell")
         }
     }
@@ -912,9 +876,9 @@ extension AssetListView {
             )
             folderTitleCell(for: folder)
             Td("Folder")
-                .setAttribute(name: "data-label", value: "Type")
+                .data("label", "Type")
             Td(folderItemCountLabel(for: folder))
-                .setAttribute(name: "data-label", value: "Size")
+                .data("label", "Size")
             Td {
                 A("Open").href(browsePath(parentId: folder.id)).class("row-btn")
                 if state.permissions.contains(
@@ -932,7 +896,7 @@ extension AssetListView {
                     folderDeleteForm(folder)
                 }
             }
-            .setAttribute(name: "data-label", value: "Actions")
+            .data("label", "Actions")
             .class("action-cell")
         }
     }
@@ -958,42 +922,42 @@ extension AssetListView {
             )
             assetTitleCell(for: item, originalURL: originalURL)
             Td(item.asset._type)
-                .setAttribute(name: "data-label", value: "Type")
+                .data("label", "Type")
             Td(fileSizeLabel(bytes: item.asset.sizeBytes))
-                .setAttribute(name: "data-label", value: "Size")
+                .data("label", "Size")
             Td {
                 if state.picker.isEnabled, let field = state.picker.field {
                     Button("Select")
                         .type(.button)
                         .class("row-btn")
-                        .setAttribute(
-                            name: "data-picker-select",
-                            value: item.asset.id
+                        .data(
+                            "picker-select",
+                            item.asset.id
                         )
-                        .setAttribute(name: "data-picker-field", value: field)
-                        .setAttribute(
-                            name: "data-picker-storage-key",
-                            value: item.asset.storageKey
+                        .data("picker-field", field)
+                        .data(
+                            "picker-storage-key",
+                            item.asset.storageKey
                         )
-                        .setAttribute(
-                            name: "data-picker-base-name",
-                            value: item.asset.baseName
+                        .data(
+                            "picker-base-name",
+                            item.asset.baseName
                         )
-                        .setAttribute(
-                            name: "data-picker-type",
-                            value: item.asset._type
+                        .data(
+                            "picker-type",
+                            item.asset._type
                         )
-                        .setAttribute(
-                            name: "data-picker-title",
-                            value: item.asset.title ?? ""
+                        .data(
+                            "picker-title",
+                            item.asset.title ?? ""
                         )
-                        .setAttribute(
-                            name: "data-picker-alt-text",
-                            value: item.asset.altText ?? ""
+                        .data(
+                            "picker-alt-text",
+                            item.asset.altText ?? ""
                         )
-                        .setAttribute(
-                            name: "data-picker-status",
-                            value: item.asset.status
+                        .data(
+                            "picker-status",
+                            item.asset.status
                         )
                 }
                 else {
@@ -1024,7 +988,7 @@ extension AssetListView {
                         .class("row-btn", "delete")
                 }
             }
-            .setAttribute(name: "data-label", value: "Actions")
+            .data("label", "Actions")
             .class("action-cell")
         }
     }
@@ -1094,11 +1058,11 @@ extension AssetListView {
                 .class("media-assets-folder-icon")
             }
             .href(href)
-            .setAttribute(name: "aria-label", value: "Open parent folder")
+            .ariaLabel("Open parent folder")
         }
         .class("media-assets-table-preview")
-        .setAttribute(name: "data-label", value: "Preview")
-        .setAttribute(name: "aria-label", value: "Parent folder")
+        .data("label", "Preview")
+        .ariaLabel("Parent folder")
     }
 
     fileprivate func folderPreviewCell(
@@ -1113,11 +1077,11 @@ extension AssetListView {
                 .class("media-assets-folder-icon")
             }
             .href(href)
-            .setAttribute(name: "aria-label", value: "Open \(label)")
+            .ariaLabel("Open \(label)")
         }
         .class("media-assets-table-preview")
-        .setAttribute(name: "data-label", value: "Preview")
-        .setAttribute(name: "aria-label", value: label)
+        .data("label", "Preview")
+        .ariaLabel(label)
     }
 
     fileprivate func assetPreviewCell(
@@ -1138,14 +1102,11 @@ extension AssetListView {
                 }
             }
             .href(originalURL)
-            .setAttribute(name: "target", value: "_blank")
-            .setAttribute(
-                name: "aria-label",
-                value: "Open \(displayTitle(for: item.asset))"
-            )
+            .target(.blank)
+            .ariaLabel("Open \(displayTitle(for: item.asset))")
         }
         .class("media-assets-table-preview")
-        .setAttribute(name: "data-label", value: "Preview")
+        .data("label", "Preview")
     }
 
     fileprivate func folderTitleCell(
@@ -1155,7 +1116,7 @@ extension AssetListView {
             A(folder.name)
                 .href(browsePath(parentId: folder.id))
         }
-        .setAttribute(name: "data-label", value: "File name")
+        .data("label", "File name")
     }
 
     fileprivate func assetTitleCell(
@@ -1166,20 +1127,14 @@ extension AssetListView {
             Span {
                 A(fileName(for: item.asset))
                     .href(originalURL)
-                    .setAttribute(name: "target", value: "_blank")
-                    .setAttribute(
-                        name: "aria-label",
-                        value: "Open \(displayTitle(for: item.asset))"
-                    )
+                    .target(.blank)
+                    .ariaLabel("Open \(displayTitle(for: item.asset))")
                 A {
                     Icon(svg: FeatherIcons.externalLink())
                 }
                 .href(originalURL)
-                .setAttribute(name: "target", value: "_blank")
-                .setAttribute(
-                    name: "aria-label",
-                    value: "Open \(displayTitle(for: item.asset))"
-                )
+                .target(.blank)
+                .ariaLabel("Open \(displayTitle(for: item.asset))")
                 .style(
                     "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;"
                 )
@@ -1188,6 +1143,6 @@ extension AssetListView {
                 "display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;line-height:1.25;"
             )
         }
-        .setAttribute(name: "data-label", value: "File name")
+        .data("label", "File name")
     }
 }

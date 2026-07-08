@@ -43,9 +43,9 @@ struct AdminBody<T: Component>: Component, FlowContent {
             .src(
                 "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/toast.js"
             )
-            .setAttribute(name: "defer", value: "")
+            .defer()
         Script()
             .src("/admin-navigation.js")
-            .setAttribute(name: "defer", value: "")
+            .defer()
     }
 }

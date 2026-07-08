@@ -20,9 +20,8 @@ struct AdminNavigationButton: Component, FlowContent {
     func content() -> some BasicTag {
         var button = Button(label)
             .type(.button)
-            .setAttribute(
-                name: "onclick",
-                value: "window.location.href='\(href)'"
+            .onClick(
+                "window.location.href='\(href)'"
             )
         if let className {
             button = button.class(className)

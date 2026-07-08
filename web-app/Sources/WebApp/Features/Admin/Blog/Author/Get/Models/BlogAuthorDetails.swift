@@ -37,7 +37,7 @@ struct BlogAuthorDetails: Component {
                                 ?? profileImage.id
                         )
                         .href(previewLink(for: profileImage.storageKey))
-                        .setAttribute(name: "target", value: "_blank")
+                        .target(.blank)
                     }
                     .class("admin-details-field__value")
                 }
@@ -77,7 +77,7 @@ struct BlogAuthorDetails: Component {
                 if let previewPath = previewPath {
                     A("Preview")
                         .href(previewPath)
-                        .setAttribute(name: "target", value: "_blank")
+                        .target(.blank)
                         .class("secondary")
                 }
                 if state.permissions.contains(
@@ -177,30 +177,15 @@ struct BlogAuthorDetails: Component {
                                             )
                                         }
                                         Td(item.label)
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Label"
-                                            )
+                                            .data("label", "Label")
                                         Td(item.url)
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "URL"
-                                            )
+                                            .data("label", "URL")
                                         Td("\(item.priority)")
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Priority"
-                                            )
+                                            .data("label", "Priority")
                                         Td(item.isBlank ? "Yes" : "No")
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Blank"
-                                            )
+                                            .data("label", "Blank")
                                         Td(item.permission)
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Permission"
-                                            )
+                                            .data("label", "Permission")
                                         ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",

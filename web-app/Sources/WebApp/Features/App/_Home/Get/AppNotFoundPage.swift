@@ -122,6 +122,6 @@ struct AppNotFoundPage: Component, FlowContent {
             .class("home-panel")
         }
         .class("home-shell")
-        .setAttribute(name: "role", value: "main")
+        .role("main")
     }
 }

@@ -153,8 +153,8 @@ struct WebMetadataForm: Component, FlowContent {
                     .type(.text)
                     .id(field.key)
                     .value(field.value)
-                    .setAttribute(name: "readonly", value: "")
-                    .setAttribute(name: "disabled", value: "")
+                    .readOnly()
+                    .disabled()
             }
         }
     }

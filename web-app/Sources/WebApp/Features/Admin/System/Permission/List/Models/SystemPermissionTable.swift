@@ -125,9 +125,9 @@ struct SystemPermissionTable: Component {
                                                 )
                                             }
                                             Td(permission.name)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Name"
+                                                .data(
+                                                    "label",
+                                                    "Name"
                                                 )
                                             ListTableRowActions(
                                                 state: .init(

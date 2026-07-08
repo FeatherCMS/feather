@@ -108,9 +108,7 @@ struct AdminConfirmationDialog: Component {
                     A(state.cancelLabel)
                         .href(state.cancelURL)
                         .class("ghost")
-                        .setAttribute(
-                            name: "onclick",
-                            value:
+                        .onClick(
                                 "if (document.referrer) { window.location.href = document.referrer; return false; }"
                         )
                 }

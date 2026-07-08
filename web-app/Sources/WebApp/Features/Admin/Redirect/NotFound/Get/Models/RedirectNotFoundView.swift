@@ -60,9 +60,7 @@ struct RedirectNotFoundView: Component {
             H2("Daily traffic")
             chartSVG
         }
-        .setAttribute(
-            name: "style",
-            value:
+.style(
                 "margin:20px 0 16px 0;padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
@@ -170,9 +168,8 @@ struct RedirectNotFoundView: Component {
             }
         }
         .setAttribute(
-            name: "style",
-            value:
-                "display:block;width:100%;height:auto;border-radius:10px;overflow:hidden;"
+                name: "style",
+                value: "display:block;width:100%;height:auto;border-radius:10px;overflow:hidden;"
         )
         .width(width)
         .height(height)
@@ -193,46 +190,32 @@ struct RedirectNotFoundView: Component {
                     Div {
                         Div {
                             Span(item.label)
-                                .setAttribute(
-                                    name: "style",
-                                    value:
-                                        "display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                                .style(
+                                            "display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
                                 )
                             Span("\(item.count)")
-                                .setAttribute(
-                                    name: "style",
-                                    value: "flex-shrink:0;"
-                                )
+                                .style("flex-shrink:0;")
                         }
-                        .setAttribute(
-                            name: "style",
-                            value:
-                                "display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:0.95rem;min-width:0;"
+                        .style(
+                                    "display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:0.95rem;min-width:0;"
                         )
                         Div {
                             Div {}
-                                .setAttribute(
-                                    name: "style",
-                                    value:
+                                .style(
                                         "display:block;width:\(max(3, Int(item.share * 100)))%;height:10px;border-radius:999px;background:\(chartPrimaryColor);"
                                 )
                         }
-                        .setAttribute(
-                            name: "style",
-                            value:
-                                "margin-top:6px;background:var(--cms-gray-2);border-radius:999px;overflow:hidden;"
+                        .style(
+                                    "margin-top:6px;background:var(--cms-gray-2);border-radius:999px;overflow:hidden;"
                         )
                     }
-                    .setAttribute(
-                        name: "style",
-                        value: "margin:0 0 12px 0;"
+                    .style(
+                        "margin:0 0 12px 0;"
                     )
                 }
             }
         }
-        .setAttribute(
-            name: "style",
-            value:
+.style(
                 "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }

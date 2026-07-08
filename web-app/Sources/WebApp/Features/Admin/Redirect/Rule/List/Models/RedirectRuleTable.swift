@@ -157,19 +157,19 @@ struct RedirectRuleTable: Component {
                                                 )
                                             }
                                             Td(rule.source)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Source"
+                                                .data(
+                                                    "label",
+                                                    "Source"
                                                 )
                                             Td(rule.destination)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Destination"
+                                                .data(
+                                                    "label",
+                                                    "Destination"
                                                 )
                                             Td("\(rule.statusCode)")
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Status"
+                                                .data(
+                                                    "label",
+                                                    "Status"
                                                 )
                                             ListTableRowActions(
                                                 state: .init(
