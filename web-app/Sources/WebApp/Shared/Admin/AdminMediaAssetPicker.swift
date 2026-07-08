@@ -264,13 +264,13 @@ extension AdminMediaAssetPicker {
                 if state.selectedAsset == nil {
                     H3("No asset selected")
                         .style("margin:0;")
-                        .setAttribute(
-                            name: "data-media-picker-title",
-                            value: state.field.key
+                        .data(
+                            "media-picker-title",
+                            state.field.key
                         )
-                        .setAttribute(
-                            name: "data-empty-title",
-                            value: "No asset selected"
+                        .data(
+                            "empty-title",
+                            "No asset selected"
                         )
                 }
             }
@@ -279,16 +279,16 @@ extension AdminMediaAssetPicker {
                 Button("Choose asset")
                     .type(.button)
                     .class("secondary")
-                    .setAttribute(
-                        name: "data-media-picker-open",
-                        value: state.field.key
+                    .data(
+                        "media-picker-open",
+                        state.field.key
                     )
                 Button("Clear")
                     .type(.button)
                     .class("ghost")
-                    .setAttribute(
-                        name: "data-media-picker-clear",
-                        value: state.field.key
+                    .data(
+                        "media-picker-clear",
+                        state.field.key
                     )
                     .if(state.field.value?.isEmpty != false) {
                         $0.style("display:none;")
@@ -319,7 +319,7 @@ extension AdminMediaAssetPicker {
             }
         }
         .class("admin-media-asset-picker-preview")
-        .setAttribute(name: "data-media-picker-preview", value: state.field.key)
+        .data("media-picker-preview", state.field.key)
     }
 
     fileprivate func modal() -> some FlowContent {
@@ -337,9 +337,9 @@ extension AdminMediaAssetPicker {
                     Button("Close")
                         .type(.button)
                         .class("ghost")
-                        .setAttribute(
-                            name: "data-media-picker-close",
-                            value: state.field.key
+                        .data(
+                            "media-picker-close",
+                            state.field.key
                         )
                 }
                 .class("admin-media-asset-picker-dialog-header")
@@ -348,31 +348,31 @@ extension AdminMediaAssetPicker {
                     Button("Gallery")
                         .type(.button)
                         .class("is-current")
-                        .setAttribute(
-                            name: "data-media-picker-tab",
-                            value: "gallery"
+                        .data(
+                            "media-picker-tab",
+                            "gallery"
                         )
-                        .setAttribute(
-                            name: "data-media-picker-field",
-                            value: state.field.key
+                        .data(
+                            "media-picker-field",
+                            state.field.key
                         )
                     Button("Upload")
                         .type(.button)
-                        .setAttribute(
-                            name: "data-media-picker-tab",
-                            value: "upload"
+                        .data(
+                            "media-picker-tab",
+                            "upload"
                         )
-                        .setAttribute(
-                            name: "data-media-picker-field",
-                            value: state.field.key
+                        .data(
+                            "media-picker-field",
+                            state.field.key
                         )
                 }
                 .class("admin-media-asset-picker-tabs")
 
                 Style("")
-                    .setAttribute(
-                        name: "data-media-picker-style",
-                        value: state.field.key
+                    .data(
+                        "media-picker-style",
+                        state.field.key
                     )
 
                 Div {
@@ -382,9 +382,9 @@ extension AdminMediaAssetPicker {
                     .class("admin-media-asset-picker-loading")
                 }
                 .class("admin-media-asset-picker-panel")
-                .setAttribute(
-                    name: "data-media-picker-panel",
-                    value: state.field.key
+                .data(
+                    "media-picker-panel",
+                    state.field.key
                 )
             }
             .class("admin-media-asset-picker-dialog")
@@ -393,18 +393,18 @@ extension AdminMediaAssetPicker {
         }
         .id("mediaPickerModal-\(state.field.key)")
         .class("admin-media-asset-picker-modal")
-        .setAttribute(
-            name: "data-media-picker-browse-path",
-            value: state.browsePath
+        .data(
+            "media-picker-browse-path",
+            state.browsePath
         )
-        .setAttribute(
-            name: "data-media-picker-upload-path",
-            value: uploadPath()
+        .data(
+            "media-picker-upload-path",
+            uploadPath()
         )
-        .setAttribute(name: "data-media-picker-active-tab", value: "gallery")
-        .setAttribute(
-            name: "data-media-picker-output",
-            value: state.outputMode.rawValue
+        .data("media-picker-active-tab", "gallery")
+        .data(
+            "media-picker-output",
+            state.outputMode.rawValue
         )
     }
 
@@ -506,7 +506,7 @@ extension AdminMediaAssetPicker {
           }
 
           function setActiveTab(modal, tab) {
-            modal.setAttribute("data-media-picker-active-tab", tab);
+            modal.data("media-picker-active-tab", tab);
             modal.querySelectorAll("[data-media-picker-tab]").forEach(function(button) {
               button.classList.toggle("is-current", button.getAttribute("data-media-picker-tab") === tab);
             });
@@ -660,8 +660,8 @@ extension AdminMediaAssetPicker {
             if (!panel || !styleNode) { return; }
 
             setActiveTab(modal, tab);
-            modal.setAttribute("data-media-picker-browse-path", deriveBrowsePath(url));
-            modal.setAttribute("data-media-picker-upload-path", deriveUploadPath(url));
+            modal.data("media-picker-browse-path", deriveBrowsePath(url));
+            modal.data("media-picker-upload-path", deriveUploadPath(url));
             panel.innerHTML = '<div class="admin-media-asset-picker-loading">Loading...</div>';
 
             var response = await fetch(url, Object.assign({ credentials: "same-origin" }, requestInit || {}));

@@ -96,15 +96,15 @@ struct MediaProcessorsListView: Component {
                                                 )
                                             }
                                             Td(item.name)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "File suffix"
+                                                .data(
+                                                    "label",
+                                                    "File suffix"
                                                 )
                                                 .columnWidth(percent: 50)
                                             Td(item.matchExtensions)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Match extensions"
+                                                .data(
+                                                    "label",
+                                                    "Match extensions"
                                                 )
                                                 .columnWidth(percent: 50)
                                             ListTableRowActions(

@@ -127,9 +127,9 @@ struct UserInvitationTable: Component {
                                                 )
                                             }
                                             Td(invitation.email)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Email"
+                                                .data(
+                                                    "label",
+                                                    "Email"
                                                 )
                                                 .columnWidth(percent: 62)
                                             Td(
@@ -138,9 +138,9 @@ struct UserInvitationTable: Component {
                                                         invitation.expiresAt
                                                     )
                                             )
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Expires At"
+                                            .data(
+                                                "label",
+                                                "Expires At"
                                             )
                                             .columnWidth(percent: 28)
                                             ListTableRowActions(

@@ -129,10 +129,7 @@ struct AuthMagicLinkTable: Component {
                                                 )
                                             }
                                             Td(link.email)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Email"
-                                                )
+                                                .data("label", "Email")
                                                 .columnWidth(percent: 50)
                                             Td(
                                                 DateFormatting
@@ -140,22 +137,13 @@ struct AuthMagicLinkTable: Component {
                                                         link.expiresAt
                                                     )
                                             )
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Expires At"
-                                            )
+                                            .data("label", "Expires At")
                                             .columnWidth(percent: 24)
                                             Td(link.isPersistent ? "Yes" : "No")
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Persistent"
-                                                )
+                                                .data("label", "Persistent")
                                                 .columnWidth(percent: 10)
                                             Td(link.isUsed ? "Yes" : "No")
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Used"
-                                                )
+                                                .data("label", "Used")
                                                 .columnWidth(percent: 10)
                                             ListTableRowActions(
                                                 state: .init(

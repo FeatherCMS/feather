@@ -33,33 +33,33 @@ struct AssetAddView: Component {
             if let error = state.form.error { P(error).class("error") }
             if let selectedAsset = state.form.selectedAsset {
                 Div {}
-                    .setAttribute(
-                        name: "data-media-picker-selected-id",
-                        value: selectedAsset.id
+                    .data(
+                        "media-picker-selected-id",
+                        selectedAsset.id
                     )
-                    .setAttribute(
-                        name: "data-media-picker-selected-storage-key",
-                        value: selectedAsset.storageKey
+                    .data(
+                        "media-picker-selected-storage-key",
+                        selectedAsset.storageKey
                     )
-                    .setAttribute(
-                        name: "data-media-picker-selected-base-name",
-                        value: selectedAsset.baseName
+                    .data(
+                        "media-picker-selected-base-name",
+                        selectedAsset.baseName
                     )
-                    .setAttribute(
-                        name: "data-media-picker-selected-type",
-                        value: selectedAsset.type
+                    .data(
+                        "media-picker-selected-type",
+                        selectedAsset.type
                     )
-                    .setAttribute(
-                        name: "data-media-picker-selected-title",
-                        value: selectedAsset.title ?? ""
+                    .data(
+                        "media-picker-selected-title",
+                        selectedAsset.title ?? ""
                     )
-                    .setAttribute(
-                        name: "data-media-picker-selected-alt-text",
-                        value: selectedAsset.altText ?? ""
+                    .data(
+                        "media-picker-selected-alt-text",
+                        selectedAsset.altText ?? ""
                     )
-                    .setAttribute(
-                        name: "data-media-picker-selected-status",
-                        value: selectedAsset.status
+                    .data(
+                        "media-picker-selected-status",
+                        selectedAsset.status
                     )
                     .hidden()
             }
@@ -151,9 +151,9 @@ struct AssetAddView: Component {
         }
         .class("cms-section")
         .if(state.form.isPicker) {
-            $0.setAttribute(
-                name: "data-admin-media-picker-section",
-                value: "upload"
+            $0.data(
+                "admin-media-picker-section",
+                "upload"
             )
         }
     }
@@ -248,9 +248,9 @@ struct AssetAddView: Component {
                 Div {
                     Button("Add")
                         .type(.button)
-                        .setAttribute(
-                            name: "data-admin-media-picker-upload-submit",
-                            value: "1"
+                        .data(
+                            "admin-media-picker-upload-submit",
+                            "1"
                         )
                 }
                 .class("button-row")
@@ -258,7 +258,7 @@ struct AssetAddView: Component {
         }
         .id("mediaAssetAddForm")
         .class("cms-form")
-        .setAttribute(name: "data-admin-media-picker-upload", value: "1")
-        .setAttribute(name: "data-action", value: state.form.action)
+        .data("admin-media-picker-upload", "1")
+        .data("action", state.form.action)
     }
 }

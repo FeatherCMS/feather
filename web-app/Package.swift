@@ -54,7 +54,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/BinaryBirds/swift-web-standards",
-            exact: "1.0.0-beta.2"
+            exact: "1.0.0-beta.3"
         ),
         .package(
             url: "https://github.com/hummingbird-project/swift-mustache",

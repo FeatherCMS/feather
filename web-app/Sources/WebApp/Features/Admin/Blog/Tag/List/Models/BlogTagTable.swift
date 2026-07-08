@@ -144,18 +144,18 @@ struct BlogTagTable: Component {
                                                         .publicationDate
                                                 )
                                             )
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Publication"
+                                            .data(
+                                                "label",
+                                                "Publication"
                                             )
                                             Td(
                                                 format(
                                                     item.metadata.expirationDate
                                                 )
                                             )
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Expiration"
+                                            .data(
+                                                "label",
+                                                "Expiration"
                                             )
                                             actionsCell(for: item)
                                         }
@@ -209,7 +209,7 @@ struct BlogTagTable: Component {
                     .class("row-btn", "delete")
             }
         }
-        .setAttribute(name: "data-label", value: "Actions")
+        .data("label", "Actions")
         .class("action-cell")
     }
 
@@ -235,7 +235,7 @@ struct BlogTagTable: Component {
                 "display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;line-height:1.25;position:relative;top:1px;"
             )
         }
-        .setAttribute(name: "data-label", value: "Title")
+        .data("label", "Title")
     }
 
     private func statusCell(
@@ -252,7 +252,7 @@ struct BlogTagTable: Component {
                 Span(item.metadata.status.capitalized)
             }
         }
-        .setAttribute(name: "data-label", value: "Status")
+        .data("label", "Status")
     }
 
     private func statusFormDefinitions() -> some FlowContent {

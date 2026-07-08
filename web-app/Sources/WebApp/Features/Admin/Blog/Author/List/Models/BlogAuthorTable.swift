@@ -204,9 +204,9 @@ struct BlogAuthorTable: Component {
                                             .class(
                                                 "blog-author-list-profile-cell"
                                             )
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Profile"
+                                            .data(
+                                                "label",
+                                                "Profile"
                                             )
                                             titleCell(for: rule)
                                             statusCell(for: rule)
@@ -216,18 +216,18 @@ struct BlogAuthorTable: Component {
                                                         .publicationDate
                                                 )
                                             )
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Publication"
+                                            .data(
+                                                "label",
+                                                "Publication"
                                             )
                                             Td(
                                                 format(
                                                     rule.metadata.expirationDate
                                                 )
                                             )
-                                            .setAttribute(
-                                                name: "data-label",
-                                                value: "Expiration"
+                                            .data(
+                                                "label",
+                                                "Expiration"
                                             )
                                             actionsCell(for: rule)
                                         }
@@ -300,7 +300,7 @@ struct BlogAuthorTable: Component {
                     .class("row-btn", "delete")
             }
         }
-        .setAttribute(name: "data-label", value: "Actions")
+        .data("label", "Actions")
         .class("action-cell")
     }
 
@@ -326,7 +326,7 @@ struct BlogAuthorTable: Component {
                 "display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;line-height:1.25;position:relative;top:1px;"
             )
         }
-        .setAttribute(name: "data-label", value: "Name")
+        .data("label", "Name")
     }
 
     private func statusCell(
@@ -343,7 +343,7 @@ struct BlogAuthorTable: Component {
                 Span(item.metadata.status.capitalized)
             }
         }
-        .setAttribute(name: "data-label", value: "Status")
+        .data("label", "Status")
     }
 
     private func statusFormDefinitions() -> some FlowContent {

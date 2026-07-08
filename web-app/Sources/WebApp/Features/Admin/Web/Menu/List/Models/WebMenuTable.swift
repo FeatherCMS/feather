@@ -125,14 +125,14 @@ struct WebMenuTable: Component {
                                                 )
                                             }
                                             Td(rule.key)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Key"
+                                                .data(
+                                                    "label",
+                                                    "Key"
                                                 )
                                             Td(rule.name)
-                                                .setAttribute(
-                                                    name: "data-label",
-                                                    value: "Name"
+                                                .data(
+                                                    "label",
+                                                    "Name"
                                                 )
                                             ListTableRowActions(
                                                 state: .init(
