@@ -14,7 +14,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-activity")
     }
 
@@ -33,7 +33,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-airplay")
     }
 
@@ -51,7 +51,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-alert-circle")
     }
 
@@ -72,7 +72,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-alert-octagon")
     }
 
@@ -92,7 +92,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-alert-triangle")
     }
 
@@ -111,7 +111,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-align-center")
     }
 
@@ -130,7 +130,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-align-justify")
     }
 
@@ -149,7 +149,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-align-left")
     }
 
@@ -168,7 +168,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-align-right")
     }
 
@@ -186,7 +186,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-anchor")
     }
 
@@ -208,7 +208,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-aperture")
     }
 
@@ -226,7 +226,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-archive")
     }
 
@@ -244,7 +244,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-down-circle")
     }
 
@@ -261,7 +261,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-down-left")
     }
 
@@ -278,7 +278,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-down-right")
     }
 
@@ -295,7 +295,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-down")
     }
 
@@ -313,7 +313,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-left-circle")
     }
 
@@ -330,7 +330,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-left")
     }
 
@@ -348,7 +348,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-right-circle")
     }
 
@@ -365,7 +365,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-right")
     }
 
@@ -383,7 +383,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-up-circle")
     }
 
@@ -400,7 +400,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-up-left")
     }
 
@@ -417,7 +417,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-up-right")
     }
 
@@ -434,7 +434,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-arrow-up")
     }
 
@@ -451,7 +451,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-at-sign")
     }
 
@@ -468,7 +468,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-award")
     }
 
@@ -486,7 +486,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-bar-chart-2")
     }
 
@@ -504,7 +504,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-bar-chart")
     }
 
@@ -524,7 +524,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-battery-charging")
     }
 
@@ -541,7 +541,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-battery")
     }
 
@@ -561,7 +561,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-bell-off")
     }
 
@@ -578,7 +578,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-bell")
     }
 
@@ -596,7 +596,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-bluetooth")
     }
 
@@ -613,7 +613,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-bold")
     }
 
@@ -630,7 +630,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-book-open")
     }
 
@@ -649,7 +649,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-book")
     }
 
@@ -665,7 +665,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-bookmark")
     }
 
@@ -685,7 +685,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-box")
     }
 
@@ -702,7 +702,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-briefcase")
     }
 
@@ -721,7 +721,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-calendar")
     }
 
@@ -740,7 +740,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-camera-off")
     }
 
@@ -759,7 +759,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-camera")
     }
 
@@ -778,7 +778,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-cast")
     }
 
@@ -795,7 +795,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-check-circle")
     }
 
@@ -812,7 +812,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-check-square")
     }
 
@@ -828,7 +828,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-check")
     }
 
@@ -844,7 +844,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-chevron-down")
     }
 
@@ -860,7 +860,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-chevron-left")
     }
 
@@ -876,7 +876,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-chevron-right")
     }
 
@@ -892,7 +892,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-chevron-up")
     }
 
@@ -909,7 +909,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-chevrons-down")
     }
 
@@ -926,7 +926,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-chevrons-left")
     }
 
@@ -943,7 +943,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-chevrons-right")
     }
 
@@ -960,7 +960,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-chevrons-up")
     }
 
@@ -980,7 +980,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-chrome")
     }
 
@@ -996,7 +996,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-circle")
     }
 
@@ -1015,7 +1015,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-clipboard")
     }
 
@@ -1032,7 +1032,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-clock")
     }
 
@@ -1054,7 +1054,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-cloud-drizzle")
     }
 
@@ -1071,7 +1071,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-cloud-lightning")
     }
 
@@ -1090,7 +1090,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-cloud-off")
     }
 
@@ -1109,7 +1109,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-cloud-rain")
     }
 
@@ -1131,7 +1131,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-cloud-snow")
     }
 
@@ -1147,7 +1147,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-cloud")
     }
 
@@ -1164,7 +1164,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-code")
     }
 
@@ -1184,7 +1184,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-codepen")
     }
 
@@ -1207,7 +1207,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-codesandbox")
     }
 
@@ -1227,7 +1227,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-coffee")
     }
 
@@ -1245,7 +1245,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-columns")
     }
 
@@ -1263,7 +1263,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-command")
     }
 
@@ -1282,7 +1282,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-compass")
     }
 
@@ -1299,7 +1299,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-copy")
     }
 
@@ -1316,7 +1316,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-corner-down-left")
     }
 
@@ -1333,7 +1333,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-corner-down-right")
     }
 
@@ -1350,7 +1350,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-corner-left-down")
     }
 
@@ -1367,7 +1367,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-corner-left-up")
     }
 
@@ -1384,7 +1384,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-corner-right-down")
     }
 
@@ -1401,7 +1401,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-corner-right-up")
     }
 
@@ -1418,7 +1418,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-corner-up-left")
     }
 
@@ -1435,7 +1435,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-corner-up-right")
     }
 
@@ -1460,7 +1460,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-cpu")
     }
 
@@ -1477,7 +1477,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-credit-card")
     }
 
@@ -1494,7 +1494,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-crop")
     }
 
@@ -1514,7 +1514,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-crosshair")
     }
 
@@ -1532,7 +1532,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-database")
     }
 
@@ -1550,7 +1550,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-delete")
     }
 
@@ -1567,7 +1567,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-disc")
     }
 
@@ -1586,7 +1586,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-divide-circle")
     }
 
@@ -1605,7 +1605,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-divide-square")
     }
 
@@ -1623,7 +1623,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-divide")
     }
 
@@ -1640,7 +1640,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-dollar-sign")
     }
 
@@ -1658,7 +1658,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-download-cloud")
     }
 
@@ -1676,7 +1676,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-download")
     }
 
@@ -1695,7 +1695,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-dribbble")
     }
 
@@ -1711,7 +1711,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-droplet")
     }
 
@@ -1727,7 +1727,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-edit-2")
     }
 
@@ -1744,7 +1744,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-edit-3")
     }
 
@@ -1761,7 +1761,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-edit")
     }
 
@@ -1779,7 +1779,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-external-link")
     }
 
@@ -1798,7 +1798,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-eye-off")
     }
 
@@ -1815,7 +1815,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-eye")
     }
 
@@ -1833,7 +1833,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-facebook")
     }
 
@@ -1850,7 +1850,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-fast-forward")
     }
 
@@ -1868,7 +1868,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-feather")
     }
 
@@ -1888,7 +1888,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-figma")
     }
 
@@ -1906,7 +1906,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-file-minus")
     }
 
@@ -1925,7 +1925,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-file-plus")
     }
 
@@ -1945,7 +1945,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-file-text")
     }
 
@@ -1962,7 +1962,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-file")
     }
 
@@ -1985,7 +1985,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-film")
     }
 
@@ -2001,7 +2001,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-filter")
     }
 
@@ -2018,7 +2018,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-flag")
     }
 
@@ -2037,7 +2037,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-folder-minus")
     }
 
@@ -2057,7 +2057,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-folder-plus")
     }
 
@@ -2075,7 +2075,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-folder")
     }
 
@@ -2091,7 +2091,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-framer")
     }
 
@@ -2110,7 +2110,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-frown")
     }
 
@@ -2130,7 +2130,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-gift")
     }
 
@@ -2149,7 +2149,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-git-branch")
     }
 
@@ -2167,7 +2167,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-git-commit")
     }
 
@@ -2185,7 +2185,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-git-merge")
     }
 
@@ -2204,7 +2204,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-git-pull-request")
     }
 
@@ -2222,7 +2222,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-github")
     }
 
@@ -2240,7 +2240,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-gitlab")
     }
 
@@ -2260,7 +2260,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-globe")
     }
 
@@ -2279,7 +2279,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-grid")
     }
 
@@ -2300,7 +2300,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-hard-drive")
     }
 
@@ -2319,7 +2319,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-hash")
     }
 
@@ -2338,7 +2338,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-headphones")
     }
 
@@ -2356,7 +2356,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-heart")
     }
 
@@ -2374,7 +2374,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-help-circle")
     }
 
@@ -2392,7 +2392,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-hexagon")
     }
 
@@ -2409,7 +2409,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-home")
     }
 
@@ -2427,7 +2427,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-image")
     }
 
@@ -2446,7 +2446,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-inbox")
     }
 
@@ -2464,7 +2464,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-info")
     }
 
@@ -2482,7 +2482,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-instagram")
     }
 
@@ -2500,7 +2500,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-italic")
     }
 
@@ -2518,7 +2518,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-key")
     }
 
@@ -2536,7 +2536,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-layers")
     }
 
@@ -2554,7 +2554,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-layout")
     }
 
@@ -2576,7 +2576,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-life-buoy")
     }
 
@@ -2595,7 +2595,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-link-2")
     }
 
@@ -2612,7 +2612,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-link")
     }
 
@@ -2632,7 +2632,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-linkedin")
     }
 
@@ -2653,7 +2653,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-list")
     }
 
@@ -2676,7 +2676,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-loader")
     }
 
@@ -2693,7 +2693,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-lock")
     }
 
@@ -2711,7 +2711,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-log-in")
     }
 
@@ -2729,7 +2729,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-log-out")
     }
 
@@ -2748,7 +2748,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-mail")
     }
 
@@ -2765,7 +2765,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-map-pin")
     }
 
@@ -2785,7 +2785,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-map")
     }
 
@@ -2804,7 +2804,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-maximize-2")
     }
 
@@ -2822,7 +2822,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-maximize")
     }
 
@@ -2841,7 +2841,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-meh")
     }
 
@@ -2859,7 +2859,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-menu")
     }
 
@@ -2877,7 +2877,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-message-circle")
     }
 
@@ -2895,7 +2895,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-message-square")
     }
 
@@ -2915,7 +2915,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-mic-off")
     }
 
@@ -2934,7 +2934,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-mic")
     }
 
@@ -2953,7 +2953,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-minimize-2")
     }
 
@@ -2971,7 +2971,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-minimize")
     }
 
@@ -2988,7 +2988,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-minus-circle")
     }
 
@@ -3005,7 +3005,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-minus-square")
     }
 
@@ -3021,7 +3021,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-minus")
     }
 
@@ -3039,7 +3039,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-monitor")
     }
 
@@ -3055,7 +3055,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-moon")
     }
 
@@ -3073,7 +3073,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-more-horizontal")
     }
 
@@ -3091,7 +3091,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-more-vertical")
     }
 
@@ -3108,7 +3108,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-mouse-pointer")
     }
 
@@ -3129,7 +3129,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-move")
     }
 
@@ -3147,7 +3147,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-music")
     }
 
@@ -3163,7 +3163,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-navigation-2")
     }
 
@@ -3179,7 +3179,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-navigation")
     }
 
@@ -3198,7 +3198,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-octagon")
     }
 
@@ -3219,7 +3219,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-package")
     }
 
@@ -3237,7 +3237,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-paperclip")
     }
 
@@ -3255,7 +3255,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-pause-circle")
     }
 
@@ -3272,7 +3272,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-pause")
     }
 
@@ -3291,7 +3291,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-pen-tool")
     }
 
@@ -3309,7 +3309,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-percent")
     }
 
@@ -3327,7 +3327,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-phone-call")
     }
 
@@ -3347,7 +3347,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-phone-forwarded")
     }
 
@@ -3367,7 +3367,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-phone-incoming")
     }
 
@@ -3387,7 +3387,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-phone-missed")
     }
 
@@ -3406,7 +3406,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-phone-off")
     }
 
@@ -3426,7 +3426,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-phone-outgoing")
     }
 
@@ -3444,7 +3444,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-phone")
     }
 
@@ -3461,7 +3461,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-pie-chart")
     }
 
@@ -3478,7 +3478,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-play-circle")
     }
 
@@ -3494,7 +3494,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-play")
     }
 
@@ -3512,7 +3512,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-plus-circle")
     }
 
@@ -3530,7 +3530,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-plus-square")
     }
 
@@ -3547,7 +3547,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-plus")
     }
 
@@ -3566,7 +3566,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-pocket")
     }
 
@@ -3583,7 +3583,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-power")
     }
 
@@ -3603,7 +3603,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-printer")
     }
 
@@ -3622,7 +3622,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-radio")
     }
 
@@ -3642,7 +3642,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-refresh-ccw")
     }
 
@@ -3662,7 +3662,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-refresh-cw")
     }
 
@@ -3681,7 +3681,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-repeat")
     }
 
@@ -3698,7 +3698,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-rewind")
     }
 
@@ -3715,7 +3715,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-rotate-ccw")
     }
 
@@ -3732,7 +3732,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-rotate-cw")
     }
 
@@ -3750,7 +3750,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-rss")
     }
 
@@ -3770,7 +3770,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-save")
     }
 
@@ -3790,7 +3790,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-scissors")
     }
 
@@ -3807,7 +3807,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-search")
     }
 
@@ -3824,7 +3824,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-send")
     }
 
@@ -3843,7 +3843,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-server")
     }
 
@@ -3862,7 +3862,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-settings")
     }
 
@@ -3882,7 +3882,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-share-2")
     }
 
@@ -3900,7 +3900,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-share")
     }
 
@@ -3918,7 +3918,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-shield-off")
     }
 
@@ -3934,7 +3934,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-shield")
     }
 
@@ -3952,7 +3952,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-shopping-bag")
     }
 
@@ -3972,7 +3972,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-shopping-cart")
     }
 
@@ -3992,7 +3992,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-shuffle")
     }
 
@@ -4009,7 +4009,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-sidebar")
     }
 
@@ -4026,7 +4026,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-skip-back")
     }
 
@@ -4043,7 +4043,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-skip-forward")
     }
 
@@ -4082,7 +4082,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-slack")
     }
 
@@ -4099,7 +4099,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-slash")
     }
 
@@ -4123,7 +4123,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-sliders")
     }
 
@@ -4140,7 +4140,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-smartphone")
     }
 
@@ -4159,7 +4159,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-smile")
     }
 
@@ -4177,7 +4177,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-speaker")
     }
 
@@ -4193,7 +4193,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-square")
     }
 
@@ -4212,7 +4212,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-star")
     }
 
@@ -4229,7 +4229,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-stop-circle")
     }
 
@@ -4253,7 +4253,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-sun")
     }
 
@@ -4276,7 +4276,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-sunrise")
     }
 
@@ -4299,7 +4299,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-sunset")
     }
 
@@ -4317,7 +4317,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-table")
     }
 
@@ -4334,7 +4334,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-tablet")
     }
 
@@ -4353,7 +4353,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-tag")
     }
 
@@ -4371,7 +4371,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-target")
     }
 
@@ -4388,7 +4388,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-terminal")
     }
 
@@ -4404,7 +4404,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-thermometer")
     }
 
@@ -4422,7 +4422,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-thumbs-down")
     }
 
@@ -4440,7 +4440,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-thumbs-up")
     }
 
@@ -4457,7 +4457,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-toggle-left")
     }
 
@@ -4474,7 +4474,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-toggle-right")
     }
 
@@ -4492,7 +4492,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-tool")
     }
 
@@ -4513,7 +4513,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-trash-2")
     }
 
@@ -4532,7 +4532,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-trash")
     }
 
@@ -4550,7 +4550,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-trello")
     }
 
@@ -4567,7 +4567,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-trending-down")
     }
 
@@ -4584,7 +4584,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-trending-up")
     }
 
@@ -4602,7 +4602,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-triangle")
     }
 
@@ -4621,7 +4621,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-truck")
     }
 
@@ -4638,7 +4638,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-tv")
     }
 
@@ -4654,7 +4654,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-twitch")
     }
 
@@ -4672,7 +4672,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-twitter")
     }
 
@@ -4690,7 +4690,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-type")
     }
 
@@ -4706,7 +4706,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-umbrella")
     }
 
@@ -4723,7 +4723,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-underline")
     }
 
@@ -4740,7 +4740,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-unlock")
     }
 
@@ -4759,7 +4759,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-upload-cloud")
     }
 
@@ -4777,7 +4777,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-upload")
     }
 
@@ -4795,7 +4795,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-user-check")
     }
 
@@ -4813,7 +4813,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-user-minus")
     }
 
@@ -4832,7 +4832,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-user-plus")
     }
 
@@ -4851,7 +4851,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-user-x")
     }
 
@@ -4868,7 +4868,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-user")
     }
 
@@ -4887,7 +4887,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-users")
     }
 
@@ -4906,7 +4906,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-video-off")
     }
 
@@ -4923,7 +4923,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-video")
     }
 
@@ -4941,7 +4941,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-voicemail")
     }
 
@@ -4958,7 +4958,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-volume-1")
     }
 
@@ -4975,7 +4975,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-volume-2")
     }
 
@@ -4993,7 +4993,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-volume-x")
     }
 
@@ -5009,7 +5009,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-volume")
     }
 
@@ -5029,7 +5029,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-watch")
     }
 
@@ -5051,7 +5051,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-wifi-off")
     }
 
@@ -5070,7 +5070,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-wifi")
     }
 
@@ -5088,7 +5088,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-wind")
     }
 
@@ -5106,7 +5106,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-x-circle")
     }
 
@@ -5127,7 +5127,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-x-octagon")
     }
 
@@ -5145,7 +5145,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-x-square")
     }
 
@@ -5162,7 +5162,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-x")
     }
 
@@ -5181,7 +5181,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-youtube")
     }
 
@@ -5200,7 +5200,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-zap-off")
     }
 
@@ -5216,7 +5216,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-zap")
     }
 
@@ -5235,7 +5235,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-zoom-in")
     }
 
@@ -5253,7 +5253,7 @@ enum FeatherIcons {
         .strokeWidth(2)
         .strokeLinecap("round")
         .strokeLinejoin("round")
-        .ariaHidden("true")
+        .setAttribute(name: "aria-hidden", value: "true")
         .class("feather feather-zoom-out")
     }
 
