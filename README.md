@@ -62,29 +62,19 @@ Compose defaults:
 - [ ] required relations, autocomplete fixes (require N item)
 - [ ] multiple selection for gallery picker -> video picker, file picker, etc.
 - [ ] review migrations
-- [ ] fix required labels design
 - [ ] split openapi into modules
-- [ ] cleanup css setAttribute calls
 - [ ] review architecture boundaries (frontend, backend)
 - [ ] check screens on mobile
 
 ### User module
-- [ ] user invitation should have role(s)
-- [ ] current signed in user should have a profile picture
+
+User data storage:
 - [ ] user accounts should be just an identifier?
 - [ ] auth magic link should have an user id? (or user selector)
 - [ ] there should be an email + passsword menu under auth? Credentials?
-- [ ] user account = id + email? + profile picture?
-- [ ] user account filter by role(s)
 - [ ] user email + password should be a different table? 
 - [ ] user magic link sign in should be a different table?
-- [ ] user settings + profile settings should work
-- [ ] root role & root user should be permanent. (no deletion)
-- [ ] invitation should use an email template
-- [ ] invitation links should work
-- [ ] magic links should work
-- [ ] user session should store device or some extra information
-- [ ] how to extend user data with additional fields? e.g. first name, last name, etc.
+
 - [ ] settings to enable different login methods (credentials, magic links, social, etc.)
 - [ ] oauth2 + oidc support
 - [ ] Sign in with Apple support
@@ -92,17 +82,17 @@ Compose defaults:
 - [ ] Sign in with Meta support
 - [ ] Sign in with Auth0 support?
 
-### Redirect module
-- [ ] 404 items should have a create redirect button to simplify redirect creation
-- [ ] redirect rules should have match count and last matched timestamp 
+- [ ] root role & root user should be permanent. (no deletion)
 
-### Analytics module
-- [ ] should parse user agent header and display bot & crawler traffic
-- [ ] should hide / redact bearer token information & sensitive data
+User model extension:
+- [ ] current signed in user should have a profile picture
+- [ ] user account = id + email? + profile picture?
+- [ ] how to extend user data with additional fields? e.g. first name, last name, etc.
+- [ ] user settings + profile settings should work
+
 
 ### Web module
 - [ ] should have drag & drop option for menu items (instead of priority field)
-- [ ] should have permission picker instead of manual permission input
 - [ ] should hide metadata menu item? or find a purpose for it?
 - [ ] should use web settings to set logo, colors, etc.
 
@@ -126,7 +116,6 @@ Compose defaults:
 - [ ] better confirmation dialogs?
 
 ### General
-- [ ] nonce support for CSRF protection
 - [ ] consider using Postgres instead of Valkey for jobs 
 - [ ] consider using SQLite as primary database? (jobs issue?)
 - [ ] split web frontend by modules
