@@ -5,17 +5,17 @@ import Testing
 @testable import WebApp
 
 @Suite
-struct FormInputTestSuite {
+struct FormInputFieldTestSuite {
 
     @Test
     func rendersRequiredInput() async throws {
         let result = render(
-            FormInput(
+            FormInputField(
                 name: "title",
                 label: "Title",
-                value: "Hello"
+                value: "Hello",
+                isRequired: true
             )
-            .required()
         )
 
         let expectation = #"""
@@ -28,7 +28,7 @@ struct FormInputTestSuite {
     @Test
     func rendersOptionalInputLabel() async throws {
         let result = render(
-            FormInput(
+            FormInputField(
                 name: "notes",
                 label: "Notes"
             )
@@ -44,17 +44,17 @@ struct FormInputTestSuite {
     @Test
     func rendersHelpAndErrorAccessibilityAttributes() async throws {
         let result = render(
-            FormInput(
+            FormInputField(
                 name: "email",
                 label: "Email",
                 value: "bad",
                 error: "Email is invalid.",
-                help: "Use your work email."
+                help: "Use your work email.",
+                type: .email,
+                placeholder: "name@example.com",
+                autocomplete: "email",
+                inputClass: "text-input"
             )
-            .type(.email)
-            .placeholder("name@example.com")
-            .autocomplete("email")
-            .inputClass("text-input")
         )
 
         let expectation = #"""
@@ -67,13 +67,13 @@ struct FormInputTestSuite {
     @Test
     func rendersDisabledAndReadOnlyStates() async throws {
         let result = render(
-            FormInput(
+            FormInputField(
                 name: "slug",
-                label: "Slug"
+                label: "Slug",
+                isDisabled: true,
+                isReadOnly: true,
+                wrapperClass: "slug-field"
             )
-            .disabled()
-            .readOnly()
-            .wrapperClass("slug-field")
         )
 
         let expectation = #"""
@@ -83,8 +83,28 @@ struct FormInputTestSuite {
         #expect(result == expectation)
     }
 
+    @Test
+    func rendersUpdatedState() async throws {
+        var field = FormInputField(
+            state: .init(
+                name: "username",
+                label: "Username"
+            )
+        )
+        field.state.value = "bird"
+        field.state.isRequired = true
+
+        let result = render(field)
+
+        let expectation = #"""
+            <section><label for="username"><span class="field-label">Username</span><input type="text" id="username" name="username" value="bird" aria-invalid="false" required></label></section>
+            """#
+
+        #expect(result == expectation)
+    }
+
     private func render(
-        _ input: FormInput
+        _ input: FormInputField
     ) -> String {
         let renderer = Renderer()
         let doc = Document(root: input)
