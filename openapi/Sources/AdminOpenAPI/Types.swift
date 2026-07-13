@@ -459,6 +459,81 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `DELETE /api/v1/admin/media/processors/{mediaProcessorId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/delete(mediaProcessorDelete)`.
     func mediaProcessorDelete(_ input: Operations.MediaProcessorDelete.Input) async throws -> Operations.MediaProcessorDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/get(contactFormList)`.
+    func contactFormList(_ input: Operations.ContactFormList.Input) async throws -> Operations.ContactFormList.Output
+    /// - Remark: HTTP `POST /api/v1/admin/contact/forms`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/post(contactFormCreate)`.
+    func contactFormCreate(_ input: Operations.ContactFormCreate.Input) async throws -> Operations.ContactFormCreate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)`.
+    func contactFormGet(_ input: Operations.ContactFormGet.Input) async throws -> Operations.ContactFormGet.Output
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)`.
+    func contactFormUpdate(_ input: Operations.ContactFormUpdate.Input) async throws -> Operations.ContactFormUpdate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)`.
+    func contactFormDelete(_ input: Operations.ContactFormDelete.Input) async throws -> Operations.ContactFormDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/get(contactFormItemList)`.
+    func contactFormItemList(_ input: Operations.ContactFormItemList.Input) async throws -> Operations.ContactFormItemList.Output
+    /// - Remark: HTTP `POST /api/v1/admin/contact/forms/{contactFormId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/post(contactFormItemCreate)`.
+    func contactFormItemCreate(_ input: Operations.ContactFormItemCreate.Input) async throws -> Operations.ContactFormItemCreate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)`.
+    func contactFormItemGet(_ input: Operations.ContactFormItemGet.Input) async throws -> Operations.ContactFormItemGet.Output
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)`.
+    func contactFormItemUpdate(_ input: Operations.ContactFormItemUpdate.Input) async throws -> Operations.ContactFormItemUpdate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)`.
+    func contactFormItemDelete(_ input: Operations.ContactFormItemDelete.Input) async throws -> Operations.ContactFormItemDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/get(contactFormSubmissionList)`.
+    func contactFormSubmissionList(_ input: Operations.ContactFormSubmissionList.Input) async throws -> Operations.ContactFormSubmissionList.Output
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
+    func contactFormSubmissionGet(_ input: Operations.ContactFormSubmissionGet.Input) async throws -> Operations.ContactFormSubmissionGet.Output
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
+    func contactFormSubmissionUpdate(_ input: Operations.ContactFormSubmissionUpdate.Input) async throws -> Operations.ContactFormSubmissionUpdate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)`.
+    func contactNewsletterList(_ input: Operations.ContactNewsletterList.Input) async throws -> Operations.ContactNewsletterList.Output
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/post(contactNewsletterCreate)`.
+    func contactNewsletterCreate(_ input: Operations.ContactNewsletterCreate.Input) async throws -> Operations.ContactNewsletterCreate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)`.
+    func contactNewsletterGet(_ input: Operations.ContactNewsletterGet.Input) async throws -> Operations.ContactNewsletterGet.Output
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)`.
+    func contactNewsletterUpdate(_ input: Operations.ContactNewsletterUpdate.Input) async throws -> Operations.ContactNewsletterUpdate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)`.
+    func contactNewsletterDelete(_ input: Operations.ContactNewsletterDelete.Input) async throws -> Operations.ContactNewsletterDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/get(contactNewsletterIssueList)`.
+    func contactNewsletterIssueList(_ input: Operations.ContactNewsletterIssueList.Input) async throws -> Operations.ContactNewsletterIssueList.Output
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/post(contactNewsletterIssueCreate)`.
+    func contactNewsletterIssueCreate(_ input: Operations.ContactNewsletterIssueCreate.Input) async throws -> Operations.ContactNewsletterIssueCreate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/get(contactNewsletterSubscriberList)`.
+    func contactNewsletterSubscriberList(_ input: Operations.ContactNewsletterSubscriberList.Input) async throws -> Operations.ContactNewsletterSubscriberList.Output
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/post(contactNewsletterSubscriberCreate)`.
+    func contactNewsletterSubscriberCreate(_ input: Operations.ContactNewsletterSubscriberCreate.Input) async throws -> Operations.ContactNewsletterSubscriberCreate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)`.
+    func contactNewsletterSubscriberGet(_ input: Operations.ContactNewsletterSubscriberGet.Input) async throws -> Operations.ContactNewsletterSubscriberGet.Output
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)`.
+    func contactNewsletterSubscriberUpdate(_ input: Operations.ContactNewsletterSubscriberUpdate.Input) async throws -> Operations.ContactNewsletterSubscriberUpdate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)`.
+    func contactNewsletterSubscriberDelete(_ input: Operations.ContactNewsletterSubscriberDelete.Input) async throws -> Operations.ContactNewsletterSubscriberDelete.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -1934,6 +2009,261 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/delete(mediaProcessorDelete)`.
     public func mediaProcessorDelete(path: Operations.MediaProcessorDelete.Input.Path) async throws -> Operations.MediaProcessorDelete.Output {
         try await mediaProcessorDelete(Operations.MediaProcessorDelete.Input(path: path))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/get(contactFormList)`.
+    public func contactFormList(headers: Operations.ContactFormList.Input.Headers = .init()) async throws -> Operations.ContactFormList.Output {
+        try await contactFormList(Operations.ContactFormList.Input(headers: headers))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/forms`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/post(contactFormCreate)`.
+    public func contactFormCreate(
+        headers: Operations.ContactFormCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactFormCreateRequestBody
+    ) async throws -> Operations.ContactFormCreate.Output {
+        try await contactFormCreate(Operations.ContactFormCreate.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)`.
+    public func contactFormGet(
+        path: Operations.ContactFormGet.Input.Path,
+        headers: Operations.ContactFormGet.Input.Headers = .init()
+    ) async throws -> Operations.ContactFormGet.Output {
+        try await contactFormGet(Operations.ContactFormGet.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)`.
+    public func contactFormUpdate(
+        path: Operations.ContactFormUpdate.Input.Path,
+        headers: Operations.ContactFormUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactFormCreateRequestBody
+    ) async throws -> Operations.ContactFormUpdate.Output {
+        try await contactFormUpdate(Operations.ContactFormUpdate.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)`.
+    public func contactFormDelete(path: Operations.ContactFormDelete.Input.Path) async throws -> Operations.ContactFormDelete.Output {
+        try await contactFormDelete(Operations.ContactFormDelete.Input(path: path))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/get(contactFormItemList)`.
+    public func contactFormItemList(
+        path: Operations.ContactFormItemList.Input.Path,
+        headers: Operations.ContactFormItemList.Input.Headers = .init()
+    ) async throws -> Operations.ContactFormItemList.Output {
+        try await contactFormItemList(Operations.ContactFormItemList.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/forms/{contactFormId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/post(contactFormItemCreate)`.
+    public func contactFormItemCreate(
+        path: Operations.ContactFormItemCreate.Input.Path,
+        headers: Operations.ContactFormItemCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactFormItemCreateRequestBody
+    ) async throws -> Operations.ContactFormItemCreate.Output {
+        try await contactFormItemCreate(Operations.ContactFormItemCreate.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)`.
+    public func contactFormItemGet(
+        path: Operations.ContactFormItemGet.Input.Path,
+        headers: Operations.ContactFormItemGet.Input.Headers = .init()
+    ) async throws -> Operations.ContactFormItemGet.Output {
+        try await contactFormItemGet(Operations.ContactFormItemGet.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)`.
+    public func contactFormItemUpdate(
+        path: Operations.ContactFormItemUpdate.Input.Path,
+        headers: Operations.ContactFormItemUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactFormItemPatchRequestBody
+    ) async throws -> Operations.ContactFormItemUpdate.Output {
+        try await contactFormItemUpdate(Operations.ContactFormItemUpdate.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)`.
+    public func contactFormItemDelete(path: Operations.ContactFormItemDelete.Input.Path) async throws -> Operations.ContactFormItemDelete.Output {
+        try await contactFormItemDelete(Operations.ContactFormItemDelete.Input(path: path))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/get(contactFormSubmissionList)`.
+    public func contactFormSubmissionList(
+        path: Operations.ContactFormSubmissionList.Input.Path,
+        headers: Operations.ContactFormSubmissionList.Input.Headers = .init()
+    ) async throws -> Operations.ContactFormSubmissionList.Output {
+        try await contactFormSubmissionList(Operations.ContactFormSubmissionList.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
+    public func contactFormSubmissionGet(
+        path: Operations.ContactFormSubmissionGet.Input.Path,
+        headers: Operations.ContactFormSubmissionGet.Input.Headers = .init()
+    ) async throws -> Operations.ContactFormSubmissionGet.Output {
+        try await contactFormSubmissionGet(Operations.ContactFormSubmissionGet.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
+    public func contactFormSubmissionUpdate(
+        path: Operations.ContactFormSubmissionUpdate.Input.Path,
+        headers: Operations.ContactFormSubmissionUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactFormSubmissionPatchRequestBody
+    ) async throws -> Operations.ContactFormSubmissionUpdate.Output {
+        try await contactFormSubmissionUpdate(Operations.ContactFormSubmissionUpdate.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)`.
+    public func contactNewsletterList(headers: Operations.ContactNewsletterList.Input.Headers = .init()) async throws -> Operations.ContactNewsletterList.Output {
+        try await contactNewsletterList(Operations.ContactNewsletterList.Input(headers: headers))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/post(contactNewsletterCreate)`.
+    public func contactNewsletterCreate(
+        headers: Operations.ContactNewsletterCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactNewsletterCreateRequestBody
+    ) async throws -> Operations.ContactNewsletterCreate.Output {
+        try await contactNewsletterCreate(Operations.ContactNewsletterCreate.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)`.
+    public func contactNewsletterGet(
+        path: Operations.ContactNewsletterGet.Input.Path,
+        headers: Operations.ContactNewsletterGet.Input.Headers = .init()
+    ) async throws -> Operations.ContactNewsletterGet.Output {
+        try await contactNewsletterGet(Operations.ContactNewsletterGet.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)`.
+    public func contactNewsletterUpdate(
+        path: Operations.ContactNewsletterUpdate.Input.Path,
+        headers: Operations.ContactNewsletterUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactNewsletterPatchRequestBody
+    ) async throws -> Operations.ContactNewsletterUpdate.Output {
+        try await contactNewsletterUpdate(Operations.ContactNewsletterUpdate.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)`.
+    public func contactNewsletterDelete(path: Operations.ContactNewsletterDelete.Input.Path) async throws -> Operations.ContactNewsletterDelete.Output {
+        try await contactNewsletterDelete(Operations.ContactNewsletterDelete.Input(path: path))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/get(contactNewsletterIssueList)`.
+    public func contactNewsletterIssueList(
+        path: Operations.ContactNewsletterIssueList.Input.Path,
+        headers: Operations.ContactNewsletterIssueList.Input.Headers = .init()
+    ) async throws -> Operations.ContactNewsletterIssueList.Output {
+        try await contactNewsletterIssueList(Operations.ContactNewsletterIssueList.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/post(contactNewsletterIssueCreate)`.
+    public func contactNewsletterIssueCreate(
+        path: Operations.ContactNewsletterIssueCreate.Input.Path,
+        headers: Operations.ContactNewsletterIssueCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactNewsletterIssueCreateRequestBody
+    ) async throws -> Operations.ContactNewsletterIssueCreate.Output {
+        try await contactNewsletterIssueCreate(Operations.ContactNewsletterIssueCreate.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/get(contactNewsletterSubscriberList)`.
+    public func contactNewsletterSubscriberList(
+        path: Operations.ContactNewsletterSubscriberList.Input.Path,
+        headers: Operations.ContactNewsletterSubscriberList.Input.Headers = .init()
+    ) async throws -> Operations.ContactNewsletterSubscriberList.Output {
+        try await contactNewsletterSubscriberList(Operations.ContactNewsletterSubscriberList.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/post(contactNewsletterSubscriberCreate)`.
+    public func contactNewsletterSubscriberCreate(
+        path: Operations.ContactNewsletterSubscriberCreate.Input.Path,
+        headers: Operations.ContactNewsletterSubscriberCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactNewsletterSubscriberCreateRequestBody
+    ) async throws -> Operations.ContactNewsletterSubscriberCreate.Output {
+        try await contactNewsletterSubscriberCreate(Operations.ContactNewsletterSubscriberCreate.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)`.
+    public func contactNewsletterSubscriberGet(
+        path: Operations.ContactNewsletterSubscriberGet.Input.Path,
+        headers: Operations.ContactNewsletterSubscriberGet.Input.Headers = .init()
+    ) async throws -> Operations.ContactNewsletterSubscriberGet.Output {
+        try await contactNewsletterSubscriberGet(Operations.ContactNewsletterSubscriberGet.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)`.
+    public func contactNewsletterSubscriberUpdate(
+        path: Operations.ContactNewsletterSubscriberUpdate.Input.Path,
+        headers: Operations.ContactNewsletterSubscriberUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.ContactNewsletterSubscriberPatchRequestBody
+    ) async throws -> Operations.ContactNewsletterSubscriberUpdate.Output {
+        try await contactNewsletterSubscriberUpdate(Operations.ContactNewsletterSubscriberUpdate.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)`.
+    public func contactNewsletterSubscriberDelete(path: Operations.ContactNewsletterSubscriberDelete.Input.Path) async throws -> Operations.ContactNewsletterSubscriberDelete.Output {
+        try await contactNewsletterSubscriberDelete(Operations.ContactNewsletterSubscriberDelete.Input(path: path))
     }
 }
 
@@ -9097,6 +9427,689 @@ public enum Components {
                 case isActive
             }
         }
+        /// - Remark: Generated from `#/components/schemas/ContactFormListSchema`.
+        public typealias ContactFormListSchema = [Components.Schemas.ContactFormSchema]
+        /// - Remark: Generated from `#/components/schemas/ContactFormSchema`.
+        public struct ContactFormSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/items`.
+            public var items: Components.Schemas.ContactFormItemSchema?
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `ContactFormSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            ///   - items:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                name: Swift.String,
+                items: Components.Schemas.ContactFormItemSchema? = nil,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.name = name
+                self.items = items
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
+                case items
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema`.
+        public struct ContactFormItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/formId`.
+            public var formId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/key`.
+            public var key: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/type`.
+            public var _type: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/label`.
+            public var label: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/allowedValues`.
+            public var allowedValues: Components.Schemas.ContactAllowedValuesSchema?
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/isRequired`.
+            public var isRequired: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/position`.
+            public var position: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `ContactFormItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - formId:
+            ///   - key:
+            ///   - _type:
+            ///   - label:
+            ///   - allowedValues:
+            ///   - isRequired:
+            ///   - position:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                formId: Swift.String,
+                key: Swift.String,
+                _type: Swift.String,
+                label: Swift.String,
+                allowedValues: Components.Schemas.ContactAllowedValuesSchema? = nil,
+                isRequired: Swift.Bool,
+                position: Swift.Int,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.formId = formId
+                self.key = key
+                self._type = _type
+                self.label = label
+                self.allowedValues = allowedValues
+                self.isRequired = isRequired
+                self.position = position
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case formId
+                case key
+                case _type = "type"
+                case label
+                case allowedValues
+                case isRequired
+                case position
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactAllowedValuesSchema`.
+        public typealias ContactAllowedValuesSchema = [Swift.String]
+        /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema`.
+        public struct ContactFormCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/name`.
+            public var name: Swift.String
+            /// Creates a new `ContactFormCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - name:
+            public init(name: Swift.String) {
+                self.name = name
+            }
+            public enum CodingKeys: String, CodingKey {
+                case name
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactIdField`.
+        public typealias ContactIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ContactFormItemListSchema`.
+        public typealias ContactFormItemListSchema = [Components.Schemas.ContactFormItemSchema]
+        /// - Remark: Generated from `#/components/schemas/ContactFormItemCreateSchema`.
+        public struct ContactFormItemCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemCreateSchema/key`.
+            public var key: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemCreateSchema/type`.
+            public var _type: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemCreateSchema/label`.
+            public var label: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemCreateSchema/allowedValues`.
+            public var allowedValues: Components.Schemas.ContactAllowedValuesSchema?
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemCreateSchema/isRequired`.
+            public var isRequired: Components.Schemas.ContactRequiredField?
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemCreateSchema/position`.
+            public var position: Components.Schemas.ContactFormItemPositionField?
+            /// Creates a new `ContactFormItemCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - key:
+            ///   - _type:
+            ///   - label:
+            ///   - allowedValues:
+            ///   - isRequired:
+            ///   - position:
+            public init(
+                key: Swift.String,
+                _type: Swift.String,
+                label: Swift.String,
+                allowedValues: Components.Schemas.ContactAllowedValuesSchema? = nil,
+                isRequired: Components.Schemas.ContactRequiredField? = nil,
+                position: Components.Schemas.ContactFormItemPositionField? = nil
+            ) {
+                self.key = key
+                self._type = _type
+                self.label = label
+                self.allowedValues = allowedValues
+                self.isRequired = isRequired
+                self.position = position
+            }
+            public enum CodingKeys: String, CodingKey {
+                case key
+                case _type = "type"
+                case label
+                case allowedValues
+                case isRequired
+                case position
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactRequiredField`.
+        public typealias ContactRequiredField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/ContactFormItemPositionField`.
+        public typealias ContactFormItemPositionField = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/ContactFormItemPatchSchema`.
+        public struct ContactFormItemPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemPatchSchema/key`.
+            public var key: Components.Schemas.ContactKeyField?
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemPatchSchema/type`.
+            public var _type: Components.Schemas.ContactTypeField?
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemPatchSchema/label`.
+            public var label: Components.Schemas.ContactLabelField?
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemPatchSchema/allowedValues`.
+            public var allowedValues: Components.Schemas.ContactAllowedValuesSchema?
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemPatchSchema/isRequired`.
+            public var isRequired: Components.Schemas.ContactRequiredField?
+            /// - Remark: Generated from `#/components/schemas/ContactFormItemPatchSchema/position`.
+            public var position: Components.Schemas.ContactFormItemPositionField?
+            /// Creates a new `ContactFormItemPatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - key:
+            ///   - _type:
+            ///   - label:
+            ///   - allowedValues:
+            ///   - isRequired:
+            ///   - position:
+            public init(
+                key: Components.Schemas.ContactKeyField? = nil,
+                _type: Components.Schemas.ContactTypeField? = nil,
+                label: Components.Schemas.ContactLabelField? = nil,
+                allowedValues: Components.Schemas.ContactAllowedValuesSchema? = nil,
+                isRequired: Components.Schemas.ContactRequiredField? = nil,
+                position: Components.Schemas.ContactFormItemPositionField? = nil
+            ) {
+                self.key = key
+                self._type = _type
+                self.label = label
+                self.allowedValues = allowedValues
+                self.isRequired = isRequired
+                self.position = position
+            }
+            public enum CodingKeys: String, CodingKey {
+                case key
+                case _type = "type"
+                case label
+                case allowedValues
+                case isRequired
+                case position
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactKeyField`.
+        public typealias ContactKeyField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ContactTypeField`.
+        public typealias ContactTypeField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ContactLabelField`.
+        public typealias ContactLabelField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionListSchema`.
+        public typealias ContactFormSubmissionListSchema = [Components.Schemas.ContactFormSubmissionSchema]
+        /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema`.
+        public struct ContactFormSubmissionSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/formId`.
+            public var formId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/values`.
+            public struct ValuesPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: [String: Swift.String]
+                /// Creates a new `ValuesPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: [String: Swift.String] = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/values`.
+            public var values: Components.Schemas.ContactFormSubmissionSchema.ValuesPayload
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/itemsSnapshot`.
+            public struct ItemsSnapshotPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: [String: Swift.String]
+                /// Creates a new `ItemsSnapshotPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: [String: Swift.String] = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/itemsSnapshot`.
+            public var itemsSnapshot: Components.Schemas.ContactFormSubmissionSchema.ItemsSnapshotPayload
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/metadata`.
+            public struct MetadataPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: [String: Swift.String]
+                /// Creates a new `MetadataPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: [String: Swift.String] = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/metadata`.
+            public var metadata: Components.Schemas.ContactFormSubmissionSchema.MetadataPayload
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/status`.
+            public var status: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/submittedAt`.
+            public var submittedAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `ContactFormSubmissionSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - formId:
+            ///   - values:
+            ///   - itemsSnapshot:
+            ///   - metadata:
+            ///   - status:
+            ///   - submittedAt:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                formId: Swift.String,
+                values: Components.Schemas.ContactFormSubmissionSchema.ValuesPayload,
+                itemsSnapshot: Components.Schemas.ContactFormSubmissionSchema.ItemsSnapshotPayload,
+                metadata: Components.Schemas.ContactFormSubmissionSchema.MetadataPayload,
+                status: Swift.String,
+                submittedAt: Swift.Double,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.formId = formId
+                self.values = values
+                self.itemsSnapshot = itemsSnapshot
+                self.metadata = metadata
+                self.status = status
+                self.submittedAt = submittedAt
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case formId
+                case values
+                case itemsSnapshot
+                case metadata
+                case status
+                case submittedAt
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionPatchSchema`.
+        public struct ContactFormSubmissionPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionPatchSchema/status`.
+            public var status: Swift.String
+            /// Creates a new `ContactFormSubmissionPatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - status:
+            public init(status: Swift.String) {
+                self.status = status
+            }
+            public enum CodingKeys: String, CodingKey {
+                case status
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterListSchema`.
+        public typealias ContactNewsletterListSchema = [Components.Schemas.ContactNewsletterSchema]
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterSchema`.
+        public struct ContactNewsletterSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `ContactNewsletterSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                name: Swift.String,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.name = name
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterCreateSchema`.
+        public struct ContactNewsletterCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterCreateSchema/name`.
+            public var name: Swift.String
+            /// Creates a new `ContactNewsletterCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - name:
+            public init(name: Swift.String) {
+                self.name = name
+            }
+            public enum CodingKeys: String, CodingKey {
+                case name
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterPatchSchema`.
+        public struct ContactNewsletterPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterPatchSchema/name`.
+            public var name: Components.Schemas.ContactNameField?
+            /// Creates a new `ContactNewsletterPatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - name:
+            public init(name: Components.Schemas.ContactNameField? = nil) {
+                self.name = name
+            }
+            public enum CodingKeys: String, CodingKey {
+                case name
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactNameField`.
+        public typealias ContactNameField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueListSchema`.
+        public typealias ContactNewsletterIssueListSchema = [Components.Schemas.ContactNewsletterIssueSchema]
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema`.
+        public struct ContactNewsletterIssueSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema/newsletterId`.
+            public var newsletterId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema/subject`.
+            public var subject: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema/content`.
+            public var content: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema/status`.
+            public var status: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema/scheduledAt`.
+            public var scheduledAt: Components.Schemas.ContactTimestampField?
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema/sentAt`.
+            public var sentAt: Components.Schemas.ContactTimestampField?
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `ContactNewsletterIssueSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - newsletterId:
+            ///   - subject:
+            ///   - content:
+            ///   - status:
+            ///   - scheduledAt:
+            ///   - sentAt:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                newsletterId: Swift.String,
+                subject: Swift.String,
+                content: Swift.String,
+                status: Swift.String,
+                scheduledAt: Components.Schemas.ContactTimestampField? = nil,
+                sentAt: Components.Schemas.ContactTimestampField? = nil,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.newsletterId = newsletterId
+                self.subject = subject
+                self.content = content
+                self.status = status
+                self.scheduledAt = scheduledAt
+                self.sentAt = sentAt
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case newsletterId
+                case subject
+                case content
+                case status
+                case scheduledAt
+                case sentAt
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactTimestampField`.
+        public typealias ContactTimestampField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueCreateSchema`.
+        public struct ContactNewsletterIssueCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueCreateSchema/subject`.
+            public var subject: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueCreateSchema/content`.
+            public var content: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterIssueCreateSchema/scheduledAt`.
+            public var scheduledAt: Components.Schemas.ContactTimestampField?
+            /// Creates a new `ContactNewsletterIssueCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - subject:
+            ///   - content:
+            ///   - scheduledAt:
+            public init(
+                subject: Swift.String,
+                content: Swift.String,
+                scheduledAt: Components.Schemas.ContactTimestampField? = nil
+            ) {
+                self.subject = subject
+                self.content = content
+                self.scheduledAt = scheduledAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case subject
+                case content
+                case scheduledAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberListSchema`.
+        public typealias ContactNewsletterSubscriberListSchema = [Components.Schemas.ContactNewsletterSubscriberSchema]
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema`.
+        public struct ContactNewsletterSubscriberSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/newsletterId`.
+            public var newsletterId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/email`.
+            public var email: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/status`.
+            public var status: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/subscriptionDate`.
+            public var subscriptionDate: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/unsubscriptionDate`.
+            public var unsubscriptionDate: Components.Schemas.ContactTimestampField?
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/firstName`.
+            public var firstName: Components.Schemas.ContactNameField?
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/lastName`.
+            public var lastName: Components.Schemas.ContactNameField?
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `ContactNewsletterSubscriberSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - newsletterId:
+            ///   - email:
+            ///   - status:
+            ///   - subscriptionDate:
+            ///   - unsubscriptionDate:
+            ///   - firstName:
+            ///   - lastName:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                newsletterId: Swift.String,
+                email: Swift.String,
+                status: Swift.String,
+                subscriptionDate: Swift.Double,
+                unsubscriptionDate: Components.Schemas.ContactTimestampField? = nil,
+                firstName: Components.Schemas.ContactNameField? = nil,
+                lastName: Components.Schemas.ContactNameField? = nil,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.newsletterId = newsletterId
+                self.email = email
+                self.status = status
+                self.subscriptionDate = subscriptionDate
+                self.unsubscriptionDate = unsubscriptionDate
+                self.firstName = firstName
+                self.lastName = lastName
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case newsletterId
+                case email
+                case status
+                case subscriptionDate
+                case unsubscriptionDate
+                case firstName
+                case lastName
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberCreateSchema`.
+        public struct ContactNewsletterSubscriberCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberCreateSchema/email`.
+            public var email: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberCreateSchema/firstName`.
+            public var firstName: Components.Schemas.ContactNameField?
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberCreateSchema/lastName`.
+            public var lastName: Components.Schemas.ContactNameField?
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberCreateSchema/status`.
+            public var status: Components.Schemas.ContactNewsletterSubscriberStatusField?
+            /// Creates a new `ContactNewsletterSubscriberCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - email:
+            ///   - firstName:
+            ///   - lastName:
+            ///   - status:
+            public init(
+                email: Swift.String,
+                firstName: Components.Schemas.ContactNameField? = nil,
+                lastName: Components.Schemas.ContactNameField? = nil,
+                status: Components.Schemas.ContactNewsletterSubscriberStatusField? = nil
+            ) {
+                self.email = email
+                self.firstName = firstName
+                self.lastName = lastName
+                self.status = status
+            }
+            public enum CodingKeys: String, CodingKey {
+                case email
+                case firstName
+                case lastName
+                case status
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberStatusField`.
+        public typealias ContactNewsletterSubscriberStatusField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ContactEmailField`.
+        public typealias ContactEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberPatchSchema`.
+        public struct ContactNewsletterSubscriberPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberPatchSchema/firstName`.
+            public var firstName: Components.Schemas.ContactNameField?
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberPatchSchema/lastName`.
+            public var lastName: Components.Schemas.ContactNameField?
+            /// - Remark: Generated from `#/components/schemas/ContactNewsletterSubscriberPatchSchema/status`.
+            public var status: Swift.String
+            /// Creates a new `ContactNewsletterSubscriberPatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - firstName:
+            ///   - lastName:
+            ///   - status:
+            public init(
+                firstName: Components.Schemas.ContactNameField? = nil,
+                lastName: Components.Schemas.ContactNameField? = nil,
+                status: Swift.String
+            ) {
+                self.firstName = firstName
+                self.lastName = lastName
+                self.status = status
+            }
+            public enum CodingKeys: String, CodingKey {
+                case firstName
+                case lastName
+                case status
+            }
+        }
     }
     /// Types generated from the `#/components/parameters` section of the OpenAPI document.
     public enum Parameters {
@@ -9194,6 +10207,16 @@ public enum Components {
         ///
         /// - Remark: Generated from `#/components/parameters/MediaProcessorIdParameter`.
         public typealias MediaProcessorIdParameter = Components.Schemas.MediaProcessorIdField
+        /// - Remark: Generated from `#/components/parameters/ContactFormIdParameter`.
+        public typealias ContactFormIdParameter = Components.Schemas.ContactIdField
+        /// - Remark: Generated from `#/components/parameters/ContactFormItemIdParameter`.
+        public typealias ContactFormItemIdParameter = Components.Schemas.ContactIdField
+        /// - Remark: Generated from `#/components/parameters/ContactFormSubmissionIdParameter`.
+        public typealias ContactFormSubmissionIdParameter = Components.Schemas.ContactIdField
+        /// - Remark: Generated from `#/components/parameters/ContactNewsletterIdParameter`.
+        public typealias ContactNewsletterIdParameter = Components.Schemas.ContactIdField
+        /// - Remark: Generated from `#/components/parameters/ContactNewsletterSubscriberEmailParameter`.
+        public typealias ContactNewsletterSubscriberEmailParameter = Components.Schemas.ContactEmailField
     }
     /// Types generated from the `#/components/requestBodies` section of the OpenAPI document.
     public enum RequestBodies {
@@ -9491,6 +10514,51 @@ public enum Components {
         @frozen public enum MediaProcessorCreateRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/MediaProcessorCreateRequestBody/content/application\/json`.
             case json(Components.Schemas.MediaProcessorCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/ContactFormCreateRequestBody`.
+        @frozen public enum ContactFormCreateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/ContactFormCreateRequestBody/content/application\/json`.
+            case json(Components.Schemas.ContactFormCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/ContactFormItemCreateRequestBody`.
+        @frozen public enum ContactFormItemCreateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/ContactFormItemCreateRequestBody/content/application\/json`.
+            case json(Components.Schemas.ContactFormItemCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/ContactFormItemPatchRequestBody`.
+        @frozen public enum ContactFormItemPatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/ContactFormItemPatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.ContactFormItemPatchSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/ContactFormSubmissionPatchRequestBody`.
+        @frozen public enum ContactFormSubmissionPatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/ContactFormSubmissionPatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.ContactFormSubmissionPatchSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterCreateRequestBody`.
+        @frozen public enum ContactNewsletterCreateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterCreateRequestBody/content/application\/json`.
+            case json(Components.Schemas.ContactNewsletterCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterPatchRequestBody`.
+        @frozen public enum ContactNewsletterPatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterPatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.ContactNewsletterPatchSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterIssueCreateRequestBody`.
+        @frozen public enum ContactNewsletterIssueCreateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterIssueCreateRequestBody/content/application\/json`.
+            case json(Components.Schemas.ContactNewsletterIssueCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterSubscriberCreateRequestBody`.
+        @frozen public enum ContactNewsletterSubscriberCreateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterSubscriberCreateRequestBody/content/application\/json`.
+            case json(Components.Schemas.ContactNewsletterSubscriberCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterSubscriberPatchRequestBody`.
+        @frozen public enum ContactNewsletterSubscriberPatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/ContactNewsletterSubscriberPatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.ContactNewsletterSubscriberPatchSchema)
         }
     }
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
@@ -11312,6 +12380,342 @@ public enum Components {
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.MediaProcessorListItemSearchSchemaSearchResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactFormListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactFormListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactFormListResponse/content/application\/json`.
+                case json(Components.Schemas.ContactFormListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactFormListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactFormListResponse.Body
+            /// Creates a new `ContactFormListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactFormListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactFormResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactFormResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactFormResponse/content/application\/json`.
+                case json(Components.Schemas.ContactFormSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactFormSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactFormResponse.Body
+            /// Creates a new `ContactFormResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactFormResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactFormItemListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactFormItemListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactFormItemListResponse/content/application\/json`.
+                case json(Components.Schemas.ContactFormItemListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactFormItemListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactFormItemListResponse.Body
+            /// Creates a new `ContactFormItemListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactFormItemListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactFormItemResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactFormItemResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactFormItemResponse/content/application\/json`.
+                case json(Components.Schemas.ContactFormItemSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactFormItemSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactFormItemResponse.Body
+            /// Creates a new `ContactFormItemResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactFormItemResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactFormSubmissionListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactFormSubmissionListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactFormSubmissionListResponse/content/application\/json`.
+                case json(Components.Schemas.ContactFormSubmissionListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactFormSubmissionListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactFormSubmissionListResponse.Body
+            /// Creates a new `ContactFormSubmissionListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactFormSubmissionListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactFormSubmissionResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactFormSubmissionResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactFormSubmissionResponse/content/application\/json`.
+                case json(Components.Schemas.ContactFormSubmissionSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactFormSubmissionSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactFormSubmissionResponse.Body
+            /// Creates a new `ContactFormSubmissionResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactFormSubmissionResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactNewsletterListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactNewsletterListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactNewsletterListResponse/content/application\/json`.
+                case json(Components.Schemas.ContactNewsletterListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactNewsletterListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactNewsletterListResponse.Body
+            /// Creates a new `ContactNewsletterListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactNewsletterListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactNewsletterResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactNewsletterResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactNewsletterResponse/content/application\/json`.
+                case json(Components.Schemas.ContactNewsletterSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactNewsletterSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactNewsletterResponse.Body
+            /// Creates a new `ContactNewsletterResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactNewsletterResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactNewsletterIssueListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactNewsletterIssueListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactNewsletterIssueListResponse/content/application\/json`.
+                case json(Components.Schemas.ContactNewsletterIssueListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactNewsletterIssueListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactNewsletterIssueListResponse.Body
+            /// Creates a new `ContactNewsletterIssueListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactNewsletterIssueListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactNewsletterIssueResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactNewsletterIssueResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactNewsletterIssueResponse/content/application\/json`.
+                case json(Components.Schemas.ContactNewsletterIssueSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactNewsletterIssueSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactNewsletterIssueResponse.Body
+            /// Creates a new `ContactNewsletterIssueResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactNewsletterIssueResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactNewsletterSubscriberListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactNewsletterSubscriberListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactNewsletterSubscriberListResponse/content/application\/json`.
+                case json(Components.Schemas.ContactNewsletterSubscriberListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactNewsletterSubscriberListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactNewsletterSubscriberListResponse.Body
+            /// Creates a new `ContactNewsletterSubscriberListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactNewsletterSubscriberListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ContactNewsletterSubscriberResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactNewsletterSubscriberResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactNewsletterSubscriberResponse/content/application\/json`.
+                case json(Components.Schemas.ContactNewsletterSubscriberSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactNewsletterSubscriberSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactNewsletterSubscriberResponse.Body
+            /// Creates a new `ContactNewsletterSubscriberResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactNewsletterSubscriberResponse.Body) {
                 self.body = body
             }
         }
@@ -37423,6 +38827,4604 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.MediaProcessorDelete.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/get(contactFormList)`.
+    public enum ContactFormList {
+        public static let id: Swift.String = "contactFormList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            public init(headers: Operations.ContactFormList.Input.Headers = .init()) {
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/get(contactFormList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactFormListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactFormListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/get(contactFormList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormList.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/get(contactFormList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/get(contactFormList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormList.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/get(contactFormList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/forms`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/post(contactFormCreate)`.
+    public enum ContactFormCreate {
+        public static let id: Swift.String = "contactFormCreate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormCreate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormCreate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormCreate.Input.Headers
+            public var body: Components.RequestBodies.ContactFormCreateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.ContactFormCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactFormCreateRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/post(contactFormCreate)/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(Components.Responses.ContactFormResponse)
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created: Components.Responses.ContactFormResponse {
+                get throws {
+                    switch self {
+                    case let .created(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/post(contactFormCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormCreate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/post(contactFormCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormCreate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/post(contactFormCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormCreate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/post(contactFormCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)`.
+    public enum ContactFormGet {
+        public static let id: Swift.String = "contactFormGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/GET/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                public init(contactFormId: Components.Parameters.ContactFormIdParameter) {
+                    self.contactFormId = contactFormId
+                }
+            }
+            public var path: Operations.ContactFormGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormGet.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormGet.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.ContactFormGet.Input.Path,
+                headers: Operations.ContactFormGet.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactFormResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactFormResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Contact form not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactFormGet.Output.NotFound)
+            /// Contact form not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactFormGet.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormGet.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormGet.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormGet.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormGet.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)`.
+    public enum ContactFormUpdate {
+        public static let id: Swift.String = "contactFormUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/PUT/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/PUT/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                public init(contactFormId: Components.Parameters.ContactFormIdParameter) {
+                    self.contactFormId = contactFormId
+                }
+            }
+            public var path: Operations.ContactFormUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/PUT/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormUpdate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormUpdate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormUpdate.Input.Headers
+            public var body: Components.RequestBodies.ContactFormCreateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.ContactFormUpdate.Input.Path,
+                headers: Operations.ContactFormUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactFormCreateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactFormResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactFormResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Contact form not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactFormUpdate.Output.NotFound)
+            /// Contact form not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactFormUpdate.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormUpdate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormUpdate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormUpdate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)`.
+    public enum ContactFormDelete {
+        public static let id: Swift.String = "contactFormDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/DELETE/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                public init(contactFormId: Components.Parameters.ContactFormIdParameter) {
+                    self.contactFormId = contactFormId
+                }
+            }
+            public var path: Operations.ContactFormDelete.Input.Path
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            public init(path: Operations.ContactFormDelete.Input.Path) {
+                self.path = path
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct NoContent: Sendable, Hashable {
+                /// Creates a new `NoContent`.
+                public init() {}
+            }
+            /// Contact form deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            case noContent(Operations.ContactFormDelete.Output.NoContent)
+            /// Contact form deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Operations.ContactFormDelete.Output.NoContent {
+                get throws {
+                    switch self {
+                    case let .noContent(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "noContent",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Contact form not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactFormDelete.Output.NotFound)
+            /// Contact form not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactFormDelete.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormDelete.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormDelete.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/get(contactFormItemList)`.
+    public enum ContactFormItemList {
+        public static let id: Swift.String = "contactFormItemList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/GET/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                public init(contactFormId: Components.Parameters.ContactFormIdParameter) {
+                    self.contactFormId = contactFormId
+                }
+            }
+            public var path: Operations.ContactFormItemList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormItemList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormItemList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormItemList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.ContactFormItemList.Input.Path,
+                headers: Operations.ContactFormItemList.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form item list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/get(contactFormItemList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactFormItemListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactFormItemListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/get(contactFormItemList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormItemList.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/get(contactFormItemList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormItemList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/get(contactFormItemList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormItemList.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/get(contactFormItemList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormItemList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/forms/{contactFormId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/post(contactFormItemCreate)`.
+    public enum ContactFormItemCreate {
+        public static let id: Swift.String = "contactFormItemCreate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/POST/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/POST/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                public init(contactFormId: Components.Parameters.ContactFormIdParameter) {
+                    self.contactFormId = contactFormId
+                }
+            }
+            public var path: Operations.ContactFormItemCreate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormItemCreate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormItemCreate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormItemCreate.Input.Headers
+            public var body: Components.RequestBodies.ContactFormItemCreateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.ContactFormItemCreate.Input.Path,
+                headers: Operations.ContactFormItemCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactFormItemCreateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form item response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/post(contactFormItemCreate)/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(Components.Responses.ContactFormItemResponse)
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created: Components.Responses.ContactFormItemResponse {
+                get throws {
+                    switch self {
+                    case let .created(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/post(contactFormItemCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormItemCreate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/post(contactFormItemCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormItemCreate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/post(contactFormItemCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormItemCreate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/post(contactFormItemCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormItemCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)`.
+    public enum ContactFormItemGet {
+        public static let id: Swift.String = "contactFormItemGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/GET/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/GET/path/contactFormItemId`.
+                public var contactFormItemId: Components.Parameters.ContactFormItemIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                ///   - contactFormItemId:
+                public init(
+                    contactFormId: Components.Parameters.ContactFormIdParameter,
+                    contactFormItemId: Components.Parameters.ContactFormItemIdParameter
+                ) {
+                    self.contactFormId = contactFormId
+                    self.contactFormItemId = contactFormItemId
+                }
+            }
+            public var path: Operations.ContactFormItemGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormItemGet.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormItemGet.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormItemGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.ContactFormItemGet.Input.Path,
+                headers: Operations.ContactFormItemGet.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form item response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactFormItemResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactFormItemResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Contact form item not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactFormItemGet.Output.NotFound)
+            /// Contact form item not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactFormItemGet.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormItemGet.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormItemGet.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormItemGet.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormItemGet.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)`.
+    public enum ContactFormItemUpdate {
+        public static let id: Swift.String = "contactFormItemUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/PUT/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/PUT/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/PUT/path/contactFormItemId`.
+                public var contactFormItemId: Components.Parameters.ContactFormItemIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                ///   - contactFormItemId:
+                public init(
+                    contactFormId: Components.Parameters.ContactFormIdParameter,
+                    contactFormItemId: Components.Parameters.ContactFormItemIdParameter
+                ) {
+                    self.contactFormId = contactFormId
+                    self.contactFormItemId = contactFormItemId
+                }
+            }
+            public var path: Operations.ContactFormItemUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/PUT/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormItemUpdate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormItemUpdate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormItemUpdate.Input.Headers
+            public var body: Components.RequestBodies.ContactFormItemPatchRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.ContactFormItemUpdate.Input.Path,
+                headers: Operations.ContactFormItemUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactFormItemPatchRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form item response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactFormItemResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactFormItemResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Contact form item not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactFormItemUpdate.Output.NotFound)
+            /// Contact form item not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactFormItemUpdate.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormItemUpdate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormItemUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormItemUpdate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormItemUpdate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)`.
+    public enum ContactFormItemDelete {
+        public static let id: Swift.String = "contactFormItemDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/DELETE/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/DELETE/path/contactFormItemId`.
+                public var contactFormItemId: Components.Parameters.ContactFormItemIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                ///   - contactFormItemId:
+                public init(
+                    contactFormId: Components.Parameters.ContactFormIdParameter,
+                    contactFormItemId: Components.Parameters.ContactFormItemIdParameter
+                ) {
+                    self.contactFormId = contactFormId
+                    self.contactFormItemId = contactFormItemId
+                }
+            }
+            public var path: Operations.ContactFormItemDelete.Input.Path
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            public init(path: Operations.ContactFormItemDelete.Input.Path) {
+                self.path = path
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct NoContent: Sendable, Hashable {
+                /// Creates a new `NoContent`.
+                public init() {}
+            }
+            /// Contact form item deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            case noContent(Operations.ContactFormItemDelete.Output.NoContent)
+            /// Contact form item deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Operations.ContactFormItemDelete.Output.NoContent {
+                get throws {
+                    switch self {
+                    case let .noContent(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "noContent",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Contact form item not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactFormItemDelete.Output.NotFound)
+            /// Contact form item not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactFormItemDelete.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormItemDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormItemDelete.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormItemDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormItemDelete.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/get(contactFormSubmissionList)`.
+    public enum ContactFormSubmissionList {
+        public static let id: Swift.String = "contactFormSubmissionList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/GET/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                public init(contactFormId: Components.Parameters.ContactFormIdParameter) {
+                    self.contactFormId = contactFormId
+                }
+            }
+            public var path: Operations.ContactFormSubmissionList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormSubmissionList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormSubmissionList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormSubmissionList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.ContactFormSubmissionList.Input.Path,
+                headers: Operations.ContactFormSubmissionList.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form submission list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/get(contactFormSubmissionList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactFormSubmissionListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactFormSubmissionListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/get(contactFormSubmissionList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormSubmissionList.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/get(contactFormSubmissionList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormSubmissionList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/get(contactFormSubmissionList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormSubmissionList.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/get(contactFormSubmissionList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormSubmissionList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
+    public enum ContactFormSubmissionGet {
+        public static let id: Swift.String = "contactFormSubmissionGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/GET/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/GET/path/contactFormSubmissionId`.
+                public var contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                ///   - contactFormSubmissionId:
+                public init(
+                    contactFormId: Components.Parameters.ContactFormIdParameter,
+                    contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                ) {
+                    self.contactFormId = contactFormId
+                    self.contactFormSubmissionId = contactFormSubmissionId
+                }
+            }
+            public var path: Operations.ContactFormSubmissionGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormSubmissionGet.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormSubmissionGet.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormSubmissionGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.ContactFormSubmissionGet.Input.Path,
+                headers: Operations.ContactFormSubmissionGet.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form submission response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactFormSubmissionResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactFormSubmissionResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Contact form submission not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactFormSubmissionGet.Output.NotFound)
+            /// Contact form submission not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactFormSubmissionGet.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormSubmissionGet.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormSubmissionGet.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormSubmissionGet.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormSubmissionGet.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
+    public enum ContactFormSubmissionUpdate {
+        public static let id: Swift.String = "contactFormSubmissionUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/PATCH/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/PATCH/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/PATCH/path/contactFormSubmissionId`.
+                public var contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                ///   - contactFormSubmissionId:
+                public init(
+                    contactFormId: Components.Parameters.ContactFormIdParameter,
+                    contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                ) {
+                    self.contactFormId = contactFormId
+                    self.contactFormSubmissionId = contactFormSubmissionId
+                }
+            }
+            public var path: Operations.ContactFormSubmissionUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/PATCH/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormSubmissionUpdate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormSubmissionUpdate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactFormSubmissionUpdate.Input.Headers
+            public var body: Components.RequestBodies.ContactFormSubmissionPatchRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.ContactFormSubmissionUpdate.Input.Path,
+                headers: Operations.ContactFormSubmissionUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactFormSubmissionPatchRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form submission response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactFormSubmissionResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactFormSubmissionResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Contact form submission not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactFormSubmissionUpdate.Output.NotFound)
+            /// Contact form submission not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactFormSubmissionUpdate.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormSubmissionUpdate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormSubmissionUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormSubmissionUpdate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormSubmissionUpdate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)`.
+    public enum ContactNewsletterList {
+        public static let id: Swift.String = "contactNewsletterList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            public init(headers: Operations.ContactNewsletterList.Input.Headers = .init()) {
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactNewsletterListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactNewsletterListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterList.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterList.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/post(contactNewsletterCreate)`.
+    public enum ContactNewsletterCreate {
+        public static let id: Swift.String = "contactNewsletterCreate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterCreate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterCreate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterCreate.Input.Headers
+            public var body: Components.RequestBodies.ContactNewsletterCreateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.ContactNewsletterCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactNewsletterCreateRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/post(contactNewsletterCreate)/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(Components.Responses.ContactNewsletterResponse)
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created: Components.Responses.ContactNewsletterResponse {
+                get throws {
+                    switch self {
+                    case let .created(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/post(contactNewsletterCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterCreate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/post(contactNewsletterCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterCreate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/post(contactNewsletterCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterCreate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/post(contactNewsletterCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)`.
+    public enum ContactNewsletterGet {
+        public static let id: Swift.String = "contactNewsletterGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/GET/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                public init(contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter) {
+                    self.contactNewsletterId = contactNewsletterId
+                }
+            }
+            public var path: Operations.ContactNewsletterGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterGet.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterGet.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.ContactNewsletterGet.Input.Path,
+                headers: Operations.ContactNewsletterGet.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactNewsletterResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactNewsletterResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Newsletter not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactNewsletterGet.Output.NotFound)
+            /// Newsletter not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactNewsletterGet.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterGet.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterGet.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterGet.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterGet.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)`.
+    public enum ContactNewsletterUpdate {
+        public static let id: Swift.String = "contactNewsletterUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/PATCH/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/PATCH/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                public init(contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter) {
+                    self.contactNewsletterId = contactNewsletterId
+                }
+            }
+            public var path: Operations.ContactNewsletterUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/PATCH/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterUpdate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterUpdate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterUpdate.Input.Headers
+            public var body: Components.RequestBodies.ContactNewsletterPatchRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.ContactNewsletterUpdate.Input.Path,
+                headers: Operations.ContactNewsletterUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactNewsletterPatchRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactNewsletterResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactNewsletterResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Newsletter not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactNewsletterUpdate.Output.NotFound)
+            /// Newsletter not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactNewsletterUpdate.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterUpdate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterUpdate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterUpdate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)`.
+    public enum ContactNewsletterDelete {
+        public static let id: Swift.String = "contactNewsletterDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/DELETE/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                public init(contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter) {
+                    self.contactNewsletterId = contactNewsletterId
+                }
+            }
+            public var path: Operations.ContactNewsletterDelete.Input.Path
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            public init(path: Operations.ContactNewsletterDelete.Input.Path) {
+                self.path = path
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct NoContent: Sendable, Hashable {
+                /// Creates a new `NoContent`.
+                public init() {}
+            }
+            /// Newsletter deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            case noContent(Operations.ContactNewsletterDelete.Output.NoContent)
+            /// Newsletter deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Operations.ContactNewsletterDelete.Output.NoContent {
+                get throws {
+                    switch self {
+                    case let .noContent(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "noContent",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Newsletter not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactNewsletterDelete.Output.NotFound)
+            /// Newsletter not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactNewsletterDelete.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterDelete.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterDelete.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/get(contactNewsletterIssueList)`.
+    public enum ContactNewsletterIssueList {
+        public static let id: Swift.String = "contactNewsletterIssueList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/issues/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/issues/GET/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                public init(contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter) {
+                    self.contactNewsletterId = contactNewsletterId
+                }
+            }
+            public var path: Operations.ContactNewsletterIssueList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/issues/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterIssueList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterIssueList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterIssueList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.ContactNewsletterIssueList.Input.Path,
+                headers: Operations.ContactNewsletterIssueList.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter issue list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/get(contactNewsletterIssueList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactNewsletterIssueListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactNewsletterIssueListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/get(contactNewsletterIssueList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterIssueList.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/get(contactNewsletterIssueList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterIssueList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/get(contactNewsletterIssueList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterIssueList.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/get(contactNewsletterIssueList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterIssueList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/post(contactNewsletterIssueCreate)`.
+    public enum ContactNewsletterIssueCreate {
+        public static let id: Swift.String = "contactNewsletterIssueCreate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/issues/POST/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/issues/POST/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                public init(contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter) {
+                    self.contactNewsletterId = contactNewsletterId
+                }
+            }
+            public var path: Operations.ContactNewsletterIssueCreate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/issues/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterIssueCreate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterIssueCreate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterIssueCreate.Input.Headers
+            public var body: Components.RequestBodies.ContactNewsletterIssueCreateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.ContactNewsletterIssueCreate.Input.Path,
+                headers: Operations.ContactNewsletterIssueCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactNewsletterIssueCreateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter issue response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/post(contactNewsletterIssueCreate)/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(Components.Responses.ContactNewsletterIssueResponse)
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created: Components.Responses.ContactNewsletterIssueResponse {
+                get throws {
+                    switch self {
+                    case let .created(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/post(contactNewsletterIssueCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterIssueCreate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/post(contactNewsletterIssueCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterIssueCreate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/post(contactNewsletterIssueCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterIssueCreate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/post(contactNewsletterIssueCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterIssueCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/get(contactNewsletterSubscriberList)`.
+    public enum ContactNewsletterSubscriberList {
+        public static let id: Swift.String = "contactNewsletterSubscriberList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/GET/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                public init(contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter) {
+                    self.contactNewsletterId = contactNewsletterId
+                }
+            }
+            public var path: Operations.ContactNewsletterSubscriberList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterSubscriberList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterSubscriberList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterSubscriberList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.ContactNewsletterSubscriberList.Input.Path,
+                headers: Operations.ContactNewsletterSubscriberList.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter subscriber list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/get(contactNewsletterSubscriberList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactNewsletterSubscriberListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactNewsletterSubscriberListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/get(contactNewsletterSubscriberList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterSubscriberList.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/get(contactNewsletterSubscriberList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterSubscriberList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/get(contactNewsletterSubscriberList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterSubscriberList.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/get(contactNewsletterSubscriberList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterSubscriberList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/post(contactNewsletterSubscriberCreate)`.
+    public enum ContactNewsletterSubscriberCreate {
+        public static let id: Swift.String = "contactNewsletterSubscriberCreate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/POST/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/POST/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                public init(contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter) {
+                    self.contactNewsletterId = contactNewsletterId
+                }
+            }
+            public var path: Operations.ContactNewsletterSubscriberCreate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterSubscriberCreate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterSubscriberCreate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterSubscriberCreate.Input.Headers
+            public var body: Components.RequestBodies.ContactNewsletterSubscriberCreateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.ContactNewsletterSubscriberCreate.Input.Path,
+                headers: Operations.ContactNewsletterSubscriberCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactNewsletterSubscriberCreateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter subscriber response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/post(contactNewsletterSubscriberCreate)/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(Components.Responses.ContactNewsletterSubscriberResponse)
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created: Components.Responses.ContactNewsletterSubscriberResponse {
+                get throws {
+                    switch self {
+                    case let .created(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/post(contactNewsletterSubscriberCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterSubscriberCreate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/post(contactNewsletterSubscriberCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterSubscriberCreate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/post(contactNewsletterSubscriberCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterSubscriberCreate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/post(contactNewsletterSubscriberCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterSubscriberCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)`.
+    public enum ContactNewsletterSubscriberGet {
+        public static let id: Swift.String = "contactNewsletterSubscriberGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/GET/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/GET/path/email`.
+                public var email: Components.Parameters.ContactNewsletterSubscriberEmailParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                ///   - email:
+                public init(
+                    contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter,
+                    email: Components.Parameters.ContactNewsletterSubscriberEmailParameter
+                ) {
+                    self.contactNewsletterId = contactNewsletterId
+                    self.email = email
+                }
+            }
+            public var path: Operations.ContactNewsletterSubscriberGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterSubscriberGet.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterSubscriberGet.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterSubscriberGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.ContactNewsletterSubscriberGet.Input.Path,
+                headers: Operations.ContactNewsletterSubscriberGet.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter subscriber response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactNewsletterSubscriberResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactNewsletterSubscriberResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Newsletter subscriber not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactNewsletterSubscriberGet.Output.NotFound)
+            /// Newsletter subscriber not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactNewsletterSubscriberGet.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterSubscriberGet.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterSubscriberGet.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterSubscriberGet.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterSubscriberGet.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)`.
+    public enum ContactNewsletterSubscriberUpdate {
+        public static let id: Swift.String = "contactNewsletterSubscriberUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/PATCH/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/PATCH/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/PATCH/path/email`.
+                public var email: Components.Parameters.ContactNewsletterSubscriberEmailParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                ///   - email:
+                public init(
+                    contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter,
+                    email: Components.Parameters.ContactNewsletterSubscriberEmailParameter
+                ) {
+                    self.contactNewsletterId = contactNewsletterId
+                    self.email = email
+                }
+            }
+            public var path: Operations.ContactNewsletterSubscriberUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/PATCH/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterSubscriberUpdate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactNewsletterSubscriberUpdate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactNewsletterSubscriberUpdate.Input.Headers
+            public var body: Components.RequestBodies.ContactNewsletterSubscriberPatchRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.ContactNewsletterSubscriberUpdate.Input.Path,
+                headers: Operations.ContactNewsletterSubscriberUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.ContactNewsletterSubscriberPatchRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter subscriber response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactNewsletterSubscriberResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactNewsletterSubscriberResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Newsletter subscriber not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactNewsletterSubscriberUpdate.Output.NotFound)
+            /// Newsletter subscriber not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactNewsletterSubscriberUpdate.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterSubscriberUpdate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterSubscriberUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterSubscriberUpdate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterSubscriberUpdate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)`.
+    public enum ContactNewsletterSubscriberDelete {
+        public static let id: Swift.String = "contactNewsletterSubscriberDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/DELETE/path/contactNewsletterId`.
+                public var contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/DELETE/path/email`.
+                public var email: Components.Parameters.ContactNewsletterSubscriberEmailParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactNewsletterId:
+                ///   - email:
+                public init(
+                    contactNewsletterId: Components.Parameters.ContactNewsletterIdParameter,
+                    email: Components.Parameters.ContactNewsletterSubscriberEmailParameter
+                ) {
+                    self.contactNewsletterId = contactNewsletterId
+                    self.email = email
+                }
+            }
+            public var path: Operations.ContactNewsletterSubscriberDelete.Input.Path
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            public init(path: Operations.ContactNewsletterSubscriberDelete.Input.Path) {
+                self.path = path
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct NoContent: Sendable, Hashable {
+                /// Creates a new `NoContent`.
+                public init() {}
+            }
+            /// Newsletter subscriber deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            case noContent(Operations.ContactNewsletterSubscriberDelete.Output.NoContent)
+            /// Newsletter subscriber deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Operations.ContactNewsletterSubscriberDelete.Output.NoContent {
+                get throws {
+                    switch self {
+                    case let .noContent(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "noContent",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Newsletter subscriber not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactNewsletterSubscriberDelete.Output.NotFound)
+            /// Newsletter subscriber not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactNewsletterSubscriberDelete.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactNewsletterSubscriberDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactNewsletterSubscriberDelete.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactNewsletterSubscriberDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactNewsletterSubscriberDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):

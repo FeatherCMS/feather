@@ -78,9 +78,6 @@ all:
 backend:
 	$(COMPOSE) up --build $(BACKEND_SERVICES)
 
-web-static:
-	$(COMPOSE) up --build $(BACKEND_STATIC_SERVICES)
-
 backend-logs:
 	$(COMPOSE) logs -f migrator server worker web-static openapi-app openapi-admin
 

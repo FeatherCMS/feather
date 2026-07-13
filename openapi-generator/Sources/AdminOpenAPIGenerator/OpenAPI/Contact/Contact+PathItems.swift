@@ -1,0 +1,14 @@
+import FeatherOpenAPI
+
+struct ContactFormPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactFormListOperation() }; var post: OperationRepresentable? { ContactFormCreateOperation() } }
+struct ContactFormIDPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactFormGetOperation() }; var put: OperationRepresentable? { ContactFormUpdateOperation() }; var delete: OperationRepresentable? { ContactFormDeleteOperation() } }
+struct ContactFormItemPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactFormItemListOperation() }; var post: OperationRepresentable? { ContactFormItemCreateOperation() } }
+struct ContactFormItemIDPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactFormItemGetOperation() }; var put: OperationRepresentable? { ContactFormItemUpdateOperation() }; var delete: OperationRepresentable? { ContactFormItemDeleteOperation() } }
+struct ContactFormSubmissionPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactFormSubmissionListOperation() } }
+struct ContactFormSubmissionIDPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactFormSubmissionGetOperation() }; var patch: OperationRepresentable? { ContactFormSubmissionUpdateOperation() } }
+struct ContactNewsletterPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactNewsletterListOperation() }; var post: OperationRepresentable? { ContactNewsletterCreateOperation() } }
+struct ContactNewsletterIDPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactNewsletterGetOperation() }; var patch: OperationRepresentable? { ContactNewsletterUpdateOperation() }; var delete: OperationRepresentable? { ContactNewsletterDeleteOperation() } }
+struct ContactNewsletterIssuePathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactNewsletterIssueListOperation() }; var post: OperationRepresentable? { ContactNewsletterIssueCreateOperation() } }
+struct ContactNewsletterIssueIDPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactNewsletterIssueGetOperation() }; var patch: OperationRepresentable? { ContactNewsletterIssueUpdateOperation() }; var delete: OperationRepresentable? { ContactNewsletterIssueDeleteOperation() } }
+struct ContactNewsletterSubscriberPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactNewsletterSubscriberListOperation() }; var post: OperationRepresentable? { ContactNewsletterSubscriberCreateOperation() } }
+struct ContactNewsletterSubscriberIDPathItems: PathItemRepresentable { var get: OperationRepresentable? { ContactNewsletterSubscriberGetOperation() }; var patch: OperationRepresentable? { ContactNewsletterSubscriberUpdateOperation() }; var delete: OperationRepresentable? { ContactNewsletterSubscriberDeleteOperation() } }

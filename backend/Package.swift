@@ -50,7 +50,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/hummingbird-project/swift-jobs-postgres",
-            from: "1.2.0"
+            exact: "1.3.0"
         ),
         .package(
             url: "https://github.com/hummingbird-project/postgres-migrations",
@@ -111,6 +111,8 @@ let package = Package(
         .package(path: "./app-modules/app-user-module"),
         .package(path: "./app-modules/app-auth-module"),
         .package(path: "./app-modules/app-media-module"),
+        .package(path: "./app-modules/app-contact-module"),
+        .package(path: "./app-modules/app-newsletter-module"),
     ],
     targets: [
         .target(
@@ -143,6 +145,8 @@ let package = Package(
                 .product(name: "AuthApplication", package: "app-auth-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(name: "ContactInfrastructure", package: "app-contact-module"),
+                .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
 
                 .target(name: "Environment"),
             ],
@@ -171,6 +175,8 @@ let package = Package(
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(name: "ContactInfrastructure", package: "app-contact-module"),
+                .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
 
                 .target(name: "Environment"),
             ],
@@ -211,6 +217,10 @@ let package = Package(
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(name: "ContactApplication", package: "app-contact-module"),
+                .product(name: "ContactInfrastructure", package: "app-contact-module"),
+                .product(name: "NewsletterApplication", package: "app-newsletter-module"),
+                .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
 
                 .target(name: "Environment"),
             ],

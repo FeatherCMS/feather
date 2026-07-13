@@ -1,0 +1,100 @@
+import ContactDomain
+import FeatherDatabase
+import Infrastructure
+
+extension ContactFormItemTable.Row {
+    var asDomain: ContactFormItem {
+        get throws {
+            guard let type = ContactFormItem.ItemType(rawValue: type) else {
+                throw RepositoryError.invalidEnumValue(type)
+            }
+            return .init(
+                id: id,
+                formId: formId,
+                key: key,
+                type: type,
+                label: label,
+                allowedValues: try allowedValues(),
+                isRequired: isRequired,
+                position: position,
+                createdAt: createdAt,
+                updatedAt: updatedAt
+            )
+        }
+    }
+}
+
+public struct DatabaseContactFormItemRepository: ContactFormItemRepository {
+
+    public var connection: any DatabaseConnection
+
+    public init(connection: any DatabaseConnection) {
+        self.connection = connection
+    }
+
+    public func insert(
+        _ model: ContactFormItem.New
+    ) async throws -> ContactFormItem {
+        let table = ContactFormItemTable(connection: connection)
+        let saved = try await table.create(
+            row: .init(
+                id: model.id,
+                formId: model.formId,
+                key: model.key,
+                type: model.type.rawValue,
+                label: model.label,
+                allowedValuesJSON: try ContactFormItem.Option.jsonString(
+                    model.allowedValues
+                ),
+                isRequired: model.isRequired,
+                position: model.position
+            )
+        )
+        return try saved.asDomain
+    }
+
+    public func findBy(
+        id: String
+    ) async throws -> ContactFormItem? {
+        let table = ContactFormItemTable(connection: connection)
+        return try await table.find(id: id).map { try $0.asDomain }
+    }
+
+    public func listBy(
+        formId: String
+    ) async throws -> [ContactFormItem] {
+        let table = ContactFormItemTable(connection: connection)
+        return try await table.list(formId: formId).map { try $0.asDomain }
+    }
+
+    public func update(
+        _ model: ContactFormItem
+    ) async throws -> ContactFormItem {
+        let table = ContactFormItemTable(connection: connection)
+        let updated = try await table.update(
+            id: model.id,
+            row: .init(
+                id: model.id,
+                formId: model.formId,
+                key: model.key,
+                type: model.type.rawValue,
+                label: model.label,
+                allowedValuesJSON: try ContactFormItem.Option.jsonString(
+                    model.allowedValues
+                ),
+                isRequired: model.isRequired,
+                position: model.position,
+                createdAt: model.createdAt,
+                updatedAt: model.updatedAt
+            )
+        )
+        return try updated.asDomain
+    }
+
+    public func delete(
+        id: String
+    ) async throws -> Bool {
+        let table = ContactFormItemTable(connection: connection)
+        return try await table.delete(id: id)
+    }
+}

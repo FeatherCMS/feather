@@ -10,6 +10,10 @@ tags:
   description: Public app web endpoints
 - name: Auth
   description: Authentication endpoints.
+- name: ContactForms
+  description: Public contact form endpoints.
+- name: Newsletters
+  description: Public newsletter endpoints.
 servers:
 - url: http://127.0.0.1:8080/
 security:
@@ -211,6 +215,42 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/AuthResponse'
+  /api/v1/contact/forms/{contactFormId}/submissions:
+    post:
+      tags:
+      - ContactForms
+      operationId: appContactFormSubmission
+      parameters:
+      - $ref: '#/components/parameters/AppContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AppContactFormSubmissionRequestBody'
+      responses:
+        201:
+          description: Contact form submitted
+  /api/v1/newsletters/{contactNewsletterId}/subscribe:
+    post:
+      tags:
+      - Newsletters
+      operationId: appContactNewsletterSubscribe
+      parameters:
+      - $ref: '#/components/parameters/AppContactNewsletterIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AppContactNewsletterSubscriptionRequestBody'
+      responses:
+        204:
+          description: Subscriber added
+  /api/v1/newsletters/{contactNewsletterId}/unsubscribe:
+    post:
+      tags:
+      - Newsletters
+      operationId: appContactNewsletterUnsubscribe
+      parameters:
+      - $ref: '#/components/parameters/AppContactNewsletterIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AppContactNewsletterSubscriptionRequestBody'
+      responses:
+        204:
+          description: Subscriber unsubscribed
 components:
   schemas:
     AppAnalyticsLogTrackSchema:
@@ -1114,6 +1154,40 @@ components:
       required:
       - token
       minProperties: 1
+    AppContactIdField:
+      type: string
+    AppContactFormSubmissionSchema:
+      type: object
+      properties:
+        values:
+          type: object
+          additionalProperties:
+            type: string
+          minProperties: 0
+        metadata:
+          $ref: '#/components/schemas/AppContactJSONField'
+      required:
+      - values
+      minProperties: 1
+    AppContactJSONField:
+      type: object
+      additionalProperties:
+        type: string
+      minProperties: 0
+    AppContactNewsletterSubscriptionSchema:
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          $ref: '#/components/schemas/AppContactNameField'
+        lastName:
+          $ref: '#/components/schemas/AppContactNameField'
+      required:
+      - email
+      minProperties: 1
+    AppContactNameField:
+      type: string
   responses:
     BlogRouteSettingsResponse:
       description: Blog route settings
@@ -1243,6 +1317,18 @@ components:
       schema:
         $ref: '#/components/schemas/WebMetadataReferenceIDField'
       description: Web metadata identifier
+    AppContactFormIdParameter:
+      name: contactFormId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AppContactIdField'
+    AppContactNewsletterIdParameter:
+      name: contactNewsletterId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AppContactIdField'
   requestBodies:
     AnalyticsLogTrackRequestBody:
       content:
@@ -1273,6 +1359,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthMagicLinkVerifyRequestSchema'
+      required: true
+    AppContactFormSubmissionRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppContactFormSubmissionSchema'
+      required: true
+    AppContactNewsletterSubscriptionRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppContactNewsletterSubscriptionSchema'
       required: true
   securitySchemes:
     bearerAuth:
