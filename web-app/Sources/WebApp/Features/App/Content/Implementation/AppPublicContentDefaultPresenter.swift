@@ -7,7 +7,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
     func render(
         content: AppPublicResolvedContent,
         request: Request
-    ) -> HTMLResponse {
+    ) async -> HTMLResponse {
         let siteSettings = SiteSettingsModel(
             schema: content.siteSettings,
             publicOrigins: themeContextFactory.publicOrigins
@@ -47,7 +47,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
                 metadata: routePaths.metadataModel(from: detail.metadata)
             )
             return themeRenderer.render(
-                themeContextFactory.makePostDetailContext(
+                await themeContextFactory.makePostDetailContext(
                     request: request,
                     model: model,
                     siteSettings: siteSettings,
@@ -87,7 +87,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
                 metadata: routePaths.metadataModel(from: detail.metadata)
             )
             return themeRenderer.render(
-                themeContextFactory.makeAuthorDetailContext(
+                await themeContextFactory.makeAuthorDetailContext(
                     request: request,
                     model: model,
                     siteSettings: siteSettings,
@@ -126,7 +126,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
                 metadata: routePaths.metadataModel(from: detail.metadata)
             )
             return themeRenderer.render(
-                themeContextFactory.makeTagDetailContext(
+                await themeContextFactory.makeTagDetailContext(
                     request: request,
                     model: model,
                     siteSettings: siteSettings,
@@ -147,7 +147,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
                 metadata: routePaths.metadataModel(from: detail.metadata)
             )
             return themeRenderer.render(
-                themeContextFactory.makePageContext(
+                await themeContextFactory.makePageContext(
                     request: request,
                     model: model,
                     siteSettings: siteSettings,

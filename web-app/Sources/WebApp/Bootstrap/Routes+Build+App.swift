@@ -12,6 +12,9 @@ func buildAppRoutes(
     publicContentRepository: AppPublicContentOpenAPIRepository,
     styleshetCollector: GlobalStylesheetCollector
 ) {
+    AppContactFormSubmission()
+        .controller.route(on: router)
+
     AppGetStylesheet(
         globalStylesheetCollector: styleshetCollector
     )

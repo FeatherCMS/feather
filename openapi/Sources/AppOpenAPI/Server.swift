@@ -252,6 +252,17 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.appContactFormGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/contact/forms/{contactFormId}")
+        )
+        try transport.register(
+            {
                 try await server.appContactNewsletterSubscribe(
                     request: $0,
                     body: $1,
@@ -1351,6 +1362,59 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
                     suppressMutabilityWarning(&response)
                     return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/forms/{contactFormId}/get(appContactFormGet)`.
+    func appContactFormGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AppContactFormGet.id,
+            using: {
+                APIHandler.appContactFormGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.AppContactFormGet.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.AppContactFormIdParameter.self
+                ))
+                let headers: Operations.AppContactFormGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.AppContactFormGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .undocumented(statusCode, _):
                     return (.init(soar_statusCode: statusCode), nil)
                 }

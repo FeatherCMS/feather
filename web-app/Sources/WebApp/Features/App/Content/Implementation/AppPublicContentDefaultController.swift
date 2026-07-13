@@ -35,7 +35,7 @@ extension AppPublicContentDefaultController {
                 headers: [.location: "/"]
             )
         }
-        return try presenter.render(content: content, request: request)
+        return try await presenter.render(content: content, request: request)
             .response(from: request, context: context)
     }
 

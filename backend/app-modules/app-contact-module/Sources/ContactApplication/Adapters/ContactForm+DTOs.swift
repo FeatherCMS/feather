@@ -2,6 +2,12 @@ import ContactDomain
 
 extension ContactForm {
     var asDetail: ContactFormDetail {
-        .init(id: id, name: name, createdAt: createdAt, updatedAt: updatedAt)
+        asDetail(items: [])
+    }
+
+    func asDetail(
+        items: [ContactFormItemDetail] = []
+    ) -> ContactFormDetail {
+        .init(id: id, name: name, items: items, createdAt: createdAt, updatedAt: updatedAt)
     }
 }

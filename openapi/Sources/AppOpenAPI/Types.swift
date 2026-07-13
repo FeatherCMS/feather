@@ -71,6 +71,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `POST /api/v1/contact/forms/{contactFormId}/submissions`.
     /// - Remark: Generated from `#/paths//api/v1/contact/forms/{contactFormId}/submissions/post(appContactFormSubmission)`.
     func appContactFormSubmission(_ input: Operations.AppContactFormSubmission.Input) async throws -> Operations.AppContactFormSubmission.Output
+    /// - Remark: HTTP `GET /api/v1/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/forms/{contactFormId}/get(appContactFormGet)`.
+    func appContactFormGet(_ input: Operations.AppContactFormGet.Input) async throws -> Operations.AppContactFormGet.Output
     /// - Remark: HTTP `POST /api/v1/newsletters/{contactNewsletterId}/subscribe`.
     /// - Remark: Generated from `#/paths//api/v1/newsletters/{contactNewsletterId}/subscribe/post(appContactNewsletterSubscribe)`.
     func appContactNewsletterSubscribe(_ input: Operations.AppContactNewsletterSubscribe.Input) async throws -> Operations.AppContactNewsletterSubscribe.Output
@@ -239,6 +242,17 @@ extension APIProtocol {
         try await appContactFormSubmission(Operations.AppContactFormSubmission.Input(
             path: path,
             body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/forms/{contactFormId}/get(appContactFormGet)`.
+    public func appContactFormGet(
+        path: Operations.AppContactFormGet.Input.Path,
+        headers: Operations.AppContactFormGet.Input.Headers = .init()
+    ) async throws -> Operations.AppContactFormGet.Output {
+        try await appContactFormGet(Operations.AppContactFormGet.Input(
+            path: path,
+            headers: headers
         ))
     }
     /// - Remark: HTTP `POST /api/v1/newsletters/{contactNewsletterId}/subscribe`.
@@ -1575,6 +1589,90 @@ public enum Components {
                 try encoder.encodeAdditionalProperties(additionalProperties)
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AppContactFormSchema`.
+        public struct AppContactFormSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/items`.
+            public var items: [Components.Schemas.AppContactFormItemSchema]
+            /// Creates a new `AppContactFormSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            ///   - items:
+            public init(
+                id: Swift.String,
+                name: Swift.String,
+                items: [Components.Schemas.AppContactFormItemSchema]
+            ) {
+                self.id = id
+                self.name = name
+                self.items = items
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
+                case items
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema`.
+        public struct AppContactFormItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema/key`.
+            public var key: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema/type`.
+            public var _type: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema/label`.
+            public var label: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema/allowedValues`.
+            public var allowedValues: Components.Schemas.ContactAllowedValuesSchema?
+            /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema/isRequired`.
+            public var isRequired: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema/position`.
+            public var position: Swift.Int
+            /// Creates a new `AppContactFormItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - key:
+            ///   - _type:
+            ///   - label:
+            ///   - allowedValues:
+            ///   - isRequired:
+            ///   - position:
+            public init(
+                id: Swift.String,
+                key: Swift.String,
+                _type: Swift.String,
+                label: Swift.String,
+                allowedValues: Components.Schemas.ContactAllowedValuesSchema? = nil,
+                isRequired: Swift.Bool,
+                position: Swift.Int
+            ) {
+                self.id = id
+                self.key = key
+                self._type = _type
+                self.label = label
+                self.allowedValues = allowedValues
+                self.isRequired = isRequired
+                self.position = position
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case key
+                case _type = "type"
+                case label
+                case allowedValues
+                case isRequired
+                case position
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactAllowedValuesSchema`.
+        public typealias ContactAllowedValuesSchema = [Swift.String]
         /// - Remark: Generated from `#/components/schemas/AppContactNewsletterSubscriptionSchema`.
         public struct AppContactNewsletterSubscriptionSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AppContactNewsletterSubscriptionSchema/email`.
@@ -2067,6 +2165,34 @@ public enum Components {
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.AuthResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct AppContactFormResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AppContactFormResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/AppContactFormResponse/content/application\/json`.
+                case json(Components.Schemas.AppContactFormSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.AppContactFormSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.AppContactFormResponse.Body
+            /// Creates a new `AppContactFormResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.AppContactFormResponse.Body) {
                 self.body = body
             }
         }
@@ -4079,6 +4205,104 @@ public enum Operations {
             ///
             /// A response with a code that is not documented in the OpenAPI document.
             case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/forms/{contactFormId}/get(appContactFormGet)`.
+    public enum AppContactFormGet {
+        public static let id: Swift.String = "appContactFormGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/contact/forms/{contactFormId}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/contact/forms/{contactFormId}/GET/path/contactFormId`.
+                public var contactFormId: Components.Parameters.AppContactFormIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                public init(contactFormId: Components.Parameters.AppContactFormIdParameter) {
+                    self.contactFormId = contactFormId
+                }
+            }
+            public var path: Operations.AppContactFormGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/contact/forms/{contactFormId}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AppContactFormGet.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AppContactFormGet.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AppContactFormGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.AppContactFormGet.Input.Path,
+                headers: Operations.AppContactFormGet.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Contact form response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/contact/forms/{contactFormId}/get(appContactFormGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.AppContactFormResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.AppContactFormResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
         }
     }
     /// - Remark: HTTP `POST /api/v1/newsletters/{contactNewsletterId}/subscribe`.

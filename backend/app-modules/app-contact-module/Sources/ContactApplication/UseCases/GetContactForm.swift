@@ -8,7 +8,8 @@ public struct GetContactForm: UseCase {
     public func execute(_ input: Input) async throws -> ContactFormDetail {
         try await transaction.run { context in
             guard let value = try await context.form.findBy(id: input.id) else { throw Error.notFound }
-            return value.asDetail
+            let items = try await context.item.listBy(formId: input.id).map(\.asDetail)
+            return value.asDetail(items: items)
         }
     }
     public enum Error: UseCaseError { case notFound }

@@ -40,7 +40,7 @@ struct ThemeContextFactory {
         siteSettings: SiteSettingsModel,
         navigation: [Components.Schemas.WebMenuItemSchema],
         siteNoIndex: Bool
-    ) -> ThemePageContext {
+    ) async -> ThemePageContext {
         .init(
             template: .pageDefault,
             value: makeContext(
@@ -52,7 +52,7 @@ struct ThemeContextFactory {
                 ),
                 canonicalURL: nonEmpty(model.metadata.canonicalURL),
                 noIndex: siteNoIndex || siteSettings.noIndex || model.metadata.noIndex,
-                contentsHTML: renderedContentsHTML(
+                contentsHTML: await renderedContentsHTML(
                     markdown: model.content,
                     requestPath: request.uri.path
                 ),
@@ -102,7 +102,7 @@ struct ThemeContextFactory {
         siteSettings: SiteSettingsModel,
         navigation: [Components.Schemas.WebMenuItemSchema],
         siteNoIndex: Bool
-    ) -> ThemePageContext {
+    ) async -> ThemePageContext {
         .init(
             template: .blogPostDefault,
             value: makeContext(
@@ -114,7 +114,7 @@ struct ThemeContextFactory {
                 ),
                 canonicalURL: nonEmpty(model.metadata.canonicalURL),
                 noIndex: siteNoIndex || siteSettings.noIndex || model.metadata.noIndex,
-                contentsHTML: renderedContentsHTML(
+                contentsHTML: await renderedContentsHTML(
                     markdown: model.content,
                     requestPath: request.uri.path
                 ),
@@ -168,7 +168,7 @@ struct ThemeContextFactory {
         siteSettings: SiteSettingsModel,
         navigation: [Components.Schemas.WebMenuItemSchema],
         siteNoIndex: Bool
-    ) -> ThemePageContext {
+    ) async -> ThemePageContext {
         .init(
             template: .blogAuthorDefault,
             value: makeContext(
@@ -180,7 +180,7 @@ struct ThemeContextFactory {
                 ),
                 canonicalURL: nonEmpty(model.metadata.canonicalURL),
                 noIndex: siteNoIndex || siteSettings.noIndex || model.metadata.noIndex,
-                contentsHTML: renderedContentsHTML(
+                contentsHTML: await renderedContentsHTML(
                     markdown: model.content,
                     requestPath: request.uri.path
                 ),
@@ -234,7 +234,7 @@ struct ThemeContextFactory {
         siteSettings: SiteSettingsModel,
         navigation: [Components.Schemas.WebMenuItemSchema],
         siteNoIndex: Bool
-    ) -> ThemePageContext {
+    ) async -> ThemePageContext {
         .init(
             template: .blogTagDefault,
             value: makeContext(
@@ -246,7 +246,7 @@ struct ThemeContextFactory {
                 ),
                 canonicalURL: nonEmpty(model.metadata.canonicalURL),
                 noIndex: siteNoIndex || siteSettings.noIndex || model.metadata.noIndex,
-                contentsHTML: renderedContentsHTML(
+                contentsHTML: await renderedContentsHTML(
                     markdown: model.content,
                     requestPath: request.uri.path
                 ),
@@ -347,8 +347,8 @@ extension ThemeContextFactory {
     private func renderedContentsHTML(
         markdown: String,
         requestPath: String
-    ) -> String {
-        contentRenderer.render(
+    ) async -> String {
+        await contentRenderer.render(
             markdown: markdown,
             requestPath: requestPath
         )

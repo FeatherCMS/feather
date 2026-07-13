@@ -33,6 +33,7 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/auth/magic-link": AuthMagicLinkPathItems(),
             "api/v1/auth/magic-link/verify": AuthMagicLinkVerifyPathItems(),
             "api/v1/contact/forms/{contactFormId}/submissions": AppContactFormSubmissionPathItems(),
+            "api/v1/contact/forms/{contactFormId}": AppContactFormGetPathItems(),
             "api/v1/newsletters/{contactNewsletterId}/subscribe": AppContactNewsletterSubscribePathItems(),
             "api/v1/newsletters/{contactNewsletterId}/unsubscribe": AppContactNewsletterUnsubscribePathItems(),
         ]

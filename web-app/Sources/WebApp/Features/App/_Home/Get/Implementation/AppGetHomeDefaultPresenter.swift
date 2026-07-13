@@ -7,10 +7,10 @@ struct AppGetHomeDefaultPresenter: AppGetHomePresenter {
 
     func renderPage(
         model: AppGetHomeModel
-    ) -> HTMLResponse {
+    ) async -> HTMLResponse {
         switch model {
         case .page(let content):
-            return AppPublicContentDefaultPresenter(
+            return await AppPublicContentDefaultPresenter(
                 themeRenderer: themeRenderer,
                 themeContextFactory: themeContextFactory
             )

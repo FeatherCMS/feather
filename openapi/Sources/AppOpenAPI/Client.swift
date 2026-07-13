@@ -1194,6 +1194,66 @@ public struct Client: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `GET /api/v1/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/forms/{contactFormId}/get(appContactFormGet)`.
+    public func appContactFormGet(_ input: Operations.AppContactFormGet.Input) async throws -> Operations.AppContactFormGet.Output {
+        try await client.send(
+            input: input,
+            forOperation: Operations.AppContactFormGet.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/api/v1/contact/forms/{}",
+                    parameters: [
+                        input.path.contactFormId
+                    ]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(
+                    soar_path: path,
+                    method: .get
+                )
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(
+                    in: &request.headerFields,
+                    contentTypes: input.headers.accept
+                )
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses.AppContactFormResponse.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.AppContactFormSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure("bestContentType chose an invalid content type.")
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    return .undocumented(
+                        statusCode: response.status.code,
+                        .init(
+                            headerFields: response.headerFields,
+                            body: responseBody
+                        )
+                    )
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `POST /api/v1/newsletters/{contactNewsletterId}/subscribe`.
     /// - Remark: Generated from `#/paths//api/v1/newsletters/{contactNewsletterId}/subscribe/post(appContactNewsletterSubscribe)`.
     public func appContactNewsletterSubscribe(_ input: Operations.AppContactNewsletterSubscribe.Input) async throws -> Operations.AppContactNewsletterSubscribe.Output {

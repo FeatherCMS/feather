@@ -227,6 +227,16 @@ paths:
       responses:
         201:
           description: Contact form submitted
+  /api/v1/contact/forms/{contactFormId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: appContactFormGet
+      parameters:
+      - $ref: '#/components/parameters/AppContactFormIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AppContactFormResponse'
   /api/v1/newsletters/{contactNewsletterId}/subscribe:
     post:
       tags:
@@ -1174,6 +1184,55 @@ components:
       additionalProperties:
         type: string
       minProperties: 0
+    AppContactFormSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppContactFormItemSchema'
+          minItems: 0
+          uniqueItems: false
+      required:
+      - id
+      - name
+      - items
+      minProperties: 3
+    AppContactFormItemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        allowedValues:
+          $ref: '#/components/schemas/ContactAllowedValuesSchema'
+        isRequired:
+          type: boolean
+        position:
+          type: integer
+      required:
+      - id
+      - key
+      - type
+      - label
+      - isRequired
+      - position
+      minProperties: 6
+    ContactAllowedValuesSchema:
+      type: array
+      items:
+        type: string
+      minItems: 0
+      uniqueItems: false
     AppContactNewsletterSubscriptionSchema:
       type: object
       properties:
@@ -1273,6 +1332,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthResponseSchema'
+    AppContactFormResponse:
+      description: Contact form response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppContactFormSchema'
   parameters:
     WebMetadataSlugParameter:
       name: slug

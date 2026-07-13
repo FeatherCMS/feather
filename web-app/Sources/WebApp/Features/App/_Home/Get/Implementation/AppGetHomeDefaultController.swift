@@ -12,6 +12,6 @@ struct AppGetHomeDefaultController: AppGetHomeController {
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let model = try await interactor.getHome(account: context.account)
-        return presenter.renderPage(model: model)
+        return await presenter.renderPage(model: model)
     }
 }
