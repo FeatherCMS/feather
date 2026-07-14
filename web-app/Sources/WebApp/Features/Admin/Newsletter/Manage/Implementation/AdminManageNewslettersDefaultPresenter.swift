@@ -4,8 +4,12 @@ struct AdminManageNewslettersDefaultPresenter: AdminManageNewslettersPresenter {
     let request: Request
     let renderEngine: any RenderingEngine
 
-    func renderList(items: [AdminManageNewsletterItem], isAdded: Bool, isEdited: Bool, isRemoved: Bool, error: String?, permissions: Set<String>) -> HTMLResponse {
-        renderEngine.renderAdminPage(request: request, title: "Campaigns - Feather CMS", description: "Manage campaigns", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: NewsletterTable(state: .init(isAdded: isAdded, isEdited: isEdited, isRemoved: isRemoved, items: items, breadcrumb: breadcrumb())))
+    func renderList(items: [AdminManageNewsletterItem], isAdded: Bool, isEdited: Bool, isRemoved: Bool, error: String?, permissions: Set<String>, search: String) -> HTMLResponse {
+        renderEngine.renderAdminPage(request: request, title: "Campaigns - Feather CMS", description: "Manage campaigns", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: NewsletterTable(state: .init(isAdded: isAdded, isEdited: isEdited, isRemoved: isRemoved, items: items, search: search, permissions: permissions, breadcrumb: breadcrumb())))
+    }
+
+    func renderBulkRemoveConfirmation(page: Int, search: String, selectedIds: [String], permissions: Set<String>) -> HTMLResponse {
+        renderEngine.renderAdminPage(request: request, title: "Remove campaigns - Feather CMS", description: "Remove campaigns", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ListBulkRemoveConfirmation(state: .init(breadcrumb: breadcrumb(), title: "Remove campaigns", message: "Are you sure you want to remove the selected campaigns? This action cannot be undone.", action: "/admin/newsletters/bulk-remove/", cancelLink: ListBulkRemoveRedirect.location(path: "/admin/newsletters/", page: page, search: search, title: nil, message: nil), selectedIds: selectedIds)))
     }
 
     func renderEdit(item: AdminManageNewsletterItem, error: String?, permissions: Set<String>) -> HTMLResponse {

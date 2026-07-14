@@ -15,8 +15,8 @@ struct AdminManageNewsletterSubscribersDefaultPresenter: AdminManageNewsletterSu
         renderEngine.renderAdminPage(request: request, title: "\(isEdit ? "Edit" : "Add") campaign subscriber - Feather CMS", description: "Manage campaign subscriber", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: NewsletterSubscriberFormView(state: .init(newsletterId: newsletterId, email: email, firstName: firstName, lastName: lastName, status: status, isEdit: isEdit, error: error, breadcrumb: breadcrumb(newsletterId: newsletterId, label: isEdit ? "Edit" : "Add"))))
     }
 
-    func renderRemoveConfirmation(newsletterId: String, email: String, permissions: Set<String>) -> HTMLResponse {
-        renderEngine.renderAdminPage(request: request, title: "Remove campaign subscriber - Feather CMS", description: "Remove campaign subscriber", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: NewsletterSubscriberRemoveView(email: email, newsletterId: newsletterId, breadcrumb: breadcrumb(newsletterId: newsletterId, label: "Remove")))
+    func renderRemoveConfirmation(newsletterId: String, subscriberId: String, email: String, permissions: Set<String>) -> HTMLResponse {
+        renderEngine.renderAdminPage(request: request, title: "Remove campaign subscriber - Feather CMS", description: "Remove campaign subscriber", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: NewsletterSubscriberRemoveView(email: email, subscriberId: subscriberId, newsletterId: newsletterId, breadcrumb: breadcrumb(newsletterId: newsletterId, label: "Remove")))
     }
 
     func renderBulkRemoveConfirmation(newsletterId: String, search: String?, emails: [String], permissions: Set<String>) -> HTMLResponse {

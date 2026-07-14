@@ -4,6 +4,7 @@ struct ListBulkRemoveFormInput: Codable, Sendable {
     var selectedIds: [String]?
     var page: Int?
     var search: String?
+    var campaignId: String?
 
     var normalizedSelectedIds: [String] {
         selectedIds ?? []

@@ -4,6 +4,7 @@ import WebStandards
 
 struct NewsletterSubscriberRemoveView: Component {
     let email: String
+    let subscriberId: String
     let newsletterId: String
     let breadcrumb: AdminBreadcrumb.State
 
@@ -15,7 +16,7 @@ struct NewsletterSubscriberRemoveView: Component {
                 message: "Are you sure you want to remove this subscriber? This action cannot be undone.",
                 details: [.init(prefix: "Email: ", value: email)],
                 submitLabel: "Remove subscriber",
-                actionURL: "/admin/newsletters/\(newsletterId)/subscribers/\(email)/remove/",
+                actionURL: "/admin/newsletters/\(newsletterId)/subscribers/\(subscriberId)/remove/",
                 cancelURL: "/admin/newsletters/\(newsletterId)/subscribers/"
             )
         )

@@ -18,4 +18,8 @@ struct AdminNewsletterSubscribersDirectoryDefaultInteractor: AdminNewsletterSubs
         }
         return .init(items: filteredItems, campaigns: campaigns, search: normalizedSearch, campaignId: campaignId ?? "")
     }
+
+    func bulkRemove(subscriberIds: [String], campaignId: String?) async throws {
+        try await repository.bulkRemove(subscriberIds: subscriberIds, campaignId: campaignId)
+    }
 }

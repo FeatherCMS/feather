@@ -12,12 +12,12 @@ struct AdminManageNewsletterSubscribersDefaultInteractor: AdminManageNewsletterS
         }
     }
     func create(newsletterId: String, form: NewsletterSubscriberForm) async throws { try await repository.create(newsletterId: newsletterId, form: form) }
-    func get(newsletterId: String, email: String) async throws -> AdminManageNewsletterSubscriberItem { try await repository.get(newsletterId: newsletterId, email: email) }
-    func update(newsletterId: String, email: String, form: NewsletterSubscriberForm) async throws { try await repository.update(newsletterId: newsletterId, email: email, form: form) }
-    func remove(newsletterId: String, email: String) async throws { try await repository.remove(newsletterId: newsletterId, email: email) }
-    func bulkRemove(newsletterId: String, emails: [String]) async throws {
-        for email in emails {
-            try await repository.remove(newsletterId: newsletterId, email: email)
+    func get(newsletterId: String, subscriberId: String) async throws -> AdminManageNewsletterSubscriberItem { try await repository.get(newsletterId: newsletterId, subscriberId: subscriberId) }
+    func update(newsletterId: String, subscriberId: String, form: NewsletterSubscriberForm) async throws { try await repository.update(newsletterId: newsletterId, subscriberId: subscriberId, form: form) }
+    func remove(newsletterId: String, subscriberId: String) async throws { try await repository.remove(newsletterId: newsletterId, subscriberId: subscriberId) }
+    func bulkRemove(newsletterId: String, subscriberIds: [String]) async throws {
+        for subscriberId in subscriberIds {
+            try await repository.remove(newsletterId: newsletterId, subscriberId: subscriberId)
         }
     }
 }

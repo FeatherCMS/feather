@@ -53,4 +53,10 @@ struct AdminManageNewslettersOpenAPIRepository {
             }
         }
     }
+
+    func bulkRemove(ids: [String]) async throws {
+        for id in ids {
+            try await remove(id: id)
+        }
+    }
 }

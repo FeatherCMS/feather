@@ -1,4 +1,5 @@
 struct AdminManageNewsletterSubscriberItem: Sendable {
+    let id: String
     let email: String
     let firstName: String
     let lastName: String

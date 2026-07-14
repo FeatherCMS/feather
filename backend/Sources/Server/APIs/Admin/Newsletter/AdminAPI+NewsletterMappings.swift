@@ -1,6 +1,7 @@
 import AdminOpenAPI
 import NewsletterApplication
 import NewsletterDomain
+import Foundation
 
 extension AdminAPI {
     func map(
@@ -18,6 +19,14 @@ extension AdminAPI {
     func map(
         _ value: NewsletterSubscriberDetail
     ) -> Components.Schemas.ContactNewsletterSubscriberSchema {
-        .init(id: value.email, newsletterId: value.newsletterId, email: value.email, status: value.status.rawValue, subscriptionDate: timestamp(value.subscriptionDate), unsubscriptionDate: value.unsubscriptionDate.map(timestamp), firstName: value.firstName.isEmpty ? nil : value.firstName, lastName: value.lastName.isEmpty ? nil : value.lastName, createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
+        .init(id: subscriberID(value.email), newsletterId: value.newsletterId, email: value.email, status: value.status.rawValue, subscriptionDate: timestamp(value.subscriptionDate), unsubscriptionDate: value.unsubscriptionDate.map(timestamp), firstName: value.firstName.isEmpty ? nil : value.firstName, lastName: value.lastName.isEmpty ? nil : value.lastName, createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
+    }
+
+    private func subscriberID(_ email: String) -> String {
+        Data(email.utf8)
+            .base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
     }
 }

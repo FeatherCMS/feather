@@ -4,10 +4,10 @@ struct AdminManageNewsletterSubscribersOpenAPIRepository {
     let api: AdminAPI
 
     func list(newsletterId: String) async throws -> [AdminManageNewsletterSubscriberItem] {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
+        return try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactNewsletterSubscriberList(path: .init(contactNewsletterId: newsletterId))
             switch response {
-            case .ok(let value): return try value.body.json.map { .init(email: $0.email, firstName: $0.firstName ?? "", lastName: $0.lastName ?? "", status: $0.status) }
+            case .ok(let value): return try value.body.json.map { .init(id: $0.id, email: $0.email, firstName: $0.firstName ?? "", lastName: $0.lastName ?? "", status: $0.status) }
             case .unauthorized: throw OpenAPIRepositoryError.unauthorized(message: "Please sign in again to view subscribers.")
             case .forbidden: throw OpenAPIRepositoryError.forbidden(message: "Your account cannot view subscribers.")
             case .undocumented(let statusCode, let response): throw try await api.failure(statusCode: statusCode, responseBody: response.body)
@@ -27,11 +27,12 @@ struct AdminManageNewsletterSubscribersOpenAPIRepository {
         }
     }
 
-    func get(newsletterId: String, email: String) async throws -> AdminManageNewsletterSubscriberItem {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
+    func get(newsletterId: String, subscriberId: String) async throws -> AdminManageNewsletterSubscriberItem {
+        let email = try await email(newsletterId: newsletterId, subscriberId: subscriberId)
+        return try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactNewsletterSubscriberGet(path: .init(contactNewsletterId: newsletterId, email: email))
             switch response {
-            case .ok(let value): let item = try value.body.json; return .init(email: item.email, firstName: item.firstName ?? "", lastName: item.lastName ?? "", status: item.status)
+            case .ok(let value): let item = try value.body.json; return AdminManageNewsletterSubscriberItem(id: item.id, email: item.email, firstName: item.firstName ?? "", lastName: item.lastName ?? "", status: item.status)
             case .notFound: throw OpenAPIRepositoryError.notFound(message: "This subscriber could not be found.")
             case .unauthorized: throw OpenAPIRepositoryError.unauthorized(message: "Please sign in again to view this subscriber.")
             case .forbidden: throw OpenAPIRepositoryError.forbidden(message: "Your account cannot view this subscriber.")
@@ -40,7 +41,8 @@ struct AdminManageNewsletterSubscribersOpenAPIRepository {
         }
     }
 
-    func update(newsletterId: String, email: String, form: NewsletterSubscriberForm) async throws {
+    func update(newsletterId: String, subscriberId: String, form: NewsletterSubscriberForm) async throws {
+        let email = try await email(newsletterId: newsletterId, subscriberId: subscriberId)
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactNewsletterSubscriberUpdate(path: .init(contactNewsletterId: newsletterId, email: email), body: .json(.init(firstName: form.firstName, lastName: form.lastName, status: form.status)))
             switch response {
@@ -53,7 +55,8 @@ struct AdminManageNewsletterSubscribersOpenAPIRepository {
         }
     }
 
-    func remove(newsletterId: String, email: String) async throws {
+    func remove(newsletterId: String, subscriberId: String) async throws {
+        let email = try await email(newsletterId: newsletterId, subscriberId: subscriberId)
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactNewsletterSubscriberDelete(path: .init(contactNewsletterId: newsletterId, email: email))
             switch response {
@@ -64,5 +67,12 @@ struct AdminManageNewsletterSubscribersOpenAPIRepository {
             case .undocumented(let statusCode, let response): throw try await api.failure(statusCode: statusCode, responseBody: response.body)
             }
         }
+    }
+
+    private func email(newsletterId: String, subscriberId: String) async throws -> String {
+        guard let item = try await list(newsletterId: newsletterId).first(where: { $0.id == subscriberId }) else {
+            throw OpenAPIRepositoryError.notFound(message: "This subscriber could not be found.")
+        }
+        return item.email
     }
 }
