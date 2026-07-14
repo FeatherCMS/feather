@@ -67,7 +67,7 @@ public struct TableMigration: DatabaseMigration {
             )
             VALUES
                 ('F6A2kqP9dW3xR7mN8tYcL', 'email', 'text', 'Email', '[]'::jsonb, TRUE, NOW(), NOW()),
-                ('nL9Y4cWQ2mR7xK8vP3dT', 'firstName', 'text', 'First name', '[]'::jsonb, FALSE, NOW(), NOW()),
+                ('nL9Y4cWQ2mR7xK8vP3dTq', 'firstName', 'text', 'First name', '[]'::jsonb, FALSE, NOW(), NOW()),
                 ('z7Qk2Vn9Xr4Lm8Pc1HaWs', 'lastName', 'text', 'Last name', '[]'::jsonb, FALSE, NOW(), NOW()),
                 ('p4Xr8Kc2Vn7Lm9Qw3HaTy', 'message', 'textarea', 'Message', '[]'::jsonb, FALSE, NOW(), NOW())
             ON CONFLICT (key) DO NOTHING;
