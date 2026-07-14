@@ -52,7 +52,7 @@ struct NewsletterCampaignIssueTable {
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT * FROM newsletter_issues
+                SELECT * FROM newsletter_issue
                 WHERE newsletter_id = \#(newsletterId)
                 ORDER BY created_at DESC;
                 """#
@@ -66,7 +66,7 @@ struct NewsletterCampaignIssueTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO newsletter_issues (
+                INSERT INTO newsletter_issue (
                     id, newsletter_id, subject, preview_text, content, status,
                     scheduled_date, created_at, updated_at
                 )
@@ -96,7 +96,7 @@ struct NewsletterCampaignIssueTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT * FROM newsletter_issues
+                SELECT * FROM newsletter_issue
                 WHERE id = \#(id)
                 LIMIT 1;
                 """#
@@ -111,7 +111,7 @@ struct NewsletterCampaignIssueTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                UPDATE newsletter_issues
+                UPDATE newsletter_issue
                 SET subject = \#(row.subject),
                     preview_text = \#(row.previewText),
                     content = \#(row.content),

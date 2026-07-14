@@ -8,6 +8,8 @@ struct ContactFormTable: Component {
         let isEdited: Bool
         let isRemoved: Bool
         let items: [AdminManageContactFormItem]
+        let search: String
+        let canRemove: Bool
         let breadcrumb: AdminBreadcrumb.State
     }
 
@@ -25,26 +27,28 @@ struct ContactFormTable: Component {
             }.class("button-row")
             Br()
             Br()
+            ListTableSearchForm(state: .init(action: "/admin/contact/forms/", placeholder: "Quick search contact forms", search: state.search))
             if state.items.isEmpty {
-                P("No contact forms yet.")
+                P(state.search.isEmpty ? "No contact forms yet." : "No contact forms match your search.")
             } else {
-                ListTableShell(
-                    table: Table {
-                        Thead { Tr { Th("Name"); Th("Actions") } }
+                ListTableBulkRemoveForm(
+                    state: .init(action: "/admin/contact/forms/bulk-remove/", page: 1, search: state.search, canRemove: state.canRemove, buttonTitle: "Remove selected"),
+                    table: ListTableShell(table: Table {
+                        Thead { Tr { if state.canRemove { ListTableSelectAllCheckbox() }; Th("Name"); Th("Actions") } }
                         Tbody {
                             for item in state.items {
                                 Tr {
+                                    if state.canRemove { ListTableRowSelectCheckbox(state: .init(id: item.id)) }
                                     Td(item.name).data("label", "Name")
                                     ListTableRowActions(state: .init(label: "Actions", actions: [
-                                        .init(title: "Fields", href: "/admin/contact/forms/\(item.id)/items/", className: nil, permission: "contact:form-items:list"),
-                                        .init(title: "Submissions", href: "/admin/contact/forms/\(item.id)/submissions/", className: nil, permission: "contact:form-submissions:list"),
+                                        .init(title: "Copy", className: nil, permission: "contact:forms:read", copyText: "@ContactForm(id: \(item.id))"),
                                         .init(title: "Edit", href: "/admin/contact/forms/\(item.id)/edit/", className: "edit", permission: "contact:forms:update"),
                                         .init(title: "Remove", href: "/admin/contact/forms/\(item.id)/remove/", className: "delete", permission: "contact:forms:delete")
-                                    ], permissions: ["contact:form-items:list", "contact:form-submissions:list", "contact:forms:update", "contact:forms:delete"]))
+                                    ], permissions: ["contact:forms:read", "contact:forms:update", "contact:forms:delete"]))
                                 }
                             }
                         }
-                    }.class("cms-table", "action-table")
+                    }.class("cms-table", "action-table").if(state.canRemove) { $0.class("bulk-select-table") })
                 )
             }
         }.class("cms-section")

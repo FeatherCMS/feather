@@ -1803,6 +1803,17 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.contactFormSubmissionDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}")
+        )
+        try transport.register(
+            {
                 try await server.contactNewsletterList(
                     request: $0,
                     body: $1,
@@ -13612,6 +13623,64 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
+    func contactFormSubmissionDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormSubmissionDelete.id,
+            using: {
+                APIHandler.contactFormSubmissionDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormSubmissionDelete.Input.Path = .init(
+                    contactFormId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormId",
+                        as: Components.Parameters.ContactFormIdParameter.self
+                    ),
+                    contactFormSubmissionId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormSubmissionId",
+                        as: Components.Parameters.ContactFormSubmissionIdParameter.self
+                    )
+                )
+                return Operations.ContactFormSubmissionDelete.Input(path: path)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
                 case let .notFound(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)

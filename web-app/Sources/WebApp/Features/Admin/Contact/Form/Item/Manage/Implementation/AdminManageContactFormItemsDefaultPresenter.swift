@@ -7,8 +7,13 @@ struct AdminManageContactFormItemsDefaultPresenter: AdminManageContactFormItemsP
     let request: Request
     let renderEngine: any RenderingEngine
 
-    func renderList(formId: String, items: [AdminManageContactFormItemRow], error: String?, permissions: Set<String>) -> HTMLResponse {
-        renderEngine.renderAdminPage(request: request, title: "Contact form fields - Feather CMS", description: "Manage contact form fields", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ContactFormItemsTable(state: .init(formId: formId, items: items, error: error, isEdited: request.hasQueryFlag("edited"), isRemoved: request.hasQueryFlag("removed"), breadcrumb: breadcrumb(formId: formId))))
+    func renderList(formId: String, items: [AdminManageContactFormItemRow], search: String, error: String?, permissions: Set<String>) -> HTMLResponse {
+        renderEngine.renderAdminPage(request: request, title: "Contact form fields - Feather CMS", description: "Manage contact form fields", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ContactFormItemsTable(state: .init(formId: formId, items: items, search: search, error: error, isEdited: request.hasQueryFlag("edited"), isRemoved: request.hasQueryFlag("removed"), canRemove: permissions.contains("contact:form-items:delete"), breadcrumb: breadcrumb(formId: formId))))
+    }
+
+    func renderBulkRemoveConfirmation(formId: String, selectedIds: [String], permissions: Set<String>) -> HTMLResponse {
+        let basePath = formId == "__global_contact_fields__" ? "/admin/contact/fields" : "/admin/contact/forms/\(formId)/items"
+        return renderEngine.renderAdminPage(request: request, title: "Remove contact form fields - Feather CMS", description: "Remove contact form fields", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ListBulkRemoveConfirmation(state: .init(breadcrumb: breadcrumb(formId: formId, label: "Remove"), title: "Remove contact form fields", message: "Are you sure you want to remove the selected contact form fields? This action cannot be undone.", action: "\(basePath)/bulk-remove/", cancelLink: "\(basePath)/", selectedIds: selectedIds)))
     }
 
     func renderEdit(formId: String, item: AdminManageContactFormItemRow, error: String?, permissions: Set<String>) -> HTMLResponse {

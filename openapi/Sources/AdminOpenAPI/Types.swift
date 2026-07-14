@@ -498,6 +498,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PATCH /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
     func contactFormSubmissionUpdate(_ input: Operations.ContactFormSubmissionUpdate.Input) async throws -> Operations.ContactFormSubmissionUpdate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
+    func contactFormSubmissionDelete(_ input: Operations.ContactFormSubmissionDelete.Input) async throws -> Operations.ContactFormSubmissionDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/newsletters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)`.
     func contactNewsletterList(_ input: Operations.ContactNewsletterList.Input) async throws -> Operations.ContactNewsletterList.Output
@@ -2142,6 +2145,11 @@ extension APIProtocol {
             headers: headers,
             body: body
         ))
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
+    public func contactFormSubmissionDelete(path: Operations.ContactFormSubmissionDelete.Input.Path) async throws -> Operations.ContactFormSubmissionDelete.Output {
+        try await contactFormSubmissionDelete(Operations.ContactFormSubmissionDelete.Input(path: path))
     }
     /// - Remark: HTTP `GET /api/v1/admin/newsletters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)`.
@@ -9435,8 +9443,16 @@ public enum Components {
             public var id: Swift.String
             /// - Remark: Generated from `#/components/schemas/ContactFormSchema/name`.
             public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/successMessage`.
+            public var successMessage: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/failureMessage`.
+            public var failureMessage: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/redirectUrl`.
+            public var redirectUrl: Components.Schemas.ContactContentField?
             /// - Remark: Generated from `#/components/schemas/ContactFormSchema/items`.
-            public var items: Components.Schemas.ContactFormItemSchema?
+            public var items: Components.Schemas.ContactFormItemsSchema?
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/mails`.
+            public var mails: Components.Schemas.ContactFormMailsSchema?
             /// - Remark: Generated from `#/components/schemas/ContactFormSchema/createdAt`.
             public var createdAt: Swift.Double
             /// - Remark: Generated from `#/components/schemas/ContactFormSchema/updatedAt`.
@@ -9446,30 +9462,50 @@ public enum Components {
             /// - Parameters:
             ///   - id:
             ///   - name:
+            ///   - successMessage:
+            ///   - failureMessage:
+            ///   - redirectUrl:
             ///   - items:
+            ///   - mails:
             ///   - createdAt:
             ///   - updatedAt:
             public init(
                 id: Swift.String,
                 name: Swift.String,
-                items: Components.Schemas.ContactFormItemSchema? = nil,
+                successMessage: Swift.String,
+                failureMessage: Swift.String,
+                redirectUrl: Components.Schemas.ContactContentField? = nil,
+                items: Components.Schemas.ContactFormItemsSchema? = nil,
+                mails: Components.Schemas.ContactFormMailsSchema? = nil,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
                 self.id = id
                 self.name = name
+                self.successMessage = successMessage
+                self.failureMessage = failureMessage
+                self.redirectUrl = redirectUrl
                 self.items = items
+                self.mails = mails
                 self.createdAt = createdAt
                 self.updatedAt = updatedAt
             }
             public enum CodingKeys: String, CodingKey {
                 case id
                 case name
+                case successMessage
+                case failureMessage
+                case redirectUrl
                 case items
+                case mails
                 case createdAt
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/ContactContentField`.
+        public typealias ContactContentField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ContactFormItemsSchema`.
+        public typealias ContactFormItemsSchema = [Components.Schemas.ContactFormItemSchema]
         /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema`.
         public struct ContactFormItemSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/ContactFormItemSchema/id`.
@@ -9543,19 +9579,163 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/ContactAllowedValuesSchema`.
         public typealias ContactAllowedValuesSchema = [Swift.String]
+        /// - Remark: Generated from `#/components/schemas/ContactFormMailsSchema`.
+        public typealias ContactFormMailsSchema = [Components.Schemas.ContactFormMailSchema]
+        /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema`.
+        public struct ContactFormMailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema/formId`.
+            public var formId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema/mailFrom`.
+            public var mailFrom: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema/mailTo`.
+            public var mailTo: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema/subject`.
+            public var subject: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema/additionalHeaders`.
+            public var additionalHeaders: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema/messageBody`.
+            public var messageBody: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `ContactFormMailSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - formId:
+            ///   - mailFrom:
+            ///   - mailTo:
+            ///   - subject:
+            ///   - additionalHeaders:
+            ///   - messageBody:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                formId: Swift.String,
+                mailFrom: Swift.String,
+                mailTo: Swift.String,
+                subject: Swift.String,
+                additionalHeaders: Swift.String,
+                messageBody: Swift.String,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.formId = formId
+                self.mailFrom = mailFrom
+                self.mailTo = mailTo
+                self.subject = subject
+                self.additionalHeaders = additionalHeaders
+                self.messageBody = messageBody
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case formId
+                case mailFrom
+                case mailTo
+                case subject
+                case additionalHeaders
+                case messageBody
+                case createdAt
+                case updatedAt
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema`.
         public struct ContactFormCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/name`.
             public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/successMessage`.
+            public var successMessage: Components.Schemas.ContactContentField?
+            /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/failureMessage`.
+            public var failureMessage: Components.Schemas.ContactContentField?
+            /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/redirectUrl`.
+            public var redirectUrl: Components.Schemas.ContactContentField?
+            /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/fieldIds`.
+            public var fieldIds: Components.Schemas.ContactFieldIDsSchema?
+            /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/mails`.
+            public var mails: Components.Schemas.ContactFormMailInputsSchema?
             /// Creates a new `ContactFormCreateSchema`.
             ///
             /// - Parameters:
             ///   - name:
-            public init(name: Swift.String) {
+            ///   - successMessage:
+            ///   - failureMessage:
+            ///   - redirectUrl:
+            ///   - fieldIds:
+            ///   - mails:
+            public init(
+                name: Swift.String,
+                successMessage: Components.Schemas.ContactContentField? = nil,
+                failureMessage: Components.Schemas.ContactContentField? = nil,
+                redirectUrl: Components.Schemas.ContactContentField? = nil,
+                fieldIds: Components.Schemas.ContactFieldIDsSchema? = nil,
+                mails: Components.Schemas.ContactFormMailInputsSchema? = nil
+            ) {
                 self.name = name
+                self.successMessage = successMessage
+                self.failureMessage = failureMessage
+                self.redirectUrl = redirectUrl
+                self.fieldIds = fieldIds
+                self.mails = mails
             }
             public enum CodingKeys: String, CodingKey {
                 case name
+                case successMessage
+                case failureMessage
+                case redirectUrl
+                case fieldIds
+                case mails
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactFieldIDsSchema`.
+        public typealias ContactFieldIDsSchema = [Swift.String]
+        /// - Remark: Generated from `#/components/schemas/ContactFormMailInputsSchema`.
+        public typealias ContactFormMailInputsSchema = [Components.Schemas.ContactFormMailInputSchema]
+        /// - Remark: Generated from `#/components/schemas/ContactFormMailInputSchema`.
+        public struct ContactFormMailInputSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailInputSchema/mailFrom`.
+            public var mailFrom: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailInputSchema/mailTo`.
+            public var mailTo: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailInputSchema/subject`.
+            public var subject: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailInputSchema/additionalHeaders`.
+            public var additionalHeaders: Components.Schemas.ContactContentField?
+            /// - Remark: Generated from `#/components/schemas/ContactFormMailInputSchema/messageBody`.
+            public var messageBody: Swift.String
+            /// Creates a new `ContactFormMailInputSchema`.
+            ///
+            /// - Parameters:
+            ///   - mailFrom:
+            ///   - mailTo:
+            ///   - subject:
+            ///   - additionalHeaders:
+            ///   - messageBody:
+            public init(
+                mailFrom: Swift.String,
+                mailTo: Swift.String,
+                subject: Swift.String,
+                additionalHeaders: Components.Schemas.ContactContentField? = nil,
+                messageBody: Swift.String
+            ) {
+                self.mailFrom = mailFrom
+                self.mailTo = mailTo
+                self.subject = subject
+                self.additionalHeaders = additionalHeaders
+                self.messageBody = messageBody
+            }
+            public enum CodingKeys: String, CodingKey {
+                case mailFrom
+                case mailTo
+                case subject
+                case additionalHeaders
+                case messageBody
             }
         }
         /// - Remark: Generated from `#/components/schemas/ContactIdField`.
@@ -9736,8 +9916,6 @@ public enum Components {
             public var metadata: Components.Schemas.ContactFormSubmissionSchema.MetadataPayload
             /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/status`.
             public var status: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/submittedAt`.
-            public var submittedAt: Swift.Double
             /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/createdAt`.
             public var createdAt: Swift.Double
             /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/updatedAt`.
@@ -9751,7 +9929,6 @@ public enum Components {
             ///   - itemsSnapshot:
             ///   - metadata:
             ///   - status:
-            ///   - submittedAt:
             ///   - createdAt:
             ///   - updatedAt:
             public init(
@@ -9761,7 +9938,6 @@ public enum Components {
                 itemsSnapshot: Components.Schemas.ContactFormSubmissionSchema.ItemsSnapshotPayload,
                 metadata: Components.Schemas.ContactFormSubmissionSchema.MetadataPayload,
                 status: Swift.String,
-                submittedAt: Swift.Double,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
@@ -9771,7 +9947,6 @@ public enum Components {
                 self.itemsSnapshot = itemsSnapshot
                 self.metadata = metadata
                 self.status = status
-                self.submittedAt = submittedAt
                 self.createdAt = createdAt
                 self.updatedAt = updatedAt
             }
@@ -9782,7 +9957,6 @@ public enum Components {
                 case itemsSnapshot
                 case metadata
                 case status
-                case submittedAt
                 case createdAt
                 case updatedAt
             }
@@ -41268,6 +41442,186 @@ public enum Operations {
                     .json
                 ]
             }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
+    public enum ContactFormSubmissionDelete {
+        public static let id: Swift.String = "contactFormSubmissionDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/DELETE/path/contactFormId`.
+                public var contactFormId: Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/DELETE/path/contactFormSubmissionId`.
+                public var contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - contactFormId:
+                ///   - contactFormSubmissionId:
+                public init(
+                    contactFormId: Components.Parameters.ContactFormIdParameter,
+                    contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                ) {
+                    self.contactFormId = contactFormId
+                    self.contactFormSubmissionId = contactFormSubmissionId
+                }
+            }
+            public var path: Operations.ContactFormSubmissionDelete.Input.Path
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            public init(path: Operations.ContactFormSubmissionDelete.Input.Path) {
+                self.path = path
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct NoContent: Sendable, Hashable {
+                /// Creates a new `NoContent`.
+                public init() {}
+            }
+            /// Contact form submission deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            case noContent(Operations.ContactFormSubmissionDelete.Output.NoContent)
+            /// Contact form submission deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Operations.ContactFormSubmissionDelete.Output.NoContent {
+                get throws {
+                    switch self {
+                    case let .noContent(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "noContent",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Contact form submission not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.ContactFormSubmissionDelete.Output.NotFound)
+            /// Contact form submission not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.ContactFormSubmissionDelete.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactFormSubmissionDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactFormSubmissionDelete.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactFormSubmissionDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactFormSubmissionDelete.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
         }
     }
     /// - Remark: HTTP `GET /api/v1/admin/newsletters`.

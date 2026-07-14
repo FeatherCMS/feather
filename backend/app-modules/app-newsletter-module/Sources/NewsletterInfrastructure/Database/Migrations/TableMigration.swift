@@ -11,10 +11,9 @@ public struct TableMigration: DatabaseMigration {
     public func apply(on connection: any DatabaseConnection) async throws {
         let queries: [DatabaseQuery] = [
             #"""
-            CREATE TABLE IF NOT EXISTS contact_subscribers (
+            CREATE TABLE IF NOT EXISTS newsletter_subscriber_global (
                 id TEXT PRIMARY KEY,
                 email TEXT NOT NULL,
-                normalized_email TEXT NOT NULL UNIQUE,
                 first_name TEXT NOT NULL DEFAULT '',
                 last_name TEXT NOT NULL DEFAULT '',
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
@@ -22,7 +21,7 @@ public struct TableMigration: DatabaseMigration {
             );
             """#,
             #"""
-            CREATE TABLE IF NOT EXISTS newsletter_campaigns (
+            CREATE TABLE IF NOT EXISTS newsletter_campaign (
                 id TEXT PRIMARY KEY,
                 name TEXT NOT NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
@@ -30,7 +29,7 @@ public struct TableMigration: DatabaseMigration {
             );
             """#,
             #"""
-            CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+            CREATE TABLE IF NOT EXISTS newsletter_subscriber (
                 newsletter_id TEXT NOT NULL,
                 email TEXT NOT NULL,
                 status TEXT NOT NULL DEFAULT 'subscribed' CHECK (status IN ('subscribed', 'unsubscribed')),
@@ -45,11 +44,11 @@ public struct TableMigration: DatabaseMigration {
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 PRIMARY KEY (newsletter_id, email),
-                FOREIGN KEY(newsletter_id) REFERENCES newsletter_campaigns(id) ON DELETE CASCADE
+                FOREIGN KEY(newsletter_id) REFERENCES newsletter_campaign(id) ON DELETE CASCADE
             );
             """#,
             #"""
-            CREATE TABLE IF NOT EXISTS newsletter_issues (
+            CREATE TABLE IF NOT EXISTS newsletter_issue (
                 id TEXT PRIMARY KEY,
                 newsletter_id TEXT NOT NULL,
                 subject TEXT NOT NULL,
@@ -61,11 +60,11 @@ public struct TableMigration: DatabaseMigration {
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 UNIQUE (id, newsletter_id),
-                FOREIGN KEY(newsletter_id) REFERENCES newsletter_campaigns(id) ON DELETE CASCADE
+                FOREIGN KEY(newsletter_id) REFERENCES newsletter_campaign(id) ON DELETE CASCADE
             );
             """#,
             #"""
-            CREATE TABLE IF NOT EXISTS newsletter_deliveries (
+            CREATE TABLE IF NOT EXISTS newsletter_delivery (
                 issue_id TEXT NOT NULL,
                 newsletter_id TEXT NOT NULL,
                 subscriber_email TEXT NOT NULL,
@@ -75,12 +74,11 @@ public struct TableMigration: DatabaseMigration {
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 PRIMARY KEY (issue_id, subscriber_email),
-                FOREIGN KEY(issue_id, newsletter_id) REFERENCES newsletter_issues(id, newsletter_id) ON DELETE CASCADE,
-                FOREIGN KEY(newsletter_id, subscriber_email) REFERENCES newsletter_subscribers(newsletter_id, email) ON DELETE CASCADE
+                FOREIGN KEY(issue_id, newsletter_id) REFERENCES newsletter_issue(id, newsletter_id)
             );
             """#,
             #"""
-            CREATE TABLE IF NOT EXISTS newsletter_subscriptions (
+            CREATE TABLE IF NOT EXISTS newsletter_subscription (
                 subscriber_id TEXT NOT NULL,
                 newsletter_id TEXT NOT NULL,
                 status TEXT NOT NULL DEFAULT 'subscribed'
@@ -94,15 +92,15 @@ public struct TableMigration: DatabaseMigration {
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 PRIMARY KEY (subscriber_id, newsletter_id),
-                FOREIGN KEY(subscriber_id) REFERENCES contact_subscribers(id) ON DELETE CASCADE,
-                FOREIGN KEY(newsletter_id) REFERENCES newsletter_campaigns(id) ON DELETE CASCADE
+                FOREIGN KEY(subscriber_id) REFERENCES newsletter_subscriber_global(id) ON DELETE CASCADE,
+                FOREIGN KEY(newsletter_id) REFERENCES newsletter_campaign(id) ON DELETE CASCADE
             );
             """#,
-            #"CREATE INDEX IF NOT EXISTS contact_subscribers_email_idx ON contact_subscribers (normalized_email);"#,
-            #"CREATE INDEX IF NOT EXISTS newsletter_subscribers_email_idx ON newsletter_subscribers (email);"#,
-            #"CREATE INDEX IF NOT EXISTS newsletter_issues_newsletter_id_idx ON newsletter_issues (newsletter_id);"#,
-            #"CREATE INDEX IF NOT EXISTS newsletter_deliveries_status_idx ON newsletter_deliveries (status);"#,
-            #"CREATE INDEX IF NOT EXISTS newsletter_subscriptions_newsletter_idx ON newsletter_subscriptions (newsletter_id, status);"#
+            #"CREATE UNIQUE INDEX IF NOT EXISTS newsletter_subscriber_global_email_idx ON newsletter_subscriber_global (lower(trim(email)));"#,
+            #"CREATE INDEX IF NOT EXISTS newsletter_subscriber_email_idx ON newsletter_subscriber (email);"#,
+            #"CREATE INDEX IF NOT EXISTS newsletter_issue_newsletter_id_idx ON newsletter_issue (newsletter_id);"#,
+            #"CREATE INDEX IF NOT EXISTS newsletter_delivery_status_idx ON newsletter_delivery (status);"#,
+            #"CREATE INDEX IF NOT EXISTS newsletter_subscription_newsletter_idx ON newsletter_subscription (newsletter_id, status);"#
         ]
         for query in queries {
             try await connection.run(query: query) { _ in }

@@ -37,6 +37,7 @@ extension ContactModule {
                 WriteContactForm(
                     form: DatabaseContactFormRepository(connection: connection),
                     item: DatabaseContactFormItemRepository(connection: connection),
+                    mail: DatabaseContactFormMailRepository(connection: connection),
                     submission: DatabaseContactFormSubmissionRepository(connection: connection)
                 )
             }
@@ -54,7 +55,7 @@ extension ContactModule {
     func makeCreateContactForm() -> CreateContactForm { .init(transaction: contactFormTransaction(), idGenerator: infrastructure.idGenerator) }
     func makeListContactForms() -> ListContactForms { .init(transaction: contactFormTransaction()) }
     func makeGetContactForm() -> GetContactForm { .init(transaction: contactFormTransaction()) }
-    func makeUpdateContactForm() -> UpdateContactForm { .init(transaction: contactFormTransaction()) }
+    func makeUpdateContactForm() -> UpdateContactForm { .init(transaction: contactFormTransaction(), idGenerator: infrastructure.idGenerator) }
     func makeDeleteContactForm() -> DeleteContactForm { .init(transaction: contactFormTransaction()) }
 
     func makeSubmitContactForm() -> SubmitContactForm {
@@ -64,5 +65,6 @@ extension ContactModule {
     func makeListContactFormSubmissions() -> ListContactFormSubmissions { .init(transaction: contactFormTransaction()) }
     func makeGetContactFormSubmission() -> GetContactFormSubmission { .init(transaction: contactFormTransaction()) }
     func makeUpdateContactFormSubmission() -> UpdateContactFormSubmission { .init(transaction: contactFormTransaction()) }
+    func makeDeleteContactFormSubmission() -> DeleteContactFormSubmission { .init(transaction: contactFormTransaction()) }
 
 }

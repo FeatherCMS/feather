@@ -55,7 +55,15 @@ public struct CreateContactFormItem: UseCase {
                 isRequired: input.isRequired,
                 position: input.position
             )
-            return (try await context.item.insert(model)).asDetail
+            let item = try await context.item.insert(model)
+            if input.formId != ContactFormItem.globalFormId {
+                try await context.item.assign(
+                    formId: input.formId,
+                    itemId: item.id,
+                    position: input.position
+                )
+            }
+            return item.asDetail
         }
     }
 }

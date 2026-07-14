@@ -6,7 +6,7 @@ import class Foundation.JSONEncoder
 import struct Foundation.Data
 import struct Foundation.Date
 
-extension ContactFormItemTable.Row {
+extension ContactFormFieldTable.Row {
 
     init(from row: DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
@@ -25,7 +25,7 @@ extension ContactFormItemTable.Row {
     }
 }
 
-struct ContactFormItemTable {
+struct ContactFormFieldTable {
 
     struct Row {
 
@@ -59,16 +59,16 @@ struct ContactFormItemTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO contact_form_items (
-                    id, form_id, key, type, label, allowed_values,
-                    is_required, position, created_at, updated_at
+                INSERT INTO contact_form_field (
+                    id, key, type, label, allowed_values,
+                    is_required, created_at, updated_at
                 )
                 VALUES (
-                    \#(row.id), \#(row.formId), \#(row.key), \#(row.type),
+                    \#(row.id), \#(row.key), \#(row.type),
                     \#(row.label), \#(row.allowedValuesJSON)::jsonb,
-                    \#(row.isRequired), \#(row.position), NOW(), NOW()
+                    \#(row.isRequired), NOW(), NOW()
                 )
-                RETURNING *;
+                RETURNING *, '__global_contact_fields__' AS form_id, 0 AS position;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -83,7 +83,8 @@ struct ContactFormItemTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT * FROM contact_form_items
+                SELECT *, '__global_contact_fields__' AS form_id, 0 AS position
+                FROM contact_form_field
                 WHERE id = \#(id)
                 LIMIT 1;
                 """#
@@ -97,9 +98,13 @@ struct ContactFormItemTable {
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT * FROM contact_form_items
-                WHERE form_id = \#(formId)
-                ORDER BY position, id;
+                SELECT i.*, \#(formId) AS form_id, COALESCE(a.position, 0) AS position
+                FROM contact_form_field i
+                LEFT JOIN contact_form_form_field a
+                    ON a.field_id = i.id AND a.form_id = \#(formId)
+                WHERE (\#(formId) = '__global_contact_fields__')
+                   OR (\#(formId) <> '__global_contact_fields__' AND a.field_id IS NOT NULL)
+                ORDER BY COALESCE(a.position, 0), i.id;
                 """#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
@@ -112,16 +117,15 @@ struct ContactFormItemTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                UPDATE contact_form_items
+                UPDATE contact_form_field
                 SET key = \#(row.key),
                     type = \#(row.type),
                     label = \#(row.label),
                     allowed_values = \#(row.allowedValuesJSON)::jsonb,
                     is_required = \#(row.isRequired),
-                    position = \#(row.position),
                     updated_at = NOW()
                 WHERE id = \#(id)
-                RETURNING *;
+                RETURNING *, '__global_contact_fields__' AS form_id, 0 AS position;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -136,7 +140,7 @@ struct ContactFormItemTable {
     ) async throws -> Bool {
         try await connection.run(
             query: #"""
-                DELETE FROM contact_form_items
+                DELETE FROM contact_form_field
                 WHERE id = \#(id)
                 RETURNING id;
                 """#
@@ -146,7 +150,7 @@ struct ContactFormItemTable {
     }
 }
 
-extension ContactFormItemTable.Row {
+extension ContactFormFieldTable.Row {
     func allowedValues() throws -> [ContactFormItem.Option] {
         try JSONDecoder().decode(
             [ContactFormItem.Option].self,

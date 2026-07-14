@@ -18,10 +18,29 @@ struct AdminContactSubmissionsDirectoryOpenAPIRepository {
                     throw OpenAPIRepositoryError.forbidden(message: "Your account cannot view contact form submissions.")
                 }
                 result.append(contentsOf: try submissionsValue.body.json.map {
-                    .init(id: $0.id, formId: form.id, formName: form.name, status: $0.status, submittedAt: String($0.submittedAt))
+                    .init(id: $0.id, formId: form.id, formName: form.name, status: $0.status, createdAt: String($0.createdAt))
                 })
             }
-            return result.sorted { $0.submittedAt > $1.submittedAt }
+            return result.sorted { $0.createdAt > $1.createdAt }
+        }
+    }
+
+    func bulkRemove(ids: [String]) async throws {
+        let items = try await list()
+        for token in ids {
+            let parts = token.split(separator: ":", maxSplits: 1).map(String.init)
+            guard parts.count == 2 else { continue }
+            guard items.contains(where: { $0.formId == parts[0] && $0.id == parts[1] }) else { continue }
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.contactFormSubmissionDelete(path: .init(contactFormId: parts[0], contactFormSubmissionId: parts[1]))
+                switch response {
+                case .noContent: return
+                case .notFound: throw OpenAPIRepositoryError.notFound(message: "This submission could not be found.")
+                case .unauthorized: throw OpenAPIRepositoryError.unauthorized(message: "Please sign in again to delete submissions.")
+                case .forbidden: throw OpenAPIRepositoryError.forbidden(message: "Your account cannot delete submissions.")
+                case .undocumented(let statusCode, let response): throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                }
+            }
         }
     }
 }

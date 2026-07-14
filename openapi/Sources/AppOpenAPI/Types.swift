@@ -1595,6 +1595,12 @@ public enum Components {
             public var id: Swift.String
             /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/name`.
             public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/successMessage`.
+            public var successMessage: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/failureMessage`.
+            public var failureMessage: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/redirectUrl`.
+            public var redirectUrl: Components.Schemas.AppContactContentField?
             /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/items`.
             public var items: [Components.Schemas.AppContactFormItemSchema]
             /// Creates a new `AppContactFormSchema`.
@@ -1602,22 +1608,36 @@ public enum Components {
             /// - Parameters:
             ///   - id:
             ///   - name:
+            ///   - successMessage:
+            ///   - failureMessage:
+            ///   - redirectUrl:
             ///   - items:
             public init(
                 id: Swift.String,
                 name: Swift.String,
+                successMessage: Swift.String,
+                failureMessage: Swift.String,
+                redirectUrl: Components.Schemas.AppContactContentField? = nil,
                 items: [Components.Schemas.AppContactFormItemSchema]
             ) {
                 self.id = id
                 self.name = name
+                self.successMessage = successMessage
+                self.failureMessage = failureMessage
+                self.redirectUrl = redirectUrl
                 self.items = items
             }
             public enum CodingKeys: String, CodingKey {
                 case id
                 case name
+                case successMessage
+                case failureMessage
+                case redirectUrl
                 case items
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AppContactContentField`.
+        public typealias AppContactContentField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema`.
         public struct AppContactFormItemSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AppContactFormItemSchema/id`.

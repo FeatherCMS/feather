@@ -48,7 +48,6 @@ public struct SubmitContactForm: UseCase {
     public func execute(
         _ input: Input
     ) async throws -> ContactFormSubmissionDetail {
-        let now = Date(timeIntervalSince1970: clock.now())
         return try await transaction.run { context in
             let items = try await context.item.listBy(formId: input.formId)
             try validate(
@@ -62,7 +61,6 @@ public struct SubmitContactForm: UseCase {
                 valuesJSON: input.valuesJSON,
                 itemsSnapshotJSON: input.itemsSnapshotJSON,
                 metadataJSON: input.metadataJSON,
-                submittedAt: now
             )
             return (try await context.submission.insert(model)).asDetail
         }

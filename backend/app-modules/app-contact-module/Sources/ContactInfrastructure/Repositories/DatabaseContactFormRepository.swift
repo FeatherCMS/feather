@@ -8,6 +8,9 @@ extension ContactFormTable.Row {
         .init(
             id: id,
             name: name,
+            successMessage: successMessage,
+            failureMessage: failureMessage,
+            redirectUrl: redirectUrl,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -33,7 +36,10 @@ public struct DatabaseContactFormRepository: ContactFormRepository {
         let saved = try await table.create(
             row: .init(
                 id: model.id,
-                name: model.name
+                name: model.name,
+                successMessage: model.successMessage,
+                failureMessage: model.failureMessage,
+                redirectUrl: model.redirectUrl
             )
         )
         return saved.asDomain
@@ -55,6 +61,9 @@ public struct DatabaseContactFormRepository: ContactFormRepository {
             row: .init(
                 id: model.id,
                 name: model.name,
+                successMessage: model.successMessage,
+                failureMessage: model.failureMessage,
+                redirectUrl: model.redirectUrl,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

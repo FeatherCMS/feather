@@ -7,5 +7,7 @@ extension AdminAddContactFormItemController {
     func route(on router: Router<AppRequestContext>) {
         router.get("/admin/contact/forms/:formId/items/add/", use: getAddContactFormItem)
         router.post("/admin/contact/forms/:formId/items/add/", use: postAddContactFormItem)
+        router.get("/admin/contact/fields/add/", use: getAddContactFormItem)
+        router.post("/admin/contact/fields/add/", use: postAddContactFormItem)
     }
 }

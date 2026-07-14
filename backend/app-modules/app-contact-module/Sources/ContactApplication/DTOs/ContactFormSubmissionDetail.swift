@@ -9,7 +9,6 @@ public struct ContactFormSubmissionDetail: DTO {
     public let itemsSnapshotJSON: String
     public let metadataJSON: String?
     public let status: ContactFormSubmission.Status
-    public let submittedAt: Date
     public let createdAt: Date
     public let updatedAt: Date
 
@@ -20,7 +19,6 @@ public struct ContactFormSubmissionDetail: DTO {
         itemsSnapshotJSON: String,
         metadataJSON: String?,
         status: ContactFormSubmission.Status,
-        submittedAt: Date,
         createdAt: Date,
         updatedAt: Date
     ) {
@@ -30,7 +28,6 @@ public struct ContactFormSubmissionDetail: DTO {
         self.itemsSnapshotJSON = itemsSnapshotJSON
         self.metadataJSON = metadataJSON
         self.status = status
-        self.submittedAt = submittedAt
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }

@@ -3,6 +3,8 @@ import struct Foundation.Date
 
 public struct ContactFormItem: Model {
 
+    public static let globalFormId = "__global_contact_fields__"
+
     public enum ItemType: String, Sendable, CaseIterable, Codable {
         case text
         case textarea

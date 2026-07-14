@@ -30,7 +30,7 @@ struct AdminManageContactFormItemsOpenAPIRepository {
 
     func update(formId: String, id: String, form: ContactFormItemAddForm) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.contactFormItemUpdate(path: .init(contactFormId: formId, contactFormItemId: id), body: .json(.init(key: form.key, _type: form.type, label: form.label, allowedValues: form.normalizedAllowedValues, isRequired: form.isRequiredValue, position: form.normalizedPosition)))
+            let response = try await client.contactFormItemUpdate(path: .init(contactFormId: formId, contactFormItemId: id), body: .json(.init(key: form.key, _type: form.type, label: form.label, allowedValues: form.normalizedAllowedValues, isRequired: form.isRequiredValue)))
             switch response {
             case .ok: return
             case .notFound: throw OpenAPIRepositoryError.notFound(message: "This form field could not be found.")

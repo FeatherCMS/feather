@@ -25,7 +25,8 @@ public struct PermissionSeedMigration: DatabaseMigration {
                 ('contact:form-items:delete', 'contact:form-items:delete', 'Delete a contact form field.', NOW(), NOW()),
                 ('contact:form-submissions:read', 'contact:form-submissions:read', 'View a contact form submission.', NOW(), NOW()),
                 ('contact:form-submissions:update', 'contact:form-submissions:update', 'Update a contact form submission.', NOW(), NOW()),
-                ('contact:form-submissions:list', 'contact:form-submissions:list', 'List contact form submissions.', NOW(), NOW())
+                ('contact:form-submissions:list', 'contact:form-submissions:list', 'List contact form submissions.', NOW(), NOW()),
+                ('contact:form-submissions:delete', 'contact:form-submissions:delete', 'Delete a contact form submission.', NOW(), NOW())
             ON CONFLICT (id) DO NOTHING;
             """#,
             #"""

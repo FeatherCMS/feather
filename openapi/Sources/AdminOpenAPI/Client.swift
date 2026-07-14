@@ -10622,6 +10622,49 @@ public struct Client: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
+    public func contactFormSubmissionDelete(_ input: Operations.ContactFormSubmissionDelete.Input) async throws -> Operations.ContactFormSubmissionDelete.Output {
+        try await client.send(
+            input: input,
+            forOperation: Operations.ContactFormSubmissionDelete.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/api/v1/admin/contact/forms/{}/submissions/{}",
+                    parameters: [
+                        input.path.contactFormId,
+                        input.path.contactFormSubmissionId
+                    ]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(
+                    soar_path: path,
+                    method: .delete
+                )
+                suppressMutabilityWarning(&request)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 204:
+                    return .noContent(.init())
+                case 404:
+                    return .notFound(.init())
+                case 401:
+                    return .unauthorized(.init())
+                case 403:
+                    return .forbidden(.init())
+                default:
+                    return .undocumented(
+                        statusCode: response.status.code,
+                        .init(
+                            headerFields: response.headerFields,
+                            body: responseBody
+                        )
+                    )
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `GET /api/v1/admin/newsletters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)`.
     public func contactNewsletterList(_ input: Operations.ContactNewsletterList.Input) async throws -> Operations.ContactNewsletterList.Output {

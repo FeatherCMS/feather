@@ -35,7 +35,7 @@ struct NewsletterCampaignTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO newsletter_campaigns (
+                INSERT INTO newsletter_campaign (
                     id,
                     name,
                     created_at,
@@ -63,7 +63,7 @@ struct NewsletterCampaignTable {
         try await connection.run(
             query: #"""
                 SELECT *
-                FROM newsletter_campaigns
+                FROM newsletter_campaign
                 WHERE id = \#(id)
                 LIMIT 1;
                 """#
@@ -74,7 +74,7 @@ struct NewsletterCampaignTable {
 
     func list() async throws -> [Row] {
         try await connection.run(
-            query: #"SELECT * FROM newsletter_campaigns ORDER BY name ASC, id ASC;"#
+            query: #"SELECT * FROM newsletter_campaign ORDER BY name ASC, id ASC;"#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
         }
@@ -86,7 +86,7 @@ struct NewsletterCampaignTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                UPDATE newsletter_campaigns
+                UPDATE newsletter_campaign
                 SET name = \#(name), updated_at = NOW()
                 WHERE id = \#(id)
                 RETURNING *;
@@ -104,7 +104,7 @@ struct NewsletterCampaignTable {
     ) async throws -> Bool {
         try await connection.run(
             query: #"""
-                DELETE FROM newsletter_campaigns
+                DELETE FROM newsletter_campaign
                 WHERE id = \#(id)
                 RETURNING id;
                 """#

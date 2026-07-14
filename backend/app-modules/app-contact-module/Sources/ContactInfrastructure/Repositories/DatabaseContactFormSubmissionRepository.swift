@@ -15,7 +15,6 @@ extension ContactFormSubmissionTable.Row {
                 itemsSnapshotJSON: itemsSnapshotJSON,
                 metadataJSON: metadataJSON,
                 status: status,
-                submittedAt: submittedAt,
                 createdAt: createdAt,
                 updatedAt: updatedAt
             )
@@ -50,7 +49,6 @@ public struct DatabaseContactFormSubmissionRepository: ContactFormSubmissionRepo
                 itemsSnapshotJSON: model.itemsSnapshotJSON,
                 metadataJSON: model.metadataJSON,
                 status: model.status.rawValue,
-                submittedAt: model.submittedAt
             )
         )
         return try saved.asDomain
@@ -68,5 +66,11 @@ public struct DatabaseContactFormSubmissionRepository: ContactFormSubmissionRepo
     ) async throws -> ContactFormSubmission {
         let table = ContactFormSubmissionTable(connection: connection)
         return try await table.update(id: model.id, status: model.status.rawValue).asDomain
+    }
+
+    public func delete(
+        id: String
+    ) async throws -> Bool {
+        try await ContactFormSubmissionTable(connection: connection).delete(id: id)
     }
 }

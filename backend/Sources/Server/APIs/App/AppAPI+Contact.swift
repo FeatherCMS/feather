@@ -13,6 +13,9 @@ extension AppAPI {
         return .ok(.init(body: .json(.init(
             id: result.id,
             name: result.name,
+            successMessage: result.successMessage,
+            failureMessage: result.failureMessage,
+            redirectUrl: result.redirectUrl,
             items: result.items.map {
                 .init(id: $0.id, key: $0.key, _type: $0.type.rawValue, label: $0.label, allowedValues: $0.allowedValues.map(\.value), isRequired: $0.isRequired, position: $0.position)
             }

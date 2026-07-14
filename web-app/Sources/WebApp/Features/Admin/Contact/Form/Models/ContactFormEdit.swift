@@ -14,6 +14,7 @@ struct ContactFormEdit: Component {
 
     func content() -> some BasicTag {
         Section {
+            AdminContactFormTabs(formId: state.id, active: .details)
             AdminBreadcrumb(state: state.breadcrumb)
             H1("Edit contact form")
             if state.isEdited { P("Contact form edited successfully.") }

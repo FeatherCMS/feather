@@ -3,4 +3,5 @@ protocol AdminManageContactFormItemsInteractor: Sendable {
     func get(formId: String, id: String) async throws -> AdminManageContactFormItemRow
     func update(formId: String, id: String, form: ContactFormItemAddForm) async throws
     func remove(formId: String, id: String) async throws
+    func bulkRemove(formId: String, ids: [String]) async throws
 }

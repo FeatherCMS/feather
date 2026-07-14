@@ -7,6 +7,9 @@ extension ContactFormTable.Row {
     init(from row: DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.name = try row.decode(column: "name", as: String.self)
+        self.successMessage = try row.decode(column: "success_message", as: String.self)
+        self.failureMessage = try row.decode(column: "failure_message", as: String.self)
+        self.redirectUrl = try row.decode(column: "redirect_url", as: String?.self)
         self.createdAt = try row.decode(column: "created_at", as: Date.self)
         self.updatedAt = try row.decode(column: "updated_at", as: Date.self)
     }
@@ -19,10 +22,16 @@ struct ContactFormTable {
         struct Create {
             let id: String
             let name: String
+            let successMessage: String
+            let failureMessage: String
+            let redirectUrl: String?
         }
 
         let id: String
         let name: String
+        let successMessage: String
+        let failureMessage: String
+        let redirectUrl: String?
         let createdAt: Date
         let updatedAt: Date
     }
@@ -34,15 +43,21 @@ struct ContactFormTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO contact_forms (
+                INSERT INTO contact_form (
                     id,
                     name,
+                    success_message,
+                    failure_message,
+                    redirect_url,
                     created_at,
                     updated_at
                 )
                 VALUES (
                     \#(row.id),
                     \#(row.name),
+                    \#(row.successMessage),
+                    \#(row.failureMessage),
+                    \#(row.redirectUrl),
                     NOW(),
                     NOW()
                 )
@@ -62,7 +77,7 @@ struct ContactFormTable {
         try await connection.run(
             query: #"""
                 SELECT *
-                FROM contact_forms
+                FROM contact_form
                 WHERE id = \#(id)
                 LIMIT 1;
                 """#
@@ -73,7 +88,7 @@ struct ContactFormTable {
 
     func list() async throws -> [Row] {
         try await connection.run(
-            query: #"SELECT * FROM contact_forms ORDER BY name ASC, id ASC;"#
+            query: #"SELECT * FROM contact_form ORDER BY name ASC, id ASC;"#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
         }
@@ -85,9 +100,12 @@ struct ContactFormTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                UPDATE contact_forms
+                UPDATE contact_form
                 SET
                     name = \#(row.name),
+                    success_message = \#(row.successMessage),
+                    failure_message = \#(row.failureMessage),
+                    redirect_url = \#(row.redirectUrl),
                     updated_at = NOW()
                 WHERE id = \#(id)
                 RETURNING *;
@@ -105,7 +123,7 @@ struct ContactFormTable {
     ) async throws -> Bool {
         try await connection.run(
             query: #"""
-                DELETE FROM contact_forms
+                DELETE FROM contact_form
                 WHERE id = \#(id)
                 RETURNING id;
                 """#

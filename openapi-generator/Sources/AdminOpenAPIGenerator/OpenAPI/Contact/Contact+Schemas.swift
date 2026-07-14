@@ -51,6 +51,9 @@ struct ContactJSONField: SchemaRepresentable {
 struct ContactAllowedValuesSchema: ArraySchemaRepresentable {
     var items: SchemaRepresentable? { ContactAllowedValueField() }
 }
+struct ContactFieldIDsSchema: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? { ContactIdField() }
+}
 
 struct ContactFormItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
@@ -68,13 +71,39 @@ struct ContactFormItemSchema: ObjectSchemaRepresentable {
         ]
     }
 }
+struct ContactFormItemsSchema: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? { ContactFormItemSchema().reference() }
+}
+
+struct ContactFormMailSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "id": ContactIdField(),
+            "formId": ContactIdField(),
+            "mailFrom": ContactEmailField(),
+            "mailTo": ContactEmailField(),
+            "subject": ContactSubjectField(),
+            "additionalHeaders": ContactContentField(),
+            "messageBody": ContactContentField(),
+            "createdAt": ContactTimestampField(),
+            "updatedAt": ContactTimestampField(),
+        ]
+    }
+}
+struct ContactFormMailsSchema: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? { ContactFormMailSchema().reference() }
+}
 
 struct ContactFormSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": ContactIdField(),
             "name": ContactNameField(),
-            "items": ContactFormItemSchema().reference(required: false),
+            "successMessage": ContactContentField(),
+            "failureMessage": ContactContentField(),
+            "redirectUrl": ContactContentField().reference(required: false),
+            "items": ContactFormItemsSchema().reference(required: false),
+            "mails": ContactFormMailsSchema().reference(required: false),
             "createdAt": ContactTimestampField(),
             "updatedAt": ContactTimestampField(),
         ]
@@ -90,7 +119,6 @@ struct ContactFormSubmissionSchema: ObjectSchemaRepresentable {
             "itemsSnapshot": ContactJSONField(),
             "metadata": ContactJSONField(),
             "status": ContactStatusField(),
-            "submittedAt": ContactTimestampField(),
             "createdAt": ContactTimestampField(),
             "updatedAt": ContactTimestampField(),
         ]
@@ -149,7 +177,21 @@ struct ContactNewsletterIssueListSchema: ArraySchemaRepresentable { var items: S
 struct ContactNewsletterSubscriberListSchema: ArraySchemaRepresentable { var items: SchemaRepresentable? { ContactNewsletterSubscriberSchema().reference() } }
 
 struct ContactFormCreateSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap { ["name": ContactNameField()] }
+    var propertyMap: SchemaMap { ["name": ContactNameField(), "successMessage": ContactContentField().reference(required: false), "failureMessage": ContactContentField().reference(required: false), "redirectUrl": ContactContentField().reference(required: false), "fieldIds": ContactFieldIDsSchema().reference(required: false), "mails": ContactFormMailInputsSchema().reference(required: false)] }
+}
+struct ContactFormMailInputSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "mailFrom": ContactEmailField(),
+            "mailTo": ContactEmailField(),
+            "subject": ContactSubjectField(),
+            "additionalHeaders": ContactContentField().reference(required: false),
+            "messageBody": ContactContentField(),
+        ]
+    }
+}
+struct ContactFormMailInputsSchema: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? { ContactFormMailInputSchema().reference() }
 }
 struct ContactFormItemCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {

@@ -75,7 +75,7 @@ struct NewsletterCampaignSubscriberTable {
         try await connection.run(
             query: #"""
                 SELECT *
-                FROM newsletter_subscribers
+                FROM newsletter_subscriber
                 WHERE newsletter_id = \#(newsletterId)
                 ORDER BY email ASC;
                 """#
@@ -89,7 +89,7 @@ struct NewsletterCampaignSubscriberTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO newsletter_subscribers (
+                INSERT INTO newsletter_subscriber (
                     newsletter_id,
                     email,
                     status,
@@ -139,7 +139,7 @@ struct NewsletterCampaignSubscriberTable {
         try await connection.run(
             query: #"""
                 SELECT *
-                FROM newsletter_subscribers
+                FROM newsletter_subscriber
                 WHERE newsletter_id = \#(newsletterId)
                   AND email = \#(email)
                 LIMIT 1;
@@ -156,7 +156,7 @@ struct NewsletterCampaignSubscriberTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                UPDATE newsletter_subscribers
+                UPDATE newsletter_subscriber
                 SET
                     status = \#(row.status),
                     subscription_date = TO_TIMESTAMP(\#(row.subscriptionDate.timeIntervalSince1970)),
@@ -189,7 +189,7 @@ struct NewsletterCampaignSubscriberTable {
     ) async throws -> Bool {
         try await connection.run(
             query: #"""
-                DELETE FROM newsletter_subscribers
+                DELETE FROM newsletter_subscriber
                 WHERE newsletter_id = \#(newsletterId)
                   AND email = \#(email)
                 RETURNING newsletter_id;

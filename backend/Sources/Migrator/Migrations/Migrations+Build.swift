@@ -26,8 +26,6 @@ public func buildMigrations(
         AuthInfrastructure.TableMigration(connection: connection),
         MediaInfrastructure.TableMigration(connection: connection),
         ContactInfrastructure.TableMigration(connection: connection),
-        ContactInfrastructure.ContactFormTablesMigration(connection: connection),
-        ContactInfrastructure.ContactFormItemPositionConstraintMigration(connection: connection),
         NewsletterInfrastructure.TableMigration(connection: connection),
         // Seed data
         SystemInfrastructure.TableSeedMigration(connection: connection),

@@ -9,6 +9,21 @@ struct ListTableRowActions: Component {
         let href: String
         let className: String?
         let permission: String
+        let copyText: String?
+
+        init(
+            title: String,
+            href: String = "#",
+            className: String? = nil,
+            permission: String,
+            copyText: String? = nil
+        ) {
+            self.title = title
+            self.href = href
+            self.className = className
+            self.permission = permission
+            self.copyText = copyText
+        }
     }
 
     struct State {
@@ -26,12 +41,17 @@ struct ListTableRowActions: Component {
             }
 
             for (index, action) in visibleActions.enumerated() {
-                if let className = action.className {
+                if let copyText = action.copyText {
+                    Button(action.title)
+                        .type(.button)
+                        .class("row-btn", action.className ?? "")
+                        .onClick("navigator.clipboard.writeText('\(copyText)').then(()=>window.toast&&window.toast.show({type:'success',title:'Copied',message:'Contact form embed code copied to the clipboard.',position:'top-right'}))")
+                }
+                else if let className = action.className {
                     A(action.title)
                         .href(action.href)
                         .class("row-btn", className)
-                }
-                else {
+                } else {
                     A(action.title)
                         .href(action.href)
                         .class("row-btn")

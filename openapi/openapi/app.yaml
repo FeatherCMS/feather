@@ -1051,6 +1051,12 @@ components:
           type: string
         name:
           type: string
+        successMessage:
+          type: string
+        failureMessage:
+          type: string
+        redirectUrl:
+          $ref: '#/components/schemas/AppContactContentField'
         items:
           type: array
           items:
@@ -1058,7 +1064,11 @@ components:
       required:
       - id
       - name
+      - successMessage
+      - failureMessage
       - items
+    AppContactContentField:
+      type: string
     AppContactFormItemSchema:
       type: object
       properties:

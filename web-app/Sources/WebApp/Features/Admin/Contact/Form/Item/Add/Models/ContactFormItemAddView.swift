@@ -11,7 +11,6 @@ struct ContactFormItemAddView: Component {
             H1("Add contact form item")
             if let error = state.error { P(error).class("error") }
             Form {
-                Label { AdminFieldLabel(label: "Key", required: true); Input().type(.text).class("text-input").name("key").value(state.key).required() }
                 Label {
                     AdminFieldLabel(label: "Type", required: true)
                     Select {
@@ -22,10 +21,10 @@ struct ContactFormItemAddView: Component {
                         if state.type == "toggle" { Option("Toggle").value("toggle").selected() } else { Option("Toggle").value("toggle") }
                     }.name("type").class("text-input")
                 }
+                Label { AdminFieldLabel(label: "Key", required: true); Input().type(.text).class("text-input").name("key").value(state.key).required() }
                 Label { AdminFieldLabel(label: "Label", required: true); Input().type(.text).class("text-input").name("label").value(state.label).required() }
                 Label { AdminFieldLabel(label: "Allowed values", required: false); Textarea(state.allowedValues).class("text-input").name("allowedValues").placeholder("One value per line") }
                 Label { Input().type(.checkbox).name("isRequired").if(state.isRequired) { $0.checked() }; Span(" Required") }
-                Label { AdminFieldLabel(label: "Position", required: false); Input().type(.number).class("text-input").name("position").value(state.position) }
                 Div { Button("Add").type(.submit) }.class("button-row")
             }.method(.post).action("/admin/contact/forms/\(state.formId)/items/add/").class("cms-form")
         }.class("cms-section")

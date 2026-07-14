@@ -3,5 +3,5 @@ struct AdminContactSubmissionDirectoryItem: Sendable {
     let formId: String
     let formName: String
     let status: String
-    let submittedAt: String
+    let createdAt: String
 }

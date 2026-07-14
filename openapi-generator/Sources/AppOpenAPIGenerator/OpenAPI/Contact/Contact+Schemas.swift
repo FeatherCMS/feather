@@ -6,6 +6,7 @@ struct ContactAllowedValuesSchema: ArraySchemaRepresentable { var items: SchemaR
 struct AppContactIdField: StringSchemaRepresentable {}
 struct AppContactEmailField: StringSchemaRepresentable {}
 struct AppContactNameField: StringSchemaRepresentable {}
+struct AppContactContentField: StringSchemaRepresentable {}
 struct AppContactBooleanField: BoolSchemaRepresentable {}
 struct AppContactPositionField: IntSchemaRepresentable {}
 struct AppContactJSONField: SchemaRepresentable {
@@ -31,7 +32,7 @@ struct AppContactFormItemsSchema: ArraySchemaRepresentable {
 }
 struct AppContactFormSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
-        ["id": AppContactIdField(), "name": AppContactNameField(), "items": AppContactFormItemsSchema()]
+        ["id": AppContactIdField(), "name": AppContactNameField(), "successMessage": AppContactContentField(), "failureMessage": AppContactContentField(), "redirectUrl": AppContactContentField().reference(required: false), "items": AppContactFormItemsSchema()]
     }
 }
 struct AppContactFormSubmissionSchema: ObjectSchemaRepresentable {

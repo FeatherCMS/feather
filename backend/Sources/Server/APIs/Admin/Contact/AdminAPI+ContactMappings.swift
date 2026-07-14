@@ -7,7 +7,7 @@ extension AdminAPI {
     func map(
         _ value: ContactFormDetail
     ) -> Components.Schemas.ContactFormSchema {
-        .init(id: value.id, name: value.name, items: nil, createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
+        .init(id: value.id, name: value.name, successMessage: value.successMessage, failureMessage: value.failureMessage, redirectUrl: value.redirectUrl, items: value.items.map(map), mails: value.mails.map(map), createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
     }
 
     func map(
@@ -17,9 +17,15 @@ extension AdminAPI {
     }
 
     func map(
+        _ value: ContactFormMailDetail
+    ) -> Components.Schemas.ContactFormMailSchema {
+        .init(id: value.id, formId: value.formId, mailFrom: value.mailFrom, mailTo: value.mailTo, subject: value.subject, additionalHeaders: value.additionalHeaders, messageBody: value.messageBody, createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
+    }
+
+    func map(
         _ value: ContactFormSubmissionDetail
     ) -> Components.Schemas.ContactFormSubmissionSchema {
-        .init(id: value.id, formId: value.formId, values: .init(additionalProperties: jsonProperties(value.valuesJSON)), itemsSnapshot: .init(additionalProperties: jsonProperties(value.itemsSnapshotJSON)), metadata: .init(additionalProperties: jsonProperties(value.metadataJSON ?? "{}")), status: value.status.rawValue, submittedAt: timestamp(value.submittedAt), createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
+        .init(id: value.id, formId: value.formId, values: .init(additionalProperties: jsonProperties(value.valuesJSON)), itemsSnapshot: .init(additionalProperties: jsonProperties(value.itemsSnapshotJSON)), metadata: .init(additionalProperties: jsonProperties(value.metadataJSON ?? "{}")), status: value.status.rawValue, createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
     }
 
     private func jsonProperties(_ value: String) -> [String: String] {

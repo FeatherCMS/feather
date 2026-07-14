@@ -11,7 +11,6 @@ struct ContactFormItemAddForm: Decodable {
         case label
         case allowedValues
         case isRequired
-        case position
     }
 
     init(from decoder: any Decoder) throws {
@@ -21,7 +20,6 @@ struct ContactFormItemAddForm: Decodable {
         label = try container.decode(String.self, forKey: .label)
         allowedValues = try container.decode(String.self, forKey: .allowedValues)
         isRequired = try container.decodeIfPresent(CheckboxFormInput.self, forKey: .isRequired) ?? .init(value: false)
-        position = try container.decode(String.self, forKey: .position)
     }
 
     var isRequiredValue: Bool { isRequired.value }

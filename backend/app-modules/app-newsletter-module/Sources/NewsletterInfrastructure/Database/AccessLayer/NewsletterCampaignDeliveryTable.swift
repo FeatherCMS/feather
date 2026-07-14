@@ -47,7 +47,7 @@ struct NewsletterCampaignDeliveryTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO newsletter_deliveries (
+                INSERT INTO newsletter_delivery (
                     issue_id, newsletter_id, subscriber_email, status,
                     sent_date, failure_reason, created_at, updated_at
                 )
@@ -77,7 +77,7 @@ struct NewsletterCampaignDeliveryTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT * FROM newsletter_deliveries
+                SELECT * FROM newsletter_delivery
                 WHERE issue_id = \#(issueId)
                   AND subscriber_email = \#(subscriberEmail)
                 LIMIT 1;
@@ -94,7 +94,7 @@ struct NewsletterCampaignDeliveryTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                UPDATE newsletter_deliveries
+                UPDATE newsletter_delivery
                 SET status = \#(row.status),
                     sent_date = CASE WHEN \#(row.sentDate == nil) THEN NULL ELSE TO_TIMESTAMP(\#(row.sentDate?.timeIntervalSince1970 ?? 0)) END,
                     failure_reason = \#(row.failureReason),

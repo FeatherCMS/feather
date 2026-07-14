@@ -41,7 +41,20 @@ struct AdminManageContactFormSubmissionsOpenAPIRepository {
         }
     }
 
+    func remove(formId: String, id: String) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.contactFormSubmissionDelete(path: .init(contactFormId: formId, contactFormSubmissionId: id))
+            switch response {
+            case .noContent: return
+            case .notFound: throw OpenAPIRepositoryError.notFound(message: "This submission could not be found.")
+            case .unauthorized: throw OpenAPIRepositoryError.unauthorized(message: "Please sign in again to delete submissions.")
+            case .forbidden: throw OpenAPIRepositoryError.forbidden(message: "Your account cannot delete submissions.")
+            case .undocumented(let statusCode, let response): throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+            }
+        }
+    }
+
     private func map(_ item: Components.Schemas.ContactFormSubmissionSchema) -> AdminManageContactFormSubmissionRow {
-        .init(id: item.id, formId: item.formId, status: item.status, submittedAt: String(item.submittedAt), values: item.values.additionalProperties)
+        .init(id: item.id, formId: item.formId, status: item.status, createdAt: String(item.createdAt), values: item.values.additionalProperties)
     }
 }

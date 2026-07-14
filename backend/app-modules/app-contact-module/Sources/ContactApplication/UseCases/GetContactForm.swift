@@ -9,7 +9,8 @@ public struct GetContactForm: UseCase {
         try await transaction.run { context in
             guard let value = try await context.form.findBy(id: input.id) else { throw Error.notFound }
             let items = try await context.item.listBy(formId: input.id).map(\.asDetail)
-            return value.asDetail(items: items)
+            let mails = try await context.mail.listBy(formId: input.id).map(\.asDetail)
+            return value.asDetail(items: items, mails: mails)
         }
     }
     public enum Error: UseCaseError { case notFound }

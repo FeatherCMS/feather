@@ -17,4 +17,8 @@ public protocol ContactFormSubmissionRepository: Repository {
     func update(
         _ model: ContactFormSubmission
     ) async throws -> ContactFormSubmission
+
+    func delete(
+        id: String
+    ) async throws -> Bool
 }

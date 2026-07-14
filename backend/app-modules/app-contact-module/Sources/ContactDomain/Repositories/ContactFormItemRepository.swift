@@ -10,6 +10,17 @@ public protocol ContactFormItemRepository: Repository {
         formId: String
     ) async throws -> [ContactFormItem]
 
+    func assign(
+        formId: String,
+        itemId: String,
+        position: Int
+    ) async throws
+
+    func unassign(
+        formId: String,
+        itemId: String
+    ) async throws
+
     func insert(
         _ model: ContactFormItem.New
     ) async throws -> ContactFormItem

@@ -15,7 +15,6 @@ extension ContactFormSubmissionTable.Row {
         )
         self.metadataJSON = try row.decode(column: "metadata", as: String?.self)
         self.status = try row.decode(column: "status", as: String.self)
-        self.submittedAt = try row.decode(column: "submitted_at", as: Date.self)
         self.createdAt = try row.decode(column: "created_at", as: Date.self)
         self.updatedAt = try row.decode(column: "updated_at", as: Date.self)
     }
@@ -31,7 +30,6 @@ struct ContactFormSubmissionTable {
             let itemsSnapshotJSON: String
             let metadataJSON: String?
             let status: String
-            let submittedAt: Date
         }
 
         let id: String
@@ -40,7 +38,6 @@ struct ContactFormSubmissionTable {
         let itemsSnapshotJSON: String
         let metadataJSON: String?
         let status: String
-        let submittedAt: Date
         let createdAt: Date
         let updatedAt: Date
     }
@@ -52,9 +49,9 @@ struct ContactFormSubmissionTable {
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT * FROM contact_form_submissions
+                SELECT * FROM contact_form_submission
                 WHERE form_id = \#(formId)
-                ORDER BY submitted_at DESC, id DESC;
+                ORDER BY created_at DESC, id DESC;
                 """#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
@@ -66,16 +63,15 @@ struct ContactFormSubmissionTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO contact_form_submissions (
+                INSERT INTO contact_form_submission (
                     id, form_id, "values", items_snapshot, metadata, status,
-                    submitted_at, created_at, updated_at
+                    created_at, updated_at
                 )
                 VALUES (
                     \#(row.id), \#(row.formId), \#(row.valuesJSON)::jsonb,
                     \#(row.itemsSnapshotJSON)::jsonb,
                     CASE WHEN \#(row.metadataJSON == nil) THEN NULL ELSE \#(row.metadataJSON)::jsonb END,
-                    \#(row.status), TO_TIMESTAMP(\#(row.submittedAt.timeIntervalSince1970)),
-                    NOW(), NOW()
+                    \#(row.status), NOW(), NOW()
                 )
                 RETURNING *;
                 """#
@@ -92,7 +88,7 @@ struct ContactFormSubmissionTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT * FROM contact_form_submissions
+                SELECT * FROM contact_form_submission
                 WHERE id = \#(id)
                 LIMIT 1;
                 """#
@@ -107,7 +103,7 @@ struct ContactFormSubmissionTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                UPDATE contact_form_submissions
+                UPDATE contact_form_submission
                 SET status = \#(status), updated_at = NOW()
                 WHERE id = \#(id)
                 RETURNING *;
@@ -117,6 +113,16 @@ struct ContactFormSubmissionTable {
                 throw RepositoryError.notFound
             }
             return try Row(from: row)
+        }
+    }
+
+    func delete(
+        id: String
+    ) async throws -> Bool {
+        try await connection.run(
+            query: #"DELETE FROM contact_form_submission WHERE id = \#(id) RETURNING id;"#
+        ) { sequence in
+            try await sequence.collect().first != nil
         }
     }
 }

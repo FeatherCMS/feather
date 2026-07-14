@@ -2,7 +2,7 @@ import ContactDomain
 import FeatherDatabase
 import Infrastructure
 
-extension ContactFormItemTable.Row {
+extension ContactFormFieldTable.Row {
     var asDomain: ContactFormItem {
         get throws {
             guard let type = ContactFormItem.ItemType(rawValue: type) else {
@@ -35,7 +35,7 @@ public struct DatabaseContactFormItemRepository: ContactFormItemRepository {
     public func insert(
         _ model: ContactFormItem.New
     ) async throws -> ContactFormItem {
-        let table = ContactFormItemTable(connection: connection)
+        let table = ContactFormFieldTable(connection: connection)
         let saved = try await table.create(
             row: .init(
                 id: model.id,
@@ -56,21 +56,43 @@ public struct DatabaseContactFormItemRepository: ContactFormItemRepository {
     public func findBy(
         id: String
     ) async throws -> ContactFormItem? {
-        let table = ContactFormItemTable(connection: connection)
+        let table = ContactFormFieldTable(connection: connection)
         return try await table.find(id: id).map { try $0.asDomain }
     }
 
     public func listBy(
         formId: String
     ) async throws -> [ContactFormItem] {
-        let table = ContactFormItemTable(connection: connection)
+        let table = ContactFormFieldTable(connection: connection)
         return try await table.list(formId: formId).map { try $0.asDomain }
+    }
+
+    public func assign(
+        formId: String,
+        itemId: String,
+        position: Int
+    ) async throws {
+        try await ContactFormFormFieldTable(connection: connection).assign(
+            formId: formId,
+            fieldId: itemId,
+            position: position
+        )
+    }
+
+    public func unassign(
+        formId: String,
+        itemId: String
+    ) async throws {
+        try await ContactFormFormFieldTable(connection: connection).unassign(
+            formId: formId,
+            fieldId: itemId
+        )
     }
 
     public func update(
         _ model: ContactFormItem
     ) async throws -> ContactFormItem {
-        let table = ContactFormItemTable(connection: connection)
+        let table = ContactFormFieldTable(connection: connection)
         let updated = try await table.update(
             id: model.id,
             row: .init(
@@ -94,7 +116,7 @@ public struct DatabaseContactFormItemRepository: ContactFormItemRepository {
     public func delete(
         id: String
     ) async throws -> Bool {
-        let table = ContactFormItemTable(connection: connection)
+        let table = ContactFormFieldTable(connection: connection)
         return try await table.delete(id: id)
     }
 }
