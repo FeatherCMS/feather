@@ -35,6 +35,12 @@ Run these from the repository root:
 - `make clean backend`
   Clears database and media storage, then builds and runs the backend stack.
 
+### Docker BuildKit cache error
+
+If `make <any>` fails with `Cache export is not supported for the docker driver`,
+enable **Use containerd for pulling and storing images** in Docker Desktop
+Settings → General, then restart Docker Desktop and run `make <any>` again.
+
 ## Public Origin Variables
 
 These variables control browser-facing URLs and are separate from the internal
