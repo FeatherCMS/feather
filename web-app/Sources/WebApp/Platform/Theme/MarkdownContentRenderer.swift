@@ -11,7 +11,7 @@ struct MarkdownContentRenderer: ContentRenderer {
         logger: Logger = .init(label: "WebApp.Theme.MarkdownContentRenderer")
     ) {
         self.logger = logger
-        self.blockRenderers = [ContactFormBlockRenderer(api: api)]
+        self.blockRenderers = [ContactFormBlockRenderer(api: api), NewsletterCampaignBlockRenderer(api: api)]
     }
 
     func render(

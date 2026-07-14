@@ -15,6 +15,9 @@ func buildAppRoutes(
     AppContactFormSubmission()
         .controller.route(on: router)
 
+    AppNewsletterCampaignSubscription()
+        .controller.route(on: router)
+
     AppGetStylesheet(
         globalStylesheetCollector: styleshetCollector
     )

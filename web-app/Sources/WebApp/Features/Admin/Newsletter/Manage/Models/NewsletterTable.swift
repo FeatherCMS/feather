@@ -34,10 +34,11 @@ struct NewsletterTable: Component {
                                 Tr {
                                     Td(item.name).data("label", "Name")
                                     ListTableRowActions(state: .init(label: "Actions", actions: [
+                                        .init(title: "Copy", className: nil, permission: "newsletter:campaigns:read", copyText: "@NewsletterCampaign(id: \(item.id))"),
                                         .init(title: "Subscribers", href: "/admin/newsletters/\(item.id)/subscribers/", className: nil, permission: "newsletter:subscribers:list"),
                                         .init(title: "Details", href: "/admin/newsletters/\(item.id)/details/", className: "edit", permission: "newsletter:campaigns:update"),
                                         .init(title: "Remove", href: "/admin/newsletters/\(item.id)/remove/", className: "delete", permission: "newsletter:campaigns:delete")
-                                    ], permissions: ["newsletter:subscribers:list", "newsletter:campaigns:update", "newsletter:campaigns:delete"]))
+                                    ], permissions: ["newsletter:campaigns:read", "newsletter:subscribers:list", "newsletter:campaigns:update", "newsletter:campaigns:delete"]))
                                 }
                             }
                         }
