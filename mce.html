@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Markdown component editor</title>
+  <title>Markdown Component Editor</title>
   <style>
     :root { color-scheme: light; --ink: #333; --muted: #666; --line: #e0e0e0; --paper: #fff; --canvas: #f5f5f5; --accent: #4e4cd0; --accent-soft: #e0e0e0; --danger: #ff342a; }
     * { box-sizing: border-box; }
@@ -19,7 +19,7 @@
     .mode-switch button.active { color: var(--ink); background: var(--paper); box-shadow: 0 1px 4px #1a26331a; }
     .workspace { display: grid; gap: 18px; align-items: start; }
     .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 15px; box-shadow: 0 9px 32px #17202a08; }
-    .sidebar { padding: 15px 18px; }
+    .sidebar { position: sticky; top: 18px; z-index: 10; padding: 15px 18px; }
     .eyebrow { margin: 0 0 12px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
     .component-list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
     .component-button { display: grid; grid-template-columns: 26px minmax(0, 1fr); grid-template-rows: 1fr; align-items: center; column-gap: 6px; min-width: 0; min-height: 38px; border: 1px solid var(--line); border-radius: 7px; background: #fff; padding: 5px 7px; text-align: left; color: var(--ink); transition: .15s ease; }
@@ -156,7 +156,7 @@
 <body>
   <main class="app">
     <header>
-      <div><h1>Markdown component editor</h1><p class="intro">Compose supported Markdown as movable blocks, or edit the source directly.</p></div>
+      <div><h1>Markdown Component Editor</h1><p class="intro">Compose supported Markdown as movable blocks, or edit the source directly.</p></div>
     </header>
     <section class="workspace">
       <aside class="panel sidebar"><p class="eyebrow">Add component</p><div class="component-list">
@@ -258,7 +258,7 @@ Build your document from small, movable components.
         else if (block.type === 'image' || block.type === 'video') { const fields = document.createElement('div'); fields.className = 'media-fields'; const url = document.createElement('input'); url.value = block.value; url.placeholder = block.type === 'image' ? 'Image URL' : 'Video URL'; url.setAttribute('aria-label', `${block.type} URL`); url.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); fields.append(url); if (block.type === 'image') { const alt = document.createElement('input'); alt.value = block.alt || ''; alt.placeholder = 'Alt text'; alt.setAttribute('aria-label', 'Image alt text'); alt.addEventListener('input', e => updateBlock(block.id, 'alt', e.target.value)); fields.append(alt); } body.querySelector('.block-label').textContent = block.type === 'image' ? 'Image' : 'Video'; body.append(fields); }
         else if (block.type === 'custom') { const fields = document.createElement('div'); fields.className = 'custom-fields'; const name = document.createElement('input'); name.value = block.name || 'CustomBlock'; name.placeholder = 'Component name'; name.setAttribute('aria-label', 'Custom component name'); name.addEventListener('input', e => updateBlock(block.id, 'name', e.target.value)); const args = document.createElement('input'); args.value = block.value; args.placeholder = 'Arguments, e.g. id: 123'; args.setAttribute('aria-label', 'Custom component arguments'); args.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); fields.append(name, args); body.querySelector('.block-label').textContent = 'Custom block'; body.append(fields); }
         else { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.value = block.value; field.placeholder = 'Write text… Select text, then choose a format'; field.setAttribute('aria-label', 'Text with Markdown formatting'); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelection(field, block.id, button.dataset.format))); }
-        item.querySelector('.remove').addEventListener('click', () => { state.blocks.splice(index, 1); syncRaw(); render(); setStatus('Removed'); });
+        item.querySelector(':scope > .remove').addEventListener('click', e => { e.stopPropagation(); state.blocks.splice(index, 1); syncRaw(); render(); setStatus('Removed'); });
         item.querySelector('.drag-controls').querySelectorAll('[data-move]').forEach(button => button.addEventListener('click', e => { e.stopPropagation(); const target = button.dataset.move === 'up' ? index - 1 : index + 1; if (target < 0 || target >= state.blocks.length) return; [state.blocks[index], state.blocks[target]] = [state.blocks[target], state.blocks[index]]; syncRaw(); render(); setStatus('Rearranged'); }));
         item.addEventListener('dragstart', () => { state.dragging = { kind: 'existing', id: block.id }; item.classList.add('dragging'); }); item.addEventListener('dragend', clearDragState);
         item.addEventListener('dragover', e => { e.preventDefault(); if (!state.dragging || (state.dragging.kind === 'existing' && state.dragging.id === block.id)) return; const after = e.clientY > item.getBoundingClientRect().top + item.offsetHeight / 2; placeMarker(item, after); canvas.classList.add('drag-over'); });
