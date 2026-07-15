@@ -84,6 +84,16 @@ struct ContactFormForm: Component, FlowContent {
         Custom(".contact-form-field-row.is-dragging") {
             Opacity(0.55)
         }
+        Custom(".contact-form-field-row.is-drop-before") {
+            UnsafeRawProperty(name: "box-shadow", value: "inset 0 3px 0 var(--cms-link-hover)")
+        }
+        Custom(".contact-form-field-row.is-drop-after") {
+            UnsafeRawProperty(name: "box-shadow", value: "inset 0 -3px 0 var(--cms-link-hover)")
+        }
+        Custom(".contact-form-field-list.is-drop-zone") {
+            UnsafeRawProperty(name: "outline", value: "2px dashed var(--cms-link-hover)")
+            UnsafeRawProperty(name: "outline-offset", value: "4px")
+        }
     }
 
     func content() -> some BasicTag {
@@ -215,12 +225,29 @@ struct ContactFormForm: Component, FlowContent {
 
                 function dragEnd() {
                     if (draggedField) { draggedField.classList.remove("is-dragging"); }
+                    clearDropIndicators();
                     draggedField = null;
+                }
+
+                function clearDropIndicators() {
+                    document.querySelectorAll('.contact-form-field-row.is-drop-before, .contact-form-field-row.is-drop-after').forEach(function (field) {
+                        field.classList.remove("is-drop-before", "is-drop-after");
+                    });
+                    selected.classList.remove("is-drop-zone");
+                    available.classList.remove("is-drop-zone");
                 }
 
                 function dragOver(event) {
                     if (!draggedField) { return; }
                     event.preventDefault();
+                    clearDropIndicators();
+                    var target = event.target.closest('[data-contact-form-field]');
+                    if (target && target !== draggedField && target.parentNode === event.currentTarget) {
+                        var bounds = target.getBoundingClientRect();
+                        target.classList.add(event.clientY < bounds.top + bounds.height / 2 ? "is-drop-before" : "is-drop-after");
+                    } else {
+                        event.currentTarget.classList.add("is-drop-zone");
+                    }
                     if (event.dataTransfer) { event.dataTransfer.dropEffect = "move"; }
                 }
 
@@ -230,17 +257,17 @@ struct ContactFormForm: Component, FlowContent {
                     var list = event.currentTarget;
                     var target = event.target.closest('[data-contact-form-field]');
                     var isSelectedList = list === selected;
+                    var dropBefore = target && event.clientY < target.getBoundingClientRect().top + target.getBoundingClientRect().height / 2;
                     var checkbox = draggedField.querySelector('input[type="checkbox"]');
                     if (checkbox) { checkbox.checked = isSelectedList; }
                     draggedField.classList.toggle("is-selected", isSelectedList);
                     draggedField.classList.toggle("is-available", !isSelectedList);
                     if (target && target !== draggedField && target.parentNode === list) {
-                        var bounds = target.getBoundingClientRect();
-                        var insertBefore = event.clientY < bounds.top + bounds.height / 2;
-                        list.insertBefore(draggedField, insertBefore ? target : target.nextElementSibling);
+                        list.insertBefore(draggedField, dropBefore ? target : target.nextElementSibling);
                     } else {
                         list.appendChild(draggedField);
                     }
+                    clearDropIndicators();
                 }
 
                 [selected, available].forEach(function (list) {
