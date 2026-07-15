@@ -70,7 +70,7 @@ reset:
 	$(COMPOSE) down --remove-orphans --volumes
 
 deps:
-	$(COMPOSE) up --build $(DEPS_SERVICES)
+	$(COMPOSE) up -d --build $(DEPS_SERVICES)
 
 all:
 	$(run_all_services_with_public_origins)
