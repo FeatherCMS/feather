@@ -1,0 +1,51 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "open_feathercms_in_simple_browser",
+      "type": "command",
+      "command": "simpleBrowser.show",
+      "args": "https://feathercms.com",
+    },
+  ],
+  "tasks": [
+    {
+      "label": "Ensure Local Dependencies",
+      "type": "shell",
+      "command": "make deps",
+      "options": {
+        "cwd": "${workspaceFolder}",
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "FeatherCMS: Stop Local Runtime and Free Ports",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "set -euo pipefail; make stop || true; pkill -f \"/backend/.build/.*/Server\" || true; pkill -f \"/backend/.build/.*/Worker\" || true",
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "FeatherCMS: Open FeatherCMS in Integrated Browser",
+      "type": "process",
+      "command": "echo",
+      "args": ["${input:open_feathercms_in_simple_browser}"],
+      "problemMatcher": [],
+    },
+    {
+      "label": "FeatherCMS: Open FeatherCMS",
+      "type": "shell",
+      "command": "open",
+      "args": [
+        "http://localhost:3456"
+      ],
+      "problemMatcher": []
+    }
+  ],
+}
