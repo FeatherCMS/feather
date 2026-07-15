@@ -506,7 +506,7 @@ extension AdminMediaAssetPicker {
           }
 
           function setActiveTab(modal, tab) {
-            modal.data("media-picker-active-tab", tab);
+            modal.setAttribute("data-media-picker-active-tab", tab);
             modal.querySelectorAll("[data-media-picker-tab]").forEach(function(button) {
               button.classList.toggle("is-current", button.getAttribute("data-media-picker-tab") === tab);
             });
@@ -660,8 +660,8 @@ extension AdminMediaAssetPicker {
             if (!panel || !styleNode) { return; }
 
             setActiveTab(modal, tab);
-            modal.data("media-picker-browse-path", deriveBrowsePath(url));
-            modal.data("media-picker-upload-path", deriveUploadPath(url));
+            modal.setAttribute("data-media-picker-browse-path", deriveBrowsePath(url));
+            modal.setAttribute("data-media-picker-upload-path", deriveUploadPath(url));
             panel.innerHTML = '<div class="admin-media-asset-picker-loading">Loading...</div>';
 
             var response = await fetch(url, Object.assign({ credentials: "same-origin" }, requestInit || {}));

@@ -1,5 +1,5 @@
 {
-  "originHash" : "9eac0c30ed9b5ff4e498dc6124d5c8e9028f221c589bdfda26dc0d0ed6f5ddb0",
+  "originHash" : "5624b2ea6b2547440cb2c5cabeb1bfd7f0c58fb673a0ae09ae6e8055c0ad1eea",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -65,6 +65,15 @@
       }
     },
     {
+      "identity" : "feather-mail-ses",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-mail-ses",
+      "state" : {
+        "revision" : "f7d66b3da9bad705a349677427265a25b189c275",
+        "version" : "1.0.0-beta.5"
+      }
+    },
+    {
       "identity" : "feather-storage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-storage",
@@ -92,6 +101,15 @@
       }
     },
     {
+      "identity" : "jmespath.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jmespath/jmespath.swift.git",
+      "state" : {
+        "revision" : "3877a5060e85ae33e3b9fe51ab581784f65ec80e",
+        "version" : "1.0.3"
+      }
+    },
+    {
       "identity" : "postgres-migrations",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hummingbird-project/postgres-migrations.git",
@@ -110,12 +128,48 @@
       }
     },
     {
+      "identity" : "soto-codegenerator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/soto-project/soto-codegenerator",
+      "state" : {
+        "revision" : "cb6b77fa637fb7ce8fd2d86192f41d66fb7e8c23",
+        "version" : "7.9.4"
+      }
+    },
+    {
+      "identity" : "soto-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/soto-project/soto-core",
+      "state" : {
+        "revision" : "47454bf79649691da406978ae803b51b54246d6e",
+        "version" : "7.14.0"
+      }
+    },
+    {
+      "identity" : "soto-smithy",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/soto-project/soto-smithy.git",
+      "state" : {
+        "revision" : "db3370bacb6f725dda79d2954f07789383983167",
+        "version" : "0.4.10"
+      }
+    },
+    {
       "identity" : "swift-algorithms",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-algorithms.git",
       "state" : {
         "revision" : "87e50f483c54e6efd60e885f7f5aa946cee68023",
         "version" : "1.2.1"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "state" : {
+        "revision" : "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "version" : "1.8.2"
       }
     },
     {
@@ -260,6 +314,15 @@
       "state" : {
         "revision" : "d51c8d13fa366eec807eedb4e37daa60ff5bfdd5",
         "version" : "2.10.1"
+      }
+    },
+    {
+      "identity" : "swift-mustache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hummingbird-project/swift-mustache.git",
+      "state" : {
+        "revision" : "0b91b3127baee1d97c45a7390a49779256b4295d",
+        "version" : "2.1.0"
       }
     },
     {

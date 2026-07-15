@@ -5,11 +5,11 @@
 //  Created by Tibor Bödecs on 2026. 04. 18..
 //
 
+import FeatherMail
 import Jobs
-import Logging
 
-struct FakeEmailService {
-    let logger: Logger
+struct EmailService {
+    let client: any MailClient
 
     func sendEmail(
         to: [String],
@@ -17,10 +17,14 @@ struct FakeEmailService {
         subject: String,
         message: String
     ) async throws {
-        self.logger.info("To: \(to.joined(separator: ", "))")
-        self.logger.info("From: \(from)")
-        self.logger.info("Subject: \(subject)")
-        self.logger.info("\(message)")
+        try await client.send(
+            .init(
+                from: .init(from),
+                to: to.map { .init($0) },
+                subject: subject,
+                body: .plainText(message)
+            )
+        )
     }
 }
 
@@ -34,7 +38,7 @@ struct JobController {
         let message: String
     }
 
-    init(queue: some JobQueueProtocol, emailService: FakeEmailService) {
+    init(queue: some JobQueueProtocol, emailService: EmailService) {
         // This function demonstrates two different ways to register a job
         // Register Job with predefined job identifier
         queue.registerJob(parameters: EmailParameters.self) {

@@ -101,6 +101,18 @@ let package = Package(
             url: "https://github.com/feather-framework/feather-mail-ephemeral",
             exact: "1.0.0-beta.2"
         ),
+        .package(
+            url: "https://github.com/feather-framework/feather-mail-ses",
+            exact: "1.0.0-beta.5"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-mail",
+            exact: "1.0.0-beta.3"
+        ),
+        .package(
+            url: "https://github.com/soto-project/soto-core",
+            from: "7.0.0"
+        ),
         .package(path: "../openapi"),
         .package(path: "./app-modules/app-kernel"),
         .package(path: "./app-modules/app-system-module"),
@@ -147,7 +159,6 @@ let package = Package(
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
                 .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
-
                 .target(name: "Environment"),
             ],
             swiftSettings: defaultSwiftSettings
@@ -177,6 +188,9 @@ let package = Package(
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
                 .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
+                .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "FeatherMailSES", package: "feather-mail-ses"),
+                .product(name: "SotoCore", package: "soto-core"),
 
                 .target(name: "Environment"),
             ],

@@ -20,6 +20,7 @@ struct WorkerConfigLoader {
         )
         let workerScope = reader.scoped(to: "worker")
         let mediaScope = reader.scoped(to: "media")
+        let sesScope = reader.scoped(to: "ses")
 
         return .init(
             system: systemConfigLoader.load(reader: reader),
@@ -110,6 +111,20 @@ struct WorkerConfigLoader {
                 storageRootPath: mediaScope.string(
                     forKey: "storage_root_path",
                     default: "/tmp/backend-media"
+                )
+            ),
+            ses: .init(
+                accessKeyId: sesScope.string(
+                    forKey: "id",
+                    default: ""
+                ),
+                secretAccessKey: sesScope.string(
+                    forKey: "secret",
+                    default: ""
+                ),
+                region: sesScope.string(
+                    forKey: "region",
+                    default: ""
                 )
             ),
             runMigrations: workerScope.bool(
