@@ -49,7 +49,7 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
         let id = try context.requiredID()
         let current = try await interactor.get(id: id)
         let form = try await request.decode(as: ContactFormEditForm.self, context: context)
-        _ = try await interactor.update(id: id, name: current.name, successMessage: current.successMessage, failureMessage: current.failureMessage, redirectUrl: current.redirectUrl, fieldIDs: current.selectedFieldIDs.sorted(), mails: form.mails)
+        _ = try await interactor.update(id: id, name: current.name, successMessage: current.successMessage, failureMessage: current.failureMessage, redirectUrl: current.redirectUrl, fieldIDs: current.selectedFieldIDs, mails: form.mails)
         return Response(status: .seeOther, headers: [.location: AdminToastRedirect.location(defaultPath: "/admin/contact/forms/\(id)/emails/", title: "Updated", message: "Contact form emails updated successfully.")])
     }
 
@@ -81,7 +81,7 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
         let form = try await request.decode(as: ContactFormEditForm.self, context: context)
         let current = try await interactor.get(id: id)
         _ = try await interactor.update(id: id, name: form.name, successMessage: form.successMessage ?? "", failureMessage: form.failureMessage ?? "", redirectUrl: form.redirectUrl, fieldIDs: form.fieldIds ?? [], mails: form.mails.isEmpty ? current.mails : form.mails)
-        return Response(status: .seeOther, headers: [.location: AdminToastRedirect.location(defaultPath: "/admin/contact/forms/", title: "Updated", message: "Contact form updated successfully.")])
+        return Response(status: .seeOther, headers: [.location: AdminToastRedirect.location(defaultPath: "/admin/contact/forms/\(id)/edit/", title: "Saved", message: "Contact form updated successfully.")])
     }
 
     func remove(request: Request, context: AppRequestContext) async throws -> Response {
@@ -118,7 +118,7 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
         let formId = try context.requiredID()
         let current = try await interactor.get(id: formId)
         let input = try await request.decode(as: ContactFormMailFormInput.self, context: context)
-        _ = try await interactor.update(id: formId, name: current.name, successMessage: current.successMessage, failureMessage: current.failureMessage, redirectUrl: current.redirectUrl, fieldIDs: current.selectedFieldIDs.sorted(), mails: current.mails + [input.mail])
+        _ = try await interactor.update(id: formId, name: current.name, successMessage: current.successMessage, failureMessage: current.failureMessage, redirectUrl: current.redirectUrl, fieldIDs: current.selectedFieldIDs, mails: current.mails + [input.mail])
         return Response(status: .seeOther, headers: [.location: AdminToastRedirect.location(defaultPath: "/admin/contact/forms/\(formId)/emails/", title: "Added", message: "Contact form email added successfully.")])
     }
 
@@ -140,7 +140,7 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
         let input = try await request.decode(as: ContactFormMailFormInput.self, context: context)
         guard current.mails.contains(where: { $0.id == mailId }) else { throw OpenAPIRepositoryError.notFound(message: "This contact form email could not be found.") }
         let mails = current.mails.map { $0.id == mailId ? input.mail : $0 }
-        _ = try await interactor.update(id: formId, name: current.name, successMessage: current.successMessage, failureMessage: current.failureMessage, redirectUrl: current.redirectUrl, fieldIDs: current.selectedFieldIDs.sorted(), mails: mails)
+        _ = try await interactor.update(id: formId, name: current.name, successMessage: current.successMessage, failureMessage: current.failureMessage, redirectUrl: current.redirectUrl, fieldIDs: current.selectedFieldIDs, mails: mails)
         return Response(status: .seeOther, headers: [.location: AdminToastRedirect.location(defaultPath: "/admin/contact/forms/\(formId)/emails/", title: "Updated", message: "Contact form email updated successfully.")])
     }
 
@@ -160,7 +160,7 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
         let mailId = try context.requiredParameter("mailId")
         let current = try await interactor.get(id: formId)
         guard current.mails.contains(where: { $0.id == mailId }) else { throw OpenAPIRepositoryError.notFound(message: "This contact form email could not be found.") }
-        _ = try await interactor.update(id: formId, name: current.name, successMessage: current.successMessage, failureMessage: current.failureMessage, redirectUrl: current.redirectUrl, fieldIDs: current.selectedFieldIDs.sorted(), mails: current.mails.filter { $0.id != mailId })
+        _ = try await interactor.update(id: formId, name: current.name, successMessage: current.successMessage, failureMessage: current.failureMessage, redirectUrl: current.redirectUrl, fieldIDs: current.selectedFieldIDs, mails: current.mails.filter { $0.id != mailId })
         return Response(status: .seeOther, headers: [.location: AdminToastRedirect.location(defaultPath: "/admin/contact/forms/\(formId)/emails/", title: "Removed", message: "Contact form email removed successfully.")])
     }
 }

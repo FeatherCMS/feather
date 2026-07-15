@@ -4,7 +4,7 @@ struct AdminManageContactFormItem: Sendable {
     let successMessage: String
     let failureMessage: String
     let redirectUrl: String?
-    let selectedFieldIDs: Set<String>
+    let selectedFieldIDs: [String]
     let availableFields: [AdminManageContactFormFieldOption]
     let mails: [AdminManageContactFormMail]
 }
