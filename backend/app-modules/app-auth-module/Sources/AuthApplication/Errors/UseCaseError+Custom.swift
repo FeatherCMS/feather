@@ -1,15 +1,15 @@
 //
-//  File.swift
-//  backend
+//  UseCaseError+Custom.swift
+//  app-auth-module
 //
-//  Created by Tibor Bödecs on 2026. 02. 28..
+//  Created by Tibor Bödecs on 2026. 02. 28.
 //
 
 //import FeatherValidation
 
-public extension UseCaseError {
+extension UseCaseError {
 
-    static func authentication() -> Self {
+    public static func authentication() -> Self {
         .init(
             reason: .auth,
             logMessage: "authentication_error",

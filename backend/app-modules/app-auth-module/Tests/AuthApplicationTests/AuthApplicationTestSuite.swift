@@ -1,7 +1,15 @@
-import Testing
+//
+//  AuthApplicationTestSuite.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import AuthDomain
+import Testing
+
 import struct Foundation.Date
+
 @testable import AuthApplication
 
 @Suite
