@@ -1,5 +1,27 @@
 # Backend
 
+## Module Tests
+
+From a module directory, such as `backend/app-modules/app-auth-module`:
+
+```sh
+make docker-up
+make test
+make docker-down
+```
+
+The manual workflow starts the module's PostgreSQL services, runs the tests
+locally, and then removes the services and their volumes.
+
+To build and run the tests in Docker instead:
+
+```sh
+make docker-test
+```
+
+This starts the required services, runs the test container, and cleans up the
+containers and volumes afterward.
+
 ## TODOs
 
 - finish system module

@@ -1,8 +1,16 @@
-import Testing
-import Domain
+//
+//  SystemApplicationTestSuite.swift
+//  app-system-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
-import struct Foundation.Date
+import Domain
 import SystemDomain
+import Testing
+
+import struct Foundation.Date
+
 @testable import SystemApplication
 
 @Suite

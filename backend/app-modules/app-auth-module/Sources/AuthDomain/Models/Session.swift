@@ -1,4 +1,11 @@
+//
+//  Session.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Session: Model {
@@ -54,7 +61,7 @@ public struct Session: Model {
     }
 }
 
-public extension Session {
+extension Session {
 
     private static func validate(
         id: String
@@ -89,7 +96,7 @@ public extension Session {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         token: String,
         accountId: String,

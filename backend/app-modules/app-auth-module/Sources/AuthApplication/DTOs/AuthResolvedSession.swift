@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  app-user-module
+//  AuthResolvedSession.swift
+//  app-auth-module
 //
-//  Created by Tibor Bödecs on 2026. 04. 17..
+//  Created by Tibor Bödecs on 2026. 04. 17.
 //
 
 import Foundation

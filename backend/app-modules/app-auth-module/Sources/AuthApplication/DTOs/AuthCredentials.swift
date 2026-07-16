@@ -1,3 +1,9 @@
+//
+//  AuthCredentials.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 public struct AuthCredentials: Sendable {
     public var email: String
     public var password: String

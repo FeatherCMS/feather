@@ -1,4 +1,11 @@
+//
+//  MagicLink.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct MagicLink: Model {
@@ -55,7 +62,7 @@ public struct MagicLink: Model {
     }
 }
 
-public extension MagicLink {
+extension MagicLink {
 
     private static func validate(
         email: String
@@ -79,7 +86,7 @@ public extension MagicLink {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         email: String,
         token: String,
@@ -97,7 +104,7 @@ public extension MagicLink {
         )
     }
 
-    mutating func consume(
+    public mutating func consume(
         now: Date = .init()
     ) throws(Self.Error) {
         guard !self.isUsed else {
