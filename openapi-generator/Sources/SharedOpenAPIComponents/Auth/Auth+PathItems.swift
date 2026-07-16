@@ -29,3 +29,9 @@ public struct AuthMePathItems: PathItemRepresentable {
 
     public init() {}
 }
+
+public struct AuthInvitationRegistrationPathItems: PathItemRepresentable {
+    public var post: OperationRepresentable? { AuthInvitationRegistrationOperation() }
+
+    public init() {}
+}

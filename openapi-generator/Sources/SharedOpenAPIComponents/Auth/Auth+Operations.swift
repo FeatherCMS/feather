@@ -64,3 +64,16 @@ struct AuthMeOperation: AuthOperation, BearerProtectedOperation {
         ]
     }
 }
+
+struct AuthInvitationRegistrationOperation: AuthOperation {
+
+    var requestBody: RequestBodyRepresentable? {
+        AuthInvitationRegistrationRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: AuthMeResponse().reference()
+        ]
+    }
+}

@@ -5,6 +5,9 @@ import WebStandards
 
 struct UserInvitationForm: Component, FlowContent {
 
+    // TODO: Render the requested-role selector once invitation creation
+    // exposes roleIds in the frontend form.
+
     struct FieldState: Object {
         var key: String
         var label: String

@@ -163,7 +163,9 @@ struct InvitationTable {
                 SELECT * FROM user_invitation WHERE token=\#(token) LIMIT 1;
                 """#
         ) { sequence in
-            guard let row = try await sequence.collect().first else { return nil }
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
             return try Row(from: row)
         }
     }

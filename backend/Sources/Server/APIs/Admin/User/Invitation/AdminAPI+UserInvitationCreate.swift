@@ -17,7 +17,10 @@ extension AdminAPI {
         let useCase = modules.user.makeAddInvitation()
         let result = try await useCase.execute(
             subject: subject,
-            input: .init(email: body.email)
+            input: .init(
+                email: body.email,
+                roleIDs: body.roleIds ?? []
+            )
         )
 
         return .created(

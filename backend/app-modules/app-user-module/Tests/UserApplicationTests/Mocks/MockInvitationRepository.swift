@@ -8,6 +8,7 @@ import UserDomain
 
 actor MockInvitationRepository: InvitationRepository {
     private(set) var createCallCount = 0
+    private(set) var insertedModel: Invitation.New?
     private(set) var deleteCallCount = 0
 
     private let result: Invitation
@@ -40,6 +41,7 @@ actor MockInvitationRepository: InvitationRepository {
         _ model: Invitation.New
     ) async throws -> Invitation {
         createCallCount += 1
+        insertedModel = model
         return result
     }
 

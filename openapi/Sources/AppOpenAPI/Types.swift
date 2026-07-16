@@ -56,6 +56,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `POST /api/v1/auth/register`.
     /// - Remark: Generated from `#/paths//api/v1/auth/register/post(authRegister)`.
     func authRegister(_ input: Operations.AuthRegister.Input) async throws -> Operations.AuthRegister.Output
+    /// - Remark: HTTP `POST /api/v1/auth/invitation/register`.
+    /// - Remark: Generated from `#/paths//api/v1/auth/invitation/register/post(authInvitationRegistration)`.
+    func authInvitationRegistration(_ input: Operations.AuthInvitationRegistration.Input) async throws -> Operations.AuthInvitationRegistration.Output
     /// - Remark: HTTP `POST /api/v1/auth/login`.
     /// - Remark: Generated from `#/paths//api/v1/auth/login/post(authLogin)`.
     func authLogin(_ input: Operations.AuthLogin.Input) async throws -> Operations.AuthLogin.Output
@@ -185,6 +188,17 @@ extension APIProtocol {
         body: Components.RequestBodies.AuthRegisterRequestBody
     ) async throws -> Operations.AuthRegister.Output {
         try await authRegister(Operations.AuthRegister.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/auth/invitation/register`.
+    /// - Remark: Generated from `#/paths//api/v1/auth/invitation/register/post(authInvitationRegistration)`.
+    public func authInvitationRegistration(
+        headers: Operations.AuthInvitationRegistration.Input.Headers = .init(),
+        body: Components.RequestBodies.AuthInvitationRegistrationRequestBody
+    ) async throws -> Operations.AuthInvitationRegistration.Output {
+        try await authInvitationRegistration(Operations.AuthInvitationRegistration.Input(
             headers: headers,
             body: body
         ))
@@ -1403,6 +1417,31 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/UserAccountPasswordField`.
         public typealias UserAccountPasswordField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthInvitationRegistrationRequestSchema`.
+        public struct AuthInvitationRegistrationRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthInvitationRegistrationRequestSchema/token`.
+            public var token: Components.Schemas.UserAuthMagicLinkTokenField
+            /// - Remark: Generated from `#/components/schemas/AuthInvitationRegistrationRequestSchema/password`.
+            public var password: Components.Schemas.UserAccountPasswordField
+            /// Creates a new `AuthInvitationRegistrationRequestSchema`.
+            ///
+            /// - Parameters:
+            ///   - token:
+            ///   - password:
+            public init(
+                token: Components.Schemas.UserAuthMagicLinkTokenField,
+                password: Components.Schemas.UserAccountPasswordField
+            ) {
+                self.token = token
+                self.password = password
+            }
+            public enum CodingKeys: String, CodingKey {
+                case token
+                case password
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserAuthMagicLinkTokenField`.
+        public typealias UserAuthMagicLinkTokenField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema`.
         public struct AuthLoginRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema/email`.
@@ -1511,6 +1550,11 @@ public enum Components {
         @frozen public enum AuthRegisterRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/AuthRegisterRequestBody/content/application\/json`.
             case json(Components.Schemas.AuthRegisterSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/AuthInvitationRegistrationRequestBody`.
+        @frozen public enum AuthInvitationRegistrationRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/AuthInvitationRegistrationRequestBody/content/application\/json`.
+            case json(Components.Schemas.AuthInvitationRegistrationRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/AuthLoginRequestBody`.
         @frozen public enum AuthLoginRequestBody: Sendable, Hashable {
@@ -3475,6 +3519,92 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/auth/invitation/register`.
+    /// - Remark: Generated from `#/paths//api/v1/auth/invitation/register/post(authInvitationRegistration)`.
+    public enum AuthInvitationRegistration {
+        public static let id: Swift.String = "authInvitationRegistration"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/auth/invitation/register/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AuthInvitationRegistration.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AuthInvitationRegistration.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AuthInvitationRegistration.Input.Headers
+            public var body: Components.RequestBodies.AuthInvitationRegistrationRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.AuthInvitationRegistration.Input.Headers = .init(),
+                body: Components.RequestBodies.AuthInvitationRegistrationRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Auth response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/auth/invitation/register/post(authInvitationRegistration)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.AuthMeResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.AuthMeResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
                             response: self
                         )
                     }

@@ -1,4 +1,11 @@
+//
+//  Invitation.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 07. 16.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Invitation: Model {
@@ -51,7 +58,7 @@ public struct Invitation: Model {
     }
 }
 
-public extension Invitation {
+extension Invitation {
 
     package init(
         id: String,
@@ -94,7 +101,7 @@ public extension Invitation {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         accountID: String,
         email: String,
@@ -112,7 +119,7 @@ public extension Invitation {
         )
     }
 
-    static func create(
+    public static func create(
         id: String,
         email: String,
         token: String
@@ -120,7 +127,7 @@ public extension Invitation {
         try create(id: id, accountID: id, email: email, token: token)
     }
 
-    mutating func update(
+    public mutating func update(
         email: String?
     ) throws(Self.Error) {
         guard let email else {
@@ -139,7 +146,7 @@ public extension Invitation {
         )
     }
 
-    mutating func consume(
+    public mutating func consume(
         now: Date = .init()
     ) throws(Self.Error) {
         //        guard !self.isUsed else {

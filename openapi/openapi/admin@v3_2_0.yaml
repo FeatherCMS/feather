@@ -3229,6 +3229,8 @@ components:
           type: string
           examples:
           - john.doe@example.com
+        roleIds:
+          $ref: '#/components/schemas/UserAccountRoleIdsField'
       required:
       - email
       minProperties: 1

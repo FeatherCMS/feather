@@ -31,6 +31,7 @@ public struct InvitationList: DTO {
             updatedAt: Date
         ) {
             self.id = id
+            self.accountID = accountID
             self.email = email
             self.token = token
             self.expiresAt = expiresAt

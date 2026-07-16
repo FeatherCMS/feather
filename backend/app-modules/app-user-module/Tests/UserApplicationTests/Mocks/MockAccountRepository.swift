@@ -1,9 +1,17 @@
+//
+//  MockAccountRepository.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 07. 16.
+
 import UserDomain
 
 actor MockAccountRepository: AccountRepository {
     private(set) var createCallCount = 0
+    private(set) var insertedModel: Account.New?
     private(set) var updateCallCount = 0
     private(set) var replaceRoleIdsCallCount = 0
+    private(set) var replacedRoleIds: [String] = []
     private(set) var findByIdCallCount = 0
     private(set) var deleteCallCount = 0
 
@@ -63,6 +71,7 @@ actor MockAccountRepository: AccountRepository {
         roleIds: [String]
     ) async throws {
         replaceRoleIdsCallCount += 1
+        replacedRoleIds = roleIds
     }
 
     func findPermissionsBy(
@@ -75,6 +84,7 @@ actor MockAccountRepository: AccountRepository {
         _ model: Account.New
     ) async throws -> Account {
         createCallCount += 1
+        insertedModel = model
         return result
     }
 

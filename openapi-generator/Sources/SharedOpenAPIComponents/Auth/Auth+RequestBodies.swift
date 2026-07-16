@@ -27,3 +27,12 @@ struct AuthMagicLinkVerifyRequestBody: RequestBodyRepresentable {
         ]
     }
 }
+
+struct AuthInvitationRegistrationRequestBody: RequestBodyRepresentable {
+
+    var contentMap: ContentMap {
+        [
+            .json: Content(AuthInvitationRegistrationRequestSchema().reference())
+        ]
+    }
+}

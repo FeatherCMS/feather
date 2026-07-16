@@ -11,6 +11,20 @@ import UserDomain
 import struct Foundation.Date
 
 public struct AddInvitation: UseCase {
+    enum Error: UseCaseError {
+        case dependenciesUnavailable
+        case roleNotFound(String)
+
+        var message: String {
+            switch self {
+            case .dependenciesUnavailable:
+                "Invitation account dependencies are unavailable"
+            case .roleNotFound(let roleID):
+                "Role not found: \(roleID)"
+            }
+        }
+    }
+
     struct Action: PermissionAction {
         let key = UserPermissions.Invitations.create
     }
@@ -54,31 +68,44 @@ public struct AddInvitation: UseCase {
 
         let model = try await transaction.run { context in
             guard let accountRepository = context.account,
-                  let roleRepository = context.role,
-                  let passwordHasher else {
-                return try await context.invitation.insert(
-                    Invitation.create(
-                        id: idGenerator.generate(), accountID: idGenerator.generate(),
-                        email: input.email, token: generateToken()
-                    )
-                )
+                let roleRepository = context.role,
+                let passwordHasher
+            else {
+                throw Error.dependenciesUnavailable
             }
             let accountID = idGenerator.generate()
             let token = generateToken()
-            let passwordHash = try await hashPassword(using: passwordHasher, original: token)
+            let passwordHash = try await hashPassword(
+                using: passwordHasher,
+                original: token
+            )
             let account = try await accountRepository.insert(
-                Account.createInvited(id: accountID, email: input.email, passwordHash: passwordHash)
+                Account.createInvited(
+                    id: accountID,
+                    email: input.email,
+                    passwordHash: passwordHash
+                )
             )
             for roleID in input.roleIDs {
                 guard try await roleRepository.findBy(id: roleID) != nil else {
-                    throw RepositoryError.notFound
+                    throw Error.roleNotFound(roleID)
                 }
             }
-            try await accountRepository.replaceRoleIds(accountId: account.id, roleIds: input.roleIDs)
+            try await accountRepository.replaceRoleIds(
+                accountId: account.id,
+                roleIds: input.roleIDs
+            )
             return try await context.invitation.insert(
-                Invitation.create(id: idGenerator.generate(), accountID: account.id, email: input.email, token: token)
+                Invitation.create(
+                    id: idGenerator.generate(),
+                    accountID: account.id,
+                    email: input.email,
+                    token: token
+                )
             )
         }
+        // TODO: Send the invitation email after the transaction commits.
+        // The backend currently has no configured runtime MailSender for this use case.
         return model.asDetail
     }
 }
