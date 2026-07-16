@@ -14,6 +14,8 @@ import RedirectApplication
 import RedirectInfrastructure
 import BlogApplication
 import BlogInfrastructure
+import AccountApplication
+import AccountInfrastructure
 
 struct AppModules: Sendable {
 
@@ -28,6 +30,7 @@ struct AppModules: Sendable {
     let user: UserModule
     let auth: AuthModule
     let media: MediaModule
+    let account: AccountModule
 
     init(
         infrastructure: AppInfrastructure
@@ -78,6 +81,10 @@ struct AppModules: Sendable {
             authorizer: authorizer
         )
         self.media = .init(
+            infrastructure: infrastructure,
+            authorizer: authorizer
+        )
+        self.account = .init(
             infrastructure: infrastructure,
             authorizer: authorizer
         )
