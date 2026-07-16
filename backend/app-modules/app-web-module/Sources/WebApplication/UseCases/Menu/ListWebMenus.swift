@@ -1,5 +1,11 @@
-import Foundation
+//
+//  ListWebMenus.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
+import Foundation
 
 public struct ListPublicMenus: Sendable {
     struct ItemPermissionAction: PermissionAction {
@@ -71,10 +77,8 @@ public struct ListPublicMenus: Sendable {
     ) async throws -> [PublicMenuItem] {
         var result: [PublicMenuItem] = []
 
-        for item in items {
-            guard try await isAvailable(item: item, subject: subject) else {
-                continue
-            }
+        for item in items
+        where try await isAvailable(item: item, subject: subject) {
             result.append(
                 .init(
                     id: item.id,

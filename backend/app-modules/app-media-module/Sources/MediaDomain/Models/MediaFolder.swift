@@ -1,4 +1,11 @@
+//
+//  MediaFolder.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct MediaFolder: Model {
@@ -44,8 +51,8 @@ public struct MediaFolder: Model {
     }
 }
 
-public extension MediaFolder {
-    static func create(
+extension MediaFolder {
+    public static func create(
         id: String,
         parentId: String?,
         name: String,

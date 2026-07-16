@@ -1,4 +1,11 @@
+//
+//  AuthorLink.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct AuthorLink: Model {
@@ -59,7 +66,7 @@ public struct AuthorLink: Model {
     }
 }
 
-public extension AuthorLink {
+extension AuthorLink {
 
     private static func validate(
         label: String
@@ -99,7 +106,7 @@ public extension AuthorLink {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         authorId: String,
         label: String,
@@ -126,7 +133,7 @@ public extension AuthorLink {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         label: String? = nil,
         url: String? = nil,
         priority: Int? = nil,

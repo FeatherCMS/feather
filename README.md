@@ -35,6 +35,24 @@ Run these from the repository root:
 - `make clean backend`
   Clears database and media storage, then builds and runs the backend stack.
 
+### Module and Backend Tests
+
+From the repository root, start all PostgreSQL and certificate services required
+by the module and backend tests:
+
+```sh
+make docker-up
+```
+
+Run tests from VS Code's Test Explorer, use `make test` for the backend package,
+or use `make test-all` for the backend and every package under
+`backend/app-modules`. When finished, remove the test services, networks, and
+volumes with:
+
+```sh
+make docker-down
+```
+
 ### Docker BuildKit cache error
 
 If `make <any>` fails with `Cache export is not supported for the docker driver`,

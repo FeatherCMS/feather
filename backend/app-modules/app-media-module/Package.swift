@@ -39,6 +39,7 @@ let package = Package(
         .library(name: "MediaInfrastructure", targets: ["MediaInfrastructure"]),
     ],
     dependencies: [
+        // [docc-plugin-placeholder]
         .package(
             url: "https://github.com/feather-framework/feather-database",
             exact: "1.0.0-beta.5"

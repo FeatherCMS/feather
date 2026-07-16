@@ -1,7 +1,13 @@
-import FeatherDatabase
+//
+//  DatabaseMenuItemRepository.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
-import WebDomain
+import FeatherDatabase
 import Infrastructure
+import WebDomain
 
 extension MenuItemTable.Row {
     var asDomain: MenuItem {

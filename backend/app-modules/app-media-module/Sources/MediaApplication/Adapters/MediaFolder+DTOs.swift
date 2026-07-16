@@ -1,7 +1,13 @@
+//
+//  MediaFolder+DTOs.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import MediaDomain
 
-public extension MediaFolder {
-    var asDetail: MediaFolderDetail {
+extension MediaFolder {
+    public var asDetail: MediaFolderDetail {
         .init(
             id: id,
             parentId: parentId,
@@ -14,7 +20,7 @@ public extension MediaFolder {
         )
     }
 
-    var asListItem: MediaFolderList.Item {
+    public var asListItem: MediaFolderList.Item {
         .init(
             id: id,
             parentId: parentId,

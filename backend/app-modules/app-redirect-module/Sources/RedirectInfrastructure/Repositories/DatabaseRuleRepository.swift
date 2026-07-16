@@ -1,7 +1,13 @@
-import FeatherDatabase
+//
+//  DatabaseRuleRepository.swift
+//  app-redirect-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
-import RedirectDomain
+import FeatherDatabase
 import Infrastructure
+import RedirectDomain
 
 extension RuleTable.Row {
     var asDomain: Rule {

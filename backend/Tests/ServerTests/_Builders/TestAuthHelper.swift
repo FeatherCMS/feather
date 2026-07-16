@@ -59,20 +59,23 @@ extension TestRunner {
         password: String = "root",
         isPersistent: Bool = true
     ) async throws -> String {
-        try await run(
-            request: JSONRequest(
-                method: .post,
-                path: "/api/v1/admin/user/auth/login",
-                body: Components.Schemas.UserAuthLoginRequestSchema(
-                    email: email,
-                    password: password,
-                    isPersistent: isPersistent
-                )
-            )
-        ) { response in
+        let body = Components.Schemas.AuthLoginRequestSchema(
+            email: email,
+            password: password,
+            isPersistent: isPersistent
+        )
+        let request = JSONRequest(
+            method: .post,
+            path: "/api/v1/admin/user/auth/login",
+            body: body
+        )
+
+        return try await run(
+            request: request
+        ) { response -> String in
             let body = try await response.json(
                 status: .ok,
-                Components.Schemas.UserAuthMeResponseSchema.self
+                Components.Schemas.AuthResponseSchema.self
             )
             guard
                 let token = response.response.headerFields[.setCookie],

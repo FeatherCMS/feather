@@ -1,6 +1,12 @@
+//
+//  GetAuthorLink.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
-import Domain
 import BlogDomain
+import Domain
 
 public struct GetAuthorLink: UseCase {
     struct Action: PermissionAction {

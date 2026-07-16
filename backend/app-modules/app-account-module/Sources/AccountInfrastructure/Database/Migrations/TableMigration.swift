@@ -1,1 +1,7 @@
+//
+//  TableMigration.swift
+//  app-account-module
+//
+//  Created by Binary Birds on 2026. 07. 16.
+
 // Placeholder for Account module table migrations.

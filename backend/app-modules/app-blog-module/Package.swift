@@ -45,6 +45,7 @@ let package = Package(
         .library(name: "BlogInfrastructure", targets: ["BlogInfrastructure"]),
     ],
     dependencies: [
+        // [docc-plugin-placeholder]
         .package(
             url: "https://github.com/apple/swift-log",
             from: "1.0.0"
@@ -113,6 +114,27 @@ let package = Package(
                 .product(name: "Infrastructure", package: "app-kernel"),
                 .product(name: "WebApplication", package: "app-web-module"),
                 .target(name: "BlogApplication"),
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "BlogDomainTests",
+            dependencies: [
+                .target(name: "BlogDomain")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "BlogApplicationTests",
+            dependencies: [
+                .target(name: "BlogApplication")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "BlogInfrastructureTests",
+            dependencies: [
+                .target(name: "BlogInfrastructure")
             ],
             swiftSettings: defaultSwiftSettings
         ),
