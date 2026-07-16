@@ -1,8 +1,9 @@
-FROM swift:6.1
+FROM swift:6.2
 
-WORKDIR /app
+WORKDIR /app/backend/app-modules/app-account-module
 
-COPY . ./
+COPY backend/app-modules/app-account-module /app/backend/app-modules/app-account-module
+COPY backend/app-modules/app-kernel /app/backend/app-modules/app-kernel
 
 RUN swift package resolve
 RUN swift package clean

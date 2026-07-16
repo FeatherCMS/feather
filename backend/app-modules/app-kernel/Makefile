@@ -46,6 +46,12 @@ fix-headers:
 test:
 	swift test --parallel
 
+docker-up:
+	docker compose up -d certificates postgres
+
+docker-down:
+	docker compose down -v --remove-orphans
+
 docker-test:
 	docker build -t app-kernel-tests . -f ./docker/tests/Dockerfile && docker run --rm app-kernel-tests
 

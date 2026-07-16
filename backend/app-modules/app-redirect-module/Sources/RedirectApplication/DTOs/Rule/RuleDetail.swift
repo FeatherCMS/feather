@@ -1,5 +1,12 @@
-import struct Foundation.Date
+//
+//  RuleDetail.swift
+//  app-redirect-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
+
+import struct Foundation.Date
 
 public struct RuleDetail: DTO {
     public let id: String

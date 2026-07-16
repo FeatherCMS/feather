@@ -1,7 +1,14 @@
-import Testing
+//
+//  MediaApplicationUploadTestSuite.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
-import MediaDomain
 import Foundation
+import MediaDomain
+import Testing
+
 @testable import MediaApplication
 
 @Suite
@@ -12,6 +19,7 @@ struct MediaApplicationUploadTestSuite {
         let repository = MediaAssetMockRepository(mode: .success)
         let transaction = MockTransactionExecutor(
             context: WriteMedia(
+                folders: NoopMediaFolderRepository(),
                 assets: repository,
                 processors: NoopMediaProcessorRepository(),
                 processorAssets: NoopMediaProcessorAssetRepository()
@@ -50,6 +58,7 @@ struct MediaApplicationUploadTestSuite {
         let repository = MediaAssetMockRepository(mode: .success)
         let transaction = MockTransactionExecutor(
             context: WriteMedia(
+                folders: NoopMediaFolderRepository(),
                 assets: repository,
                 processors: NoopMediaProcessorRepository(),
                 processorAssets: NoopMediaProcessorAssetRepository()
@@ -85,6 +94,7 @@ struct MediaApplicationUploadTestSuite {
         let repository = MediaAssetMockRepository(mode: .failure)
         let transaction = MockTransactionExecutor(
             context: WriteMedia(
+                folders: NoopMediaFolderRepository(),
                 assets: repository,
                 processors: NoopMediaProcessorRepository(),
                 processorAssets: NoopMediaProcessorAssetRepository()
@@ -204,7 +214,9 @@ private actor MediaAssetMockRepository: MediaAssetRepository {
         case .success:
             return .init(
                 id: model.id,
+                folderId: model.folderId,
                 storageKey: model.storageKey,
+                baseName: model.baseName,
                 type: model.type,
                 sizeBytes: model.sizeBytes,
                 status: model.status,
@@ -227,6 +239,18 @@ private actor MediaAssetMockRepository: MediaAssetRepository {
     ) async throws -> MediaAsset? {
         _ = id
         return nil
+    }
+    func find(
+        storageKey: String
+    ) async throws -> MediaAsset? {
+        _ = storageKey
+        return nil
+    }
+    func list(
+        folderIds: [String]
+    ) async throws -> [MediaAsset] {
+        _ = folderIds
+        return []
     }
     func delete(
         id: String
@@ -284,6 +308,11 @@ private actor NoopMediaProcessorAssetRepository: MediaProcessorAssetRepository {
     ) async throws -> [MediaProcessorAsset] {
         _ = assetId
         return []
+    }
+    func deleteAll(
+        assetId: String
+    ) async throws {
+        _ = assetId
     }
 }
 

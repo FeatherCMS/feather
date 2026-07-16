@@ -1,4 +1,11 @@
+//
+//  Metadata.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Metadata: Model {
@@ -108,7 +115,7 @@ public struct Metadata: Model {
     }
 }
 
-public extension Metadata {
+extension Metadata {
 
     private static func validate(
         slug: String
@@ -224,7 +231,7 @@ public extension Metadata {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         reference: Reference? = nil,
         slug: String,
@@ -275,7 +282,7 @@ public extension Metadata {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         reference: Reference?? = nil,
         slug: String? = nil,
         publicationDate: Date?? = nil,

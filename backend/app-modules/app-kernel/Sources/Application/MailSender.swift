@@ -1,3 +1,9 @@
+//
+//  MailSender.swift
+//  app-kernel
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 public struct MailAddress: Sendable, Equatable, Hashable {
     public var email: String
     public var name: String?

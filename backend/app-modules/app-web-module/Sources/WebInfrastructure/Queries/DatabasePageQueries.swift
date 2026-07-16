@@ -1,6 +1,11 @@
-import WebApplication
-import FeatherDatabase
+//
+//  DatabasePageQueries.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
+import FeatherDatabase
 import Infrastructure
 import WebApplication
 import WebDomain

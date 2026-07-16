@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  UseCase.swift
 //  app-kernel
 //
-//  Created by Tibor Bödecs on 2026. 04. 10..
+//  Created by Tibor Bödecs on 2026. 04. 10.
 //
 
 public protocol UseCase: Sendable {}
