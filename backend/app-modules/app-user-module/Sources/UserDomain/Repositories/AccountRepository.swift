@@ -1,3 +1,9 @@
+//
+//  AccountRepository.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
 
 public protocol AccountRepository: Repository {

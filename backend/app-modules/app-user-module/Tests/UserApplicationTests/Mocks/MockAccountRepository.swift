@@ -1,3 +1,9 @@
+//
+//  MockAccountRepository.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import UserDomain
 
 actor MockAccountRepository: AccountRepository {
@@ -51,6 +57,12 @@ actor MockAccountRepository: AccountRepository {
         []
     }
 
+    func findRoleIdsBy(
+        accountId: String
+    ) async throws -> [String] {
+        []
+    }
+
     func findPermissionsBy(
         accountId: String
     ) async throws -> [String] {
@@ -69,6 +81,12 @@ actor MockAccountRepository: AccountRepository {
     ) async throws -> Account {
         updateCallCount += 1
         return model
+    }
+
+    func replaceRoleIds(
+        accountId: String,
+        roleIds: [String]
+    ) async throws {
     }
 
     func delete(

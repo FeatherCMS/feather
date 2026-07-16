@@ -1,4 +1,11 @@
+//
+//  Account.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Account: Model {
@@ -53,7 +60,7 @@ public struct Account: Model {
     }
 }
 
-public extension Account {
+extension Account {
 
     private static func validate(
         email: String
@@ -88,7 +95,7 @@ public extension Account {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         email: String,
         password: String,
@@ -107,7 +114,7 @@ public extension Account {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         email: String? = nil,
         password: String? = nil,
         passwordHash: String? = nil,
