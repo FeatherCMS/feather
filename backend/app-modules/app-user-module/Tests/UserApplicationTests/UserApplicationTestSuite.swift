@@ -187,6 +187,70 @@ struct UserApplicationTestSuite {
     }
 
     @Test
+    func addInvitationCreatesInvitedAccountAndAssignsRoles() async throws {
+        let invitationRepo = MockInvitationRepository(result: makeInvitation(id: "i-invited"))
+        let accountRepo = MockAccountRepository(result: makeAccount(id: "a-invited"))
+        let roleRepo = MockRoleRepository(result: makeRole(id: "r-invited"))
+        let transaction = MockTransactionExecutor(
+            context: WriteInvitation(
+                invitation: invitationRepo,
+                account: accountRepo,
+                role: roleRepo
+            )
+        )
+        let useCase = AddInvitation(
+            authorizer: MockAuthorizer(result: true),
+            transaction: transaction,
+            idGenerator: FixedIDGenerator(id: "generated-id"),
+            passwordHasher: MockPasswordHasher(hashResult: "hashed-password")
+        )
+
+        _ = try await useCase.execute(
+            subject: Subject(id: "subject-invited"),
+            input: .init(email: "invitee@example.com", roleIDs: ["r-invited"])
+        )
+
+        #expect(await transaction.runCallCount == 1)
+        #expect(await accountRepo.createCallCount == 1)
+        #expect(await accountRepo.replaceRoleIdsCallCount == 1)
+        #expect(await invitationRepo.createCallCount == 1)
+    }
+
+    @Test
+    func completeInvitationRegistrationActivatesAccountAndConsumesInvitation() async throws {
+        let invitation = makeInvitation(id: "i-complete", accountID: "a-complete")
+        let invitationRepo = MockInvitationRepository(
+            result: invitation,
+            findByTokenResult: invitation,
+            deleteResult: true
+        )
+        let accountRepo = MockAccountRepository(
+            result: makeAccount(id: "a-complete"),
+            findByIdResult: makeAccount(id: "a-complete")
+        )
+        let transaction = MockTransactionExecutor(
+            context: WriteInvitation(
+                invitation: invitationRepo,
+                account: accountRepo,
+                role: MockRoleRepository(result: makeRole(id: "r-complete"))
+            )
+        )
+        let useCase = CompleteInvitationRegistration(
+            transaction: transaction,
+            passwordHasher: MockPasswordHasher(hashResult: "completed-password-hash")
+        )
+
+        let result = try await useCase.execute(
+            input: .init(token: invitation.token, password: "completed-password")
+        )
+
+        #expect(result.id == "a-complete")
+        #expect(await accountRepo.updateCallCount == 1)
+        #expect(await invitationRepo.deleteCallCount == 1)
+        #expect(await transaction.runCallCount == 1)
+    }
+
+    @Test
     func listInvitationsAndCountSuccess() async throws {
         let queries = MockInvitationQueries(
             listResult: .init(items: []),
@@ -267,10 +331,12 @@ private func makeRole(
 }
 
 private func makeInvitation(
-    id: String
+    id: String,
+    accountID: String? = nil
 ) -> Invitation {
     .init(
         id: id,
+        accountID: accountID ?? id,
         email: "invitee@example.com",
         token: "token-\(id)",
         expiresAt: Date().addingTimeInterval(3600),

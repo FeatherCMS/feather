@@ -25,6 +25,7 @@ public struct Account: Model {
 
     public enum Status: String, Sendable, CaseIterable {
         case pending
+        case invited
         case active
         case inactive
     }
@@ -104,6 +105,23 @@ public extension Account {
             password: password,
             passwordHash: passwordHash,
             status: .active
+        )
+    }
+
+    static func createInvited(
+        id: String,
+        email: String,
+        passwordHash: String
+    ) throws(Self.Error) -> Self.New {
+        try validate(email: email)
+        try validate(passwordHash: passwordHash)
+
+        return .init(
+            id: id,
+            email: email,
+            password: "invited-account-placeholder",
+            passwordHash: passwordHash,
+            status: .invited
         )
     }
 

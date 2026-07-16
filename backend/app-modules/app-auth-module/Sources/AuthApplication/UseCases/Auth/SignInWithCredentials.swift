@@ -39,6 +39,7 @@ public struct SignInWithCredentials: SignIn {
                 let user = try await context.account.findBy(
                     email: input.object.email
                 ),
+                user.status == .active,
                 let hash = try await context.account.findPasswordHashBy(
                     email: input.object.email
                 ),

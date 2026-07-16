@@ -5,13 +5,16 @@ actor MockInvitationRepository: InvitationRepository {
     private(set) var deleteCallCount = 0
 
     private let result: Invitation
+    private let findByTokenResult: Invitation?
     private let deleteResult: Bool
 
     init(
         result: Invitation,
+        findByTokenResult: Invitation? = nil,
         deleteResult: Bool = false
     ) {
         self.result = result
+        self.findByTokenResult = findByTokenResult
         self.deleteResult = deleteResult
     }
 
@@ -19,6 +22,12 @@ actor MockInvitationRepository: InvitationRepository {
         id: String
     ) async throws -> Invitation? {
         nil
+    }
+
+    func findBy(
+        token: String
+    ) async throws -> Invitation? {
+        findByTokenResult
     }
 
     func insert(

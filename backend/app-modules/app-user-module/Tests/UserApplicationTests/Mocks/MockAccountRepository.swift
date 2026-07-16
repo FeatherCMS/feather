@@ -3,6 +3,7 @@ import UserDomain
 actor MockAccountRepository: AccountRepository {
     private(set) var createCallCount = 0
     private(set) var updateCallCount = 0
+    private(set) var replaceRoleIdsCallCount = 0
     private(set) var findByIdCallCount = 0
     private(set) var deleteCallCount = 0
 
@@ -49,6 +50,19 @@ actor MockAccountRepository: AccountRepository {
         accountId: String
     ) async throws -> [String] {
         []
+    }
+
+    func findRoleIdsBy(
+        accountId: String
+    ) async throws -> [String] {
+        []
+    }
+
+    func replaceRoleIds(
+        accountId: String,
+        roleIds: [String]
+    ) async throws {
+        replaceRoleIdsCallCount += 1
     }
 
     func findPermissionsBy(

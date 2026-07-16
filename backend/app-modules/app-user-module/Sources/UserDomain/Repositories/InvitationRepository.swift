@@ -6,6 +6,10 @@ public protocol InvitationRepository: Repository {
         id: String
     ) async throws -> Invitation?
 
+    func findBy(
+        token: String
+    ) async throws -> Invitation?
+
     func insert(
         _ model: Invitation.New
     ) async throws -> Invitation

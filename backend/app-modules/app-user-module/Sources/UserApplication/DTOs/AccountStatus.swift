@@ -7,6 +7,7 @@
 
 public enum AccountStatus: String, Sendable, CaseIterable {
     case pending
+    case invited
     case active
     case inactive
 }

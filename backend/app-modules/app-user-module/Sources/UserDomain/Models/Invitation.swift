@@ -17,12 +17,14 @@ public struct Invitation: Model {
 
     public struct New: Sendable {
         public let id: String
+        public let accountID: String
         public let email: String
         public let token: String
         public let expiresAtInterval: Double
     }
 
     public let id: String
+    public let accountID: String
     public let email: String
     public let token: String
     // TODO: isUsed?
@@ -32,6 +34,7 @@ public struct Invitation: Model {
 
     package init(
         id: String,
+        accountID: String,
         email: String,
         token: String,
         expiresAt: Date,
@@ -39,6 +42,7 @@ public struct Invitation: Model {
         updatedAt: Date,
     ) {
         self.id = id
+        self.accountID = accountID
         self.email = email
         self.token = token
         self.expiresAt = expiresAt
@@ -48,6 +52,25 @@ public struct Invitation: Model {
 }
 
 public extension Invitation {
+
+    package init(
+        id: String,
+        email: String,
+        token: String,
+        expiresAt: Date,
+        createdAt: Date,
+        updatedAt: Date
+    ) {
+        self.init(
+            id: id,
+            accountID: id,
+            email: email,
+            token: token,
+            expiresAt: expiresAt,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
+    }
 
     private static func validate(
         email: String
@@ -73,6 +96,7 @@ public extension Invitation {
 
     static func create(
         id: String,
+        accountID: String,
         email: String,
         token: String
     ) throws(Self.Error) -> Self.New {
@@ -81,10 +105,19 @@ public extension Invitation {
 
         return .init(
             id: id,
+            accountID: accountID,
             email: email,
             token: token,
             expiresAtInterval: lifetime
         )
+    }
+
+    static func create(
+        id: String,
+        email: String,
+        token: String
+    ) throws(Self.Error) -> Self.New {
+        try create(id: id, accountID: id, email: email, token: token)
     }
 
     mutating func update(
@@ -97,6 +130,7 @@ public extension Invitation {
         try Self.validate(email: email)
         self = .init(
             id: id,
+            accountID: accountID,
             email: email,
             token: token,
             expiresAt: expiresAt,

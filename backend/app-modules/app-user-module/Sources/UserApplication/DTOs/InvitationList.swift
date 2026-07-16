@@ -12,6 +12,7 @@ public struct InvitationList: DTO {
 
     public struct Item: Sendable {
         public let id: String
+        public let accountID: String
         public let email: String
         public let token: String
         // TODO: isUsed?
@@ -21,6 +22,7 @@ public struct InvitationList: DTO {
 
         package init(
             id: String,
+            accountID: String,
             email: String,
             token: String,
             expiresAt: Date,

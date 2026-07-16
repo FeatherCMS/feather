@@ -20,7 +20,8 @@ struct UserInvitationExpiresAtField: DoubleSchemaRepresentable {
 struct UserInvitationCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "email": UserInvitationEmailField()
+            "email": UserInvitationEmailField(),
+            "roleIds": UserAccountRoleIdsField().reference(required: false)
         ]
     }
 }

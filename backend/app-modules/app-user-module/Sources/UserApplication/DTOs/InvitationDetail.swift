@@ -3,6 +3,7 @@ import struct Foundation.Date
 
 public struct InvitationDetail: DTO {
     public let id: String
+    public let accountID: String
     public let email: String
     public let token: String
     public let expiresAt: Date
@@ -11,6 +12,7 @@ public struct InvitationDetail: DTO {
 
     package init(
         id: String,
+        accountID: String,
         email: String,
         token: String,
         expiresAt: Date,
@@ -18,6 +20,7 @@ public struct InvitationDetail: DTO {
         updatedAt: Date
     ) {
         self.id = id
+        self.accountID = accountID
         self.email = email
         self.token = token
         self.expiresAt = expiresAt
