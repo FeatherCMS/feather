@@ -1,7 +1,14 @@
-import Domain
-import AuthDomain
+//
+//  SignIn.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
+import AuthDomain
+import Domain
 import UserDomain
+
 import struct Foundation.Date
 
 protocol SignIn: UseCase {

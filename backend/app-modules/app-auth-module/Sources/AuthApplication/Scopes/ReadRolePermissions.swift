@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  ReadRolePermissions.swift
 //  app-auth-module
 //
-//  Created by Tibor Bödecs on 2026. 04. 18..
+//  Created by Tibor Bödecs on 2026. 04. 18.
 //
 
 import Application
