@@ -53,7 +53,10 @@ docker-down:
 	docker compose down -v --remove-orphans
 
 docker-test:
-	docker build -t app-kernel-tests . -f ./docker/tests/Dockerfile && docker run --rm app-kernel-tests
+	docker compose up --build --abort-on-container-exit --exit-code-from tests tests; \
+	status=$$?; \
+	docker compose down -v --remove-orphans; \
+	exit $$status
 
 export-postgres-ca:
 	mkdir -p $(certOutputDir)
