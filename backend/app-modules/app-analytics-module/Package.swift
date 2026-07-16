@@ -45,6 +45,7 @@ let package = Package(
         ),
     ],
     dependencies: [
+        // [docc-plugin-placeholder]
         .package(path: "../app-kernel")
     ],
     targets: [
