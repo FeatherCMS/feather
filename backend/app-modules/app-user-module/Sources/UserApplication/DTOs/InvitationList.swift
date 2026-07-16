@@ -1,11 +1,12 @@
 //
-//  File.swift
+//  InvitationList.swift
 //  app-user-module
 //
-//  Created by Tibor Bödecs on 2026. 04. 17..
+//  Created by Tibor Bödecs on 2026. 04. 17.
 //
 
 import Application
+
 import struct Foundation.Date
 
 public struct InvitationList: DTO {
