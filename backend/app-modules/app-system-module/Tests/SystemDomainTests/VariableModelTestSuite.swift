@@ -1,5 +1,13 @@
+//
+//  VariableModelTestSuite.swift
+//  app-system-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Testing
+
 import struct Foundation.Date
+
 @testable import SystemDomain
 
 @Suite

@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  PermissionQueries.swift
 //  app-system-module
 //
-//  Created by Tibor Bödecs on 2026. 04. 11..
+//  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
 public protocol PermissionQueries: Sendable {

@@ -1,4 +1,11 @@
+//
+//  Permission.swift
+//  app-system-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Permission: Model {
@@ -37,7 +44,7 @@ public struct Permission: Model {
     }
 }
 
-public extension Permission {
+extension Permission {
 
     private static func validate(
         name: String
@@ -58,7 +65,7 @@ public extension Permission {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         name: String,
         notes: String
@@ -69,7 +76,7 @@ public extension Permission {
         return .init(id: id, name: name, notes: notes)
     }
 
-    mutating func update(
+    public mutating func update(
         name: String? = nil,
         notes: String? = nil
     ) throws(Self.Error) {

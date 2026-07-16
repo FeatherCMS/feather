@@ -1,4 +1,11 @@
+//
+//  Variable.swift
+//  app-system-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Variable: Model {
@@ -43,7 +50,7 @@ public struct Variable: Model {
     }
 }
 
-public extension Variable {
+extension Variable {
 
     private static func validate(
         name: String
@@ -72,7 +79,7 @@ public extension Variable {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         name: String,
         value: String,
@@ -90,7 +97,7 @@ public extension Variable {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         name: String? = nil,
         value: String? = nil,
         notes: String? = nil
