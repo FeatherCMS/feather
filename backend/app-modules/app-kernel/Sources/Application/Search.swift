@@ -1,3 +1,9 @@
+//
+//  Search.swift
+//  app-kernel
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 public enum Search {
 
     public struct Page: Sendable {

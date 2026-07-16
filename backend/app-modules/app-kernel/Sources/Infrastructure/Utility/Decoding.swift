@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  server
+//  Decoding.swift
+//  app-kernel
 //
-//  Created by Tibor Bödecs on 2026. 02. 18..
+//  Created by Tibor Bödecs on 2026. 02. 18.
 //
 
 //import Foundation

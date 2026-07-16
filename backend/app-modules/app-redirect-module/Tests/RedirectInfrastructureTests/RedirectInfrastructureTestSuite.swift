@@ -1,16 +1,21 @@
-import Testing
-import Logging
-import Infrastructure
+//
+//  RedirectInfrastructureTestSuite.swift
+//  app-redirect-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
+import Application
+import Domain
 import FeatherDatabase
 import FeatherDatabasePostgres
 import Foundation
+import Infrastructure
+import Logging
 import NIOSSL
 import PostgresNIO
-
-import Domain
-import Application
-import RedirectDomain
 import RedirectApplication
+import RedirectDomain
+import Testing
 
 @testable import RedirectInfrastructure
 
@@ -31,8 +36,8 @@ struct RedirectInfrastructureTestSuite {
                     ?? "127.0.0.1",
                 port: Int(
                     ProcessInfo.processInfo.environment["POSTGRES_PORT"]
-                        ?? "55432"
-                ) ?? 55432,
+                        ?? "55439"
+                ) ?? 55439,
                 username: ProcessInfo.processInfo.environment["POSTGRES_USER"]
                     ?? "postgres",
                 password: ProcessInfo.processInfo.environment[

@@ -1,6 +1,13 @@
-import struct Foundation.Date
+//
+//  TagDetail.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import WebApplication
+
+import struct Foundation.Date
 
 public struct TagDetail: DTO {
     public let id: String

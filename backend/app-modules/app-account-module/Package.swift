@@ -43,6 +43,7 @@ let package = Package(
         .library(name: "AccountInfrastructure", targets: ["AccountInfrastructure"]),
     ],
     dependencies: [
+        // [docc-plugin-placeholder]
         //        .package(
         //            url: "https://github.com/apple/swift-log",
         //            from: "1.0.0"

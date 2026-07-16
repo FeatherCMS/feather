@@ -1,4 +1,11 @@
+//
+//  Post.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Post: Model {
@@ -53,7 +60,7 @@ public struct Post: Model {
     }
 }
 
-public extension Post {
+extension Post {
 
     private static func validate(
         title: String
@@ -82,7 +89,7 @@ public extension Post {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         title: String,
         excerpt: String,
@@ -106,7 +113,7 @@ public extension Post {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         title: String? = nil,
         excerpt: String? = nil,
         content: String? = nil,

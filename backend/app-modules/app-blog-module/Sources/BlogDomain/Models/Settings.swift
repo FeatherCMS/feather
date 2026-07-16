@@ -1,3 +1,9 @@
+//
+//  Settings.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
 
 public struct Settings: Model {
@@ -33,7 +39,7 @@ public struct Settings: Model {
     }
 }
 
-public extension Settings {
+extension Settings {
     private static func validate(
         postListPath: String,
         authorListPath: String,
@@ -55,7 +61,7 @@ public extension Settings {
         }
     }
 
-    mutating func update(
+    public mutating func update(
         postListPath: String,
         authorListPath: String,
         tagListPath: String,

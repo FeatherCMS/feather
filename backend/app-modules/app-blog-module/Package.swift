@@ -116,5 +116,26 @@ let package = Package(
             ],
             swiftSettings: defaultSwiftSettings
         ),
+        .testTarget(
+            name: "BlogDomainTests",
+            dependencies: [
+                .target(name: "BlogDomain")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "BlogApplicationTests",
+            dependencies: [
+                .target(name: "BlogApplication")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "BlogInfrastructureTests",
+            dependencies: [
+                .target(name: "BlogInfrastructure")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
     ]
 )

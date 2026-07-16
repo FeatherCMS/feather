@@ -1,7 +1,13 @@
+//
+//  MediaAsset+DTOs.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import MediaDomain
 
-public extension MediaAsset {
-    var asDetail: MediaAssetDetail {
+extension MediaAsset {
+    public var asDetail: MediaAssetDetail {
         .init(
             id: id,
             folderId: folderId,
@@ -18,7 +24,7 @@ public extension MediaAsset {
         )
     }
 
-    var asListItem: MediaAssetList.Item {
+    public var asListItem: MediaAssetList.Item {
         .init(
             id: id,
             folderId: folderId,

@@ -71,5 +71,26 @@ let package = Package(
             ],
             swiftSettings: defaultSwiftSettings
         ),
+        .testTarget(
+            name: "AnalyticsDomainTests",
+            dependencies: [
+                .target(name: "AnalyticsDomain")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "AnalyticsApplicationTests",
+            dependencies: [
+                .target(name: "AnalyticsApplication")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "AnalyticsInfrastructureTests",
+            dependencies: [
+                .target(name: "AnalyticsInfrastructure")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
     ]
 )

@@ -1,7 +1,14 @@
-import Testing
+//
+//  MediaVariantGenerationTestSuite.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
-import MediaDomain
 import Foundation
+import MediaDomain
+import Testing
+
 @testable import MediaApplication
 
 @Suite
@@ -13,7 +20,9 @@ struct MediaVariantGenerationTestSuite {
         let assetRepo = MockAssetRepository(
             asset: .init(
                 id: "asset-3",
+                folderId: nil,
                 storageKey: "media/assets/asset-3.jpg",
+                baseName: "asset-3",
                 type: "jpeg",
                 sizeBytes: 123,
                 status: .processing,
@@ -50,6 +59,7 @@ struct MediaVariantGenerationTestSuite {
         let processorAssetRepo = MockProcessorAssetRepository()
         let transaction = MockTransactionExecutor(
             context: WriteMedia(
+                folders: NoopMediaFolderRepository(),
                 assets: assetRepo,
                 processors: processorRepo,
                 processorAssets: processorAssetRepo
@@ -85,7 +95,7 @@ struct MediaVariantGenerationTestSuite {
         #expect(
             await storage.uploadedKeys == [
                 "media/assets/asset-3_image_preview.jpeg",
-                "media/assets/asset-3_preview.jpeg",
+                "media/assets/asset-3_video_preview.jpeg",
             ]
         )
         #expect(await processorAssetRepo.inserted.count == 2)
@@ -97,7 +107,9 @@ struct MediaVariantGenerationTestSuite {
         let assetRepo = MockAssetRepository(
             asset: .init(
                 id: "asset-4",
+                folderId: nil,
                 storageKey: "media/assets/asset-4.mov",
+                baseName: "asset-4",
                 type: "mov",
                 sizeBytes: 456,
                 status: .processing,
@@ -123,6 +135,7 @@ struct MediaVariantGenerationTestSuite {
         let processorAssetRepo = MockProcessorAssetRepository()
         let transaction = MockTransactionExecutor(
             context: WriteMedia(
+                folders: NoopMediaFolderRepository(),
                 assets: assetRepo,
                 processors: processorRepo,
                 processorAssets: processorAssetRepo
@@ -142,7 +155,9 @@ struct MediaVariantGenerationTestSuite {
         )
 
         #expect(
-            await storage.uploadedKeys == ["media/assets/asset-4_preview.png"]
+            await storage.uploadedKeys == [
+                "media/assets/asset-4_video_preview.png"
+            ]
         )
         #expect(await assetRepo.statusHistory == [.ready])
     }
@@ -194,6 +209,19 @@ private actor MockAssetRepository: MediaAssetRepository {
         id: String
     ) async throws -> MediaAsset? {
         id == asset.id ? asset : nil
+    }
+
+    func find(
+        storageKey: String
+    ) async throws -> MediaAsset? {
+        storageKey == asset.storageKey ? asset : nil
+    }
+
+    func list(
+        folderIds: [String]
+    ) async throws -> [MediaAsset] {
+        _ = folderIds
+        return []
     }
 
     func delete(
@@ -292,6 +320,12 @@ private actor MockProcessorAssetRepository: MediaProcessorAssetRepository {
                     createdAt: Date()
                 )
             }
+    }
+
+    func deleteAll(
+        assetId: String
+    ) async throws {
+        inserted.removeAll { $0.assetId == assetId }
     }
 }
 

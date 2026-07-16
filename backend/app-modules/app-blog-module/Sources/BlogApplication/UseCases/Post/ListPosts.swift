@@ -1,12 +1,17 @@
-import Domain
+//
+//  ListPosts.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 07. 06.
+
 import Application
-import WebApplication
 import BlogDomain
+import Domain
+import WebApplication
 
 public struct ListPosts: UseCase {
     struct Action: PermissionAction {
         let key = BlogPermissions.Posts.list
-
 
     }
 
