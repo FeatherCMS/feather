@@ -169,32 +169,32 @@ struct AssetAddView: Component {
             Input().type(.hidden).name("view").value(state.form.view)
                 .id("view")
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: "Title", required: false)
-                    Input().type(.text).class("text-input").name("title")
-                        .value(state.form.title).id("title")
-                }
-            }
+            FormInputField(
+                name: "title",
+                label: "Title",
+                value: state.form.title,
+                id: "title",
+                inputClass: "text-input"
+            )
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: "Alt text", required: false)
-                    Input().type(.text).class("text-input").name("altText")
-                        .value(state.form.altText).id("altText")
-                }
-            }
+            FormInputField(
+                name: "altText",
+                label: "Alt text",
+                value: state.form.altText,
+                id: "altText",
+                inputClass: "text-input"
+            )
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: "File", required: true)
-                    Input().type(.file).class("text-input").name("file")
-                        .id("file")
-                        .required()
-                }
-                Input().type(.hidden).name("data").id("data")
-                    .value(state.form.data)
-            }
+            FormInputField(
+                name: "file",
+                label: "File",
+                id: "file",
+                type: .file,
+                isRequired: true,
+                inputClass: "text-input"
+            )
+            Input().type(.hidden).name("data").id("data")
+                .value(state.form.data)
 
             Section {
                 Div { Button("Add").type(.submit) }.class("button-row")
@@ -217,32 +217,32 @@ struct AssetAddView: Component {
             Input().type(.hidden).name("view").value(state.form.view)
                 .id("view")
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: "Title", required: false)
-                    Input().type(.text).class("text-input").name("title")
-                        .value(state.form.title).id("title")
-                }
-            }
+            FormInputField(
+                name: "title",
+                label: "Title",
+                value: state.form.title,
+                id: "title",
+                inputClass: "text-input"
+            )
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: "Alt text", required: false)
-                    Input().type(.text).class("text-input").name("altText")
-                        .value(state.form.altText).id("altText")
-                }
-            }
+            FormInputField(
+                name: "altText",
+                label: "Alt text",
+                value: state.form.altText,
+                id: "altText",
+                inputClass: "text-input"
+            )
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: "File", required: true)
-                    Input().type(.file).class("text-input").name("file")
-                        .id("file")
-                        .required()
-                }
-                Input().type(.hidden).name("data").id("data")
-                    .value(state.form.data)
-            }
+            FormInputField(
+                name: "file",
+                label: "File",
+                id: "file",
+                type: .file,
+                isRequired: true,
+                inputClass: "text-input"
+            )
+            Input().type(.hidden).name("data").id("data")
+                .value(state.form.data)
 
             Section {
                 Div {

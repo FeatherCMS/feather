@@ -52,45 +52,24 @@ struct UserAccountForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            Section {
-                Label {
-                    AdminFieldLabel(
-                        label: state.email.label,
-                        required: state.email.isRequired
-                    )
+            FormInputField(
+                name: state.email.key,
+                label: state.email.label,
+                value: state.email.value,
+                error: state.email.error,
+                isRequired: state.email.isRequired,
+                inputClass: "text-input"
+            )
 
-                    Input()
-                        .type(.text)
-                        .class("text-input")
-                        .id(state.email.key)
-                        .name(state.email.key)
-                        .value(state.email.value)
-                }
-                if let error = state.email.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.email.error != nil) { $0.class("has-error") }
-
-            Section {
-                Label {
-                    AdminFieldLabel(
-                        label: state.password.label,
-                        required: state.password.isRequired
-                    )
-
-                    Input()
-                        .type(.password)
-                        .class("text-input")
-                        .id(state.password.key)
-                        .name(state.password.key)
-                        .value(state.password.value)
-                }
-                if let error = state.password.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.password.error != nil) { $0.class("has-error") }
+            FormInputField(
+                name: state.password.key,
+                label: state.password.label,
+                value: state.password.value,
+                error: state.password.error,
+                type: .password,
+                isRequired: state.password.isRequired,
+                inputClass: "text-input"
+            )
 
             if !state.roleOptions.isEmpty {
                 Section {

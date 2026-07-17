@@ -165,13 +165,32 @@ struct AdminMetadataFields: Component, FlowContent {
             }
             .class("admin-metadata-fields__header")
 
-            field(state.slug, prefix: state.slugPrefix)
+            FormInputField(
+                name: state.slug.key,
+                label: state.slug.label,
+                prefix: state.slugPrefix,
+                value: state.slug.value,
+                error: state.slug.error,
+                isRequired: true
+            )
 
             Div {
                 H3("Publishing")
                 statusField(state.status)
-                field(state.publicationDate)
-                field(state.expirationDate)
+                FormInputField(
+                    name: state.publicationDate.key,
+                    label: state.publicationDate.label,
+                    value: state.publicationDate.value,
+                    error: state.publicationDate.error,
+                    type: .datetimeLocal
+                )
+                FormInputField(
+                    name: state.expirationDate.key,
+                    label: state.expirationDate.label,
+                    value: state.expirationDate.value,
+                    error: state.expirationDate.error,
+                    type: .datetimeLocal
+                )
             }
             .class("admin-metadata-fields__group")
 
@@ -182,7 +201,13 @@ struct AdminMetadataFields: Component, FlowContent {
 
                 Div {
                     if showTitle {
-                        field(state.title, required: titleRequired)
+                        FormInputField(
+                            name: state.title.key,
+                            label: state.title.label,
+                            value: state.title.value,
+                            error: state.title.error,
+                            isRequired: titleRequired
+                        )
                     }
                     textarea(state.excerpt, rows: 4)
                     imagePicker(
@@ -203,9 +228,19 @@ struct AdminMetadataFields: Component, FlowContent {
                 }
 
                 Div {
-                    field(state.canonicalUrl)
+                    FormInputField(
+                        name: state.canonicalUrl.key,
+                        label: state.canonicalUrl.label,
+                        value: state.canonicalUrl.value,
+                        error: state.canonicalUrl.error
+                    )
                     checkbox(state.noIndex)
-                    field(state.primaryKeyword)
+                    FormInputField(
+                        name: state.primaryKeyword.key,
+                        label: state.primaryKeyword.label,
+                        value: state.primaryKeyword.value,
+                        error: state.primaryKeyword.error
+                    )
                     textarea(state.cssCodeInjection, rows: 10)
                     textarea(state.javascriptCodeInjection, rows: 10)
                     textarea(state.structuredDataCodeInjection, rows: 10)
@@ -233,54 +268,6 @@ struct AdminMetadataFields: Component, FlowContent {
             || state.cssCodeInjection.error != nil
             || state.javascriptCodeInjection.error != nil
             || state.structuredDataCodeInjection.error != nil
-    }
-
-    private func field(
-        _ field: FieldState,
-        required: Bool? = nil,
-        prefix: String? = nil
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(
-                    label: field.label,
-                    required:
-                        required
-                        ?? (field.key == state.slug.key
-                            || field.key == state.status.key
-                            || field.key == state.title.key)
-                )
-                if let prefix {
-                    Div {
-                        Span(prefix)
-                            .class("admin-metadata-fields__prefix")
-                        input(field)
-                    }
-                    .class("admin-metadata-fields__prefixed-input")
-                }
-                else {
-                    input(field)
-                }
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
-    }
-
-    private func input(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Input()
-            .type(
-                field.key == state.publicationDate.key
-                    || field.key == state.expirationDate.key
-                    ? .datetimeLocal : .text
-            )
-            .id(field.key)
-            .name(field.key)
-            .value(field.value)
     }
 
     private func statusField(

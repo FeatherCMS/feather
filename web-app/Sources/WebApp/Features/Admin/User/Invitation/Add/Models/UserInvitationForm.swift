@@ -39,20 +39,13 @@ struct UserInvitationForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: state.email.label, required: true)
-                    Input()
-                        .type(.text)
-                        .id(state.email.key)
-                        .name(state.email.key)
-                        .value(state.email.value)
-                }
-                if let error = state.email.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.email.error != nil) { $0.class("has-error") }
+            FormInputField(
+                name: state.email.key,
+                label: state.email.label,
+                value: state.email.value,
+                error: state.email.error,
+                isRequired: true
+            )
 
             Section {
                 Div {

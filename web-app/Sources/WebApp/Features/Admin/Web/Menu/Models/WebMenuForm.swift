@@ -43,8 +43,20 @@ struct WebMenuForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            field(state.key)
-            field(state.name)
+            FormInputField(
+                name: state.key.key,
+                label: state.key.label,
+                value: state.key.value,
+                error: state.key.error,
+                isRequired: true
+            )
+            FormInputField(
+                name: state.name.key,
+                label: state.name.label,
+                value: state.name.value,
+                error: state.name.error,
+                isRequired: true
+            )
             textarea(state.notes)
 
             Section {
@@ -66,28 +78,6 @@ struct WebMenuForm: Component, FlowContent {
         .method(.post)
         .action(action)
         .class("cms-form")
-    }
-
-    private func field(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(
-                    label: field.label,
-                    required: field.key == "key" || field.key == "name"
-                )
-                Input()
-                    .type(.text)
-                    .id(field.key)
-                    .name(field.key)
-                    .value(field.value)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
     }
 
     private func textarea(

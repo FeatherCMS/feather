@@ -30,14 +30,13 @@ struct MediaFolderAddView: Component {
                 Input().type(.hidden).name("view")
                     .value(state.form.view).id("view")
 
-                Section {
-                    Label {
-                        AdminFieldLabel(label: "Folder name", required: true)
-                        Input().type(.text).class("text-input").name("name")
-                            .value(state.form.name).id("name")
-                            .required()
-                    }
-                }
+                FormInputField(
+                    name: "name",
+                    label: "Folder name",
+                    value: state.form.name,
+                    isRequired: true,
+                    inputClass: "text-input"
+                )
 
                 Section {
                     Div { Button("Add").type(.submit) }.class("button-row")

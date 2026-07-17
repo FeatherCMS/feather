@@ -1,11 +1,13 @@
 import HTML
 import SGML
+import CSS
 import WebStandards
 
 struct FormInputField: Component, FlowContent {
     struct State {
         var name: String
         var label: String
+        var prefix: String?
         var value: String?
         var error: String?
         var help: String?
@@ -22,6 +24,7 @@ struct FormInputField: Component, FlowContent {
         init(
             name: String,
             label: String,
+            prefix: String? = nil,
             value: String? = nil,
             error: String? = nil,
             help: String? = nil,
@@ -37,6 +40,7 @@ struct FormInputField: Component, FlowContent {
         ) {
             self.name = name
             self.label = label
+            self.prefix = prefix
             self.value = value
             self.error = error
             self.help = help
@@ -63,6 +67,7 @@ struct FormInputField: Component, FlowContent {
     init(
         name: String,
         label: String,
+        prefix: String? = nil,
         value: String? = nil,
         error: String? = nil,
         help: String? = nil,
@@ -79,6 +84,7 @@ struct FormInputField: Component, FlowContent {
         self.state = .init(
             name: name,
             label: label,
+            prefix: prefix,
             value: value,
             error: error,
             help: help,
@@ -94,11 +100,30 @@ struct FormInputField: Component, FlowContent {
         )
     }
 
+    func selectors() -> [any Selector] {
+        Class("field-label__optional") {
+            Color(.variable("cms-tertiary-font"))
+        }
+        Custom("label .field-label__optional") {
+            Color(.variable("cms-tertiary-font"))
+        }
+    }
+
     func content() -> some BasicTag {
         Section {
             Label {
                 fieldLabel()
-                input()
+                if let prefix = state.prefix {
+                    Div {
+                        Span(prefix)
+                            .class("admin-metadata-fields__prefix")
+                        input()
+                    }
+                    .class("admin-metadata-fields__prefixed-input")
+                }
+                else {
+                    input()
+                }
             }
             .for(state.id)
 

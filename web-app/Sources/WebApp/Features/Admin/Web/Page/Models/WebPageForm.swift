@@ -63,7 +63,13 @@ struct WebPageForm: Component, FlowContent {
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                 )
             )
-            field(state.title)
+            FormInputField(
+                name: state.title.key,
+                label: state.title.label,
+                value: state.title.value,
+                error: state.title.error,
+                isRequired: true
+            )
             textarea(state.excerpt, required: false, rows: 4)
             textarea(state.content)
             AdminMetadataFields(
@@ -98,25 +104,6 @@ struct WebPageForm: Component, FlowContent {
         .method(.post)
         .action(action)
         .class("cms-form")
-    }
-
-    private func field(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: true)
-                Input()
-                    .type(.text)
-                    .id(field.key)
-                    .name(field.key)
-                    .value(field.value)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
     }
 
     private func textarea(

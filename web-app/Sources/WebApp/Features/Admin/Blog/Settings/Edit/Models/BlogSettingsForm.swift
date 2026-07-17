@@ -48,14 +48,56 @@ struct BlogSettingsForm: Component, FlowContent {
             }
 
             H2("List paths")
-            field(state.postListPath)
-            field(state.authorListPath)
-            field(state.tagListPath)
+            FormInputField(
+                name: state.postListPath.key,
+                label: state.postListPath.label,
+                value: state.postListPath.value,
+                error: state.postListPath.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.authorListPath.key,
+                label: state.authorListPath.label,
+                value: state.authorListPath.value,
+                error: state.authorListPath.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.tagListPath.key,
+                label: state.tagListPath.label,
+                value: state.tagListPath.value,
+                error: state.tagListPath.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
 
             H2("Prefixes")
-            field(state.postPathPrefix)
-            field(state.authorPathPrefix)
-            field(state.tagPathPrefix)
+            FormInputField(
+                name: state.postPathPrefix.key,
+                label: state.postPathPrefix.label,
+                value: state.postPathPrefix.value,
+                error: state.postPathPrefix.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.authorPathPrefix.key,
+                label: state.authorPathPrefix.label,
+                value: state.authorPathPrefix.value,
+                error: state.authorPathPrefix.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.tagPathPrefix.key,
+                label: state.tagPathPrefix.label,
+                value: state.tagPathPrefix.value,
+                error: state.tagPathPrefix.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
 
             if state.canEdit {
                 Section {
@@ -73,27 +115,4 @@ struct BlogSettingsForm: Component, FlowContent {
         .class("cms-form")
     }
 
-    private func field(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: false)
-
-                Input()
-                    .type(.text)
-                    .class("text-input")
-                    .id(field.key)
-                    .name(field.key)
-                    .value(field.value)
-                    .if(!state.canEdit) {
-                        $0.disabled()
-                    }
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
-    }
 }

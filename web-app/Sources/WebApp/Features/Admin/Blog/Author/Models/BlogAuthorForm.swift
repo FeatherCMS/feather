@@ -65,7 +65,13 @@ struct BlogAuthorForm: Component, FlowContent {
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                 )
             )
-            field(state.name)
+            FormInputField(
+                name: state.name.key,
+                label: state.name.label,
+                value: state.name.value,
+                error: state.name.error,
+                isRequired: true
+            )
             textarea(state.excerpt, required: false, rows: 4)
             textarea(state.content)
             AdminMetadataFields(
@@ -100,28 +106,6 @@ struct BlogAuthorForm: Component, FlowContent {
         .method(.post)
         .action(action)
         .class("cms-form")
-    }
-
-    private func field(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(
-                    label: field.label,
-                    required: field.key == "name"
-                )
-                Input()
-                    .type(.text)
-                    .id(field.key)
-                    .name(field.key)
-                    .value(field.value)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
     }
 
     private func textarea(

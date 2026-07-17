@@ -80,16 +80,49 @@ struct WebMetadataForm: Component, FlowContent {
             if let referenceId = state.referenceId {
                 readonlyField(referenceId)
             }
-            field(state.slug)
-            field(state.publicationDate)
-            field(state.expirationDate)
+            FormInputField(
+                name: state.slug.key,
+                label: state.slug.label,
+                value: state.slug.value,
+                error: state.slug.error,
+                isRequired: true
+            )
+            FormInputField(
+                name: state.publicationDate.key,
+                label: state.publicationDate.label,
+                value: state.publicationDate.value,
+                error: state.publicationDate.error,
+                type: .datetimeLocal
+            )
+            FormInputField(
+                name: state.expirationDate.key,
+                label: state.expirationDate.label,
+                value: state.expirationDate.value,
+                error: state.expirationDate.error,
+                type: .datetimeLocal
+            )
             statusField(state.status)
-            field(state.title)
+            FormInputField(
+                name: state.title.key,
+                label: state.title.label,
+                value: state.title.value,
+                error: state.title.error
+            )
             textarea(state.excerpt, rows: 4)
             imagePicker(state.imageUrl, selectedAsset: state.selectedImageAsset)
-            field(state.canonicalUrl)
+            FormInputField(
+                name: state.canonicalUrl.key,
+                label: state.canonicalUrl.label,
+                value: state.canonicalUrl.value,
+                error: state.canonicalUrl.error
+            )
             checkbox(state.noIndex)
-            field(state.primaryKeyword)
+            FormInputField(
+                name: state.primaryKeyword.key,
+                label: state.primaryKeyword.label,
+                value: state.primaryKeyword.value,
+                error: state.primaryKeyword.error
+            )
             textarea(state.cssCodeInjection, rows: 10)
             textarea(state.javascriptCodeInjection, rows: 10)
             textarea(state.structuredDataCodeInjection, rows: 10)
@@ -113,34 +146,6 @@ struct WebMetadataForm: Component, FlowContent {
         .method(.post)
         .action(action)
         .class("cms-form")
-    }
-
-    private func field(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(
-                    label: field.label,
-                    required:
-                        field.key == "slug"
-                        || field.key == "status"
-                )
-                Input()
-                    .type(
-                        field.key == "publicationDate"
-                            || field.key == "expirationDate"
-                            ? .datetimeLocal : .text
-                    )
-                    .id(field.key)
-                    .name(field.key)
-                    .value(field.value)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
     }
 
     private func readonlyField(

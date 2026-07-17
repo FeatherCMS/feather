@@ -22,26 +22,21 @@ struct MediaProcessorFormView: Component {
             H1(title)
             if let error = form.error { P(error).class("error") }
             Form {
-                Section {
-                    Label {
-                        AdminFieldLabel(label: "File suffix", required: true)
-                        Input().type(.text).class("text-input")
-                            .name("fileSuffix").id("fileSuffix")
-                            .value(form.fileSuffix)
-                    }
-                }
+                FormInputField(
+                    name: "fileSuffix",
+                    label: "File suffix",
+                    value: form.fileSuffix,
+                    isRequired: true,
+                    inputClass: "text-input"
+                )
 
-                Section {
-                    Label {
-                        AdminFieldLabel(
-                            label: "Match extensions",
-                            required: true
-                        )
-                        Input().type(.text).class("text-input")
-                            .name("matchExtensions").id("matchExtensions")
-                            .value(form.matchExtensions)
-                    }
-                }
+                FormInputField(
+                    name: "matchExtensions",
+                    label: "Match extensions",
+                    value: form.matchExtensions,
+                    isRequired: true,
+                    inputClass: "text-input"
+                )
 
                 Section {
                     Label {

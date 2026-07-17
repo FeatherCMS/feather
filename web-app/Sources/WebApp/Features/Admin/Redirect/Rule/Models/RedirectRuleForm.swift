@@ -52,10 +52,56 @@ struct RedirectRuleForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            field(state.source)
-            field(state.destination)
-            field(state.statusCode)
-            field(state.notes)
+            FormInputField(
+                name: state.source.key,
+                label: state.source.label,
+                value: state.source.value,
+                error: state.source.error,
+                isRequired: true
+            )
+
+            FormInputField(
+                name: state.destination.key,
+                label: state.destination.label,
+                value: state.destination.value,
+                error: state.destination.error,
+                isRequired: true
+            )
+
+            Section {
+                Label {
+                    AdminFieldLabel(
+                        label: state.statusCode.label,
+                        required: true
+                    )
+                    Select {
+                        for option in Self.statusOptions {
+                            if (state.statusCode.value ?? "301") == option.0 {
+                                Option(option.1)
+                                    .value(option.0)
+                                    .selected()
+                            }
+                            else {
+                                Option(option.1)
+                                    .value(option.0)
+                            }
+                        }
+                    }
+                    .id(state.statusCode.key)
+                    .name(state.statusCode.key)
+                }
+                if let error = state.statusCode.error {
+                    Span(error).class("field-error")
+                }
+            }
+            .if(state.statusCode.error != nil) { $0.class("has-error") }
+
+            FormInputField(
+                name: state.notes.key,
+                label: state.notes.label,
+                value: state.notes.value,
+                error: state.notes.error
+            )
 
             Section {
                 Div {
@@ -78,44 +124,4 @@ struct RedirectRuleForm: Component, FlowContent {
         .class("cms-form")
     }
 
-    private func field(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(
-                    label: field.label,
-                    required: field.key != "notes"
-                )
-                if field.key == "statusCode" {
-                    Select {
-                        for option in Self.statusOptions {
-                            if (field.value ?? "301") == option.0 {
-                                Option(option.1)
-                                    .value(option.0)
-                                    .selected()
-                            }
-                            else {
-                                Option(option.1)
-                                    .value(option.0)
-                            }
-                        }
-                    }
-                    .id(field.key)
-                    .name(field.key)
-                }
-                else {
-                    Input()
-                        .type(.text)
-                        .id(field.key)
-                        .name(field.key)
-                        .value(field.value)
-                }
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
-    }
 }

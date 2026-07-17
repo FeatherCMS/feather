@@ -56,11 +56,34 @@ struct BlogAuthorLinkForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            field(state.label)
-            field(state.url)
-            field(state.priority)
+            FormInputField(
+                name: state.label.key,
+                label: state.label.label,
+                value: state.label.value,
+                error: state.label.error,
+                isRequired: true
+            )
+            FormInputField(
+                name: state.url.key,
+                label: state.url.label,
+                value: state.url.value,
+                error: state.url.error,
+                isRequired: true
+            )
+            FormInputField(
+                name: state.priority.key,
+                label: state.priority.label,
+                value: state.priority.value,
+                error: state.priority.error,
+                isRequired: true
+            )
             checkbox(state.isBlank)
-            field(state.permission)
+            FormInputField(
+                name: state.permission.key,
+                label: state.permission.label,
+                value: state.permission.value,
+                error: state.permission.error
+            )
             textarea(state.notes)
 
             Section {
@@ -82,31 +105,6 @@ struct BlogAuthorLinkForm: Component, FlowContent {
         .method(.post)
         .action(action)
         .class("cms-form")
-    }
-
-    private func field(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(
-                    label: field.label,
-                    required:
-                        field.key == "label"
-                        || field.key == "url"
-                        || field.key == "priority"
-                )
-                Input()
-                    .type(.text)
-                    .id(field.key)
-                    .name(field.key)
-                    .value(field.value)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
     }
 
     private func textarea(

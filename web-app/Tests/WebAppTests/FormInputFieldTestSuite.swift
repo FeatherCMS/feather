@@ -42,6 +42,23 @@ struct FormInputFieldTestSuite {
     }
 
     @Test
+    func rendersInputPrefix() async throws {
+        let result = render(
+            FormInputField(
+                name: "slug",
+                label: "Slug",
+                prefix: "/"
+            )
+        )
+
+        let expectation = #"""
+            <section><label for="slug"><span class="field-label">Slug<span class="field-label__optional"> (Optional)</span></span><div class="admin-metadata-fields__prefixed-input"><span class="admin-metadata-fields__prefix">/</span><input type="text" id="slug" name="slug" aria-invalid="false"></div></label></section>
+            """#
+
+        #expect(result == expectation)
+    }
+
+    @Test
     func rendersHelpAndErrorAccessibilityAttributes() async throws {
         let result = render(
             FormInputField(
