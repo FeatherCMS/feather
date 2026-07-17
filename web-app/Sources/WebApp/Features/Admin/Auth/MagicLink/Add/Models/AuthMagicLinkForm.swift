@@ -55,20 +55,16 @@ struct AuthMagicLinkForm: Component, FlowContent {
                 isRequired: true
             )
 
-            Section {
-                Label {
-                    Input()
-                        .type(.checkbox)
-                        .id(state.isPersistent.key)
-                        .name(state.isPersistent.key)
-                        .if(state.isPersistent.value) { $0.checked() }
-                    InlineText(state.isPersistent.label)
-                }
-                if let error = state.isPersistent.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.isPersistent.error != nil) { $0.class("has-error") }
+            CheckboxField(
+                state: .init(
+                    key: state.isPersistent.key,
+                    label: state.isPersistent.label,
+                    value: state.isPersistent.value,
+                    error: state.isPersistent.error,
+                    labelPosition: .before,
+
+                )
+            )
 
             Section {
                 Div {
