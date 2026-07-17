@@ -7,6 +7,100 @@ import typealias Foundation.TimeInterval
 struct AuthDomainTestSuite {
 
     @Test
+    func credentialCreateSucceedsWithValidValues() throws {
+        let credentials = try Credential.create(
+            id: "credential-1",
+            accountID: "account-1",
+            email: "user@example.com",
+            passwordHash: "valid-password-hash"
+        )
+
+        #expect(credentials.id == "credential-1")
+        #expect(credentials.accountID == "account-1")
+        #expect(credentials.email == "user@example.com")
+        #expect(credentials.passwordHash == "valid-password-hash")
+    }
+
+    @Test
+    func credentialCreateValidatesAccountID() {
+        #expect(throws: Credential.Error.invalidAccountID) {
+            _ = try Credential.create(
+                id: "credential-1",
+                accountID: "",
+                email: "user@example.com",
+                passwordHash: "valid-password-hash"
+            )
+        }
+    }
+
+    @Test
+    func credentialCreateValidatesEmailBoundaries() {
+        #expect(throws: Credential.Error.emailTooShort) {
+            _ = try Credential.create(
+                id: "credential-1",
+                accountID: "account-1",
+                email: "abc",
+                passwordHash: "valid-password-hash"
+            )
+        }
+
+        #expect(throws: Credential.Error.emailTooLong) {
+            _ = try Credential.create(
+                id: "credential-1",
+                accountID: "account-1",
+                email: String(repeating: "a", count: 255),
+                passwordHash: "valid-password-hash"
+            )
+        }
+    }
+
+    @Test
+    func credentialCreateValidatesPasswordHashBoundaries() {
+        #expect(throws: Credential.Error.passwordHashTooShort) {
+            _ = try Credential.create(
+                id: "credential-1",
+                accountID: "account-1",
+                email: "user@example.com",
+                passwordHash: "12345678"
+            )
+        }
+
+        #expect(throws: Credential.Error.passwordHashTooLong) {
+            _ = try Credential.create(
+                id: "credential-1",
+                accountID: "account-1",
+                email: "user@example.com",
+                passwordHash: String(repeating: "a", count: 255)
+            )
+        }
+    }
+
+    @Test
+    func credentialUpdateValidatesAndChangesValues() throws {
+        var credentials = makeCredential()
+
+        try credentials.update(
+            email: "updated@example.com",
+            passwordHash: "updated-password-hash"
+        )
+
+        #expect(credentials.email == "updated@example.com")
+        #expect(credentials.passwordHash == "updated-password-hash")
+    }
+
+    @Test
+    func credentialUpdateValidatesNewValues() throws {
+        var credentials = makeCredential()
+
+        #expect(throws: Credential.Error.emailTooShort) {
+            try credentials.update(email: "abc")
+        }
+        #expect(throws: Credential.Error.passwordHashTooShort) {
+            try credentials.update(passwordHash: "12345678")
+        }
+    }
+
+    @Test
     func magicLinkCreateValidatesToken() async throws {
         #expect(throws: MagicLink.Error.tokenTooShort) {
             _ = try MagicLink.create(
@@ -103,6 +197,17 @@ private func makeMagicLink(
         expiresAt: Date().addingTimeInterval(expiresAfter),
         isPersistent: true,
         isUsed: isUsed,
+        createdAt: Date(),
+        updatedAt: Date()
+    )
+}
+
+private func makeCredential() -> Credential {
+    .init(
+        id: "credential-1",
+        accountID: "account-1",
+        email: "user@example.com",
+        passwordHash: "valid-password-hash",
         createdAt: Date(),
         updatedAt: Date()
     )
