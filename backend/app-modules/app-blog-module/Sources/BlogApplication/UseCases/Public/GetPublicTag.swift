@@ -1,8 +1,14 @@
+//
+//  GetPublicTag.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
+import BlogDomain
 import Domain
 import Foundation
 import WebApplication
-import BlogDomain
 
 public struct GetPublicTag {
     public struct Error: UseCaseError {
@@ -58,8 +64,8 @@ public struct GetPublicTag {
     }
 }
 
-private extension GetPublicTag {
-    static func publicPosts(
+extension GetPublicTag {
+    fileprivate static func publicPosts(
         matchingTagID tagID: String,
         now: Date,
         context: ReadPublicBlogTag

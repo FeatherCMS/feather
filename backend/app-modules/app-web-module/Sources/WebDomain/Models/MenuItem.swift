@@ -1,4 +1,11 @@
+//
+//  MenuItem.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct MenuItem: Model {
@@ -59,7 +66,7 @@ public struct MenuItem: Model {
     }
 }
 
-public extension MenuItem {
+extension MenuItem {
 
     private static func validate(
         label: String
@@ -99,7 +106,7 @@ public extension MenuItem {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         menuId: String,
         label: String,
@@ -126,7 +133,7 @@ public extension MenuItem {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         label: String? = nil,
         url: String? = nil,
         priority: Int? = nil,

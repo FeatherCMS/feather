@@ -1,4 +1,11 @@
+//
+//  Author.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Author: Model {
@@ -45,7 +52,7 @@ public struct Author: Model {
     }
 }
 
-public extension Author {
+extension Author {
 
     private static func validate(
         name: String
@@ -74,7 +81,7 @@ public extension Author {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         name: String,
         excerpt: String,
@@ -94,7 +101,7 @@ public extension Author {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         name: String? = nil,
         excerpt: String? = nil,
         content: String? = nil,

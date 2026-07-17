@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  DefaultActions.swift
 //  app-auth-module
 //
-//  Created by Tibor Bödecs on 2026. 05. 08..
+//  Created by Tibor Bödecs on 2026. 05. 08.
 //
 
 import Application
@@ -15,7 +15,7 @@ public struct IsAuthenticated: Action {
         subject: Subject,
         permissions: Set<PermissionKey>
     ) async throws -> Bool {
-        return !subject.id.isEmpty
+        !subject.id.isEmpty
     }
 }
 

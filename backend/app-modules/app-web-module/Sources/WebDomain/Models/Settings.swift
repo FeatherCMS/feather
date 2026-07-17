@@ -1,3 +1,9 @@
+//
+//  Settings.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
 
 public struct Settings: Model {
@@ -71,7 +77,7 @@ public struct Settings: Model {
     }
 }
 
-public extension Settings {
+extension Settings {
 
     private static func validate(
         title: String,
@@ -129,7 +135,7 @@ public extension Settings {
         }
     }
 
-    mutating func update(
+    public mutating func update(
         logo: String,
         logoDark: String,
         metaImage: String,

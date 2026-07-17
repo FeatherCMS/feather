@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  Authorizer.swift
 //  app-kernel
 //
-//  Created by Tibor Bödecs on 2026. 04. 18..
+//  Created by Tibor Bödecs on 2026. 04. 18.
 //
 
 public struct PermissionKey: Sendable, Hashable, Equatable {
@@ -25,9 +25,9 @@ public protocol PermissionAction: Action {
     var key: PermissionKey { get }
 }
 
-public extension PermissionAction {
+extension PermissionAction {
 
-    func authorize(
+    public func authorize(
         subject: Subject,
         permissions: Set<PermissionKey>
     ) async throws -> Bool {

@@ -1,8 +1,16 @@
-import Testing
+//
+//  UserApplicationTestSuite.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import Domain
-import struct Foundation.Date
+import Testing
 import UserDomain
+
+import struct Foundation.Date
+
 @testable import UserApplication
 
 @Suite
@@ -16,7 +24,7 @@ struct UserApplicationTestSuite {
             context: WriteAccount(account: accountRepo, role: roleRepo)
         )
         let authorizer = MockAuthorizer(result: true)
-        let passwordHasher = MockPasswordHasher(hashResult: "hashed")
+        let passwordHasher = MockPasswordHasher(hashResult: "hashed-password")
         let useCase = AddAccount(
             authorizer: authorizer,
             transaction: transaction,

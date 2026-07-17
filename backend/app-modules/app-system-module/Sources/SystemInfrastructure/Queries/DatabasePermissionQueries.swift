@@ -1,13 +1,13 @@
 //
-//  File.swift
+//  DatabasePermissionQueries.swift
 //  app-system-module
 //
-//  Created by Tibor Bödecs on 2026. 04. 11..
+//  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
-import SystemApplication
-import FeatherDatabase
 import Application
+import FeatherDatabase
+import SystemApplication
 
 extension PermissionTable.Row {
 

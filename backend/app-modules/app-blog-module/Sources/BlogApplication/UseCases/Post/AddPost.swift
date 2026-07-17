@@ -1,10 +1,16 @@
+//
+//  AddPost.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import BlogDomain
 import Domain
 import Foundation
+import SystemApplication
 import WebApplication
 import WebDomain
-import SystemApplication
 
 public struct AddPost: UseCase {
 
@@ -126,8 +132,8 @@ public struct AddPost: UseCase {
     }
 }
 
-private extension AddPost {
-    func metadataSlug(
+extension AddPost {
+    fileprivate func metadataSlug(
         _ slug: String,
         variable: any VariableQueries,
         key: String,
@@ -154,7 +160,7 @@ private extension AddPost {
         return "\(prefix)/\(normalizedSlug)"
     }
 
-    func normalize(
+    fileprivate func normalize(
         _ value: String
     ) -> String {
         value

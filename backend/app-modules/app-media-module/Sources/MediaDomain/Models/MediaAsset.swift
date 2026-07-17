@@ -1,4 +1,11 @@
+//
+//  MediaAsset.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 import struct Foundation.URL
 
@@ -64,8 +71,8 @@ public struct MediaAsset: Model {
     }
 }
 
-public extension MediaAsset {
-    static func create(
+extension MediaAsset {
+    public static func create(
         id: String,
         folderId: String?,
         storageKey: String,

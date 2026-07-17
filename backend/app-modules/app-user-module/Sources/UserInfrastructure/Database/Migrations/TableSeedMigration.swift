@@ -1,7 +1,13 @@
-import Infrastructure
-import FeatherDatabase
+//
+//  TableSeedMigration.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 // TODO: eliminate these, use abstractions
 import BCrypt
+import FeatherDatabase
+import Infrastructure
 import NIOPosix
 
 public struct TableSeedMigration: DatabaseMigration {

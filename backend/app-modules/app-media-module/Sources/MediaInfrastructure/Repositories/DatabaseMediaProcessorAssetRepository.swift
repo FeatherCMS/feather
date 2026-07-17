@@ -1,5 +1,11 @@
-import MediaDomain
+//
+//  DatabaseMediaProcessorAssetRepository.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import FeatherDatabase
+import MediaDomain
 
 extension MediaProcessorAssetTable.Row {
     var asDomain: MediaProcessorAsset {

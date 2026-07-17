@@ -1,9 +1,15 @@
-import Domain
-import UserDomain
-import UserApplication
+//
+//  DatabaseAccountRepository.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
-import Infrastructure
+import Domain
 import FeatherDatabase
+import Infrastructure
+import UserApplication
+import UserDomain
 
 extension AccountTable.Row {
     var asDomain: Account {

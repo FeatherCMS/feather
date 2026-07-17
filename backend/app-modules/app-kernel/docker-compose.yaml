@@ -42,8 +42,8 @@ services:
 
     tests:
         build:
-            context: .
-            dockerfile: docker/tests/Dockerfile
+            context: ../../..
+            dockerfile: backend/app-modules/app-kernel/docker/tests/Dockerfile
         depends_on:
             postgres:
                 condition: service_healthy

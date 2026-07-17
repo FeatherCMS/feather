@@ -45,6 +45,7 @@ let package = Package(
         ),
     ],
     dependencies: [
+        // [docc-plugin-placeholder]
         .package(path: "../app-kernel")
     ],
     targets: [
@@ -68,6 +69,27 @@ let package = Package(
             dependencies: [
                 .product(name: "Infrastructure", package: "app-kernel"),
                 .target(name: "AnalyticsApplication"),
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "AnalyticsDomainTests",
+            dependencies: [
+                .target(name: "AnalyticsDomain")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "AnalyticsApplicationTests",
+            dependencies: [
+                .target(name: "AnalyticsApplication")
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "AnalyticsInfrastructureTests",
+            dependencies: [
+                .target(name: "AnalyticsInfrastructure")
             ],
             swiftSettings: defaultSwiftSettings
         ),

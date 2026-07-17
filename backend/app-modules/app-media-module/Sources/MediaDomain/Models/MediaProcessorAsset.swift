@@ -1,4 +1,11 @@
+//
+//  MediaProcessorAsset.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct MediaProcessorAsset: Model {
@@ -30,8 +37,8 @@ public struct MediaProcessorAsset: Model {
     }
 }
 
-public extension MediaProcessorAsset {
-    static func create(
+extension MediaProcessorAsset {
+    public static func create(
         id: String,
         assetId: String,
         processorId: String,

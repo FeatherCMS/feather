@@ -1,7 +1,13 @@
-import FeatherDatabase
+//
+//  DatabaseVariableRepository.swift
+//  app-system-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
-import SystemDomain
+import FeatherDatabase
 import Infrastructure
+import SystemDomain
 
 extension VariableTable.Row {
     var asDomain: Variable {

@@ -111,6 +111,7 @@ let package = Package(
         .package(path: "./app-modules/app-user-module"),
         .package(path: "./app-modules/app-auth-module"),
         .package(path: "./app-modules/app-media-module"),
+        .package(path: "./app-modules/app-account-module"),
     ],
     targets: [
         .target(
@@ -143,6 +144,7 @@ let package = Package(
                 .product(name: "AuthApplication", package: "app-auth-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(name: "AccountInfrastructure", package: "app-account-module"),
 
                 .target(name: "Environment"),
             ],
@@ -171,6 +173,7 @@ let package = Package(
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(name: "AccountInfrastructure", package: "app-account-module"),
 
                 .target(name: "Environment"),
             ],
@@ -211,6 +214,8 @@ let package = Package(
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(name: "AccountApplication", package: "app-account-module"),
+                .product(name: "AccountInfrastructure", package: "app-account-module"),
 
                 .target(name: "Environment"),
             ],

@@ -1,3 +1,9 @@
+//
+//  MockAccountQueries.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 @testable import UserApplication
 
 actor MockAccountQueries: AccountQueries {
@@ -53,6 +59,12 @@ actor MockAccountQueries: AccountQueries {
     ) async throws -> [String] {
         rolesCallCount += 1
         return rolesResult
+    }
+
+    func getRoleIdsBy(
+        accountId: String
+    ) async throws -> [String] {
+        []
     }
 
     func getPermissionsBy(

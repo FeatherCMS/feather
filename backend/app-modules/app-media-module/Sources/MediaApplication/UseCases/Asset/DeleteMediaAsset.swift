@@ -1,3 +1,9 @@
+//
+//  DeleteMediaAsset.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import MediaDomain
 
@@ -50,8 +56,8 @@ public struct DeleteMediaAsset: UseCase {
     }
 }
 
-private extension DeleteMediaAsset {
-    func adjustFolderAggregates(
+extension DeleteMediaAsset {
+    fileprivate func adjustFolderAggregates(
         folders: any MediaFolderRepository,
         folderId: String?,
         sizeDelta: Int64,

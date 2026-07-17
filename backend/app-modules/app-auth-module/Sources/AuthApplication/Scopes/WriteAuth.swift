@@ -1,5 +1,11 @@
-import AuthDomain
+//
+//  WriteAuth.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
+import AuthDomain
 import UserDomain
 
 // TODO: no need for magic link custom scope for sign in

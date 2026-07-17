@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  server
+//  Order.swift
+//  app-kernel
 //
-//  Created by Tibor Bödecs on 2026. 02. 18..
+//  Created by Tibor Bödecs on 2026. 02. 18.
 //
 
 public enum Order: String, Sendable & Equatable & Hashable & Codable,
