@@ -12,7 +12,7 @@
     {
       "label": "Ensure Local Dependencies",
       "type": "shell",
-      "command": "make deps",
+      "command": "make deps; make docker-up",
       "options": {
         "cwd": "${workspaceFolder}",
       },
@@ -24,7 +24,7 @@
       "command": "bash",
       "args": [
         "-lc",
-        "set -euo pipefail; make stop || true; pkill -f \"/backend/.build/.*/Server\" || true; pkill -f \"/backend/.build/.*/Worker\" || true",
+        "set -euo pipefail; make stop || true; make docker-down || true; pkill -f \"/backend/.build/.*/Server\" || true; pkill -f \"/backend/.build/.*/Worker\" || true",
       ],
       "options": {
         "cwd": "${workspaceFolder}",
