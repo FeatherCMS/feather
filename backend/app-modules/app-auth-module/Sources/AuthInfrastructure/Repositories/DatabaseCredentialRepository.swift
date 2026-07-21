@@ -1,9 +1,9 @@
-import Domain
 import AuthDomain
-import Infrastructure
+import Domain
 import FeatherDatabase
-import struct Foundation.Date
+import Infrastructure
 
+import struct Foundation.Date
 
 extension CredentialTable.Row {
 

@@ -1,10 +1,11 @@
 import FeatherDatabase
 import Infrastructure
+
 import struct Foundation.Date
 
-private extension CredentialTable.Row {
+extension CredentialTable.Row {
 
-    init(
+    fileprivate init(
         from row: DatabaseRow
     ) throws {
         self.init(
@@ -64,6 +65,63 @@ public struct CredentialTable {
         connection: any DatabaseConnection
     ) {
         self.connection = connection
+    }
+
+    public func list(
+        accountID: String? = nil,
+        search: String?,
+        orderBy: String,
+        limit: Int,
+        offset: Int
+    ) async throws -> [Row] {
+        try await connection.run(
+            query: #"""
+                SELECT *
+                FROM auth_credentials
+                WHERE (
+                    \#(accountID == nil)
+                    OR account_id=\#(accountID ?? "")
+                )
+                AND (
+                    \#(search == nil)
+                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(account_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                )
+                ORDER BY \#(unescaped: orderBy)
+                LIMIT \#(limit)
+                OFFSET \#(offset);
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
+    public func count(
+        accountID: String? = nil,
+        search: String?
+    ) async throws -> Int {
+        try await connection.run(
+            query: #"""
+                SELECT COUNT(*) AS count
+                FROM auth_credentials
+                WHERE (
+                    \#(accountID == nil)
+                    OR account_id=\#(accountID ?? "")
+                )
+                AND (
+                    \#(search == nil)
+                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(account_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                );
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return 0
+            }
+            return try row.decode(column: "count", as: Int.self)
+        }
     }
 
     public func find(

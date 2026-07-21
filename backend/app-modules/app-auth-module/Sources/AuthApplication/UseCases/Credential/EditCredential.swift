@@ -56,9 +56,11 @@ public struct EditCredential: UseCase {
         }
 
         let model = try await transaction.run { context in
-            guard var model = try await context.credential.findBy(
-                id: input.id
-            ) else {
+            guard
+                var model = try await context.credential.findBy(
+                    id: input.id
+                )
+            else {
                 throw UseCaseError(
                     reason: .validation,
                     logMessage: "Credential not found: \(input.id)",

@@ -1,5 +1,5 @@
-import AuthDomain
 import Application
+import AuthDomain
 
 public struct ReadCredentialLink: Scope {
     public let credential: any CredentialQueries

@@ -25,6 +25,7 @@ public enum AuthPermissions: PermissionProvider {
         static let update = PermissionKey("auth:credential:update")
         static let delete = PermissionKey("auth:credential:delete")
         static let find = PermissionKey("auth:credential:find")
+        static let list = PermissionKey("auth:credential:list")
 
         public static func allPermissions() -> Set<PermissionKey> {
             [
@@ -33,6 +34,7 @@ public enum AuthPermissions: PermissionProvider {
                 update,
                 delete,
                 find,
+                list,
             ]
         }
     }

@@ -1,4 +1,5 @@
 import Domain
+
 import struct Foundation.Date
 
 public struct Credential: Model {
@@ -42,7 +43,7 @@ public struct Credential: Model {
     }
 }
 
-public extension Credential {
+extension Credential {
 
     private static func validate(
         accountID: String
@@ -74,7 +75,7 @@ public extension Credential {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         accountID: String,
         email: String,
@@ -92,7 +93,7 @@ public extension Credential {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         email: String? = nil,
         passwordHash: String? = nil
     ) throws(Self.Error) {

@@ -1,5 +1,5 @@
-import AuthDomain
 import Application
+import AuthDomain
 
 public struct WriteCredentialLink: Scope {
     public let credential: any CredentialRepository

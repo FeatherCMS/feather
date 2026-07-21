@@ -1,4 +1,5 @@
 import Application
+
 import struct Foundation.Date
 
 public struct CredentialDetail: DTO {
