@@ -92,6 +92,8 @@
     .code-language { max-width: 180px; margin-bottom: 6px; }
     .code-editor { min-height: 150px; background: #f7f8fa !important; color: #425166 !important; font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     .media-fields { display: grid; gap: 7px; }
+    .media-picker-button { width: fit-content; border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; background: var(--paper); color: var(--muted); font-size: 12px; }
+    .media-picker-button:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
     .custom-fields { display: grid; gap: 7px; }
     .quote-fields { display: grid; gap: 7px; }
     .list-editor { min-height: 105px; }

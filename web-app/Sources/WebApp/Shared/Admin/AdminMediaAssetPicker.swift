@@ -24,19 +24,22 @@ struct AdminMediaAssetPicker: Component, FlowContent {
         let browsePath: String
         let allowedExtensions: [String]
         let outputMode: OutputMode
+        let showsCurrentCard: Bool
 
         init(
             field: FieldState,
             selectedAsset: AdminMediaAssetReferenceModel?,
             browsePath: String,
             allowedExtensions: [String],
-            outputMode: OutputMode = .assetId
+            outputMode: OutputMode = .assetId,
+            showsCurrentCard: Bool = true
         ) {
             self.field = field
             self.selectedAsset = selectedAsset
             self.browsePath = browsePath
             self.allowedExtensions = allowedExtensions
             self.outputMode = outputMode
+            self.showsCurrentCard = showsCurrentCard
         }
     }
 
@@ -230,10 +233,6 @@ struct AdminMediaAssetPicker: Component, FlowContent {
 
     func content() -> some BasicTag {
         Section {
-            Label {
-                AdminFieldLabel(label: state.field.label, required: false)
-            }
-
             Div {
                 Input()
                     .type(.hidden)
@@ -241,7 +240,18 @@ struct AdminMediaAssetPicker: Component, FlowContent {
                     .name(state.field.key)
                     .value(state.field.value)
 
-                currentCard()
+                if state.showsCurrentCard {
+                    Label {
+                        AdminFieldLabel(label: state.field.label, required: false)
+                    }
+                    currentCard()
+                }
+                else {
+                    Button("")
+                        .type(.button)
+                        .data("media-picker-open", state.field.key)
+                        .style("display:none;")
+                }
 
                 if let error = state.field.error {
                     Span(error).class("field-error")
@@ -486,6 +496,7 @@ extension AdminMediaAssetPicker {
               input.value = asset
                 ? (outputMode === "original_url" ? originalUrl(asset) : (asset.id || ""))
                 : "";
+              input.dispatchEvent(new Event("change", { bubbles: true }));
             }
 
             var preview = document.querySelector('[data-media-picker-preview="' + field + '"]');

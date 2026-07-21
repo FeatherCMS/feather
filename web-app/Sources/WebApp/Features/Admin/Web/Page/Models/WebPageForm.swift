@@ -204,7 +204,42 @@ struct WebPageForm: Component, FlowContent {
                             .class("markdown-source")
                     }.id("rawView").hidden()
                 }.class("panel editor")
-            }.class("workspace", "mce-app")
+            }
+            .class("workspace", "mce-app")
+            .data("markdown-image-picker", "markdown-image-url")
+            .data("markdown-video-picker", "markdown-video-url")
+            AdminMediaAssetPicker(
+                state: .init(
+                    field: .init(
+                        key: "markdown-image-url",
+                        label: "Choose image",
+                        value: nil,
+                        error: nil
+                    ),
+                    selectedAsset: nil,
+                    browsePath:
+                        "/admin/media/assets/?picker=1&field=markdown-image-url&extensions=png,jpg,jpeg,webp,gif",
+                    allowedExtensions: ["png", "jpg", "jpeg", "webp", "gif"],
+                    outputMode: .originalURL,
+                    showsCurrentCard: false
+                )
+            )
+            AdminMediaAssetPicker(
+                state: .init(
+                    field: .init(
+                        key: "markdown-video-url",
+                        label: "Choose video",
+                        value: nil,
+                        error: nil
+                    ),
+                    selectedAsset: nil,
+                    browsePath:
+                        "/admin/media/assets/?picker=1&field=markdown-video-url&extensions=mp4,mov,webm",
+                    allowedExtensions: ["mp4", "mov", "webm"],
+                    outputMode: .originalURL,
+                    showsCurrentCard: false
+                )
+            )
             if let error = field.error {
                 Span(error).class("field-error")
             }
