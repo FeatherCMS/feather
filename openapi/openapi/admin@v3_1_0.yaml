@@ -3175,6 +3175,22 @@ components:
       - accountID
       - email
       minProperties: 3
+    UserCredentialSearchFilterSchema:
+      type: object
+      properties:
+        search:
+          $ref: '#/components/schemas/UserCredentialSearchField'
+        accountID:
+          $ref: '#/components/schemas/UserCredentialAccountIdField'
+      minProperties: 0
+    UserCredentialSearchField:
+      type: string
+      examples:
+      - foo
+    UserCredentialAccountIdField:
+      type: string
+      examples:
+      - account_7nL3xQ2v
     UserCredentialListItemSearchQuerySchema:
       type: object
       properties:
@@ -3212,14 +3228,6 @@ components:
       - page
       - filters
       minProperties: 2
-    UserCredentialSearchField:
-      type: string
-      examples:
-      - foo
-    UserCredentialAccountIdField:
-      type: string
-      examples:
-      - account_7nL3xQ2v
     UserCredentialListItemSearchSchema:
       type: object
       properties:
@@ -7441,7 +7449,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/UserCredentialSearchFilterSchema'
     UserCredentialListItemSearchSchemaSearchResponse:
       description: Search response
       content:

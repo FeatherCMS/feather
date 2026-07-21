@@ -16,19 +16,23 @@ extension AdminAPI {
         let subject = try await CurrentSubject.require()
         let useCase = modules.auth.makeListCredential()
         let objectQuery = map(query)
+        let accountID =
+            query.filters.accountID?.isEmpty == true
+            ? nil
+            : query.filters.accountID
 
         let list = try await useCase.execute(
             subject: subject,
             input: .init(
                 query: objectQuery,
-                accountID: query.filters.accountID
+                accountID: accountID
             )
         )
         let total = try await useCase.count(
             subject: subject,
             input: .init(
                 query: objectQuery,
-                accountID: query.filters.accountID
+                accountID: accountID
             )
         )
 

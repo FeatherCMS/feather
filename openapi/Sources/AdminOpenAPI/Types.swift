@@ -2718,6 +2718,33 @@ public enum Components {
                 case email
             }
         }
+        /// - Remark: Generated from `#/components/schemas/UserCredentialSearchFilterSchema`.
+        public struct UserCredentialSearchFilterSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserCredentialSearchFilterSchema/search`.
+            public var search: Components.Schemas.UserCredentialSearchField?
+            /// - Remark: Generated from `#/components/schemas/UserCredentialSearchFilterSchema/accountID`.
+            public var accountID: Components.Schemas.UserCredentialAccountIdField?
+            /// Creates a new `UserCredentialSearchFilterSchema`.
+            ///
+            /// - Parameters:
+            ///   - search:
+            ///   - accountID:
+            public init(
+                search: Components.Schemas.UserCredentialSearchField? = nil,
+                accountID: Components.Schemas.UserCredentialAccountIdField? = nil
+            ) {
+                self.search = search
+                self.accountID = accountID
+            }
+            public enum CodingKeys: String, CodingKey {
+                case search
+                case accountID
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserCredentialSearchField`.
+        public typealias UserCredentialSearchField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserCredentialAccountIdField`.
+        public typealias UserCredentialAccountIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema`.
         public struct UserCredentialListItemSearchQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/page`.
@@ -2800,10 +2827,6 @@ public enum Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/UserCredentialSearchField`.
-        public typealias UserCredentialSearchField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/UserCredentialAccountIdField`.
-        public typealias UserCredentialAccountIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchSchema`.
         public struct UserCredentialListItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchSchema/query`.
@@ -10092,12 +10115,12 @@ public enum Components {
             /// - Remark: Generated from `#/components/responses/UserCredentialFiltersResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/components/responses/UserCredentialFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                case json(Components.Schemas.UserCredentialSearchFilterSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.UserCredentialSearchFilterSchema {
                     get throws {
                         switch self {
                         case let .json(body):

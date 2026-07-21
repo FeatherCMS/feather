@@ -29,9 +29,10 @@ struct AdminAPIUserCredentialFiltersTests {
         ) { response in
             let filters = try await response.json(
                 status: .ok,
-                Components.Schemas.SearchFilterSchema.self
+                Components.Schemas.UserCredentialSearchFilterSchema.self
             )
-            #expect(filters == .init())
+            #expect(filters.search == "")
+            #expect(filters.accountID == nil)
         }
     }
 }

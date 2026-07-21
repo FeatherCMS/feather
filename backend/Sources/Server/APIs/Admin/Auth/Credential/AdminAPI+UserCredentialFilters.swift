@@ -7,7 +7,12 @@ extension AdminAPI {
     ) async throws -> Operations.UserCredentialFilters.Output {
         .ok(
             .init(
-                body: .json(.init())
+                body: .json(
+                    .init(
+                        search: "",
+                        accountID: nil
+                    )
+                )
             )
         )
     }

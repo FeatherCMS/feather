@@ -13,5 +13,5 @@ struct UserCredentialListResponse: JSONResponseRepresentable {
 
 struct UserCredentialFiltersResponse: JSONResponseRepresentable {
     var description: String = "UserCredential filter response"
-    var schema = SearchFilterSchema().reference()
+    var schema = UserCredentialSearchFilterSchema().reference()
 }
