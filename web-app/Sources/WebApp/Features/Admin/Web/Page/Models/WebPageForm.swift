@@ -65,7 +65,7 @@ struct WebPageForm: Component, FlowContent {
             )
             field(state.title)
             textarea(state.excerpt, required: false, rows: 4)
-            textarea(state.content)
+            markdownEditor(state.content)
             AdminMetadataFields(
                 state: state.metadata,
                 showTitle: true,
@@ -132,6 +132,79 @@ struct WebPageForm: Component, FlowContent {
                     .name(field.key)
                     .rows(rows)
             }
+            if let error = field.error {
+                Span(error).class("field-error")
+            }
+        }
+        .if(field.error != nil) { $0.class("has-error") }
+    }
+
+    private func markdownEditor(
+        _ field: FieldState
+    ) -> some FlowContent {
+        Section {
+            AdminFieldLabel(label: field.label, required: true)
+            Link(rel: .stylesheet).href(
+                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin-markdown-editor.css"
+            )
+            Div {
+                Div {
+                    P("Add component").class("eyebrow")
+                    Div {
+                        for (title, icon, type) in [
+                            ("Heading", "H", "heading"), ("Text", "T", "text"),
+                            ("Image", "▧", "image"), ("Video", "▶", "video"),
+                            ("Unordered list", "•", "ul"), ("Ordered list", "1.", "ol"),
+                            ("Separator", "—", "separator"), ("Blockquote", "“", "blockquote"),
+                            ("Code block", "</>", "code"), ("HTML", "<>", "html"),
+                            ("Grid", "▦", "grid"), ("Custom block", "✦", "custom")
+                        ] {
+                            Button {
+                                Span(icon).class("component-icon").setAttribute(name: "aria-hidden", value: "true")
+                                Span(title)
+                                Small(title)
+                            }
+                            .type(.button)
+                            .class("component-button")
+                            .setAttribute(name: "data-add", value: type)
+                        }
+                    }.class("component-list")
+                    Div {
+                        P("Drag the handle to rearrange blocks. Select text inside a text block to format it.").class("hint")
+                        Div {
+                            Strong("Insert at")
+                            Div {
+                                Button("Bottom").type(.button).class("active").setAttribute(name: "data-insert", value: "bottom")
+                                Button("Top").type(.button).setAttribute(name: "data-insert", value: "top")
+                            }.class("insert-options")
+                        }.class("insert-toggle")
+                    }.class("sidebar-footer")
+                }.class("panel sidebar")
+                Div {
+                    Div {
+                        Nav {
+                            Button("Visual").type(.button).class("active").setAttribute(name: "data-mode", value: "visual")
+                            Button("Preview").type(.button).setAttribute(name: "data-mode", value: "preview")
+                            Button("Markdown").type(.button).setAttribute(name: "data-mode", value: "raw")
+                        }.class("mode-switch")
+                        Span("Ready").id("status").class("status")
+                    }.class("editor-bar")
+                    Div {
+                        Div {}.id("canvas").class("visual-canvas")
+                    }.id("visualView")
+                    Div {
+                        Div {}.id("previewContent").class("preview-content")
+                    }.id("previewView").hidden()
+                    Div {
+                        Textarea(field.value ?? "")
+                            .id("markdownInput")
+                            .name(field.key)
+                            .rows(12)
+                            .setAttribute(name: "spellcheck", value: "false")
+                            .class("markdown-source")
+                    }.id("rawView").hidden()
+                }.class("panel editor")
+            }.class("workspace", "mce-app")
             if let error = field.error {
                 Span(error).class("field-error")
             }

@@ -47,5 +47,10 @@ struct AdminBody<T: Component>: Component, FlowContent {
         Script()
             .src("/admin-navigation.js")
             .defer()
+        Script()
+            .src(
+                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin-markdown-editor.js"
+            )
+            .defer()
     }
 }
