@@ -1,8 +1,14 @@
+//
+//  Log+DTOs.swift
+//  app-analytics-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import AnalyticsDomain
 import Foundation
 
-public extension Log {
-    var asListItem: LogList.Item {
+extension Log {
+    public var asListItem: LogList.Item {
         .init(
             id: id,
             accountId: accountId,
@@ -16,7 +22,7 @@ public extension Log {
         )
     }
 
-    var asDetail: LogDetail {
+    public var asDetail: LogDetail {
         .init(
             id: id,
             accountId: accountId,

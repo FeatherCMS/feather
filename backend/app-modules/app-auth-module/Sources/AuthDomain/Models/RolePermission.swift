@@ -1,4 +1,11 @@
+//
+//  RolePermission.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct RolePermission: Model {
@@ -33,7 +40,7 @@ public struct RolePermission: Model {
     }
 }
 
-public extension RolePermission {
+extension RolePermission {
 
     private static func validate(
         roleId: String
@@ -57,7 +64,7 @@ public extension RolePermission {
         }
     }
 
-    static func create(
+    public static func create(
         roleId: String,
         permissionId: String
     ) throws(Self.Error) -> Self.New {

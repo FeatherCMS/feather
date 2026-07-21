@@ -1,3 +1,9 @@
+//
+//  MockInvitationQueries.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 @testable import UserApplication
 
 actor MockInvitationQueries: InvitationQueries {
@@ -13,6 +19,12 @@ actor MockInvitationQueries: InvitationQueries {
     ) {
         self.listResult = listResult
         self.countResult = countResult
+    }
+
+    func getBy(
+        id: String
+    ) async throws -> InvitationDetail {
+        fatalError("not needed in tests")
     }
 
     func list(

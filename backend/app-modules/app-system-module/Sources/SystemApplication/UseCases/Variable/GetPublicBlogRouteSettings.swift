@@ -1,3 +1,9 @@
+//
+//  GetPublicBlogRouteSettings.swift
+//  app-system-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import Foundation
 
@@ -52,8 +58,8 @@ public struct GetPublicBlogRouteSettings {
     }
 }
 
-private extension GetPublicBlogRouteSettings {
-    func value(
+extension GetPublicBlogRouteSettings {
+    fileprivate func value(
         for key: String,
         default defaultValue: String
     ) async throws -> String {
@@ -69,7 +75,7 @@ private extension GetPublicBlogRouteSettings {
         return normalize(stored)
     }
 
-    func normalize(
+    fileprivate func normalize(
         _ value: String
     ) -> String {
         value
@@ -77,7 +83,7 @@ private extension GetPublicBlogRouteSettings {
             .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
     }
 
-    func boolValue(
+    fileprivate func boolValue(
         for key: String,
         default defaultValue: Bool
     ) async throws -> Bool {

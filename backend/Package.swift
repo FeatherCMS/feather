@@ -125,6 +125,7 @@ let package = Package(
         .package(path: "./app-modules/app-media-module"),
         .package(path: "./app-modules/app-contact-module"),
         .package(path: "./app-modules/app-newsletter-module"),
+        .package(path: "./app-modules/app-account-module"),
     ],
     targets: [
         .target(
@@ -159,6 +160,7 @@ let package = Package(
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
                 .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
+                .product(name: "AccountInfrastructure", package: "app-account-module"),
                 .target(name: "Environment"),
             ],
             swiftSettings: defaultSwiftSettings
@@ -176,6 +178,11 @@ let package = Package(
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
+
+                .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "FeatherMailSES", package: "feather-mail-ses"),
+                .product(name: "SotoCore", package: "soto-core"),
+
                 // kernel & module infrastructure
                 .product(name: "Infrastructure", package: "app-kernel"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
@@ -188,10 +195,7 @@ let package = Package(
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
                 .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
-                .product(name: "FeatherMail", package: "feather-mail"),
-                .product(name: "FeatherMailSES", package: "feather-mail-ses"),
-                .product(name: "SotoCore", package: "soto-core"),
-
+                .product(name: "AccountInfrastructure", package: "app-account-module"),
                 .target(name: "Environment"),
             ],
             swiftSettings: defaultSwiftSettings
@@ -220,21 +224,17 @@ let package = Package(
 
                 // kernel & module infrastructure
                 .product(name: "Infrastructure", package: "app-kernel"),
-                .product(name: "AnalyticsApplication", package: "app-analytics-module"),
                 .product(name: "AnalyticsInfrastructure", package: "app-analytics-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
                 .product(name: "RedirectInfrastructure", package: "app-redirect-module"),
-                .product(name: "WebApplication", package: "app-web-module"),
-                .product(name: "BlogApplication", package: "app-blog-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
                 .product(name: "BlogInfrastructure", package: "app-blog-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
-                .product(name: "ContactApplication", package: "app-contact-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
-                .product(name: "NewsletterApplication", package: "app-newsletter-module"),
                 .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
+                .product(name: "AccountInfrastructure", package: "app-account-module"),
 
                 .target(name: "Environment"),
             ],

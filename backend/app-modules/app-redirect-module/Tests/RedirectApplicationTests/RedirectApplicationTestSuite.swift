@@ -1,8 +1,16 @@
-import Testing
+//
+//  RedirectApplicationTestSuite.swift
+//  app-redirect-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import Domain
-import struct Foundation.Date
 import RedirectDomain
+import Testing
+
+import struct Foundation.Date
+
 @testable import RedirectApplication
 
 @Suite

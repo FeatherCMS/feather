@@ -1,3 +1,9 @@
+//
+//  UploadMediaAsset.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import Foundation
 import MediaDomain
@@ -91,8 +97,8 @@ public struct UploadMediaAsset: UseCase {
     }
 }
 
-private extension UploadMediaAsset {
-    func adjustFolderAggregates(
+extension UploadMediaAsset {
+    fileprivate func adjustFolderAggregates(
         folders: any MediaFolderRepository,
         folderId: String?,
         sizeDelta: Int64,

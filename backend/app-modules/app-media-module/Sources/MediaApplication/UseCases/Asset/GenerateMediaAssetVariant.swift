@@ -1,3 +1,9 @@
+//
+//  GenerateMediaAssetVariant.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import Foundation
 import MediaDomain
@@ -104,8 +110,8 @@ public struct GenerateMediaAssetVariant: UseCase {
     }
 }
 
-private extension GenerateMediaAssetVariant {
-    func downloadOriginalAssetData(
+extension GenerateMediaAssetVariant {
+    fileprivate func downloadOriginalAssetData(
         asset: MediaAsset
     ) async throws -> Data {
         var candidates: [String] = [asset.storageKey]
@@ -128,7 +134,7 @@ private extension GenerateMediaAssetVariant {
         throw lastError ?? GenerateMediaAssetVariant.Error.assetNotFound
     }
 
-    func expandedStorageKey(
+    fileprivate func expandedStorageKey(
         asset: MediaAsset
     ) -> String? {
         guard
@@ -144,7 +150,7 @@ private extension GenerateMediaAssetVariant {
         return "\(asset.storageKey).\(normalizedType)"
     }
 
-    func outputStorageKey(
+    fileprivate func outputStorageKey(
         for asset: MediaAsset,
         processor: MediaProcessor,
         outputExtension: String? = nil
@@ -158,7 +164,7 @@ private extension GenerateMediaAssetVariant {
         return "\(baseStorageKey)_\(processor.name).\(resolvedExtension)"
     }
 
-    func baseStorageKey(
+    fileprivate func baseStorageKey(
         for storageKey: String
     ) -> String {
         guard let slashIndex = storageKey.lastIndex(of: "/") else {
@@ -171,7 +177,7 @@ private extension GenerateMediaAssetVariant {
         return String(prefix) + stripExtension(from: fileName)
     }
 
-    func stripExtension(
+    fileprivate func stripExtension(
         from fileName: String
     ) -> String {
         guard let dotIndex = fileName.lastIndex(of: "."),
@@ -182,7 +188,7 @@ private extension GenerateMediaAssetVariant {
         return String(fileName[..<dotIndex])
     }
 
-    func runProcessor(
+    fileprivate func runProcessor(
         _ processor: MediaProcessor,
         asset: MediaAsset,
         inputData: Data
@@ -239,7 +245,7 @@ private extension GenerateMediaAssetVariant {
         return outputExtension
     }
 
-    func refreshAssetStatus(
+    fileprivate func refreshAssetStatus(
         assetId: String
     ) async throws {
         let asset = try await transaction.run { context in
@@ -282,7 +288,7 @@ private extension GenerateMediaAssetVariant {
         }
     }
 
-    func render(
+    fileprivate func render(
         template: String,
         inputPath: String,
         outputPath: String
@@ -310,7 +316,7 @@ private extension GenerateMediaAssetVariant {
         }
     }
 
-    func tempFileURL(
+    fileprivate func tempFileURL(
         ext: String
     ) -> URL {
         FileManager.default.temporaryDirectory
@@ -318,7 +324,7 @@ private extension GenerateMediaAssetVariant {
             .appendingPathExtension(ext)
     }
 
-    func resolveOutputURL(
+    fileprivate func resolveOutputURL(
         preferredURL: URL
     ) throws -> URL {
         if FileManager.default.fileExists(atPath: preferredURL.path) {
@@ -350,7 +356,7 @@ private extension GenerateMediaAssetVariant {
         return preferredURL
     }
 
-    func writeTempFile(
+    fileprivate func writeTempFile(
         data: Data,
         ext: String
     ) throws -> URL {

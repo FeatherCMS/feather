@@ -1,11 +1,17 @@
-import Testing
-import Logging
-import Infrastructure
+//
+//  UserInfrastructureTestSuite.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import FeatherDatabase
 import FeatherDatabasePostgres
 import Foundation
+import Infrastructure
+import Logging
 import NIOSSL
 import PostgresNIO
+import Testing
 
 @testable import UserInfrastructure
 

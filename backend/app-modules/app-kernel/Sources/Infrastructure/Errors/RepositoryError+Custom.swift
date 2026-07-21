@@ -1,13 +1,13 @@
 //
-//  File.swift
-//  backend
+//  RepositoryError+Custom.swift
+//  app-kernel
 //
-//  Created by Tibor Bödecs on 2026. 02. 28..
+//  Created by Tibor Bödecs on 2026. 02. 28.
 //
 
-public extension RepositoryError {
+extension RepositoryError {
 
-    static var notFound: Self {
+    public static var notFound: Self {
         .init(
             reason: .database(.notFound),
             logMessage: "Entity not found",
@@ -15,7 +15,7 @@ public extension RepositoryError {
         )
     }
 
-    static func invalidEnumValue(
+    public static func invalidEnumValue(
         _ value: String
     ) -> Self {
         .init(

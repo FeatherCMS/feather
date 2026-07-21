@@ -11,7 +11,7 @@ import AppOpenAPI
 struct AppAPIUserAuthLoginTests {
 
     @Test
-    func signInWithCredentialsIsOk() async throws {
+    func appSignInWithCredentialsIsOk() async throws {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
 

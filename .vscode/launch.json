@@ -6,7 +6,7 @@
       "args": [],
       "cwd": "${workspaceFolder}/backend",
       "name": "Debug Server (backend)",
-      "target": "Server",
+      "program": "${workspaceFolder}/backend/.build/out/Products/Debug/Server",
       "configuration": "debug",
       "preLaunchTask": "swift: Build Debug Server (backend)"
     },
@@ -16,7 +16,7 @@
       "args": [],
       "cwd": "${workspaceFolder}/backend",
       "name": "Release Server (backend)",
-      "target": "Server",
+      "program": "${workspaceFolder}/backend/.build/out/Products/Release/Server",
       "configuration": "release",
       "preLaunchTask": "swift: Build Release Server (backend)"
     },
@@ -26,7 +26,7 @@
       "args": [],
       "cwd": "${workspaceFolder}/backend",
       "name": "Debug Migrator (backend)",
-      "target": "Migrator",
+      "program": "${workspaceFolder}/backend/.build/out/Products/Debug/Migrator",
       "configuration": "debug",
       "preLaunchTask": "swift: Build Debug Migrator (backend)"
     },
@@ -36,7 +36,7 @@
       "args": [],
       "cwd": "${workspaceFolder}/backend",
       "name": "Release Migrator (backend)",
-      "target": "Migrator",
+      "program": "${workspaceFolder}/backend/.build/out/Products/Release/Migrator",
       "configuration": "release",
       "preLaunchTask": "swift: Build Release Migrator (backend)"
     },
@@ -46,7 +46,7 @@
       "args": [],
       "cwd": "${workspaceFolder}/backend",
       "name": "Debug Worker (backend)",
-      "target": "Worker",
+      "program": "${workspaceFolder}/backend/.build/out/Products/Debug/Worker",
       "configuration": "debug",
       "preLaunchTask": "swift: Build Debug Worker (backend)"
     },
@@ -56,7 +56,7 @@
       "args": [],
       "cwd": "${workspaceFolder}/backend",
       "name": "Release Worker (backend)",
-      "target": "Worker",
+      "program": "${workspaceFolder}/backend/.build/out/Products/Release/Worker",
       "configuration": "release",
       "preLaunchTask": "swift: Build Release Worker (backend)"
     },
@@ -64,9 +64,9 @@
       "type": "swift",
       "request": "launch",
       "args": [],
-      "cwd": "${workspaceFolder:feather}/web-app",
+      "cwd": "${workspaceFolder}/web-app",
       "name": "Debug WebApp (web-app)",
-      "target": "WebApp",
+      "program": "${workspaceFolder}/web-app/.build/out/Products/Debug/WebApp",
       "configuration": "debug",
       "preLaunchTask": "swift: Build Debug WebApp (web-app)"
     },
@@ -74,9 +74,9 @@
       "type": "swift",
       "request": "launch",
       "args": [],
-      "cwd": "${workspaceFolder:feather}/web-app",
+      "cwd": "${workspaceFolder}/web-app",
       "name": "Release WebApp (web-app)",
-      "target": "WebApp",
+      "program": "${workspaceFolder}/web-app/.build/out/Products/Release/WebApp",
       "configuration": "release",
       "preLaunchTask": "swift: Build Release WebApp (web-app)"
     },
@@ -84,9 +84,9 @@
       "type": "swift",
       "request": "launch",
       "args": [],
-      "cwd": "${workspaceFolder:feather}/web-app",
+      "cwd": "${workspaceFolder}/web-app",
       "name": "Debug Static (web-app)",
-      "target": "Static",
+      "program": "${workspaceFolder}/web-app/.build/out/Products/Debug/Static",
       "configuration": "debug",
       "preLaunchTask": "swift: Build Debug Static (web-app)"
     },
@@ -94,11 +94,77 @@
       "type": "swift",
       "request": "launch",
       "args": [],
-      "cwd": "${workspaceFolder:feather}/web-app",
+      "cwd": "${workspaceFolder}/web-app",
       "name": "Release Static (web-app)",
-      "target": "Static",
+      "program": "${workspaceFolder}/web-app/.build/out/Products/Release/Static",
       "configuration": "release",
       "preLaunchTask": "swift: Build Release Static (web-app)"
+    },
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder}/openapi-generator",
+      "name": "Debug AppOpenAPIGenerator (openapi-generator)",
+      "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Debug/AppOpenAPIGenerator",
+      "configuration": "debug",
+      "preLaunchTask": "swift: Build Debug AppOpenAPIGenerator (openapi-generator)"
+    },
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder}/openapi-generator",
+      "name": "Release AppOpenAPIGenerator (openapi-generator)",
+      "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Release/AppOpenAPIGenerator",
+      "configuration": "release",
+      "preLaunchTask": "swift: Build Release AppOpenAPIGenerator (openapi-generator)"
+    },
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder}/openapi-generator",
+      "name": "Debug AdminOpenAPIGenerator (openapi-generator)",
+      "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Debug/AdminOpenAPIGenerator",
+      "configuration": "debug",
+      "preLaunchTask": "swift: Build Debug AdminOpenAPIGenerator (openapi-generator)"
+    },
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder}/openapi-generator",
+      "name": "Release AdminOpenAPIGenerator (openapi-generator)",
+      "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Release/AdminOpenAPIGenerator",
+      "configuration": "release",
+      "preLaunchTask": "swift: Build Release AdminOpenAPIGenerator (openapi-generator)"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Server + Worker",
+      // "preLaunchTask": "Ensure Local Dependencies" (optional, uncomment if you want to run the task automatically before starting the debug session)
+      "configurations": ["Debug Server (backend)", "Debug Worker (backend)"],
+      "stopAll": true
+    },
+    {
+      "name": "Release Server + Worker",
+      // "preLaunchTask": "Ensure Local Dependencies" (optional, uncomment if you want to run the task automatically before starting the debug session)
+      "configurations": ["Release Server (backend)", "Release Worker (backend)"],
+      "stopAll": true
+    },
+    {
+      "name": "Debug Server + Worker + WebApp + Static",
+      // "preLaunchTask": "Ensure Local Dependencies" (optional, uncomment if you want to run the task automatically before starting the debug session)
+      "configurations": ["Debug Server (backend)", "Debug Worker (backend)", "Debug WebApp (web-app)", "Debug Static (web-app)"],
+      "stopAll": true
+    },
+    {
+      "name": "Release Server + Worker + WebApp + Static",
+      // "preLaunchTask": "Ensure Local Dependencies" (optional, uncomment if you want to run the task automatically before starting the debug session)
+      "configurations": ["Release Server (backend)", "Release Worker (backend)", "Release WebApp (web-app)", "Release Static (web-app)"],
+      "stopAll": true
     }
   ]
 }

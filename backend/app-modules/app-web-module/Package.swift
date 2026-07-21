@@ -45,6 +45,7 @@ let package = Package(
         .library(name: "WebInfrastructure", targets: ["WebInfrastructure"]),
     ],
     dependencies: [
+        // [docc-plugin-placeholder]
         .package(
             url: "https://github.com/apple/swift-log",
             from: "1.0.0"

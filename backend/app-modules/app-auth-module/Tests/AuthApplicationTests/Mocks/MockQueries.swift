@@ -1,20 +1,49 @@
+//
+//  MockQueries.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Foundation
 import UserApplication
+
 @testable import AuthApplication
 
 actor MockMagicLinkQueries: MagicLinkQueries {
+    private(set) var findCallCount = 0
     private(set) var listCallCount = 0
     private(set) var countCallCount = 0
+    private(set) var lastFindId: String?
 
+    private let findResult: MagicLinkDetail
     private let listResult: MagicLinkList
     private let countResult: Int
 
     init(
+        findResult: MagicLinkDetail = .init(
+            id: "magic-link-1",
+            email: "hello@example.com",
+            token: "token-1",
+            expiresAt: .init(timeIntervalSince1970: 123_456),
+            isPersistent: true,
+            isUsed: false,
+            createdAt: .init(timeIntervalSince1970: 1),
+            updatedAt: .init(timeIntervalSince1970: 2)
+        ),
         listResult: MagicLinkList,
         countResult: Int
     ) {
+        self.findResult = findResult
         self.listResult = listResult
         self.countResult = countResult
+    }
+
+    func find(
+        id: String
+    ) async throws -> MagicLinkDetail {
+        findCallCount += 1
+        lastFindId = id
+        return findResult
     }
 
     func list(

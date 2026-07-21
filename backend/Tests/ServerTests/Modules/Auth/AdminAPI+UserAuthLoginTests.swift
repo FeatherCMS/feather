@@ -11,29 +11,32 @@ import AdminOpenAPI
 struct AdminAPIUserAuthLoginTests {
 
     @Test
-    func signInWithCredentialsIsOk() async throws {
+    func adminSignInWithCredentialsIsOk() async throws {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
 
         let email = "mail.tib@gmail.com"
         let pass = "root"
         let isPersistent = true
+        let body = Components.Schemas.AuthLoginRequestSchema(
+            email: email,
+            password: pass,
+            isPersistent: isPersistent
+        )
+        let request = JSONRequest(
+            method: .post,
+            path: "/api/v1/admin/user/auth/login",
+            body: body
+        )
 
         try await runner.run(
-            request: JSONRequest(
-                method: .post,
-                path: "/api/v1/admin/user/auth/login",
-                body: Components.Schemas.UserAuthLoginRequestSchema(
-                    email: email,
-                    password: pass,
-                    isPersistent: isPersistent
-                )
-            )
-        ) { response in
+            request: request
+        ) { response -> Components.Schemas.AuthResponseSchema in
             let object = try await response.json(
-                Components.Schemas.UserAuthMeResponseSchema.self
+                Components.Schemas.AuthResponseSchema.self
             )
             #expect(object.user.email == email)
+            return object
         }
     }
 }

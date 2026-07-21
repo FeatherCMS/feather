@@ -1,3 +1,9 @@
+//
+//  DatabaseLogQueries.swift
+//  app-analytics-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import AnalyticsApplication
 import Application
 import FeatherDatabase

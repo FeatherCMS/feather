@@ -1,4 +1,11 @@
+//
+//  Role.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Role: Model {
@@ -37,7 +44,7 @@ public struct Role: Model {
     }
 }
 
-public extension Role {
+extension Role {
 
     private static func validate(
         name: String
@@ -58,7 +65,7 @@ public extension Role {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         name: String,
         notes: String
@@ -73,7 +80,7 @@ public extension Role {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         name: String? = nil,
         notes: String? = nil
     ) throws(Self.Error) {

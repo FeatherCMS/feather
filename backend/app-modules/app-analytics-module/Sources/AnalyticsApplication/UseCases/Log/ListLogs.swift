@@ -1,3 +1,9 @@
+//
+//  ListLogs.swift
+//  app-analytics-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import AnalyticsDomain
 import Application
 import Domain

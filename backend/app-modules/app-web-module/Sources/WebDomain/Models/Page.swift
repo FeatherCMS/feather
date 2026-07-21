@@ -1,4 +1,11 @@
+//
+//  Page.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Page: Model {
@@ -45,7 +52,7 @@ public struct Page: Model {
     }
 }
 
-public extension Page {
+extension Page {
 
     private static func validate(
         title: String
@@ -74,7 +81,7 @@ public extension Page {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         title: String,
         excerpt: String,
@@ -94,7 +101,7 @@ public extension Page {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         title: String? = nil,
         excerpt: String? = nil,
         content: String? = nil,

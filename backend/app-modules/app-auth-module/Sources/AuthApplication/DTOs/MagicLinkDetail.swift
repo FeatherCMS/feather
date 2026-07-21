@@ -1,11 +1,12 @@
 //
-//  File.swift
-//  app-user-module
+//  MagicLinkDetail.swift
+//  app-auth-module
 //
-//  Created by Tibor Bödecs on 2026. 04. 17..
+//  Created by Tibor Bödecs on 2026. 04. 17.
 //
 
 import Application
+
 import struct Foundation.Date
 
 public struct MagicLinkDetail: DTO {

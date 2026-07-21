@@ -18,6 +18,8 @@ import ContactApplication
 import ContactInfrastructure
 import NewsletterApplication
 import NewsletterInfrastructure
+import AccountApplication
+import AccountInfrastructure
 
 struct AppModules: Sendable {
 
@@ -34,6 +36,7 @@ struct AppModules: Sendable {
     let media: MediaModule
     let contact: ContactModule
     let newsletter: NewsletterModule
+    let account: AccountModule
 
     init(
         infrastructure: AppInfrastructure
@@ -92,6 +95,10 @@ struct AppModules: Sendable {
             authorizer: authorizer
         )
         self.newsletter = .init(
+            infrastructure: infrastructure,
+            authorizer: authorizer
+        )
+        self.account = .init(
             infrastructure: infrastructure,
             authorizer: authorizer
         )

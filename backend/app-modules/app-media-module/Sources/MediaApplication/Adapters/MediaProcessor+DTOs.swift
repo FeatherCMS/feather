@@ -1,7 +1,13 @@
+//
+//  MediaProcessor+DTOs.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import MediaDomain
 
-public extension MediaProcessor {
-    var asProcessorDetail: MediaProcessorDetail {
+extension MediaProcessor {
+    public var asProcessorDetail: MediaProcessorDetail {
         .init(
             id: id,
             name: name,
@@ -14,7 +20,7 @@ public extension MediaProcessor {
         )
     }
 
-    var asProcessorListItem: MediaProcessorList.Item {
+    public var asProcessorListItem: MediaProcessorList.Item {
         .init(
             id: id,
             name: name,
