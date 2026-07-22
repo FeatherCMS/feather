@@ -21,7 +21,7 @@ struct MarkdownContentRenderer: ContentRenderer {
         guard !markdown.isEmpty else {
             return markdown
         }
-        var source = markdown
+        var source = resolveMediaURLs(in: markdown)
         var replacements: [String: String] = [:]
         for renderer in blockRenderers {
             source = await replaceBlocks(
@@ -53,6 +53,24 @@ struct MarkdownContentRenderer: ContentRenderer {
             return markdown
         }
         return output
+    }
+
+    private func resolveMediaURLs(
+        in source: String
+    ) -> String {
+        let mediaBaseURL = AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString
+        guard let expression = try? NSRegularExpression(
+            pattern: #"(?<![A-Za-z0-9:/._-])(/media/assets/[A-Za-z0-9._~/%+-]+)"#
+        )
+        else {
+            return source
+        }
+        let range = NSRange(source.startIndex..<source.endIndex, in: source)
+        return expression.stringByReplacingMatches(
+            in: source,
+            range: range,
+            withTemplate: NSRegularExpression.escapedTemplate(for: mediaBaseURL) + "$1"
+        )
     }
 
     private func replaceBlocks(

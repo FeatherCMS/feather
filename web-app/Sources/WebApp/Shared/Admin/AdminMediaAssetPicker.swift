@@ -9,6 +9,7 @@ struct AdminMediaAssetPicker: Component, FlowContent {
     enum OutputMode: String {
         case assetId
         case originalURL = "original_url"
+        case relativeURL = "relative_url"
     }
 
     struct FieldState {
@@ -461,6 +462,10 @@ extension AdminMediaAssetPicker {
             return mediaBaseUrl() + "/media/assets/" + encodedStorageKey(asset.storageKey || "");
           }
 
+          function relativeUrl(asset) {
+            return "/media/assets/" + encodedStorageKey(asset.storageKey || "");
+          }
+
           function fileName(asset) {
             if (!asset) { return "No asset selected"; }
             var baseName = String(asset.baseName || "");
@@ -494,7 +499,9 @@ extension AdminMediaAssetPicker {
             var outputMode = modal ? (modal.getAttribute("data-media-picker-output") || "assetId") : "assetId";
             if (input) {
               input.value = asset
-                ? (outputMode === "original_url" ? originalUrl(asset) : (asset.id || ""))
+                ? (outputMode === "original_url"
+                  ? originalUrl(asset)
+                  : (outputMode === "relative_url" ? relativeUrl(asset) : (asset.id || "")))
                 : "";
               input.dispatchEvent(new Event("change", { bubbles: true }));
             }
