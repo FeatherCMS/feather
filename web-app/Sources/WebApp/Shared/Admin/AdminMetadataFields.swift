@@ -177,19 +177,17 @@ struct AdminMetadataFields: Component, FlowContent {
             Div {
                 H3("Publishing")
                 statusField(state.status)
-                FormInputField(
+                FormDateTimeField(
                     name: state.publicationDate.key,
                     label: state.publicationDate.label,
                     value: state.publicationDate.value,
-                    error: state.publicationDate.error,
-                    type: .datetimeLocal
+                    error: state.publicationDate.error
                 )
-                FormInputField(
+                FormDateTimeField(
                     name: state.expirationDate.key,
                     label: state.expirationDate.label,
                     value: state.expirationDate.value,
-                    error: state.expirationDate.error,
-                    type: .datetimeLocal
+                    error: state.expirationDate.error
                 )
             }
             .class("admin-metadata-fields__group")
