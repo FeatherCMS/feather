@@ -56,36 +56,19 @@ struct AuthSettingsForm: Component, FlowContent {
                 inputClass: "text-input"
             )
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: state.pageSize.label, required: true)
-
-                    Select {
-                        for size in [10, 20, 50, 100] {
-                            let value = "\(size)"
-                            if state.pageSize.value == value {
-                                Option(value)
-                                    .value(value)
-                                    .selected()
-                            }
-                            else {
-                                Option(value)
-                                    .value(value)
-                            }
-                        }
-                    }
-                    .id(state.pageSize.key)
-                    .name(state.pageSize.key)
-                    .class("text-input", "page-size-select")
-                    .if(!state.canEdit) {
-                        $0.disabled()
-                    }
-                }
-                if let error = state.pageSize.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.pageSize.error != nil) { $0.class("has-error") }
+            FormSelectField(
+                name: state.pageSize.key,
+                label: state.pageSize.label,
+                options: [10, 20, 50, 100].map {
+                    let value = "\($0)"
+                    return .init(label: value, value: value)
+                },
+                selectedValue: state.pageSize.value,
+                error: state.pageSize.error,
+                isRequired: true,
+                isDisabled: !state.canEdit,
+                selectClass: "text-input page-size-select"
+            )
 
             if state.canEdit {
                 Section {

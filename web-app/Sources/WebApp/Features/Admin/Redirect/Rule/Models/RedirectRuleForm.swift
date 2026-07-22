@@ -68,33 +68,16 @@ struct RedirectRuleForm: Component, FlowContent {
                 isRequired: true
             )
 
-            Section {
-                Label {
-                    AdminFieldLabel(
-                        label: state.statusCode.label,
-                        required: true
-                    )
-                    Select {
-                        for option in Self.statusOptions {
-                            if (state.statusCode.value ?? "301") == option.0 {
-                                Option(option.1)
-                                    .value(option.0)
-                                    .selected()
-                            }
-                            else {
-                                Option(option.1)
-                                    .value(option.0)
-                            }
-                        }
-                    }
-                    .id(state.statusCode.key)
-                    .name(state.statusCode.key)
-                }
-                if let error = state.statusCode.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.statusCode.error != nil) { $0.class("has-error") }
+            FormSelectField(
+                name: state.statusCode.key,
+                label: state.statusCode.label,
+                options: Self.statusOptions.map {
+                    .init(label: $0.1, value: $0.0)
+                },
+                selectedValue: state.statusCode.value ?? "301",
+                error: state.statusCode.error,
+                isRequired: true
+            )
 
             FormInputField(
                 name: state.notes.key,

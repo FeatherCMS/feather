@@ -272,31 +272,17 @@ struct AdminMetadataFields: Component, FlowContent {
 
     private func statusField(
         _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: true)
-                Select {
-                    for value in ["draft", "published", "archived"] {
-                        if field.value == value {
-                            Option(value.capitalized)
-                                .value(value)
-                                .selected()
-                        }
-                        else {
-                            Option(value.capitalized)
-                                .value(value)
-                        }
-                    }
-                }
-                .id(field.key)
-                .name(field.key)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
+    ) -> FormSelectField {
+        FormSelectField(
+            name: field.key,
+            label: field.label,
+            options: ["draft", "published", "archived"].map {
+                .init(label: $0.capitalized, value: $0)
+            },
+            selectedValue: field.value,
+            error: field.error,
+            isRequired: true
+        )
     }
 
     private func imagePicker(
