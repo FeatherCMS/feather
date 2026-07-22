@@ -70,7 +70,7 @@ struct WebPageForm: Component, FlowContent {
                 error: state.title.error,
                 isRequired: true
             )
-            textarea(state.excerpt, required: false, rows: 4)
+            textarea(state.excerpt, rows: 4)
             textarea(state.content)
             AdminMetadataFields(
                 state: state.metadata,
@@ -110,19 +110,14 @@ struct WebPageForm: Component, FlowContent {
         _ field: FieldState,
         required: Bool = true,
         rows: Int = 12
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: required)
-                Textarea(field.value ?? "")
-                    .id(field.key)
-                    .name(field.key)
-                    .rows(rows)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
+    ) -> FormTextAreaField {
+        FormTextAreaField(
+            name: field.key,
+            label: field.label,
+            value: field.value,
+            error: field.error,
+            rows: rows,
+            isRequired: required
+        )
     }
 }

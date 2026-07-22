@@ -234,19 +234,13 @@ struct WebMetadataForm: Component, FlowContent {
     private func textarea(
         _ field: FieldState,
         rows: Int
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: false)
-                Textarea(field.value ?? "")
-                    .id(field.key)
-                    .name(field.key)
-                    .rows(rows)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
+    ) -> FormTextAreaField {
+        FormTextAreaField(
+            name: field.key,
+            label: field.label,
+            value: field.value,
+            error: field.error,
+            rows: rows
+        )
     }
 }

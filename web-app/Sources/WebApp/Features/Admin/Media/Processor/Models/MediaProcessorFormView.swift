@@ -38,16 +38,14 @@ struct MediaProcessorFormView: Component {
                     inputClass: "text-input"
                 )
 
-                Section {
-                    Label {
-                        AdminFieldLabel(
-                            label: "Command template",
-                            required: true
-                        )
-                        Textarea(form.commandTemplate).class("text-input")
-                            .name("commandTemplate").id("commandTemplate")
-                    }
-                }
+                FormTextAreaField(
+                    name: "commandTemplate",
+                    label: "Command template",
+                    value: form.commandTemplate,
+                    rows: 4,
+                    isRequired: true,
+                    textareaClass: "text-input"
+                )
 
                 Section {
                     P(

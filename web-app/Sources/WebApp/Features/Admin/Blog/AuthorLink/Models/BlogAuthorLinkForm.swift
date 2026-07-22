@@ -109,20 +109,14 @@ struct BlogAuthorLinkForm: Component, FlowContent {
 
     private func textarea(
         _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: false)
-                Textarea(field.value ?? "")
-                    .id(field.key)
-                    .name(field.key)
-                    .rows(6)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
+    ) -> FormTextAreaField {
+        FormTextAreaField(
+            name: field.key,
+            label: field.label,
+            value: field.value,
+            error: field.error,
+            rows: 6
+        )
     }
 
     private func checkbox(
