@@ -34,8 +34,12 @@ if (document.querySelector('#markdownInput')) {
     function setStatus(message) { status.textContent = message; clearTimeout(setStatus.timer); setStatus.timer = setTimeout(() => status.textContent = 'Saved locally in editor', 900); }
     function syncRaw() { input.value = serialize(); }
     function updateBlock(id, key, value) { const block = state.blocks.find(item => item.id === id); if (!block) return; block[key] = value; syncRaw(); setStatus('Updated'); }
-    const mediaBaseURL = document.querySelector('.mce-app')?.getAttribute('data-markdown-media-base-url') || '';
-    function mediaURL(value) { return value && value.startsWith('/media/assets/') ? mediaBaseURL + value : value; }
+    const editorRoot = document.querySelector('.mce-app');
+    const mediaBaseURL = input.getAttribute('data-media-base-url') || editorRoot?.dataset.markdownMediaBaseUrl || editorRoot?.getAttribute('data-markdown-media-base-url') || '';
+    function mediaURL(value) {
+      if (!value || !value.startsWith('/media/assets/') || !mediaBaseURL) return value;
+      try { return new URL(value, mediaBaseURL).toString(); } catch (_) { return mediaBaseURL.replace(/\/$/, '') + value; }
+    }
     function pickerFieldKey(type) { const app = document.querySelector('.mce-app'); return app && app.getAttribute(`data-markdown-${type}-picker`); }
     function openMediaPicker(type, apply) { const field = pickerFieldKey(type); const trigger = field && document.querySelector(`[data-media-picker-open="${field}"]`); if (!trigger) { setStatus('Gallery picker unavailable'); return; } state.pendingMedia = { apply }; trigger.click(); }
     ['image', 'video'].forEach(type => { const field = pickerFieldKey(type); const pickerInput = field && document.getElementById(field); if (!pickerInput) return; pickerInput.addEventListener('change', () => { if (!state.pendingMedia || !pickerInput.value) return; state.pendingMedia.apply(pickerInput.value); state.pendingMedia = null; render(); }); });

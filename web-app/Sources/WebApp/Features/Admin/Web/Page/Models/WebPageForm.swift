@@ -201,6 +201,10 @@ struct WebPageForm: Component, FlowContent {
                             .name(field.key)
                             .rows(12)
                             .setAttribute(name: "spellcheck", value: "false")
+                            .setAttribute(
+                                name: "data-media-base-url",
+                                value: AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString
+                            )
                             .class("markdown-source")
                     }.id("rawView").hidden()
                 }.class("panel editor")
