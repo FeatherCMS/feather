@@ -94,6 +94,21 @@
     .media-fields { display: grid; gap: 7px; }
     .media-picker-button { width: fit-content; border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; background: var(--paper); color: var(--muted); font-size: 12px; }
     .media-picker-button:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+    .embed-fields { display: grid; gap: 7px; }
+    .embed-picker-button { width: fit-content; border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; background: var(--paper); color: var(--muted); font-size: 12px; }
+    .embed-picker-button:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+    .mce-embed-picker { position: fixed; inset: 0; z-index: 2100; display: none; align-items: center; justify-content: center; padding: 24px; background: rgb(15 23 42 / 0.68); }
+    .mce-embed-picker.is-visible { display: flex; }
+    .mce-embed-picker-dialog { width: min(720px, calc(100vw - 48px)); max-height: min(680px, calc(100vh - 48px)); overflow: auto; border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--paper); box-shadow: 0 20px 48px rgb(15 23 42 / 0.22); }
+    .mce-embed-picker-header, .mce-embed-picker-search { display: flex; align-items: center; gap: 8px; }
+    .mce-embed-picker-header { justify-content: space-between; margin-bottom: 14px; }
+    .mce-embed-picker-header button { border: 0; background: transparent; color: var(--muted); font-size: 24px; }
+    .mce-embed-picker-search { margin-bottom: 12px; }
+    .mce-embed-picker-search input { min-width: 0; flex: 1; border: 1px solid var(--line); border-radius: 7px; padding: 8px 9px; background: var(--paper); color: var(--ink); }
+    .mce-embed-picker-search button, .mce-embed-picker-list button { border: 1px solid var(--line); border-radius: 7px; padding: 7px 10px; background: var(--paper); color: var(--ink); }
+    .mce-embed-picker-list { display: grid; gap: 7px; }
+    .mce-embed-picker-list button { text-align: left; }
+    .mce-embed-picker-list button:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
     .custom-fields { display: grid; gap: 7px; }
     .quote-fields { display: grid; gap: 7px; }
     .list-editor { min-height: 105px; }

@@ -1,7 +1,7 @@
 import Hummingbird
 
 protocol AdminManageContactFormsPresenter: Sendable {
-    func renderList(items: [AdminManageContactFormItem], search: String, isAdded: Bool, isEdited: Bool, isRemoved: Bool, error: String?, permissions: Set<String>) -> HTMLResponse
+    func renderList(items: [AdminManageContactFormItem], search: String, isAdded: Bool, isEdited: Bool, isRemoved: Bool, isPicker: Bool, error: String?, permissions: Set<String>) -> HTMLResponse
     func renderEdit(item: AdminManageContactFormItem, error: String?, permissions: Set<String>) -> HTMLResponse
     func renderEmails(item: AdminManageContactFormItem, error: String?, permissions: Set<String>) -> HTMLResponse
     func renderEmailAdd(formId: String, error: String?, permissions: Set<String>) -> HTMLResponse

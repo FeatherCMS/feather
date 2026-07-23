@@ -8,9 +8,9 @@ struct AdminManageNewslettersDefaultController: AdminManageNewslettersController
         let search = request.querySearch() ?? ""
         do {
             let items = try await interactor.list().filter { search.isEmpty || $0.name.localizedCaseInsensitiveContains(search) }
-            return presenter.renderList(items: items, isAdded: request.hasQueryFlag("added"), isEdited: request.hasQueryFlag("edited"), isRemoved: request.hasQueryFlag("removed"), error: nil, permissions: context.currentUserPermissions, search: search)
+            return presenter.renderList(items: items, isAdded: request.hasQueryFlag("added"), isEdited: request.hasQueryFlag("edited"), isRemoved: request.hasQueryFlag("removed"), isPicker: request.hasQueryFlag("picker"), error: nil, permissions: context.currentUserPermissions, search: search)
         }
-        catch { return presenter.renderList(items: [], isAdded: false, isEdited: false, isRemoved: false, error: error.displayMessage, permissions: context.currentUserPermissions, search: search) }
+        catch { return presenter.renderList(items: [], isAdded: false, isEdited: false, isRemoved: false, isPicker: request.hasQueryFlag("picker"), error: error.displayMessage, permissions: context.currentUserPermissions, search: search) }
     }
 
     func bulkRemoveConfirmation(request: Request, context: AppRequestContext) async throws -> HTMLResponse {
@@ -19,7 +19,7 @@ struct AdminManageNewslettersDefaultController: AdminManageNewslettersController
         let page = request.queryPage()
         let search = request.querySearch() ?? ""
         guard !selectedIds.isEmpty else {
-            return presenter.renderList(items: [], isAdded: false, isEdited: false, isRemoved: false, error: nil, permissions: context.currentUserPermissions, search: search)
+            return presenter.renderList(items: [], isAdded: false, isEdited: false, isRemoved: false, isPicker: request.hasQueryFlag("picker"), error: nil, permissions: context.currentUserPermissions, search: search)
         }
         return presenter.renderBulkRemoveConfirmation(page: page, search: search, selectedIds: selectedIds, permissions: context.currentUserPermissions)
     }

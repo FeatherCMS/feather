@@ -8,9 +8,9 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
         let search = request.querySearch() ?? ""
         do {
             let items = try await interactor.list().filter { search.isEmpty || $0.name.localizedCaseInsensitiveContains(search) }
-            return presenter.renderList(items: items, search: search, isAdded: request.hasQueryFlag("added"), isEdited: request.hasQueryFlag("edited"), isRemoved: request.hasQueryFlag("removed"), error: nil, permissions: context.currentUserPermissions)
+            return presenter.renderList(items: items, search: search, isAdded: request.hasQueryFlag("added"), isEdited: request.hasQueryFlag("edited"), isRemoved: request.hasQueryFlag("removed"), isPicker: request.hasQueryFlag("picker"), error: nil, permissions: context.currentUserPermissions)
         }
-        catch { return presenter.renderList(items: [], search: search, isAdded: false, isEdited: false, isRemoved: false, error: error.displayMessage, permissions: context.currentUserPermissions) }
+        catch { return presenter.renderList(items: [], search: search, isAdded: false, isEdited: false, isRemoved: false, isPicker: request.hasQueryFlag("picker"), error: error.displayMessage, permissions: context.currentUserPermissions) }
     }
 
     func add(request: Request, context: AppRequestContext) async throws -> HTMLResponse {
@@ -95,7 +95,7 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
         guard !selectedIds.isEmpty else {
             let (interactor, presenter) = buildRuntime(request, context)
             let items = (try? await interactor.list()) ?? []
-            return presenter.renderList(items: items, search: request.querySearch() ?? "", isAdded: false, isEdited: false, isRemoved: false, error: nil, permissions: context.currentUserPermissions)
+            return presenter.renderList(items: items, search: request.querySearch() ?? "", isAdded: false, isEdited: false, isRemoved: false, isPicker: request.hasQueryFlag("picker"), error: nil, permissions: context.currentUserPermissions)
         }
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderBulkRemoveConfirmation(selectedIds: selectedIds, permissions: context.currentUserPermissions)

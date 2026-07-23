@@ -49,7 +49,7 @@ struct AdminBody<T: Component>: Component, FlowContent {
             .defer()
         Script()
             .src(
-                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin-markdown-editor.js?v=3"
+                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin-markdown-editor.js?v=5"
             )
             .defer()
     }

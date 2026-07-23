@@ -4,8 +4,8 @@ struct AdminManageContactFormsDefaultPresenter: AdminManageContactFormsPresenter
     let request: Request
     let renderEngine: any RenderingEngine
 
-    func renderList(items: [AdminManageContactFormItem], search: String, isAdded: Bool, isEdited: Bool, isRemoved: Bool, error: String?, permissions: Set<String>) -> HTMLResponse {
-        renderEngine.renderAdminPage(request: request, title: "Contact forms - Feather CMS", description: "Manage contact forms", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ContactFormTable(state: .init(isAdded: isAdded, isEdited: isEdited, isRemoved: isRemoved, items: items, search: search, canRemove: permissions.contains("contact:forms:delete"), breadcrumb: breadcrumb())))
+    func renderList(items: [AdminManageContactFormItem], search: String, isAdded: Bool, isEdited: Bool, isRemoved: Bool, isPicker: Bool, error: String?, permissions: Set<String>) -> HTMLResponse {
+        renderEngine.renderAdminPage(request: request, title: "Contact forms - Feather CMS", description: "Manage contact forms", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ContactFormTable(state: .init(isAdded: isAdded, isEdited: isEdited, isRemoved: isRemoved, items: items, search: search, canRemove: permissions.contains("contact:forms:delete"), isPicker: isPicker, breadcrumb: breadcrumb())))
     }
 
     func renderBulkRemoveConfirmation(selectedIds: [String], permissions: Set<String>) -> HTMLResponse {

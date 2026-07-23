@@ -10,6 +10,7 @@ struct ContactFormTable: Component {
         let items: [AdminManageContactFormItem]
         let search: String
         let canRemove: Bool
+        let isPicker: Bool
         let breadcrumb: AdminBreadcrumb.State
     }
 
@@ -18,7 +19,7 @@ struct ContactFormTable: Component {
     func content() -> some BasicTag {
         Section {
             AdminBreadcrumb(state: state.breadcrumb)
-            H1("Contact forms")
+            H1(state.isPicker ? "Select contact form" : "Contact forms")
             if state.isAdded { P("Contact form added successfully.") }
             if state.isEdited { P("Contact form edited successfully.") }
             if state.isRemoved { P("Contact form removed successfully.") }
@@ -39,7 +40,17 @@ struct ContactFormTable: Component {
                             for item in state.items {
                                 Tr {
                                     if state.canRemove { ListTableRowSelectCheckbox(state: .init(id: item.id)) }
-                                    Td(item.name).data("label", "Name")
+                                    if state.isPicker {
+                                        Td {
+                                            Button(item.name)
+                                                .type(.button)
+                                                .data("mce-picker-item", item.id)
+                                                .data("mce-picker-label", item.name)
+                                        }.data("label", "Name")
+                                    }
+                                    else {
+                                        Td(item.name).data("label", "Name")
+                                    }
                                     ListTableRowActions(state: .init(label: "Actions", actions: [
                                         .init(title: "Copy", className: nil, permission: "contact:forms:read", copyText: "@ContactForm(id: \(item.id))"),
                                         .init(title: "Edit", href: "/admin/contact/forms/\(item.id)/edit/", className: "edit", permission: "contact:forms:update"),

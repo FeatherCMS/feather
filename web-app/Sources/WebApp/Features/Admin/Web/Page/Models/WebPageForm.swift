@@ -157,6 +157,7 @@ struct WebPageForm: Component, FlowContent {
                             ("Unordered list", "•", "ul"), ("Ordered list", "1.", "ol"),
                             ("Separator", "—", "separator"), ("Blockquote", "“", "blockquote"),
                             ("Code block", "</>", "code"), ("HTML", "<>", "html"),
+                            ("Newsletter", "✉", "newsletter"), ("Contact form", "☏", "contact-form"),
                             ("Grid", "▦", "grid"), ("Custom block", "✦", "custom")
                         ] {
                             Button {
