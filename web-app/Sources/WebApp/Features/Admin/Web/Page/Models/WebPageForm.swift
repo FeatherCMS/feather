@@ -72,7 +72,7 @@ struct WebPageForm: Component, FlowContent {
                 isRequired: true
             )
             textarea(state.excerpt, rows: 4)
-            textarea(state.content)
+            markdownEditor(state.content)
 
             AdminMetadataFields(
                 state: state.metadata,
