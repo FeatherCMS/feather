@@ -55,6 +55,14 @@ struct AdminManageContactFormSubmissionsOpenAPIRepository {
     }
 
     private func map(_ item: Components.Schemas.ContactFormSubmissionSchema) -> AdminManageContactFormSubmissionRow {
-        .init(id: item.id, formId: item.formId, status: item.status, createdAt: String(item.createdAt), values: item.values.additionalProperties)
+        let values = item.values.additionalProperties
+        return .init(
+            id: item.id,
+            formId: item.formId,
+            status: item.status,
+            createdAt: DateFormatting.formatUnixTimestamp(item.createdAt),
+            email: values.first { $0.key.lowercased() == "email" }?.value,
+            values: values
+        )
     }
 }

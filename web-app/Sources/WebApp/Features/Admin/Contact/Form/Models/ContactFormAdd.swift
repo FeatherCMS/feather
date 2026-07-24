@@ -17,4 +17,5 @@ struct ContactFormAdd: Component {
             ContactFormForm(state: state.form, action: "/admin/contact/forms/add/", submitLabel: "Add form")
         }.class("cms-section")
     }
+
 }

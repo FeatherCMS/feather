@@ -226,7 +226,7 @@ paths:
         $ref: '#/components/requestBodies/AppContactFormSubmissionRequestBody'
       responses:
         201:
-          description: Contact form submitted
+          $ref: '#/components/responses/AppContactFormSubmissionResponse'
   /api/v1/contact/forms/{contactFormId}:
     get:
       tags:
@@ -1184,6 +1184,14 @@ components:
       additionalProperties:
         type: string
       minProperties: 0
+    AppContactFormSubmissionResponseSchema:
+      type: object
+      properties:
+        redirectUrl:
+          $ref: '#/components/schemas/AppContactContentField'
+      minProperties: 0
+    AppContactContentField:
+      type: string
     AppContactFormSchema:
       type: object
       properties:
@@ -1210,8 +1218,6 @@ components:
       - failureMessage
       - items
       minProperties: 5
-    AppContactContentField:
-      type: string
     AppContactFormItemSchema:
       type: object
       properties:
@@ -1342,6 +1348,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthResponseSchema'
+    AppContactFormSubmissionResponse:
+      description: Contact form submission response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppContactFormSubmissionResponseSchema'
     AppContactFormResponse:
       description: Contact form response
       content:

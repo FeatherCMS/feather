@@ -38,6 +38,7 @@ FROM ubuntu:noble AS runtime-base
 
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt-get -q update \
+    && apt-get -q install -y --no-install-recommends ca-certificates \
     && apt-get -q dist-upgrade -y \
     && rm -r /var/lib/apt/lists/*
 

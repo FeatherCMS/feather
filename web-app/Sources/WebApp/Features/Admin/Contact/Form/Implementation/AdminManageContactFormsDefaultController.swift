@@ -109,8 +109,15 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
     }
 
     func addEmail(request: Request, context: AppRequestContext) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderEmailAdd(formId: try context.requiredID(), error: nil, permissions: context.currentUserPermissions)
+        let (interactor, presenter) = buildRuntime(request, context)
+        let formId = try context.requiredID()
+        do {
+            let form = try await interactor.get(id: formId)
+            let selectedFields = form.availableFields.filter { form.selectedFieldIDs.contains($0.id) }
+            return presenter.renderEmailAdd(formId: formId, availableFields: selectedFields, error: nil, permissions: context.currentUserPermissions)
+        } catch {
+            return presenter.renderEmailAdd(formId: formId, availableFields: [], error: error.displayMessage, permissions: context.currentUserPermissions)
+        }
     }
 
     func createEmail(request: Request, context: AppRequestContext) async throws -> Response {
@@ -128,8 +135,10 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
         let mailId = try context.requiredParameter("mailId")
         do {
             guard let mail = try await interactor.get(id: formId).mails.first(where: { $0.id == mailId }) else { throw HTTPError(.notFound) }
-            return presenter.renderEmailEdit(formId: formId, mail: mail, error: nil, permissions: context.currentUserPermissions)
-        } catch { return presenter.renderEmailAdd(formId: formId, error: error.displayMessage, permissions: context.currentUserPermissions) }
+            let form = try await interactor.get(id: formId)
+            let selectedFields = form.availableFields.filter { form.selectedFieldIDs.contains($0.id) }
+            return presenter.renderEmailEdit(formId: formId, mail: mail, availableFields: selectedFields, error: nil, permissions: context.currentUserPermissions)
+        } catch { return presenter.renderEmailAdd(formId: formId, availableFields: [], error: error.displayMessage, permissions: context.currentUserPermissions) }
     }
 
     func updateEmail(request: Request, context: AppRequestContext) async throws -> Response {
@@ -151,7 +160,7 @@ struct AdminManageContactFormsDefaultController: AdminManageContactFormsControll
         do {
             guard let mail = try await interactor.get(id: formId).mails.first(where: { $0.id == mailId }) else { throw HTTPError(.notFound) }
             return presenter.renderEmailRemove(formId: formId, mail: mail, permissions: context.currentUserPermissions)
-        } catch { return presenter.renderEmailAdd(formId: formId, error: error.displayMessage, permissions: context.currentUserPermissions) }
+        } catch { return presenter.renderEmailAdd(formId: formId, availableFields: [], error: error.displayMessage, permissions: context.currentUserPermissions) }
     }
 
     func removeEmail(request: Request, context: AppRequestContext) async throws -> Response {

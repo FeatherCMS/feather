@@ -32,7 +32,9 @@ extension AppAPI {
 
         let valuesJSON = try String(decoding: JSONEncoder().encode(body.values), as: UTF8.self)
         let metadataJSON = try body.metadata.map { try String(decoding: JSONEncoder().encode($0), as: UTF8.self) }
+        let form = try await modules.contact.makeGetContactForm().execute(.init(id: input.path.contactFormId))
         _ = try await modules.contact.makeSubmitContactForm().execute(.init(formId: input.path.contactFormId, valuesJSON: valuesJSON, itemsSnapshotJSON: "{}", metadataJSON: metadataJSON))
-        return .created
+        try await modules.contact.enqueueMailTasks(form: form, valuesJSON: valuesJSON)
+        return .created(.init(body: .json(.init(redirectUrl: form.redirectUrl))))
     }
 }

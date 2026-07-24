@@ -9,6 +9,10 @@ struct AppContactFormResponse: JSONResponseRepresentable {
     var description: String = "Contact form response"
     var schema = AppContactFormSchema().reference()
 }
+struct AppContactFormSubmissionResponse: JSONResponseRepresentable {
+    var description: String = "Contact form submission response"
+    var schema = AppContactFormSubmissionResponseSchema().reference()
+}
 struct AppContactFormGetOperation: OperationRepresentable {
     var tags: [TagRepresentable] { [AppContactFormsTag()] }
     var parameters: [ParameterRepresentable] { [AppContactFormIdParameter().reference()] }
@@ -19,7 +23,7 @@ struct AppContactFormSubmissionOperation: OperationRepresentable {
     var tags: [TagRepresentable] { [AppContactFormsTag()] }
     var parameters: [ParameterRepresentable] { [AppContactFormIdParameter().reference()] }
     var requestBody: RequestBodyRepresentable? { AppContactFormSubmissionRequestBody().reference() }
-    var responseMap: ResponseMap { [201: CustomResponse(description: "Contact form submitted")] }
+    var responseMap: ResponseMap { [201: AppContactFormSubmissionResponse().reference()] }
 }
 struct AppContactNewsletterSubscribeOperation: OperationRepresentable {
     var tags: [TagRepresentable] { [AppContactNewslettersTag()] }

@@ -147,7 +147,7 @@ services:
       MEDIA_STORAGE_ROOT_PATH: /media
       SES_ID: ${SES_ID:?Set SES_ID for Amazon SES}
       SES_SECRET: ${SES_SECRET:?Set SES_SECRET for Amazon SES}
-      SES_REGION: ${SES_REGION:-eu-central-1}
+      SES_REGION: ${SES_REGION:?Set SES_REGION for Amazon SES}
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres

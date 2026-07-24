@@ -19,7 +19,7 @@ struct AdminManageContactFormSubmissionsDefaultController: AdminManageContactFor
         let formId = try context.requiredParameter("formId")
         let id = try context.requiredParameter("submissionId")
         do { return presenter.renderDetail(formId: formId, item: try await interactor.get(formId: formId, id: id), error: nil, permissions: context.currentUserPermissions) }
-        catch { return presenter.renderDetail(formId: formId, item: .init(id: id, formId: formId, status: "received", createdAt: "", values: [:]), error: error.displayMessage, permissions: context.currentUserPermissions) }
+        catch { return presenter.renderDetail(formId: formId, item: .init(id: id, formId: formId, status: "received", createdAt: "", email: nil, values: [:]), error: error.displayMessage, permissions: context.currentUserPermissions) }
     }
 
     func update(request: Request, context: AppRequestContext) async throws -> Response {

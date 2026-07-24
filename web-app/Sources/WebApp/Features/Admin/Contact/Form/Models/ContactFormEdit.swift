@@ -21,4 +21,5 @@ struct ContactFormEdit: Component {
             ContactFormForm(state: state.form, action: "/admin/contact/forms/\(state.id)/edit/", submitLabel: "Save")
         }.class("cms-section")
     }
+
 }

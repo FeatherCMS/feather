@@ -20,13 +20,14 @@ struct AppContactFormSubmissionDefaultController: AppContactFormSubmissionContro
                 ))
             )
         }
-        guard case .created = response else {
+        guard case let .created(value) = response else {
             throw HTTPError(.badRequest)
         }
+        let redirectURL = try value.body.json.redirectUrl
         return Response(
             status: .seeOther,
             headers: [
-                .location: request.headers[.referer] ?? "/"
+                .location: redirectURL ?? request.headers[.referer] ?? "/"
             ]
         )
     }

@@ -2,6 +2,9 @@ import Application
 import ContactInfrastructure
 import Infrastructure
 import ContactApplication
+import Environment
+import Foundation
+import Jobs
 
 struct ContactModule: Sendable {
     private let infrastructure: AppInfrastructure
@@ -30,6 +33,61 @@ struct ContactModule: Sendable {
 }
 
 extension ContactModule {
+    func enqueueMailTasks(
+        form: ContactFormDetail,
+        valuesJSON: String
+    ) async throws {
+        guard
+            let data = valuesJSON.data(using: .utf8),
+            let values = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        else {
+            return
+        }
+
+        for mail in form.mails {
+            try await infrastructure.jobQueue.enqueueContactFormMail(
+                mailFrom: render(mail.mailFrom, values: values),
+                mailTo: render(mail.mailTo, values: values),
+                subject: render(mail.subject, values: values),
+                additionalHeaders: render(mail.additionalHeaders, values: values),
+                messageBody: renderHTML(mail.messageBody, values: values)
+            )
+        }
+    }
+
+    private func render(
+        _ template: String,
+        values: [String: Any]
+    ) -> String {
+        values.reduce(template) { result, entry in
+            let value = String(describing: entry.value)
+            return result
+                .replacingOccurrences(of: "[\(entry.key)]", with: value)
+                .replacingOccurrences(of: "{{\(entry.key)}}", with: value)
+        }
+    }
+
+    private func renderHTML(
+        _ template: String,
+        values: [String: Any]
+    ) -> String {
+        values.reduce(template) { result, entry in
+            let value = htmlEscaped(String(describing: entry.value))
+            return result
+                .replacingOccurrences(of: "[\(entry.key)]", with: value)
+                .replacingOccurrences(of: "{{\(entry.key)}}", with: value)
+        }
+    }
+
+    private func htmlEscaped(_ value: String) -> String {
+        value
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "'", with: "&#39;")
+    }
+
     private func contactFormTransaction() -> DatabaseTransactionExecutor<WriteContactForm> {
         DatabaseTransactionExecutor(
             database: infrastructure.database,

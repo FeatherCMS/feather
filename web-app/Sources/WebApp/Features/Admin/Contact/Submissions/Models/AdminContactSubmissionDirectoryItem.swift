@@ -4,4 +4,5 @@ struct AdminContactSubmissionDirectoryItem: Sendable {
     let formName: String
     let status: String
     let createdAt: String
+    let email: String?
 }

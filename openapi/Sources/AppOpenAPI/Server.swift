@@ -1330,6 +1330,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     name: "contactFormId",
                     as: Components.Parameters.AppContactFormIdParameter.self
                 ))
+                let headers: Operations.AppContactFormSubmission.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.AppContactFormSubmissionRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -1352,6 +1353,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.AppContactFormSubmission.Input(
                     path: path,
+                    headers: headers,
                     body: body
                 )
             },
@@ -1361,7 +1363,20 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
                     suppressMutabilityWarning(&response)
-                    return (response, nil)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .undocumented(statusCode, _):
                     return (.init(soar_statusCode: statusCode), nil)
                 }

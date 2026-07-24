@@ -6,6 +6,8 @@
 //
 
 import FeatherMail
+import Environment
+import Foundation
 import Jobs
 
 struct EmailService {
@@ -25,6 +27,39 @@ struct EmailService {
                 body: .plainText(message)
             )
         )
+    }
+
+    func sendContactFormEmail(
+        to: String,
+        from: String,
+        subject: String,
+        additionalHeaders: String,
+        message: String
+    ) async throws {
+        let headers = parseHeaders(additionalHeaders)
+        try await client.send(
+            .init(
+                from: .init(from),
+                to: [.init(to)],
+                cc: headers["cc", default: []].map { .init($0) },
+                bcc: headers["bcc", default: []].map { .init($0) },
+                replyTo: headers["reply-to", default: []].map { .init($0) },
+                subject: subject,
+                body: .html(message)
+            )
+        )
+    }
+
+    private func parseHeaders(_ value: String) -> [String: [String]] {
+        value.split(whereSeparator: \.isNewline).reduce(into: [:]) { result, line in
+            let parts = line.split(separator: ":", maxSplits: 1).map(String.init)
+            guard parts.count == 2 else { return }
+            let key = parts[0].trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            guard ["cc", "bcc", "reply-to"].contains(key) else { return }
+            result[key, default: []] += parts[1]
+                .split(separator: ",")
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        }
     }
 }
 
@@ -49,6 +84,21 @@ struct JobController {
                 from: parameters.from,
                 subject: parameters.subject,
                 message: parameters.message
+            )
+        }
+        queue.registerJob(
+            name: .init(ContactFormMailJobPayload.jobName),
+            parameters: ContactFormMailJobPayload.self,
+            retryStrategy: .exponentialJitter(maxAttempts: 5)
+        ) {
+            parameters,
+            _ in
+            try await emailService.sendContactFormEmail(
+                to: parameters.mailTo,
+                from: parameters.mailFrom,
+                subject: parameters.subject,
+                additionalHeaders: parameters.additionalHeaders,
+                message: parameters.messageBody
             )
         }
     }

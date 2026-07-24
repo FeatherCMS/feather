@@ -36,12 +36,12 @@ struct AdminManageContactFormsDefaultPresenter: AdminManageContactFormsPresenter
         )
     }
 
-    func renderEmailAdd(formId: String, error: String?, permissions: Set<String>) -> HTMLResponse {
-        renderEngine.renderAdminPage(request: request, title: "Add contact form email - Feather CMS", description: "Add contact form email", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ContactFormMailAdd(formId: formId, mail: .init(id: "", mailFrom: "", mailTo: "", subject: "", additionalHeaders: "", messageBody: ""), breadcrumb: breadcrumb(label: "Add email", path: "/admin/contact/forms/\(formId)/emails/add/"), error: error))
+    func renderEmailAdd(formId: String, availableFields: [AdminManageContactFormFieldOption], error: String?, permissions: Set<String>) -> HTMLResponse {
+        renderEngine.renderAdminPage(request: request, title: "Add contact form email - Feather CMS", description: "Add contact form email", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ContactFormMailAdd(formId: formId, mail: .init(id: "", mailFrom: "", mailTo: "", subject: "", additionalHeaders: "", messageBody: ""), availableFields: availableFields, breadcrumb: breadcrumb(label: "Add email", path: "/admin/contact/forms/\(formId)/emails/add/"), error: error))
     }
 
-    func renderEmailEdit(formId: String, mail: AdminManageContactFormMail, error: String?, permissions: Set<String>) -> HTMLResponse {
-        renderEngine.renderAdminPage(request: request, title: "Edit contact form email - Feather CMS", description: "Edit contact form email", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ContactFormMailEdit(formId: formId, mail: mail, breadcrumb: breadcrumb(label: "Edit email", path: "/admin/contact/forms/\(formId)/emails/\(mail.id)/edit/"), error: error))
+    func renderEmailEdit(formId: String, mail: AdminManageContactFormMail, availableFields: [AdminManageContactFormFieldOption], error: String?, permissions: Set<String>) -> HTMLResponse {
+        renderEngine.renderAdminPage(request: request, title: "Edit contact form email - Feather CMS", description: "Edit contact form email", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: ContactFormMailEdit(formId: formId, mail: mail, availableFields: availableFields, breadcrumb: breadcrumb(label: "Edit email", path: "/admin/contact/forms/\(formId)/emails/\(mail.id)/edit/"), error: error))
     }
 
     func renderEmailRemove(formId: String, mail: AdminManageContactFormMail, permissions: Set<String>) -> HTMLResponse {

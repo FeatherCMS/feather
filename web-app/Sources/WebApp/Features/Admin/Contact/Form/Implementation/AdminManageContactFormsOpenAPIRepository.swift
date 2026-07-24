@@ -27,7 +27,7 @@ struct AdminManageContactFormsOpenAPIRepository {
             let response = try await client.contactFormItemList(path: .init(contactFormId: "__global_contact_fields__"))
             switch response {
             case .ok(let value):
-                return try value.body.json.map { .init(id: $0.id, label: $0.label) }
+                return try value.body.json.map { .init(id: $0.id, key: $0.key, label: $0.label) }
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(message: "Please sign in again to view contact fields.")
             case .forbidden:

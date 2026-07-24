@@ -38,6 +38,9 @@ struct AppContactFormSchema: ObjectSchemaRepresentable {
 struct AppContactFormSubmissionSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap { ["values": AppContactJSONField(), "metadata": AppContactJSONField().reference(required: false)] }
 }
+struct AppContactFormSubmissionResponseSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap { ["redirectUrl": AppContactContentField().reference(required: false)] }
+}
 struct AppContactNewsletterSubscriptionSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap { ["email": AppContactEmailField(), "firstName": AppContactNameField().reference(required: false), "lastName": AppContactNameField().reference(required: false)] }
 }

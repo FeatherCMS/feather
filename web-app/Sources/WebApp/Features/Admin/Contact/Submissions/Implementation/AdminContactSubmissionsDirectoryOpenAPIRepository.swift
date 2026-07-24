@@ -18,7 +18,15 @@ struct AdminContactSubmissionsDirectoryOpenAPIRepository {
                     throw OpenAPIRepositoryError.forbidden(message: "Your account cannot view contact form submissions.")
                 }
                 result.append(contentsOf: try submissionsValue.body.json.map {
-                    .init(id: $0.id, formId: form.id, formName: form.name, status: $0.status, createdAt: String($0.createdAt))
+                    let values = $0.values.additionalProperties
+                    return .init(
+                        id: $0.id,
+                        formId: form.id,
+                        formName: form.name,
+                        status: $0.status,
+                        createdAt: DateFormatting.formatUnixTimestamp($0.createdAt),
+                        email: values.first { $0.key.lowercased() == "email" }?.value
+                    )
                 })
             }
             return result.sorted { $0.createdAt > $1.createdAt }
