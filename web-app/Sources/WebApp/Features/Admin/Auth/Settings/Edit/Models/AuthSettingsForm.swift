@@ -34,78 +34,41 @@ struct AuthSettingsForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: state.language.label, required: true)
+            FormInputField(
+                name: state.language.key,
+                label: state.language.label,
+                value: state.language.value,
+                error: state.language.error,
+                placeholder: "Language code, e.g. en",
+                isRequired: true,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
 
-                    Input()
-                        .type(.text)
-                        .class("text-input")
-                        .id(state.language.key)
-                        .name(state.language.key)
-                        .value(state.language.value)
-                        .placeholder("Language code, e.g. en")
-                        .if(!state.canEdit) {
-                            $0.disabled()
-                        }
-                }
-                if let error = state.language.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.language.error != nil) { $0.class("has-error") }
+            FormInputField(
+                name: state.timezone.key,
+                label: state.timezone.label,
+                value: state.timezone.value,
+                error: state.timezone.error,
+                placeholder: "Timezone, e.g. Europe/Budapest",
+                isRequired: true,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: state.timezone.label, required: true)
-
-                    Input()
-                        .type(.text)
-                        .class("text-input")
-                        .id(state.timezone.key)
-                        .name(state.timezone.key)
-                        .value(state.timezone.value)
-                        .placeholder("Timezone, e.g. Europe/Budapest")
-                        .if(!state.canEdit) {
-                            $0.disabled()
-                        }
-                }
-                if let error = state.timezone.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.timezone.error != nil) { $0.class("has-error") }
-
-            Section {
-                Label {
-                    AdminFieldLabel(label: state.pageSize.label, required: true)
-
-                    Select {
-                        for size in [10, 20, 50, 100] {
-                            let value = "\(size)"
-                            if state.pageSize.value == value {
-                                Option(value)
-                                    .value(value)
-                                    .selected()
-                            }
-                            else {
-                                Option(value)
-                                    .value(value)
-                            }
-                        }
-                    }
-                    .id(state.pageSize.key)
-                    .name(state.pageSize.key)
-                    .class("text-input", "page-size-select")
-                    .if(!state.canEdit) {
-                        $0.disabled()
-                    }
-                }
-                if let error = state.pageSize.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.pageSize.error != nil) { $0.class("has-error") }
+            FormSelectField(
+                name: state.pageSize.key,
+                label: state.pageSize.label,
+                options: [10, 20, 50, 100].map {
+                    let value = "\($0)"
+                    return .init(label: value, value: value)
+                },
+                selectedValue: state.pageSize.value,
+                error: state.pageSize.error,
+                isRequired: true,
+                isDisabled: !state.canEdit,
+                selectClass: "text-input page-size-select"
+            )
 
             if state.canEdit {
                 Section {

@@ -40,23 +40,19 @@ struct AssetEditView: Component {
                 )
 
                 Form {
-                    Section {
-                        Label {
-                            AdminFieldLabel(label: "Title", required: false)
-                            Input().type(.text).class("text-input")
-                                .name("title")
-                                .value(state.model.title).id("title")
-                        }
-                    }
+                    FormInputField(
+                        name: "title",
+                        label: "Title",
+                        value: state.model.title,
+                        inputClass: "text-input"
+                    )
 
-                    Section {
-                        Label {
-                            AdminFieldLabel(label: "Alt text", required: false)
-                            Input().type(.text).class("text-input")
-                                .name("altText")
-                                .value(state.model.altText).id("altText")
-                        }
-                    }
+                    FormInputField(
+                        name: "altText",
+                        label: "Alt text",
+                        value: state.model.altText,
+                        inputClass: "text-input"
+                    )
 
                     Section {
                         Div { Button("Save").type(.submit) }.class("button-row")
