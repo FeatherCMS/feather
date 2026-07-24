@@ -88,19 +88,75 @@ struct WebSettingsForm: Component, FlowContent {
 
             H2("SEO")
             checkbox(state.noIndex)
-            field(state.title)
+            FormInputField(
+                name: state.title.key,
+                label: state.title.label,
+                value: state.title.value,
+                error: state.title.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
             textarea(state.excerpt, rows: 4)
             imagePicker(state.metaImage)
             homePagePicker(state.homePage)
-            field(state.locale)
-            field(state.timezone)
+            FormInputField(
+                name: state.locale.key,
+                label: state.locale.label,
+                value: state.locale.value,
+                error: state.locale.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.timezone.key,
+                label: state.timezone.label,
+                value: state.timezone.value,
+                error: state.timezone.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
 
             H2("Theme")
-            field(state.primaryColor)
-            field(state.secondaryColor)
-            field(state.tertiaryColor)
-            field(state.primaryFont)
-            field(state.secondaryFont)
+            FormInputField(
+                name: state.primaryColor.key,
+                label: state.primaryColor.label,
+                value: state.primaryColor.value,
+                error: state.primaryColor.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.secondaryColor.key,
+                label: state.secondaryColor.label,
+                value: state.secondaryColor.value,
+                error: state.secondaryColor.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.tertiaryColor.key,
+                label: state.tertiaryColor.label,
+                value: state.tertiaryColor.value,
+                error: state.tertiaryColor.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.primaryFont.key,
+                label: state.primaryFont.label,
+                value: state.primaryFont.value,
+                error: state.primaryFont.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.secondaryFont.key,
+                label: state.secondaryFont.label,
+                value: state.secondaryFont.value,
+                error: state.secondaryFont.error,
+                isDisabled: !state.canEdit,
+                inputClass: "text-input"
+            )
 
             H2("Code injection")
             textarea(state.css, rows: 10)
@@ -120,30 +176,6 @@ struct WebSettingsForm: Component, FlowContent {
         .method(.post)
         .action(action)
         .class("cms-form")
-    }
-
-    private func field(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: false)
-
-                Input()
-                    .type(.text)
-                    .class("text-input")
-                    .id(field.key)
-                    .name(field.key)
-                    .value(field.value)
-                    .if(!state.canEdit) {
-                        $0.disabled()
-                    }
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
     }
 
     private func checkbox(
@@ -204,22 +236,14 @@ struct WebSettingsForm: Component, FlowContent {
     private func textarea(
         _ field: FieldState,
         rows: Int
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: false)
-                Textarea(field.value ?? "")
-                    .id(field.key)
-                    .name(field.key)
-                    .rows(rows)
-                    .if(!state.canEdit) {
-                        $0.disabled()
-                    }
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
+    ) -> FormTextAreaField {
+        FormTextAreaField(
+            name: field.key,
+            label: field.label,
+            value: field.value,
+            error: field.error,
+            rows: rows,
+            isDisabled: !state.canEdit
+        )
     }
 }

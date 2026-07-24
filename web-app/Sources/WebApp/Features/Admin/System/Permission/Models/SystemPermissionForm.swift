@@ -41,35 +41,20 @@ struct SystemPermissionForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: state.name.label, required: true)
-                    Input()
-                        .type(.text)
-                        .id(state.name.key)
-                        .name(state.name.key)
-                        .value(state.name.value)
-                }
-                if let error = state.name.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.name.error != nil) { $0.class("has-error") }
+            FormInputField(
+                name: state.name.key,
+                label: state.name.label,
+                value: state.name.value,
+                error: state.name.error,
+                isRequired: true
+            )
 
-            Section {
-                Label {
-                    AdminFieldLabel(label: state.notes.label, required: false)
-                    Input()
-                        .type(.text)
-                        .id(state.notes.key)
-                        .name(state.notes.key)
-                        .value(state.notes.value)
-                }
-                if let error = state.notes.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.notes.error != nil) { $0.class("has-error") }
+            FormInputField(
+                name: state.notes.key,
+                label: state.notes.label,
+                value: state.notes.value,
+                error: state.notes.error
+            )
 
             Section {
                 Div {
