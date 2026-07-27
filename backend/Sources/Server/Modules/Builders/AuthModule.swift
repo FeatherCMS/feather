@@ -46,6 +46,9 @@ extension AuthModule {
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
+                    credential: DatabaseCredentialRepository(
+                        connection: connection
+                    ),
                     session: DatabaseSessionRepository(
                         connection: connection
                     ),
@@ -67,6 +70,9 @@ extension AuthModule {
             scope: { connection in
                 WriteAuth(
                     account: DatabaseAccountRepository(
+                        connection: connection
+                    ),
+                    credential: DatabaseCredentialRepository(
                         connection: connection
                     ),
                     session: DatabaseSessionRepository(
@@ -94,6 +100,9 @@ extension AuthModule {
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
+                    credential: DatabaseCredentialRepository(
+                        connection: connection
+                    ),
                     session: DatabaseSessionRepository(
                         connection: connection
                     ),
@@ -116,6 +125,9 @@ extension AuthModule {
             scope: { connection in
                 WriteAuth(
                     account: DatabaseAccountRepository(
+                        connection: connection
+                    ),
+                    credential: DatabaseCredentialRepository(
                         connection: connection
                     ),
                     session: DatabaseSessionRepository(

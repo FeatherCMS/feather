@@ -4,8 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
+import BCrypt
 import FeatherDatabase
 import Infrastructure
+import NIOPosix
 
 public struct TableSeedMigration: DatabaseMigration {
 
@@ -21,7 +23,34 @@ public struct TableSeedMigration: DatabaseMigration {
         on connection: any DatabaseConnection
     ) async throws {
 
+        let rootPassword = try await NIOThreadPool.singleton.runIfActive {
+            try BCrypt().hash("root")
+        }
+        let managerPassword = try await NIOThreadPool.singleton.runIfActive {
+            try BCrypt().hash("manager")
+        }
+        let userPassword = try await NIOThreadPool.singleton.runIfActive {
+            try BCrypt().hash("user")
+        }
+
         let queries: [DatabaseQuery] = [
+            // MARK: - credential
+            #"""
+            INSERT INTO auth_credentials (
+                id,
+                account_id,
+                email,
+                password_hash,
+                created_at,
+                updated_at
+            )
+            VALUES
+                ('root', 'root', 'mail.tib@gmail.com', \#(rootPassword), NOW(), NOW()),
+                ('manager', 'manager', 'manager@example.com', \#(managerPassword), NOW(), NOW()),
+                ('user', 'user', 'user@example.com', \#(userPassword), NOW(), NOW())
+            ON CONFLICT (id) DO NOTHING;
+            """#,
+
             // MARK: - role permission
             #"""
             INSERT INTO auth_role_permission (
