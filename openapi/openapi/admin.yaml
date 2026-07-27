@@ -19,6 +19,7 @@ tags:
   description: Manage system permissions.
 - name: SystemVariables
   description: Manage system variables.
+- name: System jobs
 - name: AnalyticsLogs
   description: Browse analytics logs.
 - name: MetadataEntries
@@ -1032,6 +1033,38 @@ paths:
           $ref: '#/components/responses/SystemVariableDetailResponse'
         404:
           description: SystemVariable not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/jobs:
+    get:
+      tags:
+      - System jobs
+      operationId: systemJobList
+      responses:
+        200:
+          $ref: '#/components/responses/SystemJobListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/jobs/{systemJobId}:
+    get:
+      tags:
+      - System jobs
+      operationId: systemJobGet
+      parameters:
+      - $ref: '#/components/parameters/SystemJobIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemJobResponse'
+        404:
+          description: Worker job not found
         401:
           description: Unauthorized
         403:
@@ -2987,6 +3020,121 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/issues/test-email:
+    post:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterTestEmail
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterIssueTestEmailRequestBody'
+      responses:
+        204:
+          description: Test email queued
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}:
+    get:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueGet
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterIssueResponse'
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      responses:
+        204:
+          description: Newsletter issue deleted
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterIssuePatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterIssueResponse'
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/deliveries:
+    get:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueDeliveryList
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterDeliveryListResponse'
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/test-email:
+    post:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueTestEmail
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterIssueTestEmailRequestBody'
+      responses:
+        204:
+          description: Test email queued
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/newsletters/{contactNewsletterId}/subscribers:
     get:
       tags:
@@ -4056,6 +4204,36 @@ components:
           $ref: '#/components/schemas/SystemVariableValueField'
         notes:
           $ref: '#/components/schemas/SystemVariableNotesField'
+    SystemJobListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/SystemJobSchema'
+    SystemJobSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        queueName:
+          type: string
+        status:
+          type: integer
+        workerId:
+          $ref: '#/components/schemas/SystemJobWorkerIdField'
+        lastModified:
+          type: number
+          format: double
+        payload:
+          type: string
+      required:
+      - id
+      - queueName
+      - status
+      - lastModified
+      - payload
+    SystemJobWorkerIdField:
+      type: string
+    SystemJobIdField:
+      type: string
     AnalyticsLogFiltersSchema:
       type: object
       properties:
@@ -7058,6 +7236,8 @@ components:
           type: string
         name:
           type: string
+        fromEmail:
+          type: string
         createdAt:
           type: number
           format: double
@@ -7067,6 +7247,7 @@ components:
       required:
       - id
       - name
+      - fromEmail
       - createdAt
       - updatedAt
     ContactNewsletterCreateSchema:
@@ -7074,14 +7255,21 @@ components:
       properties:
         name:
           type: string
+        fromEmail:
+          type: string
       required:
       - name
+      - fromEmail
     ContactNewsletterPatchSchema:
       type: object
       properties:
         name:
           $ref: '#/components/schemas/ContactNameField'
+        fromEmail:
+          $ref: '#/components/schemas/ContactEmailField'
     ContactNameField:
+      type: string
+    ContactEmailField:
       type: string
     ContactNewsletterIssueListSchema:
       type: array
@@ -7133,6 +7321,56 @@ components:
       required:
       - subject
       - content
+    ContactNewsletterIssueTestEmailSchema:
+      type: object
+      properties:
+        email:
+          type: string
+        subject:
+          type: string
+        content:
+          type: string
+      required:
+      - email
+      - subject
+      - content
+    ContactNewsletterIssuePatchSchema:
+      type: object
+      properties:
+        subject:
+          $ref: '#/components/schemas/ContactSubjectField'
+        content:
+          $ref: '#/components/schemas/ContactContentField'
+        scheduledAt:
+          $ref: '#/components/schemas/ContactTimestampField'
+    ContactSubjectField:
+      type: string
+    ContactNewsletterDeliveryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactNewsletterDeliverySchema'
+    ContactNewsletterDeliverySchema:
+      type: object
+      properties:
+        subscriberEmail:
+          type: string
+        status:
+          type: string
+        sentAt:
+          $ref: '#/components/schemas/ContactTimestampField'
+        failureReason:
+          $ref: '#/components/schemas/ContactContentField'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - subscriberEmail
+      - status
+      - createdAt
+      - updatedAt
     ContactNewsletterSubscriberListSchema:
       type: array
       items:
@@ -7185,8 +7423,6 @@ components:
       required:
       - email
     ContactNewsletterSubscriberStatusField:
-      type: string
-    ContactEmailField:
       type: string
     ContactNewsletterSubscriberPatchSchema:
       type: object
@@ -7344,6 +7580,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SystemVariableListItemSearchSchema'
+    SystemJobListResponse:
+      description: Worker job list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemJobListSchema'
+    SystemJobResponse:
+      description: Worker job response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemJobSchema'
     AnalyticsLogFiltersResponse:
       description: AnalyticsLog filter response
       content:
@@ -7650,6 +7898,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ContactNewsletterIssueSchema'
+    ContactNewsletterDeliveryListResponse:
+      description: Newsletter delivery list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterDeliveryListSchema'
     ContactNewsletterSubscriberListResponse:
       description: Newsletter subscriber list response
       content:
@@ -7725,6 +7979,13 @@ components:
       schema:
         $ref: '#/components/schemas/SystemVariableIdField'
       description: SystemVariable id
+    SystemJobIdParameter:
+      name: systemJobId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/SystemJobIdField'
+      description: Worker job id
     AnalyticsLogIdParameter:
       name: id
       in: path
@@ -7850,6 +8111,12 @@ components:
         $ref: '#/components/schemas/ContactIdField'
     ContactNewsletterIdParameter:
       name: contactNewsletterId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactIdField'
+    ContactNewsletterIssueIdParameter:
+      name: contactNewsletterIssueId
       in: path
       required: true
       schema:
@@ -8258,6 +8525,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ContactNewsletterIssueCreateSchema'
+      required: true
+    ContactNewsletterIssueTestEmailRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterIssueTestEmailSchema'
+      required: true
+    ContactNewsletterIssuePatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterIssuePatchSchema'
       required: true
     ContactNewsletterSubscriberCreateRequestBody:
       content:

@@ -129,4 +129,18 @@ struct NewsletterCampaignIssueTable {
             return try Row(from: row)
         }
     }
+
+    func delete(
+        id: String
+    ) async throws -> Bool {
+        try await connection.run(
+            query: #"""
+                DELETE FROM newsletter_issue
+                WHERE id = \#(id)
+                RETURNING id;
+                """#
+        ) { sequence in
+            try await sequence.collect().isEmpty == false
+        }
+    }
 }

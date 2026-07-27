@@ -16,7 +16,7 @@ struct AdminAddContactNewsletterIssueDefaultPresenter: AdminAddContactNewsletter
             description: "Add campaign issue - Feather CMS",
             imagePath: "images/puppy.png",
             sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions),
-            content: ContactNewsletterIssueAddView(state: .init(subject: model.subject, content: model.content, scheduledAt: model.scheduledAt, newsletterId: model.newsletterId, error: model.error, breadcrumb: breadcrumb))
+            content: ContactNewsletterIssueAddView(state: .init(subject: model.subject, content: model.content, scheduledAt: model.scheduledAt, newsletterId: model.newsletterId, issueId: nil, error: model.error, breadcrumb: breadcrumb))
         )
     }
 }

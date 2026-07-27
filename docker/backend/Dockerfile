@@ -36,11 +36,12 @@ RUN --mount=type=cache,target=/build/backend/.build \
 
 FROM ubuntu:noble AS runtime-base
 
-RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+RUN --mount=type=cache,id=backend-apt-archives,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,id=backend-apt-lists,target=/var/lib/apt/lists,sharing=locked \
+    export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt-get -q update \
     && apt-get -q install -y --no-install-recommends ca-certificates \
-    && apt-get -q dist-upgrade -y \
-    && rm -r /var/lib/apt/lists/*
+    && apt-get -q dist-upgrade -y
 
 RUN useradd --user-group --create-home --system --skel /dev/null --home-dir /app hummingbird
 
@@ -69,11 +70,12 @@ ENTRYPOINT ["/app/Migrator"]
 
 FROM app-base AS worker
 
-RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+RUN --mount=type=cache,id=backend-apt-archives,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,id=backend-apt-lists,target=/var/lib/apt/lists,sharing=locked \
+    export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt-get -q update \
     && apt-get -q install -y --no-install-recommends ffmpeg ghostscript imagemagick \
-    && apt-get -q dist-upgrade -y \
-    && rm -r /var/lib/apt/lists/*
+    && apt-get -q dist-upgrade -y
 
 USER hummingbird:hummingbird
 

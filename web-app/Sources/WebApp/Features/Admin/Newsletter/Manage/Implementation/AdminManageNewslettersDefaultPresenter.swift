@@ -13,7 +13,7 @@ struct AdminManageNewslettersDefaultPresenter: AdminManageNewslettersPresenter {
     }
 
     func renderEdit(item: AdminManageNewsletterItem, error: String?, permissions: Set<String>) -> HTMLResponse {
-        renderEngine.renderAdminPage(request: request, title: "Campaign details - Feather CMS", description: "Manage campaign details", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: NewsletterEdit(state: .init(id: item.id, isEdited: false, form: .init(name: item.name, error: error, success: nil), breadcrumb: breadcrumb(label: "Details", path: "/admin/newsletters/\(item.id)/details/"))))
+        renderEngine.renderAdminPage(request: request, title: "Campaign details - Feather CMS", description: "Manage campaign details", imagePath: "images/puppy.png", sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions), content: NewsletterEdit(state: .init(id: item.id, isEdited: false, form: .init(name: item.name, fromEmail: item.fromEmail, error: error, success: nil), breadcrumb: breadcrumb(label: "Details", path: "/admin/newsletters/\(item.id)/details/"))))
     }
 
     private func breadcrumb(label: String? = nil, path: String? = nil) -> AdminBreadcrumb.State {

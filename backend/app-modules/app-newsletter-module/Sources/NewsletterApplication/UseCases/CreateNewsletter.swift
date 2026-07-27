@@ -15,9 +15,14 @@ public struct CreateNewsletter: UseCase {
 
     public struct Input: DTO {
         public let name: String
+        public let fromEmail: String
 
-        public init(name: String) {
+        public init(
+            name: String,
+            fromEmail: String = ""
+        ) {
             self.name = name
+            self.fromEmail = fromEmail
         }
     }
 
@@ -27,7 +32,8 @@ public struct CreateNewsletter: UseCase {
         try await transaction.run { context in
             let model = try NewsletterCampaign.create(
                 id: idGenerator.generate(),
-                name: input.name
+                name: input.name,
+                fromEmail: input.fromEmail
             )
             return (try await context.newsletter.insert(model)).asDetail
         }

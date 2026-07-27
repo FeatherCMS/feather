@@ -440,6 +440,13 @@ struct DefaultRenderingEngine: RenderingEngine {
                 isCurrent: isIn("/admin/system/permissions/"),
                 permission: AdminSystem.Scope.permissions.list
             ),
+            item(
+                icon: FeatherIcons.activity(),
+                label: "Worker jobs",
+                link: "/admin/system/jobs/",
+                isCurrent: isIn("/admin/system/jobs/"),
+                permission: AdminSystem.Scope.jobs.list
+            ),
         ]
 
         let mediaMenus: [AdminSidebar.State.Group.Menu.Item?] = [

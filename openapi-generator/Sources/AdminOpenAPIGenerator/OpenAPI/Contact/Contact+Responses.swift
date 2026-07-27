@@ -10,5 +10,6 @@ struct ContactNewsletterResponse: JSONResponseRepresentable { var description: S
 struct ContactNewsletterListResponse: JSONResponseRepresentable { var description: String = "Newsletter list response"; var schema = ContactNewsletterListSchema().reference() }
 struct ContactNewsletterIssueResponse: JSONResponseRepresentable { var description: String = "Newsletter issue response"; var schema = ContactNewsletterIssueSchema().reference() }
 struct ContactNewsletterIssueListResponse: JSONResponseRepresentable { var description: String = "Newsletter issue list response"; var schema = ContactNewsletterIssueListSchema().reference() }
+struct ContactNewsletterDeliveryListResponse: JSONResponseRepresentable { var description: String = "Newsletter delivery list response"; var schema = ContactNewsletterDeliveryListSchema().reference() }
 struct ContactNewsletterSubscriberListResponse: JSONResponseRepresentable { var description: String = "Newsletter subscriber list response"; var schema = ContactNewsletterSubscriberListSchema().reference() }
 struct ContactNewsletterSubscriberResponse: JSONResponseRepresentable { var description: String = "Newsletter subscriber response"; var schema = ContactNewsletterSubscriberSchema().reference() }

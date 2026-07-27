@@ -670,6 +670,28 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.systemJobList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/system/jobs")
+        )
+        try transport.register(
+            {
+                try await server.systemJobGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/system/jobs/{systemJobId}")
+        )
+        try transport.register(
+            {
                 try await server.analyticsLogFilters(
                     request: $0,
                     body: $1,
@@ -1888,6 +1910,72 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterTestEmail(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/test-email")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .patch,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueDeliveryList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/deliveries")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueTestEmail(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/test-email")
         )
         try transport.register(
             {
@@ -6065,6 +6153,129 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
                     suppressMutabilityWarning(&response)
                     return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/system/jobs`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)`.
+    func systemJobList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.SystemJobList.id,
+            using: {
+                APIHandler.systemJobList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.SystemJobList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.SystemJobList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/system/jobs/{systemJobId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/{systemJobId}/get(systemJobGet)`.
+    func systemJobGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.SystemJobGet.id,
+            using: {
+                APIHandler.systemJobGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.SystemJobGet.Input.Path = .init(systemJobId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "systemJobId",
+                    as: Components.Parameters.SystemJobIdParameter.self
+                ))
+                let headers: Operations.SystemJobGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.SystemJobGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .notFound(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
@@ -14174,6 +14385,460 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/issues/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/test-email/post(contactNewsletterTestEmail)`.
+    func contactNewsletterTestEmail(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterTestEmail.id,
+            using: {
+                APIHandler.contactNewsletterTestEmail($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterTestEmail.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.ContactNewsletterIdParameter.self
+                ))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterIssueTestEmailRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterIssueTestEmailSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterTestEmail.Input(
+                    path: path,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/get(contactNewsletterIssueGet)`.
+    func contactNewsletterIssueGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueGet.id,
+            using: {
+                APIHandler.contactNewsletterIssueGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueGet.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactNewsletterIssueGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactNewsletterIssueGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/patch(contactNewsletterIssueUpdate)`.
+    func contactNewsletterIssueUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueUpdate.id,
+            using: {
+                APIHandler.contactNewsletterIssueUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueUpdate.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactNewsletterIssueUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterIssuePatchRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterIssuePatchSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterIssueUpdate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/delete(contactNewsletterIssueDelete)`.
+    func contactNewsletterIssueDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueDelete.id,
+            using: {
+                APIHandler.contactNewsletterIssueDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueDelete.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                return Operations.ContactNewsletterIssueDelete.Input(path: path)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/deliveries`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/deliveries/get(contactNewsletterIssueDeliveryList)`.
+    func contactNewsletterIssueDeliveryList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueDeliveryList.id,
+            using: {
+                APIHandler.contactNewsletterIssueDeliveryList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueDeliveryList.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactNewsletterIssueDeliveryList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactNewsletterIssueDeliveryList.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/test-email/post(contactNewsletterIssueTestEmail)`.
+    func contactNewsletterIssueTestEmail(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueTestEmail.id,
+            using: {
+                APIHandler.contactNewsletterIssueTestEmail($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueTestEmail.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterIssueTestEmailRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterIssueTestEmailSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterIssueTestEmail.Input(
+                    path: path,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
                 case let .unauthorized(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)

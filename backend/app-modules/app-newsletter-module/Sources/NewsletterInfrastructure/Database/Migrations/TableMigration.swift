@@ -24,10 +24,12 @@ public struct TableMigration: DatabaseMigration {
             CREATE TABLE IF NOT EXISTS newsletter_campaign (
                 id TEXT PRIMARY KEY,
                 name TEXT NOT NULL,
+                from_email TEXT NOT NULL DEFAULT '',
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
             """#,
+            #"ALTER TABLE newsletter_campaign ADD COLUMN IF NOT EXISTS from_email TEXT NOT NULL DEFAULT '';"#,
             #"""
             CREATE TABLE IF NOT EXISTS newsletter_subscriber (
                 newsletter_id TEXT NOT NULL,

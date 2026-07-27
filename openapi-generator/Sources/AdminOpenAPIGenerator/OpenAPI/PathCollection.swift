@@ -72,6 +72,9 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/admin/system/variables/{systemVariableId}":
                 SystemVariableIdPathItems(),
 
+            "api/v1/admin/system/jobs": SystemJobPathItems(),
+            "api/v1/admin/system/jobs/{systemJobId}": SystemJobIDPathItems(),
+
             "api/v1/admin/analytics/logs/filters":
                 AnalyticsLogFiltersPathItems(),
             "api/v1/admin/analytics/logs/overview":
@@ -158,6 +161,10 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/admin/newsletters": ContactNewsletterPathItems(),
             "api/v1/admin/newsletters/{contactNewsletterId}": ContactNewsletterIDPathItems(),
             "api/v1/admin/newsletters/{contactNewsletterId}/issues": ContactNewsletterIssuePathItems(),
+            "api/v1/admin/newsletters/{contactNewsletterId}/issues/test-email": ContactNewsletterTestEmailPathItems(),
+            "api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}": ContactNewsletterIssueIDPathItems(),
+            "api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/deliveries": ContactNewsletterIssueDeliveryListPathItems(),
+            "api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/test-email": ContactNewsletterIssueTestEmailPathItems(),
             "api/v1/admin/newsletters/{contactNewsletterId}/subscribers": ContactNewsletterSubscriberPathItems(),
             "api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}": ContactNewsletterSubscriberIDPathItems(),
 

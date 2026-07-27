@@ -7,6 +7,7 @@ struct AdminNewsletterIssueListView: Component {
         let newsletterId: String
         let items: [AdminNewsletterIssueListItem]
         let error: String?
+        let permissions: Set<String>
         let breadcrumb: AdminBreadcrumb.State
     }
 
@@ -24,7 +25,7 @@ struct AdminNewsletterIssueListView: Component {
                 P("No issues yet.")
             } else {
                 ListTableShell(table: Table {
-                    Thead { Tr { Th("Subject"); Th("Status"); Th("Scheduled"); Th("Created") } }
+                    Thead { Tr { Th("Subject"); Th("Status"); Th("Scheduled"); Th("Created"); Th("Actions") } }
                     Tbody {
                         for item in state.items {
                             Tr {
@@ -32,10 +33,32 @@ struct AdminNewsletterIssueListView: Component {
                                 Td(item.status).data("label", "Status")
                                 Td(item.scheduledAt).data("label", "Scheduled")
                                 Td(item.createdAt).data("label", "Created")
+                                ListTableRowActions(state: .init(label: "Actions", actions: [
+                                    .init(title: "Edit", href: "/admin/newsletters/\(state.newsletterId)/issues/\(item.id)/edit/", className: "edit", permission: "newsletter:issues:update"),
+                                    .init(title: "Remove", href: "/admin/newsletters/\(state.newsletterId)/issues/\(item.id)/remove/", className: "delete", permission: "newsletter:issues:delete")
+                                ], permissions: ["newsletter:issues:update", "newsletter:issues:delete"]))
                             }
                         }
                     }
-                }.class("cms-table"))
+                }.class("cms-table", "action-table"))
+                let deliveries = state.items.flatMap(\.deliveries)
+                if !deliveries.isEmpty {
+                    H2("Delivery status")
+                    ListTableShell(table: Table {
+                        Thead { Tr { Th("Issue"); Th("Subscriber"); Th("Status"); Th("Sent"); Th("Failure") } }
+                        Tbody {
+                            for delivery in deliveries {
+                                Tr {
+                                    Td(delivery.issueSubject).data("label", "Issue")
+                                    Td(delivery.subscriberEmail).data("label", "Subscriber")
+                                    Td(delivery.status).data("label", "Status")
+                                    Td(delivery.sentAt).data("label", "Sent")
+                                    Td(delivery.failureReason).data("label", "Failure")
+                                }
+                            }
+                        }
+                    }.class("cms-table"))
+                }
             }
         }.class("cms-section")
     }

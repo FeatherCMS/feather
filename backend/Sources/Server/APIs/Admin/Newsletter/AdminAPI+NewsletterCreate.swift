@@ -14,7 +14,7 @@ extension AdminAPI {
         }
 
         let result = try await modules.newsletter.makeCreateNewsletter()
-            .execute(.init(name: body.name))
+            .execute(.init(name: body.name, fromEmail: body.fromEmail))
 
         return .created(.init(body: .json(map(result))))
     }

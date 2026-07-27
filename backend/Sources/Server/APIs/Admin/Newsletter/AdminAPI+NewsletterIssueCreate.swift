@@ -33,6 +33,10 @@ extension AdminAPI {
                 )
         }
 
+        if body.scheduledAt == nil {
+            try await modules.newsletter.enqueueIssueEmails(issue: result)
+        }
+
         return .created(.init(body: .json(map(result))))
     }
 }

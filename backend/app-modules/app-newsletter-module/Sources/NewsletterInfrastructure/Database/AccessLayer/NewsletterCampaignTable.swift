@@ -8,6 +8,7 @@ extension NewsletterCampaignTable.Row {
     init(from row: DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.name = try row.decode(column: "name", as: String.self)
+        self.fromEmail = try row.decode(column: "from_email", as: String.self)
         self.createdAt = try row.decode(column: "created_at", as: Date.self)
         self.updatedAt = try row.decode(column: "updated_at", as: Date.self)
     }
@@ -20,10 +21,12 @@ struct NewsletterCampaignTable {
         struct Create {
             let id: String
             let name: String
+            let fromEmail: String
         }
 
         let id: String
         let name: String
+        let fromEmail: String
         let createdAt: Date
         let updatedAt: Date
     }
@@ -38,12 +41,14 @@ struct NewsletterCampaignTable {
                 INSERT INTO newsletter_campaign (
                     id,
                     name,
+                    from_email,
                     created_at,
                     updated_at
                 )
                 VALUES (
                     \#(row.id),
                     \#(row.name),
+                    \#(row.fromEmail),
                     NOW(),
                     NOW()
                 )
@@ -82,12 +87,13 @@ struct NewsletterCampaignTable {
 
     func update(
         id: String,
-        name: String
+        name: String,
+        fromEmail: String
     ) async throws -> Row {
         try await connection.run(
             query: #"""
                 UPDATE newsletter_campaign
-                SET name = \#(name), updated_at = NOW()
+                SET name = \#(name), from_email = \#(fromEmail), updated_at = NOW()
                 WHERE id = \#(id)
                 RETURNING *;
                 """#

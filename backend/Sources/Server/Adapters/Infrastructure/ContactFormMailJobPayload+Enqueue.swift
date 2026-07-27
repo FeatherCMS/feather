@@ -7,7 +7,9 @@ extension JobQueueProtocol {
         mailTo: String,
         subject: String,
         additionalHeaders: String,
-        messageBody: String
+        messageBody: String,
+        deliveryIssueId: String? = nil,
+        deliveryNewsletterId: String? = nil
     ) async throws {
         _ = try await push(
             .init(ContactFormMailJobPayload.jobName),
@@ -16,7 +18,9 @@ extension JobQueueProtocol {
                 mailTo: mailTo,
                 subject: subject,
                 additionalHeaders: additionalHeaders,
-                messageBody: messageBody
+                messageBody: messageBody,
+                deliveryIssueId: deliveryIssueId,
+                deliveryNewsletterId: deliveryNewsletterId
             )
         )
     }

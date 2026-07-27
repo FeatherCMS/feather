@@ -2,6 +2,10 @@ import Domain
 
 public protocol NewsletterCampaignDeliveryRepository: Repository {
 
+    func list(
+        issueId: String
+    ) async throws -> [NewsletterCampaignDelivery]
+
     func findBy(
         issueId: String,
         subscriberEmail: String

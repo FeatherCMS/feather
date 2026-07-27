@@ -9,5 +9,6 @@ struct ContactNewsletterCreateRequestBody: JSONRequestBodyRepresentable { var sc
 struct ContactNewsletterPatchRequestBody: JSONRequestBodyRepresentable { var schema = ContactNewsletterPatchSchema().reference() }
 struct ContactNewsletterIssueCreateRequestBody: JSONRequestBodyRepresentable { var schema = ContactNewsletterIssueCreateSchema().reference() }
 struct ContactNewsletterIssuePatchRequestBody: JSONRequestBodyRepresentable { var schema = ContactNewsletterIssuePatchSchema().reference() }
+struct ContactNewsletterIssueTestEmailRequestBody: JSONRequestBodyRepresentable { var schema = ContactNewsletterIssueTestEmailSchema().reference() }
 struct ContactNewsletterSubscriberCreateRequestBody: JSONRequestBodyRepresentable { var schema = ContactNewsletterSubscriberCreateSchema().reference() }
 struct ContactNewsletterSubscriberPatchRequestBody: JSONRequestBodyRepresentable { var schema = ContactNewsletterSubscriberPatchSchema().reference() }

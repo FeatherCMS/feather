@@ -3,10 +3,13 @@ import AdminOpenAPI
 struct AdminAddContactNewsletterOpenAPIRepository {
     let api: AdminAPI
 
-    func createNewsletter(name: String) async throws {
+    func createNewsletter(
+        name: String,
+        fromEmail: String
+    ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactNewsletterCreate(
-                body: .json(.init(name: name))
+                body: .json(.init(name: name, fromEmail: fromEmail))
             )
             switch response {
             case .created: return

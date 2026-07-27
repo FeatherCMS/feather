@@ -29,6 +29,7 @@ public func buildMigrations(
         NewsletterInfrastructure.TableMigration(connection: connection),
         // Seed data
         SystemInfrastructure.TableSeedMigration(connection: connection),
+        SystemInfrastructure.JobPermissionSeedMigration(connection: connection),
         AnalyticsInfrastructure.TableSeedMigration(connection: connection),
         AnalyticsInfrastructure.InsightsPermissionSeedMigration(
             connection: connection

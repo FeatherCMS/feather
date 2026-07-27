@@ -7,7 +7,7 @@ extension AdminAPI {
     func map(
         _ value: NewsletterDetail
     ) -> Components.Schemas.ContactNewsletterSchema {
-        .init(id: value.id, name: value.name, createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
+        .init(id: value.id, name: value.name, fromEmail: value.fromEmail, createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
     }
 
     func map(
@@ -20,6 +20,19 @@ extension AdminAPI {
         _ value: NewsletterSubscriberDetail
     ) -> Components.Schemas.ContactNewsletterSubscriberSchema {
         .init(id: subscriberID(value.email), newsletterId: value.newsletterId, email: value.email, status: value.status.rawValue, subscriptionDate: timestamp(value.subscriptionDate), unsubscriptionDate: value.unsubscriptionDate.map(timestamp), firstName: value.firstName.isEmpty ? nil : value.firstName, lastName: value.lastName.isEmpty ? nil : value.lastName, createdAt: timestamp(value.createdAt), updatedAt: timestamp(value.updatedAt))
+    }
+
+    func map(
+        _ value: NewsletterDeliveryDetail
+    ) -> Components.Schemas.ContactNewsletterDeliverySchema {
+        .init(
+            subscriberEmail: value.subscriberEmail,
+            status: value.status.rawValue,
+            sentAt: value.sentDate.map(timestamp),
+            failureReason: value.failureReason,
+            createdAt: timestamp(value.createdAt),
+            updatedAt: timestamp(value.updatedAt)
+        )
     }
 
     private func subscriberID(_ email: String) -> String {

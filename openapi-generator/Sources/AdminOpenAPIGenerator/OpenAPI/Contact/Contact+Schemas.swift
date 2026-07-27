@@ -23,6 +23,9 @@ struct ContactContentField: StringSchemaRepresentable {}
 struct ContactNewsletterIssueStatusField: StringSchemaRepresentable {
     var enumValues: [String]? = ["draft", "scheduled", "sending", "sent", "failed"]
 }
+struct ContactNewsletterDeliveryStatusField: StringSchemaRepresentable {
+    var enumValues: [String]? = ["pending", "sent", "failed", "bounced"]
+}
 struct ContactTimestampField: DoubleSchemaRepresentable {}
 
 struct ContactJSONField: SchemaRepresentable {
@@ -130,6 +133,7 @@ struct ContactNewsletterSchema: ObjectSchemaRepresentable {
         [
             "id": ContactIdField(),
             "name": ContactNameField(),
+            "fromEmail": ContactEmailField(),
             "createdAt": ContactTimestampField(),
             "updatedAt": ContactTimestampField(),
         ]
@@ -158,7 +162,7 @@ struct ContactNewsletterSubscriberSchema: ObjectSchemaRepresentable {
             "id": ContactIdField(),
             "newsletterId": ContactIdField(),
             "email": ContactEmailField(),
-            "status": ContactNewsletterSubscriberStatusField(),
+            "status": ContactNewsletterDeliveryStatusField(),
             "subscriptionDate": ContactTimestampField(),
             "unsubscriptionDate": ContactTimestampField().reference(required: false),
             "firstName": ContactNameField().reference(required: false),
@@ -174,6 +178,19 @@ struct ContactFormItemListSchema: ArraySchemaRepresentable { var items: SchemaRe
 struct ContactFormSubmissionListSchema: ArraySchemaRepresentable { var items: SchemaRepresentable? { ContactFormSubmissionSchema().reference() } }
 struct ContactNewsletterListSchema: ArraySchemaRepresentable { var items: SchemaRepresentable? { ContactNewsletterSchema().reference() } }
 struct ContactNewsletterIssueListSchema: ArraySchemaRepresentable { var items: SchemaRepresentable? { ContactNewsletterIssueSchema().reference() } }
+struct ContactNewsletterDeliveryListSchema: ArraySchemaRepresentable { var items: SchemaRepresentable? { ContactNewsletterDeliverySchema().reference() } }
+struct ContactNewsletterDeliverySchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "subscriberEmail": ContactEmailField(),
+            "status": ContactNewsletterSubscriberStatusField(),
+            "sentAt": ContactTimestampField().reference(required: false),
+            "failureReason": ContactContentField().reference(required: false),
+            "createdAt": ContactTimestampField(),
+            "updatedAt": ContactTimestampField()
+        ]
+    }
+}
 struct ContactNewsletterSubscriberListSchema: ArraySchemaRepresentable { var items: SchemaRepresentable? { ContactNewsletterSubscriberSchema().reference() } }
 
 struct ContactFormCreateSchema: ObjectSchemaRepresentable {
@@ -207,16 +224,19 @@ struct ContactFormSubmissionPatchSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap { ["status": ContactStatusField()] }
 }
 struct ContactNewsletterCreateSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap { ["name": ContactNameField()] }
+    var propertyMap: SchemaMap { ["name": ContactNameField(), "fromEmail": ContactEmailField()] }
 }
 struct ContactNewsletterPatchSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap { ["name": ContactNameField().reference(required: false)] }
+    var propertyMap: SchemaMap { ["name": ContactNameField().reference(required: false), "fromEmail": ContactEmailField().reference(required: false)] }
 }
 struct ContactNewsletterIssueCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap { ["subject": ContactSubjectField(), "content": ContactContentField(), "scheduledAt": ContactTimestampField().reference(required: false)] }
 }
 struct ContactNewsletterIssuePatchSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap { ["subject": ContactSubjectField().reference(required: false), "content": ContactContentField().reference(required: false), "scheduledAt": ContactTimestampField().reference(required: false)] }
+}
+struct ContactNewsletterIssueTestEmailSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap { ["email": ContactEmailField(), "subject": ContactSubjectField(), "content": ContactContentField()] }
 }
 struct ContactNewsletterSubscriberCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap { ["email": ContactEmailField(), "firstName": ContactNameField().reference(required: false), "lastName": ContactNameField().reference(required: false), "status": ContactNewsletterSubscriberStatusField().reference(required: false)] }

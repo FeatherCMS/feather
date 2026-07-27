@@ -5,6 +5,7 @@ import WebStandards
 struct NewsletterForm: Component, FlowContent {
     struct State: Object {
         var name: String
+        var fromEmail: String
         var error: String?
         var success: String?
     }
@@ -21,6 +22,10 @@ struct NewsletterForm: Component, FlowContent {
                 Label {
                     AdminFieldLabel(label: "Name", required: true)
                     Input().type(.text).id("name").name("name").value(state.name).required()
+                }
+                Label {
+                    AdminFieldLabel(label: "From email", required: true)
+                    Input().type(.email).id("fromEmail").name("fromEmail").value(state.fromEmail).required()
                 }
             }.if(state.error != nil) { $0.class("has-error") }
             Section { Div { Button(submitLabel).type(.submit) }.class("button-row") }

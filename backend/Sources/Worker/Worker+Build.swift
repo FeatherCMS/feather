@@ -110,7 +110,10 @@ func buildWorker(
             migrations: postgresMigrations,
             configuration: .init(
                 pollTime: .milliseconds(config.queue.pollTimeMilliseconds),
-                queueName: config.queue.name
+                queueName: config.queue.name,
+                retentionPolicy: .init(
+                    completedJobs: .retain
+                )
             ),
             logger: logger
         ),
@@ -141,7 +144,8 @@ func buildWorker(
 
     _ = JobController(
         queue: jobQueue,
-        emailService: emailService
+        emailService: emailService,
+        database: database
     )
     _ = MediaJobController(
         queue: jobQueue,

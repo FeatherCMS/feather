@@ -17,6 +17,22 @@ public struct NewsletterCampaignDelivery: Model {
         public let status: Status
         public let sentDate: Date?
         public let failureReason: String?
+
+        public init(
+            issueId: String,
+            newsletterId: String,
+            subscriberEmail: String,
+            status: Status,
+            sentDate: Date?,
+            failureReason: String?
+        ) {
+            self.issueId = issueId
+            self.newsletterId = newsletterId
+            self.subscriberEmail = subscriberEmail
+            self.status = status
+            self.sentDate = sentDate
+            self.failureReason = failureReason
+        }
     }
 
     public let issueId: String

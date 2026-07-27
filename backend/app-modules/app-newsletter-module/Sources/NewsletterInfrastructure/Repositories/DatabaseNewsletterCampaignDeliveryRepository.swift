@@ -30,6 +30,14 @@ public struct DatabaseNewsletterCampaignDeliveryRepository: NewsletterCampaignDe
         self.connection = connection
     }
 
+    public func list(
+        issueId: String
+    ) async throws -> [NewsletterCampaignDelivery] {
+        try await NewsletterCampaignDeliveryTable(connection: connection)
+            .list(issueId: issueId)
+            .map { try $0.asDomain }
+    }
+
     public func insert(
         _ model: NewsletterCampaignDelivery.New
     ) async throws -> NewsletterCampaignDelivery {

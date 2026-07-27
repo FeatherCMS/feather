@@ -24,7 +24,7 @@ struct AdminNewsletterIssueListDefaultPresenter: AdminNewsletterIssueListPresent
             description: "Manage campaign issues",
             imagePath: "images/puppy.png",
             sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions),
-            content: AdminNewsletterIssueListView(state: .init(newsletterId: newsletterId, items: items, error: error, breadcrumb: breadcrumb))
+            content: AdminNewsletterIssueListView(state: .init(newsletterId: newsletterId, items: items, error: error, permissions: permissions, breadcrumb: breadcrumb))
         )
     }
 }

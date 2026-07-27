@@ -42,6 +42,20 @@ struct NewsletterCampaignDeliveryTable {
 
     let connection: any DatabaseConnection
 
+    func list(
+        issueId: String
+    ) async throws -> [Row] {
+        try await connection.run(
+            query: #"""
+                SELECT * FROM newsletter_delivery
+                WHERE issue_id = \#(issueId)
+                ORDER BY created_at ASC, subscriber_email ASC;
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
     func create(
         row: Row.Create
     ) async throws -> Row {

@@ -6,9 +6,12 @@
 //
 
 import FeatherMail
+import FeatherDatabase
 import Environment
 import Foundation
 import Jobs
+import NewsletterDomain
+import NewsletterInfrastructure
 
 struct EmailService {
     let client: any MailClient
@@ -73,7 +76,11 @@ struct JobController {
         let message: String
     }
 
-    init(queue: some JobQueueProtocol, emailService: EmailService) {
+    init(
+        queue: some JobQueueProtocol,
+        emailService: EmailService,
+        database: any DatabaseClient
+    ) {
         // This function demonstrates two different ways to register a job
         // Register Job with predefined job identifier
         queue.registerJob(parameters: EmailParameters.self) {
@@ -93,13 +100,38 @@ struct JobController {
         ) {
             parameters,
             _ in
-            try await emailService.sendContactFormEmail(
-                to: parameters.mailTo,
-                from: parameters.mailFrom,
-                subject: parameters.subject,
-                additionalHeaders: parameters.additionalHeaders,
-                message: parameters.messageBody
-            )
+            do {
+                try await emailService.sendContactFormEmail(
+                    to: parameters.mailTo,
+                    from: parameters.mailFrom,
+                    subject: parameters.subject,
+                    additionalHeaders: parameters.additionalHeaders,
+                    message: parameters.messageBody
+                )
+                try await Self.updateNewsletterDelivery(database: database, parameters: parameters, status: .sent, failureReason: nil)
+            } catch {
+                try? await Self.updateNewsletterDelivery(database: database, parameters: parameters, status: .failed, failureReason: String(describing: error))
+                throw error
+            }
+        }
+    }
+
+    private static func updateNewsletterDelivery(
+        database: any DatabaseClient,
+        parameters: ContactFormMailJobPayload,
+        status: NewsletterCampaignDelivery.Status,
+        failureReason: String?
+    ) async throws {
+        guard let issueId = parameters.deliveryIssueId else { return }
+        try await database.withConnection { connection in
+            let repository = DatabaseNewsletterCampaignDeliveryRepository(connection: connection)
+            guard var delivery = try await repository.findBy(issueId: issueId, subscriberEmail: parameters.mailTo) else {
+                return
+            }
+            delivery.status = status
+            delivery.sentDate = status == .sent ? Date() : nil
+            delivery.failureReason = failureReason
+            _ = try await repository.update(delivery)
         }
     }
 }

@@ -1,7 +1,10 @@
 import Infrastructure
 import NewsletterApplication
 import NewsletterInfrastructure
+import NewsletterDomain
 import Application
+import Environment
+import Jobs
 
 struct NewsletterModule: Sendable {
     private let infrastructure: AppInfrastructure
@@ -55,7 +58,85 @@ struct NewsletterModule: Sendable {
         .init(transaction: transaction(), idGenerator: infrastructure.idGenerator)
     }
 
+    func enqueueIssueEmails(
+        issue: NewsletterIssueDetail
+    ) async throws {
+        let newsletter = try await makeGetNewsletter().execute(.init(id: issue.newsletterId))
+        guard !newsletter.fromEmail.isEmpty else { return }
+        let subscribers = try await makeListNewsletterSubscribers().execute(
+            .init(newsletterId: issue.newsletterId)
+        )
+        for subscriber in subscribers where subscriber.status == .subscribed {
+            _ = try await createPendingDelivery(issue: issue, email: subscriber.email)
+            try await infrastructure.jobQueue.enqueueContactFormMail(
+                mailFrom: newsletter.fromEmail,
+                mailTo: subscriber.email,
+                subject: issue.subject,
+                additionalHeaders: "",
+                messageBody: issue.content,
+                deliveryIssueId: issue.id,
+                deliveryNewsletterId: issue.newsletterId
+            )
+        }
+    }
+
+    private func createPendingDelivery(
+        issue: NewsletterIssueDetail,
+        email: String
+    ) async throws -> Bool {
+        try await transaction().run { context in
+            guard try await context.delivery.findBy(issueId: issue.id, subscriberEmail: email) == nil else {
+                return false
+            }
+            _ = try await context.delivery.insert(.init(
+                issueId: issue.id,
+                newsletterId: issue.newsletterId,
+                subscriberEmail: email,
+                status: .pending,
+                sentDate: nil,
+                failureReason: nil
+            ))
+            return true
+        }
+    }
+
+    func enqueueIssueTestEmail(
+        issue: NewsletterIssueDetail,
+        email: String
+    ) async throws {
+        let newsletter = try await makeGetNewsletter().execute(.init(id: issue.newsletterId))
+        guard !newsletter.fromEmail.isEmpty else { return }
+        try await infrastructure.jobQueue.enqueueContactFormMail(
+            mailFrom: newsletter.fromEmail,
+            mailTo: email,
+            subject: issue.subject,
+            additionalHeaders: "",
+            messageBody: issue.content
+        )
+    }
+
+    func enqueueIssueTestEmail(
+        newsletterId: String,
+        email: String,
+        subject: String,
+        content: String
+    ) async throws {
+        let newsletter = try await makeGetNewsletter().execute(.init(id: newsletterId))
+        guard !newsletter.fromEmail.isEmpty else { return }
+        try await infrastructure.jobQueue.enqueueContactFormMail(
+            mailFrom: newsletter.fromEmail,
+            mailTo: email,
+            subject: subject,
+            additionalHeaders: "",
+            messageBody: content
+        )
+    }
+
     func makeListNewsletterIssues() -> ListNewsletterIssues { .init(transaction: transaction()) }
+    func makeListNewsletterDeliveries() -> ListNewsletterDeliveries { .init(transaction: transaction()) }
+    func makeGetNewsletterIssue() -> GetNewsletterIssue { .init(transaction: transaction()) }
+    func makeUpdateNewsletterIssue() -> UpdateNewsletterIssue { .init(transaction: transaction()) }
+    func makeDeleteNewsletterIssue() -> DeleteNewsletterIssue { .init(transaction: transaction()) }
 
     func makeScheduleNewsletterIssue() -> ScheduleNewsletterIssue {
         .init(transaction: transaction(), clock: DefaultClock())

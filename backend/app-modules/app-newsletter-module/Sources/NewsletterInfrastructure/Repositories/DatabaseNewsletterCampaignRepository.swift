@@ -6,6 +6,7 @@ extension NewsletterCampaignTable.Row {
         .init(
             id: id,
             name: name,
+            fromEmail: fromEmail,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -31,7 +32,8 @@ public struct DatabaseNewsletterCampaignRepository: NewsletterCampaignRepository
         let saved = try await table.create(
             row: .init(
                 id: model.id,
-                name: model.name
+                name: model.name,
+                fromEmail: model.fromEmail
             )
         )
         return saved.asDomain
@@ -50,7 +52,8 @@ public struct DatabaseNewsletterCampaignRepository: NewsletterCampaignRepository
         let table = NewsletterCampaignTable(connection: connection)
         let updated = try await table.update(
             id: model.id,
-            name: model.name
+            name: model.name,
+            fromEmail: model.fromEmail
         )
         return updated.asDomain
     }

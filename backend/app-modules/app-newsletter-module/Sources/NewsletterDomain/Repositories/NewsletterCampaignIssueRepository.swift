@@ -17,4 +17,8 @@ public protocol NewsletterCampaignIssueRepository: Repository {
     func update(
         _ model: NewsletterCampaignIssue
     ) async throws -> NewsletterCampaignIssue
+
+    func delete(
+        id: String
+    ) async throws -> Bool
 }

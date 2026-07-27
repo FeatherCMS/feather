@@ -85,4 +85,10 @@ public struct DatabaseNewsletterCampaignIssueRepository: NewsletterCampaignIssue
         )
         return try updated.asDomain
     }
+
+    public func delete(
+        id: String
+    ) async throws -> Bool {
+        try await NewsletterCampaignIssueTable(connection: connection).delete(id: id)
+    }
 }

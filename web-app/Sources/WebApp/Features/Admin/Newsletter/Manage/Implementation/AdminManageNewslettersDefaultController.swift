@@ -36,14 +36,14 @@ struct AdminManageNewslettersDefaultController: AdminManageNewslettersController
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
         do { return presenter.renderEdit(item: try await interactor.get(id: id), error: nil, permissions: context.currentUserPermissions) }
-        catch { return presenter.renderEdit(item: .init(id: id, name: ""), error: error.displayMessage, permissions: context.currentUserPermissions) }
+        catch { return presenter.renderEdit(item: .init(id: id, name: "", fromEmail: ""), error: error.displayMessage, permissions: context.currentUserPermissions) }
     }
 
     func update(request: Request, context: AppRequestContext) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let id = try context.requiredID()
         let form = try await request.decode(as: NewsletterEditForm.self, context: context)
-        _ = try await interactor.update(id: id, name: form.name)
+        _ = try await interactor.update(id: id, name: form.name, fromEmail: form.fromEmail)
         return Response(status: .seeOther, headers: [.location: AdminToastRedirect.location(defaultPath: "/admin/newsletters/", title: "Updated", message: "Campaign updated successfully.")])
     }
 

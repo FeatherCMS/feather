@@ -82,6 +82,8 @@ public struct TableSeedMigration: DatabaseMigration {
                 ('system:variables:update', 'system:variables:update', 'Edit a system variable.', NOW(), NOW()),
                 ('system:variables:list', 'system:variables:list', 'List and search system variables.', NOW(), NOW()),
                 ('system:variables:delete', 'system:variables:delete', 'Delete a system variable.', NOW(), NOW()),
+                ('system:jobs:read', 'system:jobs:read', 'View a worker job.', NOW(), NOW()),
+                ('system:jobs:list', 'system:jobs:list', 'List worker jobs.', NOW(), NOW()),
 
                 -- Analytics permissions
                 ('analytics:logs:list', 'analytics:logs:list', 'List, search, and inspect raw analytics logs.', NOW(), NOW()),
