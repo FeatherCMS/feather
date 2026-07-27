@@ -9,7 +9,15 @@ extension AppAPI {
         switch input.body {
         case let .json(value): body = value
         }
-        _ = try await modules.newsletter.makeSubscribeToNewsletter().execute(.init(newsletterId: input.path.contactNewsletterId, email: body.email, firstName: body.firstName ?? "", lastName: body.lastName ?? ""))
+        _ = try await modules.newsletter.makeSubscribeToNewsletter()
+            .execute(
+                .init(
+                    newsletterId: input.path.contactNewsletterId,
+                    email: body.email,
+                    firstName: body.firstName ?? "",
+                    lastName: body.lastName ?? ""
+                )
+            )
         return .noContent
     }
 
@@ -20,7 +28,13 @@ extension AppAPI {
         switch input.body {
         case let .json(value): body = value
         }
-        _ = try await modules.newsletter.makeUnsubscribeFromNewsletter().execute(.init(newsletterId: input.path.contactNewsletterId, email: body.email))
+        _ = try await modules.newsletter.makeUnsubscribeFromNewsletter()
+            .execute(
+                .init(
+                    newsletterId: input.path.contactNewsletterId,
+                    email: body.email
+                )
+            )
         return .noContent
     }
 }

@@ -120,7 +120,8 @@ struct ContactFormSubmissionTable {
         id: String
     ) async throws -> Bool {
         try await connection.run(
-            query: #"DELETE FROM contact_form_submission WHERE id = \#(id) RETURNING id;"#
+            query:
+                #"DELETE FROM contact_form_submission WHERE id = \#(id) RETURNING id;"#
         ) { sequence in
             try await sequence.collect().first != nil
         }

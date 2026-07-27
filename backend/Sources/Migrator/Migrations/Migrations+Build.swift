@@ -50,6 +50,8 @@ public func buildMigrations(
         ),
         AuthInfrastructure.TableSeedMigration(connection: connection),
         ContactInfrastructure.PermissionSeedMigration(connection: connection),
-        NewsletterInfrastructure.PermissionSeedMigration(connection: connection),
+        NewsletterInfrastructure.PermissionSeedMigration(
+            connection: connection
+        ),
     ]
 }

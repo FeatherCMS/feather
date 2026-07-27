@@ -20,7 +20,8 @@ public struct ListNewsletterDeliveries: UseCase {
         _ input: Input
     ) async throws -> [NewsletterDeliveryDetail] {
         try await transaction.run { context in
-            try await context.delivery.list(issueId: input.issueId).map(NewsletterDeliveryDetail.init)
+            try await context.delivery.list(issueId: input.issueId)
+                .map(NewsletterDeliveryDetail.init)
         }
     }
 }

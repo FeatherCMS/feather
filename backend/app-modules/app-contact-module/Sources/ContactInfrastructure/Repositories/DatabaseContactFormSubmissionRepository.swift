@@ -5,7 +5,8 @@ import Infrastructure
 extension ContactFormSubmissionTable.Row {
     var asDomain: ContactFormSubmission {
         get throws {
-            guard let status = ContactFormSubmission.Status(rawValue: status) else {
+            guard let status = ContactFormSubmission.Status(rawValue: status)
+            else {
                 throw RepositoryError.invalidEnumValue(status)
             }
             return .init(
@@ -22,7 +23,9 @@ extension ContactFormSubmissionTable.Row {
     }
 }
 
-public struct DatabaseContactFormSubmissionRepository: ContactFormSubmissionRepository {
+public struct DatabaseContactFormSubmissionRepository:
+    ContactFormSubmissionRepository
+{
 
     public var connection: any DatabaseConnection
 
@@ -65,12 +68,15 @@ public struct DatabaseContactFormSubmissionRepository: ContactFormSubmissionRepo
         _ model: ContactFormSubmission
     ) async throws -> ContactFormSubmission {
         let table = ContactFormSubmissionTable(connection: connection)
-        return try await table.update(id: model.id, status: model.status.rawValue).asDomain
+        return
+            try await table.update(id: model.id, status: model.status.rawValue)
+            .asDomain
     }
 
     public func delete(
         id: String
     ) async throws -> Bool {
-        try await ContactFormSubmissionTable(connection: connection).delete(id: id)
+        try await ContactFormSubmissionTable(connection: connection)
+            .delete(id: id)
     }
 }

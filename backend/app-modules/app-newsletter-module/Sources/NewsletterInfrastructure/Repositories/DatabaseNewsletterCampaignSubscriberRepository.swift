@@ -5,7 +5,11 @@ import Infrastructure
 extension NewsletterCampaignSubscriberTable.Row {
     var asDomain: NewsletterCampaignSubscriber {
         get throws {
-            guard let status = NewsletterCampaignSubscriber.Status(rawValue: status) else {
+            guard
+                let status = NewsletterCampaignSubscriber.Status(
+                    rawValue: status
+                )
+            else {
                 throw RepositoryError.invalidEnumValue(status)
             }
             return .init(
@@ -27,7 +31,9 @@ extension NewsletterCampaignSubscriberTable.Row {
     }
 }
 
-public struct DatabaseNewsletterCampaignSubscriberRepository: NewsletterCampaignSubscriberRepository {
+public struct DatabaseNewsletterCampaignSubscriberRepository:
+    NewsletterCampaignSubscriberRepository
+{
 
     public var connection: any DatabaseConnection
 
@@ -39,7 +45,8 @@ public struct DatabaseNewsletterCampaignSubscriberRepository: NewsletterCampaign
         newsletterId: String
     ) async throws -> [NewsletterCampaignSubscriber] {
         let table = NewsletterCampaignSubscriberTable(connection: connection)
-        return try await table.list(newsletterId: newsletterId).map { try $0.asDomain }
+        return try await table.list(newsletterId: newsletterId)
+            .map { try $0.asDomain }
     }
 
     public func insert(
@@ -61,7 +68,8 @@ public struct DatabaseNewsletterCampaignSubscriberRepository: NewsletterCampaign
                 lastSentAt: model.lastSentAt
             )
         )
-        try await NewsletterCampaignCanonicalTable(connection: connection).synchronize(row: saved)
+        try await NewsletterCampaignCanonicalTable(connection: connection)
+            .synchronize(row: saved)
         return try saved.asDomain
     }
 
@@ -73,7 +81,8 @@ public struct DatabaseNewsletterCampaignSubscriberRepository: NewsletterCampaign
         return try await table.find(
             newsletterId: newsletterId,
             email: email
-        )?.asDomain
+        )?
+        .asDomain
     }
 
     public func update(
@@ -99,7 +108,8 @@ public struct DatabaseNewsletterCampaignSubscriberRepository: NewsletterCampaign
                 updatedAt: model.updatedAt
             )
         )
-        try await NewsletterCampaignCanonicalTable(connection: connection).synchronize(row: updated)
+        try await NewsletterCampaignCanonicalTable(connection: connection)
+            .synchronize(row: updated)
         return try updated.asDomain
     }
 
@@ -113,10 +123,11 @@ public struct DatabaseNewsletterCampaignSubscriberRepository: NewsletterCampaign
             email: email
         )
         if deleted {
-            try await NewsletterCampaignCanonicalTable(connection: connection).delete(
-                newsletterId: newsletterId,
-                email: email
-            )
+            try await NewsletterCampaignCanonicalTable(connection: connection)
+                .delete(
+                    newsletterId: newsletterId,
+                    email: email
+                )
         }
         return deleted
     }

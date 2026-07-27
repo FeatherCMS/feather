@@ -54,15 +54,19 @@ struct EmailService {
     }
 
     private func parseHeaders(_ value: String) -> [String: [String]] {
-        value.split(whereSeparator: \.isNewline).reduce(into: [:]) { result, line in
-            let parts = line.split(separator: ":", maxSplits: 1).map(String.init)
-            guard parts.count == 2 else { return }
-            let key = parts[0].trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-            guard ["cc", "bcc", "reply-to"].contains(key) else { return }
-            result[key, default: []] += parts[1]
-                .split(separator: ",")
-                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-        }
+        value.split(whereSeparator: \.isNewline)
+            .reduce(into: [:]) { result, line in
+                let parts = line.split(separator: ":", maxSplits: 1)
+                    .map(String.init)
+                guard parts.count == 2 else { return }
+                let key = parts[0]
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .lowercased()
+                guard ["cc", "bcc", "reply-to"].contains(key) else { return }
+                result[key, default: []] += parts[1]
+                    .split(separator: ",")
+                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            }
     }
 }
 
@@ -108,9 +112,20 @@ struct JobController {
                     additionalHeaders: parameters.additionalHeaders,
                     message: parameters.messageBody
                 )
-                try await Self.updateNewsletterDelivery(database: database, parameters: parameters, status: .sent, failureReason: nil)
-            } catch {
-                try? await Self.updateNewsletterDelivery(database: database, parameters: parameters, status: .failed, failureReason: String(describing: error))
+                try await Self.updateNewsletterDelivery(
+                    database: database,
+                    parameters: parameters,
+                    status: .sent,
+                    failureReason: nil
+                )
+            }
+            catch {
+                try? await Self.updateNewsletterDelivery(
+                    database: database,
+                    parameters: parameters,
+                    status: .failed,
+                    failureReason: String(describing: error)
+                )
                 throw error
             }
         }
@@ -124,8 +139,15 @@ struct JobController {
     ) async throws {
         guard let issueId = parameters.deliveryIssueId else { return }
         try await database.withConnection { connection in
-            let repository = DatabaseNewsletterCampaignDeliveryRepository(connection: connection)
-            guard var delivery = try await repository.findBy(issueId: issueId, subscriberEmail: parameters.mailTo) else {
+            let repository = DatabaseNewsletterCampaignDeliveryRepository(
+                connection: connection
+            )
+            guard
+                var delivery = try await repository.findBy(
+                    issueId: issueId,
+                    subscriberEmail: parameters.mailTo
+                )
+            else {
                 return
             }
             delivery.status = status

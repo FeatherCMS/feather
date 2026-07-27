@@ -64,7 +64,13 @@ public extension ContactForm {
         redirectUrl: String? = nil
     ) throws(Self.Error) -> Self.New {
         try validate(name: name)
-        return .init(id: id, name: name, successMessage: successMessage, failureMessage: failureMessage, redirectUrl: redirectUrl)
+        return .init(
+            id: id,
+            name: name,
+            successMessage: successMessage,
+            failureMessage: failureMessage,
+            redirectUrl: redirectUrl
+        )
     }
 
     mutating func update(

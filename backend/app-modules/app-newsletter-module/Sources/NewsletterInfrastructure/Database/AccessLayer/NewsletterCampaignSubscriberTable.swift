@@ -22,7 +22,10 @@ extension NewsletterCampaignSubscriberTable.Row {
         )
         self.firstName = try row.decode(column: "first_name", as: String.self)
         self.lastName = try row.decode(column: "last_name", as: String.self)
-        self.confirmedAt = try row.decode(column: "confirmed_at", as: Date?.self)
+        self.confirmedAt = try row.decode(
+            column: "confirmed_at",
+            as: Date?.self
+        )
         self.unsubscribeToken = try row.decode(
             column: "unsubscribe_token",
             as: String?.self

@@ -81,7 +81,9 @@ public struct SubmitContactForm: UseCase {
         for item in items {
             guard let value = values[item.key] else {
                 if item.isRequired {
-                    throw Error(message: "Missing required form item: (item.key)")
+                    throw Error(
+                        message: "Missing required form item: (item.key)"
+                    )
                 }
                 continue
             }
@@ -89,18 +91,26 @@ public struct SubmitContactForm: UseCase {
             switch item.type {
             case .text, .textarea:
                 guard value is String else {
-                    throw Error(message: "Invalid value for form item: (item.key)")
+                    throw Error(
+                        message: "Invalid value for form item: (item.key)"
+                    )
                 }
             case .select, .radio:
                 guard
                     let stringValue = value as? String,
-                    item.allowedValues.contains(where: { $0.value == stringValue })
+                    item.allowedValues.contains(where: {
+                        $0.value == stringValue
+                    })
                 else {
-                    throw Error(message: "Invalid option for form item: (item.key)")
+                    throw Error(
+                        message: "Invalid option for form item: (item.key)"
+                    )
                 }
             case .toggle:
                 guard value is Bool else {
-                    throw Error(message: "Invalid value for form item: (item.key)")
+                    throw Error(
+                        message: "Invalid value for form item: (item.key)"
+                    )
                 }
             }
         }

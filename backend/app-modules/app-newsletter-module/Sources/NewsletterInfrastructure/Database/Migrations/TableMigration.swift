@@ -102,7 +102,7 @@ public struct TableMigration: DatabaseMigration {
             #"CREATE INDEX IF NOT EXISTS newsletter_subscriber_email_idx ON newsletter_subscriber (email);"#,
             #"CREATE INDEX IF NOT EXISTS newsletter_issue_newsletter_id_idx ON newsletter_issue (newsletter_id);"#,
             #"CREATE INDEX IF NOT EXISTS newsletter_delivery_status_idx ON newsletter_delivery (status);"#,
-            #"CREATE INDEX IF NOT EXISTS newsletter_subscription_newsletter_idx ON newsletter_subscription (newsletter_id, status);"#
+            #"CREATE INDEX IF NOT EXISTS newsletter_subscription_newsletter_idx ON newsletter_subscription (newsletter_id, status);"#,
         ]
         for query in queries {
             try await connection.run(query: query) { _ in }

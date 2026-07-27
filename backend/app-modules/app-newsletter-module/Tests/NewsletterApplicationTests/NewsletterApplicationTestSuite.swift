@@ -6,7 +6,20 @@ struct NewsletterApplicationTestSuite {
     @Test
     func inputsAreSendableDTOs() {
         #expect(CreateNewsletter.Input(name: "Updates").name == "Updates")
-        #expect(CreateNewsletterIssue.Input(newsletterId: "newsletter-1", subject: "Subject", content: "Content").content == "Content")
-        #expect(SubscribeToNewsletter.Input(newsletterId: "newsletter-1", email: "person@example.com").email == "person@example.com")
+        #expect(
+            CreateNewsletterIssue.Input(
+                newsletterId: "newsletter-1",
+                subject: "Subject",
+                content: "Content"
+            )
+            .content == "Content"
+        )
+        #expect(
+            SubscribeToNewsletter.Input(
+                newsletterId: "newsletter-1",
+                email: "person@example.com"
+            )
+            .email == "person@example.com"
+        )
     }
 }

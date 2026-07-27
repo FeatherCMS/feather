@@ -26,14 +26,19 @@ public struct DatabaseContactFormMailRepository: ContactFormMailRepository {
     }
 
     public func listBy(formId: String) async throws -> [ContactFormMail] {
-        try await ContactFormMailTable(connection: connection).list(formId: formId).map(\.asDomain)
+        try await ContactFormMailTable(connection: connection)
+            .list(formId: formId).map(\.asDomain)
     }
 
-    public func insert(_ model: ContactFormMail.New) async throws -> ContactFormMail {
-        try await ContactFormMailTable(connection: connection).create(model: model).asDomain
+    public func insert(
+        _ model: ContactFormMail.New
+    ) async throws -> ContactFormMail {
+        try await ContactFormMailTable(connection: connection)
+            .create(model: model).asDomain
     }
 
     public func deleteBy(formId: String) async throws {
-        try await ContactFormMailTable(connection: connection).delete(formId: formId)
+        try await ContactFormMailTable(connection: connection)
+            .delete(formId: formId)
     }
 }

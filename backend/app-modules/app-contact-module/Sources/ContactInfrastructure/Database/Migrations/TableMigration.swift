@@ -9,34 +9,41 @@ public struct TableMigration: DatabaseMigration {
     }
 
     public func apply(on connection: any DatabaseConnection) async throws {
-        try await connection.run(query: #"""
-            CREATE TABLE IF NOT EXISTS contact_form (
-                id TEXT PRIMARY KEY,
-                name TEXT NOT NULL,
-                success_message TEXT NOT NULL DEFAULT '',
-                failure_message TEXT NOT NULL DEFAULT '',
-                redirect_url TEXT,
-                created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
-                updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
-            );
-            """#) { _ in }
+        try await connection.run(
+            query: #"""
+                CREATE TABLE IF NOT EXISTS contact_form (
+                    id TEXT PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    success_message TEXT NOT NULL DEFAULT '',
+                    failure_message TEXT NOT NULL DEFAULT '',
+                    redirect_url TEXT,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                    updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
+                );
+                """#
+        ) { _ in }
 
-        try await connection.run(query: #"""
-            CREATE TABLE IF NOT EXISTS contact_form_mail (
-                id TEXT PRIMARY KEY,
-                form_id TEXT NOT NULL,
-                mail_from TEXT NOT NULL,
-                mail_to TEXT NOT NULL,
-                subject TEXT NOT NULL,
-                additional_headers TEXT NOT NULL DEFAULT '',
-                message_body TEXT NOT NULL,
-                created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
-                updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
-                FOREIGN KEY(form_id) REFERENCES contact_form(id) ON DELETE CASCADE
-            );
-            """#) { _ in }
+        try await connection.run(
+            query: #"""
+                CREATE TABLE IF NOT EXISTS contact_form_mail (
+                    id TEXT PRIMARY KEY,
+                    form_id TEXT NOT NULL,
+                    mail_from TEXT NOT NULL,
+                    mail_to TEXT NOT NULL,
+                    subject TEXT NOT NULL,
+                    additional_headers TEXT NOT NULL DEFAULT '',
+                    message_body TEXT NOT NULL,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                    updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                    FOREIGN KEY(form_id) REFERENCES contact_form(id) ON DELETE CASCADE
+                );
+                """#
+        ) { _ in }
 
-        try await connection.run(query: #"CREATE INDEX IF NOT EXISTS contact_form_mail_form_id_idx ON contact_form_mail (form_id, id);"#) { _ in }
+        try await connection.run(
+            query:
+                #"CREATE INDEX IF NOT EXISTS contact_form_mail_form_id_idx ON contact_form_mail (form_id, id);"#
+        ) { _ in }
 
         let queries: [DatabaseQuery] = [
             #"""
@@ -107,7 +114,7 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE INDEX IF NOT EXISTS contact_form_submission_status_idx
             ON contact_form_submission (status);
-            """#
+            """#,
         ]
 
         for query in queries {

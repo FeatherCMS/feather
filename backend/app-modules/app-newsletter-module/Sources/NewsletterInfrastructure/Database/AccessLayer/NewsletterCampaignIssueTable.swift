@@ -7,12 +7,21 @@ extension NewsletterCampaignIssueTable.Row {
 
     init(from row: DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
-        self.newsletterId = try row.decode(column: "newsletter_id", as: String.self)
+        self.newsletterId = try row.decode(
+            column: "newsletter_id",
+            as: String.self
+        )
         self.subject = try row.decode(column: "subject", as: String.self)
-        self.previewText = try row.decode(column: "preview_text", as: String.self)
+        self.previewText = try row.decode(
+            column: "preview_text",
+            as: String.self
+        )
         self.content = try row.decode(column: "content", as: String.self)
         self.status = try row.decode(column: "status", as: String.self)
-        self.scheduledDate = try row.decode(column: "scheduled_date", as: Date?.self)
+        self.scheduledDate = try row.decode(
+            column: "scheduled_date",
+            as: Date?.self
+        )
         self.sentDate = try row.decode(column: "sent_date", as: Date?.self)
         self.createdAt = try row.decode(column: "created_at", as: Date.self)
         self.updatedAt = try row.decode(column: "updated_at", as: Date.self)

@@ -36,10 +36,12 @@ public struct UnsubscribeFromNewsletter: UseCase {
     ) async throws -> NewsletterSubscriberDetail {
         let now = Date(timeIntervalSince1970: clock.now())
         return try await transaction.run { context in
-            guard var model = try await context.subscriber.findBy(
-                newsletterId: input.newsletterId,
-                email: input.email
-            ) else {
+            guard
+                var model = try await context.subscriber.findBy(
+                    newsletterId: input.newsletterId,
+                    email: input.email
+                )
+            else {
                 throw Error(message: "Newsletter subscriber not found")
             }
 

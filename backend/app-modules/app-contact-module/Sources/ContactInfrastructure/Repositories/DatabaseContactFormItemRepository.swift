@@ -72,21 +72,23 @@ public struct DatabaseContactFormItemRepository: ContactFormItemRepository {
         itemId: String,
         position: Int
     ) async throws {
-        try await ContactFormFormFieldTable(connection: connection).assign(
-            formId: formId,
-            fieldId: itemId,
-            position: position
-        )
+        try await ContactFormFormFieldTable(connection: connection)
+            .assign(
+                formId: formId,
+                fieldId: itemId,
+                position: position
+            )
     }
 
     public func unassign(
         formId: String,
         itemId: String
     ) async throws {
-        try await ContactFormFormFieldTable(connection: connection).unassign(
-            formId: formId,
-            fieldId: itemId
-        )
+        try await ContactFormFormFieldTable(connection: connection)
+            .unassign(
+                formId: formId,
+                fieldId: itemId
+            )
     }
 
     public func update(

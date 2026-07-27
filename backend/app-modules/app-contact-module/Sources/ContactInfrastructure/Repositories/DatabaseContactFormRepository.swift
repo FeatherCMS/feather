@@ -26,7 +26,8 @@ public struct DatabaseContactFormRepository: ContactFormRepository {
     }
 
     public func list() async throws -> [ContactForm] {
-        try await ContactFormTable(connection: connection).list().map(\.asDomain)
+        try await ContactFormTable(connection: connection).list()
+            .map(\.asDomain)
     }
 
     public func insert(

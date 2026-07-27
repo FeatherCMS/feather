@@ -36,7 +36,8 @@ public struct ScheduleNewsletterIssue: UseCase {
     ) async throws -> NewsletterIssueDetail {
         let now = Date(timeIntervalSince1970: clock.now())
         return try await transaction.run { context in
-            guard var model = try await context.issue.findBy(id: input.id) else {
+            guard var model = try await context.issue.findBy(id: input.id)
+            else {
                 throw Error(message: "Newsletter issue not found")
             }
 

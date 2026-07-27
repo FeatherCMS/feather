@@ -13,7 +13,8 @@ extension NewsletterCampaignTable.Row {
     }
 }
 
-public struct DatabaseNewsletterCampaignRepository: NewsletterCampaignRepository {
+public struct DatabaseNewsletterCampaignRepository: NewsletterCampaignRepository
+{
 
     public var connection: any DatabaseConnection
 
@@ -22,7 +23,8 @@ public struct DatabaseNewsletterCampaignRepository: NewsletterCampaignRepository
     }
 
     public func list() async throws -> [NewsletterCampaign] {
-        try await NewsletterCampaignTable(connection: connection).list().map(\.asDomain)
+        try await NewsletterCampaignTable(connection: connection).list()
+            .map(\.asDomain)
     }
 
     public func insert(

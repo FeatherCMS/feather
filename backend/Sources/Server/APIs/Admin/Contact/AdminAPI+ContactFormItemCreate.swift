@@ -7,7 +7,9 @@ extension AdminAPI {
     func contactFormItemCreate(
         _ input: Operations.ContactFormItemCreate.Input
     ) async throws -> Operations.ContactFormItemCreate.Output {
-        try await modules.contact.authorize(permission: ContactPermissions.Items.create)
+        try await modules.contact.authorize(
+            permission: ContactPermissions.Items.create
+        )
         let body: Components.Schemas.ContactFormItemCreateSchema
         switch input.body {
         case let .json(value): body = value
@@ -24,9 +26,10 @@ extension AdminAPI {
                     key: body.key,
                     type: type,
                     label: body.label,
-                    allowedValues: body.allowedValues?.map {
-                        .init(value: $0, label: $0)
-                    } ?? [],
+                    allowedValues: body.allowedValues?
+                        .map {
+                            .init(value: $0, label: $0)
+                        } ?? [],
                     isRequired: body.isRequired ?? false,
                     position: body.position ?? 0
                 )

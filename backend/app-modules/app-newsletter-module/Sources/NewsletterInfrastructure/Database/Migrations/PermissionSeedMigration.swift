@@ -36,7 +36,7 @@ public struct PermissionSeedMigration: DatabaseMigration {
             FROM system_permission
             WHERE id LIKE 'newsletter:%'
             ON CONFLICT (role_id, permission_id) DO NOTHING;
-            """#
+            """#,
         ]
 
         for query in queries {

@@ -152,10 +152,11 @@ struct ContactFormFieldTable {
 
 extension ContactFormFieldTable.Row {
     func allowedValues() throws -> [ContactFormItem.Option] {
-        try JSONDecoder().decode(
-            [ContactFormItem.Option].self,
-            from: Data(allowedValuesJSON.utf8)
-        )
+        try JSONDecoder()
+            .decode(
+                [ContactFormItem.Option].self,
+                from: Data(allowedValuesJSON.utf8)
+            )
     }
 }
 
@@ -168,7 +169,8 @@ extension ContactFormItem.Option {
             throw RepositoryError(
                 reason: .database(.rowDecoding),
                 logMessage: "Unable to encode contact form item options",
-                userFriendlyMessage: "Unable to encode contact form item options."
+                userFriendlyMessage:
+                    "Unable to encode contact form item options."
             )
         }
         return result

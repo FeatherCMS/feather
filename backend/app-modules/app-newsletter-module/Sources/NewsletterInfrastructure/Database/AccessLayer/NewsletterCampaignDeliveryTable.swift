@@ -7,11 +7,20 @@ extension NewsletterCampaignDeliveryTable.Row {
 
     init(from row: DatabaseRow) throws {
         self.issueId = try row.decode(column: "issue_id", as: String.self)
-        self.newsletterId = try row.decode(column: "newsletter_id", as: String.self)
-        self.subscriberEmail = try row.decode(column: "subscriber_email", as: String.self)
+        self.newsletterId = try row.decode(
+            column: "newsletter_id",
+            as: String.self
+        )
+        self.subscriberEmail = try row.decode(
+            column: "subscriber_email",
+            as: String.self
+        )
         self.status = try row.decode(column: "status", as: String.self)
         self.sentDate = try row.decode(column: "sent_date", as: Date?.self)
-        self.failureReason = try row.decode(column: "failure_reason", as: String?.self)
+        self.failureReason = try row.decode(
+            column: "failure_reason",
+            as: String?.self
+        )
         self.createdAt = try row.decode(column: "created_at", as: Date.self)
         self.updatedAt = try row.decode(column: "updated_at", as: Date.self)
     }

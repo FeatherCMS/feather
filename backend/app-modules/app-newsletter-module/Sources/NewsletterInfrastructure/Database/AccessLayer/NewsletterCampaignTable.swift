@@ -79,7 +79,8 @@ struct NewsletterCampaignTable {
 
     func list() async throws -> [Row] {
         try await connection.run(
-            query: #"SELECT * FROM newsletter_campaign ORDER BY name ASC, id ASC;"#
+            query:
+                #"SELECT * FROM newsletter_campaign ORDER BY name ASC, id ASC;"#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
         }

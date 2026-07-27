@@ -5,6 +5,9 @@ import Testing
 struct NewsletterInfrastructureTestSuite {
     @Test
     func infrastructureTargetLoads() {
-        #expect(String(describing: NewsletterInfrastructureModule.self).contains("NewsletterInfrastructureModule"))
+        #expect(
+            String(describing: NewsletterInfrastructureModule.self)
+                .contains("NewsletterInfrastructureModule")
+        )
     }
 }

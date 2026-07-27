@@ -20,7 +20,8 @@ public struct GetNewsletterIssue: UseCase {
         _ input: Input
     ) async throws -> NewsletterIssueDetail {
         try await transaction.run { context in
-            guard let issue = try await context.issue.findBy(id: input.id) else {
+            guard let issue = try await context.issue.findBy(id: input.id)
+            else {
                 throw Error.notFound
             }
             return issue.asDetail

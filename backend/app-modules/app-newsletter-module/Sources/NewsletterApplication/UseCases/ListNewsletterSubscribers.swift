@@ -13,9 +13,12 @@ public struct ListNewsletterSubscribers: UseCase {
         public init(newsletterId: String) { self.newsletterId = newsletterId }
     }
 
-    public func execute(_ input: Input) async throws -> [NewsletterSubscriberDetail] {
+    public func execute(
+        _ input: Input
+    ) async throws -> [NewsletterSubscriberDetail] {
         try await transaction.run { context in
-            try await context.subscriber.list(newsletterId: input.newsletterId).map(\.asDetail)
+            try await context.subscriber.list(newsletterId: input.newsletterId)
+                .map(\.asDetail)
         }
     }
 }

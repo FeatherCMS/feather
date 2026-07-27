@@ -8,7 +8,9 @@ extension AdminAPI {
     func contactNewsletterIssueCreate(
         _ input: Operations.ContactNewsletterIssueCreate.Input
     ) async throws -> Operations.ContactNewsletterIssueCreate.Output {
-        try await modules.newsletter.authorize(permission: NewsletterPermissions.Issues.create)
+        try await modules.newsletter.authorize(
+            permission: NewsletterPermissions.Issues.create
+        )
         let body: Components.Schemas.ContactNewsletterIssueCreateSchema
         switch input.body {
         case let .json(value): body = value

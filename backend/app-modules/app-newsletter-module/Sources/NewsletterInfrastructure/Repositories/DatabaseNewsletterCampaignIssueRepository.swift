@@ -5,7 +5,8 @@ import Infrastructure
 extension NewsletterCampaignIssueTable.Row {
     var asDomain: NewsletterCampaignIssue {
         get throws {
-            guard let status = NewsletterCampaignIssue.Status(rawValue: status) else {
+            guard let status = NewsletterCampaignIssue.Status(rawValue: status)
+            else {
                 throw RepositoryError.invalidEnumValue(status)
             }
             return .init(
@@ -24,7 +25,9 @@ extension NewsletterCampaignIssueTable.Row {
     }
 }
 
-public struct DatabaseNewsletterCampaignIssueRepository: NewsletterCampaignIssueRepository {
+public struct DatabaseNewsletterCampaignIssueRepository:
+    NewsletterCampaignIssueRepository
+{
 
     public var connection: any DatabaseConnection
 
@@ -36,7 +39,8 @@ public struct DatabaseNewsletterCampaignIssueRepository: NewsletterCampaignIssue
         newsletterId: String
     ) async throws -> [NewsletterCampaignIssue] {
         let table = NewsletterCampaignIssueTable(connection: connection)
-        return try await table.list(newsletterId: newsletterId).map { try $0.asDomain }
+        return try await table.list(newsletterId: newsletterId)
+            .map { try $0.asDomain }
     }
 
     public func insert(
@@ -89,6 +93,7 @@ public struct DatabaseNewsletterCampaignIssueRepository: NewsletterCampaignIssue
     public func delete(
         id: String
     ) async throws -> Bool {
-        try await NewsletterCampaignIssueTable(connection: connection).delete(id: id)
+        try await NewsletterCampaignIssueTable(connection: connection)
+            .delete(id: id)
     }
 }

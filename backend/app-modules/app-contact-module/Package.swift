@@ -49,7 +49,7 @@ let package = Package(
             url: "https://github.com/feather-framework/feather-database",
             exact: "1.0.0-beta.5"
         ),
-        .package(path: "../app-kernel")
+        .package(path: "../app-kernel"),
     ],
     targets: [
         .target(

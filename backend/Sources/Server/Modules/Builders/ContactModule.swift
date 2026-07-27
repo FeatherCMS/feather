@@ -26,7 +26,12 @@ struct ContactModule: Sendable {
 
     func authorize(permission: PermissionKey) async throws {
         let subject = try await CurrentSubject.require()
-        guard try await authorizer.can(subject: subject, perform: ContactPermissionAction(key: permission)) else {
+        guard
+            try await authorizer.can(
+                subject: subject,
+                perform: ContactPermissionAction(key: permission)
+            )
+        else {
             throw AuthError(kind: .forbidden, message: permission.rawValue)
         }
     }
@@ -39,7 +44,8 @@ extension ContactModule {
     ) async throws {
         guard
             let data = valuesJSON.data(using: .utf8),
-            let values = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+            let values = try JSONSerialization.jsonObject(with: data)
+                as? [String: Any]
         else {
             return
         }
@@ -49,7 +55,10 @@ extension ContactModule {
                 mailFrom: render(mail.mailFrom, values: values),
                 mailTo: render(mail.mailTo, values: values),
                 subject: render(mail.subject, values: values),
-                additionalHeaders: render(mail.additionalHeaders, values: values),
+                additionalHeaders: render(
+                    mail.additionalHeaders,
+                    values: values
+                ),
                 messageBody: renderHTML(mail.messageBody, values: values)
             )
         }
@@ -61,7 +70,8 @@ extension ContactModule {
     ) -> String {
         values.reduce(template) { result, entry in
             let value = String(describing: entry.value)
-            return result
+            return
+                result
                 .replacingOccurrences(of: "[\(entry.key)]", with: value)
                 .replacingOccurrences(of: "{{\(entry.key)}}", with: value)
         }
@@ -73,7 +83,8 @@ extension ContactModule {
     ) -> String {
         values.reduce(template) { result, entry in
             let value = htmlEscaped(String(describing: entry.value))
-            return result
+            return
+                result
                 .replacingOccurrences(of: "[\(entry.key)]", with: value)
                 .replacingOccurrences(of: "{{\(entry.key)}}", with: value)
         }
@@ -88,41 +99,88 @@ extension ContactModule {
             .replacingOccurrences(of: "'", with: "&#39;")
     }
 
-    private func contactFormTransaction() -> DatabaseTransactionExecutor<WriteContactForm> {
+    private func contactFormTransaction() -> DatabaseTransactionExecutor<
+        WriteContactForm
+    > {
         DatabaseTransactionExecutor(
             database: infrastructure.database,
             scope: { connection in
                 WriteContactForm(
                     form: DatabaseContactFormRepository(connection: connection),
-                    item: DatabaseContactFormItemRepository(connection: connection),
-                    mail: DatabaseContactFormMailRepository(connection: connection),
-                    submission: DatabaseContactFormSubmissionRepository(connection: connection)
+                    item: DatabaseContactFormItemRepository(
+                        connection: connection
+                    ),
+                    mail: DatabaseContactFormMailRepository(
+                        connection: connection
+                    ),
+                    submission: DatabaseContactFormSubmissionRepository(
+                        connection: connection
+                    )
                 )
             }
         )
     }
 
     func makeCreateContactFormItem() -> CreateContactFormItem {
-        .init(transaction: contactFormTransaction(), idGenerator: infrastructure.idGenerator)
+        .init(
+            transaction: contactFormTransaction(),
+            idGenerator: infrastructure.idGenerator
+        )
     }
-    func makeListContactFormItems() -> ListContactFormItems { .init(transaction: contactFormTransaction()) }
-    func makeGetContactFormItem() -> GetContactFormItem { .init(transaction: contactFormTransaction()) }
-    func makeUpdateContactFormItem() -> UpdateContactFormItem { .init(transaction: contactFormTransaction()) }
-    func makeDeleteContactFormItem() -> DeleteContactFormItem { .init(transaction: contactFormTransaction()) }
+    func makeListContactFormItems() -> ListContactFormItems {
+        .init(transaction: contactFormTransaction())
+    }
+    func makeGetContactFormItem() -> GetContactFormItem {
+        .init(transaction: contactFormTransaction())
+    }
+    func makeUpdateContactFormItem() -> UpdateContactFormItem {
+        .init(transaction: contactFormTransaction())
+    }
+    func makeDeleteContactFormItem() -> DeleteContactFormItem {
+        .init(transaction: contactFormTransaction())
+    }
 
-    func makeCreateContactForm() -> CreateContactForm { .init(transaction: contactFormTransaction(), idGenerator: infrastructure.idGenerator) }
-    func makeListContactForms() -> ListContactForms { .init(transaction: contactFormTransaction()) }
-    func makeGetContactForm() -> GetContactForm { .init(transaction: contactFormTransaction()) }
-    func makeUpdateContactForm() -> UpdateContactForm { .init(transaction: contactFormTransaction(), idGenerator: infrastructure.idGenerator) }
-    func makeDeleteContactForm() -> DeleteContactForm { .init(transaction: contactFormTransaction()) }
+    func makeCreateContactForm() -> CreateContactForm {
+        .init(
+            transaction: contactFormTransaction(),
+            idGenerator: infrastructure.idGenerator
+        )
+    }
+    func makeListContactForms() -> ListContactForms {
+        .init(transaction: contactFormTransaction())
+    }
+    func makeGetContactForm() -> GetContactForm {
+        .init(transaction: contactFormTransaction())
+    }
+    func makeUpdateContactForm() -> UpdateContactForm {
+        .init(
+            transaction: contactFormTransaction(),
+            idGenerator: infrastructure.idGenerator
+        )
+    }
+    func makeDeleteContactForm() -> DeleteContactForm {
+        .init(transaction: contactFormTransaction())
+    }
 
     func makeSubmitContactForm() -> SubmitContactForm {
-        .init(transaction: contactFormTransaction(), idGenerator: infrastructure.idGenerator, clock: DefaultClock())
+        .init(
+            transaction: contactFormTransaction(),
+            idGenerator: infrastructure.idGenerator,
+            clock: DefaultClock()
+        )
     }
 
-    func makeListContactFormSubmissions() -> ListContactFormSubmissions { .init(transaction: contactFormTransaction()) }
-    func makeGetContactFormSubmission() -> GetContactFormSubmission { .init(transaction: contactFormTransaction()) }
-    func makeUpdateContactFormSubmission() -> UpdateContactFormSubmission { .init(transaction: contactFormTransaction()) }
-    func makeDeleteContactFormSubmission() -> DeleteContactFormSubmission { .init(transaction: contactFormTransaction()) }
+    func makeListContactFormSubmissions() -> ListContactFormSubmissions {
+        .init(transaction: contactFormTransaction())
+    }
+    func makeGetContactFormSubmission() -> GetContactFormSubmission {
+        .init(transaction: contactFormTransaction())
+    }
+    func makeUpdateContactFormSubmission() -> UpdateContactFormSubmission {
+        .init(transaction: contactFormTransaction())
+    }
+    func makeDeleteContactFormSubmission() -> DeleteContactFormSubmission {
+        .init(transaction: contactFormTransaction())
+    }
 
 }

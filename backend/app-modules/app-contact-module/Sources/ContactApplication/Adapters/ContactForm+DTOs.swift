@@ -9,6 +9,16 @@ extension ContactForm {
         items: [ContactFormItemDetail] = [],
         mails: [ContactFormMailDetail] = []
     ) -> ContactFormDetail {
-        .init(id: id, name: name, successMessage: successMessage, failureMessage: failureMessage, redirectUrl: redirectUrl, items: items, mails: mails, createdAt: createdAt, updatedAt: updatedAt)
+        .init(
+            id: id,
+            name: name,
+            successMessage: successMessage,
+            failureMessage: failureMessage,
+            redirectUrl: redirectUrl,
+            items: items,
+            mails: mails,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
     }
 }

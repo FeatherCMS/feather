@@ -32,7 +32,8 @@ public struct UpdateNewsletterIssue: UseCase {
         _ input: Input
     ) async throws -> NewsletterIssueDetail {
         try await transaction.run { context in
-            guard var issue = try await context.issue.findBy(id: input.id) else {
+            guard var issue = try await context.issue.findBy(id: input.id)
+            else {
                 throw Error.notFound
             }
             guard !input.subject.isEmpty else {

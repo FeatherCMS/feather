@@ -5,6 +5,9 @@ import Testing
 struct ContactApplicationTestSuite {
     @Test
     func applicationTargetLoads() {
-        #expect(String(describing: ContactApplicationModule.self).contains("ContactApplicationModule"))
+        #expect(
+            String(describing: ContactApplicationModule.self)
+                .contains("ContactApplicationModule")
+        )
     }
 }

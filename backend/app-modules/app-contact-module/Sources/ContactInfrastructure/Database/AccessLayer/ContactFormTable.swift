@@ -7,9 +7,18 @@ extension ContactFormTable.Row {
     init(from row: DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.name = try row.decode(column: "name", as: String.self)
-        self.successMessage = try row.decode(column: "success_message", as: String.self)
-        self.failureMessage = try row.decode(column: "failure_message", as: String.self)
-        self.redirectUrl = try row.decode(column: "redirect_url", as: String?.self)
+        self.successMessage = try row.decode(
+            column: "success_message",
+            as: String.self
+        )
+        self.failureMessage = try row.decode(
+            column: "failure_message",
+            as: String.self
+        )
+        self.redirectUrl = try row.decode(
+            column: "redirect_url",
+            as: String?.self
+        )
         self.createdAt = try row.decode(column: "created_at", as: Date.self)
         self.updatedAt = try row.decode(column: "updated_at", as: Date.self)
     }

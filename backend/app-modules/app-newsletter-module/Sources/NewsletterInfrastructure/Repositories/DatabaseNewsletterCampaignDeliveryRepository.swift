@@ -5,7 +5,9 @@ import Infrastructure
 extension NewsletterCampaignDeliveryTable.Row {
     var asDomain: NewsletterCampaignDelivery {
         get throws {
-            guard let status = NewsletterCampaignDelivery.Status(rawValue: status) else {
+            guard
+                let status = NewsletterCampaignDelivery.Status(rawValue: status)
+            else {
                 throw RepositoryError.invalidEnumValue(status)
             }
             return .init(
@@ -22,7 +24,9 @@ extension NewsletterCampaignDeliveryTable.Row {
     }
 }
 
-public struct DatabaseNewsletterCampaignDeliveryRepository: NewsletterCampaignDeliveryRepository {
+public struct DatabaseNewsletterCampaignDeliveryRepository:
+    NewsletterCampaignDeliveryRepository
+{
 
     public var connection: any DatabaseConnection
 
@@ -60,10 +64,12 @@ public struct DatabaseNewsletterCampaignDeliveryRepository: NewsletterCampaignDe
         subscriberEmail: String
     ) async throws -> NewsletterCampaignDelivery? {
         let table = NewsletterCampaignDeliveryTable(connection: connection)
-        return try await table.find(
-            issueId: issueId,
-            subscriberEmail: subscriberEmail
-        ).map { try $0.asDomain }
+        return
+            try await table.find(
+                issueId: issueId,
+                subscriberEmail: subscriberEmail
+            )
+            .map { try $0.asDomain }
     }
 
     public func update(
