@@ -20,7 +20,11 @@ struct FormDateTimeFieldTestSuite {
 
         #expect(result.contains("class=\"form-datetime-field\""))
         #expect(result.contains("id=\"publicationDate-display\""))
-        #expect(result.contains("id=\"publicationDate\" name=\"publicationDate\" value=\"2026-07-22T14:30\""))
+        #expect(
+            result.contains(
+                "id=\"publicationDate\" name=\"publicationDate\" value=\"2026-07-22T14:30\""
+            )
+        )
         #expect(result.contains("id=\"publicationDate-picker\""))
         #expect(result.contains("role=\"dialog\""))
         #expect(result.contains("class=\"form-datetime-field__calendar\""))
@@ -56,8 +60,16 @@ struct FormDateTimeFieldTestSuite {
             )
         )
 
-        #expect(result.contains("class=\"form-datetime-field has-error metadata-date-field\""))
-        #expect(result.contains("aria-describedby=\"publicationDate-help publicationDate-error\""))
+        #expect(
+            result.contains(
+                "class=\"form-datetime-field has-error metadata-date-field\""
+            )
+        )
+        #expect(
+            result.contains(
+                "aria-describedby=\"publicationDate-help publicationDate-error\""
+            )
+        )
         #expect(result.contains("aria-invalid=\"true\""))
         #expect(result.contains("aria-errormessage=\"publicationDate-error\""))
         #expect(result.contains("disabled"))

@@ -128,9 +128,10 @@ struct WebPageForm: Component, FlowContent {
     ) -> some FlowContent {
         Section {
             AdminFieldLabel(label: field.label, required: true)
-            Link(rel: .stylesheet).href(
-                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin-markdown-editor.css"
-            )
+            Link(rel: .stylesheet)
+                .href(
+                    "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin-markdown-editor.css"
+                )
             Div {
                 Div {
                     P("Add component").class("eyebrow")
@@ -138,14 +139,23 @@ struct WebPageForm: Component, FlowContent {
                         for (title, icon, type) in [
                             ("Heading", "H", "heading"), ("Text", "T", "text"),
                             ("Image", "▧", "image"), ("Video", "▶", "video"),
-                            ("Unordered list", "•", "ul"), ("Ordered list", "1.", "ol"),
-                            ("Separator", "—", "separator"), ("Blockquote", "“", "blockquote"),
-                            ("Code block", "</>", "code"), ("HTML", "<>", "html"),
-                            ("Newsletter", "✉", "newsletter"), ("Contact form", "☏", "contact-form"),
-                            ("Grid", "▦", "grid"), ("Custom block", "✦", "custom")
+                            ("Unordered list", "•", "ul"),
+                            ("Ordered list", "1.", "ol"),
+                            ("Separator", "—", "separator"),
+                            ("Blockquote", "“", "blockquote"),
+                            ("Code block", "</>", "code"),
+                            ("HTML", "<>", "html"),
+                            ("Newsletter", "✉", "newsletter"),
+                            ("Contact form", "☏", "contact-form"),
+                            ("Grid", "▦", "grid"),
+                            ("Custom block", "✦", "custom"),
                         ] {
                             Button {
-                                Span(icon).class("component-icon").setAttribute(name: "aria-hidden", value: "true")
+                                Span(icon).class("component-icon")
+                                    .setAttribute(
+                                        name: "aria-hidden",
+                                        value: "true"
+                                    )
                                 Span(title)
                                 Small(title)
                             }
@@ -153,33 +163,62 @@ struct WebPageForm: Component, FlowContent {
                             .class("component-button")
                             .setAttribute(name: "data-add", value: type)
                         }
-                    }.class("component-list")
+                    }
+                    .class("component-list")
                     Div {
-                        P("Drag the handle to rearrange blocks. Select text inside a text block to format it.").class("hint")
+                        P(
+                            "Drag the handle to rearrange blocks. Select text inside a text block to format it."
+                        )
+                        .class("hint")
                         Div {
                             Strong("Insert at")
                             Div {
-                                Button("Bottom").type(.button).class("active").setAttribute(name: "data-insert", value: "bottom")
-                                Button("Top").type(.button).setAttribute(name: "data-insert", value: "top")
-                            }.class("insert-options")
-                        }.class("insert-toggle")
-                    }.class("sidebar-footer")
-                }.class("panel sidebar")
+                                Button("Bottom").type(.button).class("active")
+                                    .setAttribute(
+                                        name: "data-insert",
+                                        value: "bottom"
+                                    )
+                                Button("Top").type(.button)
+                                    .setAttribute(
+                                        name: "data-insert",
+                                        value: "top"
+                                    )
+                            }
+                            .class("insert-options")
+                        }
+                        .class("insert-toggle")
+                    }
+                    .class("sidebar-footer")
+                }
+                .class("panel sidebar")
                 Div {
                     Div {
                         Nav {
-                            Button("Visual").type(.button).class("active").setAttribute(name: "data-mode", value: "visual")
-                            Button("Preview").type(.button).setAttribute(name: "data-mode", value: "preview")
-                            Button("Markdown").type(.button).setAttribute(name: "data-mode", value: "raw")
-                        }.class("mode-switch")
+                            Button("Visual").type(.button).class("active")
+                                .setAttribute(
+                                    name: "data-mode",
+                                    value: "visual"
+                                )
+                            Button("Preview").type(.button)
+                                .setAttribute(
+                                    name: "data-mode",
+                                    value: "preview"
+                                )
+                            Button("Markdown").type(.button)
+                                .setAttribute(name: "data-mode", value: "raw")
+                        }
+                        .class("mode-switch")
                         Span("Ready").id("status").class("status")
-                    }.class("editor-bar")
+                    }
+                    .class("editor-bar")
                     Div {
                         Div {}.id("canvas").class("visual-canvas")
-                    }.id("visualView")
+                    }
+                    .id("visualView")
                     Div {
                         Div {}.id("previewContent").class("preview-content")
-                    }.id("previewView").hidden()
+                    }
+                    .id("previewView").hidden()
                     Div {
                         Textarea(field.value ?? "")
                             .id("markdownInput")
@@ -188,18 +227,22 @@ struct WebPageForm: Component, FlowContent {
                             .setAttribute(name: "spellcheck", value: "false")
                             .setAttribute(
                                 name: "data-media-base-url",
-                                value: AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString
+                                value: AppEnvironmentStore.current.publicOrigins
+                                    .mediaBaseURL.absoluteString
                             )
                             .class("markdown-source")
-                    }.id("rawView").hidden()
-                }.class("panel editor")
+                    }
+                    .id("rawView").hidden()
+                }
+                .class("panel editor")
             }
             .class("workspace", "mce-app")
             .data("markdown-image-picker", "markdown-image-url")
             .data("markdown-video-picker", "markdown-video-url")
             .data(
                 "markdown-media-base-url",
-                AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString
+                AppEnvironmentStore.current.publicOrigins.mediaBaseURL
+                    .absoluteString
             )
             AdminMediaAssetPicker(
                 state: .init(

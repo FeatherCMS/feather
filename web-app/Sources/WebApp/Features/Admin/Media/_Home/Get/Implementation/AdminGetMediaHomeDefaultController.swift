@@ -1,7 +1,8 @@
 import Hummingbird
 
 struct AdminGetMediaHomeDefaultController: AdminGetMediaHomeController {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetMediaHomeInteractor,
             presenter: any AdminGetMediaHomePresenter
         )

@@ -9,8 +9,10 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
         search: String?
     ) async throws -> AdminListSystemJobModel {
         let allJobs = try await repository.list()
-        let normalizedSearch = search?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let filteredJobs = normalizedSearch.isEmpty
+        let normalizedSearch =
+            search?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let filteredJobs =
+            normalizedSearch.isEmpty
             ? allJobs
             : allJobs.filter { job in
                 [
@@ -18,14 +20,20 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
                     job.queueName,
                     job.workerId ?? "",
                     String(job.status),
-                    job.payload
-                ].contains { $0.localizedCaseInsensitiveContains(normalizedSearch) }
+                    job.payload,
+                ]
+                .contains {
+                    $0.localizedCaseInsensitiveContains(normalizedSearch)
+                }
             }
         let pageSize = 20
         let normalizedPage = max(1, page)
         let start = (normalizedPage - 1) * pageSize
-        let items = start < filteredJobs.count
-            ? Array(filteredJobs[start..<min(start + pageSize, filteredJobs.count)])
+        let items =
+            start < filteredJobs.count
+            ? Array(
+                filteredJobs[start..<min(start + pageSize, filteredJobs.count)]
+            )
             : []
         return .init(
             items: items,

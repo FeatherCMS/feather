@@ -3,7 +3,12 @@ import SGML
 import WebStandards
 
 struct ContactNewsletterAddView: Component {
-    struct State { let name: String; let fromEmail: String; let error: String?; let breadcrumb: AdminBreadcrumb.State }
+    struct State {
+        let name: String
+        let fromEmail: String
+        let error: String?
+        let breadcrumb: AdminBreadcrumb.State
+    }
     let state: State
 
     func content() -> some BasicTag {
@@ -13,13 +18,26 @@ struct ContactNewsletterAddView: Component {
             if let error = state.error { P(error).class("error") }
             Form {
                 Section {
-                    Label { AdminFieldLabel(label: "Name", required: true); Input().type(.text).class("text-input").name("name").value(state.name).id("name").required() }
+                    Label {
+                        AdminFieldLabel(label: "Name", required: true)
+                        Input().type(.text).class("text-input").name("name")
+                            .value(state.name).id("name").required()
+                    }
                 }
                 Section {
-                    Label { AdminFieldLabel(label: "From email", required: true); Input().type(.email).class("text-input").name("fromEmail").value(state.fromEmail).id("fromEmail").required() }
+                    Label {
+                        AdminFieldLabel(label: "From email", required: true)
+                        Input().type(.email).class("text-input")
+                            .name("fromEmail").value(state.fromEmail)
+                            .id("fromEmail").required()
+                    }
                 }
-                Section { Div { Button("Add").type(.submit) }.class("button-row") }
-            }.method(.post).action("/admin/newsletters/add/").class("cms-form")
-        }.class("cms-section")
+                Section {
+                    Div { Button("Add").type(.submit) }.class("button-row")
+                }
+            }
+            .method(.post).action("/admin/newsletters/add/").class("cms-form")
+        }
+        .class("cms-section")
     }
 }

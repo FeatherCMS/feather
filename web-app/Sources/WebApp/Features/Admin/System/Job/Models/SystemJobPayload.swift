@@ -12,7 +12,8 @@ struct SystemJobPayload {
     init(job: Components.Schemas.SystemJobSchema) {
         guard
             let data = job.payload.data(using: .utf8),
-            let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            let root = try? JSONSerialization.jsonObject(with: data)
+                as? [String: Any],
             let name = root.keys.first,
             let jobObject = root[name] as? [String: Any],
             let rawParameters = jobObject["p"] as? [String: Any]
@@ -52,10 +53,12 @@ struct SystemJobPayload {
     }
 
     var parameterSummary: String {
-        parameters.keys.sorted().compactMap { key in
-            guard let value = parameters[key] else { return nil }
-            return "\(key): \(value)"
-        }.joined(separator: ", ")
+        parameters.keys.sorted()
+            .compactMap { key in
+                guard let value = parameters[key] else { return nil }
+                return "\(key): \(value)"
+            }
+            .joined(separator: ", ")
     }
 
     private static func stringValue(_ value: Any) -> String {

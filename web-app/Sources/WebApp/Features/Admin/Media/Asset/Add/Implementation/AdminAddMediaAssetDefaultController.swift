@@ -2,7 +2,8 @@ import Foundation
 import Hummingbird
 
 struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminAddMediaAssetInteractor,
             presenter: any AdminAddMediaAssetPresenter
         )

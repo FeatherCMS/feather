@@ -17,7 +17,10 @@ struct SystemJobDetails: Component {
             AdminDetailsField(label: "Queue", value: job.queueName)
             AdminDetailsField(label: "Status", value: statusLabel(job.status))
             AdminDetailsField(label: "Worker", value: job.workerId ?? "—")
-            AdminDetailsField(label: "Last modified", value: String(describing: job.lastModified))
+            AdminDetailsField(
+                label: "Last modified",
+                value: String(describing: job.lastModified)
+            )
             if let queuedAt = payload.queuedAt {
                 AdminDetailsField(label: "Queued at", value: queuedAt)
             }
@@ -25,7 +28,10 @@ struct SystemJobDetails: Component {
                 AdminDetailsField(label: "Attempt", value: attempt)
             }
             if let nextScheduledAt = payload.nextScheduledAt {
-                AdminDetailsField(label: "Next scheduled at", value: nextScheduledAt)
+                AdminDetailsField(
+                    label: "Next scheduled at",
+                    value: nextScheduledAt
+                )
             }
             if let traceContext = payload.traceContext {
                 AdminDetailsField(label: "Trace context", value: traceContext)
@@ -43,8 +49,13 @@ struct SystemJobDetails: Component {
                 AdminDetailsField(label: "Message", value: message)
             }
             AdminDetailsField(label: "Payload", value: job.payload)
-            Div { AdminNavigationButton("Back to worker jobs", href: "/admin/system/jobs/") }
-                .class("button-row", "admin-detail-actions")
+            Div {
+                AdminNavigationButton(
+                    "Back to worker jobs",
+                    href: "/admin/system/jobs/"
+                )
+            }
+            .class("button-row", "admin-detail-actions")
         }
         .class("cms-section")
     }

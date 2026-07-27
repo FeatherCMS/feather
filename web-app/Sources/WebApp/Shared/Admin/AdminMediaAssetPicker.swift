@@ -243,7 +243,10 @@ struct AdminMediaAssetPicker: Component, FlowContent {
 
                 if state.showsCurrentCard {
                     Label {
-                        AdminFieldLabel(label: state.field.label, required: false)
+                        AdminFieldLabel(
+                            label: state.field.label,
+                            required: false
+                        )
                     }
                     currentCard()
                 }

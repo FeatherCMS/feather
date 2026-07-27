@@ -18,7 +18,12 @@ struct NewsletterEdit: Component {
             AdminBreadcrumb(state: state.breadcrumb)
             H1("Edit campaign")
             if state.isEdited { P("Campaign edited successfully.") }
-            NewsletterForm(state: state.form, action: "/admin/newsletters/\(state.id)/edit/", submitLabel: "Save")
-        }.class("cms-section")
+            NewsletterForm(
+                state: state.form,
+                action: "/admin/newsletters/\(state.id)/edit/",
+                submitLabel: "Save"
+            )
+        }
+        .class("cms-section")
     }
 }

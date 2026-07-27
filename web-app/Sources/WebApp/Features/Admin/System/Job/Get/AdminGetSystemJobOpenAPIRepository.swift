@@ -13,13 +13,22 @@ struct AdminGetSystemJobOpenAPIRepository: AdminGetSystemJobRepository {
             case .ok(let value):
                 return try value.body.json
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(message: "Worker job not found.")
+                throw OpenAPIRepositoryError.notFound(
+                    message: "Worker job not found."
+                )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(message: "Please sign in again to view this worker job.")
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to view this worker job."
+                )
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(message: "Your account cannot access worker jobs.")
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your account cannot access worker jobs."
+                )
             case .undocumented(let statusCode, let response):
-                throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }

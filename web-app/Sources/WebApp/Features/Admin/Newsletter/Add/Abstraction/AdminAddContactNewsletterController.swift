@@ -1,8 +1,10 @@
 import Hummingbird
 
 protocol AdminAddContactNewsletterController: Sendable {
-    func getAddContactNewsletter(request: Request, context: AppRequestContext) async throws -> HTMLResponse
-    func postAddContactNewsletter(request: Request, context: AppRequestContext) async throws -> Response
+    func getAddContactNewsletter(request: Request, context: AppRequestContext)
+        async throws -> HTMLResponse
+    func postAddContactNewsletter(request: Request, context: AppRequestContext)
+        async throws -> Response
 }
 
 extension AdminAddContactNewsletterController {

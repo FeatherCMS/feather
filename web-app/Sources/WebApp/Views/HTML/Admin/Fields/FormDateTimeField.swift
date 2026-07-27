@@ -1,6 +1,6 @@
+import CSS
 import HTML
 import SGML
-import CSS
 import WebStandards
 
 struct FormDateTimeField: Component, FlowContent {
@@ -152,7 +152,8 @@ struct FormDateTimeField: Component, FlowContent {
             BorderColor(.variable("cms-primary-border"))
             Background(color: .variable("cms-gray-1"))
         }
-        Custom(".form-datetime-field__calendar button[aria-selected=\"true\"]") {
+        Custom(".form-datetime-field__calendar button[aria-selected=\"true\"]")
+        {
             BorderColor(.variable("cms-primary-border"))
             Background(color: .variable("cms-primary"))
             Color(.variable("cms-white"))
@@ -275,10 +276,13 @@ struct FormDateTimeField: Component, FlowContent {
     private func picker() -> some FlowContent {
         Div {
             Div {
-                Button("‹").type(.button).ariaLabel("Previous month").class("form-datetime-field__previous")
+                Button("‹").type(.button).ariaLabel("Previous month")
+                    .class("form-datetime-field__previous")
                 Strong("Select date and time")
-                Button("›").type(.button).ariaLabel("Next month").class("form-datetime-field__next")
-            }.class("form-datetime-field__header")
+                Button("›").type(.button).ariaLabel("Next month")
+                    .class("form-datetime-field__next")
+            }
+            .class("form-datetime-field__header")
             Div {}.class("form-datetime-field__calendar").role("grid")
             Div {
                 Span("Time:").class("form-datetime-field__time-label")
@@ -299,11 +303,15 @@ struct FormDateTimeField: Component, FlowContent {
                     .min(0)
                     .max(59)
                     .setAttribute(name: "step", value: "1")
-            }.class("form-datetime-field__time")
+            }
+            .class("form-datetime-field__time")
             Div {
-                Button("Cancel").type(.button).class("form-datetime-field__cancel")
-                Button("Apply").type(.button).class("form-datetime-field__apply")
-            }.class("form-datetime-field__actions")
+                Button("Cancel").type(.button)
+                    .class("form-datetime-field__cancel")
+                Button("Apply").type(.button)
+                    .class("form-datetime-field__apply")
+            }
+            .class("form-datetime-field__actions")
         }
         .id(pickerID)
         .class("form-datetime-field__picker")
@@ -317,7 +325,8 @@ struct FormDateTimeField: Component, FlowContent {
             if !state.isRequired {
                 Span(" (Optional)").class("field-label__optional")
             }
-        }.class("field-label")
+        }
+        .class("field-label")
     }
 
     private var displayID: String { "\(state.id)-display" }

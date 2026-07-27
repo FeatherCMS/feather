@@ -5,7 +5,8 @@ import Hummingbird
 struct AdminEditRedirectRuleDefaultController:
     AdminEditRedirectRuleController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditRedirectRuleInteractor,
             presenter: any AdminEditRedirectRulePresenter
         )

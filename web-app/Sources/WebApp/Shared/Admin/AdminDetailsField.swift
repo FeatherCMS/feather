@@ -8,7 +8,7 @@ struct AdminDetailsField: Component, FlowContent {
     let value: String
 
     func selectors() -> [any Selector] {
-        return AdminDetailFieldStyles.selectors()
+        AdminDetailFieldStyles.selectors()
     }
 
     func content() -> some BasicTag {

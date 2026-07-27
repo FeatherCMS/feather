@@ -1,4 +1,6 @@
-struct AdminNewsletterSubscribersDirectoryDefaultInteractor: AdminNewsletterSubscribersDirectoryInteractor {
+struct AdminNewsletterSubscribersDirectoryDefaultInteractor:
+    AdminNewsletterSubscribersDirectoryInteractor
+{
     let repository: AdminNewsletterSubscribersDirectoryOpenAPIRepository
 
     func list(
@@ -7,19 +9,30 @@ struct AdminNewsletterSubscribersDirectoryDefaultInteractor: AdminNewsletterSubs
     ) async throws -> AdminNewsletterSubscribersDirectoryModel {
         let campaigns = try await repository.campaigns()
         let items = try await repository.list()
-        let normalizedSearch = search?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let normalizedSearch =
+            search?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let filteredItems = items.filter { item in
-            let matchesSearch = normalizedSearch.isEmpty
+            let matchesSearch =
+                normalizedSearch.isEmpty
                 || item.email.localizedCaseInsensitiveContains(normalizedSearch)
                 || item.name.localizedCaseInsensitiveContains(normalizedSearch)
-            let matchesCampaign = campaignId?.isEmpty != false
+            let matchesCampaign =
+                campaignId?.isEmpty != false
                 || item.newsletters.contains { $0.id == campaignId }
             return matchesSearch && matchesCampaign
         }
-        return .init(items: filteredItems, campaigns: campaigns, search: normalizedSearch, campaignId: campaignId ?? "")
+        return .init(
+            items: filteredItems,
+            campaigns: campaigns,
+            search: normalizedSearch,
+            campaignId: campaignId ?? ""
+        )
     }
 
     func bulkRemove(subscriberIds: [String], campaignId: String?) async throws {
-        try await repository.bulkRemove(subscriberIds: subscriberIds, campaignId: campaignId)
+        try await repository.bulkRemove(
+            subscriberIds: subscriberIds,
+            campaignId: campaignId
+        )
     }
 }

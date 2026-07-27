@@ -18,7 +18,10 @@ struct AdminListSystemJobDefaultPresenter {
             title: "Worker jobs - Feather CMS",
             description: "Inspect worker jobs",
             imagePath: "images/puppy.png",
-            sidebarState: renderingEngine.adminSidebarState(request: request, permissions: permissions),
+            sidebarState: renderingEngine.adminSidebarState(
+                request: request,
+                permissions: permissions
+            ),
             content: SystemJobTable(
                 state: .init(
                     jobs: model.items,
@@ -39,7 +42,10 @@ struct AdminListSystemJobDefaultPresenter {
             title: "Worker jobs - Feather CMS",
             description: "Inspect worker jobs",
             imagePath: "images/puppy.png",
-            sidebarState: renderingEngine.adminSidebarState(request: request, permissions: permissions),
+            sidebarState: renderingEngine.adminSidebarState(
+                request: request,
+                permissions: permissions
+            ),
             content: SystemJobError(message: error, breadcrumb: breadcrumb())
         )
     }

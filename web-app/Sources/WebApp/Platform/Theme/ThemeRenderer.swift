@@ -17,11 +17,16 @@ final class ThemeRenderer: @unchecked Sendable {
     func render(
         _ context: ThemePageContext
     ) -> HTMLResponse {
-        let body = library.render(context.value, withTemplate: context.template.rawValue)
+        let body =
+            library.render(
+                context.value,
+                withTemplate: context.template.rawValue
+            )
             ?? "<section><p>Theme render failed.</p></section>"
         var layoutContext = context.value
         layoutContext["body"] = body
-        let html = library.render(layoutContext, withTemplate: layoutTemplate)
+        let html =
+            library.render(layoutContext, withTemplate: layoutTemplate)
             ?? "<!DOCTYPE html><html lang=\"en-US\"><body><p>Theme render failed.</p></body></html>"
         return .init(content: html)
     }
@@ -29,10 +34,12 @@ final class ThemeRenderer: @unchecked Sendable {
 
 extension ThemeRenderer {
     private static func loadTemplates() throws -> [String: MustacheTemplate] {
-        guard let themesURL = Bundle.module.url(
-            forResource: "Themes",
-            withExtension: nil
-        ) else {
+        guard
+            let themesURL = Bundle.module.url(
+                forResource: "Themes",
+                withExtension: nil
+            )
+        else {
             throw CocoaError(.fileNoSuchFile)
         }
         let fileManager = FileManager.default

@@ -168,9 +168,10 @@ struct WebMetadataForm: Component, FlowContent {
         FormSelectField(
             name: field.key,
             label: field.label,
-            options: ["draft", "published", "archived"].map {
-                .init(label: $0.capitalized, value: $0)
-            },
+            options: ["draft", "published", "archived"]
+                .map {
+                    .init(label: $0.capitalized, value: $0)
+                },
             selectedValue: field.value,
             error: field.error,
             isRequired: true

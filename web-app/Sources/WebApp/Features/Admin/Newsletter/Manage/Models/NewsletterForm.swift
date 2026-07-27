@@ -21,14 +21,20 @@ struct NewsletterForm: Component, FlowContent {
             Section {
                 Label {
                     AdminFieldLabel(label: "Name", required: true)
-                    Input().type(.text).id("name").name("name").value(state.name).required()
+                    Input().type(.text).id("name").name("name")
+                        .value(state.name).required()
                 }
                 Label {
                     AdminFieldLabel(label: "From email", required: true)
-                    Input().type(.email).id("fromEmail").name("fromEmail").value(state.fromEmail).required()
+                    Input().type(.email).id("fromEmail").name("fromEmail")
+                        .value(state.fromEmail).required()
                 }
-            }.if(state.error != nil) { $0.class("has-error") }
-            Section { Div { Button(submitLabel).type(.submit) }.class("button-row") }
-        }.encType(.urlencoded).method(.post).action(action).class("cms-form")
+            }
+            .if(state.error != nil) { $0.class("has-error") }
+            Section {
+                Div { Button(submitLabel).type(.submit) }.class("button-row")
+            }
+        }
+        .encType(.urlencoded).method(.post).action(action).class("cms-form")
     }
 }

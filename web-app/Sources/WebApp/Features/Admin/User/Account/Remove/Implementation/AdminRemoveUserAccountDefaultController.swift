@@ -3,7 +3,8 @@ import Hummingbird
 
 struct AdminRemoveUserAccountDefaultController: AdminRemoveUserAccountController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             getInteractor: any AdminGetUserAccountInteractor,
             removeInteractor: any AdminRemoveUserAccountInteractor,
             presenter: any AdminRemoveUserAccountPresenter

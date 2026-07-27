@@ -526,7 +526,7 @@ struct DefaultRenderingEngine: RenderingEngine {
                 label: "Subscribers",
                 link: "/admin/newsletters/subscribers/",
                 isCurrent: isIn("/admin/newsletters/subscribers/")
-            )
+            ),
         ]
 
         let contactMenus = [

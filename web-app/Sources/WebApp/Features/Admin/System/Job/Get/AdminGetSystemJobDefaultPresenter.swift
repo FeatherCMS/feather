@@ -8,14 +8,23 @@ struct AdminGetSystemJobDefaultPresenter {
     let request: Request
     let renderingEngine: any RenderingEngine
 
-    func render(job: Components.Schemas.SystemJobSchema, permissions: Set<String>) -> HTMLResponse {
+    func render(
+        job: Components.Schemas.SystemJobSchema,
+        permissions: Set<String>
+    ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
             title: "Worker job details - Feather CMS",
             description: "Inspect a worker job",
             imagePath: "images/puppy.png",
-            sidebarState: renderingEngine.adminSidebarState(request: request, permissions: permissions),
-            content: SystemJobDetails(job: job, breadcrumb: breadcrumb(id: job.id))
+            sidebarState: renderingEngine.adminSidebarState(
+                request: request,
+                permissions: permissions
+            ),
+            content: SystemJobDetails(
+                job: job,
+                breadcrumb: breadcrumb(id: job.id)
+            )
         )
     }
 
@@ -25,8 +34,14 @@ struct AdminGetSystemJobDefaultPresenter {
             title: "Worker job details - Feather CMS",
             description: "Inspect a worker job",
             imagePath: "images/puppy.png",
-            sidebarState: renderingEngine.adminSidebarState(request: request, permissions: permissions),
-            content: SystemJobError(message: error, breadcrumb: breadcrumb(id: ""))
+            sidebarState: renderingEngine.adminSidebarState(
+                request: request,
+                permissions: permissions
+            ),
+            content: SystemJobError(
+                message: error,
+                breadcrumb: breadcrumb(id: "")
+            )
         )
     }
 

@@ -14,7 +14,8 @@ struct AdminNewsletterCampaignTabs: Component, FlowContent {
 
     func content() -> some BasicTag {
         Div {
-            Style("""
+            Style(
+                """
                 .admin-newsletter-campaign-tabs {
                     display: flex;
                     align-items: center;
@@ -45,7 +46,8 @@ struct AdminNewsletterCampaignTabs: Component, FlowContent {
                     background: var(--cms-gray-4);
                     color: var(--cms-strong-font);
                 }
-                """)
+                """
+            )
             A("Details")
                 .href("/admin/newsletters/\(campaignId)/details/")
                 .if(active == .details) { $0.class("is-current") }
@@ -56,6 +58,9 @@ struct AdminNewsletterCampaignTabs: Component, FlowContent {
                 .href("/admin/newsletters/\(campaignId)/issues/")
                 .if(active == .issues) { $0.class("is-current") }
         }
-        .class("admin-media-asset-picker-tabs", "admin-newsletter-campaign-tabs")
+        .class(
+            "admin-media-asset-picker-tabs",
+            "admin-newsletter-campaign-tabs"
+        )
     }
 }

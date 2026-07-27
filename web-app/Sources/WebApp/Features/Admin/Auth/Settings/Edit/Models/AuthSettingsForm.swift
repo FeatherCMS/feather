@@ -59,10 +59,11 @@ struct AuthSettingsForm: Component, FlowContent {
             FormSelectField(
                 name: state.pageSize.key,
                 label: state.pageSize.label,
-                options: [10, 20, 50, 100].map {
-                    let value = "\($0)"
-                    return .init(label: value, value: value)
-                },
+                options: [10, 20, 50, 100]
+                    .map {
+                        let value = "\($0)"
+                        return .init(label: value, value: value)
+                    },
                 selectedValue: state.pageSize.value,
                 error: state.pageSize.error,
                 isRequired: true,

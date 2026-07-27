@@ -12,7 +12,8 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
             schema: content.siteSettings,
             publicOrigins: themeContextFactory.publicOrigins
         )
-        let navigation = content.menus.first(where: { $0.key == "main" })?.items ?? []
+        let navigation =
+            content.menus.first(where: { $0.key == "main" })?.items ?? []
 
         switch content.route {
         case .postList(let items, let routePaths):

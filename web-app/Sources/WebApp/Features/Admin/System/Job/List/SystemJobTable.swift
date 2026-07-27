@@ -29,19 +29,27 @@ struct SystemJobTable: Component {
             )
 
             if state.jobs.isEmpty {
-                let totalPages = max(1, (state.total + state.pageSize - 1) / state.pageSize)
+                let totalPages = max(
+                    1,
+                    (state.total + state.pageSize - 1) / state.pageSize
+                )
                 if state.total > 0 && state.page > totalPages {
                     P("Page (state.page) does not exist.")
                     P {
                         Span("Go to ")
                         A("page 1").href("/admin/system/jobs/?page=1")
                         Span(" or ")
-                        A("page (totalPages)").href("/admin/system/jobs/?page=(totalPages)")
+                        A("page (totalPages)")
+                            .href("/admin/system/jobs/?page=(totalPages)")
                         Span(".")
                     }
                 }
                 else {
-                    P(state.search.isEmpty ? "No worker jobs found." : "No worker jobs match your search.")
+                    P(
+                        state.search.isEmpty
+                            ? "No worker jobs found."
+                            : "No worker jobs match your search."
+                    )
                 }
             }
             else {
@@ -60,18 +68,24 @@ struct SystemJobTable: Component {
                                 let payload = SystemJobPayload(job: job)
                                 Tr {
                                     Td(payload.name).data("label", "Job")
-                                    Td(payload.parameterSummary.isEmpty ? "—" : payload.parameterSummary)
-                                        .data("label", "Parameters")
-                                    Td(statusLabel(job.status)).data("label", "Status")
+                                    Td(
+                                        payload.parameterSummary.isEmpty
+                                            ? "—" : payload.parameterSummary
+                                    )
+                                    .data("label", "Parameters")
+                                    Td(statusLabel(job.status))
+                                        .data("label", "Status")
                                     ListTableRowActions(
                                         state: .init(
                                             label: "Actions",
                                             actions: [
                                                 .init(
                                                     title: "Details",
-                                                    href: "/admin/system/jobs/\(job.id)/",
+                                                    href:
+                                                        "/admin/system/jobs/\(job.id)/",
                                                     className: nil,
-                                                    permission: "system:jobs:read"
+                                                    permission:
+                                                        "system:jobs:read"
                                                 )
                                             ],
                                             permissions: state.permissions

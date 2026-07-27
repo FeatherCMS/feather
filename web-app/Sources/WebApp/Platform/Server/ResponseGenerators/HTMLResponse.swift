@@ -29,7 +29,7 @@ struct HTMLResponse: ResponseGenerator {
     ) throws -> Response {
         let buffer = ByteBuffer(string: content)
         var headers: HTTPFields = [
-            .contentType: "text/html; charset=utf-8",
+            .contentType: "text/html; charset=utf-8"
         ]
         #if DEBUG
         headers[.cacheControl] = "no-cache"

@@ -45,13 +45,16 @@ struct ListTableRowActions: Component {
                     Button(action.title)
                         .type(.button)
                         .class("row-btn", action.className ?? "")
-                        .onClick("navigator.clipboard.writeText('\(copyText)').then(()=>window.toast&&window.toast.show({type:'success',title:'Copied',message:'Contact form embed code copied to the clipboard.',position:'top-right'}))")
+                        .onClick(
+                            "navigator.clipboard.writeText('\(copyText)').then(()=>window.toast&&window.toast.show({type:'success',title:'Copied',message:'Contact form embed code copied to the clipboard.',position:'top-right'}))"
+                        )
                 }
                 else if let className = action.className {
                     A(action.title)
                         .href(action.href)
                         .class("row-btn", className)
-                } else {
+                }
+                else {
                     A(action.title)
                         .href(action.href)
                         .class("row-btn")

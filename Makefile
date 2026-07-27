@@ -15,13 +15,11 @@ MODULE_DIRS := \
 TEST_PACKAGE_DIRS := backend $(sort $(dir $(wildcard backend/app-modules/*/Package.swift)))
 DEPS_SERVICES := certificates postgres migrator
 BACKEND_SERVICES := $(DEPS_SERVICES) server worker
-BACKEND_STATIC_SERVICES := $(BACKEND_SERVICES) web-static
 ALL_SERVICES := certificates postgres migrator server worker web-static openapi-app openapi-admin web-app
-SERVICE_TARGETS := $(filter-out web-static,$(ALL_SERVICES))
 POSTGRES_VOLUME := feather-cms-postgres-data
 MEDIA_VOLUME := feather-cms-file-storage
 
-.PHONY: up up-build down stop logs ps restart pull config clean reset deps all backend web-static backend-logs backend-down backend-rebuild web-static-rebuild clean-backend test test-all format fix-headers docker-up docker-down $(SERVICE_TARGETS)
+.PHONY: up up-build down stop logs ps restart pull config clean reset deps all backend web-static backend-logs test test-all format fix-headers docker-up docker-down $(SERVICE_TARGETS)
 
 define detect_lan_host
 iface="$$(route -n get default 2>/dev/null | awk '/interface: / { print $$2; exit }')"; \
@@ -120,19 +118,5 @@ backend:
 backend-logs:
 	$(COMPOSE) logs -f migrator server worker web-static openapi-app openapi-admin
 
-backend-down:
-	$(COMPOSE) down --remove-orphans
-
-backend-rebuild:
-	$(COMPOSE) build --no-cache $(BACKEND_SERVICES)
-	$(COMPOSE) up $(BACKEND_SERVICES)
-
-web-static-rebuild:
-	$(COMPOSE) build --no-cache web-static
-	$(COMPOSE) up web-static
-
-clean-backend:
-	$(MAKE) clean backend
-
-$(SERVICE_TARGETS):
+$(ALL_SERVICES):
 	$(COMPOSE) up --build $@

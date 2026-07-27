@@ -67,7 +67,10 @@ struct AdminAPI {
         body: Components.RequestBodies.ContactNewsletterIssuePatchRequestBody
     ) async throws -> Operations.ContactNewsletterIssueUpdate.Output {
         try await withOpenAPIRepositoryErrorMapping { client in
-            try await client.contactNewsletterIssueUpdate(path: path, body: body)
+            try await client.contactNewsletterIssueUpdate(
+                path: path,
+                body: body
+            )
         }
     }
 
@@ -81,7 +84,8 @@ struct AdminAPI {
 
     func contactNewsletterTestEmail(
         path: Operations.ContactNewsletterTestEmail.Input.Path,
-        body: Components.RequestBodies.ContactNewsletterIssueTestEmailRequestBody
+        body: Components.RequestBodies
+            .ContactNewsletterIssueTestEmailRequestBody
     ) async throws -> Operations.ContactNewsletterTestEmail.Output {
         try await withOpenAPIRepositoryErrorMapping { client in
             try await client.contactNewsletterTestEmail(path: path, body: body)
@@ -90,10 +94,14 @@ struct AdminAPI {
 
     func contactNewsletterIssueTestEmail(
         path: Operations.ContactNewsletterIssueTestEmail.Input.Path,
-        body: Components.RequestBodies.ContactNewsletterIssueTestEmailRequestBody
+        body: Components.RequestBodies
+            .ContactNewsletterIssueTestEmailRequestBody
     ) async throws -> Operations.ContactNewsletterIssueTestEmail.Output {
         try await withOpenAPIRepositoryErrorMapping { client in
-            try await client.contactNewsletterIssueTestEmail(path: path, body: body)
+            try await client.contactNewsletterIssueTestEmail(
+                path: path,
+                body: body
+            )
         }
     }
 }

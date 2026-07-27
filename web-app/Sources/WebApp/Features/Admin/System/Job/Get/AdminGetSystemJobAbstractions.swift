@@ -2,7 +2,8 @@ import AdminOpenAPI
 import Hummingbird
 
 protocol AdminGetSystemJobController: Sendable {
-    func getSystemJob(request: Request, context: AppRequestContext) async throws -> HTMLResponse
+    func getSystemJob(request: Request, context: AppRequestContext) async throws
+        -> HTMLResponse
 }
 
 extension AdminGetSystemJobController {

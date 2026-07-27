@@ -23,11 +23,15 @@ struct WebPageEdit: Component {
             H1 {
                 Span("Edit page")
                 if let slug = state.form.metadata.slug.value,
-                   !slug.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    !slug.trimmingCharacters(in: .whitespacesAndNewlines)
+                        .isEmpty
+                {
                     A {
                         Icon(svg: FeatherIcons.externalLink())
                     }
-                    .href("/\(slug.trimmingCharacters(in: .whitespacesAndNewlines))/")
+                    .href(
+                        "/\(slug.trimmingCharacters(in: .whitespacesAndNewlines))/"
+                    )
                     .target(.blank)
                     .ariaLabel("Preview page")
                     .style(

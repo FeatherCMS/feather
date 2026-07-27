@@ -11,7 +11,10 @@ struct MarkdownContentRenderer: ContentRenderer {
         logger: Logger = .init(label: "WebApp.Theme.MarkdownContentRenderer")
     ) {
         self.logger = logger
-        self.blockRenderers = [ContactFormBlockRenderer(api: api), NewsletterCampaignBlockRenderer(api: api)]
+        self.blockRenderers = [
+            ContactFormBlockRenderer(api: api),
+            NewsletterCampaignBlockRenderer(api: api),
+        ]
     }
 
     func render(
@@ -39,11 +42,14 @@ struct MarkdownContentRenderer: ContentRenderer {
             Document(parsing: source)
         )
         for (token, html) in replacements {
-            output = output
+            output =
+                output
                 .replacingOccurrences(of: "<p>\(token)</p>", with: html)
                 .replacingOccurrences(of: token, with: html)
         }
-        if output.isEmpty && !markdown.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        if output.isEmpty
+            && !markdown.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        {
             logger.warning(
                 "Markdown rendering produced empty output.",
                 metadata: [
@@ -58,10 +64,13 @@ struct MarkdownContentRenderer: ContentRenderer {
     private func resolveMediaURLs(
         in source: String
     ) -> String {
-        let mediaBaseURL = AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString
-        guard let expression = try? NSRegularExpression(
-            pattern: #"(?<![A-Za-z0-9:/._-])(/media/assets/[A-Za-z0-9._~/%+-]+)"#
-        )
+        let mediaBaseURL = AppEnvironmentStore.current.publicOrigins
+            .mediaBaseURL.absoluteString
+        guard
+            let expression = try? NSRegularExpression(
+                pattern:
+                    #"(?<![A-Za-z0-9:/._-])(/media/assets/[A-Za-z0-9._~/%+-]+)"#
+            )
         else {
             return source
         }
@@ -69,7 +78,8 @@ struct MarkdownContentRenderer: ContentRenderer {
         return expression.stringByReplacingMatches(
             in: source,
             range: range,
-            withTemplate: NSRegularExpression.escapedTemplate(for: mediaBaseURL) + "$1"
+            withTemplate: NSRegularExpression.escapedTemplate(for: mediaBaseURL)
+                + "$1"
         )
     }
 
@@ -79,15 +89,26 @@ struct MarkdownContentRenderer: ContentRenderer {
         requestPath: String,
         replacements: inout [String: String]
     ) async -> String {
-        let pattern = "(?m)^@\(renderer.name)\\(id:\\s*([^\\)]+)\\)\\s*(?:\\{\\s*\\})?\\s*$"
-        guard let expression = try? NSRegularExpression(pattern: pattern) else { return source }
+        let pattern =
+            "(?m)^@\(renderer.name)\\(id:\\s*([^\\)]+)\\)\\s*(?:\\{\\s*\\})?\\s*$"
+        guard let expression = try? NSRegularExpression(pattern: pattern) else {
+            return source
+        }
         let range = NSRange(source.startIndex..<source.endIndex, in: source)
         let matches = expression.matches(in: source, range: range)
         var result = source
         for (index, match) in matches.enumerated().reversed() {
-            guard let identifierRange = Range(match.range(at: 1), in: source), let fullRange = Range(match.range, in: source) else { continue }
-            let identifier = String(source[identifierRange]).trimmingCharacters(in: .whitespacesAndNewlines)
-            guard let html = await renderer.render(identifier: identifier, requestPath: requestPath) else { continue }
+            guard let identifierRange = Range(match.range(at: 1), in: source),
+                let fullRange = Range(match.range, in: source)
+            else { continue }
+            let identifier = String(source[identifierRange])
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            guard
+                let html = await renderer.render(
+                    identifier: identifier,
+                    requestPath: requestPath
+                )
+            else { continue }
             let token = "FEATHERMARKDOWNBLOCK\(renderer.name)\(index)TOKEN"
             replacements[token] = html
             let replacement = "\n\n\(token)\n\n"
@@ -109,17 +130,25 @@ struct MarkdownContentRenderer: ContentRenderer {
         var searchLocation = result.startIndex
 
         while searchLocation < result.endIndex {
-            let searchRange = NSRange(searchLocation..<result.endIndex, in: result)
-            guard let match = expression.firstMatch(in: result, range: searchRange),
-                  let matchRange = Range(match.range, in: result),
-                  let openingBrace = result[matchRange].lastIndex(of: "{")
+            let searchRange = NSRange(
+                searchLocation..<result.endIndex,
+                in: result
+            )
+            guard
+                let match = expression.firstMatch(
+                    in: result,
+                    range: searchRange
+                ),
+                let matchRange = Range(match.range, in: result),
+                let openingBrace = result[matchRange].lastIndex(of: "{")
             else {
                 break
             }
-            guard let closingBrace = matchingBrace(
-                in: result,
-                openingAt: openingBrace
-            )
+            guard
+                let closingBrace = matchingBrace(
+                    in: result,
+                    openingAt: openingBrace
+                )
             else {
                 break
             }
@@ -145,17 +174,22 @@ struct MarkdownContentRenderer: ContentRenderer {
                     "<div>" + html + "</div>"
                 )
             }
-            let gridClass = "grid-"
+            let gridClass =
+                "grid-"
                 + String(settings.desktop)
                 + String(settings.tablet)
                 + String(settings.mobile)
-            let replacement = "<div class=\"grid " + gridClass + "\">"
+            let replacement =
+                "<div class=\"grid " + gridClass + "\">"
                 + renderedCells.joined() + "</div>"
             let fullRange = matchRange.lowerBound...closingBrace
             result.replaceSubrange(fullRange, with: replacement)
             searchLocation = result.index(
                 result.startIndex,
-                offsetBy: result.distance(from: result.startIndex, to: matchRange.lowerBound) + replacement.count
+                offsetBy: result.distance(
+                    from: result.startIndex,
+                    to: matchRange.lowerBound
+                ) + replacement.count
             )
         }
 
@@ -174,8 +208,11 @@ struct MarkdownContentRenderer: ContentRenderer {
         var cells: [String] = []
         for match in matches {
             guard let matchRange = Range(match.range, in: body),
-                  let openingBrace = body[matchRange].lastIndex(of: "{"),
-                  let closingBrace = matchingBrace(in: body, openingAt: openingBrace)
+                let openingBrace = body[matchRange].lastIndex(of: "{"),
+                let closingBrace = matchingBrace(
+                    in: body,
+                    openingAt: openingBrace
+                )
             else {
                 continue
             }
@@ -212,12 +249,15 @@ struct MarkdownContentRenderer: ContentRenderer {
         func value(for key: String, fallback: Int) -> Int {
             let pattern = "\\b\(key)\\s*:\\s*(\\d+)"
             guard let expression = try? NSRegularExpression(pattern: pattern),
-                  let match = expression.firstMatch(
+                let match = expression.firstMatch(
                     in: declaration,
-                    range: NSRange(declaration.startIndex..<declaration.endIndex, in: declaration)
-                  ),
-                  let range = Range(match.range(at: 1), in: declaration),
-                  let value = Int(declaration[range])
+                    range: NSRange(
+                        declaration.startIndex..<declaration.endIndex,
+                        in: declaration
+                    )
+                ),
+                let range = Range(match.range(at: 1), in: declaration),
+                let value = Int(declaration[range])
             else {
                 return fallback
             }

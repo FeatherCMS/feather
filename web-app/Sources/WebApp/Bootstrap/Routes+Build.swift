@@ -115,7 +115,10 @@ func buildRouter(
         publicOrigins: environment.publicOrigins
     )
     let themeRenderer = ThemeRenderer()
-    let contentRenderer = MarkdownContentRenderer(api: appClient, logger: logger)
+    let contentRenderer = MarkdownContentRenderer(
+        api: appClient,
+        logger: logger
+    )
     let themeContextFactory = ThemeContextFactory(
         publicOrigins: environment.publicOrigins,
         contentRenderer: contentRenderer

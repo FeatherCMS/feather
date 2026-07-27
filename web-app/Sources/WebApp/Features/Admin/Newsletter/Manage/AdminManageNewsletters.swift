@@ -6,10 +6,19 @@ struct AdminManageNewsletters {
 
     init(renderingEngine: any RenderingEngine) {
         self.renderingEngine = renderingEngine
-        self.controller = AdminManageNewslettersDefaultController { request, context in
+        self.controller = AdminManageNewslettersDefaultController {
+            request,
+            context in
             (
-                AdminManageNewslettersDefaultInteractor(repository: AdminManageNewslettersOpenAPIRepository(api: context.managementAPI())),
-                AdminManageNewslettersDefaultPresenter(request: request, renderEngine: renderingEngine)
+                AdminManageNewslettersDefaultInteractor(
+                    repository: AdminManageNewslettersOpenAPIRepository(
+                        api: context.managementAPI()
+                    )
+                ),
+                AdminManageNewslettersDefaultPresenter(
+                    request: request,
+                    renderEngine: renderingEngine
+                )
             )
         }
     }

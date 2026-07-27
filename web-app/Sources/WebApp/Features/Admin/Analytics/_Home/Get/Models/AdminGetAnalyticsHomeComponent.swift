@@ -46,7 +46,7 @@ struct AdminGetAnalyticsHomeComponent: Component {
                 )
             }
             .style(
-                    "display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px;"
+                "display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px;"
             )
         }
         .class("cms-section")
@@ -65,8 +65,8 @@ struct AdminGetAnalyticsHomeComponent: Component {
                 )
         }
         .href(href)
-.style(
-                "display:block;padding:18px;border:1px solid rgba(0,0,0,0.12);border-radius:12px;background:#fff;color:inherit;text-decoration:none;"
+        .style(
+            "display:block;padding:18px;border:1px solid rgba(0,0,0,0.12);border-radius:12px;background:#fff;color:inherit;text-decoration:none;"
         )
     }
 }

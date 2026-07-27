@@ -278,7 +278,7 @@ struct AppHomePage: Component, FlowContent {
                             .title("The.Swift.Dev.")
                         }
                     }
-                        .href("/")
+                    .href("/")
                     Nav {
                         Input()
                             .type(.checkbox)

@@ -2,7 +2,9 @@ import Hummingbird
 import SGML
 import WebStandards
 
-struct AdminNewsletterIssueListDefaultPresenter: AdminNewsletterIssueListPresenter {
+struct AdminNewsletterIssueListDefaultPresenter:
+    AdminNewsletterIssueListPresenter
+{
     let request: Request
     let renderEngine: any RenderingEngine
 
@@ -16,15 +18,29 @@ struct AdminNewsletterIssueListDefaultPresenter: AdminNewsletterIssueListPresent
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Newsletter", link: "/admin/newsletters/"),
             .init(label: "Campaigns", link: "/admin/newsletters/"),
-            .init(label: "Issues", link: "/admin/newsletters/\(newsletterId)/issues/")
+            .init(
+                label: "Issues",
+                link: "/admin/newsletters/\(newsletterId)/issues/"
+            ),
         ])
         return renderEngine.renderAdminPage(
             request: request,
             title: "Campaign issues - Feather CMS",
             description: "Manage campaign issues",
             imagePath: "images/puppy.png",
-            sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions),
-            content: AdminNewsletterIssueListView(state: .init(newsletterId: newsletterId, items: items, error: error, permissions: permissions, breadcrumb: breadcrumb))
+            sidebarState: renderEngine.adminSidebarState(
+                request: request,
+                permissions: permissions
+            ),
+            content: AdminNewsletterIssueListView(
+                state: .init(
+                    newsletterId: newsletterId,
+                    items: items,
+                    error: error,
+                    permissions: permissions,
+                    breadcrumb: breadcrumb
+                )
+            )
         )
     }
 }

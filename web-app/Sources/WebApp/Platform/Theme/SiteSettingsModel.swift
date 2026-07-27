@@ -26,7 +26,8 @@ struct SiteSettingsModel: Sendable {
         self.noIndex = schema.noIndex
         self.logoURL = Self.normalizedAssetURL(
             schema.logo,
-            fallback: "\(publicOrigins.staticBaseURL)/theme/images/logos/logo.png",
+            fallback:
+                "\(publicOrigins.staticBaseURL)/theme/images/logos/logo.png",
             publicOrigins: publicOrigins
         )
         self.logoDarkURL = Self.normalizedAssetURL(
@@ -36,7 +37,8 @@ struct SiteSettingsModel: Sendable {
         )
         self.metaImageURL = Self.normalizedAssetURL(
             schema.metaImage,
-            fallback: "\(publicOrigins.staticBaseURL)/theme/images/logos/logo-large.png",
+            fallback:
+                "\(publicOrigins.staticBaseURL)/theme/images/logos/logo-large.png",
             publicOrigins: publicOrigins
         )
         self.primaryColor = schema.primaryColor
@@ -57,7 +59,8 @@ extension SiteSettingsModel {
         guard !trimmed.isEmpty else {
             return "en-US"
         }
-        let parts = trimmed
+        let parts =
+            trimmed
             .replacingOccurrences(of: "-", with: "_")
             .split(separator: "_")
             .map(String.init)
@@ -86,7 +89,8 @@ extension SiteSettingsModel {
         if !base.hasSuffix("/") {
             base += "/"
         }
-        let path = trimmed.hasPrefix("/") ? String(trimmed.dropFirst()) : trimmed
+        let path =
+            trimmed.hasPrefix("/") ? String(trimmed.dropFirst()) : trimmed
         return base + path
     }
 }

@@ -5,10 +5,11 @@ struct AdminGetAnalyticsInsightsDefaultController:
     AdminGetAnalyticsInsightsController
 {
     let source: AdminAnalyticsInsightsPage.Source
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
-        interactor: any AdminGetAnalyticsInsightsInteractor,
-        presenter: any AdminGetAnalyticsInsightsPresenter
-    )
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
+            interactor: any AdminGetAnalyticsInsightsInteractor,
+            presenter: any AdminGetAnalyticsInsightsPresenter
+        )
 
     func getInsights(
         request: Request,

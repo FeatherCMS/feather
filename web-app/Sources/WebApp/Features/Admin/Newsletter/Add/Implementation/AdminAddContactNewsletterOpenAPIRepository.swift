@@ -14,11 +14,18 @@ struct AdminAddContactNewsletterOpenAPIRepository {
             switch response {
             case .created: return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(message: "Please sign in again to create a newsletter.")
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to create a newsletter."
+                )
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(message: "Your account cannot create newsletters.")
-            case let .undocumented(statusCode, response):
-                throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your account cannot create newsletters."
+                )
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }
