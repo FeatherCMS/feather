@@ -4,6 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
+import AccountDomain
 import Application
 import Domain
 import UserDomain
@@ -16,13 +17,13 @@ public struct AddAccount: UseCase {
     }
 
     let authorizer: any Authorizer
-    let transaction: any TransactionExecutor<WriteAccount>
+    let transaction: any TransactionExecutor<WriteAccountAndSettings>
     let idGenerator: any IDGenerator
     let passwordHasher: any PasswordHasher
 
     public init(
         authorizer: any Authorizer,
-        transaction: any TransactionExecutor<WriteAccount>,
+        transaction: any TransactionExecutor<WriteAccountAndSettings>,
         idGenerator: any IDGenerator,
         passwordHasher: any PasswordHasher
     ) {
@@ -62,7 +63,7 @@ public struct AddAccount: UseCase {
         )
 
         let model = try await transaction.run { context in
-            try await context.account.insert(
+            let model = try await context.account.insert(
                 Account.create(
                     id: id,
                     email: input.email,
@@ -70,6 +71,8 @@ public struct AddAccount: UseCase {
                     passwordHash: hash
                 )
             )
+            try await context.settings.create(accountID: model.id)
+            return model
         }
         return model.asDetail
     }

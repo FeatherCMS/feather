@@ -494,6 +494,28 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.accountSettingsGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/account/settings")
+        )
+        try transport.register(
+            {
+                try await server.accountSettingsUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .put,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/account/settings")
+        )
+        try transport.register(
+            {
                 try await server.systemPermissionCreate(
                     request: $0,
                     body: $1,
@@ -4612,6 +4634,211 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
                     suppressMutabilityWarning(&response)
                     return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
+    func accountSettingsGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AccountSettingsGet.id,
+            using: {
+                APIHandler.accountSettingsGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.AccountSettingsGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.AccountSettingsGet.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .internalServerError(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 500)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)`.
+    func accountSettingsUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AccountSettingsUpdate.id,
+            using: {
+                APIHandler.accountSettingsUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.AccountSettingsUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.AccountSettingsUpdateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.AccountSettingsUpdateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.AccountSettingsUpdate.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .internalServerError(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 500)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .unauthorized(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)

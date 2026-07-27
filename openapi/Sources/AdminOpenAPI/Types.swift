@@ -141,6 +141,12 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `DELETE /api/v1/admin/user/magic-links/{userMagicLinkId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/magic-links/{userMagicLinkId}/delete(userMagicLinkDelete)`.
     func userMagicLinkDelete(_ input: Operations.UserMagicLinkDelete.Input) async throws -> Operations.UserMagicLinkDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
+    func accountSettingsGet(_ input: Operations.AccountSettingsGet.Input) async throws -> Operations.AccountSettingsGet.Output
+    /// - Remark: HTTP `PUT /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)`.
+    func accountSettingsUpdate(_ input: Operations.AccountSettingsUpdate.Input) async throws -> Operations.AccountSettingsUpdate.Output
     /// - Remark: HTTP `POST /api/v1/admin/system/permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/post(systemPermissionCreate)`.
     func systemPermissionCreate(_ input: Operations.SystemPermissionCreate.Input) async throws -> Operations.SystemPermissionCreate.Output
@@ -866,6 +872,22 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/user/magic-links/{userMagicLinkId}/delete(userMagicLinkDelete)`.
     public func userMagicLinkDelete(path: Operations.UserMagicLinkDelete.Input.Path) async throws -> Operations.UserMagicLinkDelete.Output {
         try await userMagicLinkDelete(Operations.UserMagicLinkDelete.Input(path: path))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
+    public func accountSettingsGet(headers: Operations.AccountSettingsGet.Input.Headers = .init()) async throws -> Operations.AccountSettingsGet.Output {
+        try await accountSettingsGet(Operations.AccountSettingsGet.Input(headers: headers))
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)`.
+    public func accountSettingsUpdate(
+        headers: Operations.AccountSettingsUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.AccountSettingsUpdateRequestBody
+    ) async throws -> Operations.AccountSettingsUpdate.Output {
+        try await accountSettingsUpdate(Operations.AccountSettingsUpdate.Input(
+            headers: headers,
+            body: body
+        ))
     }
     /// - Remark: HTTP `POST /api/v1/admin/system/permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/post(systemPermissionCreate)`.
@@ -3476,6 +3498,117 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case email
                 case isPersistent
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema`.
+        public struct AccountSettingsDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema/accountID`.
+            public var accountID: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema/language`.
+            public var language: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema/timezone`.
+            public var timezone: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema/pageSize`.
+            public var pageSize: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `AccountSettingsDetailSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - accountID:
+            ///   - language:
+            ///   - timezone:
+            ///   - pageSize:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                accountID: Swift.String,
+                language: Swift.String,
+                timezone: Swift.String,
+                pageSize: Swift.Int,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.accountID = accountID
+                self.language = language
+                self.timezone = timezone
+                self.pageSize = pageSize
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case accountID
+                case language
+                case timezone
+                case pageSize
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ServerErrorSchema`.
+        public struct ServerErrorSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ServerErrorSchema/code`.
+            public var code: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/ServerErrorSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ServerErrorSchema/reason`.
+            public var reason: Swift.String
+            /// Creates a new `ServerErrorSchema`.
+            ///
+            /// - Parameters:
+            ///   - code:
+            ///   - message:
+            ///   - reason:
+            public init(
+                code: Swift.Int,
+                message: Swift.String,
+                reason: Swift.String
+            ) {
+                self.code = code
+                self.message = message
+                self.reason = reason
+            }
+            public enum CodingKeys: String, CodingKey {
+                case code
+                case message
+                case reason
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AccountSettingsUpdateSchema`.
+        public struct AccountSettingsUpdateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsUpdateSchema/language`.
+            public var language: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsUpdateSchema/timezone`.
+            public var timezone: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AccountSettingsUpdateSchema/pageSize`.
+            public var pageSize: Swift.Int
+            /// Creates a new `AccountSettingsUpdateSchema`.
+            ///
+            /// - Parameters:
+            ///   - language:
+            ///   - timezone:
+            ///   - pageSize:
+            public init(
+                language: Swift.String,
+                timezone: Swift.String,
+                pageSize: Swift.Int
+            ) {
+                self.language = language
+                self.timezone = timezone
+                self.pageSize = pageSize
+            }
+            public enum CodingKeys: String, CodingKey {
+                case language
+                case timezone
+                case pageSize
             }
         }
         /// - Remark: Generated from `#/components/schemas/SystemPermissionCreateSchema`.
@@ -9282,6 +9415,11 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/UserMagicLinkPatchRequestBody/content/application\/json`.
             case json(Components.Schemas.UserMagicLinkPatchSchema)
         }
+        /// - Remark: Generated from `#/components/requestBodies/AccountSettingsUpdateRequestBody`.
+        @frozen public enum AccountSettingsUpdateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/AccountSettingsUpdateRequestBody/content/application\/json`.
+            case json(Components.Schemas.AccountSettingsUpdateSchema)
+        }
         /// - Remark: Generated from `#/components/requestBodies/SystemPermissionRequestBody`.
         @frozen public enum SystemPermissionRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/SystemPermissionRequestBody/content/application\/json`.
@@ -9996,6 +10134,62 @@ public enum Components {
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.UserMagicLinkListItemSearchSchemaSearchResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct AccountSettingsDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AccountSettingsDetailResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/AccountSettingsDetailResponse/content/application\/json`.
+                case json(Components.Schemas.AccountSettingsDetailSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.AccountSettingsDetailSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.AccountSettingsDetailResponse.Body
+            /// Creates a new `AccountSettingsDetailResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.AccountSettingsDetailResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct ServerErrorResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ServerErrorResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ServerErrorResponse/content/application\/json`.
+                case json(Components.Schemas.ServerErrorSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ServerErrorSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ServerErrorResponse.Body
+            /// Creates a new `ServerErrorResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ServerErrorResponse.Body) {
                 self.body = body
             }
         }
@@ -18353,6 +18547,404 @@ public enum Operations {
             ///
             /// A response with a code that is not documented in the OpenAPI document.
             case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
+    public enum AccountSettingsGet {
+        public static let id: Swift.String = "accountSettingsGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AccountSettingsGet.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AccountSettingsGet.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AccountSettingsGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            public init(headers: Operations.AccountSettingsGet.Input.Headers = .init()) {
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Account settings response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.AccountSettingsDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.AccountSettingsDetailResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Server error response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Components.Responses.ServerErrorResponse)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Components.Responses.ServerErrorResponse {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Server error response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)/responses/500`.
+            ///
+            /// HTTP response code: `500 internalServerError`.
+            case internalServerError(Components.Responses.ServerErrorResponse)
+            /// The associated value of the enum case if `self` is `.internalServerError`.
+            ///
+            /// - Throws: An error if `self` is not `.internalServerError`.
+            /// - SeeAlso: `.internalServerError`.
+            public var internalServerError: Components.Responses.ServerErrorResponse {
+                get throws {
+                    switch self {
+                    case let .internalServerError(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "internalServerError",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.AccountSettingsGet.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.AccountSettingsGet.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.AccountSettingsGet.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.AccountSettingsGet.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)`.
+    public enum AccountSettingsUpdate {
+        public static let id: Swift.String = "accountSettingsUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/PUT/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AccountSettingsUpdate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AccountSettingsUpdate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AccountSettingsUpdate.Input.Headers
+            public var body: Components.RequestBodies.AccountSettingsUpdateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.AccountSettingsUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.AccountSettingsUpdateRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Account settings response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.AccountSettingsDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.AccountSettingsDetailResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Server error response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Components.Responses.ServerErrorResponse)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Components.Responses.ServerErrorResponse {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Server error response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)/responses/500`.
+            ///
+            /// HTTP response code: `500 internalServerError`.
+            case internalServerError(Components.Responses.ServerErrorResponse)
+            /// The associated value of the enum case if `self` is `.internalServerError`.
+            ///
+            /// - Throws: An error if `self` is not `.internalServerError`.
+            /// - SeeAlso: `.internalServerError`.
+            public var internalServerError: Components.Responses.ServerErrorResponse {
+                get throws {
+                    switch self {
+                    case let .internalServerError(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "internalServerError",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.AccountSettingsUpdate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.AccountSettingsUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.AccountSettingsUpdate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.AccountSettingsUpdate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/system/permissions`.

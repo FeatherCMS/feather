@@ -392,13 +392,16 @@ struct DefaultRenderingEngine: RenderingEngine {
                 isCurrent: isIn("/admin/auth/profile/"),
                 permission: AdminAuth.Scope.profile.read
             ),
+        ]
+
+        let accountMenus: [AdminSidebar.State.Group.Menu.Item?] = [
             item(
                 icon: FeatherIcons.settings(),
                 label: "Settings",
-                link: "/admin/auth/settings/",
-                isCurrent: isIn("/admin/auth/settings/"),
-                permission: AdminAuth.Scope.settings.read
-            ),
+                link: "/admin/account/settings/",
+                isCurrent: isIn("/admin/account/settings/"),
+                permission: AdminAccount.Scope.settings.read
+            )
         ]
 
         let userMenus: [AdminSidebar.State.Group.Menu.Item?] = [
@@ -604,6 +607,12 @@ struct DefaultRenderingEngine: RenderingEngine {
                 label: "Auth",
                 isCurrent: isIn("/admin/auth/"),
                 children: authMenus
+            ),
+            submenu(
+                icon: FeatherIcons.briefcase(),
+                label: "Account",
+                isCurrent: isIn("/admin/account/"),
+                children: accountMenus
             ),
             submenu(
                 icon: FeatherIcons.user(),

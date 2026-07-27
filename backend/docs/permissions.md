@@ -21,14 +21,16 @@ This file documents the backend permission keys and what they allow a user to do
 - `auth:profile:read`: View the current account profile.
 - `auth:profile:update`: Edit the current account profile.
 
-- `auth:settings:read`: View the current account settings.
-- `auth:settings:update`: Edit the current account settings.
-
 - `auth:sessions:create`: Create a session.
 - `auth:sessions:read`: View a single session.
 - `auth:sessions:update`: Extend or update a session.
 - `auth:sessions:list`: List sessions.
 - `auth:sessions:delete`: Remove a session.
+
+## Account
+
+- `account:settings:read`: View the current account settings.
+- `account:settings:update`: Edit the current account settings.
 
 ## User
 
@@ -157,11 +159,11 @@ This file documents the backend permission keys and what they allow a user to do
 - `user:accounts:me` grants effective access to:
   - `auth:profile:read`
   - `auth:profile:update`
-  - `auth:settings:read`
-  - `auth:settings:update`
+  - `account:settings:read`
+  - `account:settings:update`
 
 - `auth:profile:update` also grants effective `auth:profile:read`.
-- `auth:settings:update` also grants effective `auth:settings:read`.
+- `account:settings:update` also grants effective `account:settings:read`.
 - `blog:settings:update` also grants effective `blog:settings:read`.
 - `web:settings:update` also grants effective `web:settings:read`.
 
