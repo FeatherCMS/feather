@@ -19,7 +19,7 @@ struct AdminGetAuthHomeComponent: Component {
             Ul {
                 Li { A("Magic links").href("/admin/auth/magic-links/") }
                 Li { A("Profile").href("/admin/auth/profile/") }
-                Li { A("Settings").href("/admin/auth/settings/") }
+                Li { A("Settings").href("/admin/account/settings/") }
                 Li { A("Access control").href("/admin/auth/access-control/") }
             }
         }

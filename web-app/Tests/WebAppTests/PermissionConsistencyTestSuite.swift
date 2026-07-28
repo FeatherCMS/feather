@@ -11,15 +11,15 @@ struct PermissionConsistencyTestSuite {
         let account = AccountModel(
             user: .init(id: "user_1", email: "admin@example.com"),
             permissions: [
-                "auth:settings:update",
+                "account:settings:update",
                 "blog:settings:update",
             ],
             roles: []
         )
 
-        #expect(account.canAccess("auth:settings:update"))
+        #expect(account.canAccess("account:settings:update"))
         #expect(account.canAccess("blog:settings:update"))
-        #expect(account.canAccess("auth:settings:read") == false)
+        #expect(account.canAccess("account:settings:read") == false)
         #expect(account.canAccess("auth:profile:read") == false)
         #expect(account.canAccess("blog:settings:read") == false)
     }

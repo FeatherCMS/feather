@@ -1,14 +1,14 @@
 import HTML
 import Hummingbird
 
-struct AdminEditAuthSettingsDefaultPresenter:
-    AdminEditAuthSettingsPresenter
+struct AdminEditAccountSettingsDefaultPresenter:
+    AdminEditAccountSettingsPresenter
 {
     let request: Request
     let renderEngine: any RenderingEngine
 
     func renderPage(
-        state: AuthSettingsEdit.State,
+        state: AccountSettingsEdit.State,
         permissions: Set<String>
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
@@ -20,7 +20,7 @@ struct AdminEditAuthSettingsDefaultPresenter:
                 request: request,
                 permissions: permissions
             ),
-            content: AuthSettingsEdit(state: state)
+            content: AccountSettingsEdit(state: state)
         )
     }
 
@@ -52,8 +52,8 @@ struct AdminEditAuthSettingsDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Auth", link: "/admin/auth/"),
-                .init(label: "Settings", link: "/admin/auth/settings/"),
+                .init(label: "Account", link: "/admin/account/"),
+                .init(label: "Settings", link: "/admin/account/settings/"),
             ]
         )
     }

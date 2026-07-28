@@ -1,30 +1,30 @@
 import Hummingbird
 
-protocol AdminEditAuthSettingsController: Sendable {
+protocol AdminEditAccountSettingsController: Sendable {
 
-    func getEditAuthSettings(
+    func getEditAccountSettings(
         request: Request,
         context: AppRequestContext
     ) async throws -> HTMLResponse
 
-    func postEditAuthSettings(
+    func postEditAccountSettings(
         request: Request,
         context: AppRequestContext
     ) async throws -> Response
 }
 
-extension AdminEditAuthSettingsController {
+extension AdminEditAccountSettingsController {
 
     func route(
         on router: Router<AppRequestContext>
     ) {
         router.get(
-            "/admin/auth/settings/",
-            use: getEditAuthSettings
+            "/admin/account/settings/",
+            use: getEditAccountSettings
         )
         router.post(
-            "/admin/auth/settings/",
-            use: postEditAuthSettings
+            "/admin/account/settings/",
+            use: postEditAccountSettings
         )
     }
 }

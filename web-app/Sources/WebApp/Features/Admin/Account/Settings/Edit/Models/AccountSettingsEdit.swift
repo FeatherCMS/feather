@@ -2,12 +2,12 @@ import HTML
 import SGML
 import WebStandards
 
-struct AuthSettingsEdit: Component {
+struct AccountSettingsEdit: Component {
 
     struct State {
         let isEdited: Bool
         let canEdit: Bool
-        let form: AuthSettingsForm.State
+        let form: AccountSettingsForm.State
         let breadcrumb: AdminBreadcrumb.State
     }
 
@@ -18,9 +18,7 @@ struct AuthSettingsEdit: Component {
             AdminBreadcrumb(state: state.breadcrumb)
 
             H1("Settings")
-            P(
-                "These settings are placeholder inputs for future localization work and table preferences."
-            )
+            
             if !state.canEdit {
                 P(
                     "You can view these settings, but update permission is required to save changes."
@@ -31,7 +29,7 @@ struct AuthSettingsEdit: Component {
                 P("Settings edited successfully.").class("success")
             }
 
-            AuthSettingsForm(state: state.form)
+            AccountSettingsForm(state: state.form)
         }
         .class("cms-section")
     }

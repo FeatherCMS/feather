@@ -13,6 +13,8 @@ struct Admin {
 
         AdminAuth(renderingEngine: renderingEngine)
             .route(on: router)
+        AdminAccount(renderingEngine: renderingEngine)
+            .route(on: router)
         AdminUser(renderingEngine: renderingEngine)
             .route(on: router)
         AdminSystem(renderingEngine: renderingEngine)

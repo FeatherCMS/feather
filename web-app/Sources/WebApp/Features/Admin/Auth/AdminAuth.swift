@@ -12,10 +12,6 @@ struct AdminAuth {
             module: "auth",
             resource: "profile"
         )
-        static let settings = PermissionScope(
-            module: "auth",
-            resource: "settings"
-        )
         static let accessControl = PermissionScope(
             module: "auth",
             resource: "access-control"
@@ -61,11 +57,6 @@ struct AdminAuth {
         .controller.route(on: router)
 
         AdminEditAuthProfile(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
-        AdminEditAuthSettings(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
