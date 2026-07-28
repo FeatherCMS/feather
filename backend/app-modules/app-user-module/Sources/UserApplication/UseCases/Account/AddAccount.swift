@@ -71,6 +71,7 @@ public struct AddAccount: UseCase {
                     passwordHash: hash
                 )
             )
+            // TODO: event hook
             try await context.settings.create(accountID: model.id)
             return model
         }
