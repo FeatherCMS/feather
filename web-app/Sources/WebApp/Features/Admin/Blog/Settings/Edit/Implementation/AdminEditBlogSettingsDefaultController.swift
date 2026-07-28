@@ -3,7 +3,8 @@ import Hummingbird
 struct AdminEditBlogSettingsDefaultController:
     AdminEditBlogSettingsController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditBlogSettingsInteractor,
             presenter: any AdminEditBlogSettingsPresenter
         )

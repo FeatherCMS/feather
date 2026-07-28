@@ -29,5 +29,9 @@ struct Admin {
             .route(on: router)
         AdminMedia(renderingEngine: renderingEngine)
             .route(on: router)
+        AdminContact(renderingEngine: renderingEngine)
+            .route(on: router)
+        AdminNewsletter(renderingEngine: renderingEngine)
+            .route(on: router)
     }
 }

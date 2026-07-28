@@ -1,6 +1,6 @@
+import CSS
 import HTML
 import SGML
-import CSS
 import WebStandards
 
 struct CheckboxField: Component, FlowContent {

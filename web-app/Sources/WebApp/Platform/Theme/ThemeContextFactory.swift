@@ -40,19 +40,22 @@ struct ThemeContextFactory {
         siteSettings: SiteSettingsModel,
         navigation: [Components.Schemas.WebMenuItemSchema],
         siteNoIndex: Bool
-    ) -> ThemePageContext {
+    ) async -> ThemePageContext {
         .init(
             template: .pageDefault,
             value: makeContext(
                 request: request,
                 title: model.metadata.seoTitle(fallback: model.title),
-                description: model.metadata.seoDescription(fallback: model.excerpt),
+                description: model.metadata.seoDescription(
+                    fallback: model.excerpt
+                ),
                 imageURL: model.metadata.seoImageURL(
                     fallback: model.imageURL ?? siteSettings.metaImageURL
                 ),
                 canonicalURL: nonEmpty(model.metadata.canonicalURL),
-                noIndex: siteNoIndex || siteSettings.noIndex || model.metadata.noIndex,
-                contentsHTML: renderedContentsHTML(
+                noIndex: siteNoIndex || siteSettings.noIndex
+                    || model.metadata.noIndex,
+                contentsHTML: await renderedContentsHTML(
                     markdown: model.content,
                     requestPath: request.uri.path
                 ),
@@ -102,19 +105,22 @@ struct ThemeContextFactory {
         siteSettings: SiteSettingsModel,
         navigation: [Components.Schemas.WebMenuItemSchema],
         siteNoIndex: Bool
-    ) -> ThemePageContext {
+    ) async -> ThemePageContext {
         .init(
             template: .blogPostDefault,
             value: makeContext(
                 request: request,
                 title: model.metadata.seoTitle(fallback: model.title),
-                description: model.metadata.seoDescription(fallback: model.excerpt),
+                description: model.metadata.seoDescription(
+                    fallback: model.excerpt
+                ),
                 imageURL: model.metadata.seoImageURL(
                     fallback: model.imageURL ?? siteSettings.metaImageURL
                 ),
                 canonicalURL: nonEmpty(model.metadata.canonicalURL),
-                noIndex: siteNoIndex || siteSettings.noIndex || model.metadata.noIndex,
-                contentsHTML: renderedContentsHTML(
+                noIndex: siteNoIndex || siteSettings.noIndex
+                    || model.metadata.noIndex,
+                contentsHTML: await renderedContentsHTML(
                     markdown: model.content,
                     requestPath: request.uri.path
                 ),
@@ -123,7 +129,7 @@ struct ThemeContextFactory {
                 extraPage: [
                     "publicationLabel": model.publishedAt ?? "",
                     "authors": model.authors.map(authorReferenceObject),
-                    "tags": model.tags.map(tagReferenceObject)
+                    "tags": model.tags.map(tagReferenceObject),
                 ]
             )
         )
@@ -168,19 +174,22 @@ struct ThemeContextFactory {
         siteSettings: SiteSettingsModel,
         navigation: [Components.Schemas.WebMenuItemSchema],
         siteNoIndex: Bool
-    ) -> ThemePageContext {
+    ) async -> ThemePageContext {
         .init(
             template: .blogAuthorDefault,
             value: makeContext(
                 request: request,
                 title: model.metadata.seoTitle(fallback: model.title),
-                description: model.metadata.seoDescription(fallback: model.subtitle),
+                description: model.metadata.seoDescription(
+                    fallback: model.subtitle
+                ),
                 imageURL: model.metadata.seoImageURL(
                     fallback: model.imageURL ?? siteSettings.metaImageURL
                 ),
                 canonicalURL: nonEmpty(model.metadata.canonicalURL),
-                noIndex: siteNoIndex || siteSettings.noIndex || model.metadata.noIndex,
-                contentsHTML: renderedContentsHTML(
+                noIndex: siteNoIndex || siteSettings.noIndex
+                    || model.metadata.noIndex,
+                contentsHTML: await renderedContentsHTML(
                     markdown: model.content,
                     requestPath: request.uri.path
                 ),
@@ -189,7 +198,7 @@ struct ThemeContextFactory {
                 extraPage: [
                     "posts": model.posts.map(postSummaryObject),
                     "postCountLabel": "\(model.posts.count) posts",
-                    "links": model.links.map(authorLinkObject)
+                    "links": model.links.map(authorLinkObject),
                 ]
             )
         )
@@ -234,19 +243,22 @@ struct ThemeContextFactory {
         siteSettings: SiteSettingsModel,
         navigation: [Components.Schemas.WebMenuItemSchema],
         siteNoIndex: Bool
-    ) -> ThemePageContext {
+    ) async -> ThemePageContext {
         .init(
             template: .blogTagDefault,
             value: makeContext(
                 request: request,
                 title: model.metadata.seoTitle(fallback: model.title),
-                description: model.metadata.seoDescription(fallback: model.excerpt),
+                description: model.metadata.seoDescription(
+                    fallback: model.excerpt
+                ),
                 imageURL: model.metadata.seoImageURL(
                     fallback: model.imageURL ?? siteSettings.metaImageURL
                 ),
                 canonicalURL: nonEmpty(model.metadata.canonicalURL),
-                noIndex: siteNoIndex || siteSettings.noIndex || model.metadata.noIndex,
-                contentsHTML: renderedContentsHTML(
+                noIndex: siteNoIndex || siteSettings.noIndex
+                    || model.metadata.noIndex,
+                contentsHTML: await renderedContentsHTML(
                     markdown: model.content,
                     requestPath: request.uri.path
                 ),
@@ -254,7 +266,7 @@ struct ThemeContextFactory {
                 navigation: navigation,
                 extraPage: [
                     "posts": model.posts.map(postSummaryObject),
-                    "postCountLabel": "\(model.posts.count) posts"
+                    "postCountLabel": "\(model.posts.count) posts",
                 ]
             )
         )
@@ -282,13 +294,16 @@ extension ThemeContextFactory {
                 requestPath: request.uri.path,
                 override: canonicalURL
             ),
-            "image": normalizedPublicImageURL(imageURL, fallback: siteSettings.metaImageURL),
+            "image": normalizedPublicImageURL(
+                imageURL,
+                fallback: siteSettings.metaImageURL
+            ),
             "noindex": noIndex,
             "contents": [
                 "html": contentsHTML
             ],
             "css": [],
-            "js": []
+            "js": [],
         ]
         for (key, value) in extraPage {
             page[key] = value
@@ -310,7 +325,7 @@ extension ThemeContextFactory {
                 "primaryFont": siteSettings.primaryFont,
                 "secondaryFont": siteSettings.secondaryFont,
                 "cssCodeInjection": siteSettings.cssCodeInjection,
-                "javascriptCodeInjection": siteSettings.javascriptCodeInjection
+                "javascriptCodeInjection": siteSettings.javascriptCodeInjection,
             ],
             "baseUrl": normalizedURL(
                 base: publicOrigins.staticBaseURL,
@@ -326,7 +341,7 @@ extension ThemeContextFactory {
             ),
             "generation": [
                 "year": String(Calendar.current.component(.year, from: Date()))
-            ]
+            ],
         ]
         for (key, value) in extraRoot {
             context[key] = value
@@ -340,15 +355,15 @@ extension ThemeContextFactory {
         [
             "label": item.label,
             "url": item.url,
-            "isBlank": item.isBlank
+            "isBlank": item.isBlank,
         ]
     }
 
     private func renderedContentsHTML(
         markdown: String,
         requestPath: String
-    ) -> String {
-        contentRenderer.render(
+    ) async -> String {
+        await contentRenderer.render(
             markdown: markdown,
             requestPath: requestPath
         )
@@ -357,12 +372,13 @@ extension ThemeContextFactory {
     private func authObject(
         request: Request
     ) -> [String: Any] {
-        let isSignedIn = request.cookies["session_token"]?.value.isEmpty == false
+        let isSignedIn =
+            request.cookies["session_token"]?.value.isEmpty == false
         return [
             "isSignedIn": isSignedIn,
             "loginURL": "/login/",
             "logoutURL": "/logout/",
-            "adminURL": "/admin/"
+            "adminURL": "/admin/",
         ]
     }
 
@@ -378,7 +394,8 @@ extension ThemeContextFactory {
                 item.metadata.seoImageURL(fallback: ""),
                 fallback: ""
             ),
-            "hasImage": nonEmpty(item.metadata.seoImageURL(fallback: "")) != nil
+            "hasImage": nonEmpty(item.metadata.seoImageURL(fallback: ""))
+                != nil,
         ]
     }
 
@@ -389,8 +406,11 @@ extension ThemeContextFactory {
             "title": item.name,
             "description": item.excerpt,
             "permalink": item.href,
-            "image": normalizedPublicImageURL(item.imageURL ?? "", fallback: ""),
-            "hasImage": item.imageURL != nil
+            "image": normalizedPublicImageURL(
+                item.imageURL ?? "",
+                fallback: ""
+            ),
+            "hasImage": item.imageURL != nil,
         ]
     }
 
@@ -400,7 +420,7 @@ extension ThemeContextFactory {
         [
             "title": item.title,
             "description": item.excerpt,
-            "permalink": item.href
+            "permalink": item.href,
         ]
     }
 
@@ -410,8 +430,11 @@ extension ThemeContextFactory {
         [
             "title": item.name,
             "permalink": item.href,
-            "image": normalizedPublicImageURL(item.imageURL ?? "", fallback: ""),
-            "hasImage": item.imageURL != nil
+            "image": normalizedPublicImageURL(
+                item.imageURL ?? "",
+                fallback: ""
+            ),
+            "hasImage": item.imageURL != nil,
         ]
     }
 
@@ -420,7 +443,7 @@ extension ThemeContextFactory {
     ) -> [String: Any] {
         [
             "title": item.title,
-            "permalink": item.href
+            "permalink": item.href,
         ]
     }
 
@@ -430,7 +453,7 @@ extension ThemeContextFactory {
         [
             "label": item.label,
             "url": item.url,
-            "isBlank": item.isBlank
+            "isBlank": item.isBlank,
         ]
     }
 
@@ -469,7 +492,8 @@ extension ThemeContextFactory {
         if !url.hasSuffix("/") {
             url += "/"
         }
-        let normalizedPath = path.hasPrefix("/") ? String(path.dropFirst()) : path
+        let normalizedPath =
+            path.hasPrefix("/") ? String(path.dropFirst()) : path
         if normalizedPath.isEmpty {
             return url
         }
@@ -488,7 +512,10 @@ extension ThemeContextFactory {
         override: String?
     ) -> String {
         guard let override = nonEmpty(override) else {
-            return normalizedURL(base: publicOrigins.siteBaseURL, path: requestPath)
+            return normalizedURL(
+                base: publicOrigins.siteBaseURL,
+                path: requestPath
+            )
         }
         return override
     }

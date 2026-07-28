@@ -193,13 +193,17 @@ struct AdminEditWebSettingsOpenAPIRepository:
                 pageNumber += 1
             }
 
-            let detailsRepository = AdminListWebPageFormOpenAPIRepository(api: api)
+            let detailsRepository = AdminListWebPageFormOpenAPIRepository(
+                api: api
+            )
             return try await withThrowingTaskGroup(
                 of: (Int, AdminEditWebSettingsHomePageModel).self
             ) { group in
                 for (index, item) in items.enumerated() {
                     group.addTask {
-                        let details = try await detailsRepository.load(id: item.id)
+                        let details = try await detailsRepository.load(
+                            id: item.id
+                        )
                         return (
                             index,
                             .init(

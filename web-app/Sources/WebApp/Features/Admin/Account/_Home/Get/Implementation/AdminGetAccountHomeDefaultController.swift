@@ -1,10 +1,11 @@
 import Hummingbird
 
 struct AdminGetAccountHomeDefaultController: AdminGetAccountHomeController {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
-        interactor: any AdminGetAccountHomeInteractor,
-        presenter: any AdminGetAccountHomePresenter
-    )
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
+            interactor: any AdminGetAccountHomeInteractor,
+            presenter: any AdminGetAccountHomePresenter
+        )
 
     func getHome(
         request: Request,

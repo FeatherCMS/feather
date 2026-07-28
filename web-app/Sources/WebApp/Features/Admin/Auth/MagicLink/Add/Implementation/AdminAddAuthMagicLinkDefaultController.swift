@@ -3,10 +3,11 @@ import Hummingbird
 
 struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
 
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
-        interactor: any AdminAddAuthMagicLinkInteractor,
-        presenter: any AdminAddAuthMagicLinkPresenter
-    )
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
+            interactor: any AdminAddAuthMagicLinkInteractor,
+            presenter: any AdminAddAuthMagicLinkPresenter
+        )
 
     func getAddAuthMagicLink(
         request: Request,

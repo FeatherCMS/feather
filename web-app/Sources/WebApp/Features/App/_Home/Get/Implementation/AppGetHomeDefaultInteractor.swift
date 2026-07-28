@@ -14,9 +14,8 @@ struct AppGetHomeDefaultInteractor: AppGetHomeInteractor {
         let resolvedMenus = try await menus
         let resolvedRouteSettings = try await routeSettings
 
-        if
-            let homePageId = resolvedSiteSettings.homePageId?
-                .trimmingCharacters(in: .whitespacesAndNewlines),
+        if let homePageId = resolvedSiteSettings.homePageId?
+            .trimmingCharacters(in: .whitespacesAndNewlines),
             !homePageId.isEmpty,
             let detail = try await repository.getWebPage(id: homePageId),
             let routePaths = AppPublicRoutePaths(

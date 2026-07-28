@@ -1,4 +1,6 @@
-struct AdminEditAccountSettingsDefaultInteractor: AdminEditAccountSettingsInteractor {
+struct AdminEditAccountSettingsDefaultInteractor:
+    AdminEditAccountSettingsInteractor
+{
 
     let repository: any AdminEditAccountSettingsRepository
 

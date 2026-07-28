@@ -136,7 +136,7 @@ let package = Package(
             name: "UserApplicationTests",
             dependencies: [
                 .target(name: "UserApplication"),
-                .product(name: "AccountDomain", package: "app-account-module")
+                .product(name: "AccountDomain", package: "app-account-module"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

@@ -5,7 +5,8 @@ import Hummingbird
 struct AdminEditWebMenuItemDefaultController:
     AdminEditWebMenuItemController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditWebMenuItemInteractor,
             presenter: any AdminEditWebMenuItemPresenter
         )

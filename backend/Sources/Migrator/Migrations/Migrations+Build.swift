@@ -8,6 +8,8 @@ import BlogInfrastructure
 import UserInfrastructure
 import AuthInfrastructure
 import MediaInfrastructure
+import ContactInfrastructure
+import NewsletterInfrastructure
 import AccountInfrastructure
 
 public func buildMigrations(
@@ -25,8 +27,11 @@ public func buildMigrations(
         AccountInfrastructure.TableMigration(connection: connection),
         AuthInfrastructure.TableMigration(connection: connection),
         MediaInfrastructure.TableMigration(connection: connection),
+        ContactInfrastructure.TableMigration(connection: connection),
+        NewsletterInfrastructure.TableMigration(connection: connection),
         // Seed data
         SystemInfrastructure.TableSeedMigration(connection: connection),
+        SystemInfrastructure.JobPermissionSeedMigration(connection: connection),
         AnalyticsInfrastructure.TableSeedMigration(connection: connection),
         AnalyticsInfrastructure.InsightsPermissionSeedMigration(
             connection: connection
@@ -47,5 +52,9 @@ public func buildMigrations(
             connection: connection
         ),
         AuthInfrastructure.TableSeedMigration(connection: connection),
+        ContactInfrastructure.PermissionSeedMigration(connection: connection),
+        NewsletterInfrastructure.PermissionSeedMigration(
+            connection: connection
+        ),
     ]
 }

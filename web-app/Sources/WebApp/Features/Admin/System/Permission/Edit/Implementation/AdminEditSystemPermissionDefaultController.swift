@@ -4,7 +4,8 @@ import Hummingbird
 struct AdminEditSystemPermissionDefaultController:
     AdminEditSystemPermissionController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminEditSystemPermissionInteractor,
             presenter: any AdminEditSystemPermissionPresenter
         )

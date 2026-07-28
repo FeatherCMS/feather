@@ -26,10 +26,17 @@ struct WorkerConfig: Sendable {
         let storageRootPath: String
     }
 
+    struct SESConfig: Sendable {
+        let accessKeyId: String
+        let secretAccessKey: String
+        let region: String
+    }
+
     let system: SystemConfig
     let queue: QueueConfig
     let processor: ProcessorConfig
     let scheduler: SchedulerConfig
     let media: MediaConfig
+    let ses: SESConfig
     let runMigrations: Bool
 }

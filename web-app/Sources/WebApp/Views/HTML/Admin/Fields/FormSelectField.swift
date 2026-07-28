@@ -1,6 +1,6 @@
+import CSS
 import HTML
 import SGML
-import CSS
 import WebStandards
 
 struct FormSelectField: Component, FlowContent {
@@ -184,7 +184,7 @@ struct FormSelectField: Component, FlowContent {
     private var describedBy: String? {
         [
             state.help == nil ? nil : helpID,
-            state.error == nil ? nil : errorID
+            state.error == nil ? nil : errorID,
         ]
         .compactMap { $0 }
         .joined(separator: " ")

@@ -158,7 +158,9 @@ extension WebModule {
                     metadata: DatabaseMetadataRepository(
                         connection: connection
                     ),
-                    settings: DatabaseSettingsRepository(connection: connection),
+                    settings: DatabaseSettingsRepository(
+                        connection: connection
+                    ),
                     variable: DatabaseVariableQueries(connection: connection)
                 )
             }
@@ -195,7 +197,9 @@ extension WebModule {
                     metadata: DatabaseMetadataRepository(
                         connection: connection
                     ),
-                    settings: DatabaseSettingsRepository(connection: connection),
+                    settings: DatabaseSettingsRepository(
+                        connection: connection
+                    ),
                     variable: DatabaseVariableQueries(connection: connection)
                 )
             }
@@ -231,7 +235,9 @@ extension WebModule {
                     metadata: DatabaseMetadataRepository(
                         connection: connection
                     ),
-                    settings: DatabaseSettingsRepository(connection: connection),
+                    settings: DatabaseSettingsRepository(
+                        connection: connection
+                    ),
                     variable: DatabaseVariableQueries(connection: connection)
                 )
             }

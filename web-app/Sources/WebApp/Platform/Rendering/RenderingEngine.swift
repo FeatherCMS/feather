@@ -372,7 +372,7 @@ struct DefaultRenderingEngine: RenderingEngine {
 
         let authMenus: [AdminSidebar.State.Group.Menu.Item?] = [
             item(
-                icon: FeatherIcons.lock(),
+                icon: FeatherIcons.key(),
                 label: "Access Control",
                 link: "/admin/auth/access-control/",
                 isCurrent: isIn("/admin/auth/access-control/"),
@@ -443,6 +443,13 @@ struct DefaultRenderingEngine: RenderingEngine {
                 isCurrent: isIn("/admin/system/permissions/"),
                 permission: AdminSystem.Scope.permissions.list
             ),
+            item(
+                icon: FeatherIcons.activity(),
+                label: "Worker jobs",
+                link: "/admin/system/jobs/",
+                isCurrent: isIn("/admin/system/jobs/"),
+                permission: AdminSystem.Scope.jobs.list
+            ),
         ]
 
         let mediaMenus: [AdminSidebar.State.Group.Menu.Item?] = [
@@ -507,6 +514,42 @@ struct DefaultRenderingEngine: RenderingEngine {
                 link: "/admin/blog/settings/",
                 isCurrent: isIn("/admin/blog/settings/"),
                 permission: AdminBlog.Scope.settings.read
+            ),
+        ]
+
+        let newsletterMenus = [
+            item(
+                icon: FeatherIcons.send(),
+                label: "Campaigns",
+                link: "/admin/newsletters/",
+                isCurrent: isIn("/admin/newsletters/")
+            ),
+            item(
+                icon: FeatherIcons.users(),
+                label: "Subscribers",
+                link: "/admin/newsletters/subscribers/",
+                isCurrent: isIn("/admin/newsletters/subscribers/")
+            ),
+        ]
+
+        let contactMenus = [
+            item(
+                icon: FeatherIcons.clipboard(),
+                label: "Forms",
+                link: "/admin/contact/forms/",
+                isCurrent: isIn("/admin/contact/forms/")
+            ),
+            item(
+                icon: FeatherIcons.list(),
+                label: "Fields",
+                link: "/admin/contact/fields/",
+                isCurrent: isIn("/admin/contact/fields/")
+            ),
+            item(
+                icon: FeatherIcons.inbox(),
+                label: "Submissions",
+                link: "/admin/contact/submissions/",
+                isCurrent: isIn("/admin/contact/submissions/")
             ),
         ]
 
@@ -597,13 +640,25 @@ struct DefaultRenderingEngine: RenderingEngine {
                 children: blogMenus
             ),
             submenu(
+                icon: FeatherIcons.mail(),
+                label: "Newsletter",
+                isCurrent: isIn("/admin/newsletters/"),
+                children: newsletterMenus
+            ),
+            submenu(
+                icon: FeatherIcons.messageSquare(),
+                label: "Contact",
+                isCurrent: isIn("/admin/contact/"),
+                children: contactMenus
+            ),
+            submenu(
                 icon: FeatherIcons.gitBranch(),
                 label: "Redirect",
                 isCurrent: isIn("/admin/redirect/"),
                 children: redirectMenus
             ),
             submenu(
-                icon: FeatherIcons.lock(),
+                icon: FeatherIcons.shield(),
                 label: "Auth",
                 isCurrent: isIn("/admin/auth/"),
                 children: authMenus

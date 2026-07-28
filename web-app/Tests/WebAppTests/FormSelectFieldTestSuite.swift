@@ -15,7 +15,7 @@ struct FormSelectFieldTestSuite {
                 label: "Status",
                 options: [
                     .init(label: "Draft", value: "draft"),
-                    .init(label: "Published", value: "published")
+                    .init(label: "Published", value: "published"),
                 ],
                 selectedValue: "published",
                 isRequired: true
@@ -37,7 +37,7 @@ struct FormSelectFieldTestSuite {
                 label: "Visibility",
                 options: [
                     .init(label: "Public", value: "public"),
-                    .init(label: "Private", value: "private")
+                    .init(label: "Private", value: "private"),
                 ]
             )
         )
@@ -57,7 +57,11 @@ struct FormSelectFieldTestSuite {
                 label: "Status",
                 options: [
                     .init(label: "Draft", value: "draft"),
-                    .init(label: "Archived", value: "archived", isDisabled: true)
+                    .init(
+                        label: "Archived",
+                        value: "archived",
+                        isDisabled: true
+                    ),
                 ],
                 error: "Status is invalid.",
                 help: "Select the current status.",

@@ -53,4 +53,55 @@ struct AdminAPI {
             responseBody: body
         )
     }
+
+    func contactNewsletterIssueGet(
+        path: Operations.ContactNewsletterIssueGet.Input.Path
+    ) async throws -> Operations.ContactNewsletterIssueGet.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactNewsletterIssueGet(path: path)
+        }
+    }
+
+    func contactNewsletterIssueUpdate(
+        path: Operations.ContactNewsletterIssueUpdate.Input.Path,
+        body: Components.RequestBodies.ContactNewsletterIssuePatchRequestBody
+    ) async throws -> Operations.ContactNewsletterIssueUpdate.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactNewsletterIssueUpdate(
+                path: path,
+                body: body
+            )
+        }
+    }
+
+    func contactNewsletterIssueDelete(
+        path: Operations.ContactNewsletterIssueDelete.Input.Path
+    ) async throws -> Operations.ContactNewsletterIssueDelete.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactNewsletterIssueDelete(path: path)
+        }
+    }
+
+    func contactNewsletterTestEmail(
+        path: Operations.ContactNewsletterTestEmail.Input.Path,
+        body: Components.RequestBodies
+            .ContactNewsletterIssueTestEmailRequestBody
+    ) async throws -> Operations.ContactNewsletterTestEmail.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactNewsletterTestEmail(path: path, body: body)
+        }
+    }
+
+    func contactNewsletterIssueTestEmail(
+        path: Operations.ContactNewsletterIssueTestEmail.Input.Path,
+        body: Components.RequestBodies
+            .ContactNewsletterIssueTestEmailRequestBody
+    ) async throws -> Operations.ContactNewsletterIssueTestEmail.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactNewsletterIssueTestEmail(
+                path: path,
+                body: body
+            )
+        }
+    }
 }

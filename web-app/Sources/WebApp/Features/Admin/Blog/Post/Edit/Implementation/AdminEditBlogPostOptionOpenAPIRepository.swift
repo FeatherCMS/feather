@@ -24,7 +24,7 @@ struct AdminEditBlogPostOptionOpenAPIRepository:
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
-                        page: .init(size: 500, number: 1),
+                        page: .init(size: 100, number: 1),
                         filters: .init(search: nil)
                     )
                 )
@@ -59,7 +59,7 @@ struct AdminEditBlogPostOptionOpenAPIRepository:
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
-                        page: .init(size: 500, number: 1),
+                        page: .init(size: 100, number: 1),
                         filters: .init(search: nil)
                     )
                 )

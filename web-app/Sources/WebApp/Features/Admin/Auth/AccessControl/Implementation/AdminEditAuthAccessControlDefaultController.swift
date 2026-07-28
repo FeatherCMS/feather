@@ -4,10 +4,11 @@ import Hummingbird
 struct AdminEditAuthAccessControlDefaultController:
     AdminEditAuthAccessControlController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
-        interactor: any AdminEditAuthAccessControlInteractor,
-        presenter: any AdminEditAuthAccessControlPresenter
-    )
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
+            interactor: any AdminEditAuthAccessControlInteractor,
+            presenter: any AdminEditAuthAccessControlPresenter
+        )
 
     func getAuthAccessControl(
         request: Request,

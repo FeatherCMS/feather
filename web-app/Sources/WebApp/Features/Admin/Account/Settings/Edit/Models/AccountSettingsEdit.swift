@@ -18,7 +18,7 @@ struct AccountSettingsEdit: Component {
             AdminBreadcrumb(state: state.breadcrumb)
 
             H1("Settings")
-            
+
             if !state.canEdit {
                 P(
                     "You can view these settings, but update permission is required to save changes."

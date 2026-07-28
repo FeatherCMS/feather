@@ -37,7 +37,7 @@ struct AdminGetHomeComponent: Component {
             }
         }
         .style(
-                "display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0;"
+            "display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0;"
         )
     }
 
@@ -62,7 +62,7 @@ struct AdminGetHomeComponent: Component {
             trafficChartSVG(points)
         }
         .style(
-                "margin:0 0 16px 0;padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
+            "margin:0 0 16px 0;padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
 
@@ -77,7 +77,7 @@ struct AdminGetHomeComponent: Component {
         }
         .class("grid", "grid-321")
         .style(
-                "display:grid;column-gap:16px;row-gap:16px;margin:0 0 16px 0;"
+            "display:grid;column-gap:16px;row-gap:16px;margin:0 0 16px 0;"
         )
     }
 
@@ -92,7 +92,7 @@ struct AdminGetHomeComponent: Component {
                 .style("font-size:1.4rem;")
         }
         .style(
-                "border:1px solid var(--cms-gray-3);border-radius:10px;padding:14px;background:var(--cms-white);color:var(--cms-strong-font);"
+            "border:1px solid var(--cms-gray-3);border-radius:10px;padding:14px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
 
@@ -108,7 +108,7 @@ struct AdminGetHomeComponent: Component {
             }
         }
         .class("grid", "grid-321")
-        .style( "display:grid;column-gap:16px;row-gap:16px;margin-top:16px;")
+        .style("display:grid;column-gap:16px;row-gap:16px;margin-top:16px;")
     }
 
     private func quickActionCard(
@@ -127,7 +127,7 @@ struct AdminGetHomeComponent: Component {
             .class("button-row")
         }
         .style(
-                "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
+            "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
 
@@ -146,7 +146,9 @@ struct AdminGetHomeComponent: Component {
                     Div {
                         Div {
                             Span(item.label)
-                                .style("display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;")
+                                .style(
+                                    "display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                                )
                             Span("\(item.count)")
                                 .style("flex-shrink:0;")
                         }
@@ -160,7 +162,7 @@ struct AdminGetHomeComponent: Component {
                                 )
                         }
                         .style(
-                                "margin-top:6px;background:var(--cms-gray-2);border-radius:999px;overflow:hidden;"
+                            "margin-top:6px;background:var(--cms-gray-2);border-radius:999px;overflow:hidden;"
                         )
                     }
                     .style(
@@ -169,8 +171,8 @@ struct AdminGetHomeComponent: Component {
                 }
             }
         }
-    .style(
-                "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
+        .style(
+            "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
 
@@ -276,7 +278,8 @@ struct AdminGetHomeComponent: Component {
         }
         .setAttribute(
             name: "style",
-            value: "display:block;width:100%;height:auto;border-radius:10px;overflow:hidden;"
+            value:
+                "display:block;width:100%;height:auto;border-radius:10px;overflow:hidden;"
         )
         .width(width)
         .height(height)
@@ -319,7 +322,7 @@ struct AdminGetHomeComponent: Component {
             P(message)
         }
         .style(
-                "border:1px solid var(--cms-gray-3);border-radius:10px;padding:14px;background:var(--cms-white);color:var(--cms-strong-font);"
+            "border:1px solid var(--cms-gray-3);border-radius:10px;padding:14px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
 }

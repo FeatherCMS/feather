@@ -2,10 +2,11 @@ import Hummingbird
 
 struct AdminGetAnalyticsHomeDefaultController: AdminGetAnalyticsHomeController {
 
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
-        interactor: any AdminGetAnalyticsHomeInteractor,
-        presenter: any AdminGetAnalyticsHomePresenter
-    )
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
+            interactor: any AdminGetAnalyticsHomeInteractor,
+            presenter: any AdminGetAnalyticsHomePresenter
+        )
 
     func getHome(
         request: Request,
