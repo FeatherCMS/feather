@@ -156,6 +156,8 @@ struct PathCollection: PathCollectionRepresentable {
 
             "api/v1/admin/contact/forms": ContactFormPathItems(),
             "api/v1/admin/contact/forms/{contactFormId}": ContactFormIDPathItems(),
+            "api/v1/admin/contact/fields": ContactFieldPathItems(),
+            "api/v1/admin/contact/fields/{contactFormItemId}": ContactFieldIDPathItems(),
             "api/v1/admin/contact/forms/{contactFormId}/items": ContactFormItemPathItems(),
             "api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}": ContactFormItemIDPathItems(),
             "api/v1/admin/contact/forms/{contactFormId}/submissions": ContactFormSubmissionPathItems(),

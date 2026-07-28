@@ -20,14 +20,12 @@ struct AdminRemoveContactSubmissionsDefaultController:
     func bulkRemove(request: Request, context: AppRequestContext) async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
             as: ListBulkRemoveFormInput.self,
             context: context
         )
-        if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
-        }
+        let (interactor, _) = buildRuntime(request, context)
+        try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
         return Response(
             status: .seeOther,
             headers: [
@@ -35,10 +33,8 @@ struct AdminRemoveContactSubmissionsDefaultController:
                     path: "/admin/contact/submissions/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,
-                    title: payload.normalizedSelectedIds.isEmpty
-                        ? nil : "Removed",
-                    message: payload.normalizedSelectedIds.isEmpty
-                        ? nil : "Contact submissions removed successfully."
+                    title: "Removed",
+                    message: "Contact submissions removed successfully."
                 )
             ]
         )

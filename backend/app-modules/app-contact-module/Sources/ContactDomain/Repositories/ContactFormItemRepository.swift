@@ -3,11 +3,12 @@ import Domain
 public protocol ContactFormItemRepository: Repository {
 
     func findBy(
-        id: String
+        id: String,
+        formId: String?
     ) async throws -> ContactFormItem?
 
     func listBy(
-        formId: String
+        formId: String?
     ) async throws -> [ContactFormItem]
 
     func assign(
@@ -30,6 +31,7 @@ public protocol ContactFormItemRepository: Repository {
     ) async throws -> ContactFormItem
 
     func delete(
-        id: String
+        id: String,
+        formId: String?
     ) async throws -> Bool
 }

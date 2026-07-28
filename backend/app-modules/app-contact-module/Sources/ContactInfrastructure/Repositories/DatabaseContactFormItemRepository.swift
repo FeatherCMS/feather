@@ -54,14 +54,16 @@ public struct DatabaseContactFormItemRepository: ContactFormItemRepository {
     }
 
     public func findBy(
-        id: String
+        id: String,
+        formId: String?
     ) async throws -> ContactFormItem? {
         let table = ContactFormFieldTable(connection: connection)
-        return try await table.find(id: id).map { try $0.asDomain }
+        return try await table.find(id: id, formId: formId)
+            .map { try $0.asDomain }
     }
 
     public func listBy(
-        formId: String
+        formId: String?
     ) async throws -> [ContactFormItem] {
         let table = ContactFormFieldTable(connection: connection)
         return try await table.list(formId: formId).map { try $0.asDomain }
@@ -116,9 +118,10 @@ public struct DatabaseContactFormItemRepository: ContactFormItemRepository {
     }
 
     public func delete(
-        id: String
+        id: String,
+        formId: String?
     ) async throws -> Bool {
         let table = ContactFormFieldTable(connection: connection)
-        return try await table.delete(id: id)
+        return try await table.delete(id: id, formId: formId)
     }
 }

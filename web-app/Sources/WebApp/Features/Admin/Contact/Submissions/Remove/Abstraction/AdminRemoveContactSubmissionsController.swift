@@ -9,7 +9,7 @@ protocol AdminRemoveContactSubmissionsController: Sendable {
 
 extension AdminRemoveContactSubmissionsController {
     func route(on router: Router<AppRequestContext>) {
-        router.get("/admin/contact/submissions/bulk-remove/", use: bulkConfirm)
-        router.post("/admin/contact/submissions/bulk-remove/", use: bulkRemove)
+        router.get("/admin/contact/submissions/remove/", use: bulkConfirm)
+        router.post("/admin/contact/submissions/remove/", use: bulkRemove)
     }
 }

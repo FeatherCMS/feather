@@ -9,6 +9,7 @@ public struct UpdateContactFormItem: UseCase {
     }
     public struct Input: DTO {
         public let id: String
+        public let formId: String?
         public let key: String?
         public let type: ContactFormItem.ItemType?
         public let label: String?
@@ -17,6 +18,7 @@ public struct UpdateContactFormItem: UseCase {
         public let position: Int?
         public init(
             id: String,
+            formId: String?,
             key: String? = nil,
             type: ContactFormItem.ItemType? = nil,
             label: String? = nil,
@@ -25,6 +27,7 @@ public struct UpdateContactFormItem: UseCase {
             position: Int? = nil
         ) {
             self.id = id
+            self.formId = formId
             self.key = key
             self.type = type
             self.label = label
@@ -35,7 +38,12 @@ public struct UpdateContactFormItem: UseCase {
     }
     public func execute(_ input: Input) async throws -> ContactFormItemDetail {
         try await transaction.run { context in
-            guard var value = try await context.item.findBy(id: input.id) else {
+            guard
+                var value = try await context.item.findBy(
+                    id: input.id,
+                    formId: input.formId
+                )
+            else {
                 throw Error(message: "Contact form item not found")
             }
             try value.update(

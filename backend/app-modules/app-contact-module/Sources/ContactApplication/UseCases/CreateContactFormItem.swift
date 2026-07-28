@@ -14,7 +14,7 @@ public struct CreateContactFormItem: UseCase {
     }
 
     public struct Input: DTO {
-        public let formId: String
+        public let formId: String?
         public let key: String
         public let type: ContactFormItem.ItemType
         public let label: String
@@ -23,7 +23,7 @@ public struct CreateContactFormItem: UseCase {
         public let position: Int
 
         public init(
-            formId: String,
+            formId: String?,
             key: String,
             type: ContactFormItem.ItemType,
             label: String,
@@ -47,7 +47,7 @@ public struct CreateContactFormItem: UseCase {
         try await transaction.run { context in
             let model = try ContactFormItem.create(
                 id: idGenerator.generate(),
-                formId: input.formId,
+                formId: input.formId ?? "",
                 key: input.key,
                 type: input.type,
                 label: input.label,
@@ -56,9 +56,9 @@ public struct CreateContactFormItem: UseCase {
                 position: input.position
             )
             let item = try await context.item.insert(model)
-            if input.formId != ContactFormItem.globalFormId {
+            if let formId = input.formId {
                 try await context.item.assign(
-                    formId: input.formId,
+                    formId: formId,
                     itemId: item.id,
                     position: input.position
                 )

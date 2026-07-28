@@ -7,8 +7,8 @@ public struct ListContactFormItems: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let formId: String
-        public init(formId: String) { self.formId = formId }
+        public let formId: String?
+        public init(formId: String?) { self.formId = formId }
     }
     public func execute(_ input: Input) async throws -> [ContactFormItemDetail]
     {

@@ -32,7 +32,7 @@ struct AdminContactSubmissionsDirectoryView: Component {
             else {
                 ListTableBulkRemoveForm(
                     state: .init(
-                        action: "/admin/contact/submissions/bulk-remove/",
+                        action: "/admin/contact/submissions/remove/",
                         page: 1,
                         search: search,
                         canRemove: canRemove,

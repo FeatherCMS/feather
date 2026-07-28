@@ -18,6 +18,7 @@ extension AdminAPI {
             .execute(
                 .init(
                     id: input.path.contactFormItemId,
+                    formId: input.path.contactFormId,
                     key: body.key,
                     type: type,
                     label: body.label,

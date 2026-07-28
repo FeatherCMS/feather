@@ -9,7 +9,12 @@ extension AdminAPI {
             permission: ContactPermissions.Items.read
         )
         let result = try await modules.contact.makeGetContactFormItem()
-            .execute(.init(id: input.path.contactFormItemId))
+            .execute(
+                .init(
+                    id: input.path.contactFormItemId,
+                    formId: input.path.contactFormId
+                )
+            )
         return .ok(.init(body: .json(map(result))))
     }
 }

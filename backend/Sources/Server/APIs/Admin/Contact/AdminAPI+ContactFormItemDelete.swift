@@ -9,7 +9,12 @@ extension AdminAPI {
             permission: ContactPermissions.Items.delete
         )
         try await modules.contact.makeDeleteContactFormItem()
-            .execute(.init(id: input.path.contactFormItemId))
+            .execute(
+                .init(
+                    id: input.path.contactFormItemId,
+                    formId: input.path.contactFormId
+                )
+            )
         return .noContent
     }
 }
