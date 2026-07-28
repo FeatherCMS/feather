@@ -13,12 +13,17 @@ struct AdminAddNewsletterIssueDefaultController:
         context: AppRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard let id = context.parameters.get("id", as: String.self) else {
+        guard
+            let newsletterId = context.parameters.get(
+                "newsletterId",
+                as: String.self
+            )
+        else {
             return HTMLResponse(content: "Bad request", status: .badRequest)
         }
         return presenter.renderPage(
             model: try await interactor.getAddNewsletterIssue(
-                newsletterId: id
+                newsletterId: newsletterId
             ),
             permissions: context.currentUserPermissions
         )
@@ -28,7 +33,12 @@ struct AdminAddNewsletterIssueDefaultController:
         context: AppRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard let id = context.parameters.get("id", as: String.self) else {
+        guard
+            let newsletterId = context.parameters.get(
+                "newsletterId",
+                as: String.self
+            )
+        else {
             return Response(status: .badRequest)
         }
         let payload = try await request.decode(
@@ -36,7 +46,7 @@ struct AdminAddNewsletterIssueDefaultController:
             context: context
         )
         let model = try await interactor.postAddNewsletterIssue(
-            newsletterId: id,
+            newsletterId: newsletterId,
             payload: payload
         )
         if model.error == nil {

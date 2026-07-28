@@ -9,11 +9,20 @@ public struct DeleteContactFormItem: UseCase {
     }
     public struct Input: DTO {
         public let id: String
-        public init(id: String) { self.id = id }
+        public let formId: String
+        public init(id: String, formId: String) {
+            self.id = id
+            self.formId = formId
+        }
     }
     public func execute(_ input: Input) async throws {
         try await transaction.run { context in
-            guard try await context.item.delete(id: input.id) else {
+            guard
+                try await context.item.delete(
+                    id: input.id,
+                    formId: input.formId
+                )
+            else {
                 throw Error(message: "Contact form item not found")
             }
         }

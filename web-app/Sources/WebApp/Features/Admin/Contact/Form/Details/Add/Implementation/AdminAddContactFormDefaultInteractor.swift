@@ -1,10 +1,6 @@
 struct AdminAddContactFormDefaultInteractor: AdminAddContactFormInteractor {
     let repository: AdminAddContactFormOpenAPIRepository
 
-    func availableFields() async throws -> [AdminContactFormFieldOption] {
-        try await repository.availableFields()
-    }
-
     func create(
         name: String,
         successMessage: String,

@@ -17,21 +17,17 @@ extension AdminRemoveContactFormItemsController {
             "/admin/contact/forms/:formId/items/:itemId/remove/",
             use: confirm
         )
-        router.get("/admin/contact/fields/:itemId/remove/", use: confirm)
         router.post(
             "/admin/contact/forms/:formId/items/:itemId/remove/",
             use: remove
         )
-        router.post("/admin/contact/fields/:itemId/remove/", use: remove)
         router.get(
             "/admin/contact/forms/:formId/items/bulk-remove/",
             use: bulkConfirm
         )
-        router.get("/admin/contact/fields/bulk-remove/", use: bulkConfirm)
         router.post(
             "/admin/contact/forms/:formId/items/bulk-remove/",
             use: bulkRemove
         )
-        router.post("/admin/contact/fields/bulk-remove/", use: bulkRemove)
     }
 }

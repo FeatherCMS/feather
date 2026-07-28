@@ -15,10 +15,7 @@ struct ContactFormItemsTable: Component {
     }
     let state: State
     func content() -> some BasicTag {
-        let basePath =
-            state.formId == "__global_contact_fields__"
-            ? "/admin/contact/fields"
-            : "/admin/contact/forms/\(state.formId)/items"
+        let basePath = "/admin/contact/forms/\(state.formId)/items"
         Section {
             AdminBreadcrumb(state: state.breadcrumb)
             H1("Contact form fields")

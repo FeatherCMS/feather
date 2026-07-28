@@ -13,11 +13,9 @@ extension AdminEditContactFormItemsController {
             "/admin/contact/forms/:formId/items/:itemId/edit/",
             use: edit
         )
-        router.get("/admin/contact/fields/:itemId/edit/", use: edit)
         router.post(
             "/admin/contact/forms/:formId/items/:itemId/edit/",
             use: update
         )
-        router.post("/admin/contact/fields/:itemId/edit/", use: update)
     }
 }

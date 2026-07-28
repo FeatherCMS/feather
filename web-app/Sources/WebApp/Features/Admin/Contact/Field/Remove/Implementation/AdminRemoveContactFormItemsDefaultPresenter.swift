@@ -42,8 +42,7 @@ struct AdminRemoveContactFormItemsDefaultPresenter:
         permissions: Set<String>
     ) -> HTMLResponse {
         let basePath =
-            formId == "__global_contact_fields__"
-            ? "/admin/contact/fields" : "/admin/contact/forms/\(formId)/items"
+            "/admin/contact/forms/\(formId)/items"
         return renderEngine.renderAdminPage(
             request: request,
             title: "Remove contact form fields - Feather CMS",

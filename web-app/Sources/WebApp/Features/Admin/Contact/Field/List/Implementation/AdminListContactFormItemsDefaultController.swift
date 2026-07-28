@@ -13,9 +13,7 @@ struct AdminListContactFormItemsDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId =
-            context.parameters.get("formId", as: String.self)
-            ?? "__global_contact_fields__"
+        let formId = try context.requiredParameter("formId")
         let search = request.querySearch() ?? ""
         do {
             let items = try await interactor.list(formId: formId)

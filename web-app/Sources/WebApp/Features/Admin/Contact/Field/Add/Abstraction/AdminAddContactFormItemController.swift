@@ -16,7 +16,5 @@ extension AdminAddContactFormItemController {
             "/admin/contact/forms/:formId/items/add/",
             use: postAddContactFormItem
         )
-        router.get("/admin/contact/fields/add/", use: getAddContactFormItem)
-        router.post("/admin/contact/fields/add/", use: postAddContactFormItem)
     }
 }

@@ -10,40 +10,21 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
     func add(request: Request, context: AppRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
-        do {
-            let fields = try await interactor.availableFields()
-            return presenter.renderPage(
-                item: .init(
-                    id: "",
-                    name: "",
-                    successMessage: "",
-                    failureMessage: "",
-                    redirectUrl: nil,
-                    selectedFieldIDs: [],
-                    availableFields: fields,
-                    mails: []
-                ),
-                error: nil,
-                permissions: context.currentUserPermissions
-            )
-        }
-        catch {
-            return presenter.renderPage(
-                item: .init(
-                    id: "",
-                    name: "",
-                    successMessage: "",
-                    failureMessage: "",
-                    redirectUrl: nil,
-                    selectedFieldIDs: [],
-                    availableFields: [],
-                    mails: []
-                ),
-                error: error.displayMessage,
-                permissions: context.currentUserPermissions
-            )
-        }
+        let (_, presenter) = buildRuntime(request, context)
+        return presenter.renderPage(
+            item: .init(
+                id: "",
+                name: "",
+                successMessage: "",
+                failureMessage: "",
+                redirectUrl: nil,
+                selectedFieldIDs: [],
+                availableFields: [],
+                mails: []
+            ),
+            error: nil,
+            permissions: context.currentUserPermissions
+        )
     }
 
     func create(request: Request, context: AppRequestContext) async throws

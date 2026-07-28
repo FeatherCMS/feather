@@ -11,7 +11,7 @@ struct AdminGetContactFormOpenAPIRepository {
             case .ok(let value):
                 let item = try value.body.json
                 let fieldsResponse = try await client.contactFormItemList(
-                    path: .init(contactFormId: "__global_contact_fields__")
+                    path: .init(contactFormId: id)
                 )
                 let fields: [AdminContactFormFieldOption]
                 switch fieldsResponse {

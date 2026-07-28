@@ -18,8 +18,6 @@ struct AdminContact {
 
         AdminListContactFormItems(renderingEngine: renderingEngine)
             .route(on: router)
-        AdminListGlobalContactFields(renderingEngine: renderingEngine)
-            .route(on: router)
         AdminEditContactFormItems(renderingEngine: renderingEngine)
             .route(on: router)
         AdminRemoveContactFormItems(renderingEngine: renderingEngine)

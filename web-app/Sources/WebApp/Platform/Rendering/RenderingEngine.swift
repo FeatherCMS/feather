@@ -540,12 +540,6 @@ struct DefaultRenderingEngine: RenderingEngine {
                 isCurrent: isIn("/admin/contact/forms/")
             ),
             item(
-                icon: FeatherIcons.list(),
-                label: "Fields",
-                link: "/admin/contact/fields/",
-                isCurrent: isIn("/admin/contact/fields/")
-            ),
-            item(
                 icon: FeatherIcons.inbox(),
                 label: "Submissions",
                 link: "/admin/contact/submissions/",

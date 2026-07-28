@@ -68,7 +68,7 @@ struct ContactFormFieldTable {
                     \#(row.label), \#(row.allowedValuesJSON)::jsonb,
                     \#(row.isRequired), NOW(), NOW()
                 )
-                RETURNING *, '__global_contact_fields__' AS form_id, 0 AS position;
+                RETURNING *, \#(row.formId) AS form_id, \#(row.position) AS position;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -79,13 +79,15 @@ struct ContactFormFieldTable {
     }
 
     func find(
-        id: String
+        id: String,
+        formId: String
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT *, '__global_contact_fields__' AS form_id, 0 AS position
-                FROM contact_form_field
-                WHERE id = \#(id)
+                SELECT i.*, a.form_id, a.position
+                FROM contact_form_field i
+                JOIN contact_form_form_field a ON a.field_id = i.id
+                WHERE i.id = \#(id) AND a.form_id = \#(formId)
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -102,8 +104,7 @@ struct ContactFormFieldTable {
                 FROM contact_form_field i
                 LEFT JOIN contact_form_form_field a
                     ON a.field_id = i.id AND a.form_id = \#(formId)
-                WHERE (\#(formId) = '__global_contact_fields__')
-                   OR (\#(formId) <> '__global_contact_fields__' AND a.field_id IS NOT NULL)
+                WHERE a.field_id IS NOT NULL
                 ORDER BY COALESCE(a.position, 0), i.id;
                 """#
         ) { sequence in
@@ -125,7 +126,7 @@ struct ContactFormFieldTable {
                     is_required = \#(row.isRequired),
                     updated_at = NOW()
                 WHERE id = \#(id)
-                RETURNING *, '__global_contact_fields__' AS form_id, 0 AS position;
+                RETURNING *, \#(row.formId) AS form_id, \#(row.position) AS position;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -136,12 +137,18 @@ struct ContactFormFieldTable {
     }
 
     func delete(
-        id: String
+        id: String,
+        formId: String
     ) async throws -> Bool {
         try await connection.run(
             query: #"""
                 DELETE FROM contact_form_field
                 WHERE id = \#(id)
+                  AND EXISTS (
+                      SELECT 1
+                      FROM contact_form_form_field
+                      WHERE form_id = \#(formId) AND field_id = \#(id)
+                  )
                 RETURNING id;
                 """#
         ) { sequence in

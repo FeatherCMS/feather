@@ -12,9 +12,7 @@ struct AdminRemoveContactFormItemsDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId =
-            context.parameters.get("formId", as: String.self)
-            ?? "__global_contact_fields__"
+        let formId = try context.requiredParameter("formId")
         let id = try context.requiredParameter("itemId")
         let item = try? await interactor.get(formId: formId, id: id)
         return presenter.renderConfirmation(
@@ -28,16 +26,12 @@ struct AdminRemoveContactFormItemsDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)
-        let formId =
-            context.parameters.get("formId", as: String.self)
-            ?? "__global_contact_fields__"
+        let formId = try context.requiredParameter("formId")
         try await interactor.remove(
             formId: formId,
             id: try context.requiredParameter("itemId")
         )
-        let basePath =
-            formId == "__global_contact_fields__"
-            ? "/admin/contact/fields/" : "/admin/contact/forms/\(formId)/items/"
+        let basePath = "/admin/contact/forms/\(formId)/items/"
         return Response(
             status: .seeOther,
             headers: [
@@ -53,9 +47,7 @@ struct AdminRemoveContactFormItemsDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        let formId =
-            context.parameters.get("formId", as: String.self)
-            ?? "__global_contact_fields__"
+        let formId = try context.requiredParameter("formId")
         return presenter.renderBulkConfirmation(
             formId: formId,
             selectedIds: request.queryStrings("selectedIds"),
@@ -65,9 +57,7 @@ struct AdminRemoveContactFormItemsDefaultController:
     func bulkRemove(request: Request, context: AppRequestContext) async throws
         -> Response
     {
-        let formId =
-            context.parameters.get("formId", as: String.self)
-            ?? "__global_contact_fields__"
+        let formId = try context.requiredParameter("formId")
         let payload = try await request.decode(
             as: ListBulkRemoveFormInput.self,
             context: context
@@ -79,9 +69,7 @@ struct AdminRemoveContactFormItemsDefaultController:
                 ids: payload.normalizedSelectedIds
             )
         }
-        let basePath =
-            formId == "__global_contact_fields__"
-            ? "/admin/contact/fields/" : "/admin/contact/forms/\(formId)/items/"
+        let basePath = "/admin/contact/forms/\(formId)/items/"
         return Response(
             status: .seeOther,
             headers: [

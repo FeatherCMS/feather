@@ -1,5 +1,4 @@
 protocol AdminAddContactFormInteractor: Sendable {
-    func availableFields() async throws -> [AdminContactFormFieldOption]
     func create(
         name: String,
         successMessage: String,

@@ -46,9 +46,7 @@ struct AdminListContactFormItemsDefaultPresenter:
             .init(label: "Contact", link: "/admin/contact/"),
             .init(
                 label: "Fields",
-                link: formId == "__global_contact_fields__"
-                    ? "/admin/contact/fields/"
-                    : "/admin/contact/forms/\(formId)/items/"
+                link: "/admin/contact/forms/\(formId)/items/"
             ),
         ])
     }

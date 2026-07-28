@@ -12,9 +12,7 @@ struct AdminAddContactFormItemDefaultController:
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId =
-            context.parameters.get("formId", as: String.self)
-            ?? "__global_contact_fields__"
+        let formId = try context.requiredParameter("formId")
         return presenter.renderPage(
             model: try await interactor.getAddContactFormItem(formId: formId),
             permissions: context.currentUserPermissions
@@ -24,9 +22,7 @@ struct AdminAddContactFormItemDefaultController:
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId =
-            context.parameters.get("formId", as: String.self)
-            ?? "__global_contact_fields__"
+        let formId = try context.requiredParameter("formId")
         let payload = try await request.decode(
             as: ContactFormItemAddForm.self,
             context: context
@@ -36,10 +32,7 @@ struct AdminAddContactFormItemDefaultController:
             payload: payload
         )
         if model.error == nil {
-            let basePath =
-                formId == "__global_contact_fields__"
-                ? "/admin/contact/fields/"
-                : "/admin/contact/forms/\(formId)/items/"
+            let basePath = "/admin/contact/forms/\(formId)/items/"
             return Response(
                 status: .seeOther,
                 headers: [

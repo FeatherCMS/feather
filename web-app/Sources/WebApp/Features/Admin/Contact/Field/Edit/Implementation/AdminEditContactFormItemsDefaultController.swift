@@ -12,9 +12,7 @@ struct AdminEditContactFormItemsDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId =
-            context.parameters.get("formId", as: String.self)
-            ?? "__global_contact_fields__"
+        let formId = try context.requiredParameter("formId")
         let id = try context.requiredParameter("itemId")
         do {
             return presenter.renderPage(
@@ -46,17 +44,13 @@ struct AdminEditContactFormItemsDefaultController:
         -> Response
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId =
-            context.parameters.get("formId", as: String.self)
-            ?? "__global_contact_fields__"
+        let formId = try context.requiredParameter("formId")
         let id = try context.requiredParameter("itemId")
         let form = try await request.decode(
             as: ContactFormItemAddForm.self,
             context: context
         )
-        let basePath =
-            formId == "__global_contact_fields__"
-            ? "/admin/contact/fields/" : "/admin/contact/forms/\(formId)/items/"
+        let basePath = "/admin/contact/forms/\(formId)/items/"
         do {
             try await interactor.update(formId: formId, id: id, form: form)
             return Response(
