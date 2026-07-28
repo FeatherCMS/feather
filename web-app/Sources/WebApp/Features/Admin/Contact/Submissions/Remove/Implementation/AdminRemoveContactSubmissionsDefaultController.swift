@@ -1,46 +1,18 @@
 import Hummingbird
 
-struct AdminRemoveContactSubmissionsDefaultController:
-    AdminRemoveContactSubmissionsController
-{
-    let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
-            interactor: any AdminRemoveContactSubmissionsInteractor,
-            presenter: any AdminRemoveContactSubmissionsPresenter
-        )
-    func bulkConfirm(request: Request, context: AppRequestContext) async throws
-        -> HTMLResponse
-    {
+struct AdminRemoveContactSubmissionsDefaultController: AdminRemoveContactSubmissionsController {
+    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+        interactor: any AdminRemoveContactSubmissionsInteractor,
+        presenter: any AdminRemoveContactSubmissionsPresenter
+    )
+    func bulkConfirm(request: Request, context: AppRequestContext) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderBulkConfirmation(
-            selectedIds: request.queryStrings("selectedIds"),
-            permissions: context.currentUserPermissions
-        )
+        return presenter.renderBulkConfirmation(selectedIds: request.queryStrings("selectedIds"), permissions: context.currentUserPermissions)
     }
-    func bulkRemove(request: Request, context: AppRequestContext) async throws
-        -> Response
-    {
+    func bulkRemove(request: Request, context: AppRequestContext) async throws -> Response {
+        let payload = try await request.decode(as: ListBulkRemoveFormInput.self, context: context)
         let (interactor, _) = buildRuntime(request, context)
-        let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
-            context: context
-        )
-        if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
-        }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: ListBulkRemoveRedirect.location(
-                    path: "/admin/contact/submissions/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
-                    title: payload.normalizedSelectedIds.isEmpty
-                        ? nil : "Removed",
-                    message: payload.normalizedSelectedIds.isEmpty
-                        ? nil : "Contact submissions removed successfully."
-                )
-            ]
-        )
+        try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+        return Response(status: .seeOther, headers: [.location: ListBulkRemoveRedirect.location(path: "/admin/contact/submissions/", page: payload.normalizedPage, search: payload.normalizedSearch, title: "Removed", message: "Contact submissions removed successfully.")])
     }
 }

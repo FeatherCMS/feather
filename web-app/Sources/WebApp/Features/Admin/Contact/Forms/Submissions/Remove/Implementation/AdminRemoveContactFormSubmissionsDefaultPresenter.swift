@@ -23,47 +23,37 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: AdminConfirmationDialog(
                 state: .init(
                     breadcrumb: breadcrumb(formId: formId, label: "Remove"),
                     title: "Remove contact form submission",
                     message:
                         "Are you sure you want to remove this contact form submission? This action cannot be undone.",
-                    action:
-                        "/admin/contact/forms/\(formId)/submissions/bulk-remove/",
-                    cancelLink: "/admin/contact/forms/\(formId)/submissions/",
-                    selectedIds: [item.id]
+                    details: [.init(prefix: "Submitted: ", value: item.createdAt)],
+                    submitLabel: "Remove submission",
+                    actionURL:
+                        "/admin/contact/forms/\(formId)/submissions/\(item.id)/remove/",
+                    cancelURL: "/admin/contact/forms/\(formId)/submissions/"
                 )
             )
         )
     }
 
-    func renderBulkConfirmation(
-        formId: String,
-        selectedIds: [String],
-        permissions: Set<String>
-    ) -> HTMLResponse {
+    func renderBulkConfirmation(formId: String, selectedIds: [String], permissions: Set<String>) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove contact form submissions - Feather CMS",
             description: "Remove contact form submissions",
             imagePath: "images/puppy.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListBulkRemoveConfirmation(
-                state: .init(
-                    breadcrumb: breadcrumb(formId: formId, label: "Remove"),
-                    title: "Remove contact form submissions",
-                    message:
-                        "Are you sure you want to remove the selected contact form submissions? This action cannot be undone.",
-                    action:
-                        "/admin/contact/forms/\(formId)/submissions/bulk-remove/",
-                    cancelLink: "/admin/contact/forms/\(formId)/submissions/",
-                    selectedIds: selectedIds
-                )
-            )
+            sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions),
+            content: ListBulkRemoveConfirmation(state: .init(
+                breadcrumb: breadcrumb(formId: formId, label: "Remove"),
+                title: "Remove contact form submissions",
+                message: "Are you sure you want to remove the selected contact form submissions? This action cannot be undone.",
+                action: "/admin/contact/forms/\(formId)/submissions/remove/",
+                cancelLink: "/admin/contact/forms/\(formId)/submissions/",
+                selectedIds: selectedIds
+            ))
         )
     }
 

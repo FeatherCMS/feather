@@ -24,9 +24,33 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
                 name: name,
                 breadcrumb: breadcrumb(
                     label: "Remove",
-                    path: "/admin/contact/forms/\(id)/remove/"
+                    path: "/admin/contact/forms/remove/?selectedIds[]=\(id)"
                 )
             )
+        )
+    }
+
+    func renderBulkConfirmation(
+        selectedIds: [String],
+        permissions: Set<String>
+    ) -> HTMLResponse {
+        renderEngine.renderAdminPage(
+            request: request,
+            title: "Remove contact forms - Feather CMS",
+            description: "Remove contact forms",
+            imagePath: "images/puppy.png",
+            sidebarState: renderEngine.adminSidebarState(
+                request: request,
+                permissions: permissions
+            ),
+            content: ListBulkRemoveConfirmation(state: .init(
+                breadcrumb: breadcrumb(label: "Remove", path: ""),
+                title: "Remove contact forms",
+                message: "Are you sure you want to remove the selected contact forms? This action cannot be undone.",
+                action: "/admin/contact/forms/remove/",
+                cancelLink: "/admin/contact/forms/",
+                selectedIds: selectedIds
+            ))
         )
     }
 

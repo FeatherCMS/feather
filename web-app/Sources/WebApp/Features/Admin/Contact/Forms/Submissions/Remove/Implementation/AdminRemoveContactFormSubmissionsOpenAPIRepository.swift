@@ -35,4 +35,12 @@ struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
             }
         }
     }
+    func bulkRemove(formId: String, ids: [String]) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            _ = try await client.contactFormSubmissionBulkDelete(
+                path: .init(contactFormId: formId),
+                body: .json(.init(ids: ids, summary: true))
+            )
+        }
+    }
 }

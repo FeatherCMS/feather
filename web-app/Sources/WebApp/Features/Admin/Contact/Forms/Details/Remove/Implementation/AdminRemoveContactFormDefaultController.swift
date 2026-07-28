@@ -12,8 +12,8 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId = try context.requiredParameter("formId")
-        do {
+        let selectedIds = request.queryStrings("selectedIds")
+        if selectedIds.count == 1, let formId = selectedIds.first {
             let item = try await interactor.get(id: formId)
             return presenter.renderConfirmation(
                 id: formId,
@@ -21,10 +21,9 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
                 permissions: context.currentUserPermissions
             )
         }
-        catch {
-            return presenter.renderConfirmation(
-                id: formId,
-                name: formId,
+        else {
+            return presenter.renderBulkConfirmation(
+                selectedIds: selectedIds,
                 permissions: context.currentUserPermissions
             )
         }
@@ -33,27 +32,13 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
     func remove(request: Request, context: AppRequestContext) async throws
         -> Response
     {
+        let payload = try await request.decode(as: ListBulkRemoveFormInput.self, context: context)
         let (interactor, _) = buildRuntime(request, context)
-        let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
-            context: context
-        )
-        if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
-        }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: ListBulkRemoveRedirect.location(
-                    path: "/admin/contact/forms/",
-                    page: 1,
-                    search: payload.normalizedSearch,
-                    title: payload.normalizedSelectedIds.isEmpty
-                        ? nil : "Removed",
-                    message: payload.normalizedSelectedIds.isEmpty
-                        ? nil : "Contact forms removed successfully."
-                )
-            ]
-        )
+        try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+        return Response(status: .seeOther, headers: [.location: ListBulkRemoveRedirect.location(
+            path: "/admin/contact/forms/", page: payload.normalizedPage,
+            search: payload.normalizedSearch, title: "Removed",
+            message: "Contact forms removed successfully."
+        )])
     }
 }

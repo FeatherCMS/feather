@@ -17,8 +17,9 @@ struct ContactFormMailRemove: Component {
                 details: [.init(prefix: "Subject: ", value: mail.subject)],
                 submitLabel: "Remove email",
                 actionURL:
-                    "/admin/contact/forms/\(formId)/emails/\(mail.id)/remove/",
-                cancelURL: "/admin/contact/forms/\(formId)/emails/"
+                    "/admin/contact/forms/\(formId)/emails/remove/",
+                cancelURL: "/admin/contact/forms/\(formId)/emails/",
+                hiddenFields: [.init(name: "selectedIds[]", value: mail.id)]
             )
         )
     }

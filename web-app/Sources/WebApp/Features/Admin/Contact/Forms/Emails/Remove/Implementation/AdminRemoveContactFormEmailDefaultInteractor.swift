@@ -7,11 +7,13 @@ struct AdminRemoveContactFormEmailDefaultInteractor:
         try await repository.get(id: id)
     }
 
-    func remove(id: String, emailId: String) async throws {
+    func bulkRemove(id: String, emailIds: [String]) async throws {
         let current = try await repository.get(id: id)
-        guard current.mails.contains(where: { $0.id == emailId }) else {
+        let selected = Set(emailIds)
+        let remaining = current.mails.filter { !selected.contains($0.id) }
+        guard remaining.count != current.mails.count else {
             throw OpenAPIRepositoryError.notFound(
-                message: "This contact form email could not be found."
+                message: "The selected contact form emails could not be found."
             )
         }
         _ = try await repository.update(
@@ -21,7 +23,7 @@ struct AdminRemoveContactFormEmailDefaultInteractor:
             failureMessage: current.failureMessage,
             redirectUrl: current.redirectUrl,
             fieldIDs: current.selectedFieldIDs,
-            mails: current.mails.filter { $0.id != emailId }
+            mails: remaining
         )
     }
 }

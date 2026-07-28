@@ -2726,6 +2726,21 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/contact/forms/{contactFormId}:
     get:
       tags:
@@ -2803,6 +2818,21 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/ContactFormItemResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFieldBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
         401:
           description: Unauthorized
         403:
@@ -2896,6 +2926,23 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormItemBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}:
     get:
       tags:
@@ -2963,6 +3010,23 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/ContactFormSubmissionListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
         401:
           description: Unauthorized
         403:

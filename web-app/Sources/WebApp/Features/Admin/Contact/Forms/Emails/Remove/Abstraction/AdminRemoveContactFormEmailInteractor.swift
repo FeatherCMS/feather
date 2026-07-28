@@ -1,4 +1,4 @@
 protocol AdminRemoveContactFormEmailInteractor: Sendable {
     func get(id: String) async throws -> AdminContactFormDetailsItem
-    func remove(id: String, emailId: String) async throws
+    func bulkRemove(id: String, emailIds: [String]) async throws
 }

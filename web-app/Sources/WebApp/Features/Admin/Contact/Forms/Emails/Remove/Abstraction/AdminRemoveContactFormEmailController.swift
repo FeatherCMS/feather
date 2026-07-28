@@ -10,11 +10,11 @@ protocol AdminRemoveContactFormEmailController: Sendable {
 extension AdminRemoveContactFormEmailController {
     func route(on router: Router<AppRequestContext>) {
         router.get(
-            "/admin/contact/forms/:formId/emails/:mailId/remove/",
+            "/admin/contact/forms/:formId/emails/remove/",
             use: confirm
         )
         router.post(
-            "/admin/contact/forms/:formId/emails/:mailId/remove/",
+            "/admin/contact/forms/:formId/emails/remove/",
             use: remove
         )
     }

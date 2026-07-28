@@ -26,6 +26,7 @@ struct AdminListContactFormEmailsDefaultPresenter:
             content: ContactFormEmails(
                 id: item.id,
                 mails: item.mails,
+                canRemove: permissions.contains("contact:forms:update"),
                 breadcrumb: breadcrumb(formId: item.id),
                 error: error
             )

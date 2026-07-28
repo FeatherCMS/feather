@@ -9,6 +9,6 @@ struct AdminRemoveContactFormSubmissionsDefaultInteractor:
         try await repository.remove(formId: formId, id: id)
     }
     func bulkRemove(formId: String, ids: [String]) async throws {
-        for id in ids { try await repository.remove(formId: formId, id: id) }
+        try await repository.bulkRemove(formId: formId, ids: ids)
     }
 }

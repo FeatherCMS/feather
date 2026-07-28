@@ -115,7 +115,7 @@ struct ContactFormTable: Component {
                                                     .init(
                                                         title: "Remove",
                                                         href:
-                                                            "/admin/contact/forms/\(item.id)/remove/",
+                                                            "/admin/contact/forms/remove/?selectedIds[]=\(item.id)",
                                                         className: "delete",
                                                         permission:
                                                             "contact:forms:delete"
