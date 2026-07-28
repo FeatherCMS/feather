@@ -75,7 +75,7 @@ struct AnalyticsLogMiddleware: RouterMiddleware {
             )
         }
         catch {
-            print("Analytics tracking failed: \(error)")
+            // print("Analytics tracking failed: \(error)")
         }
 
         return response

@@ -75,6 +75,7 @@ let package = Package(
         ),
 
         .package(path: "../app-kernel"),
+        .package(path: "../app-account-module"),
 
         // MARK: - test dependencies
 
@@ -108,6 +109,7 @@ let package = Package(
             name: "UserApplication",
             dependencies: [
                 .product(name: "Application", package: "app-kernel"),
+                .product(name: "AccountDomain", package: "app-account-module"),
                 .target(name: "UserDomain"),
             ],
             swiftSettings: defaultSwiftSettings
@@ -133,7 +135,8 @@ let package = Package(
         .testTarget(
             name: "UserApplicationTests",
             dependencies: [
-                .target(name: "UserApplication")
+                .target(name: "UserApplication"),
+                .product(name: "AccountDomain", package: "app-account-module"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

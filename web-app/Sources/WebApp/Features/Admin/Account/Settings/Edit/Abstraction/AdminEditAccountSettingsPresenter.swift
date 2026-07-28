@@ -1,9 +1,9 @@
 import Hummingbird
 
-protocol AdminEditAuthSettingsPresenter: Sendable {
+protocol AdminEditAccountSettingsPresenter: Sendable {
 
     func renderPage(
-        state: AuthSettingsEdit.State,
+        state: AccountSettingsEdit.State,
         permissions: Set<String>
     ) -> HTMLResponse
 

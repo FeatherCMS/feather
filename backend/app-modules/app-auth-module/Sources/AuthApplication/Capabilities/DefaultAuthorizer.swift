@@ -58,16 +58,16 @@ public struct DefaultAuthorizer: Authorizer {
         if result.contains("user:accounts:me") {
             result.insert("auth:profile:read")
             result.insert("auth:profile:update")
-            result.insert("auth:settings:read")
-            result.insert("auth:settings:update")
+            result.insert("account:settings:read")
+            result.insert("account:settings:update")
         }
 
         if result.contains("auth:profile:update") {
             result.insert("auth:profile:read")
         }
 
-        if result.contains("auth:settings:update") {
-            result.insert("auth:settings:read")
+        if result.contains("account:settings:update") {
+            result.insert("account:settings:read")
         }
         if result.contains("web:settings:update") {
             result.insert("web:settings:read")

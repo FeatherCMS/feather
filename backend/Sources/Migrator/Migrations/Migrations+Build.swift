@@ -10,6 +10,7 @@ import AuthInfrastructure
 import MediaInfrastructure
 import ContactInfrastructure
 import NewsletterInfrastructure
+import AccountInfrastructure
 
 public func buildMigrations(
     connection: any DatabaseConnection
@@ -23,6 +24,7 @@ public func buildMigrations(
         WebInfrastructure.TableMigration(connection: connection),
         BlogInfrastructure.TableMigration(connection: connection),
         UserInfrastructure.TableMigration(connection: connection),
+        AccountInfrastructure.TableMigration(connection: connection),
         AuthInfrastructure.TableMigration(connection: connection),
         MediaInfrastructure.TableMigration(connection: connection),
         ContactInfrastructure.TableMigration(connection: connection),
@@ -45,6 +47,7 @@ public func buildMigrations(
             connection: connection
         ),
         UserInfrastructure.TableSeedMigration(connection: connection),
+        AccountInfrastructure.TableSeedMigration(connection: connection),
         WebInfrastructure.MetadataPermissionSeedMigration(
             connection: connection
         ),

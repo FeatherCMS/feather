@@ -126,7 +126,10 @@ let package = Package(
         ),
         .testTarget(
             name: "AccountApplicationTests",
-            dependencies: [.target(name: "AccountApplication")],
+            dependencies: [
+                .target(name: "AccountApplication"),
+                .target(name: "AccountDomain"),
+            ],
             swiftSettings: defaultSwiftSettings
         ),
         .testTarget(

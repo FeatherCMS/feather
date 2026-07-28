@@ -1,15 +1,15 @@
 import Hummingbird
 
-struct AdminEditAuthSettingsDefaultController:
-    AdminEditAuthSettingsController
+struct AdminEditAccountSettingsDefaultController:
+    AdminEditAccountSettingsController
 {
     let buildRuntime:
         @Sendable (Request, AppRequestContext) -> (
-            interactor: any AdminEditAuthSettingsInteractor,
-            presenter: any AdminEditAuthSettingsPresenter
+            interactor: any AdminEditAccountSettingsInteractor,
+            presenter: any AdminEditAccountSettingsPresenter
         )
 
-    func getEditAuthSettings(
+    func getEditAccountSettings(
         request: Request,
         context: AppRequestContext
     ) async throws -> HTMLResponse {
@@ -17,11 +17,11 @@ struct AdminEditAuthSettingsDefaultController:
         let permissions = context.currentUserPermissions
         let canRead = context.isCurrentUserAllowed(
             to: .read,
-            scope: AdminAuth.Scope.settings
+            scope: AdminAccount.Scope.settings
         )
         let canEdit = context.isCurrentUserAllowed(
             to: .update,
-            scope: AdminAuth.Scope.settings
+            scope: AdminAccount.Scope.settings
         )
 
         guard canRead else {
@@ -66,15 +66,15 @@ struct AdminEditAuthSettingsDefaultController:
         )
     }
 
-    func postEditAuthSettings(
+    func postEditAccountSettings(
         request: Request,
         context: AppRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canEdit = context.isCurrentUserAllowed(
             to: .update,
-            scope: AdminAuth.Scope.settings
+            scope: AdminAccount.Scope.settings
         )
 
         guard canEdit else {
@@ -87,15 +87,16 @@ struct AdminEditAuthSettingsDefaultController:
                 .response(from: request, context: context)
         }
 
-        _ = try await request.decode(
-            as: AdminEditAuthSettingsFormInput.self,
+        let input = try await request.decode(
+            as: AdminEditAccountSettingsFormInput.self,
             context: context
         )
+        try await interactor.saveSettings(input: input)
         return Response(
             status: .seeOther,
             headers: [
                 .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/auth/settings/",
+                    defaultPath: "/admin/account/settings/",
                     title: "Saved",
                     message: "Settings edited successfully."
                 )
@@ -107,8 +108,8 @@ struct AdminEditAuthSettingsDefaultController:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Auth", link: "/admin/auth/"),
-                .init(label: "Settings", link: "/admin/auth/settings/"),
+                .init(label: "Account", link: "/admin/account/"),
+                .init(label: "Settings", link: "/admin/account/settings/"),
             ]
         )
     }

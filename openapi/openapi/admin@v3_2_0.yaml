@@ -15,6 +15,8 @@ tags:
   description: Manage user invitations.
 - name: UserMagicLinks
   description: Manage user magic links.
+- name: AccountSettings
+  description: Manage the current account settings.
 - name: SystemPermissions
   description: Manage system permissions.
 - name: SystemVariables
@@ -757,6 +759,43 @@ paths:
           $ref: '#/components/responses/UserMagicLinkDetailResponse'
         404:
           description: UserMagicLink not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/account/settings:
+    get:
+      tags:
+      - AccountSettings
+      operationId: accountSettingsGet
+      responses:
+        200:
+          $ref: '#/components/responses/AccountSettingsDetailResponse'
+        400:
+          $ref: '#/components/responses/ServerErrorResponse'
+        500:
+          $ref: '#/components/responses/ServerErrorResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - AccountSettings
+      operationId: accountSettingsUpdate
+      requestBody:
+        $ref: '#/components/requestBodies/AccountSettingsUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountSettingsDetailResponse'
+        400:
+          $ref: '#/components/responses/ServerErrorResponse'
+        500:
+          $ref: '#/components/responses/ServerErrorResponse'
         401:
           description: Unauthorized
         403:
@@ -4137,6 +4176,82 @@ components:
         isPersistent:
           $ref: '#/components/schemas/UserMagicLinkIsPersistentField'
       minProperties: 0
+    AccountSettingsDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - account-settings-user_1
+        accountID:
+          type: string
+          examples:
+          - user_1
+        language:
+          type: string
+          examples:
+          - en
+        timezone:
+          type: string
+          examples:
+          - Europe/Budapest
+        pageSize:
+          type: integer
+          examples:
+          - 20
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.7595216e+9
+        updatedAt:
+          type: number
+          format: double
+          examples:
+          - 1.7595216e+9
+      required:
+      - id
+      - accountID
+      - language
+      - timezone
+      - pageSize
+      - createdAt
+      - updatedAt
+      minProperties: 7
+    ServerErrorSchema:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - code
+      - message
+      - reason
+      minProperties: 3
+    AccountSettingsUpdateSchema:
+      type: object
+      properties:
+        language:
+          type: string
+          examples:
+          - en
+        timezone:
+          type: string
+          examples:
+          - Europe/Budapest
+        pageSize:
+          type: integer
+          examples:
+          - 20
+      required:
+      - language
+      - timezone
+      - pageSize
+      minProperties: 3
     SystemPermissionCreateSchema:
       type: object
       properties:
@@ -8361,6 +8476,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserMagicLinkListItemSearchSchema'
+    AccountSettingsDetailResponse:
+      description: Account settings response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountSettingsDetailSchema'
+    ServerErrorResponse:
+      description: Server error response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServerErrorSchema'
     SystemPermissionDetailResponse:
       description: SystemPermission response
       content:
@@ -9046,6 +9173,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserMagicLinkPatchSchema'
+      required: true
+    AccountSettingsUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountSettingsUpdateSchema'
       required: true
     SystemPermissionRequestBody:
       content:

@@ -4,4 +4,19 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-// Placeholder for the AccountSettingsRepository domain port.
+import Domain
+
+public protocol AccountSettingsRepository: Repository {
+
+    func create(
+        accountID: String
+    ) async throws
+
+    func update(
+        _ model: AccountSettings
+    ) async throws -> AccountSettings
+
+    func delete(
+        id: String
+    ) async throws
+}

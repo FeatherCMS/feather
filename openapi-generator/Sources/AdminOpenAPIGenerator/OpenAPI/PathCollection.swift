@@ -56,6 +56,8 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/admin/user/magic-links/{userMagicLinkId}":
                 UserMagicLinkIdPathItems(),
 
+            "api/v1/admin/account/settings": AccountSettingsPathItems(),
+
             "api/v1/admin/system/permissions": SystemPermissionPathItems(),
             "api/v1/admin/system/permissions/filters":
                 SystemPermissionFiltersPathItems(),

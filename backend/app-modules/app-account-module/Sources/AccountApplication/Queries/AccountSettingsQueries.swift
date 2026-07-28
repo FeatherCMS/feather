@@ -4,4 +4,12 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-// Placeholder for the AccountSettingsQueries application port.
+import AccountDomain
+import Application
+
+public protocol AccountSettingsQueries: Sendable {
+
+    func get(
+        accountID: String
+    ) async throws -> AccountSettings
+}

@@ -3,7 +3,7 @@ import HTML
 import SGML
 import WebStandards
 
-struct AuthSettingsForm: Component, FlowContent {
+struct AccountSettingsForm: Component, FlowContent {
 
     struct FieldState: Object {
         var key: String
@@ -22,7 +22,7 @@ struct AuthSettingsForm: Component, FlowContent {
     }
 
     var state: State
-    var action: String = "/admin/auth/settings/"
+    var action: String = "/admin/account/settings/"
     var submitLabel: String = "Save settings"
 
     func content() -> some BasicTag {

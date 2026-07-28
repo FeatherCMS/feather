@@ -19,9 +19,12 @@ struct UserApplicationTestSuite {
     @Test
     func addAccountSuccess() async throws {
         let accountRepo = MockAccountRepository(result: makeAccount(id: "a-1"))
-        let roleRepo = MockRoleRepository(result: makeRole(id: "r-1"))
+        let settingsRepo = MockAccountSettingsRepository()
         let transaction = MockTransactionExecutor(
-            context: WriteAccount(account: accountRepo, role: roleRepo)
+            context: WriteAccountAndSettings(
+                account: accountRepo,
+                settings: settingsRepo
+            )
         )
         let authorizer = MockAuthorizer(result: true)
         let passwordHasher = MockPasswordHasher(hashResult: "hashed-password")
@@ -43,6 +46,7 @@ struct UserApplicationTestSuite {
         #expect(result.id == "a-1")
         #expect(await authorizer.canCallCount == 1)
         #expect(await accountRepo.createCallCount == 1)
+        #expect(await settingsRepo.createCallCount == 1)
         #expect(await passwordHasher.hashCallCount == 1)
     }
 
