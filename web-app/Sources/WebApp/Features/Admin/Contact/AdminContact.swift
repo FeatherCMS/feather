@@ -16,11 +16,14 @@ struct AdminContact {
         AdminEditContactFormEmail(details: details).route(on: router)
         AdminRemoveContactFormEmail(details: details).route(on: router)
 
-        AdminListContactFormItems(renderingEngine: renderingEngine)
+        let fields = AdminListContactFormFields(
+            renderingEngine: renderingEngine
+        )
+        fields.route(on: router)
+        fields.routeCatalog(on: router)
+        AdminEditContactFormField(renderingEngine: renderingEngine)
             .route(on: router)
-        AdminEditContactFormItems(renderingEngine: renderingEngine)
-            .route(on: router)
-        AdminRemoveContactFormItems(renderingEngine: renderingEngine)
+        AdminRemoveContactFormField(renderingEngine: renderingEngine)
             .route(on: router)
 
         let submissions = AdminContactFormSubmissions(
@@ -38,7 +41,7 @@ struct AdminContact {
             .route(on: router)
         AdminRemoveContactSubmissions(renderingEngine: renderingEngine)
             .route(on: router)
-        AdminAddContactFormItem(renderingEngine: renderingEngine).controller
+        AdminAddContactFormField(renderingEngine: renderingEngine)
             .route(on: router)
     }
 }

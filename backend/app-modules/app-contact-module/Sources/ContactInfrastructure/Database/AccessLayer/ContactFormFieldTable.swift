@@ -57,7 +57,7 @@ struct ContactFormFieldTable {
     func create(
         row: Row.Create
     ) async throws -> Row {
-        try await connection.run(
+        return try await connection.run(
             query: #"""
                 INSERT INTO contact_form_field (
                     id, key, type, label, allowed_values,
@@ -80,9 +80,19 @@ struct ContactFormFieldTable {
 
     func find(
         id: String,
+        formId: String?
+    ) async throws -> Row? {
+        if formId == nil {
+            return try await findCatalog(id: id)
+        }
+        return try await findAssigned(id: id, formId: formId!)
+    }
+
+    private func findAssigned(
+        id: String,
         formId: String
     ) async throws -> Row? {
-        try await connection.run(
+        return try await connection.run(
             query: #"""
                 SELECT i.*, a.form_id, a.position
                 FROM contact_form_field i
@@ -96,9 +106,13 @@ struct ContactFormFieldTable {
     }
 
     func list(
-        formId: String
+        formId: String?
     ) async throws -> [Row] {
-        try await connection.run(
+        if formId == nil {
+            return try await listCatalog()
+        }
+        let formId = formId!
+        return try await connection.run(
             query: #"""
                 SELECT i.*, \#(formId) AS form_id, COALESCE(a.position, 0) AS position
                 FROM contact_form_field i
@@ -106,6 +120,31 @@ struct ContactFormFieldTable {
                     ON a.field_id = i.id AND a.form_id = \#(formId)
                 WHERE a.field_id IS NOT NULL
                 ORDER BY COALESCE(a.position, 0), i.id;
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
+    private func findCatalog(id: String) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT i.*, '' AS form_id, 0 AS position
+                FROM contact_form_field i
+                WHERE i.id = \#(id)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            try await sequence.collect().first.map { try Row(from: $0) }
+        }
+    }
+
+    private func listCatalog() async throws -> [Row] {
+        try await connection.run(
+            query: #"""
+                SELECT i.*, '' AS form_id, 0 AS position
+                FROM contact_form_field i
+                ORDER BY i.id;
                 """#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
@@ -138,9 +177,12 @@ struct ContactFormFieldTable {
 
     func delete(
         id: String,
-        formId: String
+        formId: String?
     ) async throws -> Bool {
-        try await connection.run(
+        if formId == nil {
+            return try await deleteCatalog(id: id)
+        }
+        return try await connection.run(
             query: #"""
                 DELETE FROM contact_form_field
                 WHERE id = \#(id)
@@ -149,6 +191,18 @@ struct ContactFormFieldTable {
                       FROM contact_form_form_field
                       WHERE form_id = \#(formId) AND field_id = \#(id)
                   )
+                RETURNING id;
+                """#
+        ) { sequence in
+            try await sequence.collect().first != nil
+        }
+    }
+
+    private func deleteCatalog(id: String) async throws -> Bool {
+        try await connection.run(
+            query: #"""
+                DELETE FROM contact_form_field
+                WHERE id = \#(id)
                 RETURNING id;
                 """#
         ) { sequence in

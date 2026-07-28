@@ -27,6 +27,45 @@ struct AdminAPI {
         )
     }
 
+    func contactFieldList() async throws -> Operations.ContactFieldList.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactFieldList()
+        }
+    }
+
+    func contactFieldCreate(
+        body: Components.RequestBodies.ContactFormItemCreateRequestBody
+    ) async throws -> Operations.ContactFieldCreate.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactFieldCreate(body: body)
+        }
+    }
+
+    func contactFieldGet(
+        path: Operations.ContactFieldGet.Input.Path
+    ) async throws -> Operations.ContactFieldGet.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactFieldGet(path: path)
+        }
+    }
+
+    func contactFieldUpdate(
+        path: Operations.ContactFieldUpdate.Input.Path,
+        body: Components.RequestBodies.ContactFormItemPatchRequestBody
+    ) async throws -> Operations.ContactFieldUpdate.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactFieldUpdate(path: path, body: body)
+        }
+    }
+
+    func contactFieldDelete(
+        path: Operations.ContactFieldDelete.Input.Path
+    ) async throws -> Operations.ContactFieldDelete.Output {
+        try await withOpenAPIRepositoryErrorMapping { client in
+            try await client.contactFieldDelete(path: path)
+        }
+    }
+
     func withOpenAPIRepositoryErrorMapping<T: Sendable>(
         _ operation: @Sendable (Client) async throws -> T
     ) async throws(OpenAPIRepositoryError) -> T {

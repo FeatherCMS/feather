@@ -4,11 +4,11 @@ public protocol ContactFormItemRepository: Repository {
 
     func findBy(
         id: String,
-        formId: String
+        formId: String?
     ) async throws -> ContactFormItem?
 
     func listBy(
-        formId: String
+        formId: String?
     ) async throws -> [ContactFormItem]
 
     func assign(
@@ -32,6 +32,6 @@ public protocol ContactFormItemRepository: Repository {
 
     func delete(
         id: String,
-        formId: String
+        formId: String?
     ) async throws -> Bool
 }

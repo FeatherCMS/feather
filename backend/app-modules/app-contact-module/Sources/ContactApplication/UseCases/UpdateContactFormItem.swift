@@ -9,7 +9,7 @@ public struct UpdateContactFormItem: UseCase {
     }
     public struct Input: DTO {
         public let id: String
-        public let formId: String
+        public let formId: String?
         public let key: String?
         public let type: ContactFormItem.ItemType?
         public let label: String?
@@ -18,7 +18,7 @@ public struct UpdateContactFormItem: UseCase {
         public let position: Int?
         public init(
             id: String,
-            formId: String,
+            formId: String?,
             key: String? = nil,
             type: ContactFormItem.ItemType? = nil,
             label: String? = nil,

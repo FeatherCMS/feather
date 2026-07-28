@@ -2,6 +2,32 @@ import AdminOpenAPI
 
 struct AdminAddContactFormOpenAPIRepository {
     let api: AdminAPI
+
+    func availableFields() async throws -> [AdminContactFormFieldOption] {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.contactFieldList()
+            switch response {
+            case .ok(let value):
+                return try value.body.json.map {
+                    .init(id: $0.id, key: $0.key, label: $0.label)
+                }
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to view contact fields."
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your account cannot view contact fields."
+                )
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
     func create(
         name: String,
         successMessage: String,

@@ -8,6 +8,9 @@ protocol ContactFormIDOperation: ContactFormOperation {}
 extension ContactFormIDOperation { var parameters: [ParameterRepresentable] { [ContactFormIdParameter().reference()] } }
 protocol ContactFormItemOperation: ContactFormOperation {}
 extension ContactFormItemOperation { var parameters: [ParameterRepresentable] { [ContactFormIdParameter().reference()] } }
+protocol ContactFieldOperation: ContactFormOperation {}
+protocol ContactFieldIDOperation: ContactFieldOperation {}
+extension ContactFieldIDOperation { var parameters: [ParameterRepresentable] { [ContactFormItemIdParameter().reference()] } }
 protocol ContactFormItemIDOperation: ContactFormItemOperation {}
 extension ContactFormItemIDOperation { var parameters: [ParameterRepresentable] { [ContactFormIdParameter().reference(), ContactFormItemIdParameter().reference()] } }
 protocol ContactFormSubmissionOperation: ContactFormOperation {}
@@ -26,6 +29,11 @@ struct ContactFormItemCreateOperation: ContactFormItemOperation { var requestBod
 struct ContactFormItemGetOperation: ContactFormItemIDOperation { var responseMap: ResponseMap { [200: ContactFormItemResponse().reference(), 404: CustomResponse(description: "Contact form item not found")] } }
 struct ContactFormItemUpdateOperation: ContactFormItemIDOperation { var requestBody: RequestBodyRepresentable? { ContactFormItemPatchRequestBody().reference() }; var responseMap: ResponseMap { [200: ContactFormItemResponse().reference(), 404: CustomResponse(description: "Contact form item not found")] } }
 struct ContactFormItemDeleteOperation: ContactFormItemIDOperation { var responseMap: ResponseMap { [204: CustomResponse(description: "Contact form item deleted"), 404: CustomResponse(description: "Contact form item not found")] } }
+struct ContactFieldListOperation: ContactFieldOperation { var responseMap: ResponseMap { [200: ContactFormItemListResponse().reference()] } }
+struct ContactFieldCreateOperation: ContactFieldOperation { var requestBody: RequestBodyRepresentable? { ContactFormItemCreateRequestBody().reference() }; var responseMap: ResponseMap { [201: ContactFormItemResponse().reference()] } }
+struct ContactFieldGetOperation: ContactFieldIDOperation { var responseMap: ResponseMap { [200: ContactFormItemResponse().reference(), 404: CustomResponse(description: "Contact field not found")] } }
+struct ContactFieldUpdateOperation: ContactFieldIDOperation { var requestBody: RequestBodyRepresentable? { ContactFormItemPatchRequestBody().reference() }; var responseMap: ResponseMap { [200: ContactFormItemResponse().reference(), 404: CustomResponse(description: "Contact field not found")] } }
+struct ContactFieldDeleteOperation: ContactFieldIDOperation { var responseMap: ResponseMap { [204: CustomResponse(description: "Contact field deleted"), 404: CustomResponse(description: "Contact field not found")] } }
 
 struct ContactFormSubmissionListOperation: ContactFormSubmissionOperation { var responseMap: ResponseMap { [200: ContactFormSubmissionListResponse().reference()] } }
 struct ContactFormSubmissionGetOperation: ContactFormSubmissionIDOperation { var responseMap: ResponseMap { [200: ContactFormSubmissionResponse().reference(), 404: CustomResponse(description: "Contact form submission not found")] } }
