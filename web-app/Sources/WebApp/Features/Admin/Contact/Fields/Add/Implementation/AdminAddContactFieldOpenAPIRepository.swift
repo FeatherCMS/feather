@@ -2,8 +2,7 @@ import AdminOpenAPI
 
 struct AdminAddContactFieldOpenAPIRepository {
     let api: AdminAPI
-    func createField(form: ContactFieldFormInput) async throws
-    {
+    func createField(form: ContactFieldFormInput) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let body:
                 Components.RequestBodies.ContactFormItemCreateRequestBody =

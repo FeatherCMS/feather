@@ -13,7 +13,8 @@ struct AdminListContactFieldsOpenAPIRepository {
                         key: $0.key,
                         type: $0._type,
                         label: $0.label,
-                        allowedValues: ($0.allowedValues ?? []).joined(separator: "\n"),
+                        allowedValues: ($0.allowedValues ?? [])
+                            .joined(separator: "\n"),
                         isRequired: $0.isRequired,
                         position: String($0.position)
                     )

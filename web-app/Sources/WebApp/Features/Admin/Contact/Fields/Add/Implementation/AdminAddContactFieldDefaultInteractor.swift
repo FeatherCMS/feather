@@ -2,8 +2,7 @@ struct AdminAddContactFieldDefaultInteractor:
     AdminAddContactFieldInteractor
 {
     let repository: AdminAddContactFieldOpenAPIRepository
-    func getAddContactField() async throws -> AdminAddContactFieldModel
-    {
+    func getAddContactField() async throws -> AdminAddContactFieldModel {
         .init(
             key: "",
             type: "text",

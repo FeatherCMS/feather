@@ -15,11 +15,12 @@ struct AdminListContactFieldsDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let search = request.querySearch() ?? ""
         do {
-            let fields = try await interactor.list().filter {
-                search.isEmpty
-                    || $0.key.localizedCaseInsensitiveContains(search)
-                    || $0.label.localizedCaseInsensitiveContains(search)
-            }
+            let fields = try await interactor.list()
+                .filter {
+                    search.isEmpty
+                        || $0.key.localizedCaseInsensitiveContains(search)
+                        || $0.label.localizedCaseInsensitiveContains(search)
+                }
             return presenter.renderList(
                 fields: fields,
                 search: search,

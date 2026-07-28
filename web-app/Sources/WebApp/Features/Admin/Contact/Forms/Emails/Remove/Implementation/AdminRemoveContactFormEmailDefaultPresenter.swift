@@ -58,20 +58,26 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(state: .init(
-                breadcrumb: .init(links: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Contact", link: "/admin/contact/"),
-                    .init(label: "Forms", link: "/admin/contact/forms/"),
-                    .init(label: "Emails", link: "/admin/contact/forms/\(formId)/emails/"),
-                    .init(label: "Remove", link: "")
-                ]),
-                title: "Remove contact form emails",
-                message: "Are you sure you want to remove the selected contact form emails? This action cannot be undone.",
-                action: "/admin/contact/forms/\(formId)/emails/remove/",
-                cancelLink: "/admin/contact/forms/\(formId)/emails/",
-                selectedIds: selectedIds
-            ))
+            content: ListBulkRemoveConfirmation(
+                state: .init(
+                    breadcrumb: .init(links: [
+                        .init(label: "Admin", link: "/admin/"),
+                        .init(label: "Contact", link: "/admin/contact/"),
+                        .init(label: "Forms", link: "/admin/contact/forms/"),
+                        .init(
+                            label: "Emails",
+                            link: "/admin/contact/forms/\(formId)/emails/"
+                        ),
+                        .init(label: "Remove", link: ""),
+                    ]),
+                    title: "Remove contact form emails",
+                    message:
+                        "Are you sure you want to remove the selected contact form emails? This action cannot be undone.",
+                    action: "/admin/contact/forms/\(formId)/emails/remove/",
+                    cancelLink: "/admin/contact/forms/\(formId)/emails/",
+                    selectedIds: selectedIds
+                )
+            )
         )
     }
 }

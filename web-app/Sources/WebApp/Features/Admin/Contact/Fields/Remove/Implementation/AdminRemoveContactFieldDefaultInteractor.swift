@@ -2,8 +2,9 @@ struct AdminRemoveContactFieldDefaultInteractor:
     AdminRemoveContactFieldInteractor
 {
     let repository: AdminRemoveContactFieldOpenAPIRepository
-    func get(id: String) async throws -> AdminContactFieldRow
-    { try await repository.get(id: id) }
+    func get(id: String) async throws -> AdminContactFieldRow {
+        try await repository.get(id: id)
+    }
     func remove(id: String) async throws {
         try await repository.remove(id: id)
     }

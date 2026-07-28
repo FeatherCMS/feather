@@ -35,15 +35,20 @@ struct ContactFormSubmissionsTable: Component {
             else {
                 ListTableBulkRemoveForm(
                     state: .init(
-                        action: "/admin/contact/forms/\(state.formId)/submissions/remove/",
-                        page: 1, search: state.search, canRemove: state.canRemove,
+                        action:
+                            "/admin/contact/forms/\(state.formId)/submissions/remove/",
+                        page: 1,
+                        search: state.search,
+                        canRemove: state.canRemove,
                         buttonTitle: "Remove selected"
                     ),
                     table: ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
-                                    if state.canRemove { ListTableSelectAllCheckbox() }
+                                    if state.canRemove {
+                                        ListTableSelectAllCheckbox()
+                                    }
                                     Th("Submitted")
                                     if hasEmailColumn { Th("Email") }
                                     Th("Status")
@@ -54,7 +59,9 @@ struct ContactFormSubmissionsTable: Component {
                                 for item in state.items {
                                     Tr {
                                         if state.canRemove {
-                                            ListTableRowSelectCheckbox(state: .init(id: item.id))
+                                            ListTableRowSelectCheckbox(
+                                                state: .init(id: item.id)
+                                            )
                                         }
                                         Td(item.createdAt)
                                             .data("label", "Submitted")

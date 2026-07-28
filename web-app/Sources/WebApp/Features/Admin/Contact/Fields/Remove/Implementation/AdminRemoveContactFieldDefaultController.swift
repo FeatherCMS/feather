@@ -26,7 +26,9 @@ struct AdminRemoveContactFieldDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)
-        try await interactor.remove(id: try context.requiredParameter("fieldId"))
+        try await interactor.remove(
+            id: try context.requiredParameter("fieldId")
+        )
         return Response(
             status: .seeOther,
             headers: [
@@ -40,7 +42,8 @@ struct AdminRemoveContactFieldDefaultController:
     }
 
     func bulkConfirm(request: Request, context: AppRequestContext) async throws
-        -> HTMLResponse {
+        -> HTMLResponse
+    {
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderBulkConfirmation(
             selectedIds: request.queryStrings("selectedIds"),
@@ -49,15 +52,26 @@ struct AdminRemoveContactFieldDefaultController:
     }
 
     func bulkRemove(request: Request, context: AppRequestContext) async throws
-        -> Response {
-        let payload = try await request.decode(as: ListBulkRemoveFormInput.self, context: context)
+        -> Response
+    {
+        let payload = try await request.decode(
+            as: ListBulkRemoveFormInput.self,
+            context: context
+        )
         let (interactor, _) = buildRuntime(request, context)
         try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
-        return Response(status: .seeOther, headers: [.location: ListBulkRemoveRedirect.location(
-            path: "/admin/contact/fields/", page: payload.normalizedPage,
-            search: payload.normalizedSearch, title: "Removed",
-            message: "Contact fields removed successfully."
-        )])
+        return Response(
+            status: .seeOther,
+            headers: [
+                .location: ListBulkRemoveRedirect.location(
+                    path: "/admin/contact/fields/",
+                    page: payload.normalizedPage,
+                    search: payload.normalizedSearch,
+                    title: "Removed",
+                    message: "Contact fields removed successfully."
+                )
+            ]
+        )
     }
 
 }

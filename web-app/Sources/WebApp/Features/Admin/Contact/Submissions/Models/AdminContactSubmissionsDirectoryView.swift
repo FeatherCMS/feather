@@ -31,12 +31,20 @@ struct AdminContactSubmissionsDirectoryView: Component {
             }
             else {
                 ListTableBulkRemoveForm(
-                    state: .init(action: "/admin/contact/submissions/remove/", page: 1, search: search, canRemove: canRemove, buttonTitle: "Remove selected"),
+                    state: .init(
+                        action: "/admin/contact/submissions/remove/",
+                        page: 1,
+                        search: search,
+                        canRemove: canRemove,
+                        buttonTitle: "Remove selected"
+                    ),
                     table: ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
-                                    if canRemove { ListTableSelectAllCheckbox() }
+                                    if canRemove {
+                                        ListTableSelectAllCheckbox()
+                                    }
                                     Th("Form")
                                     Th("Submitted")
                                     if hasEmailColumn { Th("Email") }
@@ -48,7 +56,12 @@ struct AdminContactSubmissionsDirectoryView: Component {
                                 for item in items {
                                     Tr {
                                         if canRemove {
-                                            ListTableRowSelectCheckbox(state: .init(id: "\(item.formId):\(item.id)"))
+                                            ListTableRowSelectCheckbox(
+                                                state: .init(
+                                                    id:
+                                                        "\(item.formId):\(item.id)"
+                                                )
+                                            )
                                         }
                                         Td(item.formName).data("label", "Form")
                                         Td(item.createdAt)

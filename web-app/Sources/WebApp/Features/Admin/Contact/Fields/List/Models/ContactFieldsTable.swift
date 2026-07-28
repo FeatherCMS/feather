@@ -37,12 +37,20 @@ struct ContactFieldsTable: Component {
             }
             else {
                 ListTableBulkRemoveForm(
-                    state: .init(action: "\(basePath)/remove/", page: 1, search: state.search, canRemove: state.canRemove, buttonTitle: "Remove selected"),
+                    state: .init(
+                        action: "\(basePath)/remove/",
+                        page: 1,
+                        search: state.search,
+                        canRemove: state.canRemove,
+                        buttonTitle: "Remove selected"
+                    ),
                     table: ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
-                                    if state.canRemove { ListTableSelectAllCheckbox() }
+                                    if state.canRemove {
+                                        ListTableSelectAllCheckbox()
+                                    }
                                     Th("Key")
                                     Th("Label")
                                     Th("Type")
@@ -54,7 +62,9 @@ struct ContactFieldsTable: Component {
                                 for field in state.fields {
                                     Tr {
                                         if state.canRemove {
-                                            ListTableRowSelectCheckbox(state: .init(id: field.id))
+                                            ListTableRowSelectCheckbox(
+                                                state: .init(id: field.id)
+                                            )
                                         }
                                         Td(field.key).data("label", "Key")
                                         Td(field.label).data("label", "Label")

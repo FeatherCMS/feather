@@ -48,13 +48,15 @@ struct AdminRemoveContactFormEmailDefaultController:
         )
         return Response(
             status: .seeOther,
-            headers: [.location: ListBulkRemoveRedirect.location(
-                path: "/admin/contact/forms/\(formId)/emails/",
-                page: payload.normalizedPage,
-                search: payload.normalizedSearch,
-                title: "Removed",
-                message: "Contact form emails removed successfully."
-            )]
+            headers: [
+                .location: ListBulkRemoveRedirect.location(
+                    path: "/admin/contact/forms/\(formId)/emails/",
+                    page: payload.normalizedPage,
+                    search: payload.normalizedSearch,
+                    title: "Removed",
+                    message: "Contact form emails removed successfully."
+                )
+            ]
         )
     }
 }

@@ -43,7 +43,9 @@ struct AdminRemoveContactFormFieldDefaultController:
             ]
         )
     }
-    func bulkConfirm(request: Request, context: AppRequestContext) async throws -> HTMLResponse {
+    func bulkConfirm(request: Request, context: AppRequestContext) async throws
+        -> HTMLResponse
+    {
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderBulkConfirmation(
             formId: try context.requiredParameter("formId"),
@@ -51,15 +53,30 @@ struct AdminRemoveContactFormFieldDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func bulkRemove(request: Request, context: AppRequestContext) async throws -> Response {
+    func bulkRemove(request: Request, context: AppRequestContext) async throws
+        -> Response
+    {
         let formId = try context.requiredParameter("formId")
-        let payload = try await request.decode(as: ListBulkRemoveFormInput.self, context: context)
+        let payload = try await request.decode(
+            as: ListBulkRemoveFormInput.self,
+            context: context
+        )
         let (interactor, _) = buildRuntime(request, context)
-        try await interactor.bulkRemove(formId: formId, ids: payload.normalizedSelectedIds)
-        return Response(status: .seeOther, headers: [.location: ListBulkRemoveRedirect.location(
-            path: "/admin/contact/forms/\(formId)/items/", page: payload.normalizedPage,
-            search: payload.normalizedSearch, title: "Removed",
-            message: "Contact form fields removed successfully."
-        )])
+        try await interactor.bulkRemove(
+            formId: formId,
+            ids: payload.normalizedSelectedIds
+        )
+        return Response(
+            status: .seeOther,
+            headers: [
+                .location: ListBulkRemoveRedirect.location(
+                    path: "/admin/contact/forms/\(formId)/items/",
+                    page: payload.normalizedPage,
+                    search: payload.normalizedSearch,
+                    title: "Removed",
+                    message: "Contact form fields removed successfully."
+                )
+            ]
+        )
     }
 }

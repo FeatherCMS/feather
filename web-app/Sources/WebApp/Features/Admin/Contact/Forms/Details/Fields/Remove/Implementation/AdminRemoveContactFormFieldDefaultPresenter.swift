@@ -36,19 +36,35 @@ struct AdminRemoveContactFormFieldDefaultPresenter:
             )
         )
     }
-    func renderBulkConfirmation(formId: String, selectedIds: [String], permissions: Set<String>) -> HTMLResponse {
+    func renderBulkConfirmation(
+        formId: String,
+        selectedIds: [String],
+        permissions: Set<String>
+    ) -> HTMLResponse {
         renderEngine.renderAdminPage(
-            request: request, title: "Remove contact form fields - Feather CMS",
-            description: "Remove contact form fields", imagePath: "images/puppy.png",
-            sidebarState: renderEngine.adminSidebarState(request: request, permissions: permissions),
-            content: ListBulkRemoveConfirmation(state: .init(
-                breadcrumb: .init(links: [.init(label: "Admin", link: "/admin/"), .init(label: "Contact", link: "/admin/contact/"), .init(label: "Remove", link: "")]),
-                title: "Remove contact form fields",
-                message: "Are you sure you want to remove the selected contact form fields? This action cannot be undone.",
-                action: "/admin/contact/forms/\(formId)/items/remove/",
-                cancelLink: "/admin/contact/forms/\(formId)/items/",
-                selectedIds: selectedIds
-            ))
+            request: request,
+            title: "Remove contact form fields - Feather CMS",
+            description: "Remove contact form fields",
+            imagePath: "images/puppy.png",
+            sidebarState: renderEngine.adminSidebarState(
+                request: request,
+                permissions: permissions
+            ),
+            content: ListBulkRemoveConfirmation(
+                state: .init(
+                    breadcrumb: .init(links: [
+                        .init(label: "Admin", link: "/admin/"),
+                        .init(label: "Contact", link: "/admin/contact/"),
+                        .init(label: "Remove", link: ""),
+                    ]),
+                    title: "Remove contact form fields",
+                    message:
+                        "Are you sure you want to remove the selected contact form fields? This action cannot be undone.",
+                    action: "/admin/contact/forms/\(formId)/items/remove/",
+                    cancelLink: "/admin/contact/forms/\(formId)/items/",
+                    selectedIds: selectedIds
+                )
+            )
         )
     }
 }

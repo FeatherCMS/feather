@@ -7,12 +7,20 @@ struct AdminRemoveContactSubmissions {
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveContactSubmissionsDefaultInteractor(
-                        repository: AdminRemoveContactSubmissionsOpenAPIRepository(api: context.managementAPI())
+                        repository:
+                            AdminRemoveContactSubmissionsOpenAPIRepository(
+                                api: context.managementAPI()
+                            )
                     ),
-                    presenter: AdminRemoveContactSubmissionsDefaultPresenter(request: request, renderEngine: renderingEngine)
+                    presenter: AdminRemoveContactSubmissionsDefaultPresenter(
+                        request: request,
+                        renderEngine: renderingEngine
+                    )
                 )
             }
         )
     }
-    func route(on router: Router<AppRequestContext>) { controller.route(on: router) }
+    func route(on router: Router<AppRequestContext>) {
+        controller.route(on: router)
+    }
 }

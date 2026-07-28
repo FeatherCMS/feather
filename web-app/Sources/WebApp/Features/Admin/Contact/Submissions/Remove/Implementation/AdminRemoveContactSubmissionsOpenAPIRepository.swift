@@ -4,7 +4,8 @@ struct AdminRemoveContactSubmissionsOpenAPIRepository {
     let api: AdminAPI
     func bulkRemove(ids: [String]) async throws {
         let grouped = Dictionary(grouping: ids) { token in
-            token.split(separator: ":", maxSplits: 1).first.map(String.init) ?? ""
+            token.split(separator: ":", maxSplits: 1).first.map(String.init)
+                ?? ""
         }
         try await api.withOpenAPIRepositoryErrorMapping { client in
             for (formId, tokens) in grouped where !formId.isEmpty {

@@ -43,14 +43,17 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(state: .init(
-                breadcrumb: breadcrumb(label: "Remove", path: ""),
-                title: "Remove contact forms",
-                message: "Are you sure you want to remove the selected contact forms? This action cannot be undone.",
-                action: "/admin/contact/forms/remove/",
-                cancelLink: "/admin/contact/forms/",
-                selectedIds: selectedIds
-            ))
+            content: ListBulkRemoveConfirmation(
+                state: .init(
+                    breadcrumb: breadcrumb(label: "Remove", path: ""),
+                    title: "Remove contact forms",
+                    message:
+                        "Are you sure you want to remove the selected contact forms? This action cannot be undone.",
+                    action: "/admin/contact/forms/remove/",
+                    cancelLink: "/admin/contact/forms/",
+                    selectedIds: selectedIds
+                )
+            )
         )
     }
 

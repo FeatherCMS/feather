@@ -21,7 +21,13 @@ extension AdminRemoveContactFormFieldController {
             "/admin/contact/forms/:formId/items/:fieldId/remove/",
             use: remove
         )
-        router.get("/admin/contact/forms/:formId/items/remove/", use: bulkConfirm)
-        router.post("/admin/contact/forms/:formId/items/remove/", use: bulkRemove)
+        router.get(
+            "/admin/contact/forms/:formId/items/remove/",
+            use: bulkConfirm
+        )
+        router.post(
+            "/admin/contact/forms/:formId/items/remove/",
+            use: bulkRemove
+        )
     }
 }

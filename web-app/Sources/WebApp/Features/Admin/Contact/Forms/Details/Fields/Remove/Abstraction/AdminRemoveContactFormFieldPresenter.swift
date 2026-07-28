@@ -7,6 +7,10 @@ protocol AdminRemoveContactFormFieldPresenter: Sendable {
         label: String,
         permissions: Set<String>
     ) -> HTMLResponse
-    func renderBulkConfirmation(formId: String, selectedIds: [String], permissions: Set<String>)
+    func renderBulkConfirmation(
+        formId: String,
+        selectedIds: [String],
+        permissions: Set<String>
+    )
         -> HTMLResponse
 }
