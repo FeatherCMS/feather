@@ -43,7 +43,7 @@
     {
       "type": "swift",
       "request": "launch",
-      "args": [],
+      "args": ["--env-file-path", "${workspaceFolder}/.env"],
       "cwd": "${workspaceFolder}/backend",
       "name": "Debug Worker (backend)",
       "program": "${workspaceFolder}/backend/.build/out/Products/Debug/Worker",
@@ -53,7 +53,7 @@
     {
       "type": "swift",
       "request": "launch",
-      "args": [],
+      "args": ["--env-file-path", "${workspaceFolder}/.env"],
       "cwd": "${workspaceFolder}/backend",
       "name": "Release Worker (backend)",
       "program": "${workspaceFolder}/backend/.build/out/Products/Release/Worker",

@@ -12,7 +12,7 @@
     {
       "label": "Ensure Local Dependencies",
       "type": "shell",
-      "command": "make deps; make docker-up",
+      "command": "if [ -f .env ]; then set -a; source .env; set +a; fi; make deps; make docker-up",
       "options": {
         "cwd": "${workspaceFolder}",
       },
