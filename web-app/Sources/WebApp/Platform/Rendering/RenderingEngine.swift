@@ -386,6 +386,13 @@ struct DefaultRenderingEngine: RenderingEngine {
                 permission: AdminAuth.Scope.magicLinks.list
             ),
             item(
+                icon: FeatherIcons.key(),
+                label: "Credentials",
+                link: "/admin/auth/credentials/",
+                isCurrent: isIn("/admin/auth/credentials/"),
+                permission: AdminAuth.Scope.credentials.list
+            ),
+            item(
                 icon: FeatherIcons.user(),
                 label: "Profile",
                 link: "/admin/auth/profile/",
