@@ -1,5 +1,6 @@
 import FeatherDatabase
 import Infrastructure
+import AccountInfrastructure
 import SystemInfrastructure
 import UserInfrastructure
 import AuthInfrastructure
@@ -13,6 +14,7 @@ public func buildTestMigrations(
         // Tables
         SystemInfrastructure.TableMigration(connection: connection),
         UserInfrastructure.TableMigration(connection: connection),
+        AccountInfrastructure.TableMigration(connection: connection),
         AuthInfrastructure.TableMigration(connection: connection),
         MediaInfrastructure.TableMigration(connection: connection),
         WebInfrastructure.TableMigration(connection: connection),
@@ -20,6 +22,7 @@ public func buildTestMigrations(
         // Seed data
         SystemInfrastructure.TableSeedMigration(connection: connection),
         UserInfrastructure.TableSeedMigration(connection: connection),
+        AccountInfrastructure.TableSeedMigration(connection: connection),
         AuthInfrastructure.TableSeedMigration(connection: connection),
         WebInfrastructure.MetadataPermissionSeedMigration(
             connection: connection

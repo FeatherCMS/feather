@@ -46,16 +46,13 @@ struct MediaFolderEditView: Component {
                 )
 
                 Form {
-                    Section {
-                        Label {
-                            AdminFieldLabel(
-                                label: "Folder name",
-                                required: true
-                            )
-                            Input().type(.text).class("text-input").name("name")
-                                .value(state.model.name).id("name")
-                        }
-                    }
+                    FormInputField(
+                        name: "name",
+                        label: "Folder name",
+                        value: state.model.name,
+                        isRequired: true,
+                        inputClass: "text-input"
+                    )
 
                     Section {
                         Div { Button("Save").type(.submit) }.class("button-row")

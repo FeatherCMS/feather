@@ -4,4 +4,19 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-// Placeholder for AccountSettings-to-DTO mappings.
+import AccountDomain
+
+extension AccountSettings {
+
+    public var asDetail: AccountSettingsDetail {
+        .init(
+            id: id,
+            accountID: accountID,
+            language: language,
+            timezone: timezone,
+            pageSize: pageSize,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
+    }
+}

@@ -1,7 +1,8 @@
 import Hummingbird
 
 struct AppGetStylesheetDefaultController: AppGetStylesheetController {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AppGetStylesheetInteractor,
             presenter: any AppGetStylesheetPresenter
         )

@@ -3,7 +3,8 @@ import Hummingbird
 struct AdminRemoveMediaProcessorDefaultController:
     AdminRemoveMediaProcessorController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminRemoveMediaProcessorInteractor,
             presenter: any AdminRemoveMediaProcessorPresenter
         )

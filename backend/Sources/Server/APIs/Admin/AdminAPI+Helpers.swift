@@ -1,4 +1,5 @@
 import Application
+import AccountApplication
 import SystemApplication
 import AnalyticsApplication
 import WebApplication
@@ -934,6 +935,20 @@ extension AdminAPI {
             postPathPrefix: detail.postPathPrefix,
             authorPathPrefix: detail.authorPathPrefix,
             tagPathPrefix: detail.tagPathPrefix
+        )
+    }
+
+    func map(
+        _ detail: AccountSettingsDetail
+    ) -> Components.Schemas.AccountSettingsDetailSchema {
+        .init(
+            id: detail.id,
+            accountID: detail.accountID,
+            language: detail.language,
+            timezone: detail.timezone,
+            pageSize: detail.pageSize,
+            createdAt: timestamp(detail.createdAt),
+            updatedAt: timestamp(detail.updatedAt)
         )
     }
 

@@ -45,12 +45,22 @@ public enum SystemPermissions: PermissionProvider {
         }
     }
 
+    public enum Jobs {
+        public static let read = PermissionKey("system:jobs:read")
+        public static let list = PermissionKey("system:jobs:list")
+
+        public static func allPermissions() -> Set<PermissionKey> {
+            [read, list]
+        }
+    }
+
     // MARK: -
 
     public static func allPermissions() -> Set<PermissionKey> {
         var result: Set<PermissionKey> = .init()
         result.formUnion(Permissions.allPermissions())
         result.formUnion(Variables.allPermissions())
+        result.formUnion(Jobs.allPermissions())
         return result
     }
 }

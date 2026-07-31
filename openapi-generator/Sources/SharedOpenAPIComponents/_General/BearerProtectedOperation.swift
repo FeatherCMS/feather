@@ -79,7 +79,7 @@ public struct BearerSecurityScheme: SecuritySchemeRepresentable {
 
     public var openAPIIdentifier: String { "bearerAuth" }
 
-    public var type: OpenAPIKit30.OpenAPI.SecurityScheme.SecurityType = .http(
+    public var type: OpenAPI.SecurityScheme.SecurityType = .http(
         scheme: "bearer",
         bearerFormat: nil
     )

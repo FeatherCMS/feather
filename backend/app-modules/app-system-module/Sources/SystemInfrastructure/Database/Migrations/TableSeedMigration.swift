@@ -51,8 +51,8 @@ public struct TableSeedMigration: DatabaseMigration {
                 ('auth:access-control:delete', 'auth:access-control:delete', 'Remove a permission from a role.', NOW(), NOW()),
                 ('auth:profile:read', 'auth:profile:read', 'View the current account profile.', NOW(), NOW()),
                 ('auth:profile:update', 'auth:profile:update', 'Edit the current account profile.', NOW(), NOW()),
-                ('auth:settings:read', 'auth:settings:read', 'View the current account settings.', NOW(), NOW()),
-                ('auth:settings:update', 'auth:settings:update', 'Edit the current account settings.', NOW(), NOW()),
+                ('account:settings:read', 'account:settings:read', 'View the current account settings.', NOW(), NOW()),
+                ('account:settings:update', 'account:settings:update', 'Edit the current account settings.', NOW(), NOW()),
                 ('auth:sessions:create', 'auth:sessions:create', 'Create a session.', NOW(), NOW()),
                 ('auth:sessions:read', 'auth:sessions:read', 'View a single session.', NOW(), NOW()),
                 ('auth:sessions:update', 'auth:sessions:update', 'Extend or update a session.', NOW(), NOW()),
@@ -88,6 +88,8 @@ public struct TableSeedMigration: DatabaseMigration {
                 ('system:variables:update', 'system:variables:update', 'Edit a system variable.', NOW(), NOW()),
                 ('system:variables:list', 'system:variables:list', 'List and search system variables.', NOW(), NOW()),
                 ('system:variables:delete', 'system:variables:delete', 'Delete a system variable.', NOW(), NOW()),
+                ('system:jobs:read', 'system:jobs:read', 'View a worker job.', NOW(), NOW()),
+                ('system:jobs:list', 'system:jobs:list', 'List worker jobs.', NOW(), NOW()),
 
                 -- Analytics permissions
                 ('analytics:logs:list', 'analytics:logs:list', 'List, search, and inspect raw analytics logs.', NOW(), NOW()),

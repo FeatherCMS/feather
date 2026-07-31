@@ -3,7 +3,8 @@ import Hummingbird
 struct AdminGetSystemPermissionDefaultController:
     AdminGetSystemPermissionController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetSystemPermissionInteractor,
             presenter: any AdminGetSystemPermissionPresenter
         )

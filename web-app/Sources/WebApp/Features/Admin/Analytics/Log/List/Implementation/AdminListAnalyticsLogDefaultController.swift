@@ -3,10 +3,11 @@ import Hummingbird
 struct AdminListAnalyticsLogDefaultController:
     AdminListAnalyticsLogController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
-        interactor: any AdminListAnalyticsLogInteractor,
-        presenter: any AdminListAnalyticsLogPresenter
-    )
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
+            interactor: any AdminListAnalyticsLogInteractor,
+            presenter: any AdminListAnalyticsLogPresenter
+        )
 
     func getAnalyticsLogs(
         request: Request,

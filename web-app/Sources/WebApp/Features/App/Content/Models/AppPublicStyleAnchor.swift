@@ -93,14 +93,6 @@ struct AppPublicStyleAnchor: Component, FlowContent {
         Custom(".public-body p, .public-body div") {
             Margin(0)
         }
-        Class("public-grid") {
-            Display(.grid)
-            Gap(16.px)
-            UnsafeRawProperty(
-                name: "grid-template-columns",
-                value: "repeat(auto-fit, minmax(16rem, 1fr))"
-            )
-        }
         Class("public-card") {
             Display(.grid)
             Gap(12.px)

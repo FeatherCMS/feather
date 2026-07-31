@@ -28,13 +28,15 @@ struct HTMLResponse: ResponseGenerator {
         context: some RequestContext
     ) throws -> Response {
         let buffer = ByteBuffer(string: content)
+        var headers: HTTPFields = [
+            .contentType: "text/html; charset=utf-8"
+        ]
+        #if DEBUG
+        headers[.cacheControl] = "no-cache"
+        #endif
         return .init(
             status: status,
-            headers: [
-                .contentType: "text/html; charset=utf-8",
-                .cacheControl: "no-cache",
-                    //                .cacheControl: "max-age=\(60 * 60 * 24 * 30)",
-            ],
+            headers: headers,
             body: .init(
                 byteBuffer: buffer
             )

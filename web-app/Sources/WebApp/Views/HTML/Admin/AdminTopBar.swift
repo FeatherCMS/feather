@@ -66,7 +66,7 @@ struct AdminTopBar: Component, FlowContent {
 
                 Ul {
                     Li { A("Profile").href("/admin/auth/profile/") }
-                    Li { A("Settings").href("/admin/auth/settings/") }
+                    Li { A("Settings").href("/admin/account/settings/") }
                     Li { A("Logout").href("/logout") }
                 }
                 .class("account-menu")

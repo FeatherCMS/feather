@@ -4,4 +4,15 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-// Placeholder for the read AccountSettings scope.
+import Application
+
+public struct ReadAccountSettings: Scope {
+
+    public let settings: any AccountSettingsQueries
+
+    public init(
+        settings: any AccountSettingsQueries
+    ) {
+        self.settings = settings
+    }
+}

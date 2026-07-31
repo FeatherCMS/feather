@@ -3,7 +3,8 @@ import Hummingbird
 struct AdminListWebMetadataDefaultController:
     AdminListWebMetadataController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminListWebMetadataInteractor,
             presenter: any AdminListWebMetadataPresenter
         )

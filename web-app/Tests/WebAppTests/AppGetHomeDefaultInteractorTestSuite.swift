@@ -32,7 +32,9 @@ struct AppGetHomeDefaultInteractorTestSuite {
         let model = try await interactor.getHome(account: nil)
 
         guard case .page(let content) = model else {
-            Issue.record("Expected configured homepage to render as page content")
+            Issue.record(
+                "Expected configured homepage to render as page content"
+            )
             return
         }
         guard case .pageDetail(let detail, _) = content.route else {

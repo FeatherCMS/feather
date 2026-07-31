@@ -80,16 +80,47 @@ struct WebMetadataForm: Component, FlowContent {
             if let referenceId = state.referenceId {
                 readonlyField(referenceId)
             }
-            field(state.slug)
-            field(state.publicationDate)
-            field(state.expirationDate)
+            FormInputField(
+                name: state.slug.key,
+                label: state.slug.label,
+                value: state.slug.value,
+                error: state.slug.error,
+                isRequired: true
+            )
+            FormDateTimeField(
+                name: state.publicationDate.key,
+                label: state.publicationDate.label,
+                value: state.publicationDate.value,
+                error: state.publicationDate.error
+            )
+            FormDateTimeField(
+                name: state.expirationDate.key,
+                label: state.expirationDate.label,
+                value: state.expirationDate.value,
+                error: state.expirationDate.error
+            )
             statusField(state.status)
-            field(state.title)
+            FormInputField(
+                name: state.title.key,
+                label: state.title.label,
+                value: state.title.value,
+                error: state.title.error
+            )
             textarea(state.excerpt, rows: 4)
             imagePicker(state.imageUrl, selectedAsset: state.selectedImageAsset)
-            field(state.canonicalUrl)
+            FormInputField(
+                name: state.canonicalUrl.key,
+                label: state.canonicalUrl.label,
+                value: state.canonicalUrl.value,
+                error: state.canonicalUrl.error
+            )
             checkbox(state.noIndex)
-            field(state.primaryKeyword)
+            FormInputField(
+                name: state.primaryKeyword.key,
+                label: state.primaryKeyword.label,
+                value: state.primaryKeyword.value,
+                error: state.primaryKeyword.error
+            )
             textarea(state.cssCodeInjection, rows: 10)
             textarea(state.javascriptCodeInjection, rows: 10)
             textarea(state.structuredDataCodeInjection, rows: 10)
@@ -115,34 +146,6 @@ struct WebMetadataForm: Component, FlowContent {
         .class("cms-form")
     }
 
-    private func field(
-        _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(
-                    label: field.label,
-                    required:
-                        field.key == "slug"
-                        || field.key == "status"
-                )
-                Input()
-                    .type(
-                        field.key == "publicationDate"
-                            || field.key == "expirationDate"
-                            ? .datetimeLocal : .text
-                    )
-                    .id(field.key)
-                    .name(field.key)
-                    .value(field.value)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
-    }
-
     private func readonlyField(
         _ field: FieldState
     ) -> some BasicTag {
@@ -161,31 +164,18 @@ struct WebMetadataForm: Component, FlowContent {
 
     private func statusField(
         _ field: FieldState
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: true)
-                Select {
-                    for value in ["draft", "published", "archived"] {
-                        if field.value == value {
-                            Option(value.capitalized)
-                                .value(value)
-                                .selected()
-                        }
-                        else {
-                            Option(value.capitalized)
-                                .value(value)
-                        }
-                    }
-                }
-                .id(field.key)
-                .name(field.key)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
+    ) -> FormSelectField {
+        FormSelectField(
+            name: field.key,
+            label: field.label,
+            options: ["draft", "published", "archived"]
+                .map {
+                    .init(label: $0.capitalized, value: $0)
+                },
+            selectedValue: field.value,
+            error: field.error,
+            isRequired: true
+        )
     }
 
     private func imagePicker(
@@ -229,19 +219,13 @@ struct WebMetadataForm: Component, FlowContent {
     private func textarea(
         _ field: FieldState,
         rows: Int
-    ) -> some BasicTag {
-        Section {
-            Label {
-                AdminFieldLabel(label: field.label, required: false)
-                Textarea(field.value ?? "")
-                    .id(field.key)
-                    .name(field.key)
-                    .rows(rows)
-            }
-            if let error = field.error {
-                Span(error).class("field-error")
-            }
-        }
-        .if(field.error != nil) { $0.class("has-error") }
+    ) -> FormTextAreaField {
+        FormTextAreaField(
+            name: field.key,
+            label: field.label,
+            value: field.value,
+            error: field.error,
+            rows: rows
+        )
     }
 }

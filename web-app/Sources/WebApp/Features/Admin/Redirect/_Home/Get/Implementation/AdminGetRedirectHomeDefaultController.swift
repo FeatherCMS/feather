@@ -1,7 +1,8 @@
 import Hummingbird
 
 struct AdminGetRedirectHomeDefaultController: AdminGetRedirectHomeController {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetRedirectHomeInteractor,
             presenter: any AdminGetRedirectHomePresenter
         )

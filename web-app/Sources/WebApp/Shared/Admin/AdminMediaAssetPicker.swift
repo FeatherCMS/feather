@@ -9,6 +9,7 @@ struct AdminMediaAssetPicker: Component, FlowContent {
     enum OutputMode: String {
         case assetId
         case originalURL = "original_url"
+        case relativeURL = "relative_url"
     }
 
     struct FieldState {
@@ -24,19 +25,22 @@ struct AdminMediaAssetPicker: Component, FlowContent {
         let browsePath: String
         let allowedExtensions: [String]
         let outputMode: OutputMode
+        let showsCurrentCard: Bool
 
         init(
             field: FieldState,
             selectedAsset: AdminMediaAssetReferenceModel?,
             browsePath: String,
             allowedExtensions: [String],
-            outputMode: OutputMode = .assetId
+            outputMode: OutputMode = .assetId,
+            showsCurrentCard: Bool = true
         ) {
             self.field = field
             self.selectedAsset = selectedAsset
             self.browsePath = browsePath
             self.allowedExtensions = allowedExtensions
             self.outputMode = outputMode
+            self.showsCurrentCard = showsCurrentCard
         }
     }
 
@@ -230,10 +234,6 @@ struct AdminMediaAssetPicker: Component, FlowContent {
 
     func content() -> some BasicTag {
         Section {
-            Label {
-                AdminFieldLabel(label: state.field.label, required: false)
-            }
-
             Div {
                 Input()
                     .type(.hidden)
@@ -241,7 +241,21 @@ struct AdminMediaAssetPicker: Component, FlowContent {
                     .name(state.field.key)
                     .value(state.field.value)
 
-                currentCard()
+                if state.showsCurrentCard {
+                    Label {
+                        AdminFieldLabel(
+                            label: state.field.label,
+                            required: false
+                        )
+                    }
+                    currentCard()
+                }
+                else {
+                    Button("")
+                        .type(.button)
+                        .data("media-picker-open", state.field.key)
+                        .style("display:none;")
+                }
 
                 if let error = state.field.error {
                     Span(error).class("field-error")
@@ -451,6 +465,10 @@ extension AdminMediaAssetPicker {
             return mediaBaseUrl() + "/media/assets/" + encodedStorageKey(asset.storageKey || "");
           }
 
+          function relativeUrl(asset) {
+            return "/media/assets/" + encodedStorageKey(asset.storageKey || "");
+          }
+
           function fileName(asset) {
             if (!asset) { return "No asset selected"; }
             var baseName = String(asset.baseName || "");
@@ -484,8 +502,11 @@ extension AdminMediaAssetPicker {
             var outputMode = modal ? (modal.getAttribute("data-media-picker-output") || "assetId") : "assetId";
             if (input) {
               input.value = asset
-                ? (outputMode === "original_url" ? originalUrl(asset) : (asset.id || ""))
+                ? (outputMode === "original_url"
+                  ? originalUrl(asset)
+                  : (outputMode === "relative_url" ? relativeUrl(asset) : (asset.id || "")))
                 : "";
+              input.dispatchEvent(new Event("change", { bubbles: true }));
             }
 
             var preview = document.querySelector('[data-media-picker-preview="' + field + '"]');
@@ -506,7 +527,7 @@ extension AdminMediaAssetPicker {
           }
 
           function setActiveTab(modal, tab) {
-            modal.data("media-picker-active-tab", tab);
+            modal.setAttribute("data-media-picker-active-tab", tab);
             modal.querySelectorAll("[data-media-picker-tab]").forEach(function(button) {
               button.classList.toggle("is-current", button.getAttribute("data-media-picker-tab") === tab);
             });
@@ -660,8 +681,8 @@ extension AdminMediaAssetPicker {
             if (!panel || !styleNode) { return; }
 
             setActiveTab(modal, tab);
-            modal.data("media-picker-browse-path", deriveBrowsePath(url));
-            modal.data("media-picker-upload-path", deriveUploadPath(url));
+            modal.setAttribute("data-media-picker-browse-path", deriveBrowsePath(url));
+            modal.setAttribute("data-media-picker-upload-path", deriveUploadPath(url));
             panel.innerHTML = '<div class="admin-media-asset-picker-loading">Loading...</div>';
 
             var response = await fetch(url, Object.assign({ credentials: "same-origin" }, requestInit || {}));

@@ -4,7 +4,8 @@ import Hummingbird
 struct AdminRemoveRedirectRuleDefaultController:
     AdminRemoveRedirectRuleController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminRemoveRedirectRuleInteractor,
             presenter: any AdminRemoveRedirectRulePresenter
         )
