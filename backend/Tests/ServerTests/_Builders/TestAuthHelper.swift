@@ -6,6 +6,35 @@ import AdminOpenAPI
 
 extension TestRunner {
 
+    func accountID(
+        token: String
+    ) async throws -> String {
+        guard !token.isEmpty else {
+            throw TestAuthError.invalidAuthenticationValue
+        }
+
+        return try await system.databaseClient.execute { database in
+            try await database.withConnection { connection in
+                try await connection.run(
+                    query: #"""
+                        SELECT account_id
+                        FROM user_session
+                        WHERE token=\#(token)
+                        LIMIT 1;
+                        """#
+                ) { sequence in
+                    guard let row = try await sequence.collect().first else {
+                        throw TestAuthError.sessionNotFound
+                    }
+                    return try row.decode(
+                        column: "account_id",
+                        as: String.self
+                    )
+                }
+            }
+        }
+    }
+
     func grantRootPermissions(
         _ permissions: [String]
     ) async throws {
@@ -92,4 +121,9 @@ extension TestRunner {
     ) -> String {
         "Bearer \(token)"
     }
+}
+
+private enum TestAuthError: Error {
+    case invalidAuthenticationValue
+    case sessionNotFound
 }

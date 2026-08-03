@@ -49,9 +49,9 @@ public struct TestDatabaseClient {
         return client
     }
 
-    public func execute(
-        _ block: @Sendable @escaping (any DatabaseClient) async throws -> Void
-    ) async throws {
+    public func execute<Output>(
+        _ block: @Sendable @escaping (any DatabaseClient) async throws -> Output
+    ) async throws -> Output {
         let client = try getPostgresClient()
         let database = DatabaseClientPostgres(
             client: client,
@@ -63,6 +63,6 @@ public struct TestDatabaseClient {
         defer { clientTask.cancel() }
 
         try await Task.sleep(for: .milliseconds(100))
-        try await block(database)
+        return try await block(database)
     }
 }

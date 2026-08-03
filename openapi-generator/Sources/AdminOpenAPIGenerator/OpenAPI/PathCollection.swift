@@ -30,6 +30,14 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/admin/user/accounts/{userAccountId}/sessions/{sessionId}":
                 UserAccountSessionIdPathItems(),
 
+            "api/v1/admin/user/credential": UserCredentialPathItems(),
+            "api/v1/admin/user/credential/filters":
+                UserCredentialFiltersPathItems(),
+            "api/v1/admin/user/credential/search":
+                UserCredentialSearchPathItems(),
+            "api/v1/admin/user/credential/{userCredentialId}":
+                UserCredentialIdPathItems(),
+
             "api/v1/admin/user/roles": UserRolePathItems(),
             "api/v1/admin/user/roles/filters": UserRoleFiltersPathItems(),
             "api/v1/admin/user/roles/search": UserRoleSearchPathItems(),

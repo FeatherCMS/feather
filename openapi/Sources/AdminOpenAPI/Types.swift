@@ -60,6 +60,30 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `DELETE /api/v1/admin/user/accounts/{userAccountId}/sessions/{sessionId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/accounts/{userAccountId}/sessions/{sessionId}/delete(userAccountSessionDelete)`.
     func userAccountSessionDelete(_ input: Operations.UserAccountSessionDelete.Input) async throws -> Operations.UserAccountSessionDelete.Output
+    /// - Remark: HTTP `POST /api/v1/admin/user/credential`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/post(userCredentialCreate)`.
+    func userCredentialCreate(_ input: Operations.UserCredentialCreate.Input) async throws -> Operations.UserCredentialCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/credential`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/delete(userCredentialBulkDelete)`.
+    func userCredentialBulkDelete(_ input: Operations.UserCredentialBulkDelete.Input) async throws -> Operations.UserCredentialBulkDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/user/credential/filters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/filters/get(userCredentialFilters)`.
+    func userCredentialFilters(_ input: Operations.UserCredentialFilters.Input) async throws -> Operations.UserCredentialFilters.Output
+    /// - Remark: HTTP `POST /api/v1/admin/user/credential/search`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/search/post(userCredentialSearch)`.
+    func userCredentialSearch(_ input: Operations.UserCredentialSearch.Input) async throws -> Operations.UserCredentialSearch.Output
+    /// - Remark: HTTP `GET /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)`.
+    func userCredentialGet(_ input: Operations.UserCredentialGet.Input) async throws -> Operations.UserCredentialGet.Output
+    /// - Remark: HTTP `PATCH /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)`.
+    func userCredentialPatch(_ input: Operations.UserCredentialPatch.Input) async throws -> Operations.UserCredentialPatch.Output
+    /// - Remark: HTTP `PUT /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)`.
+    func userCredentialUpdate(_ input: Operations.UserCredentialUpdate.Input) async throws -> Operations.UserCredentialUpdate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)`.
+    func userCredentialDelete(_ input: Operations.UserCredentialDelete.Input) async throws -> Operations.UserCredentialDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)`.
     func userRoleCreate(_ input: Operations.UserRoleCreate.Input) async throws -> Operations.UserRoleCreate.Output
@@ -734,6 +758,86 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/user/accounts/{userAccountId}/sessions/{sessionId}/delete(userAccountSessionDelete)`.
     public func userAccountSessionDelete(path: Operations.UserAccountSessionDelete.Input.Path) async throws -> Operations.UserAccountSessionDelete.Output {
         try await userAccountSessionDelete(Operations.UserAccountSessionDelete.Input(path: path))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/user/credential`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/post(userCredentialCreate)`.
+    public func userCredentialCreate(
+        headers: Operations.UserCredentialCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.UserCredentialRequestBody
+    ) async throws -> Operations.UserCredentialCreate.Output {
+        try await userCredentialCreate(Operations.UserCredentialCreate.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/credential`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/delete(userCredentialBulkDelete)`.
+    public func userCredentialBulkDelete(
+        headers: Operations.UserCredentialBulkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.UserCredentialBulkDelete.Output {
+        try await userCredentialBulkDelete(Operations.UserCredentialBulkDelete.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/user/credential/filters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/filters/get(userCredentialFilters)`.
+    public func userCredentialFilters(headers: Operations.UserCredentialFilters.Input.Headers = .init()) async throws -> Operations.UserCredentialFilters.Output {
+        try await userCredentialFilters(Operations.UserCredentialFilters.Input(headers: headers))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/user/credential/search`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/search/post(userCredentialSearch)`.
+    public func userCredentialSearch(
+        headers: Operations.UserCredentialSearch.Input.Headers = .init(),
+        body: Operations.UserCredentialSearch.Input.Body
+    ) async throws -> Operations.UserCredentialSearch.Output {
+        try await userCredentialSearch(Operations.UserCredentialSearch.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)`.
+    public func userCredentialGet(
+        path: Operations.UserCredentialGet.Input.Path,
+        headers: Operations.UserCredentialGet.Input.Headers = .init()
+    ) async throws -> Operations.UserCredentialGet.Output {
+        try await userCredentialGet(Operations.UserCredentialGet.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)`.
+    public func userCredentialPatch(
+        path: Operations.UserCredentialPatch.Input.Path,
+        headers: Operations.UserCredentialPatch.Input.Headers = .init(),
+        body: Components.RequestBodies.UserCredentialPatchRequestBody
+    ) async throws -> Operations.UserCredentialPatch.Output {
+        try await userCredentialPatch(Operations.UserCredentialPatch.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)`.
+    public func userCredentialUpdate(
+        path: Operations.UserCredentialUpdate.Input.Path,
+        headers: Operations.UserCredentialUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.UserCredentialUpdateRequestBody
+    ) async throws -> Operations.UserCredentialUpdate.Output {
+        try await userCredentialUpdate(Operations.UserCredentialUpdate.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)`.
+    public func userCredentialDelete(path: Operations.UserCredentialDelete.Input.Path) async throws -> Operations.UserCredentialDelete.Output {
+        try await userCredentialDelete(Operations.UserCredentialDelete.Input(path: path))
     }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)`.
@@ -3138,6 +3242,277 @@ public enum Components {
         public typealias UserAuthSessionTimestampField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/UserAuthSessionPersistentField`.
         public typealias UserAuthSessionPersistentField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/UserCredentialCreateSchema`.
+        public struct UserCredentialCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserCredentialCreateSchema/accountID`.
+            public var accountID: Swift.String
+            /// - Remark: Generated from `#/components/schemas/UserCredentialCreateSchema/email`.
+            public var email: Swift.String
+            /// - Remark: Generated from `#/components/schemas/UserCredentialCreateSchema/password`.
+            public var password: Swift.String
+            /// Creates a new `UserCredentialCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - accountID:
+            ///   - email:
+            ///   - password:
+            public init(
+                accountID: Swift.String,
+                email: Swift.String,
+                password: Swift.String
+            ) {
+                self.accountID = accountID
+                self.email = email
+                self.password = password
+            }
+            public enum CodingKeys: String, CodingKey {
+                case accountID
+                case email
+                case password
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserCredentialDetailSchema`.
+        public struct UserCredentialDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserCredentialDetailSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/UserCredentialDetailSchema/accountID`.
+            public var accountID: Swift.String
+            /// - Remark: Generated from `#/components/schemas/UserCredentialDetailSchema/email`.
+            public var email: Swift.String
+            /// Creates a new `UserCredentialDetailSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - accountID:
+            ///   - email:
+            public init(
+                id: Swift.String,
+                accountID: Swift.String,
+                email: Swift.String
+            ) {
+                self.id = id
+                self.accountID = accountID
+                self.email = email
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case accountID
+                case email
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserCredentialSearchFilterSchema`.
+        public struct UserCredentialSearchFilterSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserCredentialSearchFilterSchema/search`.
+            public var search: Components.Schemas.UserCredentialSearchField?
+            /// - Remark: Generated from `#/components/schemas/UserCredentialSearchFilterSchema/accountID`.
+            public var accountID: Components.Schemas.UserCredentialAccountIdField?
+            /// Creates a new `UserCredentialSearchFilterSchema`.
+            ///
+            /// - Parameters:
+            ///   - search:
+            ///   - accountID:
+            public init(
+                search: Components.Schemas.UserCredentialSearchField? = nil,
+                accountID: Components.Schemas.UserCredentialAccountIdField? = nil
+            ) {
+                self.search = search
+                self.accountID = accountID
+            }
+            public enum CodingKeys: String, CodingKey {
+                case search
+                case accountID
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserCredentialSearchField`.
+        public typealias UserCredentialSearchField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserCredentialAccountIdField`.
+        public typealias UserCredentialAccountIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema`.
+        public struct UserCredentialListItemSearchQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case accountID = "accountID"
+                    case email = "email"
+                }
+                /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.UserCredentialListItemSearchQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.UserCredentialListItemSearchQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.UserCredentialListItemSearchQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/sort`.
+            public var sort: Components.Schemas.UserCredentialListItemSearchQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/filters/search`.
+                public var search: Components.Schemas.UserCredentialSearchField?
+                /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/filters/accountID`.
+                public var accountID: Components.Schemas.UserCredentialAccountIdField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - accountID:
+                public init(
+                    search: Components.Schemas.UserCredentialSearchField? = nil,
+                    accountID: Components.Schemas.UserCredentialAccountIdField? = nil
+                ) {
+                    self.search = search
+                    self.accountID = accountID
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case accountID
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchQuerySchema/filters`.
+            public var filters: Components.Schemas.UserCredentialListItemSearchQuerySchema.FiltersPayload
+            /// Creates a new `UserCredentialListItemSearchQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchPageSchema,
+                sort: Components.Schemas.UserCredentialListItemSearchQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.UserCredentialListItemSearchQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchSchema`.
+        public struct UserCredentialListItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchSchema/query`.
+            public var query: Components.Schemas.UserCredentialListItemSearchQuerySchema
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchSchema/data`.
+            public struct DataPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.UserCredentialListItemSchema]
+                /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchSchema/data/total`.
+                public var total: Swift.Int
+                /// Creates a new `DataPayload`.
+                ///
+                /// - Parameters:
+                ///   - items:
+                ///   - total:
+                public init(
+                    items: [Components.Schemas.UserCredentialListItemSchema],
+                    total: Swift.Int
+                ) {
+                    self.items = items
+                    self.total = total
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case items
+                    case total
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSearchSchema/data`.
+            public var data: Components.Schemas.UserCredentialListItemSearchSchema.DataPayload
+            /// Creates a new `UserCredentialListItemSearchSchema`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - data:
+            public init(
+                query: Components.Schemas.UserCredentialListItemSearchQuerySchema,
+                data: Components.Schemas.UserCredentialListItemSearchSchema.DataPayload
+            ) {
+                self.query = query
+                self.data = data
+            }
+            public enum CodingKeys: String, CodingKey {
+                case query
+                case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSchema`.
+        public struct UserCredentialListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSchema/id`.
+            public var id: Components.Schemas.UserCredentialIdField
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSchema/accountID`.
+            public var accountID: Components.Schemas.UserCredentialAccountIdField
+            /// - Remark: Generated from `#/components/schemas/UserCredentialListItemSchema/email`.
+            public var email: Components.Schemas.UserCredentialEmailField
+            /// Creates a new `UserCredentialListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - accountID:
+            ///   - email:
+            public init(
+                id: Components.Schemas.UserCredentialIdField,
+                accountID: Components.Schemas.UserCredentialAccountIdField,
+                email: Components.Schemas.UserCredentialEmailField
+            ) {
+                self.id = id
+                self.accountID = accountID
+                self.email = email
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case accountID
+                case email
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserCredentialIdField`.
+        public typealias UserCredentialIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserCredentialEmailField`.
+        public typealias UserCredentialEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserCredentialPatchSchema`.
+        public struct UserCredentialPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserCredentialPatchSchema/email`.
+            public var email: Components.Schemas.UserCredentialEmailField?
+            /// - Remark: Generated from `#/components/schemas/UserCredentialPatchSchema/password`.
+            public var password: Components.Schemas.UserCredentialPasswordField?
+            /// Creates a new `UserCredentialPatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - email:
+            ///   - password:
+            public init(
+                email: Components.Schemas.UserCredentialEmailField? = nil,
+                password: Components.Schemas.UserCredentialPasswordField? = nil
+            ) {
+                self.email = email
+                self.password = password
+            }
+            public enum CodingKeys: String, CodingKey {
+                case email
+                case password
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserCredentialPasswordField`.
+        public typealias UserCredentialPasswordField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema`.
         public struct UserRoleCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema/name`.
@@ -10834,6 +11209,8 @@ public enum Components {
         ///
         /// - Remark: Generated from `#/components/parameters/UserAccountSessionIdParameter`.
         public typealias UserAccountSessionIdParameter = Components.Schemas.UserAuthSessionIDField
+        /// - Remark: Generated from `#/components/parameters/UserCredentialIdParameter`.
+        public typealias UserCredentialIdParameter = Components.Schemas.UserCredentialIdField
         /// UserRole id
         ///
         /// - Remark: Generated from `#/components/parameters/UserRoleIdParameter`.
@@ -10973,6 +11350,21 @@ public enum Components {
         @frozen public enum UserAccountPatchRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/UserAccountPatchRequestBody/content/application\/json`.
             case json(Components.Schemas.UserAccountPatchSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/UserCredentialRequestBody`.
+        @frozen public enum UserCredentialRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/UserCredentialRequestBody/content/application\/json`.
+            case json(Components.Schemas.UserCredentialCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/UserCredentialUpdateRequestBody`.
+        @frozen public enum UserCredentialUpdateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/UserCredentialUpdateRequestBody/content/application\/json`.
+            case json(Components.Schemas.UserCredentialCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/UserCredentialPatchRequestBody`.
+        @frozen public enum UserCredentialPatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/UserCredentialPatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.UserCredentialPatchSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/UserRoleRequestBody`.
         @frozen public enum UserRoleRequestBody: Sendable, Hashable {
@@ -11490,6 +11882,90 @@ public enum Components {
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.UserAccountSessionListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct UserCredentialDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserCredentialDetailResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/UserCredentialDetailResponse/content/application\/json`.
+                case json(Components.Schemas.UserCredentialDetailSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.UserCredentialDetailSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.UserCredentialDetailResponse.Body
+            /// Creates a new `UserCredentialDetailResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.UserCredentialDetailResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct UserCredentialFiltersResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserCredentialFiltersResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/UserCredentialFiltersResponse/content/application\/json`.
+                case json(Components.Schemas.UserCredentialSearchFilterSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.UserCredentialSearchFilterSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.UserCredentialFiltersResponse.Body
+            /// Creates a new `UserCredentialFiltersResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.UserCredentialFiltersResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct UserCredentialListItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserCredentialListItemSearchSchemaSearchResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/UserCredentialListItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.UserCredentialListItemSearchSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.UserCredentialListItemSearchSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.UserCredentialListItemSearchSchemaSearchResponse.Body
+            /// Creates a new `UserCredentialListItemSearchSchemaSearchResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.UserCredentialListItemSearchSchemaSearchResponse.Body) {
                 self.body = body
             }
         }
@@ -15894,6 +16370,1419 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.UserAccountSessionDelete.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/user/credential`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/post(userCredentialCreate)`.
+    public enum UserCredentialCreate {
+        public static let id: Swift.String = "userCredentialCreate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialCreate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialCreate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.UserCredentialCreate.Input.Headers
+            public var body: Components.RequestBodies.UserCredentialRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.UserCredentialCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.UserCredentialRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// User credential response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/post(userCredentialCreate)/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(Components.Responses.UserCredentialDetailResponse)
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created: Components.Responses.UserCredentialDetailResponse {
+                get throws {
+                    switch self {
+                    case let .created(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/post(userCredentialCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserCredentialCreate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/post(userCredentialCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserCredentialCreate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/post(userCredentialCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserCredentialCreate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/post(userCredentialCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserCredentialCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/credential`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/delete(userCredentialBulkDelete)`.
+    public enum UserCredentialBulkDelete {
+        public static let id: Swift.String = "userCredentialBulkDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialBulkDelete.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialBulkDelete.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.UserCredentialBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.UserCredentialBulkDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Bulk delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/delete(userCredentialBulkDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/delete(userCredentialBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserCredentialBulkDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/delete(userCredentialBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserCredentialBulkDelete.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/delete(userCredentialBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserCredentialBulkDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/delete(userCredentialBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserCredentialBulkDelete.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/user/credential/filters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/filters/get(userCredentialFilters)`.
+    public enum UserCredentialFilters {
+        public static let id: Swift.String = "userCredentialFilters"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/filters/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialFilters.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialFilters.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.UserCredentialFilters.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            public init(headers: Operations.UserCredentialFilters.Input.Headers = .init()) {
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// UserCredential filter response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/filters/get(userCredentialFilters)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.UserCredentialFiltersResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.UserCredentialFiltersResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/filters/get(userCredentialFilters)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserCredentialFilters.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/filters/get(userCredentialFilters)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserCredentialFilters.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/filters/get(userCredentialFilters)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserCredentialFilters.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/filters/get(userCredentialFilters)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserCredentialFilters.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/user/credential/search`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/search/post(userCredentialSearch)`.
+    public enum UserCredentialSearch {
+        public static let id: Swift.String = "userCredentialSearch"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/search/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialSearch.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialSearch.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.UserCredentialSearch.Input.Headers
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/search/POST/requestBody`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/search/POST/requestBody/content/application\/json`.
+                case json(Components.Schemas.UserCredentialListItemSearchQuerySchema)
+            }
+            public var body: Operations.UserCredentialSearch.Input.Body
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.UserCredentialSearch.Input.Headers = .init(),
+                body: Operations.UserCredentialSearch.Input.Body
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Search response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/search/post(userCredentialSearch)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.UserCredentialListItemSearchSchemaSearchResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.UserCredentialListItemSearchSchemaSearchResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/search/post(userCredentialSearch)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserCredentialSearch.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/search/post(userCredentialSearch)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserCredentialSearch.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/search/post(userCredentialSearch)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserCredentialSearch.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/search/post(userCredentialSearch)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserCredentialSearch.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)`.
+    public enum UserCredentialGet {
+        public static let id: Swift.String = "userCredentialGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/GET/path/userCredentialId`.
+                public var userCredentialId: Components.Parameters.UserCredentialIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - userCredentialId:
+                public init(userCredentialId: Components.Parameters.UserCredentialIdParameter) {
+                    self.userCredentialId = userCredentialId
+                }
+            }
+            public var path: Operations.UserCredentialGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialGet.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialGet.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.UserCredentialGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.UserCredentialGet.Input.Path,
+                headers: Operations.UserCredentialGet.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// User credential response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.UserCredentialDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.UserCredentialDetailResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// UserCredential not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.UserCredentialGet.Output.NotFound)
+            /// UserCredential not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.UserCredentialGet.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserCredentialGet.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserCredentialGet.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserCredentialGet.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/get(userCredentialGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserCredentialGet.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)`.
+    public enum UserCredentialPatch {
+        public static let id: Swift.String = "userCredentialPatch"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/PATCH/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/PATCH/path/userCredentialId`.
+                public var userCredentialId: Components.Parameters.UserCredentialIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - userCredentialId:
+                public init(userCredentialId: Components.Parameters.UserCredentialIdParameter) {
+                    self.userCredentialId = userCredentialId
+                }
+            }
+            public var path: Operations.UserCredentialPatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/PATCH/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialPatch.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialPatch.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.UserCredentialPatch.Input.Headers
+            public var body: Components.RequestBodies.UserCredentialPatchRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.UserCredentialPatch.Input.Path,
+                headers: Operations.UserCredentialPatch.Input.Headers = .init(),
+                body: Components.RequestBodies.UserCredentialPatchRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// User credential response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.UserCredentialDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.UserCredentialDetailResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// UserCredential not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.UserCredentialPatch.Output.NotFound)
+            /// UserCredential not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.UserCredentialPatch.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserCredentialPatch.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserCredentialPatch.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserCredentialPatch.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/patch(userCredentialPatch)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserCredentialPatch.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)`.
+    public enum UserCredentialUpdate {
+        public static let id: Swift.String = "userCredentialUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/PUT/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/PUT/path/userCredentialId`.
+                public var userCredentialId: Components.Parameters.UserCredentialIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - userCredentialId:
+                public init(userCredentialId: Components.Parameters.UserCredentialIdParameter) {
+                    self.userCredentialId = userCredentialId
+                }
+            }
+            public var path: Operations.UserCredentialUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/PUT/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialUpdate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserCredentialUpdate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.UserCredentialUpdate.Input.Headers
+            public var body: Components.RequestBodies.UserCredentialUpdateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.UserCredentialUpdate.Input.Path,
+                headers: Operations.UserCredentialUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.UserCredentialUpdateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// User credential response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.UserCredentialDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.UserCredentialDetailResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// UserCredential not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.UserCredentialUpdate.Output.NotFound)
+            /// UserCredential not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.UserCredentialUpdate.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserCredentialUpdate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserCredentialUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserCredentialUpdate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/put(userCredentialUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserCredentialUpdate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/credential/{userCredentialId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)`.
+    public enum UserCredentialDelete {
+        public static let id: Swift.String = "userCredentialDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/credential/{userCredentialId}/DELETE/path/userCredentialId`.
+                public var userCredentialId: Components.Parameters.UserCredentialIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - userCredentialId:
+                public init(userCredentialId: Components.Parameters.UserCredentialIdParameter) {
+                    self.userCredentialId = userCredentialId
+                }
+            }
+            public var path: Operations.UserCredentialDelete.Input.Path
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            public init(path: Operations.UserCredentialDelete.Input.Path) {
+                self.path = path
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct NoContent: Sendable, Hashable {
+                /// Creates a new `NoContent`.
+                public init() {}
+            }
+            /// UserCredential deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            case noContent(Operations.UserCredentialDelete.Output.NoContent)
+            /// UserCredential deleted
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Operations.UserCredentialDelete.Output.NoContent {
+                get throws {
+                    switch self {
+                    case let .noContent(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "noContent",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// UserCredential not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.UserCredentialDelete.Output.NotFound)
+            /// UserCredential not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.UserCredentialDelete.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserCredentialDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserCredentialDelete.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserCredentialDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/credential/{userCredentialId}/delete(userCredentialDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserCredentialDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):

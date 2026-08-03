@@ -16,6 +16,10 @@ struct AdminAuth {
             module: "auth",
             resource: "access-control"
         )
+        static let credentials = PermissionScope(
+            module: "auth",
+            resource: "credential"
+        )
     }
 
     func route(
@@ -65,5 +69,10 @@ struct AdminAuth {
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
+
+        AdminCredentials(
+            renderingEngine: renderingEngine
+        )
+        .route(on: router)
     }
 }
