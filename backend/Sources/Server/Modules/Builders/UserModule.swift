@@ -1,6 +1,7 @@
 import Application
 import UserApplication
 import UserInfrastructure
+import AccountInfrastructure
 import Infrastructure
 
 struct UserModule: Sendable {
@@ -39,11 +40,11 @@ extension UserModule {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,
             scope: { connection in
-                WriteAccount(
+                WriteAccountAndSettings(
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
-                    role: DatabaseRoleRepository(
+                    settings: DatabaseAccountSettingsRepository(
                         connection: connection
                     )
                 )
@@ -60,11 +61,11 @@ extension UserModule {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,
             scope: { connection in
-                WriteAccount(
+                WriteAccountAndSettings(
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
-                    role: DatabaseRoleRepository(
+                    settings: DatabaseAccountSettingsRepository(
                         connection: connection
                     )
                 )

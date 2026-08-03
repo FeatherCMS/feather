@@ -12,6 +12,10 @@ struct AdminSystem {
             module: "system",
             resource: "variables"
         )
+        static let jobs = PermissionScope(
+            module: "system",
+            resource: "jobs"
+        )
     }
 
     func route(
@@ -68,6 +72,16 @@ struct AdminSystem {
         .controller.route(on: router)
 
         AdminGetSystemVariable(
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+
+        AdminListSystemJob(
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+
+        AdminGetSystemJob(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

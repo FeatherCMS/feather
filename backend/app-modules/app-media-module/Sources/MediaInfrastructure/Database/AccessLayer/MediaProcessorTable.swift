@@ -1,5 +1,12 @@
+//
+//  MediaProcessorTable.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import FeatherDatabase
 import Infrastructure
+
 import struct Foundation.Date
 
 extension MediaProcessorTable.Row {

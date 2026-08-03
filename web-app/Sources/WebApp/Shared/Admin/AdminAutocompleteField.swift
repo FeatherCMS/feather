@@ -304,12 +304,7 @@ struct AdminAutocompleteField: Component, FlowContent {
     private func script() -> String {
         #"""
         (function () {
-            if (window.__webAppAdminAutocompleteInitialized) {
-                return;
-            }
-            window.__webAppAdminAutocompleteInitialized = true;
-
-            var multiselectCounter = 0;
+            var multiselectCounter = window.__webAppAdminAutocompleteCounter || 0;
 
             function createMultiselect(root) {
                 if (root.dataset.bound === "1") {
@@ -319,6 +314,7 @@ struct AdminAutocompleteField: Component, FlowContent {
 
                 var selectionMode = root.dataset.mode === "single" ? "single" : "multiple";
                 var instanceId = "multiselect-" + (++multiselectCounter);
+                window.__webAppAdminAutocompleteCounter = multiselectCounter;
                 var input = root.querySelector(".multiselect__input");
                 var label = root.querySelector(".multiselect__label");
                 var chipsContainer = root.querySelector(".multiselect__chips");
@@ -349,12 +345,12 @@ struct AdminAutocompleteField: Component, FlowContent {
                     listbox.id = listbox.id || listboxId;
 
                     if (label) {
-                        label.for(input.id);
+                        label.setAttribute("for", input.id);
                     }
 
-                    control.ariaOwns(listbox.id);
-                    input.ariaControls(listbox.id);
-                    toggleButton.ariaControls(listbox.id);
+                    control.setAttribute("aria-owns", listbox.id);
+                    input.setAttribute("aria-controls", listbox.id);
+                    toggleButton.setAttribute("aria-controls", listbox.id);
                 }
 
                 function loadOptions() {
@@ -418,18 +414,18 @@ struct AdminAutocompleteField: Component, FlowContent {
                     }
                     listbox.classList.add("multiselect__dropdown--open");
                     control.classList.add("multiselect__control--open");
-                    input.ariaExpanded("true");
-                    toggleButton.ariaExpanded("true");
+                    input.setAttribute("aria-expanded", "true");
+                    toggleButton.setAttribute("aria-expanded", "true");
                 }
 
                 function closeDropdown() {
                     state.open = false;
                     state.highlightedIndex = -1;
-                    input.ariaActiveDescendant("");
+                    input.setAttribute("aria-activedescendant", "");
                     listbox.classList.remove("multiselect__dropdown--open");
                     control.classList.remove("multiselect__control--open");
-                    input.ariaExpanded("false");
-                    toggleButton.ariaExpanded("false");
+                    input.setAttribute("aria-expanded", "false");
+                    toggleButton.setAttribute("aria-expanded", "false");
                 }
 
                 function announce(message) {
@@ -454,7 +450,7 @@ struct AdminAutocompleteField: Component, FlowContent {
                         remove.className = "multiselect__chip-remove";
                         remove.type = "button";
                         remove.dataset.value = item.value;
-                        remove.ariaLabel("Remove " + item.label);
+                        remove.setAttribute("aria-label", "Remove " + item.label);
                         remove.textContent = "×";
 
                         chip.append(labelText, remove);
@@ -509,7 +505,7 @@ struct AdminAutocompleteField: Component, FlowContent {
 
                     if (options.length === 0) {
                         state.highlightedIndex = -1;
-                        input.ariaActiveDescendant("");
+                        input.setAttribute("aria-activedescendant", "");
                         listbox.innerHTML = '<li class="multiselect__empty">No matches</li>';
                         return;
                     }
@@ -525,16 +521,16 @@ struct AdminAutocompleteField: Component, FlowContent {
                         var li = document.createElement("li");
                         li.id = optionId;
                         li.className = "multiselect__option";
-                        li.role("option");
-                        li.ariaSelected("false");
+                        li.setAttribute("role", "option");
+                        li.setAttribute("aria-selected", "false");
                         li.dataset.value = item.value;
                         li.dataset.index = String(index);
                         li.textContent = item.label;
 
                         if (index === state.highlightedIndex) {
                             li.classList.add("multiselect__option--active");
-                            li.ariaSelected("true");
-                            input.ariaActiveDescendant(optionId);
+                            li.setAttribute("aria-selected", "true");
+                            input.setAttribute("aria-activedescendant", optionId);
                         }
 
                         li.addEventListener("mousedown", function (event) {
@@ -547,7 +543,7 @@ struct AdminAutocompleteField: Component, FlowContent {
                     });
 
                     if (state.highlightedIndex === -1) {
-                        input.ariaActiveDescendant("");
+                        input.setAttribute("aria-activedescendant", "");
                         return;
                     }
 

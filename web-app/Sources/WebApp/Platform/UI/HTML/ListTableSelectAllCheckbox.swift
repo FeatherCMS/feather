@@ -11,7 +11,7 @@ struct ListTableSelectAllCheckbox: Component {
                 .ariaLabel("Select all rows")
                 .class("bulk-select-all")
                 .onChange(
-                        "this.closest('form').querySelectorAll('input.bulk-select-row').forEach(function(input) { input.checked = this.checked; }, this)"
+                    "this.closest('form').querySelectorAll('input.bulk-select-row').forEach(function(input) { input.checked = this.checked; }, this)"
                 )
         }
         .class("bulk-select-cell")

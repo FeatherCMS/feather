@@ -1,8 +1,14 @@
+//
+//  MetadataDetail+PublicVisibility.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Foundation
 import WebDomain
 
-public extension MetadataDetail {
-    func isPublic(
+extension MetadataDetail {
+    public func isPublic(
         at date: Date
     ) -> Bool {
         guard status == .published else {
@@ -17,7 +23,7 @@ public extension MetadataDetail {
         return true
     }
 
-    func isDirectlyAccessible(
+    public func isDirectlyAccessible(
         at date: Date
     ) -> Bool {
         switch status {

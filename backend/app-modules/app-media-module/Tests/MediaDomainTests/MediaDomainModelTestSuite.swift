@@ -1,5 +1,12 @@
-import Testing
+//
+//  MediaDomainModelTestSuite.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Foundation
+import Testing
+
 @testable import MediaDomain
 
 @Suite
@@ -9,6 +16,7 @@ struct MediaDomainModelTestSuite {
     func mediaAssetCreateDefaultsToUploadedStatus() {
         let new = MediaAsset.create(
             id: "asset-1",
+            folderId: nil,
             storageKey: "media/assets/asset-1",
             type: "jpeg",
             sizeBytes: 123,
@@ -25,7 +33,9 @@ struct MediaDomainModelTestSuite {
     func mediaExtensionMatcherPrefersStorageKeyExtension() {
         let asset = MediaAsset(
             id: "asset-1",
+            folderId: nil,
             storageKey: "media/assets/asset-1.jpg",
+            baseName: "asset-1",
             type: "application/octet-stream",
             sizeBytes: 123,
             status: .uploaded,

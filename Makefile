@@ -1,14 +1,25 @@
 SHELL := /bin/bash
 
 COMPOSE := docker compose -f docker-compose.yaml
+MODULE_DIRS := \
+	backend/app-modules/app-kernel \
+	backend/app-modules/app-system-module \
+	backend/app-modules/app-user-module \
+	backend/app-modules/app-auth-module \
+	backend/app-modules/app-account-module \
+	backend/app-modules/app-analytics-module \
+	backend/app-modules/app-blog-module \
+	backend/app-modules/app-media-module \
+	backend/app-modules/app-redirect-module \
+	backend/app-modules/app-web-module
+TEST_PACKAGE_DIRS := backend $(sort $(dir $(wildcard backend/app-modules/*/Package.swift)))
 DEPS_SERVICES := certificates postgres migrator
 BACKEND_SERVICES := $(DEPS_SERVICES) server worker
-BACKEND_STATIC_SERVICES := $(BACKEND_SERVICES) web-static
 ALL_SERVICES := certificates postgres migrator server worker web-static openapi-app openapi-admin web-app
 POSTGRES_VOLUME := feather-cms-postgres-data
 MEDIA_VOLUME := feather-cms-file-storage
 
-.PHONY: up up-build down stop logs ps restart pull config clean reset deps all backend web-static backend-logs backend-down backend-rebuild web-static-rebuild clean-backend $(ALL_SERVICES)
+.PHONY: up up-build down stop logs ps restart pull config clean reset deps all backend web-static backend-logs test test-all format fix-headers docker-up docker-down $(SERVICE_TARGETS)
 
 define detect_lan_host
 iface="$$(route -n get default 2>/dev/null | awk '/interface: / { print $$2; exit }')"; \
@@ -72,31 +83,40 @@ reset:
 deps:
 	$(COMPOSE) up -d --build $(DEPS_SERVICES)
 
+test:
+	$(MAKE) -C backend test
+
+test-all:
+	@set -e; \
+	for package in $(TEST_PACKAGE_DIRS); do \
+		echo "Testing $$package"; \
+		if [ -f "$$package/Makefile" ]; then \
+			$(MAKE) -C "$$package" test; \
+		else \
+			(cd "$$package" && swift test --parallel); \
+		fi; \
+	done
+
+docker-up:
+	$(COMPOSE) up -d certificates postgres
+	@for module in $(MODULE_DIRS); do \
+		$(MAKE) -C $$module docker-up; \
+	done
+
+docker-down:
+	@for module in $(MODULE_DIRS); do \
+		$(MAKE) -C $$module docker-down; \
+	done
+	$(COMPOSE) down -v --remove-orphans
+
 all:
 	$(run_all_services_with_public_origins)
 
 backend:
 	$(COMPOSE) up --build $(BACKEND_SERVICES)
 
-web-static:
-	$(COMPOSE) up --build $(BACKEND_STATIC_SERVICES)
-
 backend-logs:
 	$(COMPOSE) logs -f migrator server worker web-static openapi-app openapi-admin
-
-backend-down:
-	$(COMPOSE) down --remove-orphans
-
-backend-rebuild:
-	$(COMPOSE) build --no-cache $(BACKEND_SERVICES)
-	$(COMPOSE) up $(BACKEND_SERVICES)
-
-web-static-rebuild:
-	$(COMPOSE) build --no-cache web-static
-	$(COMPOSE) up web-static
-
-clean-backend:
-	$(MAKE) clean backend
 
 $(ALL_SERVICES):
 	$(COMPOSE) up --build $@

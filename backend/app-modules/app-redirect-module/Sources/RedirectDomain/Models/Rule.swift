@@ -1,4 +1,11 @@
+//
+//  Rule.swift
+//  app-redirect-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Rule: Model {
@@ -47,7 +54,7 @@ public struct Rule: Model {
     }
 }
 
-public extension Rule {
+extension Rule {
 
     private static func validate(
         source: String
@@ -87,7 +94,7 @@ public extension Rule {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         source: String,
         destination: String,
@@ -108,7 +115,7 @@ public extension Rule {
         )
     }
 
-    mutating func update(
+    public mutating func update(
         source: String? = nil,
         destination: String? = nil,
         statusCode: Int? = nil,

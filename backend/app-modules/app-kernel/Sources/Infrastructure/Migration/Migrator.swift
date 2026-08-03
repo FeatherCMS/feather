@@ -1,12 +1,12 @@
 //
 //  Migrator.swift
-//  backend
+//  app-kernel
 //
-//  Created by Tibor Bödecs on 2026. 02. 20..
+//  Created by Tibor Bödecs on 2026. 02. 20.
 //
 
-import Logging
 import FeatherDatabase
+import Logging
 
 public struct Migrator {
 

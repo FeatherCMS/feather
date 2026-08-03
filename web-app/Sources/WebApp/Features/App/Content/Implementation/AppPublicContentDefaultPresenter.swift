@@ -7,12 +7,13 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
     func render(
         content: AppPublicResolvedContent,
         request: Request
-    ) -> HTMLResponse {
+    ) async -> HTMLResponse {
         let siteSettings = SiteSettingsModel(
             schema: content.siteSettings,
             publicOrigins: themeContextFactory.publicOrigins
         )
-        let navigation = content.menus.first(where: { $0.key == "main" })?.items ?? []
+        let navigation =
+            content.menus.first(where: { $0.key == "main" })?.items ?? []
 
         switch content.route {
         case .postList(let items, let routePaths):
@@ -47,7 +48,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
                 metadata: routePaths.metadataModel(from: detail.metadata)
             )
             return themeRenderer.render(
-                themeContextFactory.makePostDetailContext(
+                await themeContextFactory.makePostDetailContext(
                     request: request,
                     model: model,
                     siteSettings: siteSettings,
@@ -87,7 +88,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
                 metadata: routePaths.metadataModel(from: detail.metadata)
             )
             return themeRenderer.render(
-                themeContextFactory.makeAuthorDetailContext(
+                await themeContextFactory.makeAuthorDetailContext(
                     request: request,
                     model: model,
                     siteSettings: siteSettings,
@@ -126,7 +127,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
                 metadata: routePaths.metadataModel(from: detail.metadata)
             )
             return themeRenderer.render(
-                themeContextFactory.makeTagDetailContext(
+                await themeContextFactory.makeTagDetailContext(
                     request: request,
                     model: model,
                     siteSettings: siteSettings,
@@ -147,7 +148,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
                 metadata: routePaths.metadataModel(from: detail.metadata)
             )
             return themeRenderer.render(
-                themeContextFactory.makePageContext(
+                await themeContextFactory.makePageContext(
                     request: request,
                     model: model,
                     siteSettings: siteSettings,

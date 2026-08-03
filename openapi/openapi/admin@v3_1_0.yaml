@@ -15,10 +15,13 @@ tags:
   description: Manage user invitations.
 - name: UserMagicLinks
   description: Manage user magic links.
+- name: AccountSettings
+  description: Manage the current account settings.
 - name: SystemPermissions
   description: Manage system permissions.
 - name: SystemVariables
   description: Manage system variables.
+- name: System jobs
 - name: AnalyticsLogs
   description: Browse analytics logs.
 - name: MetadataEntries
@@ -51,6 +54,10 @@ tags:
   description: Manage media folders.
 - name: MediaProcessors
   description: Manage media processors.
+- name: ContactForms
+  description: Manage contact forms, fields, and submissions.
+- name: Newsletters
+  description: Manage newsletters, issues, and subscribers.
 servers:
 - url: http://127.0.0.1:8080/
 security:
@@ -758,6 +765,43 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+  /api/v1/admin/account/settings:
+    get:
+      tags:
+      - AccountSettings
+      operationId: accountSettingsGet
+      responses:
+        200:
+          $ref: '#/components/responses/AccountSettingsDetailResponse'
+        400:
+          $ref: '#/components/responses/ServerErrorResponse'
+        500:
+          $ref: '#/components/responses/ServerErrorResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - AccountSettings
+      operationId: accountSettingsUpdate
+      requestBody:
+        $ref: '#/components/requestBodies/AccountSettingsUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountSettingsDetailResponse'
+        400:
+          $ref: '#/components/responses/ServerErrorResponse'
+        500:
+          $ref: '#/components/responses/ServerErrorResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/system/permissions:
     post:
       tags:
@@ -1028,6 +1072,38 @@ paths:
           $ref: '#/components/responses/SystemVariableDetailResponse'
         404:
           description: SystemVariable not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/jobs:
+    get:
+      tags:
+      - System jobs
+      operationId: systemJobList
+      responses:
+        200:
+          $ref: '#/components/responses/SystemJobListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/jobs/{systemJobId}:
+    get:
+      tags:
+      - System jobs
+      operationId: systemJobGet
+      parameters:
+      - $ref: '#/components/parameters/SystemJobIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemJobResponse'
+        404:
+          description: Worker job not found
         401:
           description: Unauthorized
         403:
@@ -2621,6 +2697,720 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+  /api/v1/admin/contact/forms:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormList
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - ContactForms
+      operationId: contactFormCreate
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/ContactFormResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/forms/{contactFormId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormGet
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormResponse'
+        404:
+          description: Contact form not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - ContactForms
+      operationId: contactFormUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormCreateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormResponse'
+        404:
+          description: Contact form not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      responses:
+        204:
+          description: Contact form deleted
+        404:
+          description: Contact form not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/fields:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFieldList
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormItemListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - ContactForms
+      operationId: contactFieldCreate
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormItemCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/ContactFormItemResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFieldBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/fields/{contactFormItemId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFieldGet
+      parameters:
+      - $ref: '#/components/parameters/ContactFormItemIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormItemResponse'
+        404:
+          description: Contact field not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - ContactForms
+      operationId: contactFieldUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactFormItemIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormItemPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormItemResponse'
+        404:
+          description: Contact field not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFieldDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormItemIdParameter'
+      responses:
+        204:
+          description: Contact field deleted
+        404:
+          description: Contact field not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/forms/{contactFormId}/items:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormItemList
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormItemListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - ContactForms
+      operationId: contactFormItemCreate
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormItemCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/ContactFormItemResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormItemBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormItemGet
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormItemIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormItemResponse'
+        404:
+          description: Contact form item not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - ContactForms
+      operationId: contactFormItemUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormItemIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormItemPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormItemResponse'
+        404:
+          description: Contact form item not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormItemDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormItemIdParameter'
+      responses:
+        204:
+          description: Contact form item deleted
+        404:
+          description: Contact form item not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/forms/{contactFormId}/submissions:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionList
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormSubmissionListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionGet
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormSubmissionResponse'
+        404:
+          description: Contact form submission not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
+      responses:
+        204:
+          description: Contact form submission deleted
+        404:
+          description: Contact form submission not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormSubmissionPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormSubmissionResponse'
+        404:
+          description: Contact form submission not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters:
+    get:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterList
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterCreate
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/ContactNewsletterResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}:
+    get:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterGet
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterResponse'
+        404:
+          description: Newsletter not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      responses:
+        204:
+          description: Newsletter deleted
+        404:
+          description: Newsletter not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterResponse'
+        404:
+          description: Newsletter not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/issues:
+    get:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueList
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterIssueListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueCreate
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterIssueCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/ContactNewsletterIssueResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/issues/test-email:
+    post:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterTestEmail
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterIssueTestEmailRequestBody'
+      responses:
+        204:
+          description: Test email queued
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}:
+    get:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueGet
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterIssueResponse'
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      responses:
+        204:
+          description: Newsletter issue deleted
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterIssuePatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterIssueResponse'
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/deliveries:
+    get:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueDeliveryList
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterDeliveryListResponse'
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/test-email:
+    post:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterIssueTestEmail
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterIssueIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterIssueTestEmailRequestBody'
+      responses:
+        204:
+          description: Test email queued
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/subscribers:
+    get:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterSubscriberList
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterSubscriberListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterSubscriberCreate
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterSubscriberCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/ContactNewsletterSubscriberResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}:
+    get:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterSubscriberGet
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterSubscriberEmailParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterSubscriberResponse'
+        404:
+          description: Newsletter subscriber not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterSubscriberDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterSubscriberEmailParameter'
+      responses:
+        204:
+          description: Newsletter subscriber deleted
+        404:
+          description: Newsletter subscriber not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Newsletters
+      operationId: contactNewsletterSubscriberUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactNewsletterIdParameter'
+      - $ref: '#/components/parameters/ContactNewsletterSubscriberEmailParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactNewsletterSubscriberPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactNewsletterSubscriberResponse'
+        404:
+          description: Newsletter subscriber not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
 components:
   schemas:
     AuthResponseSchema:
@@ -3535,6 +4325,82 @@ components:
         isPersistent:
           $ref: '#/components/schemas/UserMagicLinkIsPersistentField'
       minProperties: 0
+    AccountSettingsDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - account-settings-user_1
+        accountID:
+          type: string
+          examples:
+          - user_1
+        language:
+          type: string
+          examples:
+          - en
+        timezone:
+          type: string
+          examples:
+          - Europe/Budapest
+        pageSize:
+          type: integer
+          examples:
+          - 20
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.7595216e+9
+        updatedAt:
+          type: number
+          format: double
+          examples:
+          - 1.7595216e+9
+      required:
+      - id
+      - accountID
+      - language
+      - timezone
+      - pageSize
+      - createdAt
+      - updatedAt
+      minProperties: 7
+    ServerErrorSchema:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - code
+      - message
+      - reason
+      minProperties: 3
+    AccountSettingsUpdateSchema:
+      type: object
+      properties:
+        language:
+          type: string
+          examples:
+          - en
+        timezone:
+          type: string
+          examples:
+          - Europe/Budapest
+        pageSize:
+          type: integer
+          examples:
+          - 20
+      required:
+      - language
+      - timezone
+      - pageSize
+      minProperties: 3
     SystemPermissionCreateSchema:
       type: object
       properties:
@@ -3805,6 +4671,39 @@ components:
         notes:
           $ref: '#/components/schemas/SystemVariableNotesField'
       minProperties: 0
+    SystemJobListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/SystemJobSchema'
+      minItems: 0
+      uniqueItems: false
+    SystemJobSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        queueName:
+          type: string
+        status:
+          type: integer
+        workerId:
+          $ref: '#/components/schemas/SystemJobWorkerIdField'
+        lastModified:
+          type: number
+          format: double
+        payload:
+          type: string
+      required:
+      - id
+      - queueName
+      - status
+      - lastModified
+      - payload
+      minProperties: 5
+    SystemJobWorkerIdField:
+      type: string
+    SystemJobIdField:
+      type: string
     AnalyticsLogFiltersSchema:
       type: object
       properties:
@@ -7104,6 +8003,519 @@ components:
       - isRequired
       - isActive
       minProperties: 6
+    ContactFormListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactFormSchema'
+      minItems: 0
+      uniqueItems: false
+    ContactFormSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        successMessage:
+          type: string
+        failureMessage:
+          type: string
+        redirectUrl:
+          $ref: '#/components/schemas/ContactContentField'
+        items:
+          $ref: '#/components/schemas/ContactFormItemsSchema'
+        mails:
+          $ref: '#/components/schemas/ContactFormMailsSchema'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - name
+      - successMessage
+      - failureMessage
+      - createdAt
+      - updatedAt
+      minProperties: 6
+    ContactContentField:
+      type: string
+    ContactFormItemsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactFormItemSchema'
+      minItems: 0
+      uniqueItems: false
+    ContactFormItemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        formId:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        allowedValues:
+          $ref: '#/components/schemas/ContactAllowedValuesSchema'
+        isRequired:
+          type: boolean
+        position:
+          type: integer
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - formId
+      - key
+      - type
+      - label
+      - isRequired
+      - position
+      - createdAt
+      - updatedAt
+      minProperties: 9
+    ContactAllowedValuesSchema:
+      type: array
+      items:
+        type: string
+      minItems: 0
+      uniqueItems: false
+    ContactFormMailsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactFormMailSchema'
+      minItems: 0
+      uniqueItems: false
+    ContactFormMailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        formId:
+          type: string
+        mailFrom:
+          type: string
+        mailTo:
+          type: string
+        subject:
+          type: string
+        additionalHeaders:
+          type: string
+        messageBody:
+          type: string
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - formId
+      - mailFrom
+      - mailTo
+      - subject
+      - additionalHeaders
+      - messageBody
+      - createdAt
+      - updatedAt
+      minProperties: 9
+    ContactFormCreateSchema:
+      type: object
+      properties:
+        name:
+          type: string
+        successMessage:
+          $ref: '#/components/schemas/ContactContentField'
+        failureMessage:
+          $ref: '#/components/schemas/ContactContentField'
+        redirectUrl:
+          $ref: '#/components/schemas/ContactContentField'
+        fieldIds:
+          $ref: '#/components/schemas/ContactFieldIDsSchema'
+        mails:
+          $ref: '#/components/schemas/ContactFormMailInputsSchema'
+      required:
+      - name
+      minProperties: 1
+    ContactFieldIDsSchema:
+      type: array
+      items:
+        type: string
+      minItems: 0
+      uniqueItems: false
+    ContactFormMailInputsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactFormMailInputSchema'
+      minItems: 0
+      uniqueItems: false
+    ContactFormMailInputSchema:
+      type: object
+      properties:
+        mailFrom:
+          type: string
+        mailTo:
+          type: string
+        subject:
+          type: string
+        additionalHeaders:
+          $ref: '#/components/schemas/ContactContentField'
+        messageBody:
+          type: string
+      required:
+      - mailFrom
+      - mailTo
+      - subject
+      - messageBody
+      minProperties: 4
+    ContactIdField:
+      type: string
+    ContactFormItemListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactFormItemSchema'
+      minItems: 0
+      uniqueItems: false
+    ContactFormItemCreateSchema:
+      type: object
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        allowedValues:
+          $ref: '#/components/schemas/ContactAllowedValuesSchema'
+        isRequired:
+          $ref: '#/components/schemas/ContactRequiredField'
+        position:
+          $ref: '#/components/schemas/ContactFormItemPositionField'
+      required:
+      - key
+      - type
+      - label
+      minProperties: 3
+    ContactRequiredField:
+      type: boolean
+    ContactFormItemPositionField:
+      type: integer
+    ContactFormItemPatchSchema:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/ContactKeyField'
+        type:
+          $ref: '#/components/schemas/ContactTypeField'
+        label:
+          $ref: '#/components/schemas/ContactLabelField'
+        allowedValues:
+          $ref: '#/components/schemas/ContactAllowedValuesSchema'
+        isRequired:
+          $ref: '#/components/schemas/ContactRequiredField'
+        position:
+          $ref: '#/components/schemas/ContactFormItemPositionField'
+      minProperties: 0
+    ContactKeyField:
+      type: string
+    ContactTypeField:
+      type: string
+    ContactLabelField:
+      type: string
+    ContactFormSubmissionListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactFormSubmissionSchema'
+      minItems: 0
+      uniqueItems: false
+    ContactFormSubmissionSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        formId:
+          type: string
+        values:
+          type: object
+          additionalProperties:
+            type: string
+          minProperties: 0
+        itemsSnapshot:
+          type: object
+          additionalProperties:
+            type: string
+          minProperties: 0
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          minProperties: 0
+        status:
+          type: string
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - formId
+      - values
+      - itemsSnapshot
+      - metadata
+      - status
+      - createdAt
+      - updatedAt
+      minProperties: 8
+    ContactFormSubmissionPatchSchema:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
+      minProperties: 1
+    ContactNewsletterListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactNewsletterSchema'
+      minItems: 0
+      uniqueItems: false
+    ContactNewsletterSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        fromEmail:
+          type: string
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - name
+      - fromEmail
+      - createdAt
+      - updatedAt
+      minProperties: 5
+    ContactNewsletterCreateSchema:
+      type: object
+      properties:
+        name:
+          type: string
+        fromEmail:
+          type: string
+      required:
+      - name
+      - fromEmail
+      minProperties: 2
+    ContactNewsletterPatchSchema:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ContactNameField'
+        fromEmail:
+          $ref: '#/components/schemas/ContactEmailField'
+      minProperties: 0
+    ContactNameField:
+      type: string
+    ContactEmailField:
+      type: string
+    ContactNewsletterIssueListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactNewsletterIssueSchema'
+      minItems: 0
+      uniqueItems: false
+    ContactNewsletterIssueSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        newsletterId:
+          type: string
+        subject:
+          type: string
+        content:
+          type: string
+        status:
+          type: string
+        scheduledAt:
+          $ref: '#/components/schemas/ContactTimestampField'
+        sentAt:
+          $ref: '#/components/schemas/ContactTimestampField'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - newsletterId
+      - subject
+      - content
+      - status
+      - createdAt
+      - updatedAt
+      minProperties: 7
+    ContactTimestampField:
+      type: number
+      format: double
+    ContactNewsletterIssueCreateSchema:
+      type: object
+      properties:
+        subject:
+          type: string
+        content:
+          type: string
+        scheduledAt:
+          $ref: '#/components/schemas/ContactTimestampField'
+      required:
+      - subject
+      - content
+      minProperties: 2
+    ContactNewsletterIssueTestEmailSchema:
+      type: object
+      properties:
+        email:
+          type: string
+        subject:
+          type: string
+        content:
+          type: string
+      required:
+      - email
+      - subject
+      - content
+      minProperties: 3
+    ContactNewsletterIssuePatchSchema:
+      type: object
+      properties:
+        subject:
+          $ref: '#/components/schemas/ContactSubjectField'
+        content:
+          $ref: '#/components/schemas/ContactContentField'
+        scheduledAt:
+          $ref: '#/components/schemas/ContactTimestampField'
+      minProperties: 0
+    ContactSubjectField:
+      type: string
+    ContactNewsletterDeliveryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactNewsletterDeliverySchema'
+      minItems: 0
+      uniqueItems: false
+    ContactNewsletterDeliverySchema:
+      type: object
+      properties:
+        subscriberEmail:
+          type: string
+        status:
+          type: string
+        sentAt:
+          $ref: '#/components/schemas/ContactTimestampField'
+        failureReason:
+          $ref: '#/components/schemas/ContactContentField'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - subscriberEmail
+      - status
+      - createdAt
+      - updatedAt
+      minProperties: 4
+    ContactNewsletterSubscriberListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactNewsletterSubscriberSchema'
+      minItems: 0
+      uniqueItems: false
+    ContactNewsletterSubscriberSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        newsletterId:
+          type: string
+        email:
+          type: string
+        status:
+          type: string
+        subscriptionDate:
+          type: number
+          format: double
+        unsubscriptionDate:
+          $ref: '#/components/schemas/ContactTimestampField'
+        firstName:
+          $ref: '#/components/schemas/ContactNameField'
+        lastName:
+          $ref: '#/components/schemas/ContactNameField'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - newsletterId
+      - email
+      - status
+      - subscriptionDate
+      - createdAt
+      - updatedAt
+      minProperties: 7
+    ContactNewsletterSubscriberCreateSchema:
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          $ref: '#/components/schemas/ContactNameField'
+        lastName:
+          $ref: '#/components/schemas/ContactNameField'
+        status:
+          $ref: '#/components/schemas/ContactNewsletterSubscriberStatusField'
+      required:
+      - email
+      minProperties: 1
+    ContactNewsletterSubscriberStatusField:
+      type: string
+    ContactNewsletterSubscriberPatchSchema:
+      type: object
+      properties:
+        firstName:
+          $ref: '#/components/schemas/ContactNameField'
+        lastName:
+          $ref: '#/components/schemas/ContactNameField'
+        status:
+          type: string
+      required:
+      - status
+      minProperties: 1
   responses:
     AuthMeResponse:
       description: Auth response
@@ -7213,6 +8625,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserMagicLinkListItemSearchSchema'
+    AccountSettingsDetailResponse:
+      description: Account settings response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountSettingsDetailSchema'
+    ServerErrorResponse:
+      description: Server error response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServerErrorSchema'
     SystemPermissionDetailResponse:
       description: SystemPermission response
       content:
@@ -7249,6 +8673,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SystemVariableListItemSearchSchema'
+    SystemJobListResponse:
+      description: Worker job list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemJobListSchema'
+    SystemJobResponse:
+      description: Worker job response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemJobSchema'
     AnalyticsLogFiltersResponse:
       description: AnalyticsLog filter response
       content:
@@ -7495,6 +8931,84 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaProcessorListItemSearchSchema'
+    ContactFormListResponse:
+      description: Contact form list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormListSchema'
+    ContactFormResponse:
+      description: Contact form response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormSchema'
+    ContactFormItemListResponse:
+      description: Contact form item list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormItemListSchema'
+    ContactFormItemResponse:
+      description: Contact form item response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormItemSchema'
+    ContactFormSubmissionListResponse:
+      description: Contact form submission list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormSubmissionListSchema'
+    ContactFormSubmissionResponse:
+      description: Contact form submission response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormSubmissionSchema'
+    ContactNewsletterListResponse:
+      description: Newsletter list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterListSchema'
+    ContactNewsletterResponse:
+      description: Newsletter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterSchema'
+    ContactNewsletterIssueListResponse:
+      description: Newsletter issue list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterIssueListSchema'
+    ContactNewsletterIssueResponse:
+      description: Newsletter issue response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterIssueSchema'
+    ContactNewsletterDeliveryListResponse:
+      description: Newsletter delivery list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterDeliveryListSchema'
+    ContactNewsletterSubscriberListResponse:
+      description: Newsletter subscriber list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterSubscriberListSchema'
+    ContactNewsletterSubscriberResponse:
+      description: Newsletter subscriber response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterSubscriberSchema'
   parameters:
     UserAccountIdParameter:
       name: userAccountId
@@ -7558,6 +9072,13 @@ components:
       schema:
         $ref: '#/components/schemas/SystemVariableIdField'
       description: SystemVariable id
+    SystemJobIdParameter:
+      name: systemJobId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/SystemJobIdField'
+      description: Worker job id
     AnalyticsLogIdParameter:
       name: id
       in: path
@@ -7663,6 +9184,42 @@ components:
       schema:
         $ref: '#/components/schemas/MediaProcessorIdField'
       description: MediaProcessor id
+    ContactFormIdParameter:
+      name: contactFormId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactIdField'
+    ContactFormItemIdParameter:
+      name: contactFormItemId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactIdField'
+    ContactFormSubmissionIdParameter:
+      name: contactFormSubmissionId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactIdField'
+    ContactNewsletterIdParameter:
+      name: contactNewsletterId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactIdField'
+    ContactNewsletterIssueIdParameter:
+      name: contactNewsletterIssueId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactIdField'
+    ContactNewsletterSubscriberEmailParameter:
+      name: email
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactEmailField'
   requestBodies:
     AuthLoginRequestBody:
       content:
@@ -7765,6 +9322,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserMagicLinkPatchSchema'
+      required: true
+    AccountSettingsUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountSettingsUpdateSchema'
       required: true
     SystemPermissionRequestBody:
       content:
@@ -8019,6 +9582,72 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaProcessorCreateSchema'
+      required: true
+    ContactFormCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormCreateSchema'
+      required: true
+    ContactFormItemCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormItemCreateSchema'
+      required: true
+    ContactFormItemPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormItemPatchSchema'
+      required: true
+    ContactFormSubmissionPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormSubmissionPatchSchema'
+      required: true
+    ContactNewsletterCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterCreateSchema'
+      required: true
+    ContactNewsletterPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterPatchSchema'
+      required: true
+    ContactNewsletterIssueCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterIssueCreateSchema'
+      required: true
+    ContactNewsletterIssueTestEmailRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterIssueTestEmailSchema'
+      required: true
+    ContactNewsletterIssuePatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterIssuePatchSchema'
+      required: true
+    ContactNewsletterSubscriberCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterSubscriberCreateSchema'
+      required: true
+    ContactNewsletterSubscriberPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactNewsletterSubscriberPatchSchema'
       required: true
   securitySchemes:
     bearerAuth:

@@ -1,20 +1,27 @@
+//
+//  PostTable.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import FeatherDatabase
 import Infrastructure
+
 import struct Foundation.Data
 import struct Foundation.Date
 import class Foundation.JSONDecoder
 import class Foundation.JSONEncoder
 
-private extension String {
+extension String {
 
-    func decodedStringArray() throws -> [String] {
+    fileprivate func decodedStringArray() throws -> [String] {
         try JSONDecoder().decode([String].self, from: Data(utf8))
     }
 }
 
-private extension Array where Element == String {
+extension Array where Element == String {
 
-    func encodedJSONString() throws -> String {
+    fileprivate func encodedJSONString() throws -> String {
         let data = try JSONEncoder().encode(self)
         guard let string = String(data: data, encoding: .utf8) else {
             throw RepositoryError(

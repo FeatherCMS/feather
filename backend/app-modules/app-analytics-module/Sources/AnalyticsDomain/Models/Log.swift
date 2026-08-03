@@ -1,4 +1,11 @@
+//
+//  Log.swift
+//  app-analytics-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Domain
+
 import struct Foundation.Date
 
 public struct Log: Model {
@@ -133,7 +140,7 @@ public struct Log: Model {
     }
 }
 
-public extension Log {
+extension Log {
 
     private static func validate(
         method: String
@@ -176,7 +183,7 @@ public extension Log {
         }
     }
 
-    static func create(
+    public static func create(
         id: String,
         accountId: String?,
         source: Source,

@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 
 struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminAddBlogPostInteractor,
             presenter: any AdminAddBlogPostPresenter
         )

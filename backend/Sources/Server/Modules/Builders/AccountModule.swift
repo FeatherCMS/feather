@@ -16,3 +16,43 @@ struct AccountModule: Sendable {
         self.authorizer = authorizer
     }
 }
+
+extension AccountModule {
+
+    func makeGetAccountSettings() -> GetAccountSettings {
+        let query = DatabaseQueryExecutor(
+            database: infrastructure.database,
+            scope: { connection in
+                ReadAccountSettings(
+                    settings: DatabaseAccountSettingsQueries(
+                        connection: connection
+                    )
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            query: query
+        )
+    }
+
+    func makeEditAccountSettings() -> EditAccountSettings {
+        let transaction = DatabaseTransactionExecutor(
+            database: infrastructure.database,
+            scope: { connection in
+                WriteAccountSettings(
+                    queries: DatabaseAccountSettingsQueries(
+                        connection: connection
+                    ),
+                    settings: DatabaseAccountSettingsRepository(
+                        connection: connection
+                    )
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
+}

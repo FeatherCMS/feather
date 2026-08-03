@@ -1,6 +1,13 @@
-import struct Foundation.Date
+//
+//  PostDetail.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import WebApplication
+
+import struct Foundation.Date
 
 public struct PostDetail: DTO {
     public let id: String

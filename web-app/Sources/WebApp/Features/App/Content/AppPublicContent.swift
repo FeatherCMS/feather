@@ -9,7 +9,7 @@ struct AppPublicContent {
         themeContextFactory: ThemeContextFactory
     ) {
         self.controller = AppPublicContentDefaultController(
-            buildRuntime: { request, context in 
+            buildRuntime: { request, context in
                 (
                     interactor: AppPublicContentDefaultInteractor(
                         repository: repository

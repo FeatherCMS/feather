@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  app-redirect-module
+//  MenuQueries.swift
+//  app-web-module
 //
-//  Created by Tibor Bödecs on 2026. 04. 11..
+//  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
 public protocol MenuQueries: Sendable {

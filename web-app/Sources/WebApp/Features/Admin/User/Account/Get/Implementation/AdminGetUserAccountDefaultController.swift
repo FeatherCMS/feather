@@ -2,7 +2,8 @@ import HTML
 import Hummingbird
 
 struct AdminGetUserAccountDefaultController: AdminGetUserAccountController {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetUserAccountInteractor,
             removeSessionInteractor:
                 any AdminRemoveUserAccountSessionInteractor,

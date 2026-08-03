@@ -109,7 +109,7 @@ struct AdminConfirmationDialog: Component {
                         .href(state.cancelURL)
                         .class("ghost")
                         .onClick(
-                                "if (document.referrer) { window.location.href = document.referrer; return false; }"
+                            "if (document.referrer) { window.location.href = document.referrer; return false; }"
                         )
                 }
                 .class("button-row")

@@ -1,3 +1,9 @@
+//
+//  RepositoryError.swift
+//  app-kernel
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 //import FeatherError
 
 public struct RepositoryError: Error {

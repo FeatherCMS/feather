@@ -1,4 +1,7 @@
 import Environment
+import FeatherGeneratedSES
+import FeatherMail
+import FeatherMailSES
 import Infrastructure
 import Jobs
 import JobsPostgres
@@ -9,12 +12,14 @@ import NIOSSL
 import PostgresMigrations
 import PostgresNIO
 import ServiceLifecycle
+import SotoCore
 import UnixSignals
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
 import Foundation
 #endif
+import Foundation
 
 func buildWorker(
     config: WorkerConfig
@@ -25,6 +30,46 @@ func buildWorker(
         logger.logLevel = config.system.logger.level
         return logger
     }()
+
+    guard !config.ses.accessKeyId.isEmpty else {
+        throw WorkerConfigurationError.missing("SES_ID")
+    }
+    guard !config.ses.secretAccessKey.isEmpty else {
+        throw WorkerConfigurationError.missing("SES_SECRET")
+    }
+    guard !config.ses.region.isEmpty else {
+        throw WorkerConfigurationError.missing("SES_REGION")
+    }
+
+    let awsClient = AWSClient(
+        credentialProvider: .static(
+            accessKeyId: config.ses.accessKeyId,
+            secretAccessKey: config.ses.secretAccessKey
+        ),
+        logger: logger
+    )
+    let ses = SESv2(
+        client: awsClient,
+        region: .init(rawValue: config.ses.region),
+        partition: .aws,
+        endpoint: nil,
+        timeout: nil,
+        byteBufferAllocator: .init(),
+        options: []
+    )
+    let emailService = EmailService(
+        client: MailClientSES(
+            ses: ses,
+            encoder: RawMailEncoder(
+                headerDateEncodingStrategy: {
+                    let formatter = DateFormatter()
+                    formatter.locale = Locale(identifier: "en_US")
+                    formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
+                    return formatter.string(from: Date())
+                }
+            )
+        )
+    )
 
     var tlsConfig = TLSConfiguration.makeClientConfiguration()
     if FileManager.default.fileExists(atPath: config.system.database.rootCAPath)
@@ -65,7 +110,10 @@ func buildWorker(
             migrations: postgresMigrations,
             configuration: .init(
                 pollTime: .milliseconds(config.queue.pollTimeMilliseconds),
-                queueName: config.queue.name
+                queueName: config.queue.name,
+                retentionPolicy: .init(
+                    completedJobs: .retain
+                )
             ),
             logger: logger
         ),
@@ -96,7 +144,8 @@ func buildWorker(
 
     _ = JobController(
         queue: jobQueue,
-        emailService: .init(logger: logger)
+        emailService: emailService,
+        database: database
     )
     _ = MediaJobController(
         queue: jobQueue,
@@ -145,7 +194,9 @@ func buildWorker(
         )
     )
 
-    var services: [any Service] = [postgresClient]
+    var services: [any Service] = [
+        postgresClient, AWSClientLifecycleService(client: awsClient),
+    ]
     services.append(
         jobQueue.processor(
             options: JobQueueProcessorOptions(

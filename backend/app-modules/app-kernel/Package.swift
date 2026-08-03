@@ -45,6 +45,7 @@ let package = Package(
         .library(name: "Infrastructure", targets: ["Infrastructure"]),
     ],
     dependencies: [
+        // [docc-plugin-placeholder]
         //        .package(
         //            url: "https://github.com/apple/swift-configuration",
         //            exact: "1.0.2",

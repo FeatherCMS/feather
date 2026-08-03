@@ -1,3 +1,9 @@
+//
+//  CreateMediaAsset.swift
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 import Application
 import Foundation
 import MediaDomain
@@ -91,8 +97,8 @@ public struct CreateMediaAsset: UseCase {
     }
 }
 
-private extension CreateMediaAsset {
-    func adjustFolderAggregates(
+extension CreateMediaAsset {
+    fileprivate func adjustFolderAggregates(
         folders: any MediaFolderRepository,
         folderId: String?,
         sizeDelta: Int64,

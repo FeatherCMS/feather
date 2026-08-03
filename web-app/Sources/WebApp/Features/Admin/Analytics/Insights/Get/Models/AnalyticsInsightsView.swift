@@ -106,8 +106,8 @@ struct AnalyticsInsightsView: Component {
                 )
             }
         }
-.style(
-                "display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0;"
+        .style(
+            "display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0;"
         )
     }
 
@@ -126,7 +126,7 @@ struct AnalyticsInsightsView: Component {
                 )
         }
         .style(
-                "border:1px solid var(--cms-gray-3);border-radius:10px;padding:14px;background:var(--cms-white);color:var(--cms-strong-font);"
+            "border:1px solid var(--cms-gray-3);border-radius:10px;padding:14px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
 
@@ -139,7 +139,7 @@ struct AnalyticsInsightsView: Component {
             chartSVG
         }
         .style(
-                "margin:20px 0;padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
+            "margin:20px 0;padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
 
@@ -244,7 +244,8 @@ struct AnalyticsInsightsView: Component {
         }
         .setAttribute(
             name: "style",
-            value: "display:block;width:100%;height:auto;border-radius:10px;overflow:hidden;"
+            value:
+                "display:block;width:100%;height:auto;border-radius:10px;overflow:hidden;"
         )
         .width(width)
         .height(height)
@@ -285,7 +286,8 @@ struct AnalyticsInsightsView: Component {
                 breakdownCard("5xx paths", page.overview.serverErrorPaths)
             }
         }
-.style( "display:grid;gap:16px;"
+        .style(
+            "display:grid;gap:16px;"
         )
     }
 
@@ -307,7 +309,7 @@ struct AnalyticsInsightsView: Component {
                         Div {
                             Span(item.label)
                                 .style(
-                                        "display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                                    "display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
                                 )
                             Span("\(item.count)")
                                 .style(
@@ -320,13 +322,13 @@ struct AnalyticsInsightsView: Component {
                         Div {
                             Div {}
                                 .style(
-                                        "display:block;width:\(max(3, Int(item.share * 100)))%;height:10px;border-radius:999px;background:\(chartPrimaryColor);"
+                                    "display:block;width:\(max(3, Int(item.share * 100)))%;height:10px;border-radius:999px;background:\(chartPrimaryColor);"
                                 )
                         }
                         .style(
                             "margin-top:6px;background:var(--cms-gray-2);border-radius:999px;overflow:hidden;"
                         )
-                        }
+                    }
                     .style(
                         "margin:0 0 12px 0;"
                     )
@@ -334,7 +336,7 @@ struct AnalyticsInsightsView: Component {
             }
         }
         .style(
-                "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
+            "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
 

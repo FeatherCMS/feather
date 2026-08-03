@@ -3,7 +3,8 @@ import Hummingbird
 struct AdminGetAuthProfileDefaultController:
     AdminGetAuthProfileController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetAuthProfileInteractor,
             presenter: any AdminGetAuthProfilePresenter
         )

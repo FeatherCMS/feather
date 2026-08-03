@@ -250,6 +250,50 @@ extension APIProtocol {
             method: .post,
             path: server.apiPathComponentsWithServerPrefix("/api/v1/auth/magic-link/verify")
         )
+        try transport.register(
+            {
+                try await server.appContactFormSubmission(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/contact/forms/{contactFormId}/submissions")
+        )
+        try transport.register(
+            {
+                try await server.appContactFormGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/contact/forms/{contactFormId}")
+        )
+        try transport.register(
+            {
+                try await server.appContactNewsletterSubscribe(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/newsletters/{contactNewsletterId}/subscribe")
+        )
+        try transport.register(
+            {
+                try await server.appContactNewsletterUnsubscribe(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/newsletters/{contactNewsletterId}/unsubscribe")
+        )
     }
 }
 
@@ -1338,6 +1382,251 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/contact/forms/{contactFormId}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/forms/{contactFormId}/submissions/post(appContactFormSubmission)`.
+    func appContactFormSubmission(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AppContactFormSubmission.id,
+            using: {
+                APIHandler.appContactFormSubmission($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.AppContactFormSubmission.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.AppContactFormIdParameter.self
+                ))
+                let headers: Operations.AppContactFormSubmission.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.AppContactFormSubmissionRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.AppContactFormSubmissionSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.AppContactFormSubmission.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .created(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/forms/{contactFormId}/get(appContactFormGet)`.
+    func appContactFormGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AppContactFormGet.id,
+            using: {
+                APIHandler.appContactFormGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.AppContactFormGet.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.AppContactFormIdParameter.self
+                ))
+                let headers: Operations.AppContactFormGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.AppContactFormGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/newsletters/{contactNewsletterId}/subscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletters/{contactNewsletterId}/subscribe/post(appContactNewsletterSubscribe)`.
+    func appContactNewsletterSubscribe(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AppContactNewsletterSubscribe.id,
+            using: {
+                APIHandler.appContactNewsletterSubscribe($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.AppContactNewsletterSubscribe.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.AppContactNewsletterIdParameter.self
+                ))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.AppContactNewsletterSubscriptionRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.AppContactNewsletterSubscriptionSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.AppContactNewsletterSubscribe.Input(
+                    path: path,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/newsletters/{contactNewsletterId}/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletters/{contactNewsletterId}/unsubscribe/post(appContactNewsletterUnsubscribe)`.
+    func appContactNewsletterUnsubscribe(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AppContactNewsletterUnsubscribe.id,
+            using: {
+                APIHandler.appContactNewsletterUnsubscribe($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.AppContactNewsletterUnsubscribe.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.AppContactNewsletterIdParameter.self
+                ))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.AppContactNewsletterSubscriptionRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.AppContactNewsletterSubscriptionSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.AppContactNewsletterUnsubscribe.Input(
+                    path: path,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
                 case let .undocumented(statusCode, _):
                     return (.init(soar_statusCode: statusCode), nil)
                 }

@@ -40,9 +40,13 @@ let package = Package(
     products: [
         .library(name: "AccountDomain", targets: ["AccountDomain"]),
         .library(name: "AccountApplication", targets: ["AccountApplication"]),
-        .library(name: "AccountInfrastructure", targets: ["AccountInfrastructure"]),
+        .library(
+            name: "AccountInfrastructure",
+            targets: ["AccountInfrastructure"]
+        ),
     ],
     dependencies: [
+        // [docc-plugin-placeholder]
         //        .package(
         //            url: "https://github.com/apple/swift-log",
         //            from: "1.0.0"
@@ -73,11 +77,18 @@ let package = Package(
         // MARK: - test dependencies
 
         .package(
-            url: "https://github.com/feather-framework/feather-database-postgres",
+            url:
+                "https://github.com/feather-framework/feather-database-postgres",
             exact: "1.0.0-beta.6"
         ),
-        .package(url: "https://github.com/vapor/postgres-nio.git", from: "1.32.2"),
-        .package(url: "https://github.com/apple/swift-nio-ssl.git", from: "2.34.0"),
+        .package(
+            url: "https://github.com/vapor/postgres-nio.git",
+            from: "1.32.2"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-nio-ssl.git",
+            from: "2.34.0"
+        ),
         .package(
             url: "https://github.com/feather-framework/feather-mail-ephemeral",
             exact: "1.0.0-beta.2"
@@ -115,13 +126,19 @@ let package = Package(
         ),
         .testTarget(
             name: "AccountApplicationTests",
-            dependencies: [.target(name: "AccountApplication")],
+            dependencies: [
+                .target(name: "AccountApplication"),
+                .target(name: "AccountDomain"),
+            ],
             swiftSettings: defaultSwiftSettings
         ),
         .testTarget(
             name: "AccountInfrastructureTests",
             dependencies: [
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(
+                    name: "FeatherDatabasePostgres",
+                    package: "feather-database-postgres"
+                ),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .target(name: "AccountInfrastructure"),

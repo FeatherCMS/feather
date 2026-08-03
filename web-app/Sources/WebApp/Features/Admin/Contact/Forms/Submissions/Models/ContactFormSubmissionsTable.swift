@@ -1,0 +1,116 @@
+import HTML
+import SGML
+import WebStandards
+
+struct ContactFormSubmissionsTable: Component {
+    struct State {
+        let formId: String
+        let items: [AdminContactFormSubmissionItem]
+        let search: String
+        let error: String?
+        let breadcrumb: AdminBreadcrumb.State
+        let canRemove: Bool
+    }
+    let state: State
+    func content() -> some BasicTag {
+        Section {
+            AdminContactFormTabs(formId: state.formId, active: .submissions)
+            AdminBreadcrumb(state: state.breadcrumb)
+            H1("Contact form submissions")
+            if let error = state.error { P(error).class("error") }
+            ListTableSearchForm(
+                state: .init(
+                    action: "/admin/contact/forms/\(state.formId)/submissions/",
+                    placeholder: "Quick search submissions",
+                    search: state.search
+                )
+            )
+            if state.items.isEmpty {
+                P(
+                    state.search.isEmpty
+                        ? "No submissions yet."
+                        : "No submissions match your search."
+                )
+            }
+            else {
+                ListTableBulkRemoveForm(
+                    state: .init(
+                        action:
+                            "/admin/contact/forms/\(state.formId)/submissions/remove/",
+                        page: 1,
+                        search: state.search,
+                        canRemove: state.canRemove,
+                        buttonTitle: "Remove selected"
+                    ),
+                    table: ListTableShell(
+                        table: Table {
+                            Thead {
+                                Tr {
+                                    if state.canRemove {
+                                        ListTableSelectAllCheckbox()
+                                    }
+                                    Th("Submitted")
+                                    if hasEmailColumn { Th("Email") }
+                                    Th("Status")
+                                    Th("Actions")
+                                }
+                            }
+                            Tbody {
+                                for item in state.items {
+                                    Tr {
+                                        if state.canRemove {
+                                            ListTableRowSelectCheckbox(
+                                                state: .init(id: item.id)
+                                            )
+                                        }
+                                        Td(item.createdAt)
+                                            .data("label", "Submitted")
+                                        if hasEmailColumn {
+                                            Td(item.email ?? "—")
+                                                .data("label", "Email")
+                                        }
+                                        Td(item.status).data("label", "Status")
+                                        ListTableRowActions(
+                                            state: .init(
+                                                label: "Actions",
+                                                actions: [
+                                                    .init(
+                                                        title: "Details",
+                                                        href:
+                                                            "/admin/contact/forms/\(state.formId)/submissions/\(item.id)/",
+                                                        className: nil,
+                                                        permission:
+                                                            "contact:form-submissions:read"
+                                                    ),
+                                                    .init(
+                                                        title: "Remove",
+                                                        href:
+                                                            "/admin/contact/forms/\(state.formId)/submissions/\(item.id)/remove/",
+                                                        className: "delete",
+                                                        permission:
+                                                            "contact:form-submissions:delete"
+                                                    ),
+                                                ],
+                                                permissions: [
+                                                    "contact:form-submissions:read",
+                                                    "contact:form-submissions:delete",
+                                                ]
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        .class("cms-table", "action-table")
+                        .if(state.canRemove) { $0.class("bulk-select-table") }
+                    )
+                )
+            }
+        }
+        .class("cms-section")
+    }
+
+    private var hasEmailColumn: Bool {
+        state.items.contains { $0.email != nil }
+    }
+}

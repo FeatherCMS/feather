@@ -35,6 +35,42 @@ Run these from the repository root:
 - `make clean backend`
   Clears database and media storage, then builds and runs the backend stack.
 
+
+## Amazon SES Configuration
+
+The worker sends email through Amazon SES. Keep credentials in a local `.env`
+file next to `docker-compose.yaml`; `.env` files are ignored by Git.
+
+```env
+SES_ID=your-aws-access-key-id
+SES_SECRET=your-aws-secret-access-key
+SES_REGION=eu-central-1
+```
+
+Start the services with:
+
+```bash
+docker compose up --build
+```
+
+### Module and Backend Tests
+
+From the repository root, start all PostgreSQL and certificate services required
+by the module and backend tests:
+
+```sh
+make docker-up
+```
+
+Run tests from VS Code's Test Explorer, use `make test` for the backend package,
+or use `make test-all` for the backend and every package under
+`backend/app-modules`. When finished, remove the test services, networks, and
+volumes with:
+
+```sh
+make docker-down
+```
+
 ### Docker BuildKit cache error
 
 If `make <any>` fails with `Cache export is not supported for the docker driver`,

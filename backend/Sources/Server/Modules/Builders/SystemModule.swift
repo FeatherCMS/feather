@@ -195,6 +195,30 @@ extension SystemModule {
         )
     }
 
+    func makeListJobs() -> ListJobs {
+        .init(
+            authorizer: authorizer,
+            query: DatabaseQueryExecutor(
+                database: infrastructure.database,
+                scope: { connection in
+                    ReadJob(job: DatabaseJobQueries(connection: connection))
+                }
+            )
+        )
+    }
+
+    func makeGetJob() -> GetJob {
+        .init(
+            authorizer: authorizer,
+            query: DatabaseQueryExecutor(
+                database: infrastructure.database,
+                scope: { connection in
+                    ReadJob(job: DatabaseJobQueries(connection: connection))
+                }
+            )
+        )
+    }
+
     func makeRemoveVariable() -> RemoveVariable {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,

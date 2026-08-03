@@ -90,7 +90,8 @@ extension AppPublicRoutePaths {
                 fallback: item.content
             ),
             href: authorDetailPath(slug: item.metadata.slug),
-            imageURL: nonEmpty(item.media?.defaultURL ?? "") ?? nonEmpty(item.imageURL),
+            imageURL: nonEmpty(item.media?.defaultURL ?? "")
+                ?? nonEmpty(item.imageURL),
             metadata: metadata
         )
     }

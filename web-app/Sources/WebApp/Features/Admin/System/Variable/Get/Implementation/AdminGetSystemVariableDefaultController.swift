@@ -3,7 +3,8 @@ import Hummingbird
 
 struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
 {
-    let buildRuntime: @Sendable (Request, AppRequestContext) -> (
+    let buildRuntime:
+        @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetSystemVariableInteractor,
             presenter: any AdminGetSystemVariablePresenter
         )

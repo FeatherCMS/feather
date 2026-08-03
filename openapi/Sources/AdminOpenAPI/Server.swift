@@ -494,6 +494,28 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.accountSettingsGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/account/settings")
+        )
+        try transport.register(
+            {
+                try await server.accountSettingsUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .put,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/account/settings")
+        )
+        try transport.register(
+            {
                 try await server.systemPermissionCreate(
                     request: $0,
                     body: $1,
@@ -667,6 +689,28 @@ extension APIProtocol {
             },
             method: .delete,
             path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/system/variables/{systemVariableId}")
+        )
+        try transport.register(
+            {
+                try await server.systemJobList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/system/jobs")
+        )
+        try transport.register(
+            {
+                try await server.systemJobGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/system/jobs/{systemJobId}")
         )
         try transport.register(
             {
@@ -1657,6 +1701,457 @@ extension APIProtocol {
             },
             method: .delete,
             path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/media/processors/{mediaProcessorId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFormList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms")
+        )
+        try transport.register(
+            {
+                try await server.contactFormCreate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms")
+        )
+        try transport.register(
+            {
+                try await server.contactFormBulkDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms")
+        )
+        try transport.register(
+            {
+                try await server.contactFormGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFormUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .put,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFormDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFieldList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/fields")
+        )
+        try transport.register(
+            {
+                try await server.contactFieldCreate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/fields")
+        )
+        try transport.register(
+            {
+                try await server.contactFieldBulkDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/fields")
+        )
+        try transport.register(
+            {
+                try await server.contactFieldGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/fields/{contactFormItemId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFieldUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .put,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/fields/{contactFormItemId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFieldDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/fields/{contactFormItemId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFormItemList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/items")
+        )
+        try transport.register(
+            {
+                try await server.contactFormItemCreate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/items")
+        )
+        try transport.register(
+            {
+                try await server.contactFormItemBulkDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/items")
+        )
+        try transport.register(
+            {
+                try await server.contactFormItemGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFormItemUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .put,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFormItemDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFormSubmissionList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/submissions")
+        )
+        try transport.register(
+            {
+                try await server.contactFormSubmissionBulkDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/submissions")
+        )
+        try transport.register(
+            {
+                try await server.contactFormSubmissionGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFormSubmissionUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .patch,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}")
+        )
+        try transport.register(
+            {
+                try await server.contactFormSubmissionDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterCreate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .patch,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueCreate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterTestEmail(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/test-email")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .patch,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueDeliveryList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/deliveries")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterIssueTestEmail(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/test-email")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterSubscriberList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/subscribers")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterSubscriberCreate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/subscribers")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterSubscriberGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterSubscriberUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .patch,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}")
+        )
+        try transport.register(
+            {
+                try await server.contactNewsletterSubscriberDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}")
         )
     }
 }
@@ -4628,6 +5123,211 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
+    func accountSettingsGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AccountSettingsGet.id,
+            using: {
+                APIHandler.accountSettingsGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.AccountSettingsGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.AccountSettingsGet.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .internalServerError(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 500)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/account/settings`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)`.
+    func accountSettingsUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AccountSettingsUpdate.id,
+            using: {
+                APIHandler.accountSettingsUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.AccountSettingsUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.AccountSettingsUpdateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.AccountSettingsUpdateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.AccountSettingsUpdate.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .internalServerError(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 500)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `POST /api/v1/admin/system/permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/post(systemPermissionCreate)`.
     func systemPermissionCreate(
@@ -5779,6 +6479,129 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
                     suppressMutabilityWarning(&response)
                     return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/system/jobs`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)`.
+    func systemJobList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.SystemJobList.id,
+            using: {
+                APIHandler.systemJobList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.SystemJobList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.SystemJobList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/system/jobs/{systemJobId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/{systemJobId}/get(systemJobGet)`.
+    func systemJobGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.SystemJobGet.id,
+            using: {
+                APIHandler.systemJobGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.SystemJobGet.Input.Path = .init(systemJobId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "systemJobId",
+                    as: Components.Parameters.SystemJobIdParameter.self
+                ))
+                let headers: Operations.SystemJobGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.SystemJobGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .notFound(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
@@ -12378,6 +13201,2998 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     as: Components.Parameters.MediaProcessorIdParameter.self
                 ))
                 return Operations.MediaProcessorDelete.Input(path: path)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/get(contactFormList)`.
+    func contactFormList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormList.id,
+            using: {
+                APIHandler.contactFormList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.ContactFormList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactFormList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/forms`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/post(contactFormCreate)`.
+    func contactFormCreate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormCreate.id,
+            using: {
+                APIHandler.contactFormCreate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.ContactFormCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactFormCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactFormCreateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFormCreate.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .created(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/delete(contactFormBulkDelete)`.
+    func contactFormBulkDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormBulkDelete.id,
+            using: {
+                APIHandler.contactFormBulkDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.ContactFormBulkDelete.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFormBulkDelete.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/get(contactFormGet)`.
+    func contactFormGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormGet.id,
+            using: {
+                APIHandler.contactFormGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormGet.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.ContactFormIdParameter.self
+                ))
+                let headers: Operations.ContactFormGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactFormGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/put(contactFormUpdate)`.
+    func contactFormUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormUpdate.id,
+            using: {
+                APIHandler.contactFormUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormUpdate.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.ContactFormIdParameter.self
+                ))
+                let headers: Operations.ContactFormUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactFormCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactFormCreateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFormUpdate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/delete(contactFormDelete)`.
+    func contactFormDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormDelete.id,
+            using: {
+                APIHandler.contactFormDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormDelete.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.ContactFormIdParameter.self
+                ))
+                return Operations.ContactFormDelete.Input(path: path)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/fields`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/fields/get(contactFieldList)`.
+    func contactFieldList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFieldList.id,
+            using: {
+                APIHandler.contactFieldList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.ContactFieldList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactFieldList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/fields`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/fields/post(contactFieldCreate)`.
+    func contactFieldCreate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFieldCreate.id,
+            using: {
+                APIHandler.contactFieldCreate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.ContactFieldCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactFormItemCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactFormItemCreateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFieldCreate.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .created(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/fields`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/fields/delete(contactFieldBulkDelete)`.
+    func contactFieldBulkDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFieldBulkDelete.id,
+            using: {
+                APIHandler.contactFieldBulkDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.ContactFieldBulkDelete.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFieldBulkDelete.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/fields/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/fields/{contactFormItemId}/get(contactFieldGet)`.
+    func contactFieldGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFieldGet.id,
+            using: {
+                APIHandler.contactFieldGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFieldGet.Input.Path = .init(contactFormItemId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormItemId",
+                    as: Components.Parameters.ContactFormItemIdParameter.self
+                ))
+                let headers: Operations.ContactFieldGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactFieldGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/fields/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/fields/{contactFormItemId}/put(contactFieldUpdate)`.
+    func contactFieldUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFieldUpdate.id,
+            using: {
+                APIHandler.contactFieldUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFieldUpdate.Input.Path = .init(contactFormItemId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormItemId",
+                    as: Components.Parameters.ContactFormItemIdParameter.self
+                ))
+                let headers: Operations.ContactFieldUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactFormItemPatchRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactFormItemPatchSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFieldUpdate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/fields/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/fields/{contactFormItemId}/delete(contactFieldDelete)`.
+    func contactFieldDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFieldDelete.id,
+            using: {
+                APIHandler.contactFieldDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFieldDelete.Input.Path = .init(contactFormItemId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormItemId",
+                    as: Components.Parameters.ContactFormItemIdParameter.self
+                ))
+                return Operations.ContactFieldDelete.Input(path: path)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/get(contactFormItemList)`.
+    func contactFormItemList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormItemList.id,
+            using: {
+                APIHandler.contactFormItemList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormItemList.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.ContactFormIdParameter.self
+                ))
+                let headers: Operations.ContactFormItemList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactFormItemList.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/forms/{contactFormId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/post(contactFormItemCreate)`.
+    func contactFormItemCreate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormItemCreate.id,
+            using: {
+                APIHandler.contactFormItemCreate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormItemCreate.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.ContactFormIdParameter.self
+                ))
+                let headers: Operations.ContactFormItemCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactFormItemCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactFormItemCreateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFormItemCreate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .created(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/delete(contactFormItemBulkDelete)`.
+    func contactFormItemBulkDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormItemBulkDelete.id,
+            using: {
+                APIHandler.contactFormItemBulkDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormItemBulkDelete.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.ContactFormIdParameter.self
+                ))
+                let headers: Operations.ContactFormItemBulkDelete.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFormItemBulkDelete.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/get(contactFormItemGet)`.
+    func contactFormItemGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormItemGet.id,
+            using: {
+                APIHandler.contactFormItemGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormItemGet.Input.Path = .init(
+                    contactFormId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormId",
+                        as: Components.Parameters.ContactFormIdParameter.self
+                    ),
+                    contactFormItemId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormItemId",
+                        as: Components.Parameters.ContactFormItemIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactFormItemGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactFormItemGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/put(contactFormItemUpdate)`.
+    func contactFormItemUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormItemUpdate.id,
+            using: {
+                APIHandler.contactFormItemUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormItemUpdate.Input.Path = .init(
+                    contactFormId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormId",
+                        as: Components.Parameters.ContactFormIdParameter.self
+                    ),
+                    contactFormItemId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormItemId",
+                        as: Components.Parameters.ContactFormItemIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactFormItemUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactFormItemPatchRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactFormItemPatchSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFormItemUpdate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/items/{contactFormItemId}/delete(contactFormItemDelete)`.
+    func contactFormItemDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormItemDelete.id,
+            using: {
+                APIHandler.contactFormItemDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormItemDelete.Input.Path = .init(
+                    contactFormId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormId",
+                        as: Components.Parameters.ContactFormIdParameter.self
+                    ),
+                    contactFormItemId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormItemId",
+                        as: Components.Parameters.ContactFormItemIdParameter.self
+                    )
+                )
+                return Operations.ContactFormItemDelete.Input(path: path)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/get(contactFormSubmissionList)`.
+    func contactFormSubmissionList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormSubmissionList.id,
+            using: {
+                APIHandler.contactFormSubmissionList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormSubmissionList.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.ContactFormIdParameter.self
+                ))
+                let headers: Operations.ContactFormSubmissionList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactFormSubmissionList.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/delete(contactFormSubmissionBulkDelete)`.
+    func contactFormSubmissionBulkDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormSubmissionBulkDelete.id,
+            using: {
+                APIHandler.contactFormSubmissionBulkDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormSubmissionBulkDelete.Input.Path = .init(contactFormId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactFormId",
+                    as: Components.Parameters.ContactFormIdParameter.self
+                ))
+                let headers: Operations.ContactFormSubmissionBulkDelete.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFormSubmissionBulkDelete.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
+    func contactFormSubmissionGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormSubmissionGet.id,
+            using: {
+                APIHandler.contactFormSubmissionGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormSubmissionGet.Input.Path = .init(
+                    contactFormId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormId",
+                        as: Components.Parameters.ContactFormIdParameter.self
+                    ),
+                    contactFormSubmissionId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormSubmissionId",
+                        as: Components.Parameters.ContactFormSubmissionIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactFormSubmissionGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactFormSubmissionGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
+    func contactFormSubmissionUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormSubmissionUpdate.id,
+            using: {
+                APIHandler.contactFormSubmissionUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormSubmissionUpdate.Input.Path = .init(
+                    contactFormId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormId",
+                        as: Components.Parameters.ContactFormIdParameter.self
+                    ),
+                    contactFormSubmissionId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormSubmissionId",
+                        as: Components.Parameters.ContactFormSubmissionIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactFormSubmissionUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactFormSubmissionPatchRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactFormSubmissionPatchSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactFormSubmissionUpdate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/forms/{contactFormId}/submissions/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
+    func contactFormSubmissionDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactFormSubmissionDelete.id,
+            using: {
+                APIHandler.contactFormSubmissionDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactFormSubmissionDelete.Input.Path = .init(
+                    contactFormId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormId",
+                        as: Components.Parameters.ContactFormIdParameter.self
+                    ),
+                    contactFormSubmissionId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormSubmissionId",
+                        as: Components.Parameters.ContactFormSubmissionIdParameter.self
+                    )
+                )
+                return Operations.ContactFormSubmissionDelete.Input(path: path)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/get(contactNewsletterList)`.
+    func contactNewsletterList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterList.id,
+            using: {
+                APIHandler.contactNewsletterList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.ContactNewsletterList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactNewsletterList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/post(contactNewsletterCreate)`.
+    func contactNewsletterCreate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterCreate.id,
+            using: {
+                APIHandler.contactNewsletterCreate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.ContactNewsletterCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterCreateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterCreate.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .created(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/get(contactNewsletterGet)`.
+    func contactNewsletterGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterGet.id,
+            using: {
+                APIHandler.contactNewsletterGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterGet.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.ContactNewsletterIdParameter.self
+                ))
+                let headers: Operations.ContactNewsletterGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactNewsletterGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/patch(contactNewsletterUpdate)`.
+    func contactNewsletterUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterUpdate.id,
+            using: {
+                APIHandler.contactNewsletterUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterUpdate.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.ContactNewsletterIdParameter.self
+                ))
+                let headers: Operations.ContactNewsletterUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterPatchRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterPatchSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterUpdate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/delete(contactNewsletterDelete)`.
+    func contactNewsletterDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterDelete.id,
+            using: {
+                APIHandler.contactNewsletterDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterDelete.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.ContactNewsletterIdParameter.self
+                ))
+                return Operations.ContactNewsletterDelete.Input(path: path)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/get(contactNewsletterIssueList)`.
+    func contactNewsletterIssueList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueList.id,
+            using: {
+                APIHandler.contactNewsletterIssueList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueList.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.ContactNewsletterIdParameter.self
+                ))
+                let headers: Operations.ContactNewsletterIssueList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactNewsletterIssueList.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/post(contactNewsletterIssueCreate)`.
+    func contactNewsletterIssueCreate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueCreate.id,
+            using: {
+                APIHandler.contactNewsletterIssueCreate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueCreate.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.ContactNewsletterIdParameter.self
+                ))
+                let headers: Operations.ContactNewsletterIssueCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterIssueCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterIssueCreateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterIssueCreate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .created(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/issues/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/test-email/post(contactNewsletterTestEmail)`.
+    func contactNewsletterTestEmail(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterTestEmail.id,
+            using: {
+                APIHandler.contactNewsletterTestEmail($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterTestEmail.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.ContactNewsletterIdParameter.self
+                ))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterIssueTestEmailRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterIssueTestEmailSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterTestEmail.Input(
+                    path: path,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/get(contactNewsletterIssueGet)`.
+    func contactNewsletterIssueGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueGet.id,
+            using: {
+                APIHandler.contactNewsletterIssueGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueGet.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactNewsletterIssueGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactNewsletterIssueGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/patch(contactNewsletterIssueUpdate)`.
+    func contactNewsletterIssueUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueUpdate.id,
+            using: {
+                APIHandler.contactNewsletterIssueUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueUpdate.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactNewsletterIssueUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterIssuePatchRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterIssuePatchSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterIssueUpdate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/delete(contactNewsletterIssueDelete)`.
+    func contactNewsletterIssueDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueDelete.id,
+            using: {
+                APIHandler.contactNewsletterIssueDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueDelete.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                return Operations.ContactNewsletterIssueDelete.Input(path: path)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/deliveries`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/deliveries/get(contactNewsletterIssueDeliveryList)`.
+    func contactNewsletterIssueDeliveryList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueDeliveryList.id,
+            using: {
+                APIHandler.contactNewsletterIssueDeliveryList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueDeliveryList.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                let headers: Operations.ContactNewsletterIssueDeliveryList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactNewsletterIssueDeliveryList.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/issues/{contactNewsletterIssueId}/test-email/post(contactNewsletterIssueTestEmail)`.
+    func contactNewsletterIssueTestEmail(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterIssueTestEmail.id,
+            using: {
+                APIHandler.contactNewsletterIssueTestEmail($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterIssueTestEmail.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    contactNewsletterIssueId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterIssueId",
+                        as: Components.Parameters.ContactNewsletterIssueIdParameter.self
+                    )
+                )
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterIssueTestEmailRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterIssueTestEmailSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterIssueTestEmail.Input(
+                    path: path,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .noContent(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/get(contactNewsletterSubscriberList)`.
+    func contactNewsletterSubscriberList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterSubscriberList.id,
+            using: {
+                APIHandler.contactNewsletterSubscriberList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterSubscriberList.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.ContactNewsletterIdParameter.self
+                ))
+                let headers: Operations.ContactNewsletterSubscriberList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactNewsletterSubscriberList.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletters/{contactNewsletterId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/post(contactNewsletterSubscriberCreate)`.
+    func contactNewsletterSubscriberCreate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterSubscriberCreate.id,
+            using: {
+                APIHandler.contactNewsletterSubscriberCreate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterSubscriberCreate.Input.Path = .init(contactNewsletterId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "contactNewsletterId",
+                    as: Components.Parameters.ContactNewsletterIdParameter.self
+                ))
+                let headers: Operations.ContactNewsletterSubscriberCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterSubscriberCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterSubscriberCreateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterSubscriberCreate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .created(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/get(contactNewsletterSubscriberGet)`.
+    func contactNewsletterSubscriberGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterSubscriberGet.id,
+            using: {
+                APIHandler.contactNewsletterSubscriberGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterSubscriberGet.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    email: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "email",
+                        as: Components.Parameters.ContactNewsletterSubscriberEmailParameter.self
+                    )
+                )
+                let headers: Operations.ContactNewsletterSubscriberGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.ContactNewsletterSubscriberGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/patch(contactNewsletterSubscriberUpdate)`.
+    func contactNewsletterSubscriberUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterSubscriberUpdate.id,
+            using: {
+                APIHandler.contactNewsletterSubscriberUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterSubscriberUpdate.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    email: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "email",
+                        as: Components.Parameters.ContactNewsletterSubscriberEmailParameter.self
+                    )
+                )
+                let headers: Operations.ContactNewsletterSubscriberUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Components.RequestBodies.ContactNewsletterSubscriberPatchRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactNewsletterSubscriberPatchSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactNewsletterSubscriberUpdate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletters/{contactNewsletterId}/subscribers/{email}/delete(contactNewsletterSubscriberDelete)`.
+    func contactNewsletterSubscriberDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactNewsletterSubscriberDelete.id,
+            using: {
+                APIHandler.contactNewsletterSubscriberDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.ContactNewsletterSubscriberDelete.Input.Path = .init(
+                    contactNewsletterId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactNewsletterId",
+                        as: Components.Parameters.ContactNewsletterIdParameter.self
+                    ),
+                    email: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "email",
+                        as: Components.Parameters.ContactNewsletterSubscriberEmailParameter.self
+                    )
+                )
+                return Operations.ContactNewsletterSubscriberDelete.Input(path: path)
             },
             serializer: { output, request in
                 switch output {

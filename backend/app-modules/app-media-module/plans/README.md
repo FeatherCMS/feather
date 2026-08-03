@@ -1,3 +1,9 @@
+//
+//  README.md
+//  app-media-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
 # Media Module Plan (POC)
 
 This plan keeps the media domain intentionally minimal for a first implementation.
