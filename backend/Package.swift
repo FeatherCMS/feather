@@ -256,5 +256,16 @@ let package = Package(
             ],
             swiftSettings: defaultSwiftSettings
         ),
+
+        .testTarget(
+            name: "WorkerTests",
+            dependencies: [
+                .target(name: "Worker"),
+                .product(name: "FeatherMailEphemeral", package: "feather-mail-ephemeral"),
+                .product(name: "FeatherMail", package: "feather-mail"),
+                .target(name: "Environment"),
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
     ]
 )

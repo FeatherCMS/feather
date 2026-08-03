@@ -26,7 +26,8 @@ extension UserModule {
                 WriteInvitation(
                     invitation: DatabaseInvitationRepository(connection: connection),
                     account: DatabaseAccountRepository(connection: connection),
-                    role: DatabaseRoleRepository(connection: connection)
+                    role: DatabaseRoleRepository(connection: connection),
+                    settings: DatabaseAccountSettingsRepository(connection: connection)
                 )
             }
         )
@@ -264,7 +265,8 @@ extension UserModule {
                 WriteInvitation(
                     invitation: DatabaseInvitationRepository(connection: connection),
                     account: DatabaseAccountRepository(connection: connection),
-                    role: DatabaseRoleRepository(connection: connection)
+                    role: DatabaseRoleRepository(connection: connection),
+                    settings: DatabaseAccountSettingsRepository(connection: connection)
                 )
             }
         )
@@ -272,7 +274,10 @@ extension UserModule {
             authorizer: authorizer,
             transaction: transaction,
             idGenerator: infrastructure.idGenerator,
-            passwordHasher: BCryptPasswordHasher()
+            passwordHasher: BCryptPasswordHasher(),
+            mailQueue: JobQueueInvitationMailQueue(
+                queue: infrastructure.jobQueue
+            )
         )
     }
 
@@ -297,7 +302,7 @@ extension UserModule {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,
             scope: { connection in
-                WriteInvitation(
+                WriteInvitationOnly(
                     invitation: DatabaseInvitationRepository(
                         connection: connection
                     )
@@ -331,7 +336,7 @@ extension UserModule {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,
             scope: { connection in
-                WriteInvitation(
+                WriteInvitationOnly(
                     invitation: DatabaseInvitationRepository(
                         connection: connection
                     )

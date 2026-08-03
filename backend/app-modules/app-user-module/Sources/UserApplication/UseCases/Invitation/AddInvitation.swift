@@ -33,17 +33,20 @@ public struct AddInvitation: UseCase {
     let transaction: any TransactionExecutor<WriteInvitation>
     let idGenerator: any IDGenerator
     let passwordHasher: (any PasswordHasher)?
+    let mailQueue: (any InvitationMailQueue)?
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteInvitation>,
         idGenerator: any IDGenerator,
-        passwordHasher: (any PasswordHasher)? = nil
+        passwordHasher: (any PasswordHasher)? = nil,
+        mailQueue: (any InvitationMailQueue)? = nil
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.idGenerator = idGenerator
         self.passwordHasher = passwordHasher
+        self.mailQueue = mailQueue
     }
 
     public struct Input: DTO {
@@ -67,12 +70,11 @@ public struct AddInvitation: UseCase {
         }
 
         let model = try await transaction.run { context in
-            guard let accountRepository = context.account,
-                let roleRepository = context.role,
-                let passwordHasher
-            else {
+            guard let passwordHasher else {
                 throw Error.dependenciesUnavailable
             }
+            let accountRepository = context.account
+            let roleRepository = context.role
             let accountID = idGenerator.generate()
             let token = generateToken()
             let passwordHash = try await hashPassword(
@@ -104,8 +106,12 @@ public struct AddInvitation: UseCase {
                 )
             )
         }
-        // TODO: Send the invitation email after the transaction commits.
-        // The backend currently has no configured runtime MailSender for this use case.
+        if let mailQueue {
+            try await mailQueue.enqueue(
+                email: model.email,
+                token: model.token
+            )
+        }
         return model.asDetail
     }
 }

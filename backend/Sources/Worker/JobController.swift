@@ -98,6 +98,16 @@ struct JobController {
             )
         }
         queue.registerJob(
+            name: .init(UserInvitationMailJobPayload.jobName),
+            parameters: UserInvitationMailJobPayload.self,
+            retryStrategy: .exponentialJitter(maxAttempts: 5)
+        ) { parameters, _ in
+            try await UserInvitationMailJob.send(
+                parameters: parameters,
+                emailService: emailService
+            )
+        }
+        queue.registerJob(
             name: .init(ContactFormMailJobPayload.jobName),
             parameters: ContactFormMailJobPayload.self,
             retryStrategy: .exponentialJitter(maxAttempts: 5)

@@ -185,7 +185,8 @@ struct UserApplicationTestSuite {
             context: WriteInvitation(
                 invitation: repo,
                 account: accountRepo,
-                role: roleRepo
+                role: roleRepo,
+                settings: MockAccountSettingsRepository()
             )
         )
         let authorizer = MockAuthorizer(result: true)
@@ -221,7 +222,8 @@ struct UserApplicationTestSuite {
             context: WriteInvitation(
                 invitation: invitationRepo,
                 account: accountRepo,
-                role: roleRepo
+                role: roleRepo,
+                settings: MockAccountSettingsRepository()
             )
         )
         let useCase = AddInvitation(
@@ -259,7 +261,8 @@ struct UserApplicationTestSuite {
             context: WriteInvitation(
                 invitation: invitationRepo,
                 account: accountRepo,
-                role: roleRepo
+                role: roleRepo,
+                settings: MockAccountSettingsRepository()
             )
         )
         let useCase = AddInvitation(
@@ -304,7 +307,8 @@ struct UserApplicationTestSuite {
             context: WriteInvitation(
                 invitation: invitationRepo,
                 account: accountRepo,
-                role: MockRoleRepository(result: makeRole(id: "r-complete"))
+                role: MockRoleRepository(result: makeRole(id: "r-complete")),
+                settings: MockAccountSettingsRepository()
             )
         )
         let useCase = CompleteInvitationRegistration(
@@ -347,7 +351,8 @@ struct UserApplicationTestSuite {
                 context: WriteInvitation(
                     invitation: invitationRepo,
                     account: accountRepo,
-                    role: MockRoleRepository(result: makeRole(id: "r-expired"))
+                    role: MockRoleRepository(result: makeRole(id: "r-expired")),
+                    settings: MockAccountSettingsRepository()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -382,7 +387,8 @@ struct UserApplicationTestSuite {
                     account: accountRepo,
                     role: MockRoleRepository(
                         result: makeRole(id: "r-invalid-token")
-                    )
+                    ),
+                    settings: MockAccountSettingsRepository()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -418,7 +424,8 @@ struct UserApplicationTestSuite {
                 context: WriteInvitation(
                     invitation: invitationRepo,
                     account: accountRepo,
-                    role: MockRoleRepository(result: makeRole(id: "r-used"))
+                    role: MockRoleRepository(result: makeRole(id: "r-used")),
+                    settings: MockAccountSettingsRepository()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -454,7 +461,8 @@ struct UserApplicationTestSuite {
                 context: WriteInvitation(
                     invitation: invitationRepo,
                     account: accountRepo,
-                    role: MockRoleRepository(result: makeRole(id: "r-inactive"))
+                    role: MockRoleRepository(result: makeRole(id: "r-inactive")),
+                    settings: MockAccountSettingsRepository()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -509,7 +517,7 @@ struct UserApplicationTestSuite {
             deleteResult: true
         )
         let transaction = MockTransactionExecutor(
-            context: WriteInvitation(invitation: repo)
+            context: WriteInvitationOnly(invitation: repo)
         )
         let authorizer = MockAuthorizer(result: false)
         let useCase = RemoveInvitation(
