@@ -7,6 +7,8 @@ tags:
   description: Authentication endpoints.
 - name: UserAccounts
   description: User accounts related endpoints.
+- name: UserCredentials
+  description: Manage user credentials.
 - name: UserRoles
   description: Manage user roles.
 - name: UserRolePermissions
@@ -292,6 +294,144 @@ paths:
           description: UserAccount session deleted
         404:
           description: UserAccount session not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/user/credential:
+    post:
+      tags:
+      - UserCredentials
+      operationId: userCredentialCreate
+      requestBody:
+        $ref: '#/components/requestBodies/UserCredentialRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/UserCredentialDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - UserCredentials
+      operationId: userCredentialBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/user/credential/filters:
+    get:
+      tags:
+      - UserCredentials
+      operationId: userCredentialFilters
+      responses:
+        200:
+          $ref: '#/components/responses/UserCredentialFiltersResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/user/credential/search:
+    post:
+      tags:
+      - UserCredentials
+      operationId: userCredentialSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentialListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserCredentialListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/user/credential/{userCredentialId}:
+    get:
+      tags:
+      - UserCredentials
+      operationId: userCredentialGet
+      parameters:
+      - $ref: '#/components/parameters/UserCredentialIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/UserCredentialDetailResponse'
+        404:
+          description: UserCredential not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - UserCredentials
+      operationId: userCredentialUpdate
+      parameters:
+      - $ref: '#/components/parameters/UserCredentialIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UserCredentialUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/UserCredentialDetailResponse'
+        404:
+          description: UserCredential not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - UserCredentials
+      operationId: userCredentialDelete
+      parameters:
+      - $ref: '#/components/parameters/UserCredentialIdParameter'
+      responses:
+        204:
+          description: UserCredential deleted
+        404:
+          description: UserCredential not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - UserCredentials
+      operationId: userCredentialPatch
+      parameters:
+      - $ref: '#/components/parameters/UserCredentialIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UserCredentialPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/UserCredentialDetailResponse'
+        404:
+          description: UserCredential not found
         401:
           description: Unauthorized
         403:
@@ -3721,6 +3861,132 @@ components:
       format: double
     UserAuthSessionPersistentField:
       type: boolean
+    UserCredentialCreateSchema:
+      type: object
+      properties:
+        accountID:
+          type: string
+          example: account_7nL3xQ2v
+        email:
+          type: string
+          example: john.doe@example.com
+        password:
+          type: string
+          example: correct-horse-battery-staple
+      required:
+      - accountID
+      - email
+      - password
+    UserCredentialDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: credential_7nL3xQ2v
+        accountID:
+          type: string
+          example: account_7nL3xQ2v
+        email:
+          type: string
+          example: john.doe@example.com
+      required:
+      - id
+      - accountID
+      - email
+    UserCredentialSearchFilterSchema:
+      type: object
+      properties:
+        search:
+          $ref: '#/components/schemas/UserCredentialSearchField'
+        accountID:
+          $ref: '#/components/schemas/UserCredentialAccountIdField'
+    UserCredentialSearchField:
+      type: string
+      example: foo
+    UserCredentialAccountIdField:
+      type: string
+      example: account_7nL3xQ2v
+    UserCredentialListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - accountID
+                - email
+                example: accountID
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          properties:
+            search:
+              $ref: '#/components/schemas/UserCredentialSearchField'
+            accountID:
+              $ref: '#/components/schemas/UserCredentialAccountIdField'
+      required:
+      - page
+      - filters
+    UserCredentialListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/UserCredentialListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserCredentialListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    UserCredentialListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UserCredentialIdField'
+        accountID:
+          $ref: '#/components/schemas/UserCredentialAccountIdField'
+        email:
+          $ref: '#/components/schemas/UserCredentialEmailField'
+      required:
+      - id
+      - accountID
+      - email
+    UserCredentialIdField:
+      type: string
+      example: credential_7nL3xQ2v
+    UserCredentialEmailField:
+      type: string
+      example: john.doe@example.com
+    UserCredentialPatchSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/UserCredentialEmailField'
+        password:
+          $ref: '#/components/schemas/UserCredentialPasswordField'
+    UserCredentialPasswordField:
+      type: string
+      example: correct-horse-battery-staple
     UserRoleCreateSchema:
       type: object
       properties:
@@ -7729,6 +7995,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserAuthSessionListSchema'
+    UserCredentialDetailResponse:
+      description: User credential response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserCredentialDetailSchema'
+    UserCredentialFiltersResponse:
+      description: UserCredential filter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserCredentialSearchFilterSchema'
+    UserCredentialListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserCredentialListItemSearchSchema'
     UserRoleDetailResponse:
       description: UserRole response
       content:
@@ -8194,6 +8478,12 @@ components:
       schema:
         $ref: '#/components/schemas/UserAuthSessionIDField'
       description: User account session id
+    UserCredentialIdParameter:
+      name: userCredentialId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserCredentialIdField'
     UserRoleIdParameter:
       name: userRoleId
       in: path
@@ -8432,6 +8722,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserAccountPatchSchema'
+      required: true
+    UserCredentialRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserCredentialCreateSchema'
+      required: true
+    UserCredentialUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserCredentialCreateSchema'
+      required: true
+    UserCredentialPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserCredentialPatchSchema'
       required: true
     UserRoleRequestBody:
       content:

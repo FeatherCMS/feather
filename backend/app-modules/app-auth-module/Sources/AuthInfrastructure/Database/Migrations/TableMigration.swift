@@ -47,6 +47,18 @@ public struct TableMigration: DatabaseMigration {
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
             """#,
+            // MARK: - auth credentials
+            #"""
+            CREATE TABLE IF NOT EXISTS auth_credentials (
+                id TEXT PRIMARY KEY,
+                account_id TEXT NOT NULL,
+                email TEXT NOT NULL,
+                password_hash TEXT NOT NULL,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                FOREIGN KEY(account_id) REFERENCES user_account(id) ON DELETE CASCADE
+            );
+            """#,
             // MARK: - role permission
             #"""
             CREATE TABLE IF NOT EXISTS auth_role_permission (

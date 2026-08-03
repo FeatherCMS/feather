@@ -42,17 +42,16 @@ public struct SignInWithCredentials: SignIn {
     ) async throws -> Output {
         try await transaction.run { context in
             guard
-                let user = try await context.account.findBy(
-                    email: input.object.email
-                ),
-                user.status == .active,
-                let hash = try await context.account.findPasswordHashBy(
+                let credential = try await context.credential.findBy(
                     email: input.object.email
                 ),
                 try await checkPasswordHash(
                     using: passwordHasher,
                     original: input.object.password,
-                    hash: hash
+                    hash: credential.passwordHash
+                ),
+                let user = try await context.account.findBy(
+                    id: credential.accountID
                 )
             else {
                 throw UseCaseError.authentication()

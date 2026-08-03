@@ -46,6 +46,9 @@ extension AuthModule {
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
+                    credential: DatabaseCredentialRepository(
+                        connection: connection
+                    ),
                     session: DatabaseSessionRepository(
                         connection: connection
                     ),
@@ -67,6 +70,9 @@ extension AuthModule {
             scope: { connection in
                 WriteAuth(
                     account: DatabaseAccountRepository(
+                        connection: connection
+                    ),
+                    credential: DatabaseCredentialRepository(
                         connection: connection
                     ),
                     session: DatabaseSessionRepository(
@@ -94,6 +100,9 @@ extension AuthModule {
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
+                    credential: DatabaseCredentialRepository(
+                        connection: connection
+                    ),
                     session: DatabaseSessionRepository(
                         connection: connection
                     ),
@@ -116,6 +125,9 @@ extension AuthModule {
             scope: { connection in
                 WriteAuth(
                     account: DatabaseAccountRepository(
+                        connection: connection
+                    ),
+                    credential: DatabaseCredentialRepository(
                         connection: connection
                     ),
                     session: DatabaseSessionRepository(
@@ -161,6 +173,88 @@ extension AuthModule {
             }
         )
         return GetMagicLink(authorizer: authorizer, query: query)
+    }
+
+    func makeListCredential() -> ListCredential {
+        let query = DatabaseQueryExecutor(
+            database: infrastructure.database,
+            scope: { connection in
+                ReadCredentialLink(
+                    credential: DatabaseCredentialQueries(
+                        connection: connection
+                    )
+                )
+            }
+        )
+        return ListCredential(authorizer: authorizer, query: query)
+    }
+
+    func makeGetCredential() -> GetCredential {
+        let query = DatabaseQueryExecutor(
+            database: infrastructure.database,
+            scope: { connection in
+                ReadCredentialLink(
+                    credential: DatabaseCredentialQueries(
+                        connection: connection
+                    )
+                )
+            }
+        )
+        return GetCredential(authorizer: authorizer, query: query)
+    }
+
+    func makeAddCredential() -> AddCredential {
+        let transaction = DatabaseTransactionExecutor(
+            database: infrastructure.database,
+            scope: { connection in
+                WriteCredentialLink(
+                    credential: DatabaseCredentialRepository(
+                        connection: connection
+                    )
+                )
+            }
+        )
+        return AddCredential(
+            authorizer: authorizer,
+            transaction: transaction,
+            idGenerator: infrastructure.idGenerator,
+            passwordHasher: BCryptPasswordHasher()
+        )
+    }
+
+    func makeEditCredential() -> EditCredential {
+        let transaction = DatabaseTransactionExecutor(
+            database: infrastructure.database,
+            scope: { connection in
+                WriteCredentialLink(
+                    credential: DatabaseCredentialRepository(
+                        connection: connection
+                    )
+                )
+            }
+        )
+        return EditCredential(
+            authorizer: authorizer,
+            transaction: transaction,
+            passwordHasher: BCryptPasswordHasher()
+        )
+    }
+
+    func makeRemoveCredential() -> RemoveCredential {
+        let transaction = DatabaseTransactionExecutor(
+            database: infrastructure.database,
+            scope: { connection in
+                WriteCredentialLink(
+                    credential: DatabaseCredentialRepository(
+                        connection: connection
+                    )
+                )
+            }
+        )
+        return RemoveCredential(
+            authorizer: authorizer,
+            transaction: transaction
+        )
     }
 
     func makeListAccountSessions() -> ListAccountSessions {

@@ -33,6 +33,12 @@ public struct TableSeedMigration: DatabaseMigration {
             VALUES
                 -- Auth permissions (current naming)
                 ('auth:admin:access', 'auth:admin:access', 'Access the admin dashboard and admin application shell.', NOW(), NOW()),
+                ('auth:credential:create', 'auth:credential:create', 'Create a user credential.', NOW(), NOW()),
+                ('auth:credential:read', 'auth:credential:read', 'View a single user credential.', NOW(), NOW()),
+                ('auth:credential:update', 'auth:credential:update', 'Edit a user credential.', NOW(), NOW()),
+                ('auth:credential:delete', 'auth:credential:delete', 'Delete a user credential.', NOW(), NOW()),
+                ('auth:credential:find', 'auth:credential:find', 'Find a user credential.', NOW(), NOW()),
+                ('auth:credential:list', 'auth:credential:list', 'List and search user credentials.', NOW(), NOW()),
                 ('auth:magic-links:create', 'auth:magic-links:create', 'Create a magic link.', NOW(), NOW()),
                 ('auth:magic-links:read', 'auth:magic-links:read', 'View a single magic link.', NOW(), NOW()),
                 ('auth:magic-links:update', 'auth:magic-links:update', 'Edit a magic link.', NOW(), NOW()),

@@ -1264,6 +1264,51 @@ extension AdminAPI {
     }
 
     func map(
+        _ query: Components.Schemas.UserCredentialListItemSearchQuerySchema
+    ) -> CredentialList.Query {
+        let sort = (query.sort ?? [])
+            .map { rule in
+                let field: CredentialList.Query.Sort.Field
+                switch rule.field {
+                case .accountID:
+                    field = .accountID
+                case .email:
+                    field = .email
+                }
+                return CredentialList.Query.Sort(
+                    field: field,
+                    direction: mapSortDirection(rule.direction)
+                )
+            }
+
+        return .init(
+            page: map(query.page),
+            sort: sort,
+            search: query.filters.search
+        )
+    }
+
+    func map(
+        _ detail: CredentialDetail
+    ) -> Components.Schemas.UserCredentialDetailSchema {
+        .init(
+            id: detail.id,
+            accountID: detail.accountID,
+            email: detail.email
+        )
+    }
+
+    func map(
+        _ item: CredentialList.Item
+    ) -> Components.Schemas.UserCredentialListItemSchema {
+        .init(
+            id: item.id,
+            accountID: item.accountID,
+            email: item.email
+        )
+    }
+
+    func map(
         _ query: Components.Schemas.MediaAssetListItemSearchQuerySchema
     ) -> MediaAssetList.Query {
         let sort: [MediaAssetList.Query.Sort] = (query.sort ?? [])
