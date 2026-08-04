@@ -19,6 +19,24 @@ struct UserModule: Sendable {
 
 extension UserModule {
 
+    func makeCompleteInvitationRegistration() -> UserApplication.CompleteInvitationRegistration {
+        let transaction = DatabaseTransactionExecutor(
+            database: infrastructure.database,
+            scope: { connection in
+                WriteInvitation(
+                    invitation: DatabaseInvitationRepository(connection: connection),
+                    account: DatabaseAccountRepository(connection: connection),
+                    role: DatabaseRoleRepository(connection: connection),
+                    settings: DatabaseAccountSettingsRepository(connection: connection)
+                )
+            }
+        )
+        return .init(
+            transaction: transaction,
+            passwordHasher: BCryptPasswordHasher()
+        )
+    }
+
     func makeRegisterAccount() -> UserApplication.RegisterAccount {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,
@@ -245,16 +263,21 @@ extension UserModule {
             database: infrastructure.database,
             scope: { connection in
                 WriteInvitation(
-                    invitation: DatabaseInvitationRepository(
-                        connection: connection
-                    )
+                    invitation: DatabaseInvitationRepository(connection: connection),
+                    account: DatabaseAccountRepository(connection: connection),
+                    role: DatabaseRoleRepository(connection: connection),
+                    settings: DatabaseAccountSettingsRepository(connection: connection)
                 )
             }
         )
         return .init(
             authorizer: authorizer,
             transaction: transaction,
-            idGenerator: infrastructure.idGenerator
+            idGenerator: infrastructure.idGenerator,
+            passwordHasher: BCryptPasswordHasher(),
+            mailSender: JobQueueMailSender(
+                queue: infrastructure.jobQueue
+            )
         )
     }
 
@@ -279,7 +302,7 @@ extension UserModule {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,
             scope: { connection in
-                WriteInvitation(
+                WriteInvitationOnly(
                     invitation: DatabaseInvitationRepository(
                         connection: connection
                     )
@@ -313,7 +336,7 @@ extension UserModule {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,
             scope: { connection in
-                WriteInvitation(
+                WriteInvitationOnly(
                     invitation: DatabaseInvitationRepository(
                         connection: connection
                     )

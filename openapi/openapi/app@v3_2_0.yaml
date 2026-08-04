@@ -171,6 +171,16 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/AuthMeResponse'
+  /api/v1/auth/invitation/register:
+    post:
+      tags:
+      - Auth
+      operationId: authInvitationRegistration
+      requestBody:
+        $ref: '#/components/requestBodies/AuthInvitationRegistrationRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthMeResponse'
   /api/v1/auth/login:
     post:
       tags:
@@ -1121,6 +1131,21 @@ components:
       type: string
       examples:
       - root
+    AuthInvitationRegistrationRequestSchema:
+      type: object
+      properties:
+        token:
+          $ref: '#/components/schemas/UserAuthMagicLinkTokenField'
+        password:
+          $ref: '#/components/schemas/UserAccountPasswordField'
+      required:
+      - token
+      - password
+      minProperties: 2
+    UserAuthMagicLinkTokenField:
+      type: string
+      examples:
+      - mgl_3XbY...
     AuthLoginRequestSchema:
       type: object
       properties:
@@ -1428,6 +1453,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthRegisterSchema'
+      required: true
+    AuthInvitationRegistrationRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthInvitationRegistrationRequestSchema'
       required: true
     AuthLoginRequestBody:
       content:

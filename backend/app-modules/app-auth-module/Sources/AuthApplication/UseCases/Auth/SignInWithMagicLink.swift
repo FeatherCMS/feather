@@ -46,7 +46,8 @@ public struct SignInWithMagicLink: SignIn {
             guard
                 let user = try await context.account.findBy(
                     email: usedLink.email
-                )
+                ),
+                user.status == .active
             else {
                 throw UseCaseError.authentication()
             }
