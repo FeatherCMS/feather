@@ -52,7 +52,8 @@ public struct SignInWithCredentials: SignIn {
                 ),
                 let user = try await context.account.findBy(
                     id: credential.accountID
-                )
+                ),
+                user.status == .active
             else {
                 throw UseCaseError.authentication()
             }

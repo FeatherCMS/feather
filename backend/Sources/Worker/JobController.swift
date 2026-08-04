@@ -90,11 +90,9 @@ struct JobController {
         queue.registerJob(parameters: EmailParameters.self) {
             parameters,
             context in
-            try await emailService.sendEmail(
-                to: parameters.to,
-                from: parameters.from,
-                subject: parameters.subject,
-                message: parameters.message
+            try await Self.sendEmail(
+                parameters: parameters,
+                emailService: emailService
             )
         }
         queue.registerJob(
@@ -115,12 +113,9 @@ struct JobController {
             parameters,
             _ in
             do {
-                try await emailService.sendContactFormEmail(
-                    to: parameters.mailTo,
-                    from: parameters.mailFrom,
-                    subject: parameters.subject,
-                    additionalHeaders: parameters.additionalHeaders,
-                    message: parameters.messageBody
+                try await Self.sendContactFormEmail(
+                    parameters: parameters,
+                    emailService: emailService
                 )
                 try await Self.updateNewsletterDelivery(
                     database: database,
@@ -139,6 +134,31 @@ struct JobController {
                 throw error
             }
         }
+    }
+
+    static func sendEmail(
+        parameters: EmailParameters,
+        emailService: EmailService
+    ) async throws {
+        try await emailService.sendEmail(
+            to: parameters.to,
+            from: parameters.from,
+            subject: parameters.subject,
+            message: parameters.message
+        )
+    }
+
+    static func sendContactFormEmail(
+        parameters: ContactFormMailJobPayload,
+        emailService: EmailService
+    ) async throws {
+        try await emailService.sendContactFormEmail(
+            to: parameters.mailTo,
+            from: parameters.mailFrom,
+            subject: parameters.subject,
+            additionalHeaders: parameters.additionalHeaders,
+            message: parameters.messageBody
+        )
     }
 
     private static func updateNewsletterDelivery(

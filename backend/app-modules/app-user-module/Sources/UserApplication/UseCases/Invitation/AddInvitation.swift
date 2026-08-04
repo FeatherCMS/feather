@@ -33,14 +33,14 @@ public struct AddInvitation: UseCase {
     let transaction: any TransactionExecutor<WriteInvitation>
     let idGenerator: any IDGenerator
     let passwordHasher: (any PasswordHasher)?
-    let mailQueue: (any InvitationMailQueue)?
+    let mailQueue: any InvitationMailQueue
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteInvitation>,
         idGenerator: any IDGenerator,
         passwordHasher: (any PasswordHasher)? = nil,
-        mailQueue: (any InvitationMailQueue)? = nil
+        mailQueue: any InvitationMailQueue
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
@@ -106,12 +106,10 @@ public struct AddInvitation: UseCase {
                 )
             )
         }
-        if let mailQueue {
-            try await mailQueue.enqueue(
-                email: model.email,
-                token: model.token
-            )
-        }
+        try await mailQueue.enqueue(
+            email: model.email,
+            token: model.token
+        )
         return model.asDetail
     }
 }
