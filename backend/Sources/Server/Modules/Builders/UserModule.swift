@@ -275,7 +275,7 @@ extension UserModule {
             transaction: transaction,
             idGenerator: infrastructure.idGenerator,
             passwordHasher: BCryptPasswordHasher(),
-            mailQueue: JobQueueInvitationMailQueue(
+            mailSender: JobQueueMailSender(
                 queue: infrastructure.jobQueue
             )
         )

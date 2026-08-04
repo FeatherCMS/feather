@@ -195,7 +195,7 @@ struct UserApplicationTestSuite {
             transaction: transaction,
             idGenerator: FixedIDGenerator(id: "generated-inv-id"),
             passwordHasher: MockPasswordHasher(),
-            mailQueue: MockInvitationMailQueue()
+            mailSender: MockMailSender()
         )
 
         let result = try await useCase.execute(
@@ -227,13 +227,13 @@ struct UserApplicationTestSuite {
                 settings: MockAccountSettingsRepository()
             )
         )
-        let mailQueue = MockInvitationMailQueue()
+        let mailSender = MockMailSender()
         let useCase = AddInvitation(
             authorizer: MockAuthorizer(result: true),
             transaction: transaction,
             idGenerator: FixedIDGenerator(id: "generated-id"),
             passwordHasher: MockPasswordHasher(hashResult: "hashed-password"),
-            mailQueue: mailQueue
+            mailSender: mailSender
         )
 
         _ = try await useCase.execute(
@@ -249,8 +249,8 @@ struct UserApplicationTestSuite {
         #expect(await accountRepo.replacedRoleIds == ["r-invited"])
         #expect(await invitationRepo.createCallCount == 1)
         #expect(await invitationRepo.insertedModel?.accountID == "generated-id")
-        #expect(await mailQueue.enqueueCallCount == 1)
-        #expect(await mailQueue.lastEmail == "invitee@example.com")
+        #expect(await mailSender.sendCallCount == 1)
+        #expect(await mailSender.lastMessage?.to.first?.email == "invitee@example.com")
     }
 
     @Test
@@ -275,7 +275,7 @@ struct UserApplicationTestSuite {
             transaction: transaction,
             idGenerator: FixedIDGenerator(id: "generated-id"),
             passwordHasher: MockPasswordHasher(),
-            mailQueue: MockInvitationMailQueue()
+            mailSender: MockMailSender()
         )
 
         await #expect(throws: AddInvitation.Error.self) {

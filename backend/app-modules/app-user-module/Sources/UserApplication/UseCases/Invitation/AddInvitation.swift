@@ -30,20 +30,20 @@ public struct AddInvitation: UseCase {
     let transaction: any TransactionExecutor<WriteInvitation>
     let idGenerator: any IDGenerator
     let passwordHasher: any PasswordHasher
-    let mailQueue: any InvitationMailQueue
+    let mailSender: any MailSender
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteInvitation>,
         idGenerator: any IDGenerator,
         passwordHasher: any PasswordHasher,
-        mailQueue: any InvitationMailQueue
+        mailSender: any MailSender
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.idGenerator = idGenerator
         self.passwordHasher = passwordHasher
-        self.mailQueue = mailQueue
+        self.mailSender = mailSender
     }
 
     public struct Input: DTO {
@@ -100,9 +100,23 @@ public struct AddInvitation: UseCase {
                 )
             )
         }
-        try await mailQueue.enqueue(
-            email: model.email,
-            token: model.token
+        try await mailSender.send(
+            .init(
+                from: .init("info@binarybirds.com"),
+                to: [.init(model.email)],
+                subject: "Application - Invitation",
+                body: #"""
+                    Hello,
+
+                    You have been invited to create your application account.
+                    Use this invitation token to complete registration:
+
+                    \(model.token)
+
+                    Cheers,
+                    Application Team.
+                    """#
+            )
         )
         return model.asDetail
     }

@@ -133,6 +133,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
+                .product(name: "Jobs", package: "swift-jobs"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

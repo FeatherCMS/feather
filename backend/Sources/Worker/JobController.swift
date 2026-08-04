@@ -71,15 +71,6 @@ struct EmailService {
 }
 
 struct JobController {
-    // parameters required to run email job
-    struct EmailParameters: JobParameters {
-        static let jobName = "send_email"
-        let to: [String]
-        let from: String
-        let subject: String
-        let message: String
-    }
-
     init(
         queue: some JobQueueProtocol,
         emailService: EmailService,
@@ -87,20 +78,10 @@ struct JobController {
     ) {
         // This function demonstrates two different ways to register a job
         // Register Job with predefined job identifier
-        queue.registerJob(parameters: EmailParameters.self) {
+        queue.registerJob(parameters: EmailJobPayload.self) {
             parameters,
             context in
             try await Self.sendEmail(
-                parameters: parameters,
-                emailService: emailService
-            )
-        }
-        queue.registerJob(
-            name: .init(UserInvitationMailJobPayload.jobName),
-            parameters: UserInvitationMailJobPayload.self,
-            retryStrategy: .exponentialJitter(maxAttempts: 5)
-        ) { parameters, _ in
-            try await UserInvitationMailJob.send(
                 parameters: parameters,
                 emailService: emailService
             )
@@ -137,7 +118,7 @@ struct JobController {
     }
 
     static func sendEmail(
-        parameters: EmailParameters,
+        parameters: EmailJobPayload,
         emailService: EmailService
     ) async throws {
         try await emailService.sendEmail(

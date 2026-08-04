@@ -11,13 +11,16 @@ struct UserInvitationMailJobTests {
     @Test
     func sendsInvitationMailToPayloadEmail() async throws {
         let mailbox = EphemeralMailbox()
-        let client = MailClientEphemeral(mailbox: mailbox)
-        let service = EmailService(client: client)
+        let service = EmailService(
+            client: MailClientEphemeral(mailbox: mailbox)
+        )
 
-        try await UserInvitationMailJob.send(
+        try await JobController.sendEmail(
             parameters: .init(
-                email: "invitee@example.com",
-                token: "invitation-token-123"
+                to: ["invitee@example.com"],
+                from: "info@binarybirds.com",
+                subject: "Application - Invitation",
+                message: "Use invitation token: invitation-token-123"
             ),
             emailService: service
         )
@@ -40,14 +43,17 @@ struct UserInvitationMailJobTests {
     @Test
     func rejectsInvalidRecipientWithoutSending() async throws {
         let mailbox = EphemeralMailbox()
-        let client = MailClientEphemeral(mailbox: mailbox)
-        let service = EmailService(client: client)
+        let service = EmailService(
+            client: MailClientEphemeral(mailbox: mailbox)
+        )
 
         await #expect(throws: MailError.self) {
-            try await UserInvitationMailJob.send(
+            try await JobController.sendEmail(
                 parameters: .init(
-                    email: "",
-                    token: "invitation-token-123"
+                    to: [""],
+                    from: "info@binarybirds.com",
+                    subject: "Application - Invitation",
+                    message: "Use invitation token: invitation-token-123"
                 ),
                 emailService: service
             )
