@@ -1,4 +1,6 @@
-public struct UserInvitationMailJobPayload: Codable, Sendable {
+import Jobs
+
+public struct UserInvitationMailJobPayload: JobParameters {
     public static let jobName = "send_user_invitation_email"
 
     public let email: String

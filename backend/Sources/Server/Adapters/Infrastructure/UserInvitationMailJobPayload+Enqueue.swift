@@ -9,9 +9,8 @@ extension JobQueueProtocol {
         email: String,
         token: String
     ) async throws {
-        _ = try await push(
-            .init(UserInvitationMailJobPayload.jobName),
-            parameters: UserInvitationMailJobPayload(
+        try await push(
+            UserInvitationMailJobPayload(
                 email: email,
                 token: token
             )
