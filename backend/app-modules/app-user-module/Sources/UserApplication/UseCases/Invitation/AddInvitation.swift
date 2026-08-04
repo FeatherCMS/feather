@@ -12,13 +12,10 @@ import struct Foundation.Date
 
 public struct AddInvitation: UseCase {
     enum Error: UseCaseError {
-        case dependenciesUnavailable
         case roleNotFound(String)
 
         var message: String {
             switch self {
-            case .dependenciesUnavailable:
-                "Invitation account dependencies are unavailable"
             case .roleNotFound(let roleID):
                 "Role not found: \(roleID)"
             }
@@ -32,14 +29,14 @@ public struct AddInvitation: UseCase {
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteInvitation>
     let idGenerator: any IDGenerator
-    let passwordHasher: (any PasswordHasher)?
+    let passwordHasher: any PasswordHasher
     let mailQueue: any InvitationMailQueue
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteInvitation>,
         idGenerator: any IDGenerator,
-        passwordHasher: (any PasswordHasher)? = nil,
+        passwordHasher: any PasswordHasher,
         mailQueue: any InvitationMailQueue
     ) {
         self.authorizer = authorizer
@@ -70,9 +67,6 @@ public struct AddInvitation: UseCase {
         }
 
         let model = try await transaction.run { context in
-            guard let passwordHasher else {
-                throw Error.dependenciesUnavailable
-            }
             let accountRepository = context.account
             let roleRepository = context.role
             let accountID = idGenerator.generate()
