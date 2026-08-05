@@ -4,12 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AccountDomain
 import Application
 import Domain
 import UserDomain
-
-import struct Foundation.Date
+import UserEvents
 
 public struct AddAccount: UseCase {
     struct Action: PermissionAction {
@@ -17,13 +15,13 @@ public struct AddAccount: UseCase {
     }
 
     let authorizer: any Authorizer
-    let transaction: any TransactionExecutor<WriteAccountAndSettings>
+    let transaction: any TransactionExecutor<WriteAccountCreation>
     let idGenerator: any IDGenerator
     let passwordHasher: any PasswordHasher
 
     public init(
         authorizer: any Authorizer,
-        transaction: any TransactionExecutor<WriteAccountAndSettings>,
+        transaction: any TransactionExecutor<WriteAccountCreation>,
         idGenerator: any IDGenerator,
         passwordHasher: any PasswordHasher
     ) {
@@ -62,7 +60,7 @@ public struct AddAccount: UseCase {
             original: input.password
         )
 
-        let model = try await transaction.run { context in
+        return try await transaction.run { context in
             let model = try await context.account.insert(
                 Account.create(
                     id: id,
@@ -71,10 +69,10 @@ public struct AddAccount: UseCase {
                     passwordHash: hash
                 )
             )
-            // TODO: event hook
-            try await context.settings.create(accountID: model.id)
-            return model
+            try await context.hooks.dispatch(
+                UserAccountDidInsert(accountID: model.id)
+            )
+            return model.asDetail
         }
-        return model.asDetail
     }
 }

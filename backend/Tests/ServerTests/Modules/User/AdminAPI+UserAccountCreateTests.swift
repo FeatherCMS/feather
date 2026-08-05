@@ -1,3 +1,6 @@
+import AccountDomain
+import AccountInfrastructure
+import FeatherDatabase
 import FeatherHTTP
 import HTTPTypes
 import OpenAPIRuntime
@@ -48,6 +51,22 @@ struct AdminAPIUserAccountCreateTests {
             )
         }
         #expect(!created.id.isEmpty)
+
+        let persistedAccountID = try await runner.system.databaseClient.execute
+        {
+            database in
+            try await database.withConnection { connection in
+                let settings = try await DatabaseAccountSettingsRepository(
+                    connection: connection
+                )
+                .get(
+                    accountID: created.id
+                )
+                return settings.accountID
+            }
+        }
+
+        #expect(persistedAccountID == created.id)
     }
 
     @Test

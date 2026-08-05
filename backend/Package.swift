@@ -230,6 +230,7 @@ let package = Package(
                 .product(name: "WebInfrastructure", package: "app-web-module"),
                 .product(name: "BlogInfrastructure", package: "app-blog-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
+                .product(name: "UserEvents", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
@@ -252,6 +253,8 @@ let package = Package(
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
                 .product(name: "PostgresMigrations", package: "postgres-migrations"),
+                .product(name: "AccountDomain", package: "app-account-module"),
+                .product(name: "AccountInfrastructure", package: "app-account-module"),
                 .target(name: "Server"),
             ],
             swiftSettings: defaultSwiftSettings

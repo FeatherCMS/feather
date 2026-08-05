@@ -1,8 +1,7 @@
 import Application
+import Infrastructure
 import UserApplication
 import UserInfrastructure
-import AccountInfrastructure
-import Infrastructure
 
 struct UserModule: Sendable {
     private let infrastructure: AppInfrastructure
@@ -23,12 +22,12 @@ extension UserModule {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,
             scope: { connection in
-                WriteAccountAndSettings(
+                WriteAccountCreation(
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
-                    settings: DatabaseAccountSettingsRepository(
-                        connection: connection
+                    hooks: infrastructure.hooks.dispatcher(
+                        context: AppHookContext(connection: connection)
                     )
                 )
             }
@@ -44,12 +43,12 @@ extension UserModule {
         let transaction = DatabaseTransactionExecutor(
             database: infrastructure.database,
             scope: { connection in
-                WriteAccountAndSettings(
+                WriteAccountCreation(
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
-                    settings: DatabaseAccountSettingsRepository(
-                        connection: connection
+                    hooks: infrastructure.hooks.dispatcher(
+                        context: AppHookContext(connection: connection)
                     )
                 )
             }

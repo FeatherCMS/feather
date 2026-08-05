@@ -28,6 +28,7 @@ func buildTestServer(
     )
 
     let idGenerator = NanoIDGenerator()
+    let hooks = try buildAppHooks()
     let jobQueue = JobQueue(
         MemoryQueue(queueName: config.queue.name),
         logger: logger
@@ -37,6 +38,7 @@ func buildTestServer(
         infrastructure: .init(
             database: database,
             idGenerator: idGenerator,
+            hooks: hooks,
             jobQueue: jobQueue,
             mediaStorageRootPath: config.media.storageRootPath
         )

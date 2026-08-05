@@ -1,4 +1,6 @@
-public struct MediaGenerateVariantJobPayload: Codable, Sendable {
+import Jobs
+
+public struct MediaGenerateVariantJobPayload: JobParameters, Codable, Sendable {
     public static let jobName = "media_generate_variant"
 
     public let assetId: String

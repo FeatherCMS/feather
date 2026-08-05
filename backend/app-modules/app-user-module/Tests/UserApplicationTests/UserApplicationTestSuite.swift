@@ -8,6 +8,7 @@ import Application
 import Domain
 import Testing
 import UserDomain
+import UserEvents
 
 import struct Foundation.Date
 
@@ -19,11 +20,11 @@ struct UserApplicationTestSuite {
     @Test
     func addAccountSuccess() async throws {
         let accountRepo = MockAccountRepository(result: makeAccount(id: "a-1"))
-        let settingsRepo = MockAccountSettingsRepository()
+        let hooks = MockHookDispatcher()
         let transaction = MockTransactionExecutor(
-            context: WriteAccountAndSettings(
+            context: WriteAccountCreation(
                 account: accountRepo,
-                settings: settingsRepo
+                hooks: hooks
             )
         )
         let authorizer = MockAuthorizer(result: true)
@@ -46,8 +47,62 @@ struct UserApplicationTestSuite {
         #expect(result.id == "a-1")
         #expect(await authorizer.canCallCount == 1)
         #expect(await accountRepo.createCallCount == 1)
-        #expect(await settingsRepo.createCallCount == 1)
+        #expect(await hooks.dispatchCallCount == 1)
+        #expect(await hooks.accountIDs == ["a-1"])
         #expect(await passwordHasher.hashCallCount == 1)
+    }
+
+    @Test
+    func registerAccountDispatchesInsertedAccountHook() async throws {
+        let accountRepo = MockAccountRepository(result: makeAccount(id: "a-2"))
+        let hooks = MockHookDispatcher()
+        let transaction = MockTransactionExecutor(
+            context: WriteAccountCreation(
+                account: accountRepo,
+                hooks: hooks
+            )
+        )
+        let useCase = RegisterAccount(
+            transaction: transaction,
+            idGenerator: FixedIDGenerator(id: "generated-id"),
+            passwordHasher: MockPasswordHasher(hashResult: "hashed-password")
+        )
+
+        let result = try await useCase.execute(
+            input: .init(
+                email: "john@example.com",
+                password: "long-enough-password"
+            )
+        )
+
+        #expect(result.id == "a-2")
+        #expect(await hooks.dispatchCallCount == 1)
+        #expect(await hooks.accountIDs == ["a-2"])
+    }
+
+    @Test
+    func accountCreationFailsWhenHookFails() async throws {
+        let hooks = MockHookDispatcher(shouldFail: true)
+        let transaction = MockTransactionExecutor(
+            context: WriteAccountCreation(
+                account: MockAccountRepository(result: makeAccount(id: "a-3")),
+                hooks: hooks
+            )
+        )
+        let useCase = RegisterAccount(
+            transaction: transaction,
+            idGenerator: FixedIDGenerator(id: "generated-id"),
+            passwordHasher: MockPasswordHasher(hashResult: "hashed-password")
+        )
+
+        await #expect(throws: (any Error).self) {
+            _ = try await useCase.execute(
+                input: .init(
+                    email: "john@example.com",
+                    password: "long-enough-password"
+                )
+            )
+        }
     }
 
     @Test
