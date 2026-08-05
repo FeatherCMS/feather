@@ -14,6 +14,7 @@ extension InvitationTable.Row {
     var asQueryListItem: InvitationList.Item {
         .init(
             id: id,
+            accountID: accountID,
             email: email,
             token: token,
             expiresAt: expiresAt,
@@ -25,6 +26,7 @@ extension InvitationTable.Row {
     var asDetail: InvitationDetail {
         .init(
             id: id,
+            accountID: accountID,
             email: email,
             token: token,
             expiresAt: expiresAt,

@@ -4181,6 +4181,8 @@ components:
         email:
           type: string
           example: john.doe@example.com
+        roleIds:
+          $ref: '#/components/schemas/UserAccountRoleIdsField'
       required:
       - email
     UserInvitationDetailSchema:

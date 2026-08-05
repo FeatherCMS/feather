@@ -71,15 +71,6 @@ struct EmailService {
 }
 
 struct JobController {
-    // parameters required to run email job
-    struct EmailParameters: JobParameters {
-        static let jobName = "send_email"
-        let to: [String]
-        let from: String
-        let subject: String
-        let message: String
-    }
-
     init(
         queue: some JobQueueProtocol,
         emailService: EmailService,
@@ -87,14 +78,12 @@ struct JobController {
     ) {
         // This function demonstrates two different ways to register a job
         // Register Job with predefined job identifier
-        queue.registerJob(parameters: EmailParameters.self) {
+        queue.registerJob(parameters: EmailJobPayload.self) {
             parameters,
             context in
-            try await emailService.sendEmail(
-                to: parameters.to,
-                from: parameters.from,
-                subject: parameters.subject,
-                message: parameters.message
+            try await Self.sendEmail(
+                parameters: parameters,
+                emailService: emailService
             )
         }
         queue.registerJob(
@@ -105,12 +94,9 @@ struct JobController {
             parameters,
             _ in
             do {
-                try await emailService.sendContactFormEmail(
-                    to: parameters.mailTo,
-                    from: parameters.mailFrom,
-                    subject: parameters.subject,
-                    additionalHeaders: parameters.additionalHeaders,
-                    message: parameters.messageBody
+                try await Self.sendContactFormEmail(
+                    parameters: parameters,
+                    emailService: emailService
                 )
                 try await Self.updateNewsletterDelivery(
                     database: database,
@@ -129,6 +115,31 @@ struct JobController {
                 throw error
             }
         }
+    }
+
+    static func sendEmail(
+        parameters: EmailJobPayload,
+        emailService: EmailService
+    ) async throws {
+        try await emailService.sendEmail(
+            to: parameters.to,
+            from: parameters.from,
+            subject: parameters.subject,
+            message: parameters.message
+        )
+    }
+
+    static func sendContactFormEmail(
+        parameters: ContactFormMailJobPayload,
+        emailService: EmailService
+    ) async throws {
+        try await emailService.sendContactFormEmail(
+            to: parameters.mailTo,
+            from: parameters.mailFrom,
+            subject: parameters.subject,
+            additionalHeaders: parameters.additionalHeaders,
+            message: parameters.messageBody
+        )
     }
 
     private static func updateNewsletterDelivery(

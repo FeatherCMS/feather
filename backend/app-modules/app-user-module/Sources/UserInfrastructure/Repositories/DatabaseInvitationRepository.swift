@@ -15,6 +15,7 @@ extension InvitationTable.Row {
     var asDomain: Invitation {
         .init(
             id: id,
+            accountID: accountID,
             email: email,
             token: token,
             expiresAt: expiresAt,
@@ -41,6 +42,13 @@ public struct DatabaseInvitationRepository: InvitationRepository {
         return try await table.find(id: id)?.asDomain
     }
 
+    public func findBy(
+        token: String
+    ) async throws -> Invitation? {
+        let table = InvitationTable(connection: connection)
+        return try await table.find(token: token)?.asDomain
+    }
+
     public func insert(
         _ model: Invitation.New
     ) async throws -> Invitation {
@@ -48,6 +56,7 @@ public struct DatabaseInvitationRepository: InvitationRepository {
         let saved = try await table.save(
             row: .init(
                 id: model.id,
+                accountID: model.accountID,
                 email: model.email,
                 token: model.token,
                 expiresAtInterval: model.expiresAtInterval
@@ -64,6 +73,7 @@ public struct DatabaseInvitationRepository: InvitationRepository {
             id: model.id,
             row: .init(
                 id: model.id,
+                accountID: model.accountID,
                 email: model.email,
                 token: model.token,
                 expiresAt: model.expiresAt,

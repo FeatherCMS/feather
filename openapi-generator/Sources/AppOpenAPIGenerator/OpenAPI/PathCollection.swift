@@ -28,6 +28,7 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/web/pages/{id}": WebPageGetPathItems(),
             "api/v1/auth/me": AuthMePathItems(),
             "api/v1/auth/register": AuthRegisterPathItems(),
+            "api/v1/auth/invitation/register": AuthInvitationRegistrationPathItems(),
             "api/v1/auth/login": AuthLoginPathItems(),
             "api/v1/auth/logout": AuthLogoutPathItems(),
             "api/v1/auth/magic-link": AuthMagicLinkPathItems(),

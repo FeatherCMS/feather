@@ -3933,15 +3933,23 @@ public enum Components {
         public struct UserInvitationCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserInvitationCreateSchema/email`.
             public var email: Swift.String
+            /// - Remark: Generated from `#/components/schemas/UserInvitationCreateSchema/roleIds`.
+            public var roleIds: Components.Schemas.UserAccountRoleIdsField?
             /// Creates a new `UserInvitationCreateSchema`.
             ///
             /// - Parameters:
             ///   - email:
-            public init(email: Swift.String) {
+            ///   - roleIds:
+            public init(
+                email: Swift.String,
+                roleIds: Components.Schemas.UserAccountRoleIdsField? = nil
+            ) {
                 self.email = email
+                self.roleIds = roleIds
             }
             public enum CodingKeys: String, CodingKey {
                 case email
+                case roleIds
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserInvitationDetailSchema`.

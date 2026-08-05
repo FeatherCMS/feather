@@ -133,6 +133,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
+                .product(name: "Jobs", package: "swift-jobs"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
@@ -256,6 +257,17 @@ let package = Package(
                 .product(name: "AccountDomain", package: "app-account-module"),
                 .product(name: "AccountInfrastructure", package: "app-account-module"),
                 .target(name: "Server"),
+            ],
+            swiftSettings: defaultSwiftSettings
+        ),
+
+        .testTarget(
+            name: "WorkerTests",
+            dependencies: [
+                .target(name: "Worker"),
+                .product(name: "FeatherMailEphemeral", package: "feather-mail-ephemeral"),
+                .product(name: "FeatherMail", package: "feather-mail"),
+                .target(name: "Environment"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

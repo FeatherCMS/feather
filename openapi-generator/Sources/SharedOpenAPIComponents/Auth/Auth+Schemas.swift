@@ -59,3 +59,12 @@ struct AuthMagicLinkVerifyRequestSchema: ObjectSchemaRepresentable {
         ]
     }
 }
+
+struct AuthInvitationRegistrationRequestSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "token": UserAuthMagicLinkTokenField().reference(),
+            "password": UserAccountPasswordField().reference(),
+        ]
+    }
+}

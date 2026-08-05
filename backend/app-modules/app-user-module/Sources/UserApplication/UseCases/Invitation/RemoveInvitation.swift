@@ -13,11 +13,11 @@ public struct RemoveInvitation: UseCase {
     }
 
     let authorizer: any Authorizer
-    let transaction: any TransactionExecutor<WriteInvitation>
+    let transaction: any TransactionExecutor<WriteInvitationOnly>
 
     public init(
         authorizer: any Authorizer,
-        transaction: any TransactionExecutor<WriteInvitation>
+        transaction: any TransactionExecutor<WriteInvitationOnly>
     ) {
         self.authorizer = authorizer
         self.transaction = transaction

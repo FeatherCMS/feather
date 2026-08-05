@@ -15,6 +15,7 @@ extension InvitationTable.Row {
         from row: DatabaseRow
     ) throws {
         self.id = try row.decode(column: "id", as: String.self)
+        self.accountID = try row.decode(column: "account_id", as: String.self)
         self.email = try row.decode(column: "email", as: String.self)
         self.token = try row.decode(column: "token", as: String.self)
         self.expiresAt = try row.decode(
@@ -37,12 +38,14 @@ struct InvitationTable {
     struct Row {
         struct Create {
             let id: String
+            let accountID: String
             let email: String
             let token: String
             let expiresAtInterval: Double
         }
 
         let id: String
+        let accountID: String
         let email: String
         let token: String
         let expiresAt: Date
@@ -59,6 +62,7 @@ struct InvitationTable {
             query: #"""
                 INSERT INTO user_invitation (
                     id,
+                    account_id,
                     email,
                     token,
                     expires_at,
@@ -67,6 +71,7 @@ struct InvitationTable {
                 )
                 VALUES (
                     \#(row.id),
+                    \#(row.accountID),
                     \#(row.email),
                     \#(row.token),
                     NOW() + (\#(row.expiresAtInterval) * INTERVAL '1 second'),
@@ -150,6 +155,21 @@ struct InvitationTable {
         }
     }
 
+    func find(
+        token: String
+    ) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT * FROM user_invitation WHERE token=\#(token) LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try Row(from: row)
+        }
+    }
+
     func update(
         id: String,
         row: Row
@@ -159,6 +179,7 @@ struct InvitationTable {
                 UPDATE user_invitation
                 SET
                     id=\#(row.id),
+                    account_id=\#(row.accountID),
                     email=\#(row.email),
                     token=\#(row.token),
                     expires_at=TO_TIMESTAMP(\#(row.expiresAt.timeIntervalSince1970)),
