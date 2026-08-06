@@ -82,6 +82,9 @@ public struct AddInvitation: UseCase {
                     passwordHash: passwordHash
                 )
             )
+            try await context.hooks.dispatch(
+                UserAccountDidInsert(accountID: account.id)
+            )
             for roleID in input.roleIDs {
                 guard try await roleRepository.findBy(id: roleID) != nil else {
                     throw Error.roleNotFound(roleID)

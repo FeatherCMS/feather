@@ -4,7 +4,6 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-import AccountDomain
 import Application
 import Domain
 import UserDomain
@@ -63,7 +62,6 @@ public struct CompleteInvitationRegistration: UseCase {
                 passwordHash: hash,
                 status: .active
             )
-            try await context.settings.create(accountID: account.id)
             let updated = try await context.account.update(account)
             guard try await context.invitation.delete(id: invitation.id) else {
                 throw Error(message: "Invitation already used")

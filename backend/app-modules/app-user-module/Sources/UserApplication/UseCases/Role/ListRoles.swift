@@ -13,11 +13,11 @@ public struct ListRoles: UseCase {
     }
 
     let authorizer: any Authorizer
-    let query: any QueryExecutor<ReadRole>
+    let query: any QueryExecutor<ReadRoles>
 
     public init(
         authorizer: any Authorizer,
-        query: any QueryExecutor<ReadRole>
+        query: any QueryExecutor<ReadRoles>
     ) {
         self.authorizer = authorizer
         self.query = query

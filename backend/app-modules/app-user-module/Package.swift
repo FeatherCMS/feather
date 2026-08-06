@@ -40,7 +40,6 @@ let package = Package(
         .visionOS(.v2),
     ],
     products: [
-        .library(name: "UserEvents", targets: ["UserEvents"]),
         .library(name: "UserDomain", targets: ["UserDomain"]),
         .library(name: "UserApplication", targets: ["UserApplication"]),
         .library(name: "UserInfrastructure", targets: ["UserInfrastructure"]),
@@ -99,13 +98,6 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "UserEvents",
-            dependencies: [
-                .product(name: "Application", package: "app-kernel")
-            ],
-            swiftSettings: defaultSwiftSettings
-        ),
-        .target(
             name: "UserDomain",
             dependencies: [
                 .product(name: "Domain", package: "app-kernel")
@@ -116,7 +108,6 @@ let package = Package(
             name: "UserApplication",
             dependencies: [
                 .product(name: "Application", package: "app-kernel"),
-                .target(name: "UserEvents"),
                 .target(name: "UserDomain"),
             ],
             swiftSettings: defaultSwiftSettings
@@ -143,7 +134,6 @@ let package = Package(
             name: "UserApplicationTests",
             dependencies: [
                 .target(name: "UserApplication"),
-                .target(name: "UserEvents"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

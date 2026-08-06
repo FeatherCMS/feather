@@ -5,7 +5,7 @@
 
 import AccountInfrastructure
 import Infrastructure
-import UserEvents
+import UserApplication
 
 func buildAppHooks() throws -> HookRegistry<AppHookContext> {
     var hooks = HookRegistryBuilder<AppHookContext>()
@@ -14,11 +14,9 @@ func buildAppHooks() throws -> HookRegistry<AppHookContext> {
         UserAccountDidInsert.self,
         id: "account.create-default-settings"
     ) { hook, context in
-        try await DatabaseAccountSettingsRepository(
+        try await AccountSettingsHooks.createDefaultSettings(
+            accountID: hook.accountID,
             connection: context.connection
-        )
-        .create(
-            accountID: hook.accountID
         )
     }
 

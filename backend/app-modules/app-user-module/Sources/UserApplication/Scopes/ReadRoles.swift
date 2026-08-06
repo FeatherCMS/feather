@@ -1,5 +1,5 @@
 //
-//  RoleScopes.swift
+//  ReadRoles.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -7,7 +7,7 @@
 import Application
 import UserDomain
 
-public struct ReadRole: Scope {
+public struct ReadRoles: Scope {
     public let role: any RoleQueries
 
     public init(

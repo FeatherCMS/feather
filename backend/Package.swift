@@ -231,7 +231,6 @@ let package = Package(
                 .product(name: "WebInfrastructure", package: "app-web-module"),
                 .product(name: "BlogInfrastructure", package: "app-blog-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
-                .product(name: "UserEvents", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),

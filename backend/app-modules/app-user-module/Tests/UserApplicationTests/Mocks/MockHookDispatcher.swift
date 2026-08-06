@@ -4,7 +4,7 @@
 //
 
 import Application
-import UserEvents
+import UserApplication
 
 actor MockHookDispatcher: HookDispatcher {
 

@@ -8,7 +8,6 @@ import Application
 import Domain
 import Testing
 import UserDomain
-import UserEvents
 
 import struct Foundation.Date
 
@@ -185,7 +184,7 @@ struct UserApplicationTestSuite {
             listResult: .init(items: []),
             countResult: 7
         )
-        let queryExecutor = MockQueryExecutor(context: ReadRole(role: queries))
+        let queryExecutor = MockQueryExecutor(context: ReadRoles(role: queries))
         let authorizer = MockAuthorizer(result: true)
         let useCase = ListRoles(
             authorizer: authorizer,
@@ -236,12 +235,13 @@ struct UserApplicationTestSuite {
         let repo = MockInvitationRepository(result: makeInvitation(id: "i-1"))
         let accountRepo = MockAccountRepository(result: makeAccount(id: "a-1"))
         let roleRepo = MockRoleRepository(result: makeRole(id: "r-1"))
+        let hooks = MockHookDispatcher()
         let transaction = MockTransactionExecutor(
             context: WriteInvitation(
                 invitation: repo,
                 account: accountRepo,
                 role: roleRepo,
-                settings: MockAccountSettingsRepository()
+                hooks: hooks
             )
         )
         let authorizer = MockAuthorizer(result: true)
@@ -260,6 +260,8 @@ struct UserApplicationTestSuite {
 
         #expect(result.id == "i-1")
         #expect(await repo.createCallCount == 1)
+        #expect(await hooks.dispatchCallCount == 1)
+        #expect(await hooks.accountIDs == ["a-1"])
     }
 
     @Test
@@ -279,7 +281,7 @@ struct UserApplicationTestSuite {
                 invitation: invitationRepo,
                 account: accountRepo,
                 role: roleRepo,
-                settings: MockAccountSettingsRepository()
+                    hooks: MockHookDispatcher()
             )
         )
         let mailSender = MockMailSender()
@@ -305,7 +307,10 @@ struct UserApplicationTestSuite {
         #expect(await invitationRepo.createCallCount == 1)
         #expect(await invitationRepo.insertedModel?.accountID == "generated-id")
         #expect(await mailSender.sendCallCount == 1)
-        #expect(await mailSender.lastMessage?.to.first?.email == "invitee@example.com")
+        #expect(
+            await mailSender.lastMessage?.to.first?.email
+                == "invitee@example.com"
+        )
     }
 
     @Test
@@ -322,7 +327,7 @@ struct UserApplicationTestSuite {
                 invitation: invitationRepo,
                 account: accountRepo,
                 role: roleRepo,
-                settings: MockAccountSettingsRepository()
+                    hooks: MockHookDispatcher()
             )
         )
         let useCase = AddInvitation(
@@ -369,7 +374,7 @@ struct UserApplicationTestSuite {
                 invitation: invitationRepo,
                 account: accountRepo,
                 role: MockRoleRepository(result: makeRole(id: "r-complete")),
-                settings: MockAccountSettingsRepository()
+                    hooks: MockHookDispatcher()
             )
         )
         let useCase = CompleteInvitationRegistration(
@@ -413,7 +418,7 @@ struct UserApplicationTestSuite {
                     invitation: invitationRepo,
                     account: accountRepo,
                     role: MockRoleRepository(result: makeRole(id: "r-expired")),
-                    settings: MockAccountSettingsRepository()
+                    hooks: MockHookDispatcher()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -449,7 +454,7 @@ struct UserApplicationTestSuite {
                     role: MockRoleRepository(
                         result: makeRole(id: "r-invalid-token")
                     ),
-                    settings: MockAccountSettingsRepository()
+                    hooks: MockHookDispatcher()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -486,7 +491,7 @@ struct UserApplicationTestSuite {
                     invitation: invitationRepo,
                     account: accountRepo,
                     role: MockRoleRepository(result: makeRole(id: "r-used")),
-                    settings: MockAccountSettingsRepository()
+                    hooks: MockHookDispatcher()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -522,8 +527,10 @@ struct UserApplicationTestSuite {
                 context: WriteInvitation(
                     invitation: invitationRepo,
                     account: accountRepo,
-                    role: MockRoleRepository(result: makeRole(id: "r-inactive")),
-                    settings: MockAccountSettingsRepository()
+                    role: MockRoleRepository(
+                        result: makeRole(id: "r-inactive")
+                    ),
+                    hooks: MockHookDispatcher()
                 )
             ),
             passwordHasher: MockPasswordHasher()

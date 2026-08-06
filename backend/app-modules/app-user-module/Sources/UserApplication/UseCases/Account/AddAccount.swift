@@ -7,7 +7,6 @@
 import Application
 import Domain
 import UserDomain
-import UserEvents
 
 public struct AddAccount: UseCase {
     struct Action: PermissionAction {

@@ -26,7 +26,9 @@ extension UserModule {
                     invitation: DatabaseInvitationRepository(connection: connection),
                     account: DatabaseAccountRepository(connection: connection),
                     role: DatabaseRoleRepository(connection: connection),
-                    settings: DatabaseAccountSettingsRepository(connection: connection)
+                    hooks: infrastructure.hooks.dispatcher(
+                        context: AppHookContext(connection: connection)
+                    )
                 )
             }
         )
@@ -193,7 +195,7 @@ extension UserModule {
         let query = DatabaseQueryExecutor(
             database: infrastructure.database,
             scope: { connection in
-                ReadRole(
+                ReadRoles(
                     role: DatabaseRoleQueries(
                         connection: connection
                     )
@@ -227,7 +229,7 @@ extension UserModule {
         let query = DatabaseQueryExecutor(
             database: infrastructure.database,
             scope: { connection in
-                ReadRole(
+                ReadRoles(
                     role: DatabaseRoleQueries(
                         connection: connection
                     )
@@ -265,7 +267,9 @@ extension UserModule {
                     invitation: DatabaseInvitationRepository(connection: connection),
                     account: DatabaseAccountRepository(connection: connection),
                     role: DatabaseRoleRepository(connection: connection),
-                    settings: DatabaseAccountSettingsRepository(connection: connection)
+                    hooks: infrastructure.hooks.dispatcher(
+                        context: AppHookContext(connection: connection)
+                    )
                 )
             }
         )
