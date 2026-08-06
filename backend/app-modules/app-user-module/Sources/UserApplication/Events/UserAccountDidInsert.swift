@@ -5,7 +5,7 @@
 
 import Application
 
-public struct UserAccountDidInsert: Hook {
+public struct UserAccountDidInsert: Event {
 
     public let accountID: String
 

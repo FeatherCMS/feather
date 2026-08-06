@@ -1,10 +1,10 @@
 //
-//  AppHookContext.swift
+//  AppEventContext.swift
 //  backend
 //
 
 import FeatherDatabase
 
-struct AppHookContext: Sendable {
+struct AppEventContext: Sendable {
     let connection: any DatabaseConnection
 }

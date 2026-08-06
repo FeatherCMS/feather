@@ -19,11 +19,11 @@ struct UserApplicationTestSuite {
     @Test
     func addAccountSuccess() async throws {
         let accountRepo = MockAccountRepository(result: makeAccount(id: "a-1"))
-        let hooks = MockHookDispatcher()
+        let events = MockEventDispatcher()
         let transaction = MockTransactionExecutor(
             context: WriteAccountCreation(
                 account: accountRepo,
-                hooks: hooks
+                events: events
             )
         )
         let authorizer = MockAuthorizer(result: true)
@@ -46,19 +46,19 @@ struct UserApplicationTestSuite {
         #expect(result.id == "a-1")
         #expect(await authorizer.canCallCount == 1)
         #expect(await accountRepo.createCallCount == 1)
-        #expect(await hooks.dispatchCallCount == 1)
-        #expect(await hooks.accountIDs == ["a-1"])
+        #expect(await events.dispatchCallCount == 1)
+        #expect(await events.accountIDs == ["a-1"])
         #expect(await passwordHasher.hashCallCount == 1)
     }
 
     @Test
-    func registerAccountDispatchesInsertedAccountHook() async throws {
+    func registerAccountDispatchesInsertedAccountEvent() async throws {
         let accountRepo = MockAccountRepository(result: makeAccount(id: "a-2"))
-        let hooks = MockHookDispatcher()
+        let events = MockEventDispatcher()
         let transaction = MockTransactionExecutor(
             context: WriteAccountCreation(
                 account: accountRepo,
-                hooks: hooks
+                events: events
             )
         )
         let useCase = RegisterAccount(
@@ -75,17 +75,17 @@ struct UserApplicationTestSuite {
         )
 
         #expect(result.id == "a-2")
-        #expect(await hooks.dispatchCallCount == 1)
-        #expect(await hooks.accountIDs == ["a-2"])
+        #expect(await events.dispatchCallCount == 1)
+        #expect(await events.accountIDs == ["a-2"])
     }
 
     @Test
-    func accountCreationFailsWhenHookFails() async throws {
-        let hooks = MockHookDispatcher(shouldFail: true)
+    func accountCreationFailsWhenEventDispatchFails() async throws {
+        let events = MockEventDispatcher(shouldFail: true)
         let transaction = MockTransactionExecutor(
             context: WriteAccountCreation(
                 account: MockAccountRepository(result: makeAccount(id: "a-3")),
-                hooks: hooks
+                events: events
             )
         )
         let useCase = RegisterAccount(
@@ -235,13 +235,13 @@ struct UserApplicationTestSuite {
         let repo = MockInvitationRepository(result: makeInvitation(id: "i-1"))
         let accountRepo = MockAccountRepository(result: makeAccount(id: "a-1"))
         let roleRepo = MockRoleRepository(result: makeRole(id: "r-1"))
-        let hooks = MockHookDispatcher()
+        let events = MockEventDispatcher()
         let transaction = MockTransactionExecutor(
             context: WriteInvitation(
                 invitation: repo,
                 account: accountRepo,
                 role: roleRepo,
-                hooks: hooks
+                events: events
             )
         )
         let authorizer = MockAuthorizer(result: true)
@@ -260,8 +260,8 @@ struct UserApplicationTestSuite {
 
         #expect(result.id == "i-1")
         #expect(await repo.createCallCount == 1)
-        #expect(await hooks.dispatchCallCount == 1)
-        #expect(await hooks.accountIDs == ["a-1"])
+        #expect(await events.dispatchCallCount == 1)
+        #expect(await events.accountIDs == ["a-1"])
     }
 
     @Test
@@ -281,7 +281,7 @@ struct UserApplicationTestSuite {
                 invitation: invitationRepo,
                 account: accountRepo,
                 role: roleRepo,
-                    hooks: MockHookDispatcher()
+                events: MockEventDispatcher()
             )
         )
         let mailSender = MockMailSender()
@@ -322,12 +322,13 @@ struct UserApplicationTestSuite {
             result: makeAccount(id: "a-role-error")
         )
         let roleRepo = MockRoleRepository(result: makeRole(id: "r-role-error"))
+        let events = MockEventDispatcher()
         let transaction = MockTransactionExecutor(
             context: WriteInvitation(
                 invitation: invitationRepo,
                 account: accountRepo,
                 role: roleRepo,
-                    hooks: MockHookDispatcher()
+                events: events
             )
         )
         let useCase = AddInvitation(
@@ -350,6 +351,7 @@ struct UserApplicationTestSuite {
 
         #expect(await accountRepo.replaceRoleIdsCallCount == 0)
         #expect(await invitationRepo.createCallCount == 0)
+        #expect(await events.dispatchCallCount == 0)
     }
 
     @Test
@@ -374,7 +376,7 @@ struct UserApplicationTestSuite {
                 invitation: invitationRepo,
                 account: accountRepo,
                 role: MockRoleRepository(result: makeRole(id: "r-complete")),
-                    hooks: MockHookDispatcher()
+                events: MockEventDispatcher()
             )
         )
         let useCase = CompleteInvitationRegistration(
@@ -418,7 +420,7 @@ struct UserApplicationTestSuite {
                     invitation: invitationRepo,
                     account: accountRepo,
                     role: MockRoleRepository(result: makeRole(id: "r-expired")),
-                    hooks: MockHookDispatcher()
+                    events: MockEventDispatcher()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -454,7 +456,7 @@ struct UserApplicationTestSuite {
                     role: MockRoleRepository(
                         result: makeRole(id: "r-invalid-token")
                     ),
-                    hooks: MockHookDispatcher()
+                    events: MockEventDispatcher()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -491,7 +493,7 @@ struct UserApplicationTestSuite {
                     invitation: invitationRepo,
                     account: accountRepo,
                     role: MockRoleRepository(result: makeRole(id: "r-used")),
-                    hooks: MockHookDispatcher()
+                    events: MockEventDispatcher()
                 )
             ),
             passwordHasher: MockPasswordHasher()
@@ -530,7 +532,7 @@ struct UserApplicationTestSuite {
                     role: MockRoleRepository(
                         result: makeRole(id: "r-inactive")
                     ),
-                    hooks: MockHookDispatcher()
+                    events: MockEventDispatcher()
                 )
             ),
             passwordHasher: MockPasswordHasher()

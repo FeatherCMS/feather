@@ -1,20 +1,20 @@
 //
-//  HookDispatchError.swift
+//  EventDispatchError.swift
 //  app-kernel
 //
 
-public struct HookDispatchError: Error {
+public struct EventDispatchError: Error {
 
-    public let hookType: String
+    public let eventType: String
     public let handlerID: String
     public let underlyingError: any Error
 
     public init(
-        hookType: String,
+        eventType: String,
         handlerID: String,
         underlyingError: any Error
     ) {
-        self.hookType = hookType
+        self.eventType = eventType
         self.handlerID = handlerID
         self.underlyingError = underlyingError
     }

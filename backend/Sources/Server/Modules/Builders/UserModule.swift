@@ -26,8 +26,8 @@ extension UserModule {
                     invitation: DatabaseInvitationRepository(connection: connection),
                     account: DatabaseAccountRepository(connection: connection),
                     role: DatabaseRoleRepository(connection: connection),
-                    hooks: infrastructure.hooks.dispatcher(
-                        context: AppHookContext(connection: connection)
+                    events: infrastructure.eventHandlers.dispatcher(
+                        context: AppEventContext(connection: connection)
                     )
                 )
             }
@@ -46,8 +46,8 @@ extension UserModule {
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
-                    hooks: infrastructure.hooks.dispatcher(
-                        context: AppHookContext(connection: connection)
+                    events: infrastructure.eventHandlers.dispatcher(
+                        context: AppEventContext(connection: connection)
                     )
                 )
             }
@@ -67,8 +67,8 @@ extension UserModule {
                     account: DatabaseAccountRepository(
                         connection: connection
                     ),
-                    hooks: infrastructure.hooks.dispatcher(
-                        context: AppHookContext(connection: connection)
+                    events: infrastructure.eventHandlers.dispatcher(
+                        context: AppEventContext(connection: connection)
                     )
                 )
             }
@@ -267,8 +267,8 @@ extension UserModule {
                     invitation: DatabaseInvitationRepository(connection: connection),
                     account: DatabaseAccountRepository(connection: connection),
                     role: DatabaseRoleRepository(connection: connection),
-                    hooks: infrastructure.hooks.dispatcher(
-                        context: AppHookContext(connection: connection)
+                    events: infrastructure.eventHandlers.dispatcher(
+                        context: AppEventContext(connection: connection)
                     )
                 )
             }

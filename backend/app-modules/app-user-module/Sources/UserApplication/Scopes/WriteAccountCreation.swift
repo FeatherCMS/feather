@@ -9,13 +9,13 @@ import UserDomain
 public struct WriteAccountCreation: Scope {
 
     public let account: any AccountRepository
-    public let hooks: any HookDispatcher
+    public let events: any EventDispatcher
 
     public init(
         account: any AccountRepository,
-        hooks: any HookDispatcher
+        events: any EventDispatcher
     ) {
         self.account = account
-        self.hooks = hooks
+        self.events = events
     }
 }

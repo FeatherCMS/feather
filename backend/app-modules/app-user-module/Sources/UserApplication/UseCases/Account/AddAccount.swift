@@ -68,7 +68,7 @@ public struct AddAccount: UseCase {
                     passwordHash: hash
                 )
             )
-            try await context.hooks.dispatch(
+            try await context.events.dispatch(
                 UserAccountDidInsert(accountID: model.id)
             )
             return model.asDetail

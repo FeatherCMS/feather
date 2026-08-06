@@ -11,17 +11,17 @@ public struct WriteInvitation: Scope {
     public let invitation: any InvitationRepository
     public let account: any AccountRepository
     public let role: any RoleRepository
-    public let hooks: any HookDispatcher
+    public let events: any EventDispatcher
 
     public init(
         invitation: any InvitationRepository,
         account: any AccountRepository,
         role: any RoleRepository,
-        hooks: any HookDispatcher
+        events: any EventDispatcher
     ) {
         self.invitation = invitation
         self.account = account
         self.role = role
-        self.hooks = hooks
+        self.events = events
     }
 }

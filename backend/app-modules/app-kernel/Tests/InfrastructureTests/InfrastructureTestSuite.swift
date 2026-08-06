@@ -15,20 +15,20 @@ struct InfrastructureTestSuite {
     @Test
     func dispatchesMatchingHandlersInRegistrationOrder() async throws {
         let recorder = Recorder()
-        var builder = HookRegistryBuilder<String>()
-        try builder.register(TestHook.self, id: "first") { hook, context in
-            await recorder.append("\(context):\(hook.value):first")
+        var builder = EventHandlerRegistryBuilder<String>()
+        try builder.register(TestEvent.self, id: "first") { event, context in
+            await recorder.append("\(context):\(event.value):first")
         }
-        try builder.register(TestHook.self, id: "second") { hook, context in
-            await recorder.append("\(context):\(hook.value):second")
+        try builder.register(TestEvent.self, id: "second") { event, context in
+            await recorder.append("\(context):\(event.value):second")
         }
-        try builder.register(OtherHook.self, id: "other") { _, _ in
+        try builder.register(OtherEvent.self, id: "other") { _, _ in
             await recorder.append("other")
         }
 
         try await builder.build()
             .dispatcher(context: "context")
-            .dispatch(TestHook(value: "value"))
+            .dispatch(TestEvent(value: "value"))
 
         #expect(
             await recorder.values == [
@@ -39,49 +39,59 @@ struct InfrastructureTestSuite {
     }
 
     @Test
-    func rejectsDuplicateHandlerIDsForTheSameHook() throws {
-        var builder = HookRegistryBuilder<VoidContext>()
-        try builder.register(TestHook.self, id: "duplicate") { _, _ in }
+    func rejectsDuplicateHandlerIDsForTheSameEvent() throws {
+        var builder = EventHandlerRegistryBuilder<VoidContext>()
+        try builder.register(TestEvent.self, id: "duplicate") { _, _ in }
 
-        #expect(throws: HookRegistryError.self) {
-            try builder.register(TestHook.self, id: "duplicate") { _, _ in }
+        #expect(
+            throws: EventHandlerRegistryError.duplicateHandler(
+                eventType: String(reflecting: TestEvent.self),
+                handlerID: "duplicate"
+            )
+        ) {
+            try builder.register(TestEvent.self, id: "duplicate") { _, _ in }
         }
     }
 
     @Test
     func validatesRequiredHandlers() throws {
-        let builder = HookRegistryBuilder<VoidContext>()
+        let builder = EventHandlerRegistryBuilder<VoidContext>()
 
-        #expect(throws: HookRegistryError.self) {
-            try builder.require(TestHook.self, id: "required")
+        #expect(
+            throws: EventHandlerRegistryError.missingRequiredHandler(
+                eventType: String(reflecting: TestEvent.self),
+                handlerID: "required"
+            )
+        ) {
+            try builder.require(TestEvent.self, id: "required")
         }
     }
 
     @Test
-    func unhandledHooksAreNoOp() async throws {
-        let registry = HookRegistryBuilder<VoidContext>().build()
+    func unhandledEventsAreNoOp() async throws {
+        let registry = EventHandlerRegistryBuilder<VoidContext>().build()
 
         try await registry
             .dispatcher(context: .init())
-            .dispatch(TestHook(value: "value"))
+            .dispatch(TestEvent(value: "value"))
     }
 
     @Test
     func stopsAfterAHandlerThrows() async throws {
         let recorder = Recorder()
-        var builder = HookRegistryBuilder<VoidContext>()
-        try builder.register(TestHook.self, id: "failing") { _, _ in
+        var builder = EventHandlerRegistryBuilder<VoidContext>()
+        try builder.register(TestEvent.self, id: "failing") { _, _ in
             await recorder.append("failing")
             throw TestError.failed
         }
-        try builder.register(TestHook.self, id: "later") { _, _ in
+        try builder.register(TestEvent.self, id: "later") { _, _ in
             await recorder.append("later")
         }
 
-        await #expect(throws: HookDispatchError.self) {
+        await #expect(throws: EventDispatchError.self) {
             try await builder.build()
                 .dispatcher(context: .init())
-                .dispatch(TestHook(value: "value"))
+                .dispatch(TestEvent(value: "value"))
         }
         #expect(await recorder.values == ["failing"])
     }
@@ -89,11 +99,11 @@ struct InfrastructureTestSuite {
 
 extension InfrastructureTestSuite {
 
-    fileprivate struct TestHook: Hook {
+    fileprivate struct TestEvent: Event {
         let value: String
     }
 
-    fileprivate struct OtherHook: Hook {}
+    fileprivate struct OtherEvent: Event {}
 
     fileprivate struct VoidContext: Sendable {}
 

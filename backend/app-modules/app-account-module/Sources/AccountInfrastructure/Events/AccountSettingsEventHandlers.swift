@@ -1,11 +1,11 @@
 //
-//  AccountSettingsHooks.swift
+//  AccountSettingsEventHandlers.swift
 //  app-account-module
 //
 
 import FeatherDatabase
 
-public enum AccountSettingsHooks {
+public enum AccountSettingsEventHandlers {
 
     public static func createDefaultSettings(
         accountID: String,

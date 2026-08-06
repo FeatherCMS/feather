@@ -82,9 +82,6 @@ public struct AddInvitation: UseCase {
                     passwordHash: passwordHash
                 )
             )
-            try await context.hooks.dispatch(
-                UserAccountDidInsert(accountID: account.id)
-            )
             for roleID in input.roleIDs {
                 guard try await roleRepository.findBy(id: roleID) != nil else {
                     throw Error.roleNotFound(roleID)
@@ -94,7 +91,7 @@ public struct AddInvitation: UseCase {
                 accountId: account.id,
                 roleIds: input.roleIDs
             )
-            return try await context.invitation.insert(
+            let invitation = try await context.invitation.insert(
                 Invitation.create(
                     id: idGenerator.generate(),
                     accountID: account.id,
@@ -102,6 +99,10 @@ public struct AddInvitation: UseCase {
                     token: token
                 )
             )
+            try await context.events.dispatch(
+                UserAccountDidInsert(accountID: account.id)
+            )
+            return invitation
         }
         try await mailSender.send(
             .init(

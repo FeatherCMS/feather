@@ -70,13 +70,13 @@ func buildServer(
     )
 
     let idGenerator = NanoIDGenerator()
-    let hooks = try buildAppHooks()
+    let eventHandlers = try buildAppEventHandlers()
 
     let modules = AppModules(
         infrastructure: .init(
             database: database,
             idGenerator: idGenerator,
-            hooks: hooks,
+            eventHandlers: eventHandlers,
             jobQueue: jobQueue,
             mediaStorageRootPath: config.media.storageRootPath
         )
