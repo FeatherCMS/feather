@@ -1,0 +1,25 @@
+import FeatherAdmin
+import FeatherValidation
+import Foundation
+import HTML
+import Hummingbird
+import MediaAdminAPI
+import OpenAPIRuntime
+import SGML
+import WebStandards
+
+protocol AdminEditMediaFolderPresenter: Sendable {
+
+    func renderEditPage(
+        model: AdminEditMediaFolderModel,
+        isEdited: Bool,
+        permissions: Set<String>
+    ) -> HTMLResponse
+
+    func renderErrorPage(
+        id: String,
+        info: String,
+        message: String,
+        permissions: Set<String>
+    ) -> HTMLResponse
+}

@@ -1,0 +1,22 @@
+//
+//  ReadWebMenu.swift
+//  app-web-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
+import FeatherApplication
+import FeatherContracts
+import WebDomain
+
+public struct ReadPublicMenu: Scope {
+    public let menu: any MenuQueries
+    public let menuItem: any MenuItemQueries
+
+    public init(
+        menu: any MenuQueries,
+        menuItem: any MenuItemQueries
+    ) {
+        self.menu = menu
+        self.menuItem = menuItem
+    }
+}

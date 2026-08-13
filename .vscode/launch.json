@@ -1,146 +1,632 @@
 {
   "configurations": [
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/backend",
-      "name": "Debug Server (backend)",
-      "program": "${workspaceFolder}/backend/.build/out/Products/Debug/Server",
-      "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug Server (backend)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Debug Server (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Debug/Server",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug Server (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/backend",
-      "name": "Release Server (backend)",
-      "program": "${workspaceFolder}/backend/.build/out/Products/Release/Server",
-      "configuration": "release",
-      "preLaunchTask": "swift: Build Release Server (backend)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Release Server (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Release/Server",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release Server (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/backend",
-      "name": "Debug Migrator (backend)",
-      "program": "${workspaceFolder}/backend/.build/out/Products/Debug/Migrator",
-      "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug Migrator (backend)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Debug Migrator (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Debug/Migrator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug Migrator (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/backend",
-      "name": "Release Migrator (backend)",
-      "program": "${workspaceFolder}/backend/.build/out/Products/Release/Migrator",
-      "configuration": "release",
-      "preLaunchTask": "swift: Build Release Migrator (backend)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Release Migrator (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Release/Migrator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release Migrator (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": ["--env-file-path", "${workspaceFolder}/.env"],
-      "cwd": "${workspaceFolder}/backend",
-      "name": "Debug Worker (backend)",
-      "program": "${workspaceFolder}/backend/.build/out/Products/Debug/Worker",
-      "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug Worker (backend)"
+        "type": "swift",
+        "request": "launch",
+        "args": [
+            "--env-file-path",
+            "${workspaceFolder}/.env"
+        ],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Debug Worker (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Debug/Worker",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug Worker (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": ["--env-file-path", "${workspaceFolder}/.env"],
-      "cwd": "${workspaceFolder}/backend",
-      "name": "Release Worker (backend)",
-      "program": "${workspaceFolder}/backend/.build/out/Products/Release/Worker",
-      "configuration": "release",
-      "preLaunchTask": "swift: Build Release Worker (backend)"
+        "type": "swift",
+        "request": "launch",
+        "args": [
+            "--env-file-path",
+            "${workspaceFolder}/.env"
+        ],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Release Worker (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Release/Worker",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release Worker (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/web-app",
-      "name": "Debug WebApp (web-app)",
-      "program": "${workspaceFolder}/web-app/.build/out/Products/Debug/WebApp",
-      "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug WebApp (web-app)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Debug WebApp (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Debug/WebApp",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug WebApp (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/web-app",
-      "name": "Release WebApp (web-app)",
-      "program": "${workspaceFolder}/web-app/.build/out/Products/Release/WebApp",
-      "configuration": "release",
-      "preLaunchTask": "swift: Build Release WebApp (web-app)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Release WebApp (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Release/WebApp",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release WebApp (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/web-app",
-      "name": "Debug Static (web-app)",
-      "program": "${workspaceFolder}/web-app/.build/out/Products/Debug/Static",
-      "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug Static (web-app)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Debug Static (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Debug/Static",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug Static (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/web-app",
-      "name": "Release Static (web-app)",
-      "program": "${workspaceFolder}/web-app/.build/out/Products/Release/Static",
-      "configuration": "release",
-      "preLaunchTask": "swift: Build Release Static (web-app)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/application",
+        "name": "Release Static (backend)",
+        "program": "${workspaceFolder}/application/.build/out/Products/Release/Static",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release Static (backend)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/openapi-generator",
-      "name": "Debug AppOpenAPIGenerator (openapi-generator)",
-      "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Debug/AppOpenAPIGenerator",
-      "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug AppOpenAPIGenerator (openapi-generator)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/openapi-generator",
+        "name": "Debug AppOpenAPIGenerator (openapi-generator)",
+        "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Debug/AppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug AppOpenAPIGenerator (openapi-generator)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/openapi-generator",
-      "name": "Release AppOpenAPIGenerator (openapi-generator)",
-      "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Release/AppOpenAPIGenerator",
-      "configuration": "release",
-      "preLaunchTask": "swift: Build Release AppOpenAPIGenerator (openapi-generator)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/openapi-generator",
+        "name": "Release AppOpenAPIGenerator (openapi-generator)",
+        "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Release/AppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release AppOpenAPIGenerator (openapi-generator)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/openapi-generator",
-      "name": "Debug AdminOpenAPIGenerator (openapi-generator)",
-      "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Debug/AdminOpenAPIGenerator",
-      "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug AdminOpenAPIGenerator (openapi-generator)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/openapi-generator",
+        "name": "Debug AdminOpenAPIGenerator (openapi-generator)",
+        "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Debug/AdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug AdminOpenAPIGenerator (openapi-generator)"
     },
     {
-      "type": "swift",
-      "request": "launch",
-      "args": [],
-      "cwd": "${workspaceFolder}/openapi-generator",
-      "name": "Release AdminOpenAPIGenerator (openapi-generator)",
-      "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Release/AdminOpenAPIGenerator",
-      "configuration": "release",
-      "preLaunchTask": "swift: Build Release AdminOpenAPIGenerator (openapi-generator)"
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder}/openapi-generator",
+        "name": "Release AdminOpenAPIGenerator (openapi-generator)",
+        "program": "${workspaceFolder}/openapi-generator/.build/out/Products/Release/AdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release AdminOpenAPIGenerator (openapi-generator)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-auth-module",
+        "name": "Debug AuthAdminOpenAPIGenerator (modules/app-auth-module)",
+        "target": "AuthAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug AuthAdminOpenAPIGenerator (modules/app-auth-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-auth-module",
+        "name": "Release AuthAdminOpenAPIGenerator (modules/app-auth-module)",
+        "target": "AuthAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release AuthAdminOpenAPIGenerator (modules/app-auth-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-auth-module",
+        "name": "Debug AuthAppOpenAPIGenerator (modules/app-auth-module)",
+        "target": "AuthAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug AuthAppOpenAPIGenerator (modules/app-auth-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-auth-module",
+        "name": "Release AuthAppOpenAPIGenerator (modules/app-auth-module)",
+        "target": "AuthAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release AuthAppOpenAPIGenerator (modules/app-auth-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-analytics-module",
+        "name": "Debug AnalyticsAdminOpenAPIGenerator (modules/app-analytics-module)",
+        "target": "AnalyticsAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug AnalyticsAdminOpenAPIGenerator (modules/app-analytics-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-analytics-module",
+        "name": "Release AnalyticsAdminOpenAPIGenerator (modules/app-analytics-module)",
+        "target": "AnalyticsAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release AnalyticsAdminOpenAPIGenerator (modules/app-analytics-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-analytics-module",
+        "name": "Debug AnalyticsAppOpenAPIGenerator (modules/app-analytics-module)",
+        "target": "AnalyticsAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug AnalyticsAppOpenAPIGenerator (modules/app-analytics-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-analytics-module",
+        "name": "Release AnalyticsAppOpenAPIGenerator (modules/app-analytics-module)",
+        "target": "AnalyticsAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release AnalyticsAppOpenAPIGenerator (modules/app-analytics-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-blog-module",
+        "name": "Debug BlogAdminOpenAPIGenerator (modules/app-blog-module)",
+        "target": "BlogAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug BlogAdminOpenAPIGenerator (modules/app-blog-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-blog-module",
+        "name": "Release BlogAdminOpenAPIGenerator (modules/app-blog-module)",
+        "target": "BlogAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release BlogAdminOpenAPIGenerator (modules/app-blog-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-blog-module",
+        "name": "Debug BlogAppOpenAPIGenerator (modules/app-blog-module)",
+        "target": "BlogAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug BlogAppOpenAPIGenerator (modules/app-blog-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-blog-module",
+        "name": "Release BlogAppOpenAPIGenerator (modules/app-blog-module)",
+        "target": "BlogAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release BlogAppOpenAPIGenerator (modules/app-blog-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-contact-module",
+        "name": "Debug ContactAdminOpenAPIGenerator (modules/app-contact-module)",
+        "target": "ContactAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug ContactAdminOpenAPIGenerator (modules/app-contact-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-contact-module",
+        "name": "Release ContactAdminOpenAPIGenerator (modules/app-contact-module)",
+        "target": "ContactAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release ContactAdminOpenAPIGenerator (modules/app-contact-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-contact-module",
+        "name": "Debug ContactAppOpenAPIGenerator (modules/app-contact-module)",
+        "target": "ContactAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug ContactAppOpenAPIGenerator (modules/app-contact-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-contact-module",
+        "name": "Release ContactAppOpenAPIGenerator (modules/app-contact-module)",
+        "target": "ContactAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release ContactAppOpenAPIGenerator (modules/app-contact-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-media-module",
+        "name": "Debug MediaAdminOpenAPIGenerator (modules/app-media-module)",
+        "target": "MediaAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug MediaAdminOpenAPIGenerator (modules/app-media-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-media-module",
+        "name": "Release MediaAdminOpenAPIGenerator (modules/app-media-module)",
+        "target": "MediaAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release MediaAdminOpenAPIGenerator (modules/app-media-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-newsletter-module",
+        "name": "Debug NewsletterAdminOpenAPIGenerator (modules/app-newsletter-module)",
+        "target": "NewsletterAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug NewsletterAdminOpenAPIGenerator (modules/app-newsletter-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-newsletter-module",
+        "name": "Release NewsletterAdminOpenAPIGenerator (modules/app-newsletter-module)",
+        "target": "NewsletterAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release NewsletterAdminOpenAPIGenerator (modules/app-newsletter-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-newsletter-module",
+        "name": "Debug NewsletterAppOpenAPIGenerator (modules/app-newsletter-module)",
+        "target": "NewsletterAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug NewsletterAppOpenAPIGenerator (modules/app-newsletter-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-newsletter-module",
+        "name": "Release NewsletterAppOpenAPIGenerator (modules/app-newsletter-module)",
+        "target": "NewsletterAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release NewsletterAppOpenAPIGenerator (modules/app-newsletter-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-redirect-module",
+        "name": "Debug RedirectAdminOpenAPIGenerator (modules/app-redirect-module)",
+        "target": "RedirectAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug RedirectAdminOpenAPIGenerator (modules/app-redirect-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-redirect-module",
+        "name": "Release RedirectAdminOpenAPIGenerator (modules/app-redirect-module)",
+        "target": "RedirectAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release RedirectAdminOpenAPIGenerator (modules/app-redirect-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-redirect-module",
+        "name": "Debug RedirectAppOpenAPIGenerator (modules/app-redirect-module)",
+        "target": "RedirectAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug RedirectAppOpenAPIGenerator (modules/app-redirect-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-redirect-module",
+        "name": "Release RedirectAppOpenAPIGenerator (modules/app-redirect-module)",
+        "target": "RedirectAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release RedirectAppOpenAPIGenerator (modules/app-redirect-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-system-module",
+        "name": "Debug SystemAdminOpenAPIGenerator (modules/app-system-module)",
+        "target": "SystemAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug SystemAdminOpenAPIGenerator (modules/app-system-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-system-module",
+        "name": "Release SystemAdminOpenAPIGenerator (modules/app-system-module)",
+        "target": "SystemAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release SystemAdminOpenAPIGenerator (modules/app-system-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-system-module",
+        "name": "Debug SystemAppOpenAPIGenerator (modules/app-system-module)",
+        "target": "SystemAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug SystemAppOpenAPIGenerator (modules/app-system-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-system-module",
+        "name": "Release SystemAppOpenAPIGenerator (modules/app-system-module)",
+        "target": "SystemAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release SystemAppOpenAPIGenerator (modules/app-system-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-user-module",
+        "name": "Debug UserAdminOpenAPIGenerator (modules/app-user-module)",
+        "target": "UserAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug UserAdminOpenAPIGenerator (modules/app-user-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-user-module",
+        "name": "Release UserAdminOpenAPIGenerator (modules/app-user-module)",
+        "target": "UserAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release UserAdminOpenAPIGenerator (modules/app-user-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-user-module",
+        "name": "Debug UserAppOpenAPIGenerator (modules/app-user-module)",
+        "target": "UserAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug UserAppOpenAPIGenerator (modules/app-user-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-user-module",
+        "name": "Release UserAppOpenAPIGenerator (modules/app-user-module)",
+        "target": "UserAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release UserAppOpenAPIGenerator (modules/app-user-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-web-module",
+        "name": "Debug WebAdminOpenAPIGenerator (modules/app-web-module)",
+        "target": "WebAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug WebAdminOpenAPIGenerator (modules/app-web-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-web-module",
+        "name": "Release WebAdminOpenAPIGenerator (modules/app-web-module)",
+        "target": "WebAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release WebAdminOpenAPIGenerator (modules/app-web-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-web-module",
+        "name": "Debug WebAppOpenAPIGenerator (modules/app-web-module)",
+        "target": "WebAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug WebAppOpenAPIGenerator (modules/app-web-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-web-module",
+        "name": "Release WebAppOpenAPIGenerator (modules/app-web-module)",
+        "target": "WebAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release WebAppOpenAPIGenerator (modules/app-web-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Debug Server (application)",
+        "target": "Server",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug Server (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Release Server (application)",
+        "target": "Server",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release Server (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Debug Migrator (application)",
+        "target": "Migrator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug Migrator (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Release Migrator (application)",
+        "target": "Migrator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release Migrator (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Debug Worker (application)",
+        "target": "Worker",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug Worker (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Release Worker (application)",
+        "target": "Worker",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release Worker (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Debug WebApp (application)",
+        "target": "WebApp",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug WebApp (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Release WebApp (application)",
+        "target": "WebApp",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release WebApp (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Debug Static (application)",
+        "target": "Static",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug Static (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/application",
+        "name": "Release Static (application)",
+        "target": "Static",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release Static (application)"
     }
-  ],
+],
   "compounds": [
     {
       "name": "Debug Server + Worker",
@@ -157,13 +643,13 @@
     {
       "name": "Debug Server + Worker + WebApp + Static",
       // "preLaunchTask": "Ensure Local Dependencies" (optional, uncomment if you want to run the task automatically before starting the debug session)
-      "configurations": ["Debug Server (backend)", "Debug Worker (backend)", "Debug WebApp (web-app)", "Debug Static (web-app)"],
+      "configurations": ["Debug Server (backend)", "Debug Worker (backend)", "Debug WebApp (backend)", "Debug Static (backend)"],
       "stopAll": true
     },
     {
       "name": "Release Server + Worker + WebApp + Static",
       // "preLaunchTask": "Ensure Local Dependencies" (optional, uncomment if you want to run the task automatically before starting the debug session)
-      "configurations": ["Release Server (backend)", "Release Worker (backend)", "Release WebApp (web-app)", "Release Static (web-app)"],
+      "configurations": ["Release Server (backend)", "Release Worker (backend)", "Release WebApp (backend)", "Release Static (backend)"],
       "stopAll": true
     }
   ]

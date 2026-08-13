@@ -1,7 +1,0 @@
-protocol ContentRenderer: Sendable {
-
-    func render(
-        markdown: String,
-        requestPath: String
-    ) async -> String
-}

@@ -1,0 +1,26 @@
+//
+//  WriteTagPostsMetadata.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
+import BlogDomain
+import FeatherApplication
+import FeatherContracts
+import WebDomain
+
+public struct WriteTagPostsMetadata: Scope {
+    public let post: any PostRepository
+    public let tag: any TagRepository
+    public let metadata: any MetadataRepository
+
+    public init(
+        post: any PostRepository,
+        tag: any TagRepository,
+        metadata: any MetadataRepository
+    ) {
+        self.post = post
+        self.tag = tag
+        self.metadata = metadata
+    }
+}

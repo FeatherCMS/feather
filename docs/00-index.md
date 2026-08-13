@@ -16,7 +16,7 @@ By the end of this guide, you will:
 
 - The backend is a modular monolith.
 - Dependencies always point inward: Infrastructure -> Application -> Domain.
-- The `app-kernel` package provides shared contracts for all modules.
+- The `feather-core` package provides shared contracts for all modules.
 - Each feature module owns its business logic and persistence adapters.
 
 ---
@@ -27,8 +27,9 @@ Our sample project is a **multi-project workspace** centered around a shared **A
 
 - `openapi-generator`: Swift tool for generating OpenAPI specs
 - `openapi`: the **central contract** (OpenAPI spec + generated Swift types)
-- `backend`: implements the server API defined by OpenAPI (main runtime)
-- `web-app`: consumes the API via generated client types
+- `application`: implements the server API defined by OpenAPI and contains the WebApp and Static targets
+- `application/Sources/WebApp`: web application target consuming the API via generated client types
+- `application/Sources/Static`: static-file server target
 
 ```text
             ┌──────────────────────────────────┐
@@ -37,12 +38,13 @@ Our sample project is a **multi-project workspace** centered around a shared **A
             └───────────────┬──────────────────┘
                             │
             ┌───────────────┼───────────────┐
-            │               │               │
-            v               v               v
-┌──────────────────┐ ┌───────────────┐ ┌───────────────┐
-│     backend      │ │    web-app    │ │  native-app   │
-│ (implements API) │ │ (API client)  │ │ (API client)  │
-└──────────────────┘ └───────────────┘ └───────────────┘
+            │               │
+            v               v
+┌────────────────────────┐ ┌───────────────┐
+│       application      │ │  native-app   │
+│ Server + WebApp +      │ │ (API client)  │
+│ Static + module APIs   │ └───────────────┘
+└────────────────────────┘
 ```
 
 ---
@@ -129,13 +131,15 @@ In this project, think: Onion for structure, Hexagonal for boundaries.
 
 ## 3) How This Looks in Backend
 
-Main backend runtime lives in `backend`.
+Main backend runtime lives in `application`.
 
-It provides 3 executables:
+It provides 5 executables:
 
 - `Server`: HTTP API runtime
 - `Migrator`: database schema + seed runner
 - `Worker`: background jobs/scheduling
+- `WebApp`: dynamic web application
+- `Static`: static-file server
 
 Runtime view:
 
@@ -170,9 +174,9 @@ Connections:
 
 ## 4) Backend Module Layout (Modular Monolith)
 
-Inside `backend/app-modules`:
+Inside `modules`:
 
-- `app-kernel` (shared foundation)
+- `feather-core` (shared foundation)
 - `app-system-module` (system variables, permissions)
 - `app-user-module` (accounts, roles, invitations)
 - `app-auth-module` (sessions, magic links, auth flows)
@@ -180,7 +184,7 @@ Inside `backend/app-modules`:
 Module map:
 ```text
                       ┌──────────────────┐
-                      │   app-kernel     │
+                      │   feather-core     │
                       │ shared contracts │
                       └───┬────────┬─────┘
                           ▲        ▲
@@ -256,8 +260,8 @@ What lives here:
 
 Examples:
 
-- `SystemInfrastructure/Repositories/DatabaseVariableRepository.swift`
-- `UserInfrastructure/Queries/DatabaseAccountQueries.swift`
+- `SystemInfrastructure/Repositories/VariableDatabaseRepository.swift`
+- `UserInfrastructure/Queries/AccountDatabaseQueries.swift`
 - `AuthInfrastructure/Database/Migrations/*`
 
 ---
@@ -373,8 +377,8 @@ This is the "outside" layer doing dependency injection.
 buildServer
   -> AppInfrastructure(database, idGenerator)
   -> AppModules(infrastructure)
-      -> SystemModule
-      -> UserModule
+      -> SystemBackend
+      -> UserBackend
       -> AuthModule
   -> buildRouter(modules)
 ```
@@ -383,7 +387,7 @@ buildServer
 
 ## 9) Kernel vs Feature Modules
 
-### Kernel (`app-kernel`)
+### Kernel (`feather-core`)
 
 Kernel is the shared foundation used by all modules.
 

@@ -1,0 +1,30 @@
+import AuthAdminAPI
+import AuthAppAPI
+import CSS
+import FeatherAdmin
+import FeatherValidation
+import FeatherValidationFoundation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemFrontend
+import UserAdminAPI
+import UserAppAPI
+import UserFrontend
+import WebStandards
+
+protocol AdminAddAuthCredentialController: Sendable {
+    func getAddCredential(request: Request, context: AppRequestContext)
+        async throws -> HTMLResponse
+    func postAddCredential(request: Request, context: AppRequestContext)
+        async throws -> Response
+}
+
+extension AdminAddAuthCredentialController {
+    func route(on router: Router<AppRequestContext>) {
+        router.get("/admin/auth/credentials/{id}/add", use: getAddCredential)
+        router.post("/admin/auth/credentials/{id}/add", use: postAddCredential)
+    }
+}

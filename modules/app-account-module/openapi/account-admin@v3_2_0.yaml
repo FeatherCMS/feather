@@ -1,0 +1,542 @@
+openapi: 3.2.0
+info:
+  title: Account Admin API
+  version: 0.1.0
+tags:
+- name: AccountSettings
+  description: Manage account settings.
+- name: AccountInvitations
+  description: Manage user invitations.
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/admin/account/settings:
+    get:
+      tags:
+      - AccountSettings
+      operationId: accountSettingsGet
+      responses:
+        200:
+          $ref: '#/components/responses/AccountSettingsDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - AccountSettings
+      operationId: accountSettingsUpdate
+      requestBody:
+        $ref: '#/components/requestBodies/AccountSettingsUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountSettingsDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/account/invitations:
+    post:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationCreate
+      requestBody:
+        $ref: '#/components/requestBodies/AccountInvitationRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AccountInvitationDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/account/invitations/filters:
+    get:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationFilters
+      responses:
+        200:
+          $ref: '#/components/responses/AccountInvitationFiltersResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/account/invitations/search:
+    post:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountInvitationListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/AccountInvitationListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/account/invitations/{accountInvitationId}:
+    get:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationGet
+      parameters:
+      - $ref: '#/components/parameters/AccountInvitationIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountInvitationDetailResponse'
+        404:
+          description: AccountInvitation not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationUpdate
+      parameters:
+      - $ref: '#/components/parameters/AccountInvitationIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AccountInvitationUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountInvitationDetailResponse'
+        404:
+          description: AccountInvitation not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationDelete
+      parameters:
+      - $ref: '#/components/parameters/AccountInvitationIdParameter'
+      responses:
+        204:
+          description: AccountInvitation deleted
+        404:
+          description: AccountInvitation not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationPatch
+      parameters:
+      - $ref: '#/components/parameters/AccountInvitationIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AccountInvitationPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountInvitationDetailResponse'
+        404:
+          description: AccountInvitation not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    AccountSettingsDetailSchema:
+      type: object
+      properties:
+        language:
+          type: string
+        timezone:
+          type: string
+        pageSize:
+          type: integer
+      required:
+      - language
+      - timezone
+      - pageSize
+      minProperties: 3
+    AccountSettingsUpdateSchema:
+      type: object
+      properties:
+        language:
+          type: string
+        timezone:
+          type: string
+        pageSize:
+          type: integer
+      required:
+      - language
+      - timezone
+      - pageSize
+      minProperties: 3
+    AccountInvitationCreateSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          examples:
+          - john.doe@example.com
+        roleIds:
+          $ref: '#/components/schemas/AccountInvitationRoleIDsField'
+      required:
+      - email
+      minProperties: 1
+    AccountInvitationRoleIDsField:
+      type: array
+      items:
+        type: string
+      minItems: 0
+      uniqueItems: false
+    AccountInvitationDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - inv_7nL3xQ2v
+        email:
+          type: string
+          examples:
+          - john.doe@example.com
+        token:
+          type: string
+          examples:
+          - eyJhbGciOi...
+        expiresAt:
+          type: number
+          format: double
+          examples:
+          - 1.76e+9
+      required:
+      - id
+      - email
+      - token
+      - expiresAt
+      minProperties: 4
+    BulkDeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            examples:
+            - id1
+          minItems: 0
+          uniqueItems: false
+        summary:
+          type: boolean
+          examples:
+          - true
+      required:
+      - ids
+      - summary
+      minProperties: 2
+    BulkDeleteResponseSchema:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - id1
+              status:
+                type: string
+                enum:
+                - deleted
+                - not_found
+                - forbidden
+                examples:
+                - deleted
+            required:
+            - id
+            - status
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        summary:
+          type: object
+          properties:
+            requested:
+              type: integer
+              examples:
+              - 1
+            deleted:
+              type: integer
+              examples:
+              - 1
+            notFound:
+              type: integer
+              examples:
+              - 1
+            forbidden:
+              type: integer
+              examples:
+              - 1
+          required:
+          - requested
+          - deleted
+          - notFound
+          - forbidden
+          minProperties: 4
+      required:
+      - results
+      - summary
+      minProperties: 2
+    SearchFilterSchema:
+      type: object
+      properties:
+        search:
+          $ref: '#/components/schemas/SearchStringField'
+      minProperties: 0
+    SearchStringField:
+      type: string
+      examples:
+      - foo
+    AccountInvitationListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - email
+                - token
+                - expiresAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+      minProperties: 2
+    SearchPageSizeField:
+      type: integer
+      examples:
+      - 20
+    SearchPageNumberField:
+      type: integer
+      examples:
+      - 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      examples:
+      - asc
+    AccountInvitationListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/AccountInvitationListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/AccountInvitationListItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    AccountInvitationListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AccountInvitationIdField'
+        email:
+          $ref: '#/components/schemas/AccountInvitationEmailField'
+        token:
+          $ref: '#/components/schemas/AccountInvitationTokenField'
+        expiresAt:
+          $ref: '#/components/schemas/AccountInvitationExpiresAtField'
+      required:
+      - id
+      - email
+      - token
+      - expiresAt
+      minProperties: 4
+    AccountInvitationIdField:
+      type: string
+      examples:
+      - inv_7nL3xQ2v
+    AccountInvitationEmailField:
+      type: string
+      examples:
+      - john.doe@example.com
+    AccountInvitationTokenField:
+      type: string
+      examples:
+      - eyJhbGciOi...
+    AccountInvitationExpiresAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    AccountInvitationPatchSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/AccountInvitationEmailField'
+      minProperties: 0
+  responses:
+    AccountSettingsDetailResponse:
+      description: Account settings
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountSettingsDetailSchema'
+    AccountInvitationDetailResponse:
+      description: AccountInvitation response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountInvitationDetailSchema'
+    BulkDeleteResponse:
+      description: Bulk delete response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteResponseSchema'
+    AccountInvitationFiltersResponse:
+      description: AccountInvitation filter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchFilterSchema'
+    AccountInvitationListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountInvitationListItemSearchSchema'
+  parameters:
+    AccountInvitationIdParameter:
+      name: accountInvitationId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AccountInvitationIdField'
+      description: AccountInvitation id
+  requestBodies:
+    AccountSettingsUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountSettingsUpdateSchema'
+      required: true
+    AccountInvitationRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountInvitationCreateSchema'
+      required: true
+    BulkDeleteRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+      required: true
+    AccountInvitationUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountInvitationCreateSchema'
+      required: true
+    AccountInvitationPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountInvitationPatchSchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

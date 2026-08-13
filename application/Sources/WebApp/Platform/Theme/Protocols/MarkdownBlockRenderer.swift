@@ -1,0 +1,3 @@
+import WebApplication
+
+typealias MarkdownBlockRenderer = WebMarkdownBlockRenderer

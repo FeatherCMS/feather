@@ -1,0 +1,617 @@
+openapi: 3.1.0
+info:
+  title: Admin API
+  version: 0.1.0
+tags:
+- name: AnalyticsLogs
+  description: Browse analytics logs.
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/admin/analytics/logs/filters:
+    get:
+      tags:
+      - AnalyticsLogs
+      operationId: analyticsLogFilters
+      responses:
+        200:
+          $ref: '#/components/responses/AnalyticsLogFiltersResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/analytics/logs/overview:
+    post:
+      tags:
+      - AnalyticsLogs
+      operationId: analyticsLogOverview
+      requestBody:
+        $ref: '#/components/requestBodies/AnalyticsLogOverviewRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AnalyticsLogOverviewResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/analytics/logs/search:
+    post:
+      tags:
+      - AnalyticsLogs
+      operationId: analyticsLogSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyticsLogListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/AnalyticsLogListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/analytics/logs/{id}:
+    get:
+      tags:
+      - AnalyticsLogs
+      operationId: analyticsLogGet
+      parameters:
+      - $ref: '#/components/parameters/AnalyticsLogIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AnalyticsLogDetailResponse'
+        404:
+          description: AnalyticsLog not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    AnalyticsLogFiltersSchema:
+      type: object
+      properties:
+        search:
+          $ref: '#/components/schemas/AnalyticsLogPathField'
+        source:
+          $ref: '#/components/schemas/AnalyticsLogSourceField'
+        method:
+          $ref: '#/components/schemas/AnalyticsLogMethodField'
+        responseCode:
+          $ref: '#/components/schemas/AnalyticsLogResponseCodeField'
+      minProperties: 0
+    AnalyticsLogPathField:
+      type: string
+      examples:
+      - /articles/hello-world/
+    AnalyticsLogSourceField:
+      type: string
+      examples:
+      - web_app
+    AnalyticsLogMethodField:
+      type: string
+      examples:
+      - GET
+    AnalyticsLogResponseCodeField:
+      type: integer
+      examples:
+      - 200
+    AnalyticsLogOverviewQuerySchema:
+      type: object
+      properties:
+        source:
+          type: string
+          examples:
+          - web_app
+        from:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+        to:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+      required:
+      - source
+      - from
+      - to
+      minProperties: 3
+    AnalyticsLogOverviewSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/AnalyticsLogOverviewQuerySchema'
+        kpis:
+          $ref: '#/components/schemas/AnalyticsLogOverviewKPISchema'
+        daily:
+          $ref: '#/components/schemas/AnalyticsLogOverviewDailyListSchema'
+        statusFamilies:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        methods:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        paths:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        notFoundPaths:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        serverErrorPaths:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        referrers:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        browsers:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        operatingSystems:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        deviceTypes:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        languages:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+        regions:
+          $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownListSchema'
+      required:
+      - query
+      - kpis
+      - daily
+      - statusFamilies
+      - methods
+      - paths
+      - notFoundPaths
+      - serverErrorPaths
+      - referrers
+      - browsers
+      - operatingSystems
+      - deviceTypes
+      - languages
+      - regions
+      minProperties: 14
+    AnalyticsLogOverviewKPISchema:
+      type: object
+      properties:
+        totalRequests:
+          type: integer
+          examples:
+          - 123
+        averageRequestsPerDay:
+          type: number
+          format: double
+          examples:
+          - 1.23e+2
+        authenticatedRequests:
+          type: integer
+          examples:
+          - 123
+        notFoundRequests:
+          type: integer
+          examples:
+          - 123
+        clientErrorRequests:
+          type: integer
+          examples:
+          - 123
+        serverErrorRequests:
+          type: integer
+          examples:
+          - 123
+      required:
+      - totalRequests
+      - averageRequestsPerDay
+      - authenticatedRequests
+      - notFoundRequests
+      - clientErrorRequests
+      - serverErrorRequests
+      minProperties: 6
+    AnalyticsLogOverviewDailyListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/AnalyticsLogOverviewDailyPointSchema'
+      minItems: 0
+      uniqueItems: false
+    AnalyticsLogOverviewDailyPointSchema:
+      type: object
+      properties:
+        bucket:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+        requests:
+          type: integer
+          examples:
+          - 123
+        notFoundRequests:
+          type: integer
+          examples:
+          - 123
+        clientErrorRequests:
+          type: integer
+          examples:
+          - 123
+        serverErrorRequests:
+          type: integer
+          examples:
+          - 123
+      required:
+      - bucket
+      - requests
+      - notFoundRequests
+      - clientErrorRequests
+      - serverErrorRequests
+      minProperties: 5
+    AnalyticsLogOverviewBreakdownListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/AnalyticsLogOverviewBreakdownItemSchema'
+      minItems: 0
+      uniqueItems: false
+    AnalyticsLogOverviewBreakdownItemSchema:
+      type: object
+      properties:
+        label:
+          type: string
+          examples:
+          - chrome
+        count:
+          type: integer
+          examples:
+          - 123
+        share:
+          type: number
+          format: double
+          examples:
+          - 1.23e+2
+      required:
+      - label
+      - count
+      - share
+      minProperties: 3
+    AnalyticsLogListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - accountId
+                - method
+                - source
+                - path
+                - responseCode
+                - ip
+                - browserName
+                - createdAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          properties:
+            search:
+              $ref: '#/components/schemas/AnalyticsLogPathField'
+            source:
+              $ref: '#/components/schemas/AnalyticsLogSourceField'
+            method:
+              $ref: '#/components/schemas/AnalyticsLogMethodField'
+            responseCode:
+              $ref: '#/components/schemas/AnalyticsLogResponseCodeField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+      minProperties: 2
+    SearchPageSizeField:
+      type: integer
+      examples:
+      - 20
+    SearchPageNumberField:
+      type: integer
+      examples:
+      - 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      examples:
+      - asc
+    AnalyticsLogListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/AnalyticsLogListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/AnalyticsLogListItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    AnalyticsLogListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AnalyticsLogIdField'
+        accountId:
+          type: string
+          examples:
+          - account-01
+        source:
+          type: string
+          examples:
+          - web_app
+        method:
+          type: string
+          examples:
+          - GET
+        path:
+          type: string
+          examples:
+          - /articles/hello-world/
+        responseCode:
+          type: integer
+          examples:
+          - 200
+        ip:
+          type: string
+          examples:
+          - 203.0.113.10
+        browserName:
+          type: string
+          examples:
+          - Safari
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+      required:
+      - id
+      - accountId
+      - source
+      - method
+      - path
+      - responseCode
+      - ip
+      - browserName
+      - createdAt
+      minProperties: 9
+    AnalyticsLogIdField:
+      type: string
+      examples:
+      - analytics-log-01
+    AnalyticsLogDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AnalyticsLogIdField'
+        accountId:
+          type: string
+          examples:
+          - account-01
+        source:
+          type: string
+          examples:
+          - web_app
+        method:
+          type: string
+          examples:
+          - GET
+        url:
+          type: string
+          examples:
+          - https://example.com/admin/analytics/logs/
+        headers:
+          type: string
+          examples:
+          - '{"accept":"application/json"}'
+        ip:
+          type: string
+          examples:
+          - 203.0.113.10
+        path:
+          type: string
+          examples:
+          - /articles/hello-world/
+        referer:
+          type: string
+          examples:
+          - https://example.com/admin/
+        origin:
+          type: string
+          examples:
+          - https://example.com
+        acceptLanguage:
+          type: string
+          examples:
+          - en-US,en;q=0.9
+        userAgent:
+          type: string
+          examples:
+          - Mozilla/5.0
+        language:
+          type: string
+          examples:
+          - en
+        region:
+          type: string
+          examples:
+          - US
+        osName:
+          type: string
+          examples:
+          - macOS
+        osVersion:
+          type: string
+          examples:
+          - '15.0'
+        browserName:
+          type: string
+          examples:
+          - Safari
+        browserVersion:
+          type: string
+          examples:
+          - '17.5'
+        engineName:
+          type: string
+          examples:
+          - WebKit
+        engineVersion:
+          type: string
+          examples:
+          - '617.1'
+        deviceVendor:
+          type: string
+          examples:
+          - Apple
+        deviceType:
+          type: string
+          examples:
+          - desktop
+        deviceModel:
+          type: string
+          examples:
+          - Mac
+        cpu:
+          type: string
+          examples:
+          - arm64
+        responseCode:
+          type: integer
+          examples:
+          - 200
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+        updatedAt:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+      required:
+      - id
+      - accountId
+      - source
+      - method
+      - url
+      - headers
+      - ip
+      - path
+      - referer
+      - origin
+      - acceptLanguage
+      - userAgent
+      - language
+      - region
+      - osName
+      - osVersion
+      - browserName
+      - browserVersion
+      - engineName
+      - engineVersion
+      - deviceVendor
+      - deviceType
+      - deviceModel
+      - cpu
+      - responseCode
+      - createdAt
+      - updatedAt
+      minProperties: 27
+  responses:
+    AnalyticsLogFiltersResponse:
+      description: AnalyticsLog filter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AnalyticsLogFiltersSchema'
+    AnalyticsLogOverviewResponse:
+      description: Analytics overview response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AnalyticsLogOverviewSchema'
+    AnalyticsLogListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AnalyticsLogListItemSearchSchema'
+    AnalyticsLogDetailResponse:
+      description: AnalyticsLog detail response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AnalyticsLogDetailSchema'
+  parameters:
+    AnalyticsLogIdParameter:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AnalyticsLogIdField'
+      description: Analytics log identifier
+  requestBodies:
+    AnalyticsLogOverviewRequestBody:
+      description: Analytics overview query payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AnalyticsLogOverviewQuerySchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

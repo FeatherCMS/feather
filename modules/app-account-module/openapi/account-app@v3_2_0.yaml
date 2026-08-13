@@ -1,0 +1,201 @@
+openapi: 3.2.0
+info:
+  title: Account App API
+  version: 0.1.0
+tags:
+- name: Account
+  description: Account endpoints.
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/account/register:
+    post:
+      tags:
+      - Account
+      operationId: accountRegister
+      requestBody:
+        $ref: '#/components/requestBodies/AccountRegisterRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AccountAuthResponse'
+  /api/v1/account/invitation/exchange:
+    post:
+      tags:
+      - Account
+      operationId: accountInvitationExchange
+      requestBody:
+        $ref: '#/components/requestBodies/AccountInvitationExchangeRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountAuthResponse'
+  /api/v1/account/settings:
+    get:
+      tags:
+      - Account
+      operationId: accountSettings
+      responses:
+        200:
+          $ref: '#/components/responses/AccountSettingsResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    AccountRegisterSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/AccountRegisterEmailField'
+        password:
+          $ref: '#/components/schemas/AccountRegisterPasswordField'
+      required:
+      - email
+      - password
+      minProperties: 2
+    AccountRegisterEmailField:
+      type: string
+      examples:
+      - admin@example.com
+    AccountRegisterPasswordField:
+      type: string
+      examples:
+      - password
+    AccountAuthResponseSchema:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserIdentityDetailSchema'
+        roles:
+          type: array
+          items:
+            type: string
+          minItems: 0
+          uniqueItems: false
+        permissions:
+          type: array
+          items:
+            type: string
+          minItems: 0
+          uniqueItems: false
+        token:
+          $ref: '#/components/schemas/AccountAuthTokenField'
+      required:
+      - user
+      - roles
+      - permissions
+      - token
+      minProperties: 4
+    UserIdentityDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UserIdentityIDField'
+        status:
+          $ref: '#/components/schemas/UserIdentityStatusField'
+        roleIds:
+          $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
+      required:
+      - id
+      - status
+      minProperties: 2
+    UserIdentityIDField:
+      type: string
+      examples:
+      - usr_a9x1f7Qk2m
+    UserIdentityStatusField:
+      type: string
+      enum:
+      - invited
+      - active
+      - suspended
+      - deactivated
+      - anonymized
+      examples:
+      - active
+    UserIdentityRoleIDListSchema:
+      type: array
+      items:
+        type: string
+      minItems: 0
+      uniqueItems: false
+    AccountAuthTokenField:
+      type: string
+      examples:
+      - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    AccountInvitationExchangeRequestSchema:
+      type: object
+      properties:
+        token:
+          $ref: '#/components/schemas/AccountAuthMagicLinkTokenField'
+        password:
+          $ref: '#/components/schemas/AccountRegisterPasswordField'
+      required:
+      - token
+      - password
+      minProperties: 2
+    AccountAuthMagicLinkTokenField:
+      type: string
+      examples:
+      - mgl_3XbY...
+    AccountSettingsResponseSchema:
+      type: object
+      properties:
+        language:
+          $ref: '#/components/schemas/AccountSettingsLanguageField'
+        timezone:
+          $ref: '#/components/schemas/AccountSettingsTimezoneField'
+        pageSize:
+          $ref: '#/components/schemas/AccountSettingsPageSizeField'
+      required:
+      - language
+      - timezone
+      - pageSize
+      minProperties: 3
+    AccountSettingsLanguageField:
+      type: string
+      examples:
+      - en
+    AccountSettingsTimezoneField:
+      type: string
+      examples:
+      - UTC
+    AccountSettingsPageSizeField:
+      type: integer
+      examples:
+      - 20
+  responses:
+    AccountAuthResponse:
+      description: Account authentication response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountAuthResponseSchema'
+    AccountSettingsResponse:
+      description: Account settings response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountSettingsResponseSchema'
+  requestBodies:
+    AccountRegisterRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountRegisterSchema'
+      required: true
+    AccountInvitationExchangeRequestBody:
+      description: Account invitation registration request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountInvitationExchangeRequestSchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

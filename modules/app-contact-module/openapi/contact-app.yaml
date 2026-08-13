@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  title: App API
+  version: 0.1.0
+tags:
+- name: ContactForms
+  description: Public contact form endpoints.
+servers:
+- url: http://127.0.0.1:8080/
+paths:
+  /api/v1/contact/form/{contactFormId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: appContactFormGet
+      parameters:
+      - $ref: '#/components/parameters/AppContactFormIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AppContactFormResponse'
+  /api/v1/contact/form/{contactFormId}/submit:
+    post:
+      tags:
+      - ContactForms
+      operationId: appContactFormSubmission
+      parameters:
+      - $ref: '#/components/parameters/AppContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AppContactFormSubmissionRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AppContactFormSubmissionResponse'
+components:
+  schemas:
+    AppContactIdField:
+      type: string
+    AppContactFormSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        successMessage:
+          type: string
+        failureMessage:
+          type: string
+        redirectUrl:
+          $ref: '#/components/schemas/AppContactContentField'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppFormFieldSchema'
+      required:
+      - id
+      - name
+      - successMessage
+      - failureMessage
+      - items
+    AppContactContentField:
+      type: string
+    AppFormFieldSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        allowedValues:
+          $ref: '#/components/schemas/ContactAllowedValuesSchema'
+        isRequired:
+          type: boolean
+        position:
+          type: integer
+      required:
+      - id
+      - key
+      - type
+      - label
+      - isRequired
+      - position
+    ContactAllowedValuesSchema:
+      type: array
+      items:
+        type: string
+    AppContactFormSubmissionSchema:
+      type: object
+      properties:
+        values:
+          type: object
+          additionalProperties:
+            type: string
+        metadata:
+          $ref: '#/components/schemas/AppContactJSONField'
+      required:
+      - values
+    AppContactJSONField:
+      type: object
+      additionalProperties:
+        type: string
+    AppContactFormSubmissionResponseSchema:
+      type: object
+      properties:
+        redirectUrl:
+          $ref: '#/components/schemas/AppContactContentField'
+  responses:
+    AppContactFormResponse:
+      description: Contact form response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppContactFormSchema'
+    AppContactFormSubmissionResponse:
+      description: Contact form submission response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppContactFormSubmissionResponseSchema'
+  parameters:
+    AppContactFormIdParameter:
+      name: contactFormId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AppContactIdField'
+  requestBodies:
+    AppContactFormSubmissionRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppContactFormSubmissionSchema'
+      required: true

@@ -1,0 +1,423 @@
+openapi: 3.0.0
+info:
+  title: App API
+  version: 0.1.0
+tags:
+- name: Web
+  description: Public app web endpoints
+servers:
+- url: http://127.0.0.1:8080/
+paths:
+  /api/v1/web/settings:
+    get:
+      tags:
+      - Web
+      operationId: webSiteSettings
+      responses:
+        200:
+          $ref: '#/components/responses/WebSiteSettingsResponse'
+  /api/v1/web/menus:
+    get:
+      tags:
+      - Web
+      operationId: webMenuList
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuListResponse'
+  /api/v1/web/routes/{slug}:
+    get:
+      tags:
+      - Web
+      operationId: webMetadataGet
+      parameters:
+      - $ref: '#/components/parameters/WebMetadataSlugParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMetadataResponse'
+        404:
+          description: Web metadata not found
+  /api/v1/web/pages/{id}:
+    get:
+      tags:
+      - Web
+      operationId: webPageGet
+      parameters:
+      - $ref: '#/components/parameters/WebMetadataIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebPageDetailResponse'
+        404:
+          description: Web page not found
+components:
+  schemas:
+    WebSiteSettingsSchema:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/WebSiteSettingsTitleField'
+        excerpt:
+          $ref: '#/components/schemas/WebSiteSettingsExcerptField'
+        locale:
+          $ref: '#/components/schemas/WebSiteSettingsLocaleField'
+        noIndex:
+          $ref: '#/components/schemas/WebSiteSettingsNoIndexField'
+        logo:
+          $ref: '#/components/schemas/WebSiteSettingsLogoField'
+        logoDark:
+          $ref: '#/components/schemas/WebSiteSettingsLogoDarkField'
+        metaImage:
+          $ref: '#/components/schemas/WebSiteSettingsMetaImageField'
+        primaryColor:
+          $ref: '#/components/schemas/WebSiteSettingsPrimaryColorField'
+        secondaryColor:
+          $ref: '#/components/schemas/WebSiteSettingsSecondaryColorField'
+        tertiaryColor:
+          $ref: '#/components/schemas/WebSiteSettingsTertiaryColorField'
+        primaryFont:
+          $ref: '#/components/schemas/WebSiteSettingsPrimaryFontField'
+        secondaryFont:
+          $ref: '#/components/schemas/WebSiteSettingsSecondaryFontField'
+        homePageId:
+          $ref: '#/components/schemas/WebSiteSettingsHomePageIDField'
+        css:
+          $ref: '#/components/schemas/WebSiteSettingsCSSField'
+        js:
+          $ref: '#/components/schemas/WebSiteSettingsJSField'
+      required:
+      - title
+      - excerpt
+      - locale
+      - noIndex
+      - logo
+      - logoDark
+      - metaImage
+      - primaryColor
+      - secondaryColor
+      - tertiaryColor
+      - primaryFont
+      - secondaryFont
+      - css
+      - js
+    WebSiteSettingsTitleField:
+      type: string
+      example: Example Site
+    WebSiteSettingsExcerptField:
+      type: string
+      example: A concise site description.
+    WebSiteSettingsLocaleField:
+      type: string
+      example: en_us
+    WebSiteSettingsNoIndexField:
+      type: boolean
+      example: false
+    WebSiteSettingsLogoField:
+      type: string
+      example: /images/logo.svg
+    WebSiteSettingsLogoDarkField:
+      type: string
+      example: /images/logo-dark.svg
+    WebSiteSettingsMetaImageField:
+      type: string
+      example: /media/assets/default-meta-image.webp
+    WebSiteSettingsPrimaryColorField:
+      type: string
+      example: '#1d4ed8'
+    WebSiteSettingsSecondaryColorField:
+      type: string
+      example: '#0f172a'
+    WebSiteSettingsTertiaryColorField:
+      type: string
+      example: '#e2e8f0'
+    WebSiteSettingsPrimaryFontField:
+      type: string
+      example: Geist
+    WebSiteSettingsSecondaryFontField:
+      type: string
+      example: Merriweather
+    WebSiteSettingsHomePageIDField:
+      type: string
+      example: web_page_1
+    WebSiteSettingsCSSField:
+      type: string
+      example: body { }
+    WebSiteSettingsJSField:
+      type: string
+      example: console.log('web');
+    WebMenuListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebMenuSchema'
+    WebMenuSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebMenuIdField'
+        key:
+          $ref: '#/components/schemas/WebMenuKeyField'
+        name:
+          $ref: '#/components/schemas/WebMenuNameField'
+        items:
+          $ref: '#/components/schemas/WebMenuItemListSchema'
+      required:
+      - id
+      - key
+      - name
+      - items
+    WebMenuIdField:
+      type: string
+      example: wm_header
+    WebMenuKeyField:
+      type: string
+      example: header
+    WebMenuNameField:
+      type: string
+      example: Header menu
+    WebMenuItemListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebMenuItemSchema'
+    WebMenuItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebMenuItemIdField'
+        label:
+          $ref: '#/components/schemas/WebMenuItemLabelField'
+        url:
+          $ref: '#/components/schemas/WebMenuItemURLField'
+        priority:
+          $ref: '#/components/schemas/WebMenuItemPriorityField'
+        isBlank:
+          $ref: '#/components/schemas/WebMenuItemIsBlankField'
+      required:
+      - id
+      - label
+      - url
+      - priority
+      - isBlank
+    WebMenuItemIdField:
+      type: string
+      example: wmi_home
+    WebMenuItemLabelField:
+      type: string
+      example: Home
+    WebMenuItemURLField:
+      type: string
+      example: /
+    WebMenuItemPriorityField:
+      type: integer
+      example: 10
+    WebMenuItemIsBlankField:
+      type: boolean
+      example: false
+    WebMetadataSlugField:
+      type: string
+      example: homepage
+    WebMetadataSchema:
+      type: object
+      properties:
+        referenceType:
+          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+        referenceId:
+          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+        slug:
+          $ref: '#/components/schemas/WebMetadataSlugField'
+        template:
+          $ref: '#/components/schemas/WebMetadataTemplateField'
+      required:
+      - referenceType
+      - referenceId
+      - slug
+    WebMetadataReferenceTypeField:
+      type: string
+      example: web.page
+    WebMetadataReferenceIDField:
+      type: string
+      example: wp_home
+    WebMetadataTemplateField:
+      type: string
+      example: default
+    WebPageDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebPageIdField'
+        excerpt:
+          $ref: '#/components/schemas/WebPageExcerptField'
+        content:
+          $ref: '#/components/schemas/WebPageContentField'
+        imageURL:
+          $ref: '#/components/schemas/WebPageImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+      required:
+      - id
+      - excerpt
+      - content
+      - imageURL
+      - metadata
+    WebPageIdField:
+      type: string
+      example: wp_home
+    WebPageExcerptField:
+      type: string
+      example: Short page summary.
+    WebPageContentField:
+      type: string
+      example: <h1>Homepage</h1>
+    WebPageImageURLField:
+      type: string
+      example: /media/assets/homepage.png
+    MediaAssetSchema:
+      type: object
+      properties:
+        assetId:
+          $ref: '#/components/schemas/MediaAssetIdField'
+        originalURL:
+          $ref: '#/components/schemas/MediaAssetURLField'
+        defaultURL:
+          $ref: '#/components/schemas/MediaAssetURLField'
+        variants:
+          $ref: '#/components/schemas/MediaAssetVariantListSchema'
+      required:
+      - assetId
+      - originalURL
+      - defaultURL
+      - variants
+    MediaAssetIdField:
+      type: string
+      example: media_asset_1
+    MediaAssetURLField:
+      type: string
+      example: /media/assets/example.png
+    MediaAssetVariantListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MediaAssetVariantSchema'
+    MediaAssetVariantSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaAssetIdField'
+        url:
+          $ref: '#/components/schemas/MediaAssetURLField'
+        type:
+          $ref: '#/components/schemas/MediaAssetTypeField'
+        width:
+          type: integer
+          format: int64
+          nullable: true
+        height:
+          type: integer
+          format: int64
+          nullable: true
+      required:
+      - id
+      - url
+      - type
+    MediaAssetTypeField:
+      type: string
+      example: png
+    WebMetadataContentSchema:
+      type: object
+      properties:
+        slug:
+          $ref: '#/components/schemas/WebMetadataSlugField'
+        template:
+          $ref: '#/components/schemas/WebMetadataTemplateField'
+        publicationDate:
+          $ref: '#/components/schemas/WebMetadataTimestampField'
+        expirationDate:
+          $ref: '#/components/schemas/WebMetadataTimestampField'
+        status:
+          $ref: '#/components/schemas/WebMetadataStatusField'
+        title:
+          $ref: '#/components/schemas/WebMetadataTitleField'
+        excerpt:
+          $ref: '#/components/schemas/WebMetadataExcerptField'
+        imageURL:
+          $ref: '#/components/schemas/WebMetadataImageURLField'
+        canonicalURL:
+          $ref: '#/components/schemas/WebMetadataCanonicalURLField'
+        noIndex:
+          $ref: '#/components/schemas/WebMetadataNoIndexField'
+        cssCodeInjection:
+          $ref: '#/components/schemas/WebMetadataCodeInjectionField'
+        javascriptCodeInjection:
+          $ref: '#/components/schemas/WebMetadataCodeInjectionField'
+        structuredDataCodeInjection:
+          $ref: '#/components/schemas/WebMetadataCodeInjectionField'
+      required:
+      - slug
+      - status
+      - title
+      - excerpt
+      - imageURL
+      - noIndex
+    WebMetadataTimestampField:
+      type: number
+      format: double
+      example: 1.76e+9
+    WebMetadataStatusField:
+      type: string
+      example: published
+    WebMetadataTitleField:
+      type: string
+      example: Hello world
+    WebMetadataExcerptField:
+      type: string
+      example: Short summary
+    WebMetadataImageURLField:
+      type: string
+      example: /media/assets/example.png
+    WebMetadataCanonicalURLField:
+      type: string
+      example: https://example.com/posts/hello-world
+    WebMetadataNoIndexField:
+      type: boolean
+      example: false
+    WebMetadataCodeInjectionField:
+      type: string
+      example: <p>Hello world</p>
+  responses:
+    WebSiteSettingsResponse:
+      description: Web site settings
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebSiteSettingsSchema'
+    WebMenuListResponse:
+      description: Web menu list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuListSchema'
+    WebMetadataResponse:
+      description: Web metadata resolution
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataSchema'
+    WebPageDetailResponse:
+      description: Web page detail
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebPageDetailSchema'
+  parameters:
+    WebMetadataSlugParameter:
+      name: slug
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMetadataSlugField'
+      description: Web metadata slug
+    WebMetadataIdParameter:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMetadataReferenceIDField'
+      description: Web metadata identifier

@@ -1,0 +1,10 @@
+{{& page.contents.html}}
+
+<div id="news-categories" class="wrapper">
+    <div class="grid grid-321">
+    {{#items}}
+        {{> partials/news/item}}
+    {{/items}}
+    </div>
+    {{^items}}<p>Empty.</p>{{/items}}
+</div>

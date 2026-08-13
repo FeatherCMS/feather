@@ -1,0 +1,1804 @@
+openapi: 3.0.0
+info:
+  title: Admin API
+  version: 0.1.0
+tags:
+- name: MetadataEntries
+  description: Manage metadata entries.
+- name: WebPages
+  description: Manage web pages.
+- name: WebMenus
+  description: Manage web menus.
+- name: WebMenuItems
+  description: Manage web menu items.
+- name: WebSettings
+  description: Manage web settings.
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/admin/web/metadata:
+    post:
+      tags:
+      - MetadataEntries
+      operationId: webMetadataCreate
+      requestBody:
+        $ref: '#/components/requestBodies/WebMetadataRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/WebMetadataDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - MetadataEntries
+      operationId: webMetadataBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/metadata/filters:
+    get:
+      tags:
+      - MetadataEntries
+      operationId: webMetadataFilters
+      responses:
+        200:
+          $ref: '#/components/responses/WebMetadataFiltersResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/metadata/search:
+    post:
+      tags:
+      - MetadataEntries
+      operationId: webMetadataSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebMetadataListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/WebMetadataListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/metadata/{webMetadataId}:
+    get:
+      tags:
+      - MetadataEntries
+      operationId: webMetadataGet
+      parameters:
+      - $ref: '#/components/parameters/WebMetadataIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMetadataDetailResponse'
+        404:
+          description: WebMetadata not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - MetadataEntries
+      operationId: webMetadataUpdate
+      parameters:
+      - $ref: '#/components/parameters/WebMetadataIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebMetadataUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMetadataDetailResponse'
+        404:
+          description: WebMetadata not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - MetadataEntries
+      operationId: webMetadataDelete
+      parameters:
+      - $ref: '#/components/parameters/WebMetadataIdParameter'
+      responses:
+        204:
+          description: WebMetadata deleted
+        404:
+          description: WebMetadata not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - MetadataEntries
+      operationId: webMetadataPatch
+      parameters:
+      - $ref: '#/components/parameters/WebMetadataIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebMetadataPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMetadataDetailResponse'
+        404:
+          description: WebMetadata not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/pages:
+    post:
+      tags:
+      - WebPages
+      operationId: webPageCreate
+      requestBody:
+        $ref: '#/components/requestBodies/WebPageRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/WebPageDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/pages/filters:
+    get:
+      tags:
+      - WebPages
+      operationId: webPageFilters
+      responses:
+        200:
+          $ref: '#/components/responses/WebPageFiltersResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/pages/search:
+    post:
+      tags:
+      - WebPages
+      operationId: webPageSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebPageListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/WebPageListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/pages/{webPageId}:
+    get:
+      tags:
+      - WebPages
+      operationId: webPageGet
+      parameters:
+      - $ref: '#/components/parameters/WebPageIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebPageDetailResponse'
+        404:
+          description: WebPage not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - WebPages
+      operationId: webPageUpdate
+      parameters:
+      - $ref: '#/components/parameters/WebPageIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebPageUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebPageDetailResponse'
+        404:
+          description: WebPage not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - WebPages
+      operationId: webPageDelete
+      parameters:
+      - $ref: '#/components/parameters/WebPageIdParameter'
+      responses:
+        204:
+          description: WebPage deleted
+        404:
+          description: WebPage not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - WebPages
+      operationId: webPagePatch
+      parameters:
+      - $ref: '#/components/parameters/WebPageIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebPagePatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebPageDetailResponse'
+        404:
+          description: WebPage not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/menus:
+    post:
+      tags:
+      - WebMenus
+      operationId: webMenuCreate
+      requestBody:
+        $ref: '#/components/requestBodies/WebMenuRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/WebMenuDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/menus/filters:
+    get:
+      tags:
+      - WebMenus
+      operationId: webMenuFilters
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuFiltersResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/menus/search:
+    post:
+      tags:
+      - WebMenus
+      operationId: webMenuSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebMenuListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/menus/{webMenuId}:
+    get:
+      tags:
+      - WebMenus
+      operationId: webMenuGet
+      parameters:
+      - $ref: '#/components/parameters/WebMenuIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuDetailResponse'
+        404:
+          description: WebMenu not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - WebMenus
+      operationId: webMenuUpdate
+      parameters:
+      - $ref: '#/components/parameters/WebMenuIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebMenuUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuDetailResponse'
+        404:
+          description: WebMenu not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - WebMenus
+      operationId: webMenuDelete
+      parameters:
+      - $ref: '#/components/parameters/WebMenuIdParameter'
+      responses:
+        204:
+          description: WebMenu deleted
+        404:
+          description: WebMenu not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - WebMenus
+      operationId: webMenuPatch
+      parameters:
+      - $ref: '#/components/parameters/WebMenuIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebMenuPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuDetailResponse'
+        404:
+          description: WebMenu not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/menus/{webMenuId}/items:
+    post:
+      tags:
+      - WebMenuItems
+      operationId: webMenuItemCreate
+      parameters:
+      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebMenuItemRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/WebMenuItemDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/menus/{webMenuId}/items/filters:
+    get:
+      tags:
+      - WebMenuItems
+      operationId: webMenuItemFilters
+      parameters:
+      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuItemFiltersResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/menus/{webMenuId}/items/search:
+    post:
+      tags:
+      - WebMenuItems
+      operationId: webMenuItemSearch
+      parameters:
+      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebMenuItemListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuItemListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}:
+    get:
+      tags:
+      - WebMenuItems
+      operationId: webMenuItemGet
+      parameters:
+      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuItemDetailResponse'
+        404:
+          description: WebMenuItem not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - WebMenuItems
+      operationId: webMenuItemUpdate
+      parameters:
+      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebMenuItemUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuItemDetailResponse'
+        404:
+          description: WebMenuItem not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - WebMenuItems
+      operationId: webMenuItemDelete
+      parameters:
+      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      responses:
+        204:
+          description: WebMenuItem deleted
+        404:
+          description: WebMenuItem not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - WebMenuItems
+      operationId: webMenuItemPatch
+      parameters:
+      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebMenuItemPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuItemDetailResponse'
+        404:
+          description: WebMenuItem not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/settings:
+    get:
+      tags:
+      - WebSettings
+      operationId: webSettingsGet
+      responses:
+        200:
+          $ref: '#/components/responses/WebSettingsDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - WebSettings
+      operationId: webSettingsUpdate
+      requestBody:
+        $ref: '#/components/requestBodies/WebSettingsUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebSettingsDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    WebMetadataCreateSchema:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: homepage
+        template:
+          $ref: '#/components/schemas/WebMetadataTemplateField'
+        referenceType:
+          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+        referenceId:
+          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+        publicationDate:
+          type: number
+          nullable: true
+        expirationDate:
+          type: number
+          nullable: true
+        status:
+          type: string
+          example: draft
+        title:
+          type: string
+          nullable: true
+        excerpt:
+          type: string
+          nullable: true
+        imageUrl:
+          type: string
+          nullable: true
+        canonicalUrl:
+          type: string
+          nullable: true
+        noIndex:
+          $ref: '#/components/schemas/WebMetadataNoIndexField'
+        primaryKeyword:
+          type: string
+          nullable: true
+        cssCodeInjection:
+          type: string
+          nullable: true
+        javascriptCodeInjection:
+          type: string
+          nullable: true
+        structuredDataCodeInjection:
+          type: string
+          nullable: true
+      required:
+      - slug
+      - status
+    WebMetadataTemplateField:
+      type: string
+      example: default
+    WebMetadataReferenceTypeField:
+      type: string
+      example: web.page
+    WebMetadataReferenceIDField:
+      type: string
+      example: wp_home
+    WebMetadataNoIndexField:
+      type: boolean
+      example: false
+    WebMetadataDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: metadata_homepage
+        referenceType:
+          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+        referenceId:
+          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+        slug:
+          type: string
+          example: homepage
+        template:
+          type: string
+          example: default
+        publicationDate:
+          type: number
+          nullable: true
+        expirationDate:
+          type: number
+          nullable: true
+        status:
+          type: string
+          example: draft
+        title:
+          type: string
+          nullable: true
+        excerpt:
+          type: string
+          nullable: true
+        imageUrl:
+          type: string
+          nullable: true
+        canonicalUrl:
+          type: string
+          nullable: true
+        noIndex:
+          type: boolean
+          example: false
+        primaryKeyword:
+          type: string
+          example: homepage seo
+        cssCodeInjection:
+          type: string
+          nullable: true
+        javascriptCodeInjection:
+          type: string
+          nullable: true
+        structuredDataCodeInjection:
+          type: string
+          nullable: true
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - slug
+      - template
+      - status
+      - noIndex
+      - primaryKeyword
+      - createdAt
+      - updatedAt
+    BulkDeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            example: id1
+        summary:
+          type: boolean
+          example: true
+      required:
+      - ids
+      - summary
+    BulkDeleteResponseSchema:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: id1
+              status:
+                type: string
+                enum:
+                - deleted
+                - not_found
+                - forbidden
+                example: deleted
+            required:
+            - id
+            - status
+        summary:
+          type: object
+          properties:
+            requested:
+              type: integer
+              example: 1
+            deleted:
+              type: integer
+              example: 1
+            notFound:
+              type: integer
+              example: 1
+            forbidden:
+              type: integer
+              example: 1
+          required:
+          - requested
+          - deleted
+          - notFound
+          - forbidden
+      required:
+      - results
+      - summary
+    SearchFilterSchema:
+      type: object
+      properties:
+        search:
+          $ref: '#/components/schemas/SearchStringField'
+    SearchStringField:
+      type: string
+      example: foo
+    WebMetadataListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - slug
+                - publicationDate
+                - expirationDate
+                - status
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            referenceType:
+              $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+      required:
+      - page
+      - filters
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+    SearchPageSizeField:
+      type: integer
+      example: 20
+    SearchPageNumberField:
+      type: integer
+      example: 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      example: asc
+    WebMetadataListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/WebMetadataListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebMetadataListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    WebMetadataListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebMetadataIdField'
+        referenceType:
+          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+        referenceId:
+          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+        slug:
+          $ref: '#/components/schemas/WebMetadataSlugField'
+        publicationDate:
+          type: number
+          nullable: true
+        expirationDate:
+          type: number
+          nullable: true
+        status:
+          $ref: '#/components/schemas/WebMetadataStatusField'
+        title:
+          $ref: '#/components/schemas/WebMetadataTitleField'
+        createdAt:
+          $ref: '#/components/schemas/WebMetadataTimestampField'
+        updatedAt:
+          $ref: '#/components/schemas/WebMetadataTimestampField'
+      required:
+      - id
+      - slug
+      - status
+      - title
+      - createdAt
+      - updatedAt
+    WebMetadataIdField:
+      type: string
+      example: metadata_homepage
+    WebMetadataSlugField:
+      type: string
+      example: homepage
+    WebMetadataStatusField:
+      type: string
+      example: draft
+    WebMetadataTitleField:
+      type: string
+      example: Homepage metadata title
+    WebMetadataTimestampField:
+      type: number
+      format: double
+      example: 1.76e+9
+    WebMetadataPatchSchema:
+      type: object
+      properties:
+        slug:
+          $ref: '#/components/schemas/WebMetadataSlugField'
+        template:
+          $ref: '#/components/schemas/WebMetadataTemplateField'
+        referenceType:
+          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+        referenceId:
+          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+        publicationDate:
+          type: number
+          nullable: true
+        expirationDate:
+          type: number
+          nullable: true
+        status:
+          $ref: '#/components/schemas/WebMetadataStatusField'
+        title:
+          type: string
+          nullable: true
+        excerpt:
+          type: string
+          nullable: true
+        imageUrl:
+          type: string
+          nullable: true
+        canonicalUrl:
+          type: string
+          nullable: true
+        noIndex:
+          $ref: '#/components/schemas/WebMetadataNoIndexField'
+        primaryKeyword:
+          type: string
+          nullable: true
+        cssCodeInjection:
+          type: string
+          nullable: true
+        javascriptCodeInjection:
+          type: string
+          nullable: true
+        structuredDataCodeInjection:
+          type: string
+          nullable: true
+    WebPageCreateSchema:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Homepage
+        excerpt:
+          type: string
+          example: Short page summary.
+        content:
+          type: string
+          example: <h1>Homepage</h1>
+        imageAssetId:
+          $ref: '#/components/schemas/WebPageImageAssetIdField'
+      required:
+      - title
+      - excerpt
+      - content
+    WebPageImageAssetIdField:
+      type: string
+      example: media_asset_1
+    WebPageDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: wp_home
+        title:
+          type: string
+          example: Homepage
+        excerpt:
+          type: string
+          example: Short page summary.
+        content:
+          type: string
+          example: <h1>Homepage</h1>
+        imageAssetId:
+          $ref: '#/components/schemas/WebPageImageAssetIdField'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataDetailSchema'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - title
+      - excerpt
+      - content
+      - metadata
+      - createdAt
+      - updatedAt
+    WebPageListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    WebPageListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/WebPageListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebPageListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    WebPageListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebPageIdField'
+        title:
+          $ref: '#/components/schemas/WebPageTitleField'
+        excerpt:
+          $ref: '#/components/schemas/WebPageExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/WebPageImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/WebPageCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/WebPageUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+    WebPageIdField:
+      type: string
+      example: wp_home
+    WebPageTitleField:
+      type: string
+      example: Homepage
+    WebPageExcerptField:
+      type: string
+      example: Short page summary.
+    WebPageCreatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    WebPageUpdatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    WebPagePatchSchema:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/WebPageTitleField'
+        excerpt:
+          $ref: '#/components/schemas/WebPageExcerptField'
+        content:
+          $ref: '#/components/schemas/WebPageContentField'
+        imageAssetId:
+          $ref: '#/components/schemas/WebPageImageAssetIdField'
+    WebPageContentField:
+      type: string
+      example: <h1>Homepage</h1>
+    WebMenuCreateSchema:
+      type: object
+      properties:
+        key:
+          type: string
+          example: header
+        name:
+          type: string
+          example: Header menu
+        notes:
+          $ref: '#/components/schemas/WebMenuNotesField'
+      required:
+      - key
+      - name
+    WebMenuNotesField:
+      type: string
+      example: Primary site navigation.
+    WebMenuDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: wm_header
+        key:
+          type: string
+          example: header
+        name:
+          type: string
+          example: Header menu
+        notes:
+          $ref: '#/components/schemas/WebMenuNotesField'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - key
+      - name
+      - createdAt
+      - updatedAt
+    WebMenuListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - key
+                - name
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    WebMenuListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/WebMenuListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebMenuListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    WebMenuListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebMenuIdField'
+        key:
+          $ref: '#/components/schemas/WebMenuKeyField'
+        name:
+          $ref: '#/components/schemas/WebMenuNameField'
+        createdAt:
+          $ref: '#/components/schemas/WebMenuCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/WebMenuUpdatedAtField'
+      required:
+      - id
+      - key
+      - name
+      - createdAt
+      - updatedAt
+    WebMenuIdField:
+      type: string
+      example: wm_header
+    WebMenuKeyField:
+      type: string
+      example: header
+    WebMenuNameField:
+      type: string
+      example: Header menu
+    WebMenuCreatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    WebMenuUpdatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    WebMenuPatchSchema:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/WebMenuKeyField'
+        name:
+          $ref: '#/components/schemas/WebMenuNameField'
+        notes:
+          $ref: '#/components/schemas/WebMenuNotesField'
+    WebMenuItemCreateSchema:
+      type: object
+      properties:
+        label:
+          type: string
+          example: Home
+        url:
+          type: string
+          example: /
+        priority:
+          type: integer
+          example: 10
+        isBlank:
+          type: boolean
+          example: false
+        permission:
+          type: string
+          example: ''
+        authentication:
+          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
+        notes:
+          $ref: '#/components/schemas/WebMenuItemNotesField'
+      required:
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+    WebMenuItemAuthenticationField:
+      type: string
+      example: any
+    WebMenuItemNotesField:
+      type: string
+      example: Visible for all visitors.
+    WebMenuItemDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: wmi_home
+        menuId:
+          type: string
+          example: wm_header
+        label:
+          type: string
+          example: Home
+        url:
+          type: string
+          example: /
+        priority:
+          type: integer
+          example: 10
+        isBlank:
+          type: boolean
+          example: false
+        permission:
+          type: string
+          example: ''
+        authentication:
+          type: string
+          example: any
+        notes:
+          $ref: '#/components/schemas/WebMenuItemNotesField'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - menuId
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      - authentication
+      - createdAt
+      - updatedAt
+    WebMenuItemListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - label
+                - url
+                - priority
+                - permission
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    WebMenuItemListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/WebMenuItemListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebMenuItemListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    WebMenuItemListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/WebMenuItemIdField'
+        menuId:
+          $ref: '#/components/schemas/WebMenuIdField'
+        label:
+          $ref: '#/components/schemas/WebMenuItemLabelField'
+        url:
+          $ref: '#/components/schemas/WebMenuItemURLField'
+        priority:
+          $ref: '#/components/schemas/WebMenuItemPriorityField'
+        isBlank:
+          $ref: '#/components/schemas/WebMenuItemIsBlankField'
+        permission:
+          $ref: '#/components/schemas/WebMenuItemPermissionField'
+        authentication:
+          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
+        createdAt:
+          $ref: '#/components/schemas/WebMenuItemCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/WebMenuItemUpdatedAtField'
+      required:
+      - id
+      - menuId
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      - authentication
+      - createdAt
+      - updatedAt
+    WebMenuItemIdField:
+      type: string
+      example: wmi_home
+    WebMenuItemLabelField:
+      type: string
+      example: Home
+    WebMenuItemURLField:
+      type: string
+      example: /
+    WebMenuItemPriorityField:
+      type: integer
+      example: 10
+    WebMenuItemIsBlankField:
+      type: boolean
+      example: false
+    WebMenuItemPermissionField:
+      type: string
+      example: ''
+    WebMenuItemCreatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    WebMenuItemUpdatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    WebMenuItemPatchSchema:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/WebMenuItemLabelField'
+        url:
+          $ref: '#/components/schemas/WebMenuItemURLField'
+        priority:
+          $ref: '#/components/schemas/WebMenuItemPriorityField'
+        isBlank:
+          $ref: '#/components/schemas/WebMenuItemIsBlankField'
+        permission:
+          $ref: '#/components/schemas/WebMenuItemPermissionField'
+        authentication:
+          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
+        notes:
+          $ref: '#/components/schemas/WebMenuItemNotesField'
+    WebSettingsDetailSchema:
+      type: object
+      properties:
+        logo:
+          type: string
+          example: /images/logo.svg
+        logoDark:
+          type: string
+          example: /images/logo-dark.svg
+        metaImage:
+          type: string
+          example: /media/assets/default-meta-image.webp
+        primaryColor:
+          type: string
+          example: '#1d4ed8'
+        secondaryColor:
+          type: string
+          example: '#0f172a'
+        tertiaryColor:
+          type: string
+          example: '#e2e8f0'
+        primaryFont:
+          type: string
+          example: Geist
+        secondaryFont:
+          type: string
+          example: Merriweather
+        homePageId:
+          $ref: '#/components/schemas/WebSettingsHomePageIDField'
+        locale:
+          type: string
+          example: en_us
+        timezone:
+          type: string
+          example: utc
+        title:
+          type: string
+          example: Example Site
+        excerpt:
+          type: string
+          example: A concise site description.
+        noIndex:
+          type: boolean
+          example: false
+        css:
+          type: string
+          example: body { }
+        js:
+          type: string
+          example: console.log('web');
+      required:
+      - logo
+      - logoDark
+      - metaImage
+      - primaryColor
+      - secondaryColor
+      - tertiaryColor
+      - primaryFont
+      - secondaryFont
+      - locale
+      - timezone
+      - title
+      - excerpt
+      - noIndex
+      - css
+      - js
+    WebSettingsHomePageIDField:
+      type: string
+      example: web_page_1
+    WebSettingsUpdateSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: web-settings
+        logo:
+          type: string
+          example: /images/logo.svg
+        logoDark:
+          type: string
+          example: /images/logo-dark.svg
+        metaImage:
+          type: string
+          example: /media/assets/default-meta-image.webp
+        primaryColor:
+          type: string
+          example: '#1d4ed8'
+        secondaryColor:
+          type: string
+          example: '#0f172a'
+        tertiaryColor:
+          type: string
+          example: '#e2e8f0'
+        primaryFont:
+          type: string
+          example: Geist
+        secondaryFont:
+          type: string
+          example: Merriweather
+        homePageId:
+          $ref: '#/components/schemas/WebSettingsHomePageIDField'
+        locale:
+          type: string
+          example: en_us
+        timezone:
+          type: string
+          example: utc
+        title:
+          type: string
+          example: Example Site
+        excerpt:
+          type: string
+          example: A concise site description.
+        noIndex:
+          type: boolean
+          example: false
+        css:
+          type: string
+          example: body { }
+        js:
+          type: string
+          example: console.log('web');
+      required:
+      - id
+      - logo
+      - logoDark
+      - metaImage
+      - primaryColor
+      - secondaryColor
+      - tertiaryColor
+      - primaryFont
+      - secondaryFont
+      - locale
+      - timezone
+      - title
+      - excerpt
+      - noIndex
+      - css
+      - js
+  responses:
+    WebMetadataDetailResponse:
+      description: WebMetadata response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataDetailSchema'
+    BulkDeleteResponse:
+      description: Bulk delete response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteResponseSchema'
+    WebMetadataFiltersResponse:
+      description: WebMetadata filter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchFilterSchema'
+    WebMetadataListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataListItemSearchSchema'
+    WebPageDetailResponse:
+      description: WebPage response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebPageDetailSchema'
+    WebPageFiltersResponse:
+      description: WebPage filter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchFilterSchema'
+    WebPageListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebPageListItemSearchSchema'
+    WebMenuDetailResponse:
+      description: WebMenu response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuDetailSchema'
+    WebMenuFiltersResponse:
+      description: WebMenu filter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchFilterSchema'
+    WebMenuListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuListItemSearchSchema'
+    WebMenuItemDetailResponse:
+      description: WebMenuItem response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuItemDetailSchema'
+    WebMenuItemFiltersResponse:
+      description: WebMenuItem filter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchFilterSchema'
+    WebMenuItemListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuItemListItemSearchSchema'
+    WebSettingsDetailResponse:
+      description: WebSettings response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebSettingsDetailSchema'
+  parameters:
+    WebMetadataIdParameter:
+      name: webMetadataId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMetadataIdField'
+      description: WebMetadata id
+    WebPageIdParameter:
+      name: webPageId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebPageIdField'
+      description: WebPage id
+    WebMenuIdParameter:
+      name: webMenuId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMenuIdField'
+      description: WebMenu id
+    WebMenuItemMenuIdParameter:
+      name: webMenuId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMenuIdField'
+      description: WebMenu id
+    WebMenuItemIdParameter:
+      name: webMenuItemId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMenuItemIdField'
+      description: WebMenuItem id
+  requestBodies:
+    WebMetadataRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataCreateSchema'
+      required: true
+    BulkDeleteRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+      required: true
+    WebMetadataUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataCreateSchema'
+      required: true
+    WebMetadataPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataPatchSchema'
+      required: true
+    WebPageRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebPageCreateSchema'
+      required: true
+    WebPageUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebPagePatchSchema'
+      required: true
+    WebPagePatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebPagePatchSchema'
+      required: true
+    WebMenuRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuCreateSchema'
+      required: true
+    WebMenuUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuCreateSchema'
+      required: true
+    WebMenuPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuPatchSchema'
+      required: true
+    WebMenuItemRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuItemCreateSchema'
+      required: true
+    WebMenuItemUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuItemCreateSchema'
+      required: true
+    WebMenuItemPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuItemPatchSchema'
+      required: true
+    WebSettingsUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebSettingsUpdateSchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

@@ -1,6 +1,0 @@
-generate:
-  - types
-  - client
-  - server
-accessModifier: public
-namingStrategy: idiomatic

@@ -1,0 +1,818 @@
+openapi: 3.0.0
+info:
+  title: Admin API
+  version: 0.1.0
+tags:
+- name: ContactForms
+  description: Manage contact forms, fields, and submissions.
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/admin/contact/form:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormList
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - ContactForms
+      operationId: contactFormCreate
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/ContactFormResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/form/{contactFormId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormGet
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormResponse'
+        404:
+          description: Contact form not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - ContactForms
+      operationId: contactFormUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormCreateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormResponse'
+        404:
+          description: Contact form not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      responses:
+        204:
+          description: Contact form deleted
+        404:
+          description: Contact form not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/form/{contactFormId}/field:
+    get:
+      tags:
+      - ContactForms
+      operationId: formFieldList
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/FormFieldListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - ContactForms
+      operationId: formFieldCreate
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/FormFieldCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/FormFieldResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: formFieldBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: formFieldGet
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/FormFieldIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/FormFieldResponse'
+        404:
+          description: Contact form item not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - ContactForms
+      operationId: formFieldUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/FormFieldIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/FormFieldPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/FormFieldResponse'
+        404:
+          description: Contact form item not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: formFieldDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/FormFieldIdParameter'
+      responses:
+        204:
+          description: Contact form item deleted
+        404:
+          description: Contact form item not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/field:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFieldList
+      responses:
+        200:
+          $ref: '#/components/responses/FormFieldListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - ContactForms
+      operationId: contactFieldCreate
+      requestBody:
+        $ref: '#/components/requestBodies/FormFieldCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/FormFieldResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFieldBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/field/{formFieldId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFieldGet
+      parameters:
+      - $ref: '#/components/parameters/FormFieldIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/FormFieldResponse'
+        404:
+          description: Contact field not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - ContactForms
+      operationId: contactFieldUpdate
+      parameters:
+      - $ref: '#/components/parameters/FormFieldIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/FormFieldPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/FormFieldResponse'
+        404:
+          description: Contact field not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFieldDelete
+      parameters:
+      - $ref: '#/components/parameters/FormFieldIdParameter'
+      responses:
+        204:
+          description: Contact field deleted
+        404:
+          description: Contact field not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/form/{contactFormId}/submission:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionList
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormSubmissionListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}:
+    get:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionGet
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormSubmissionResponse'
+        404:
+          description: Contact form submission not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionDelete
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
+      responses:
+        204:
+          description: Contact form submission deleted
+        404:
+          description: Contact form submission not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - ContactForms
+      operationId: contactFormSubmissionUpdate
+      parameters:
+      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactFormSubmissionPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFormSubmissionResponse'
+        404:
+          description: Contact form submission not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    ContactFormListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactFormSchema'
+    ContactFormSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        successMessage:
+          type: string
+        failureMessage:
+          type: string
+        redirectUrl:
+          $ref: '#/components/schemas/ContactContentField'
+        items:
+          $ref: '#/components/schemas/FormFieldsSchema'
+        mails:
+          $ref: '#/components/schemas/SubmissionMailsSchema'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - name
+      - successMessage
+      - failureMessage
+      - createdAt
+      - updatedAt
+    ContactContentField:
+      type: string
+    FormFieldsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/FormFieldSchema'
+    FormFieldSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        formId:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        allowedValues:
+          $ref: '#/components/schemas/ContactAllowedValuesSchema'
+        isRequired:
+          type: boolean
+        position:
+          type: integer
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - formId
+      - key
+      - type
+      - label
+      - isRequired
+      - position
+      - createdAt
+      - updatedAt
+    ContactAllowedValuesSchema:
+      type: array
+      items:
+        type: string
+    SubmissionMailsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/SubmissionMailSchema'
+    SubmissionMailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        formId:
+          type: string
+        mailFrom:
+          type: string
+        mailTo:
+          type: string
+        subject:
+          type: string
+        additionalHeaders:
+          type: string
+        messageBody:
+          type: string
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - formId
+      - mailFrom
+      - mailTo
+      - subject
+      - additionalHeaders
+      - messageBody
+      - createdAt
+      - updatedAt
+    ContactFormCreateSchema:
+      type: object
+      properties:
+        name:
+          type: string
+        successMessage:
+          $ref: '#/components/schemas/ContactContentField'
+        failureMessage:
+          $ref: '#/components/schemas/ContactContentField'
+        redirectUrl:
+          $ref: '#/components/schemas/ContactContentField'
+        fieldIds:
+          $ref: '#/components/schemas/ContactFieldIDsSchema'
+        mails:
+          $ref: '#/components/schemas/SubmissionMailInputsSchema'
+      required:
+      - name
+    ContactFieldIDsSchema:
+      type: array
+      items:
+        type: string
+    SubmissionMailInputsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/SubmissionMailInputSchema'
+    SubmissionMailInputSchema:
+      type: object
+      properties:
+        mailFrom:
+          type: string
+        mailTo:
+          type: string
+        subject:
+          type: string
+        additionalHeaders:
+          $ref: '#/components/schemas/ContactContentField'
+        messageBody:
+          type: string
+      required:
+      - mailFrom
+      - mailTo
+      - subject
+      - messageBody
+    BulkDeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            example: id1
+        summary:
+          type: boolean
+          example: true
+      required:
+      - ids
+      - summary
+    BulkDeleteResponseSchema:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: id1
+              status:
+                type: string
+                enum:
+                - deleted
+                - not_found
+                - forbidden
+                example: deleted
+            required:
+            - id
+            - status
+        summary:
+          type: object
+          properties:
+            requested:
+              type: integer
+              example: 1
+            deleted:
+              type: integer
+              example: 1
+            notFound:
+              type: integer
+              example: 1
+            forbidden:
+              type: integer
+              example: 1
+          required:
+          - requested
+          - deleted
+          - notFound
+          - forbidden
+      required:
+      - results
+      - summary
+    ContactIdField:
+      type: string
+    FormFieldListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/FormFieldSchema'
+    FormFieldCreateSchema:
+      type: object
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        allowedValues:
+          $ref: '#/components/schemas/ContactAllowedValuesSchema'
+        isRequired:
+          $ref: '#/components/schemas/ContactRequiredField'
+        position:
+          $ref: '#/components/schemas/FormFieldPositionField'
+      required:
+      - key
+      - type
+      - label
+    ContactRequiredField:
+      type: boolean
+    FormFieldPositionField:
+      type: integer
+    FormFieldPatchSchema:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/ContactKeyField'
+        type:
+          $ref: '#/components/schemas/ContactTypeField'
+        label:
+          $ref: '#/components/schemas/ContactLabelField'
+        allowedValues:
+          $ref: '#/components/schemas/ContactAllowedValuesSchema'
+        isRequired:
+          $ref: '#/components/schemas/ContactRequiredField'
+        position:
+          $ref: '#/components/schemas/FormFieldPositionField'
+    ContactKeyField:
+      type: string
+    ContactTypeField:
+      type: string
+    ContactLabelField:
+      type: string
+    ContactFormSubmissionListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactFormSubmissionSchema'
+    ContactFormSubmissionSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        formId:
+          type: string
+        values:
+          type: object
+          additionalProperties:
+            type: string
+        itemsSnapshot:
+          type: object
+          additionalProperties:
+            type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        status:
+          type: string
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - formId
+      - values
+      - itemsSnapshot
+      - metadata
+      - status
+      - createdAt
+      - updatedAt
+    ContactFormSubmissionPatchSchema:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
+  responses:
+    ContactFormListResponse:
+      description: Contact form list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormListSchema'
+    ContactFormResponse:
+      description: Contact form response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormSchema'
+    BulkDeleteResponse:
+      description: Bulk delete response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteResponseSchema'
+    FormFieldListResponse:
+      description: Contact form item list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FormFieldListSchema'
+    FormFieldResponse:
+      description: Contact form item response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FormFieldSchema'
+    ContactFormSubmissionListResponse:
+      description: Contact form submission list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormSubmissionListSchema'
+    ContactFormSubmissionResponse:
+      description: Contact form submission response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormSubmissionSchema'
+  parameters:
+    ContactFormIdParameter:
+      name: contactFormId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactIdField'
+    FormFieldIdParameter:
+      name: formFieldId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactIdField'
+    ContactFormSubmissionIdParameter:
+      name: contactFormSubmissionId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactIdField'
+  requestBodies:
+    ContactFormCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormCreateSchema'
+      required: true
+    BulkDeleteRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+      required: true
+    FormFieldCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FormFieldCreateSchema'
+      required: true
+    FormFieldPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FormFieldPatchSchema'
+      required: true
+    ContactFormSubmissionPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFormSubmissionPatchSchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

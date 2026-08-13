@@ -1,6 +1,0 @@
-.DS_Store
-.build
-.swift-openapi-generator
-.swiftpm
-xcuserdata
-DerivedData

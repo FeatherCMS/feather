@@ -1,0 +1,492 @@
+openapi: 3.2.0
+info:
+  title: System Admin API
+  version: 0.1.0
+tags:
+- name: RedirectRules
+  description: Manage redirect rules.
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/admin/redirect/rules:
+    post:
+      tags:
+      - RedirectRules
+      operationId: redirectRuleCreate
+      requestBody:
+        $ref: '#/components/requestBodies/RedirectRuleRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/RedirectRuleDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - RedirectRules
+      operationId: redirectRuleBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/redirect/rules/filters:
+    get:
+      tags:
+      - RedirectRules
+      operationId: redirectRuleFilters
+      responses:
+        200:
+          $ref: '#/components/responses/RedirectRuleFiltersResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/redirect/rules/search:
+    post:
+      tags:
+      - RedirectRules
+      operationId: redirectRuleSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RedirectRuleListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/RedirectRuleListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/redirect/rules/{redirectRuleId}:
+    get:
+      tags:
+      - RedirectRules
+      operationId: redirectRuleGet
+      parameters:
+      - $ref: '#/components/parameters/RedirectRuleIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/RedirectRuleDetailResponse'
+        404:
+          description: RedirectRule not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - RedirectRules
+      operationId: redirectRuleUpdate
+      parameters:
+      - $ref: '#/components/parameters/RedirectRuleIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/RedirectRuleUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/RedirectRuleDetailResponse'
+        404:
+          description: RedirectRule not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - RedirectRules
+      operationId: redirectRuleDelete
+      parameters:
+      - $ref: '#/components/parameters/RedirectRuleIdParameter'
+      responses:
+        204:
+          description: RedirectRule deleted
+        404:
+          description: RedirectRule not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - RedirectRules
+      operationId: redirectRulePatch
+      parameters:
+      - $ref: '#/components/parameters/RedirectRuleIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/RedirectRulePatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/RedirectRuleDetailResponse'
+        404:
+          description: RedirectRule not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    RedirectRuleCreateSchema:
+      type: object
+      properties:
+        source:
+          type: string
+          examples:
+          - /old-home
+        destination:
+          type: string
+          examples:
+          - /new-home
+        statusCode:
+          type: integer
+          examples:
+          - 301
+        notes:
+          $ref: '#/components/schemas/RedirectRuleNotesField'
+      required:
+      - source
+      - destination
+      - statusCode
+      minProperties: 3
+    RedirectRuleNotesField:
+      type: string
+      examples:
+      - Legacy homepage redirect.
+    RedirectRuleDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - rr_home_old
+        source:
+          type: string
+          examples:
+          - /old-home
+        destination:
+          type: string
+          examples:
+          - /new-home
+        statusCode:
+          type: integer
+          examples:
+          - 301
+        notes:
+          $ref: '#/components/schemas/RedirectRuleNotesField'
+      required:
+      - id
+      - source
+      - destination
+      - statusCode
+      minProperties: 4
+    BulkDeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            examples:
+            - id1
+          minItems: 0
+          uniqueItems: false
+        summary:
+          type: boolean
+          examples:
+          - true
+      required:
+      - ids
+      - summary
+      minProperties: 2
+    BulkDeleteResponseSchema:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - id1
+              status:
+                type: string
+                enum:
+                - deleted
+                - not_found
+                - forbidden
+                examples:
+                - deleted
+            required:
+            - id
+            - status
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        summary:
+          type: object
+          properties:
+            requested:
+              type: integer
+              examples:
+              - 1
+            deleted:
+              type: integer
+              examples:
+              - 1
+            notFound:
+              type: integer
+              examples:
+              - 1
+            forbidden:
+              type: integer
+              examples:
+              - 1
+          required:
+          - requested
+          - deleted
+          - notFound
+          - forbidden
+          minProperties: 4
+      required:
+      - results
+      - summary
+      minProperties: 2
+    SearchFilterSchema:
+      type: object
+      properties:
+        search:
+          $ref: '#/components/schemas/SearchStringField'
+      minProperties: 0
+    SearchStringField:
+      type: string
+      examples:
+      - foo
+    RedirectRuleListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - source
+                - destination
+                - statusCode
+                - notes
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          properties:
+            search:
+              $ref: '#/components/schemas/RedirectRuleSearchField'
+            statusCode:
+              $ref: '#/components/schemas/RedirectRuleStatusCodeField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+      minProperties: 2
+    SearchPageSizeField:
+      type: integer
+      examples:
+      - 20
+    SearchPageNumberField:
+      type: integer
+      examples:
+      - 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      examples:
+      - asc
+    RedirectRuleSearchField:
+      type: string
+      examples:
+      - /old-home
+    RedirectRuleStatusCodeField:
+      type: integer
+      examples:
+      - 301
+    RedirectRuleListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/RedirectRuleListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/RedirectRuleListItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    RedirectRuleListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/RedirectRuleIdField'
+        source:
+          $ref: '#/components/schemas/RedirectRuleSourceField'
+        destination:
+          $ref: '#/components/schemas/RedirectRuleDestinationField'
+        statusCode:
+          $ref: '#/components/schemas/RedirectRuleStatusCodeField'
+      required:
+      - id
+      - source
+      - destination
+      - statusCode
+      minProperties: 4
+    RedirectRuleIdField:
+      type: string
+      examples:
+      - rr_home_old
+    RedirectRuleSourceField:
+      type: string
+      examples:
+      - /old-home
+    RedirectRuleDestinationField:
+      type: string
+      examples:
+      - /new-home
+    RedirectRulePatchSchema:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/RedirectRuleSourceField'
+        destination:
+          $ref: '#/components/schemas/RedirectRuleDestinationField'
+        statusCode:
+          $ref: '#/components/schemas/RedirectRuleStatusCodeField'
+        notes:
+          $ref: '#/components/schemas/RedirectRuleNotesField'
+      minProperties: 0
+  responses:
+    RedirectRuleDetailResponse:
+      description: RedirectRule response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectRuleDetailSchema'
+    BulkDeleteResponse:
+      description: Bulk delete response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteResponseSchema'
+    RedirectRuleFiltersResponse:
+      description: RedirectRule filter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchFilterSchema'
+    RedirectRuleListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectRuleListItemSearchSchema'
+  parameters:
+    RedirectRuleIdParameter:
+      name: redirectRuleId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/RedirectRuleIdField'
+      description: RedirectRule id
+  requestBodies:
+    RedirectRuleRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectRuleCreateSchema'
+      required: true
+    BulkDeleteRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+      required: true
+    RedirectRuleUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectRuleCreateSchema'
+      required: true
+    RedirectRulePatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectRulePatchSchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

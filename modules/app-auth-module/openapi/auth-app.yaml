@@ -1,0 +1,183 @@
+openapi: 3.0.0
+info:
+  title: User App API
+  version: 0.1.0
+tags: []
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/auth/me:
+    get:
+      operationId: authMe
+      responses:
+        200:
+          $ref: '#/components/responses/AuthMeResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/auth/login:
+    post:
+      operationId: authLogin
+      requestBody:
+        $ref: '#/components/requestBodies/AuthLoginRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthResponse'
+  /api/v1/auth/logout:
+    post:
+      operationId: authLogout
+      responses:
+        204:
+          description: Logged out
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/auth/magic-link:
+    post:
+      operationId: authMagicLink
+      requestBody:
+        $ref: '#/components/requestBodies/AuthMagicLinkRequestBody'
+      responses:
+        204:
+          description: Magic link requested
+  /api/v1/auth/magic-link/verify:
+    post:
+      operationId: authMagicLinkVerify
+      requestBody:
+        $ref: '#/components/requestBodies/AuthMagicLinkVerifyRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthResponse'
+components:
+  schemas:
+    AuthResponseSchema:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/AuthUserIdentityDetailSchema'
+        roles:
+          type: array
+          items:
+            type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        token:
+          $ref: '#/components/schemas/UserAuthTokenField'
+      required:
+      - user
+      - roles
+      - permissions
+      - token
+    AuthUserIdentityDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UserIdentityIDField'
+        status:
+          $ref: '#/components/schemas/UserIdentityStatusField'
+      required:
+      - id
+      - status
+    UserIdentityIDField:
+      type: string
+      example: usr_a9x1f7Qk2m
+    UserIdentityStatusField:
+      type: string
+      enum:
+      - invited
+      - active
+      - suspended
+      - deactivated
+      - anonymized
+      example: active
+    UserAuthTokenField:
+      type: string
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    AuthLoginRequestSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/AuthEmailField'
+        password:
+          $ref: '#/components/schemas/AuthPasswordField'
+        isPersistent:
+          $ref: '#/components/schemas/AuthIsPersistentField'
+      required:
+      - email
+      - password
+      - isPersistent
+    AuthEmailField:
+      type: string
+      example: admin@example.com
+    AuthPasswordField:
+      type: string
+      example: password
+    AuthIsPersistentField:
+      type: boolean
+      example: true
+    AuthMagicLinkRequestSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          example: admin@example.com
+        isPersistent:
+          type: boolean
+          example: true
+      required:
+      - email
+      - isPersistent
+    AuthMagicLinkVerifyRequestSchema:
+      type: object
+      properties:
+        token:
+          type: string
+          example: mgl_3XbY...
+      required:
+      - token
+  responses:
+    AuthMeResponse:
+      description: Auth response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthResponseSchema'
+    AuthResponse:
+      description: Auth response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthResponseSchema'
+  requestBodies:
+    AuthLoginRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthLoginRequestSchema'
+      required: true
+    AuthMagicLinkRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthMagicLinkRequestSchema'
+      required: true
+    AuthMagicLinkVerifyRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthMagicLinkVerifyRequestSchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

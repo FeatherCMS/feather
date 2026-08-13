@@ -46,12 +46,8 @@ services:
     image: feather-cms-server
     build:
       context: .
-      dockerfile: ./docker/backend/Dockerfile
+      dockerfile: ./docker/application-runtime/Dockerfile
       target: server
-      cache_from:
-        - type=local,src=.docker-cache/server
-      cache_to:
-        - type=local,dest=.docker-cache/server,mode=max
     depends_on:
       certificates:
         condition: service_completed_successfully
@@ -87,12 +83,8 @@ services:
         condition: service_healthy
     build:
       context: .
-      dockerfile: ./docker/backend/Dockerfile
+      dockerfile: ./docker/application-runtime/Dockerfile
       target: migrator
-      cache_from:
-        - type=local,src=.docker-cache/migrator
-      cache_to:
-        - type=local,dest=.docker-cache/migrator,mode=max
     user: "0:0"
     volumes:
       - certificates:/certs
@@ -111,12 +103,8 @@ services:
     image: feather-cms-worker
     build:
       context: .
-      dockerfile: ./docker/backend/Dockerfile
+      dockerfile: ./docker/application-runtime/Dockerfile
       target: worker
-      cache_from:
-        - type=local,src=.docker-cache/worker
-      cache_to:
-        - type=local,dest=.docker-cache/worker,mode=max
     depends_on:
       certificates:
         condition: service_completed_successfully
@@ -158,11 +146,8 @@ services:
   web-app:
     build:
       context: .
-      dockerfile: ./docker/web-app/Dockerfile
-      cache_from:
-        - type=local,src=.docker-cache/web-app
-      cache_to:
-        - type=local,dest=.docker-cache/web-app,mode=max
+      dockerfile: ./docker/application-runtime/Dockerfile
+      target: web-app
     depends_on:
       - server
     ports:
@@ -178,11 +163,8 @@ services:
   web-static:
     build:
       context: .
-      dockerfile: ./docker/web-static/Dockerfile
-      cache_from:
-        - type=local,src=.docker-cache/web-static
-      cache_to:
-        - type=local,dest=.docker-cache/web-static,mode=max
+      dockerfile: ./docker/application-runtime/Dockerfile
+      target: web-static
     ports:
       - "4567:4567"
 
@@ -199,7 +181,17 @@ services:
       - ./docker/openapi/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./docker/openapi/www/index.html:/usr/share/nginx/html/index.html:ro
       - ./docker/openapi/www/swagger-ui/:/usr/share/nginx/html/swagger-ui/:ro
-      - ./openapi/openapi/:/usr/share/nginx/html/openapi/:ro
+      - ./modules/app-analytics-module/openapi/:/usr/share/nginx/html/openapi/analytics/:ro
+      - ./modules/app-auth-module/openapi/:/usr/share/nginx/html/openapi/auth/:ro
+      - ./modules/app-blog-module/openapi/:/usr/share/nginx/html/openapi/blog/:ro
+      - ./modules/app-contact-module/openapi/:/usr/share/nginx/html/openapi/contact/:ro
+      - ./modules/app-media-module/openapi/:/usr/share/nginx/html/openapi/media/:ro
+      - ./modules/app-news-module/openapi/:/usr/share/nginx/html/openapi/news/:ro
+      - ./modules/app-newsletter-module/openapi/:/usr/share/nginx/html/openapi/newsletter/:ro
+      - ./modules/app-redirect-module/openapi/:/usr/share/nginx/html/openapi/redirect/:ro
+      - ./modules/app-system-module/openapi/:/usr/share/nginx/html/openapi/system/:ro
+      - ./modules/app-user-module/openapi/:/usr/share/nginx/html/openapi/user/:ro
+      - ./modules/app-web-module/openapi/:/usr/share/nginx/html/openapi/web/:ro
 
   openapi-admin:
     image: feather-cms-openapi-admin
@@ -214,7 +206,17 @@ services:
       - ./docker/openapi/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./docker/openapi/www/index.html:/usr/share/nginx/html/index.html:ro
       - ./docker/openapi/www/swagger-ui/:/usr/share/nginx/html/swagger-ui/:ro
-      - ./openapi/openapi/:/usr/share/nginx/html/openapi/:ro
+      - ./modules/app-analytics-module/openapi/:/usr/share/nginx/html/openapi/analytics/:ro
+      - ./modules/app-auth-module/openapi/:/usr/share/nginx/html/openapi/auth/:ro
+      - ./modules/app-blog-module/openapi/:/usr/share/nginx/html/openapi/blog/:ro
+      - ./modules/app-contact-module/openapi/:/usr/share/nginx/html/openapi/contact/:ro
+      - ./modules/app-media-module/openapi/:/usr/share/nginx/html/openapi/media/:ro
+      - ./modules/app-news-module/openapi/:/usr/share/nginx/html/openapi/news/:ro
+      - ./modules/app-newsletter-module/openapi/:/usr/share/nginx/html/openapi/newsletter/:ro
+      - ./modules/app-redirect-module/openapi/:/usr/share/nginx/html/openapi/redirect/:ro
+      - ./modules/app-system-module/openapi/:/usr/share/nginx/html/openapi/system/:ro
+      - ./modules/app-user-module/openapi/:/usr/share/nginx/html/openapi/user/:ro
+      - ./modules/app-web-module/openapi/:/usr/share/nginx/html/openapi/web/:ro
 
 volumes:
   certificates:

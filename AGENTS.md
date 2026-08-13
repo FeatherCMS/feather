@@ -6,6 +6,12 @@ Scope: these rules apply to the whole repository unless a deeper `AGENTS.md` fil
 
 Docs are the design source of truth. Follow the patterns in `docs/00-index.md`, `docs/01-modules.md`, and `docs/02-server.md` when deciding structure, naming, and layer boundaries.
 
+never list sources or exclude files in a package.swift files a folder path should be sufficent.
+
+never write sql code outside of a Database/AccessLayer folder. SQL code is only allowed within that folder.
+
+never write functionality on a Scope object. Always use a repository or query for managing database models, always use the table representation objects and never use direct SQL code. 
+
 ## 1) Current project structure
 
 This workspace is a multi-project Swift repository centered on a shared OpenAPI contract:
@@ -13,14 +19,18 @@ This workspace is a multi-project Swift repository centered on a shared OpenAPI 
 - `openapi`
   - Shared OpenAPI libraries used by clients and servers.
   - Contains the generated app and management API types.
-- `backend`
+- `application`
   - Modular backend runtime.
-  - Executables: `Server`, `Migrator`, `Worker`.
-  - Internal modules live under `app-modules/`.
-- `web-app`
-  - Hummingbird-based web app.
+  - Executables: `Server`, `Migrator`, `Worker`, `WebApp`, `Static`.
+  - Internal modules live under the top-level `modules/` directory.
+- `application/Sources/WebApp`
+  - Hummingbird-based web application target.
   - Feature code lives under the web app feature source root in feature-scoped folders.
   - Shared code lives under `Bootstrap`, `Core`, `Platform`, `Shared`, and `Views`.
+- `application/Sources/Static`
+  - Static-file server target.
+- `application/Tests/WebAppTests`
+  - Web application test target.
 - `native-app`
   - Native client that consumes the shared OpenAPI contract.
 - `docs`
@@ -112,7 +122,7 @@ Dependency direction must stay inward:
 
 - Never edit OpenAPI YAML files directly.
 - Treat `openapi/*.yaml` files as generated artifacts.
-- Always make OpenAPI contract changes in the Swift OpenAPI generator project under `openapi-generator`.
+- Always make OpenAPI contract changes in the owning module's generator target under `modules/`.
 - After changing generator sources, regenerate the YAML and generated Swift API files from the generator output.
 - Do not hand-edit generated YAML to “fix” drift. Fix the generator so it produces the desired contract.
 
@@ -151,9 +161,7 @@ func delete(
 
 ## 5) Validation expectations
 
-- Run the smallest relevant checks for the touched area when practical.
-- Prefer targeted tests first, then broader validation only if needed.
-- If validation cannot be completed, state the limitation clearly.
+- Never run tests or validations. The developer will run it and provide you feedback if something fails.
 
 ## 6) Collaboration rule
 

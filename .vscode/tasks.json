@@ -24,7 +24,7 @@
       "command": "bash",
       "args": [
         "-lc",
-        "set -euo pipefail; make stop || true; make docker-down || true; pkill -f \"/backend/.build/.*/Server\" || true; pkill -f \"/backend/.build/.*/Worker\" || true",
+        "set -euo pipefail; make stop || true; make docker-down || true; pkill -f \"/application/.build/.*/Server\" || true; pkill -f \"/application/.build/.*/Worker\" || true",
       ],
       "options": {
         "cwd": "${workspaceFolder}",
