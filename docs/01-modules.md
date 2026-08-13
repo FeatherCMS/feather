@@ -15,7 +15,7 @@ By the end of this guide, you will:
 ## Key Points
 
 - A module is layered: Domain -> Application -> Infrastructure.
-- A shared `app-kernel` provides common contracts used by modules.
+- A shared `feather-core` provides common contracts used by modules.
 - Use-cases run in Application and call abstract ports.
 - Infrastructure implements those ports with Structured Query Language (SQL) and mappings.
 - Use-cases exchange Data Transfer Objects (DTOs), not raw domain entities.
@@ -52,9 +52,9 @@ A FATHOMS module combines Onion and Hexagonal ideas.
 
 Dependency direction is always inward.
 
-### 1.1 app-kernel
+### 1.1 feather-core
 
-`app-kernel` is the shared space for common contracts used by modules.
+`feather-core` is the shared space for common contracts used by modules.
 It contains reusable Domain, Application, and Infrastructure contracts.
 Keep it thin and lightweight. Add only shared patterns that reduce duplication.
 Kernel Application contracts define ports that Infrastructure adapters implement.
@@ -75,6 +75,7 @@ Snippet (from `UserDomain/Models/Account.swift`):
 
 ```swift
 public struct Account: Model {
+
     public enum Error: DomainError {
         case emailTooShort
         case emailTooLong
@@ -83,7 +84,6 @@ public struct Account: Model {
     }
 
     public struct New: Sendable {
-        public let id: String
         public let email: String
         public let password: String
         public let passwordHash: String
@@ -91,13 +91,17 @@ public struct Account: Model {
     }
 
     public static func create(
-        id: String,
         email: String,
         password: String,
         passwordHash: String
     ) throws(Self.Error) -> Self.New {
         try validate(email: email)
-        return .init(id: id, email: email, password: password, passwordHash: passwordHash, status: .active)
+        return .init(
+            email: email, 
+            password: password, 
+            passwordHash: passwordHash, 
+            status: .active
+        )
     }
 }
 ```
@@ -157,7 +161,6 @@ Snippet (from `UserApplication/UseCases/Account/AddAccount.swift`):
 ```swift
 public struct AddAccount: UseCase {
     let transaction: any TransactionExecutor<WriteAccount>
-    let idGenerator: any IDGenerator
     let passwordHasher: any PasswordHasher
 
     public struct Input: DTO {
@@ -165,13 +168,22 @@ public struct AddAccount: UseCase {
         public let password: String
     }
 
-    public func execute(_ input: Input) async throws -> AccountDetail {
-        let id = idGenerator.generate()
-        let hash = try await hashPassword(using: passwordHasher, original: input.password)
+    public func execute(
+        _ input: Input
+    ) async throws -> AccountDetail {
+        
+        let hash = try await hashPassword(
+            using: passwordHasher, 
+            original: input.password
+        )
 
-        let model = try await transaction.run { context in
-            try await context.account.insert(
-                Account.create(id: id, email: input.email, password: input.password, passwordHash: hash)
+        let model = try await transaction.run { scope in
+            try await scope.account.insert(
+                Account.create(
+                    email: input.email, 
+                    password: input.password, 
+                    passwordHash: hash
+                )
             )
         }
         return model.asDetail
@@ -285,7 +297,7 @@ Snippet (from `UserInfrastructure/Database/AccessLayer/AccountTable.swift`):
 
 ```swift
 func find(id: String) async throws -> Row? {
-    try await connection.run(
+    try await context.connection.run(
         query: #"""
             SELECT *
             FROM user_account
@@ -304,16 +316,16 @@ func find(id: String) async throws -> Row? {
 What this snippet does:
 
 1. Builds a parameterized SQL query.
-2. Executes it through the database connection.
+2. Executes it through the database context.connection.
 3. Maps the first row into a typed table row object.
 
 ### 4.2 Query adapter
 
-Snippet (from `UserInfrastructure/Queries/DatabaseAccountQueries.swift`):
+Snippet (from `UserInfrastructure/Queries/AccountDatabaseQueries.swift`):
 
 ```swift
 public func getBy(id: String) async throws -> AccountDetail {
-    let table = AccountTable(connection: connection)
+    let table = AccountTable(connection: context.connection)
     guard let row = try await table.find(id: id) else {
         throw RepositoryError.notFound
     }
@@ -325,14 +337,16 @@ This adapter converts table output into an application DTO.
 
 ### 4.3 Repository adapter
 
-Snippet (from `UserInfrastructure/Repositories/DatabaseAccountRepository.swift`):
+Snippet (from `UserInfrastructure/Repositories/AccountDatabaseRepository.swift`):
 
 ```swift
-public func insert(_ model: Account.New) async throws -> Account {
-    let table = AccountTable(connection: connection)
+public func insert(
+    _ model: Account.New
+) async throws -> Account {
+    let table = AccountTable(connection: context.connection)
     let saved = try await table.save(
         row: .init(
-            id: model.id,
+            id: context.idGenerator.generate(),
             email: model.email,
             password: model.passwordHash,
             status: model.status.rawValue

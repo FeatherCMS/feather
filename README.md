@@ -18,8 +18,15 @@ Run these from the repository root:
   Stops all running services without removing them.
 - `make deps`
   Builds and runs the current dependency services: `certificates`, `postgres`, and `migrator`.
-- `make backend`
-  Builds and runs the backend stack: dependencies plus `server` and `worker`.
+- `make application`
+  Builds the shared application artifact image once, builds the runtime images
+  from it, and runs the application stack: dependencies, migrations, backend
+  workers, web app, static server, and OpenAPI services.
+- `make application-artifacts`
+  Compiles all application executables once and creates the local artifact
+  image used by the runtime images.
+- `make application-images`
+  Builds the artifact image and the separate minimal runtime images.
 - `make all`
   Builds and runs the full local stack.
   For the web app, this also sets browser-facing public origins for:
@@ -32,8 +39,8 @@ Run these from the repository root:
   `WEB_PUBLIC_BASE_URL=http://192.168.8.102:3456 STATIC_PUBLIC_BASE_URL=http://192.168.8.102:4567 MEDIA_PUBLIC_BASE_URL=http://192.168.8.102:8080 make all`
 - `make clean all`
   Clears database and media storage, then builds and runs the full stack.
-- `make clean backend`
-  Clears database and media storage, then builds and runs the backend stack.
+- `make clean application`
+  Clears database and media storage, then builds and runs the application stack.
 
 
 ## Amazon SES Configuration
@@ -64,7 +71,7 @@ make docker-up
 
 Run tests from VS Code's Test Explorer, use `make test` for the backend package,
 or use `make test-all` for the backend and every package under
-`backend/app-modules`. When finished, remove the test services, networks, and
+`modules`. When finished, remove the test services, networks, and
 volumes with:
 
 ```sh
@@ -151,7 +158,5 @@ You can add the FeatherCMS shortcuts to VS Code's `keybindings.json` file:
 
 ## OpenAPI Generator
 
-The Swift OpenAPI generator package lives at `openapi-generator`.
-Use `make -C openapi-generator yaml` or `make -C openapi-generator run`
-to regenerate the OpenAPI YAML and generated Swift sources in
-`openapi`.
+OpenAPI generators live in the owning module packages under `modules/`.
+Use `make yaml` to regenerate module contracts.

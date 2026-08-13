@@ -1,8 +1,11 @@
 .DS_Store
 .build
+.swiftpm
 .cache
 .docker-cache
-.swiftpm
+.env
+.env.*
+*.code-workspace
 ca.key
 ca.pem
 ca.srl
@@ -11,7 +14,4 @@ server.csr
 server.key
 server.pem
 db.sqlite
-.env
-.env.*
-sidebar-menu
-*.code-workspace
+.swift-openapi-generator

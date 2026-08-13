@@ -1,0 +1,6 @@
+<div class="card tag">
+    {{#hasImage}}<img src="{{image}}" alt="{{title}}">{{/hasImage}}
+    <h2><a href="{{permalink}}">{{title}}</a></h2>
+    {{#postCountLabel}}<p>{{.}}</p>{{/postCountLabel}}
+    {{^postCountLabel}}<p>{{description}}</p>{{/postCountLabel}}
+</div>

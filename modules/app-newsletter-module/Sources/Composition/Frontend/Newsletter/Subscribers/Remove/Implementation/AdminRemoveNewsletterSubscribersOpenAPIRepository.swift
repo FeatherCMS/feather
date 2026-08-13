@@ -1,0 +1,17 @@
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import NewsletterAdminAPI
+import OpenAPIRuntime
+import SGML
+import WebStandards
+
+struct AdminRemoveNewsletterSubscribersOpenAPIRepository {
+    let api: NewsletterAdminAPIClient
+
+    func remove(ids: [String], campaignId: String?) async throws {
+        try await AdminNewsletterSubscribersAPIClient(api: api)
+            .bulkRemove(subscriberIds: ids, campaignId: campaignId)
+    }
+}

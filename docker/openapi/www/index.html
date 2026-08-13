@@ -12,11 +12,11 @@
     <script>
         function render() {
             var defaultSpecByPort = {
-                "8888": "/openapi/app.yaml",
-                "8889": "/openapi/admin.yaml"
+                "8888": "/openapi/system/system-app.yaml",
+                "8889": "/openapi/system/system-admin.yaml"
             };
             var params = new URLSearchParams(window.location.search);
-            var specUrl = params.get("url") || defaultSpecByPort[window.location.port] || "/openapi/admin.yaml";
+            var specUrl = params.get("url") || defaultSpecByPort[window.location.port] || "/openapi/system/system-admin.yaml";
             var ui = SwaggerUIBundle({
                 url: specUrl,
                 dom_id: '#swagger-ui',

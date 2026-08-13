@@ -1,6 +1,6 @@
 # FATHOMS Server Layer Guide
 
-This guide explains the Server layer in `backend/Sources/Server`.
+This guide explains the Server layer in `application/Sources/Server`.
 
 It focuses on two things:
 
@@ -124,8 +124,8 @@ struct AppInfrastructure: Sendable {
 
 ```swift
 struct AppModules: Sendable {
-    let system: SystemModule
-    let user: UserModule
+    let system: SystemBackend
+    let user: UserBackend
     let auth: AuthModule
 }
 ```
@@ -134,7 +134,7 @@ struct AppModules: Sendable {
 
 Each module builder composes use-cases from executors + scopes.
 
-Snippet (`SystemModule.makeAddVariable()`):
+Snippet (`SystemBackend.makeAddVariable()`):
 
 ```swift
 func makeAddVariable() -> AddVariable {
@@ -142,7 +142,7 @@ func makeAddVariable() -> AddVariable {
         database: infrastructure.database,
         scope: { connection in
             WriteVariable(
-                variable: DatabaseVariableRepository(connection: connection)
+                variable: VariableDatabaseRepository(connection: connection)
             )
         }
     )

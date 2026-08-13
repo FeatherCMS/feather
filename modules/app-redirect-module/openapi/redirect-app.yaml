@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  title: System App API
+  version: 0.1.0
+tags: []
+servers:
+- url: http://127.0.0.1:8080/
+paths:
+  /api/v1/redirect/rules:
+    get:
+      operationId: redirectRuleGet
+      parameters:
+      - $ref: '#/components/parameters/RedirectSourceParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/RedirectRuleResponse'
+        404:
+          description: Redirect rule not found
+components:
+  schemas:
+    RedirectSourceField:
+      type: string
+      example: /from-here/
+    RedirectRuleSchema:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/RedirectSourceField'
+        destination:
+          $ref: '#/components/schemas/RedirectDestinationField'
+        statusCode:
+          $ref: '#/components/schemas/RedirectStatusCodeField'
+      required:
+      - source
+      - destination
+      - statusCode
+    RedirectDestinationField:
+      type: string
+      example: /to-there/
+    RedirectStatusCodeField:
+      type: integer
+      example: 301
+  responses:
+    RedirectRuleResponse:
+      description: Redirect rule response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectRuleSchema'
+  parameters:
+    RedirectSourceParameter:
+      name: source
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/RedirectSourceField'
+      description: Public redirect source path

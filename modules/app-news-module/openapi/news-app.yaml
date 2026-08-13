@@ -1,0 +1,337 @@
+openapi: 3.0.0
+info:
+  title: News App API
+  version: 0.1.0
+tags:
+- name: News
+  description: News public content
+servers:
+- url: http://127.0.0.1:8080/
+paths:
+  /api/v1/news/articles:
+    get:
+      tags:
+      - News
+      operationId: newsArticleList
+      responses:
+        200:
+          $ref: '#/components/responses/NewsArticleListResponse'
+  /api/v1/news/articles/{id}:
+    get:
+      tags:
+      - News
+      operationId: newsArticleGet
+      parameters:
+      - $ref: '#/components/parameters/NewsArticleIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsArticleDetailResponse'
+        404:
+          description: News item not found
+  /api/v1/news/categories:
+    get:
+      tags:
+      - News
+      operationId: newsCategoryList
+      responses:
+        200:
+          $ref: '#/components/responses/NewsCategoryListResponse'
+  /api/v1/news/categories/{id}:
+    get:
+      tags:
+      - News
+      operationId: newsCategoryGet
+      parameters:
+      - $ref: '#/components/parameters/NewsCategoryIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsCategoryDetailResponse'
+        404:
+          description: News category not found
+components:
+  schemas:
+    NewsArticleListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsArticleSummarySchema'
+    NewsArticleSummarySchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/NewsArticleIdField'
+        excerpt:
+          $ref: '#/components/schemas/NewsArticleExcerptField'
+        imageURL:
+          $ref: '#/components/schemas/NewsArticleImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+      required:
+      - id
+      - excerpt
+      - imageURL
+      - metadata
+    NewsArticleIdField:
+      type: string
+      example: news_1
+    NewsArticleExcerptField:
+      type: string
+      example: Short article summary.
+    NewsArticleImageURLField:
+      type: string
+      example: /media/assets/news.png
+    MediaAssetSchema:
+      type: object
+      properties:
+        assetId:
+          $ref: '#/components/schemas/MediaAssetIdField'
+        originalURL:
+          $ref: '#/components/schemas/MediaAssetURLField'
+        defaultURL:
+          $ref: '#/components/schemas/MediaAssetURLField'
+        variants:
+          $ref: '#/components/schemas/MediaAssetVariantListSchema'
+      required:
+      - assetId
+      - originalURL
+      - defaultURL
+      - variants
+    MediaAssetIdField:
+      type: string
+      example: media_asset_1
+    MediaAssetURLField:
+      type: string
+      example: /media/assets/example.png
+    MediaAssetVariantListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MediaAssetVariantSchema'
+    MediaAssetVariantSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaAssetIdField'
+        url:
+          $ref: '#/components/schemas/MediaAssetURLField'
+        type:
+          $ref: '#/components/schemas/MediaAssetTypeField'
+        width:
+          type: integer
+          format: int64
+          nullable: true
+        height:
+          type: integer
+          format: int64
+          nullable: true
+      required:
+      - id
+      - url
+      - type
+    MediaAssetTypeField:
+      type: string
+      example: png
+    WebMetadataContentSchema:
+      type: object
+      properties:
+        slug:
+          $ref: '#/components/schemas/WebMetadataSlugField'
+        template:
+          $ref: '#/components/schemas/WebMetadataTemplateField'
+        publicationDate:
+          $ref: '#/components/schemas/WebMetadataTimestampField'
+        expirationDate:
+          $ref: '#/components/schemas/WebMetadataTimestampField'
+        status:
+          $ref: '#/components/schemas/WebMetadataStatusField'
+        title:
+          $ref: '#/components/schemas/WebMetadataTitleField'
+        excerpt:
+          $ref: '#/components/schemas/WebMetadataExcerptField'
+        imageURL:
+          $ref: '#/components/schemas/WebMetadataImageURLField'
+        canonicalURL:
+          $ref: '#/components/schemas/WebMetadataCanonicalURLField'
+        noIndex:
+          $ref: '#/components/schemas/WebMetadataNoIndexField'
+        cssCodeInjection:
+          $ref: '#/components/schemas/WebMetadataCodeInjectionField'
+        javascriptCodeInjection:
+          $ref: '#/components/schemas/WebMetadataCodeInjectionField'
+        structuredDataCodeInjection:
+          $ref: '#/components/schemas/WebMetadataCodeInjectionField'
+      required:
+      - slug
+      - status
+      - title
+      - excerpt
+      - imageURL
+      - canonicalURL
+      - noIndex
+      - cssCodeInjection
+      - javascriptCodeInjection
+      - structuredDataCodeInjection
+    WebMetadataSlugField:
+      type: string
+      example: homepage
+    WebMetadataTemplateField:
+      type: string
+      example: default
+    WebMetadataTimestampField:
+      type: number
+      format: double
+      example: 1.76e+9
+    WebMetadataStatusField:
+      type: string
+      example: published
+    WebMetadataTitleField:
+      type: string
+      example: Hello world
+    WebMetadataExcerptField:
+      type: string
+      example: Short summary
+    WebMetadataImageURLField:
+      type: string
+      example: /media/assets/example.png
+    WebMetadataCanonicalURLField:
+      type: string
+      example: https://example.com/posts/hello-world
+    WebMetadataNoIndexField:
+      type: boolean
+      example: false
+    WebMetadataCodeInjectionField:
+      type: string
+      example: <p>Hello world</p>
+    NewsArticleDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/NewsArticleIdField'
+        excerpt:
+          $ref: '#/components/schemas/NewsArticleExcerptField'
+        content:
+          $ref: '#/components/schemas/NewsArticleContentField'
+        imageURL:
+          $ref: '#/components/schemas/NewsArticleImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+        categories:
+          $ref: '#/components/schemas/NewsCategorySummaryListSchema'
+      required:
+      - id
+      - excerpt
+      - content
+      - imageURL
+      - metadata
+      - categories
+    NewsArticleContentField:
+      type: string
+      example: <p>Hello world</p>
+    NewsCategorySummaryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsCategorySummarySchema'
+    NewsCategorySummarySchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/NewsCategoryIdField'
+        excerpt:
+          $ref: '#/components/schemas/NewsCategoryExcerptField'
+        imageURL:
+          $ref: '#/components/schemas/NewsCategoryImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+      required:
+      - id
+      - excerpt
+      - imageURL
+      - metadata
+    NewsCategoryIdField:
+      type: string
+      example: news_category_1
+    NewsCategoryExcerptField:
+      type: string
+      example: Short news category summary.
+    NewsCategoryImageURLField:
+      type: string
+      example: /media/assets/news-category.png
+    NewsCategoryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsCategorySummarySchema'
+    NewsCategoryDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/NewsCategoryIdField'
+        excerpt:
+          $ref: '#/components/schemas/NewsCategoryExcerptField'
+        content:
+          $ref: '#/components/schemas/NewsCategoryContentField'
+        imageURL:
+          $ref: '#/components/schemas/NewsCategoryImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+        news:
+          $ref: '#/components/schemas/NewsArticleSummaryListSchema'
+      required:
+      - id
+      - excerpt
+      - content
+      - imageURL
+      - metadata
+      - news
+    NewsCategoryContentField:
+      type: string
+      example: <p>News category description</p>
+    NewsArticleSummaryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsArticleSummarySchema'
+  responses:
+    NewsArticleListResponse:
+      description: News item list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsArticleListSchema'
+    NewsArticleDetailResponse:
+      description: News item detail
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsArticleDetailSchema'
+    NewsCategoryListResponse:
+      description: News category list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsCategoryListSchema'
+    NewsCategoryDetailResponse:
+      description: News category detail
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsCategoryDetailSchema'
+  parameters:
+    NewsArticleIdParameter:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/NewsArticleIdField'
+      description: News item identifier
+    NewsCategoryIdParameter:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/NewsCategoryIdField'
+      description: News category identifier

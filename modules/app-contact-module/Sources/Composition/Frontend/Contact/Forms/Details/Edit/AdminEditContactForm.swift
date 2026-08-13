@@ -1,0 +1,31 @@
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebStandards
+
+struct AdminEditContactForm {
+    let controller: any AdminEditContactFormController
+
+    init(details: AdminContactFormDetails) {
+        controller = AdminEditContactFormDefaultController(
+            buildRuntime: { request, context in
+                (
+                    interactor: AdminEditContactFormDefaultInteractor(
+                        repository: .init(api: context.contactManagementAPI())
+                    ),
+                    presenter: AdminEditContactFormDefaultPresenter(
+                        request: request,
+                        renderEngine: details.renderingEngine
+                    )
+                )
+            }
+        )
+    }
+
+    func route(on router: Router<AppRequestContext>) {
+        controller.route(on: router)
+    }
+}

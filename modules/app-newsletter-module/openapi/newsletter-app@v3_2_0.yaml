@@ -1,0 +1,66 @@
+openapi: 3.2.0
+info:
+  title: App API
+  version: 0.1.0
+tags:
+- name: Newsletter
+  description: Public newsletter endpoints.
+servers:
+- url: http://127.0.0.1:8080/
+paths:
+  /api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe:
+    post:
+      tags:
+      - Newsletter
+      operationId: appNewsletterCampaignSubscribe
+      parameters:
+      - $ref: '#/components/parameters/AppNewsletterCampaignIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AppNewsletterCampaignSubscriptionRequestBody'
+      responses:
+        204:
+          description: Subscriber added
+  /api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe:
+    post:
+      tags:
+      - Newsletter
+      operationId: appNewsletterCampaignUnsubscribe
+      parameters:
+      - $ref: '#/components/parameters/AppNewsletterCampaignIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AppNewsletterCampaignSubscriptionRequestBody'
+      responses:
+        204:
+          description: Subscriber unsubscribed
+components:
+  schemas:
+    AppNewsletterIdField:
+      type: string
+    AppNewsletterCampaignSubscriptionSchema:
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          $ref: '#/components/schemas/AppNewsletterNameField'
+        lastName:
+          $ref: '#/components/schemas/AppNewsletterNameField'
+      required:
+      - email
+      minProperties: 1
+    AppNewsletterNameField:
+      type: string
+  parameters:
+    AppNewsletterCampaignIdParameter:
+      name: newsletterCampaignId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AppNewsletterIdField'
+  requestBodies:
+    AppNewsletterCampaignSubscriptionRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppNewsletterCampaignSubscriptionSchema'
+      required: true
