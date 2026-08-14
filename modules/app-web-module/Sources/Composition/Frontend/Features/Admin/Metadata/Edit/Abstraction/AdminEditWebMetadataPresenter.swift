@@ -9,14 +9,16 @@ protocol AdminEditWebMetadataPresenter: Sendable {
         state: WebMetadataForm.State,
         isEdited: Bool,
         permissions: Set<String>,
-        navigationTabs: [AdminPillTabs.Link]
+        navigationTabs: [AdminPillTabs.Link],
+        configuration: AdminWebMetadataEditConfiguration?
     ) -> HTMLResponse
 
     func renderErrorPage(
         id: String,
         info: String,
         message: String,
-        permissions: Set<String>
+        permissions: Set<String>,
+        configuration: AdminWebMetadataEditConfiguration?
     ) -> HTMLResponse
 
     func breadcrumb(

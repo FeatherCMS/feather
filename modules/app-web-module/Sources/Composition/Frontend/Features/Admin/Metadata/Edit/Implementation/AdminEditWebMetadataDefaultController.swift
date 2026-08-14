@@ -20,13 +20,15 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: AppRequestContext,
         referenceType: String,
-        navigationTabs: [AdminPillTabs.Link]
+        navigationTabs: [AdminPillTabs.Link],
+        configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse {
         try await renderEditWebMetadata(
             request: request,
             context: context,
             referenceType: referenceType,
-            navigationTabs: navigationTabs
+            navigationTabs: navigationTabs,
+            configuration: configuration
         )
     }
 
@@ -34,13 +36,15 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: AppRequestContext,
         referenceType: String,
-        navigationTabs: [AdminPillTabs.Link]
+        navigationTabs: [AdminPillTabs.Link],
+        configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> Response {
         try await renderPostEditWebMetadata(
             request: request,
             context: context,
             referenceType: referenceType,
-            navigationTabs: navigationTabs
+            navigationTabs: navigationTabs,
+            configuration: configuration
         )
     }
 
@@ -52,7 +56,8 @@ struct AdminEditWebMetadataDefaultController:
             request: request,
             context: context,
             referenceType: nil,
-            navigationTabs: []
+            navigationTabs: [],
+            configuration: nil
         )
     }
 
@@ -60,7 +65,8 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: AppRequestContext,
         referenceType: String?,
-        navigationTabs: [AdminPillTabs.Link]
+        navigationTabs: [AdminPillTabs.Link],
+        configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try metadataID(context: context)
@@ -97,7 +103,8 @@ struct AdminEditWebMetadataDefaultController:
                 ),
                 isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions,
-                navigationTabs: navigationTabs
+                navigationTabs: navigationTabs,
+                configuration: configuration
             )
         }
         catch let error as OpenAPIRepositoryError {
@@ -105,7 +112,8 @@ struct AdminEditWebMetadataDefaultController:
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
-                permissions: permissions
+                permissions: permissions,
+                configuration: configuration
             )
         }
     }
@@ -118,7 +126,8 @@ struct AdminEditWebMetadataDefaultController:
             request: request,
             context: context,
             referenceType: nil,
-            navigationTabs: []
+            navigationTabs: [],
+            configuration: nil
         )
     }
 
@@ -126,7 +135,8 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: AppRequestContext,
         referenceType: String?,
-        navigationTabs: [AdminPillTabs.Link]
+        navigationTabs: [AdminPillTabs.Link],
+        configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let id = try metadataID(context: context)
@@ -193,7 +203,8 @@ struct AdminEditWebMetadataDefaultController:
                     state: state,
                     isEdited: false,
                     permissions: permissions,
-                    navigationTabs: navigationTabs
+                    navigationTabs: navigationTabs,
+                    configuration: configuration
                 )
                 .response(from: request, context: context)
         }
@@ -226,7 +237,8 @@ struct AdminEditWebMetadataDefaultController:
                     state: state,
                     isEdited: false,
                     permissions: permissions,
-                    navigationTabs: navigationTabs
+                    navigationTabs: navigationTabs,
+                    configuration: configuration
                 )
                 .response(from: request, context: context)
         }
@@ -259,7 +271,8 @@ struct AdminEditWebMetadataDefaultController:
                     state: state,
                     isEdited: false,
                     permissions: permissions,
-                    navigationTabs: navigationTabs
+                    navigationTabs: navigationTabs,
+                    configuration: configuration
                 )
                 .response(from: request, context: context)
         }
