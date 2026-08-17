@@ -24,8 +24,7 @@ struct AdminRemoveWebMenuOpenAPIRepository:
                     id: menu.id,
                     key: menu.key,
                     name: menu.name,
-                    notes: menu.notes,
-                    items: []
+                    notes: menu.notes
                 )
             case .notFound:
                 throw OpenAPIRepositoryError.notFound(

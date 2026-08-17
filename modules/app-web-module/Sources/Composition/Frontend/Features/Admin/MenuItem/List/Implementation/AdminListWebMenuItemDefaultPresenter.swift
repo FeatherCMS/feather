@@ -60,6 +60,9 @@ struct AdminListWebMenuItemDefaultPresenter:
                     canAccess: canAccess,
                     permissions: permissions,
                     canAdd: permissions.contains(scope.create),
+                    canReorder: permissions.contains(
+                        scope.permission(for: .update)
+                    ),
                     items: model.items,
                     page: model.page,
                     pageSize: model.pageSize,

@@ -22,6 +22,7 @@ struct WebMenuItemAdd: Component {
             AdminBreadcrumb(state: state.breadcrumb)
 
             H1("Add item")
+            AdminWebMenuTabs(menuID: state.menuId, active: .items)
             WebMenuItemForm(
                 state: state.form,
                 action: "/admin/web/menus/\(state.menuId)/items/add/",

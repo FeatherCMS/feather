@@ -120,8 +120,7 @@ let package = Package(
                 .target(name: "ContactApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "ContactContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .target(name: "ContactContracts"),],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),

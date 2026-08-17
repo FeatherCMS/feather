@@ -535,6 +535,27 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+  /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move:
+    post:
+      tags:
+      - WebMenuItems
+      operationId: webMenuItemMove
+      parameters:
+      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/WebMenuItemMoveRequestBody'
+      responses:
+        204:
+          description: WebMenuItem moved
+        404:
+          description: WebMenuItem not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/web/settings:
     get:
       tags:
@@ -675,7 +696,7 @@ components:
         status:
           type: string
           examples:
-          - draft
+          - published
         title:
           type:
           - string
@@ -1639,6 +1660,16 @@ components:
         notes:
           $ref: '#/components/schemas/WebMenuItemNotesField'
       minProperties: 0
+    WebMenuItemMoveSchema:
+      type: object
+      properties:
+        beforeItemId:
+          type: string
+          examples:
+          - wmi_home
+      required:
+      - beforeItemId
+      minProperties: 1
     WebSettingsDetailSchema:
       type: object
       properties:
@@ -2011,6 +2042,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMenuItemPatchSchema'
+      required: true
+    WebMenuItemMoveRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuItemMoveSchema'
       required: true
     WebSettingsUpdateRequestBody:
       content:

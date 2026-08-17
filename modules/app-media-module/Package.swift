@@ -146,8 +146,7 @@ let package = Package(
                 .target(name: "MediaApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "MediaContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .target(name: "MediaContracts"),],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
