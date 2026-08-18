@@ -625,6 +625,46 @@
         "target": "Static",
         "configuration": "release",
         "preLaunchTask": "swift: Build Release Static (application)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-account-module",
+        "name": "Debug AccountAdminOpenAPIGenerator (modules/app-account-module)",
+        "target": "AccountAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug AccountAdminOpenAPIGenerator (modules/app-account-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-account-module",
+        "name": "Release AccountAdminOpenAPIGenerator (modules/app-account-module)",
+        "target": "AccountAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release AccountAdminOpenAPIGenerator (modules/app-account-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-account-module",
+        "name": "Debug AccountAppOpenAPIGenerator (modules/app-account-module)",
+        "target": "AccountAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug AccountAppOpenAPIGenerator (modules/app-account-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-account-module",
+        "name": "Release AccountAppOpenAPIGenerator (modules/app-account-module)",
+        "target": "AccountAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release AccountAppOpenAPIGenerator (modules/app-account-module)"
     }
 ],
   "compounds": [

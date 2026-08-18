@@ -32,8 +32,9 @@ struct AdminAPISystemVariableCreateTests {
                     )
                 ],
                 body: Components.Schemas.SystemVariableCreateSchema(
-                    name: name,
+                    id: name,
                     value: value,
+                    name: name,
                     notes: notes
                 )
             )

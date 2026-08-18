@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import Foundation
+import AuthDomain
 import UserApplication
 
 @testable import AuthApplication
@@ -22,7 +23,7 @@ actor MockMagicLinkQueries: MagicLinkQueries {
     init(
         findResult: MagicLinkDetail = .init(
             id: "magic-link-1",
-            email: "hello@example.com",
+            credentialId: "credential-1",
             token: "token-1",
             expiresAt: .init(timeIntervalSince1970: 123_456),
             isPersistent: true,
@@ -116,6 +117,8 @@ actor MockSessionQueries: SessionQueries {
             id: "session-1",
             token: "token-1",
             identityId: "identity-1",
+            authenticationType: Session.AuthenticationTypes.credential,
+            authenticationReference: "credential-1",
             expiresAt: 123_456,
             isPersistent: true,
             createdAt: .init(timeIntervalSince1970: 1),

@@ -6,6 +6,9 @@
 
 import FeatherDatabase
 import FeatherDatabasePostgres
+import FeatherApplication
+import FeatherContracts
+import FeatherDomain
 import FeatherInfrastructure
 import Foundation
 import Logging
@@ -66,19 +69,26 @@ struct AuthInfrastructureTestSuite {
                     """#
             ) { _ in }
 
+            let events = EventRegistry()
+            let idGenerator = TestIDGenerator()
             let migrator = Migrator(
                 migrations: [
                     SystemInfrastructure.TableMigration(connection: connection),
                     SystemInfrastructure.TableSeedMigration(
-                        connection: connection
+                        connection: connection,
+                        events: events,
+                        idGenerator: idGenerator
                     ),
                     UserInfrastructure.TableMigration(connection: connection),
                     UserInfrastructure.TableSeedMigration(
-                        connection: connection
+                        connection: connection,
+                        events: events,
+                        idGenerator: idGenerator
                     ),
                     AuthInfrastructure.TableMigration(connection: connection),
                     AuthInfrastructure.TableSeedMigration(
-                        connection: connection
+                        connection: connection,
+                        idGenerator: idGenerator
                     ),
                 ]
             )
@@ -114,5 +124,11 @@ struct AuthInfrastructureTestSuite {
 
             #expect(Set(rootPermissionIds) == Set(permissionIds))
         }
+    }
+}
+
+private struct TestIDGenerator: IDGenerator {
+    func generate() -> String {
+        "test-id"
     }
 }

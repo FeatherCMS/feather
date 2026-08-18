@@ -308,7 +308,7 @@ private actor MockProcessorAssetRepository: MediaProcessorAssetRepository {
         inserted.filter { $0.assetId == assetId }
             .map {
                 .init(
-                    id: $0.id,
+                    id: "link-id-1",
                     assetId: $0.assetId,
                     processorId: $0.processorId,
                     storageKey: $0.storageKey,

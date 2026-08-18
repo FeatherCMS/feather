@@ -19,7 +19,7 @@ struct AdminAPIUserCredentialDeleteTests {
             "auth:credential:delete",
         ])
         let authentication = try await runner.authenticateTestAccount()
-        let identityId = try await runner.identityId(
+        let identityId = try await runner.identityID(
             token: authentication
         )
 
@@ -35,7 +35,8 @@ struct AdminAPIUserCredentialDeleteTests {
                 body: Components.Schemas.AuthCredentialCreateSchema(
                     userId: identityId,
                     email: "credential-delete@example.com",
-                    password: "very-secure-password"
+                    password: "very-secure-password",
+                    isPersistent: true
                 )
             )
         ) { response in

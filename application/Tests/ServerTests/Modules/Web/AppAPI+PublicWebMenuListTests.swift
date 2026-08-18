@@ -1,4 +1,5 @@
 import FeatherDatabase
+import FeatherInfrastructure
 import FeatherHTTP
 import HTTPTypes
 import OpenAPIRuntime
@@ -6,6 +7,8 @@ import Testing
 
 import AuthAppAPI
 import WebAppAPI
+import WebDomain
+import WebInfrastructure
 
 @testable import Server
 
@@ -33,7 +36,7 @@ struct AppAPIPublicWebMenuListTests {
         }
 
         let menu = try #require(response.first(where: { $0.key == "main" }))
-        #expect(menu.items.count == 3)
+        #expect(menu.items.count == 4)
         #expect(
             menu.items.contains(where: { $0.label == "Root only" }) == false
         )
@@ -81,41 +84,36 @@ struct AppAPIPublicWebMenuListTests {
         }
 
         let menu = try #require(response.first(where: { $0.key == "main" }))
-        #expect(menu.items.count == 4)
+        #expect(menu.items.count == 6)
         #expect(menu.items.contains(where: { $0.label == "Root only" }))
     }
 
     private func insertRestrictedMenuItem(
         connection: any DatabaseConnection
     ) async throws {
-        try await connection.run(
-            query: """
-                INSERT INTO web_menu_item (
-                    id,
-                    menu_id,
-                    label,
-                    url,
-                    priority,
-                    is_blank,
-                    permission,
-                    notes,
-                    created_at,
-                    updated_at
-                )
-                VALUES (
-                    'sample-menu-item-root-only',
-                    'kojVpotjKPEkSyVvb_e78',
-                    'Root only',
-                    '/admin/',
-                    40,
-                    FALSE,
-                    'system:permissions:list',
-                    'Restricted seeded item for tests.',
-                    NOW(),
-                    NOW()
-                )
-                ON CONFLICT DO NOTHING;
-                """
-        ) { _ in }
+        let context = DatabaseTransactionContext(
+            connection: connection,
+            idGenerator: NanoIDGenerator()
+        )
+        guard
+            let menu = try await MenuDatabaseRepository(context: context)
+                .find(key: "main")
+        else {
+            throw MissingMenuError()
+        }
+        _ = try await MenuItemDatabaseRepository(context: context).insert(
+            .init(
+                menuId: menu.id,
+                label: "Root only",
+                url: "/admin/",
+                priority: 40,
+                isBlank: false,
+                permission: "system:permissions:list",
+                authentication: .any,
+                notes: "Restricted seeded item for tests."
+            )
+        )
     }
 }
+
+private struct MissingMenuError: Error {}

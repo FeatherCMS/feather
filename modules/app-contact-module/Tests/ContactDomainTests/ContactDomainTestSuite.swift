@@ -23,11 +23,12 @@ struct ContactDomainTestSuite {
 
     @Test
     func submissionPreservesPayloadAndSnapshot() {
-        let submission = ContactFormSubmission.create(
+        let submission = Submission.create(
             formId: "form-1",
             valuesJSON: #"{"name":"Jane"}"#,
             itemsSnapshotJSON: #"[{"key":"name","type":"text"}]"#
         )
         #expect(submission.valuesJSON.contains("Jane"))
+        #expect(submission.itemsSnapshotJSON.contains("name"))
     }
 }

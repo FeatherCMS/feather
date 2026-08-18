@@ -36,9 +36,7 @@ struct AdminAPIUserIdentitySearchTests {
                     )
                 ],
                 body: Components.Schemas.UserIdentityCreateSchema(
-                    email:
-                        "acc-\(UUID().uuidString.lowercased())@example.com",
-                    password: "very-secure-password"
+                    status: .invited
                 )
             )
         ) { response in

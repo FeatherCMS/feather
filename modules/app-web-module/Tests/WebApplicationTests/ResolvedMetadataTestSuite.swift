@@ -62,11 +62,12 @@ private func makeMetadataDetail(
 ) -> MetadataDetail {
     let now = Date()
     return .init(
+        id: "metadata-1",
         referenceType: "blog.post",
         referenceID: "post-1",
-        id: "metadata-1",
+        template: "default",
         slug: "post-1",
-        publicationDate: nil,
+        publicationDate: now,
         expirationDate: nil,
         status: .published,
         title: title,

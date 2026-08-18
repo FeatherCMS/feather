@@ -8,10 +8,10 @@ struct NewsletterApplicationTestSuite {
     @Test
     func inputsAreSendableDTOs() {
         #expect(
-            CreateNewsletterCampaign.Input(name: "Updates").name == "Updates"
+            CreateCampaign.Input(name: "Updates").name == "Updates"
         )
         #expect(
-            CreateNewsletterIssue.Input(
+            CreateIssue.Input(
                 newsletterId: "newsletter-1",
                 subject: "Subject",
                 content: "Content"
@@ -19,7 +19,7 @@ struct NewsletterApplicationTestSuite {
             .content == "Content"
         )
         #expect(
-            SubscribeToNewsletter.Input(
+            Subscribe.Input(
                 newsletterId: "newsletter-1",
                 email: "person@example.com"
             )

@@ -1,3 +1,4 @@
+import FeatherContracts
 import Testing
 
 @testable import WebApp
@@ -7,7 +8,10 @@ struct MarkdownContentRendererTestSuite {
 
     @Test
     func rendersMarkdownToHTML() async {
-        let renderer = MarkdownContentRenderer()
+        let renderer = MarkdownContentRenderer(
+            events: EventRegistry(),
+            mediaBaseURL: ""
+        )
 
         let output = await renderer.render(
             markdown: "# Hello\n\nThis is **markdown**.",

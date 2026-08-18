@@ -33,7 +33,7 @@ struct AppAPIUserAuthLoginTests {
             let object = try await response.json(
                 Components.Schemas.AuthResponseSchema.self
             )
-            #expect(object.user.email == email)
+            #expect(!object.user.id.isEmpty)
         }
     }
 
@@ -77,6 +77,6 @@ struct AppAPIUserAuthLoginTests {
             )
         }
 
-        #expect(response.user.email == email)
+        #expect(!response.user.id.isEmpty)
     }
 }

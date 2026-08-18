@@ -15,7 +15,6 @@ struct MediaDomainModelTestSuite {
     @Test
     func mediaAssetCreateDefaultsToUploadedStatus() {
         let new = MediaAsset.create(
-            id: "asset-1",
             folderId: nil,
             storageKey: "media/assets/asset-1",
             type: "jpeg",
@@ -24,7 +23,7 @@ struct MediaDomainModelTestSuite {
             altText: "alt"
         )
 
-        #expect(new.status == .uploaded)
+        #expect(new.status == MediaAsset.Status.uploaded)
         #expect(new.type == "jpeg")
         #expect(new.sizeBytes == 123)
     }
@@ -64,7 +63,6 @@ struct MediaDomainModelTestSuite {
     @Test
     func mediaProcessorAssetCreateStoresStorageKey() {
         let link = MediaProcessorAsset.create(
-            id: "link-1",
             assetId: "asset-1",
             processorId: "processor-1",
             storageKey: "media/assets/asset-1/image_preview.jpeg"

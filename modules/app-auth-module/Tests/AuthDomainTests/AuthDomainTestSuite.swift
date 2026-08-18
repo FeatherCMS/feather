@@ -17,26 +17,26 @@ struct AuthDomainTestSuite {
     @Test
     func credentialCreateSucceedsWithValidValues() throws {
         let credentials = try Credential.create(
-            id: "credential-1",
-            identityId: "identity-1",
+            userId: "user-1",
             email: "user@example.com",
-            passwordHash: "valid-password-hash"
+            passwordHash: "valid-password-hash",
+            isPersistent: true
         )
 
-        #expect(credentials.id == "credential-1")
-        #expect(credentials.identityId == "identity-1")
+        #expect(credentials.userId == "user-1")
         #expect(credentials.email == "user@example.com")
         #expect(credentials.passwordHash == "valid-password-hash")
+        #expect(credentials.isPersistent)
     }
 
     @Test
     func credentialCreateValidatesIdentityID() {
-        #expect(throws: Credential.Error.invalidIdentityID) {
+        #expect(throws: Credential.Error.invalidUserId) {
             _ = try Credential.create(
-                id: "credential-1",
-                identityId: "",
+                userId: "",
                 email: "user@example.com",
-                passwordHash: "valid-password-hash"
+                passwordHash: "valid-password-hash",
+                isPersistent: false
             )
         }
     }
@@ -45,19 +45,19 @@ struct AuthDomainTestSuite {
     func credentialCreateValidatesEmailBoundaries() {
         #expect(throws: Credential.Error.emailTooShort) {
             _ = try Credential.create(
-                id: "credential-1",
-                identityId: "identity-1",
+                userId: "user-1",
                 email: "abc",
-                passwordHash: "valid-password-hash"
+                passwordHash: "valid-password-hash",
+                isPersistent: false
             )
         }
 
         #expect(throws: Credential.Error.emailTooLong) {
             _ = try Credential.create(
-                id: "credential-1",
-                identityId: "identity-1",
+                userId: "user-1",
                 email: String(repeating: "a", count: 255),
-                passwordHash: "valid-password-hash"
+                passwordHash: "valid-password-hash",
+                isPersistent: false
             )
         }
     }
@@ -66,19 +66,19 @@ struct AuthDomainTestSuite {
     func credentialCreateValidatesPasswordHashBoundaries() {
         #expect(throws: Credential.Error.passwordHashTooShort) {
             _ = try Credential.create(
-                id: "credential-1",
-                identityId: "identity-1",
+                userId: "user-1",
                 email: "user@example.com",
-                passwordHash: "12345678"
+                passwordHash: "12345678",
+                isPersistent: false
             )
         }
 
         #expect(throws: Credential.Error.passwordHashTooLong) {
             _ = try Credential.create(
-                id: "credential-1",
-                identityId: "identity-1",
+                userId: "user-1",
                 email: "user@example.com",
-                passwordHash: String(repeating: "a", count: 255)
+                passwordHash: String(repeating: "a", count: 255),
+                isPersistent: false
             )
         }
     }
@@ -112,8 +112,7 @@ struct AuthDomainTestSuite {
     func magicLinkCreateValidatesToken() async throws {
         #expect(throws: MagicLink.Error.tokenTooShort) {
             _ = try MagicLink.create(
-                id: "m1",
-                email: "user@example.com",
+                credentialId: "credential-1",
                 token: "short",
                 isPersistent: true
             )
@@ -151,9 +150,10 @@ struct AuthDomainTestSuite {
     func sessionCreateValidatesToken() async throws {
         #expect(throws: Session.Error.tokenTooShort) {
             _ = try Session.create(
-                id: "session-1",
                 token: "short",
                 identityId: "identity-1",
+                authenticationType: Session.AuthenticationTypes.credential,
+                authenticationReference: "credential-1",
                 expiresAtInterval: Session.Lifetimes.regular,
                 isPersistent: false
             )
@@ -164,9 +164,10 @@ struct AuthDomainTestSuite {
     func sessionCreateValidatesIdentityId() async throws {
         #expect(throws: Session.Error.identityIdTooShort) {
             _ = try Session.create(
-                id: "session-1",
                 token: "valid-session-token",
                 identityId: "a1",
+                authenticationType: Session.AuthenticationTypes.credential,
+                authenticationReference: "credential-1",
                 expiresAtInterval: Session.Lifetimes.regular,
                 isPersistent: false
             )
@@ -200,7 +201,7 @@ private func makeMagicLink(
 ) -> MagicLink {
     .init(
         id: "m1",
-        email: "user@example.com",
+        credentialId: "credential-1",
         token: "valid-token-value",
         expiresAt: Date().addingTimeInterval(expiresAfter),
         isPersistent: true,
@@ -213,9 +214,10 @@ private func makeMagicLink(
 private func makeCredential() -> Credential {
     .init(
         id: "credential-1",
-        identityId: "identity-1",
+        userId: "user-1",
         email: "user@example.com",
         passwordHash: "valid-password-hash",
+        isPersistent: true,
         createdAt: Date(),
         updatedAt: Date()
     )

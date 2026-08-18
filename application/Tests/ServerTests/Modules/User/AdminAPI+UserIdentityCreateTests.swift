@@ -36,9 +36,7 @@ struct AdminAPIUserIdentityCreateTests {
                     ),
                 ],
                 body: Components.Schemas.UserIdentityCreateSchema(
-                    email:
-                        "acc-\(UUID().uuidString.lowercased())@example.com",
-                    password: "very-secure-password"
+                    status: .invited
                 )
             )
         ) { response in
@@ -51,7 +49,7 @@ struct AdminAPIUserIdentityCreateTests {
     }
 
     @Test
-    func createUserIdentityRejectsShortPassword() async throws {
+    func createUserIdentityWithDefaultStatus() async throws {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
         try await runner.grantRootPermissions([
@@ -59,7 +57,7 @@ struct AdminAPIUserIdentityCreateTests {
         ])
         let token = try await runner.authenticateTestAccount()
 
-        let error = try await runner.run(
+        let created = try await runner.run(
             request: JSONRequest(
                 method: .post,
                 path: "/api/v1/admin/user/identities",
@@ -69,26 +67,17 @@ struct AdminAPIUserIdentityCreateTests {
                     )
                 ],
                 body: Components.Schemas.UserIdentityCreateSchema(
-                    email:
-                        "acc-\(UUID().uuidString.lowercased())@example.com",
-                    password: "Test123"
+                    status: .invited
                 )
             )
         ) { response in
             try await response.json(
-                status: .badRequest,
-                ErrorResponseBody.self
+                status: .created,
+                Components.Schemas.UserIdentityDetailSchema.self
             )
         }
 
-        #expect(error.code == 400)
-        #expect(error.message == "Password is too short.")
-        #expect(error.reason == "passwordTooShort")
+        #expect(!created.id.isEmpty)
+        #expect(created.status == .invited)
     }
-}
-
-private struct ErrorResponseBody: Codable {
-    let code: Int
-    let message: String
-    let reason: String
 }

@@ -25,13 +25,12 @@ struct AuthApplicationTestSuite {
         let authorizer = MockAuthorizer(result: true)
         let useCase = AddMagicLink(
             authorizer: authorizer,
-            transaction: transaction,
-            idGenerator: FixedIDGenerator(id: "generated-id")
+            transaction: transaction
         )
 
         let result = try await useCase.execute(
             subject: Subject(id: "subject-1"),
-            input: .init(email: "hello@example.com", isPersistent: true)
+            input: .init(credentialId: "credential-1", isPersistent: true)
         )
 
         #expect(result.id == "m-1")
@@ -307,7 +306,7 @@ private func makeMagicLink(
 ) -> MagicLink {
     .init(
         id: id,
-        email: "hello@example.com",
+        credentialId: "credential-1",
         token: "valid-token",
         expiresAt: Date().addingTimeInterval(3600),
         isPersistent: true,
@@ -334,6 +333,8 @@ private func makeSession(
         id: id,
         token: token,
         identityId: "identity-1",
+        authenticationType: Session.AuthenticationTypes.credential,
+        authenticationReference: "credential-1",
         expiresAt: 123_456,
         isPersistent: true,
         createdAt: Date(),
@@ -348,6 +349,8 @@ private func makeSessionListItem(
         id: "session-1",
         token: "token-1",
         identityId: identityId,
+        authenticationType: Session.AuthenticationTypes.credential,
+        authenticationReference: "credential-1",
         expiresAt: 123_456,
         isPersistent: true,
         createdAt: Date(),
@@ -362,6 +365,8 @@ private func makeSessionDetail(
         id: "session-1",
         token: "token-1",
         identityId: identityId,
+        authenticationType: Session.AuthenticationTypes.credential,
+        authenticationReference: "credential-1",
         expiresAt: 123_456,
         isPersistent: true,
         createdAt: Date(),

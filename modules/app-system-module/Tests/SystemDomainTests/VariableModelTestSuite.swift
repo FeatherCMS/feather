@@ -17,8 +17,8 @@ struct VariableModelTestSuite {
     func variableNewSucceedsWithValidInput() throws {
         let create = try Variable.create(
             id: "var-1",
-            name: "abcd",
             value: "value",
+            name: "abcd",
             notes: "notes"
         )
 
@@ -33,8 +33,8 @@ struct VariableModelTestSuite {
         #expect(throws: Variable.Error.nameTooShort) {
             _ = try Variable.create(
                 id: "var-1",
-                name: "abc",
                 value: "value",
+                name: "abc",
                 notes: "notes"
             )
         }
@@ -45,8 +45,8 @@ struct VariableModelTestSuite {
         #expect(throws: Variable.Error.nameTooLong) {
             _ = try Variable.create(
                 id: "var-1",
-                name: String(repeating: "a", count: 255),
                 value: "value",
+                name: String(repeating: "a", count: 255),
                 notes: "notes"
             )
         }
@@ -57,8 +57,8 @@ struct VariableModelTestSuite {
         #expect(throws: Variable.Error.valueTooLong) {
             _ = try Variable.create(
                 id: "var-1",
-                name: "abcd",
                 value: String(repeating: "a", count: 255),
+                name: "abcd",
                 notes: "notes"
             )
         }
@@ -69,8 +69,8 @@ struct VariableModelTestSuite {
         #expect(throws: Variable.Error.notesTooLong) {
             _ = try Variable.create(
                 id: "var-1",
-                name: "abcd",
                 value: "value",
+                name: "abcd",
                 notes: String(repeating: "a", count: 255)
             )
         }
@@ -80,8 +80,8 @@ struct VariableModelTestSuite {
     func variableUpdateSucceedsWithProvidedValues() throws {
         var model = Variable(
             id: "var-1",
-            name: "name-a",
             value: "value-a",
+            name: "name-a",
             notes: "notes-a",
             createdAt: .distantPast,
             updatedAt: .distantFuture
@@ -102,8 +102,8 @@ struct VariableModelTestSuite {
     func variableUpdateKeepsValuesWhenArgumentsAreNil() throws {
         var model = Variable(
             id: "var-1",
-            name: "name-a",
             value: "value-a",
+            name: "name-a",
             notes: "notes-a",
             createdAt: .distantPast,
             updatedAt: .distantFuture
@@ -120,8 +120,8 @@ struct VariableModelTestSuite {
     func variableUpdateThrowsNameTooShort() throws {
         var model = Variable(
             id: "var-1",
-            name: "name-a",
             value: "value-a",
+            name: "name-a",
             notes: "notes-a",
             createdAt: .distantPast,
             updatedAt: .distantFuture
@@ -136,8 +136,8 @@ struct VariableModelTestSuite {
     func variableUpdateThrowsNameTooLong() throws {
         var model = Variable(
             id: "var-1",
-            name: "name-a",
             value: "value-a",
+            name: "name-a",
             notes: "notes-a",
             createdAt: .distantPast,
             updatedAt: .distantFuture
@@ -152,8 +152,8 @@ struct VariableModelTestSuite {
     func variableUpdateThrowsValueTooLong() throws {
         var model = Variable(
             id: "var-1",
-            name: "name-a",
             value: "value-a",
+            name: "name-a",
             notes: "notes-a",
             createdAt: .distantPast,
             updatedAt: .distantFuture
@@ -168,8 +168,8 @@ struct VariableModelTestSuite {
     func variableUpdateThrowsNotesTooLong() throws {
         var model = Variable(
             id: "var-1",
-            name: "name-a",
             value: "value-a",
+            name: "name-a",
             notes: "notes-a",
             createdAt: .distantPast,
             updatedAt: .distantFuture

@@ -13,6 +13,6 @@ struct BlogApplicationTestSuite {
 
     @Test
     func moduleIsReadyForApplicationFeatures() {
-        _ = ReadPost.self
+        _ = GetPost.self
     }
 }

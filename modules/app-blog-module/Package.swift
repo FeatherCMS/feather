@@ -71,10 +71,6 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/binarybirds/swift-nanoid",
-            from: "1.0.0"
-        ),
-        .package(
             url: "https://github.com/feather-framework/feather-database",
             exact: "1.0.0-rc.2"
         ),
@@ -117,15 +113,6 @@ let package = Package(
         .package(
             url: "https://github.com/apple/swift-nio",
             from: "2.0.0"
-        ),
-        .package(
-            url:
-                "https://github.com/feather-framework/feather-database-postgres",
-            exact: "1.0.0-rc.2"
-        ),
-        .package(
-            url: "https://github.com/vapor/postgres-nio.git",
-            from: "1.32.2"
         ),
         .package(
             url: "https://github.com/apple/swift-nio-ssl.git",
@@ -174,8 +161,8 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "BlogContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+
+            ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -194,8 +181,8 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "BlogContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
@@ -300,7 +287,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "BlogContracts"),
                 .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+            ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),
@@ -329,7 +316,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "BlogContracts"),
                 .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+            ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings
         ),

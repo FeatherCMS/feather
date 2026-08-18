@@ -73,15 +73,6 @@ let package = Package(
             url: "https://github.com/apple/swift-log",
             from: "1.0.0"
         ),
-        .package(
-            url: "https://github.com/binarybirds/swift-nanoid",
-            from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-database",
-            exact: "1.0.0-rc.2"
-        ),
-
         //        .package(
         //            url: "https://github.com/feather-framework/feather-mail",
         //            exact: "1.0.0-beta.3"
@@ -190,7 +181,7 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "RedirectContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),

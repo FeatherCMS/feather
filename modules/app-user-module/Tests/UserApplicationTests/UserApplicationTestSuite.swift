@@ -162,6 +162,7 @@ private func makeIdentity(
     .init(
         id: id,
         status: status,
+        isRoot: false,
         createdAt: Date(),
         updatedAt: Date()
     )

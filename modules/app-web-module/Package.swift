@@ -167,7 +167,7 @@ let package = Package(
                 .target(name: "WebApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),

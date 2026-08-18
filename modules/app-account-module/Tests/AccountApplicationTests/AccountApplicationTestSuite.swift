@@ -34,7 +34,7 @@ struct AccountApplicationTestSuite {
     func getSettingsReturnsMappedDetailForAuthorizedSubject() async throws {
         let settings = makeSettings()
         let repository = MockSettingsRepository(result: settings)
-        let query = MockQueryExecutor(
+        let query = MockTransactionExecutor(
             context: WriteSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
@@ -62,7 +62,7 @@ struct AccountApplicationTestSuite {
     @Test
     func getSettingsDoesNotQueryForForbiddenSubject() async throws {
         let repository = MockSettingsRepository(result: makeSettings())
-        let query = MockQueryExecutor(
+        let query = MockTransactionExecutor(
             context: WriteSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
