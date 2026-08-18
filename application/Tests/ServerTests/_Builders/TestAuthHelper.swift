@@ -117,24 +117,6 @@ extension TestRunner {
                             ON CONFLICT (id) DO NOTHING;
                             """
                     ) { _ in }
-
-                    try await connection.run(
-                        query: """
-                            INSERT INTO auth_role_permission (
-                                role_id,
-                                permission_id,
-                                created_at,
-                                updated_at
-                            )
-                            VALUES (
-                                'root',
-                                \(permission),
-                                NOW(),
-                                NOW()
-                            )
-                            ON CONFLICT (role_id, permission_id) DO NOTHING;
-                            """
-                    ) { _ in }
                 }
             }
         }

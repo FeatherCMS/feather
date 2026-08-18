@@ -27,10 +27,6 @@ public enum EventHandlers {
                 .init(
                     id: "editor",
                     name: "Editor"
-                ),
-                .init(
-                    id: "root",
-                    name: "Root"
                 )
             ]
         }
