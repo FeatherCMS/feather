@@ -172,7 +172,6 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "AuthContracts"),
-
                 .product(name: "WebApplication", package: "app-web-module"),
             ],
             path: "Sources/Layers/Application",
@@ -200,9 +199,8 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "AuthContracts"),
-
-
-                .product(name: "UserApplication", package: "app-user-module")],
+                .product(name: "UserApplication", package: "app-user-module"),
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
@@ -282,11 +280,8 @@ let package = Package(
                 .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
-                .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
-                .product(name: "UserApplication", package: "app-user-module"),
                 .product(name: "UserDomain", package: "app-user-module"),
-                .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "UserBackend", package: "app-user-module"),
                 .target(name: "AuthApplication"),
                 .target(name: "AuthInfrastructure"),
@@ -295,7 +290,6 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "AuthContracts"),
-
                 .product(name: "WebApplication", package: "app-web-module"),
             ],
             path: "Sources/Composition/Backend",
@@ -318,17 +312,12 @@ let package = Package(
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "NIOCore", package: "swift-nio"),
-        .product(name: "UserAdminAPI", package: "app-user-module"),
-        .product(name: "UserFrontend", package: "app-user-module"),
-                .product(name: "UserAppAPI", package: "app-user-module")
-                , .product(name: "SystemAdminAPI", package: "app-system-module")
-                , .product(name: "SystemFrontend", package: "app-system-module"),
-            
+                .product(name: "UserFrontend", package: "app-user-module"),
+                .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "AuthContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module"),
-                .product(name: "UserApplication", package: "app-user-module")],
+                .product(name: "WebApplication", package: "app-web-module")
+            ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings
         ),

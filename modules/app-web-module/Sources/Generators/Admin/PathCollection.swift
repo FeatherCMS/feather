@@ -27,6 +27,8 @@ struct PathCollection: PathCollectionRepresentable {
                 WebMenuItemSearchPathItems(),
             "api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}":
                 WebMenuItemIdPathItems(),
+            "api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move":
+                WebMenuItemMovePathItems(),
             "api/v1/admin/web/settings": WebSettingsPathItems(),
         ]
     }

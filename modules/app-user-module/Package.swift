@@ -249,8 +249,8 @@ let package = Package(
                 .target(name: "UserAppAPI"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "SystemApplication", package: "app-system-module"),
+            ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),

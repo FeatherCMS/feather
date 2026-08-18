@@ -18,6 +18,11 @@ protocol AdminListWebMenuItemController: Sendable {
         request: Request,
         context: AppRequestContext
     ) async throws -> Response
+
+    func postWebMenuItemMove(
+        request: Request,
+        context: AppRequestContext
+    ) async throws -> Response
 }
 
 extension AdminListWebMenuItemController {
@@ -36,6 +41,10 @@ extension AdminListWebMenuItemController {
         router.post(
             "/admin/web/menus/{id}/items/bulk-remove/",
             use: postWebMenuItemsBulkRemove
+        )
+        router.post(
+            "/admin/web/menus/{id}/items/{itemId}/move/",
+            use: postWebMenuItemMove
         )
     }
 }

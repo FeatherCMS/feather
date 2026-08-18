@@ -14,4 +14,10 @@ protocol AdminListWebMenuItemInteractor: Sendable {
         menuId: String,
         ids: [String]
     ) async throws
+
+    func move(
+        menuId: String,
+        itemId: String,
+        beforeItemId: String?
+    ) async throws
 }

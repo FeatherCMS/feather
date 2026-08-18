@@ -290,7 +290,11 @@ extension WebBackend {
         _ query: WebAdminAPI.Components.Schemas
             .WebMenuItemListItemSearchQuerySchema
     ) -> MenuItemList.Query {
-        .init(page: map(query.page), sort: [], search: query.filters.search)
+        .init(
+            page: map(query.page),
+            sort: [.init(field: .priority, direction: .asc)],
+            search: query.filters.search
+        )
     }
 
     func map(_ detail: MenuItemDetail)

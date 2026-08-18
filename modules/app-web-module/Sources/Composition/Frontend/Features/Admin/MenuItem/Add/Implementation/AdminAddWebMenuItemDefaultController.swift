@@ -67,7 +67,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 status: .seeOther,
                 headers: [
                     .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/menus/\(menuId)/",
+                        defaultPath: "/admin/web/menus/\(menuId)/edit/",
                         title: "Added",
                         message: "Item added successfully."
                     )

@@ -127,4 +127,23 @@ struct AdminListWebMenuItemDefaultController:
             ]
         )
     }
+
+    func postWebMenuItemMove(
+        request: Request,
+        context: AppRequestContext
+    ) async throws -> Response {
+        let (interactor, _) = buildRuntime(request, context)
+        let menuId = try context.requiredID()
+        let itemId = try context.requiredParameter("itemId")
+        let payload = try await request.decode(
+            as: WebMenuItemMoveFormInput.self,
+            context: context
+        )
+        try await interactor.move(
+            menuId: menuId,
+            itemId: itemId,
+            beforeItemId: payload.normalizedBeforeItemID
+        )
+        return Response(status: .noContent)
+    }
 }

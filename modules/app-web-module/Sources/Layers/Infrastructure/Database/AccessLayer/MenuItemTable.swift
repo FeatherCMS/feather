@@ -207,6 +207,92 @@ struct MenuItemTable {
         }
     }
 
+    func move(
+        id: String,
+        menuId: String,
+        beforeItemID: String?
+    ) async throws {
+        try await connection.run(
+            query: #"""
+                WITH locked AS (
+                    SELECT id, priority
+                    FROM web_menu_item
+                    WHERE menu_id=\#(menuId)
+                    FOR UPDATE
+                ), ordered AS (
+                    SELECT
+                        id,
+                        CAST(
+                            ROW_NUMBER() OVER (ORDER BY priority, id) - 1
+                            AS INTEGER
+                        ) AS position
+                    FROM locked
+                ), moved AS (
+                    SELECT id
+                    FROM ordered
+                    WHERE id=\#(id)
+                ), remaining AS (
+                    SELECT
+                        id,
+                        CAST(
+                            ROW_NUMBER() OVER (ORDER BY position) - 1
+                            AS INTEGER
+                        ) AS position
+                    FROM ordered
+                    WHERE id<>\#(id)
+                ), target AS (
+                    SELECT CASE
+                        WHEN \#(beforeItemID == nil || beforeItemID?.isEmpty == true)
+                        THEN CAST((SELECT COUNT(*) FROM remaining) AS INTEGER)
+                        ELSE (
+                            SELECT position
+                            FROM remaining
+                            WHERE id=\#(beforeItemID ?? "")
+                        )
+                    END AS position
+                ), final_order AS (
+                    SELECT
+                        remaining.id,
+                        remaining.position + CASE
+                            WHEN remaining.position >= target.position THEN 1
+                            ELSE 0
+                        END AS position
+                    FROM remaining
+                    CROSS JOIN target
+                    UNION ALL
+                    SELECT
+                        moved.id,
+                        target.position AS position
+                    FROM moved
+                    CROSS JOIN target
+                ), reordered AS (
+                    SELECT
+                        id,
+                        CAST(
+                            ROW_NUMBER() OVER (ORDER BY position, id) - 1
+                            AS INTEGER
+                        ) AS priority,
+                        (SELECT position FROM target) IS NOT NULL
+                            AS valid_target
+                    FROM final_order
+                )
+                UPDATE web_menu_item AS item
+                SET
+                    priority=reordered.priority,
+                    updated_at=NOW()
+                FROM reordered
+                WHERE item.id=reordered.id
+                  AND reordered.valid_target
+                  AND reordered.priority IS NOT NULL
+                RETURNING item.id;
+                """#
+        ) { sequence in
+            guard try await sequence.collect().first != nil else {
+                throw RepositoryError.notFound
+            }
+        }
+    }
+
     func delete(
         id: String
     ) async throws -> Bool {

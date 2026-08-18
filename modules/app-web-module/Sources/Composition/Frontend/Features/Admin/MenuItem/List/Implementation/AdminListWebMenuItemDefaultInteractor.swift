@@ -27,4 +27,16 @@ struct AdminListWebMenuItemDefaultInteractor:
             try await repository.delete(menuId: menuId, id: id)
         }
     }
+
+    func move(
+        menuId: String,
+        itemId: String,
+        beforeItemId: String?
+    ) async throws {
+        try await repository.move(
+            menuId: menuId,
+            itemId: itemId,
+            beforeItemId: beforeItemId
+        )
+    }
 }

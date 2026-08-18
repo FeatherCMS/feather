@@ -125,7 +125,6 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "NewsContracts"),
-
             ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
@@ -144,7 +143,6 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "NewsContracts"),
-
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
