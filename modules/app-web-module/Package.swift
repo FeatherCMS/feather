@@ -80,7 +80,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
-            from: "2.20.1"
+            from: "2.26.0"
         ),
         .package(
             url: "https://github.com/BinaryBirds/swift-web-standards",
@@ -166,8 +166,7 @@ let package = Package(
                 .target(name: "WebDomain"),
                 .target(name: "WebApplication"),
             
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "FeatherContracts", package: "feather-core"),],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),

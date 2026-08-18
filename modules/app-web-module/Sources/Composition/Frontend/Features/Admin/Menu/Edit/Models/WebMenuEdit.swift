@@ -23,6 +23,7 @@ struct WebMenuEdit: Component {
             AdminBreadcrumb(state: state.breadcrumb)
 
             H1("Edit menu")
+            AdminWebMenuTabs(menuID: state.id, active: .details)
             if state.isEdited { P("Menu edited successfully.") }
             WebMenuForm(
                 state: state.form,

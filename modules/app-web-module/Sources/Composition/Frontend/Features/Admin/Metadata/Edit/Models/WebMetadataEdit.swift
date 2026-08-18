@@ -24,6 +24,7 @@ struct WebMetadataEdit: Component {
         let breadcrumb: AdminBreadcrumb.State
         let action: String
         let navigationTabs: [AdminPillTabs.Link]
+        let title: String
     }
 
     let state: State
@@ -32,7 +33,13 @@ struct WebMetadataEdit: Component {
         Section {
             AdminBreadcrumb(state: state.breadcrumb)
 
-            H1("Edit web metadata")
+            H1 {
+                Span(state.title)
+                AdminPreviewLink(
+                    slug: state.form.slug.value,
+                    label: "Preview page"
+                )
+            }
             if state.isEdited { P("Web metadata edited successfully.") }
             AdminWebMetadataTabs(links: state.navigationTabs)
             WebMetadataForm(

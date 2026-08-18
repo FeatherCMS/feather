@@ -32,7 +32,8 @@ public struct AdminWebMetadataEditHandler: Sendable {
         request: Request,
         context: AppRequestContext,
         referenceType: String,
-        navigationTabs: [AdminPillTabs.Link] = []
+        navigationTabs: [AdminPillTabs.Link] = [],
+        configuration: AdminWebMetadataEditConfiguration? = nil
     ) async throws -> HTMLResponse {
         let tabs =
             navigationTabs.isEmpty
@@ -42,7 +43,8 @@ public struct AdminWebMetadataEditHandler: Sendable {
             request: request,
             context: context,
             referenceType: referenceType,
-            navigationTabs: tabs
+            navigationTabs: tabs,
+            configuration: configuration
         )
     }
 
@@ -50,7 +52,8 @@ public struct AdminWebMetadataEditHandler: Sendable {
         request: Request,
         context: AppRequestContext,
         referenceType: String,
-        navigationTabs: [AdminPillTabs.Link] = []
+        navigationTabs: [AdminPillTabs.Link] = [],
+        configuration: AdminWebMetadataEditConfiguration? = nil
     ) async throws -> Response {
         let tabs =
             navigationTabs.isEmpty
@@ -60,7 +63,8 @@ public struct AdminWebMetadataEditHandler: Sendable {
             request: request,
             context: context,
             referenceType: referenceType,
-            navigationTabs: tabs
+            navigationTabs: tabs,
+            configuration: configuration
         )
     }
 

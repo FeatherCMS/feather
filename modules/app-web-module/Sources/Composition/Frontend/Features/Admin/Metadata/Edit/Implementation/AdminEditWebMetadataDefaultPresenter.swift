@@ -15,11 +15,13 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         state: WebMetadataForm.State,
         isEdited: Bool,
         permissions: Set<String>,
-        navigationTabs: [AdminPillTabs.Link]
+        navigationTabs: [AdminPillTabs.Link],
+        configuration: AdminWebMetadataEditConfiguration?
     ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        let title = configuration?.title ?? "Edit web metadata"
+        return renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit web metadata - Feather CMS",
+            title: "\(title) - Feather CMS",
             description: "Edit a management web metadata",
             imagePath: "images/puppy.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -31,9 +33,10 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
                     id: id,
                     isEdited: isEdited,
                     form: state,
-                    breadcrumb: breadcrumb(id: id),
+                    breadcrumb: configuration?.breadcrumb ?? breadcrumb(id: id),
                     action: request.uri.path,
-                    navigationTabs: navigationTabs
+                    navigationTabs: navigationTabs,
+                    title: title
                 )
             )
         )
@@ -43,11 +46,13 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         id: String,
         info: String,
         message: String,
-        permissions: Set<String>
+        permissions: Set<String>,
+        configuration: AdminWebMetadataEditConfiguration?
     ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        let title = configuration?.title ?? "Edit web metadata"
+        return renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit web metadata - Feather CMS",
+            title: "\(title) - Feather CMS",
             description: "Edit a management web metadata",
             imagePath: "images/puppy.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -58,7 +63,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: configuration?.breadcrumb ?? breadcrumb(id: id)
                 )
             )
         )

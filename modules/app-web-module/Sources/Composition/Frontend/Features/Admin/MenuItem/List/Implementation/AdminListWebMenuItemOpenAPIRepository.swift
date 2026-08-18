@@ -102,4 +102,41 @@ struct AdminListWebMenuItemOpenAPIRepository:
         }
     }
 
+    func move(
+        menuId: String,
+        itemId: String,
+        beforeItemId: String?
+    ) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.webMenuItemMove(
+                path: .init(webMenuId: menuId, webMenuItemId: itemId),
+                body: .json(
+                    .init(beforeItemId: beforeItemId ?? "")
+                )
+            )
+
+            switch response {
+            case .noContent:
+                return
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to move web menu items."
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your account cannot move web menu items."
+                )
+            case .notFound:
+                throw OpenAPIRepositoryError.notFound(
+                    message: "This web menu item could not be found."
+                )
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
 }

@@ -1,3 +1,4 @@
+import CSS
 import FeatherAdmin
 import FeatherValidation
 import HTML
@@ -17,6 +18,7 @@ struct WebMenuItemTable: Component {
         let canAccess: Bool
         let permissions: Set<String>
         let canAdd: Bool
+        let canReorder: Bool
         let items: [Components.Schemas.WebMenuItemListItemSchema]
         let page: Int
         let pageSize: Int
@@ -29,6 +31,46 @@ struct WebMenuItemTable: Component {
 
     let state: State
 
+    func selectors() -> [any Selector] {
+        Class("web-menu-item-row") {
+            UnsafeRawProperty(name: "cursor", value: "grab")
+        }
+        Class("web-menu-item-row.is-dragging") {
+            Opacity(0.55)
+        }
+        Class("web-menu-item-drag") {
+            Color(.variable("cms-light-font"))
+            FontSize(18.px)
+            Width(18.px)
+            TextAlign(.center)
+        }
+        Class("web-menu-item-reorder-cell") {
+            Display(.flex)
+            AlignItems(.center)
+            Gap(8.px)
+        }
+        Custom(".web-menu-item-row.is-drop-before") {
+            UnsafeRawProperty(
+                name: "box-shadow",
+                value: "inset 0 3px 0 var(--cms-link-hover)"
+            )
+        }
+        Custom(".web-menu-item-row.is-drop-after") {
+            UnsafeRawProperty(
+                name: "box-shadow",
+                value: "inset 0 -3px 0 var(--cms-link-hover)"
+            )
+        }
+        Class("web-menu-item-actions") {
+            Display(.flex)
+            Gap(4.px)
+            AlignItems(.center)
+        }
+        Class("web-menu-item-reorder-status") {
+            Color(.variable("cms-light-font"))
+        }
+    }
+
     func content() -> some BasicTag {
         Section {
             if !state.canAccess {
@@ -37,7 +79,8 @@ struct WebMenuItemTable: Component {
             }
             else {
                 AdminBreadcrumb(state: state.breadcrumb)
-                H1("Items")
+                H1("Edit menu")
+                AdminWebMenuTabs(menuID: state.menuId, active: .items)
 
                 if state.isAdded {
                     P("Item added successfully.")
@@ -112,11 +155,12 @@ struct WebMenuItemTable: Component {
                         table: ListTableShell(
                             table: Table {
                                 Thead {
-                                    Tr {
-                                        if canRemove {
-                                            ListTableSelectAllCheckbox()
-                                        }
-                                        Th("Label")
+                                Tr {
+                                    if canRemove {
+                                        ListTableSelectAllCheckbox()
+                                    }
+                                    if state.canReorder { Th("Order") }
+                                    Th("Label")
                                         Th("URL")
                                         Th("Priority")
                                         Th("Blank")
@@ -134,6 +178,38 @@ struct WebMenuItemTable: Component {
                                                     )
                                                 )
                                             }
+                                            if state.canReorder {
+                                                Td {
+                                                    Div {
+                                                        Span("⠿")
+                                                            .class("web-menu-item-drag")
+                                                        Div {
+                                                            Button("↑")
+                                                                .type(.button)
+                                                                .class("row-btn", "edit")
+                                                                .data(
+                                                                    "web-menu-item-move",
+                                                                    "up"
+                                                                )
+                                                                .ariaLabel(
+                                                                    "Move \(item.label) up"
+                                                                )
+                                                            Button("↓")
+                                                                .type(.button)
+                                                                .class("row-btn", "edit")
+                                                                .data(
+                                                                    "web-menu-item-move",
+                                                                    "down"
+                                                                )
+                                                                .ariaLabel(
+                                                                    "Move \(item.label) down"
+                                                                )
+                                                        }
+                                                        .class("web-menu-item-actions")
+                                                    }
+                                                    .class("web-menu-item-reorder-cell")
+                                                }
+                                            }
                                             Td(item.label)
                                                 .data(
                                                     "label",
@@ -148,6 +224,10 @@ struct WebMenuItemTable: Component {
                                                 .data(
                                                     "label",
                                                     "Priority"
+                                                )
+                                                .data(
+                                                    "web-menu-item-priority",
+                                                    "true"
                                                 )
                                             Td(item.isBlank ? "Yes" : "No")
                                                 .data(
@@ -193,6 +273,12 @@ struct WebMenuItemTable: Component {
                                                 )
                                             )
                                         }
+                                        .class("web-menu-item-row")
+                                        .data("web-menu-item", item.id)
+                                        .data(
+                                            "web-menu-item-move-url",
+                                            "/admin/web/menus/\(state.menuId)/items/\(item.id)/move/"
+                                        )
                                     }
                                 }
                             }
@@ -200,6 +286,9 @@ struct WebMenuItemTable: Component {
                             .if(canRemove) { $0.class("bulk-select-table") }
                         )
                     )
+                    if state.canReorder {
+                        Script(reorderScript())
+                    }
                     ListTablePagination(
                         state: .init(
                             path: "/admin/web/menus/\(state.menuId)/items/",
@@ -213,5 +302,162 @@ struct WebMenuItemTable: Component {
             }
         }
         .class("cms-section")
+    }
+
+    private func reorderScript() -> String {
+        #"""
+        (function () {
+            function bind() {
+                var list = document.querySelector('tbody');
+                var status = document.getElementById('web-menu-item-reorder-status');
+                if (!list) { return; }
+                var dragged = null;
+                var saving = false;
+
+                function rows() {
+                    return Array.from(list.querySelectorAll('[data-web-menu-item]'));
+                }
+
+                function clearIndicators() {
+                    rows().forEach(function (row) {
+                        row.classList.remove('is-drop-before', 'is-drop-after');
+                    });
+                }
+
+                function updatePriorities() {
+                    rows().forEach(function (row, index) {
+                        var priority = row.querySelector('[data-web-menu-item-priority]');
+                        if (priority) { priority.textContent = String(index); }
+                    });
+                }
+
+                function setStatus(message, isError) {
+                    if (!status) { return; }
+                    status.textContent = message;
+                    status.classList.toggle('error', Boolean(isError));
+                }
+
+                function setControlsDisabled(disabled) {
+                    document.querySelectorAll('[data-web-menu-item-move]').forEach(function (button) {
+                        button.disabled = disabled;
+                    });
+                }
+
+                function restore(order) {
+                    order.forEach(function (row) { list.appendChild(row); });
+                    updatePriorities();
+                }
+
+                async function persistMove(row, beforeRow, previousOrder) {
+                    var beforeItemId = beforeRow
+                        ? beforeRow.getAttribute('data-web-menu-item')
+                        : '';
+                    var url = row.getAttribute('data-web-menu-item-move-url');
+                    saving = true;
+                    setControlsDisabled(true);
+                    setStatus('Saving…', false);
+                    try {
+                        var response = await fetch(url, {
+                            method: 'POST',
+                            credentials: 'same-origin',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: new URLSearchParams({
+                                beforeItemId: beforeItemId
+                            })
+                        });
+                        if (!response.ok) { throw new Error('Move request failed'); }
+                        setStatus('Saved', false);
+                    } catch (error) {
+                        restore(previousOrder);
+                        setStatus('Unable to save item order.', true);
+                    } finally {
+                        saving = false;
+                        setControlsDisabled(false);
+                    }
+                }
+
+                function moveRow(row, beforeRow) {
+                    if (saving) { return; }
+                    var previousOrder = rows();
+                    if (beforeRow === row || beforeRow === row.nextElementSibling) {
+                        return;
+                    }
+                    list.removeChild(row);
+                    if (beforeRow) {
+                        list.insertBefore(row, beforeRow);
+                    } else {
+                        list.appendChild(row);
+                    }
+                    var finalBeforeRow = row.nextElementSibling;
+                    updatePriorities();
+                    persistMove(row, finalBeforeRow, previousOrder);
+                }
+
+                rows().forEach(function (row) { row.setAttribute('draggable', 'true'); });
+
+                list.addEventListener('dragstart', function (event) {
+                    if (saving) { return; }
+                    dragged = event.target.closest('[data-web-menu-item]');
+                    if (!dragged) { return; }
+                    dragged.classList.add('is-dragging');
+                    if (event.dataTransfer) { event.dataTransfer.effectAllowed = 'move'; }
+                });
+
+                list.addEventListener('dragend', function () {
+                    if (dragged) { dragged.classList.remove('is-dragging'); }
+                    clearIndicators();
+                    dragged = null;
+                });
+
+                list.addEventListener('dragover', function (event) {
+                    if (!dragged || saving) { return; }
+                    event.preventDefault();
+                    clearIndicators();
+                    var target = event.target.closest('[data-web-menu-item]');
+                    if (target && target !== dragged) {
+                        var bounds = target.getBoundingClientRect();
+                        target.classList.add(event.clientY < bounds.top + bounds.height / 2 ? 'is-drop-before' : 'is-drop-after');
+                    }
+                    if (event.dataTransfer) { event.dataTransfer.dropEffect = 'move'; }
+                });
+
+                list.addEventListener('drop', function (event) {
+                    event.preventDefault();
+                    if (!dragged || saving) { return; }
+                    var target = event.target.closest('[data-web-menu-item]');
+                    if (!target || target === dragged) { return; }
+                    var dropBefore = event.clientY < target.getBoundingClientRect().top + target.getBoundingClientRect().height / 2;
+                    var beforeRow = dropBefore ? target : target.nextElementSibling;
+                    moveRow(dragged, beforeRow);
+                    clearIndicators();
+                });
+
+                document.querySelectorAll('[data-web-menu-item-move]').forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        if (saving) { return; }
+                        var row = button.closest('[data-web-menu-item]');
+                        if (!row) { return; }
+                        var direction = button.getAttribute('data-web-menu-item-move');
+                        if (direction === 'up') {
+                            var previousRow = row.previousElementSibling;
+                            if (previousRow) { moveRow(row, previousRow); }
+                            return;
+                        }
+                        var nextRow = row.nextElementSibling;
+                        if (nextRow) {
+                            moveRow(row, nextRow.nextElementSibling);
+                        }
+                    });
+                });
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bind, { once: true });
+            } else {
+                bind();
+            }
+        })();
+        """#
     }
 }

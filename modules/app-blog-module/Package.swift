@@ -173,9 +173,7 @@ let package = Package(
                 .target(name: "BlogDomain"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "BlogContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+                .target(name: "BlogContracts"),],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -193,9 +191,7 @@ let package = Package(
                 .target(name: "BlogApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "BlogContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+                .target(name: "BlogContracts"),],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
@@ -298,9 +294,7 @@ let package = Package(
                 .target(name: "BlogAppAPI"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "BlogContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+                .target(name: "BlogContracts"),],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),
@@ -308,11 +302,9 @@ let package = Package(
             name: "BlogFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "FeatherDatabase", package: "feather-database"),
-                .product(name: "WebApplication", package: "app-web-module"),
+                .product(name: "FeatherDatabase", package: "feather-database"),                
                 .product(name: "WebDomain", package: "app-web-module"),
-                .product(name: "WebFrontend", package: "app-web-module"),
-                .product(name: "WebAdminAPI", package: "app-web-module"),
+                .product(name: "WebFrontend", package: "app-web-module"),                
                 .product(name: "MediaFrontend", package: "app-media-module"),
                 .target(name: "BlogAdminAPI"),
                 .target(name: "BlogAppAPI"),
@@ -327,9 +319,7 @@ let package = Package(
                 .product(name: "NIOCore", package: "swift-nio"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "BlogContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+                .target(name: "BlogContracts"),],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings
         ),

@@ -189,8 +189,7 @@ let package = Package(
                 .target(name: "RedirectApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "RedirectContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .target(name: "RedirectContracts"),],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),

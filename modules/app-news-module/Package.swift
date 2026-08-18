@@ -149,9 +149,7 @@ let package = Package(
                 .target(name: "NewsDomain"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "NewsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+                .target(name: "NewsContracts"),],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -168,9 +166,7 @@ let package = Package(
                 .target(name: "NewsApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "NewsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+                .target(name: "NewsContracts"),],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
@@ -221,8 +217,7 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "NewsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+                .product(name: "SystemApplication", package: "app-system-module")],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),
@@ -244,8 +239,7 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "NewsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+                .product(name: "SystemApplication", package: "app-system-module")],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings
         ),

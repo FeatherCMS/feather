@@ -20,6 +20,12 @@ public protocol MenuItemRepository: Repository {
         _ model: MenuItem
     ) async throws -> MenuItem
 
+    func move(
+        id: String,
+        menuId: String,
+        beforeItemId: String?
+    ) async throws
+
     func delete(
         id: String
     ) async throws -> Bool

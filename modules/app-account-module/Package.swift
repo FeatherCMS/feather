@@ -183,8 +183,7 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "AccountContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "UserApplication", package: "app-user-module")],
+                .product(name: "SystemApplication", package: "app-system-module")],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -204,9 +203,7 @@ let package = Package(
                 .target(name: "AccountApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AccountContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "UserApplication", package: "app-user-module")],
+                .target(name: "AccountContracts"),],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
@@ -307,8 +304,7 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "AccountContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "UserApplication", package: "app-user-module")],
+                .product(name: "SystemApplication", package: "app-system-module")],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),

@@ -419,6 +419,22 @@ extension WebBackend {
         )
     }
 
+    func makeMoveMenuItem() -> MoveMenuItem {
+        let transaction = DatabaseTransactionExecutor(
+            database: database,
+            idGenerator: idGenerator,
+            scope: { context in
+                WriteMenuItem(
+                    menuItem: MenuItemDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
+
     func makeListMenuItems() -> ListMenuItems {
         let query = DatabaseQueryExecutor(
             database: database,

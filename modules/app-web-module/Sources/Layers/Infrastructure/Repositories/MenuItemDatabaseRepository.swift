@@ -84,6 +84,19 @@ public struct MenuItemDatabaseRepository: MenuItemRepository {
         return updated.asDomain
     }
 
+    public func move(
+        id: String,
+        menuId: String,
+        beforeItemId: String?
+    ) async throws {
+        let table = MenuItemTable(connection: context.connection)
+        try await table.move(
+            id: id,
+            menuId: menuId,
+            beforeItemID: beforeItemId
+        )
+    }
+
     public func delete(
         id: String
     ) async throws -> Bool {
