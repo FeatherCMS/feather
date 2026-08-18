@@ -44,7 +44,7 @@ public enum AccountAdminMenuEventHandlers {
                     icon: "mail",
                     link: "/admin/account/invitations/",
                     permission: "account:invitations:list"
-                )
+                ),
             ]
         }
     }

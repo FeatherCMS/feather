@@ -46,12 +46,13 @@ extension TestRunner {
                 headerFields: [
                     .authorization: bearerAuthorizationHeader(token: token)
                 ],
-                body: AuthAdminAPI.Components.Schemas.AuthCredentialCreateSchema(
-                    userId: userId,
-                    email: email,
-                    password: password,
-                    isPersistent: isPersistent
-                )
+                body: AuthAdminAPI.Components.Schemas
+                    .AuthCredentialCreateSchema(
+                        userId: userId,
+                        email: email,
+                        password: password,
+                        isPersistent: isPersistent
+                    )
             )
         ) { response in
             try await response.json(

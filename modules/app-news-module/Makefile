@@ -3,7 +3,7 @@ SHELL := /bin/bash
 baseUrl = https://raw.githubusercontent.com/BinaryBirds/github-workflows/main/scripts
 OPENAPI_SCRIPT := scripts/generate-openapi.sh
 
-.PHONY: openapi openapi-yaml openapi-swift docker-openapi build test clean resolve format
+.PHONY: openapi openapi-yaml openapi-swift docker-openapi build test clean resolve format docker-up docker-down
 
 openapi:
 	@$(OPENAPI_SCRIPT) run
@@ -32,3 +32,9 @@ resolve:
 
 format:
 	curl -fsSL $(baseUrl)/run-swift-format.sh | bash -s -- --fix
+
+docker-up:
+	docker compose up -d certificates postgres
+
+docker-down:
+	docker compose down -v --remove-orphans

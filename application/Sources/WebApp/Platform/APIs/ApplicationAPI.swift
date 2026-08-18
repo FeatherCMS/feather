@@ -31,7 +31,7 @@ public struct ApplicationAPI: Sendable {
         sessionToken: String? = nil
     ) {
         self.apiBaseURL = apiBaseURL
-        
+
         self.authClient = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(

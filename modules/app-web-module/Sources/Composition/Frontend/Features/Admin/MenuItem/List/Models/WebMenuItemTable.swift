@@ -155,12 +155,12 @@ struct WebMenuItemTable: Component {
                         table: ListTableShell(
                             table: Table {
                                 Thead {
-                                Tr {
-                                    if canRemove {
-                                        ListTableSelectAllCheckbox()
-                                    }
-                                    if state.canReorder { Th("Order") }
-                                    Th("Label")
+                                    Tr {
+                                        if canRemove {
+                                            ListTableSelectAllCheckbox()
+                                        }
+                                        if state.canReorder { Th("Order") }
+                                        Th("Label")
                                         Th("URL")
                                         Th("Priority")
                                         Th("Blank")
@@ -182,11 +182,16 @@ struct WebMenuItemTable: Component {
                                                 Td {
                                                     Div {
                                                         Span("⠿")
-                                                            .class("web-menu-item-drag")
+                                                            .class(
+                                                                "web-menu-item-drag"
+                                                            )
                                                         Div {
                                                             Button("↑")
                                                                 .type(.button)
-                                                                .class("row-btn", "edit")
+                                                                .class(
+                                                                    "row-btn",
+                                                                    "edit"
+                                                                )
                                                                 .data(
                                                                     "web-menu-item-move",
                                                                     "up"
@@ -196,7 +201,10 @@ struct WebMenuItemTable: Component {
                                                                 )
                                                             Button("↓")
                                                                 .type(.button)
-                                                                .class("row-btn", "edit")
+                                                                .class(
+                                                                    "row-btn",
+                                                                    "edit"
+                                                                )
                                                                 .data(
                                                                     "web-menu-item-move",
                                                                     "down"
@@ -205,9 +213,13 @@ struct WebMenuItemTable: Component {
                                                                     "Move \(item.label) down"
                                                                 )
                                                         }
-                                                        .class("web-menu-item-actions")
+                                                        .class(
+                                                            "web-menu-item-actions"
+                                                        )
                                                     }
-                                                    .class("web-menu-item-reorder-cell")
+                                                    .class(
+                                                        "web-menu-item-reorder-cell"
+                                                    )
                                                 }
                                             }
                                             Td(item.label)

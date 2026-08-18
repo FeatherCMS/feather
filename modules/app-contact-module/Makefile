@@ -6,7 +6,7 @@ OPENAPI_SCRIPT := scripts/generate-openapi.sh
 export SWIFTPM_MODULECACHE_OVERRIDE ?= $(CURDIR)/.build/swift-module-cache
 export CLANG_MODULE_CACHE_PATH ?= $(CURDIR)/.build/clang-module-cache
 
-.PHONY: openapi openapi-yaml openapi-swift docker-openapi build test clean resolve format
+.PHONY: openapi openapi-yaml openapi-swift docker-openapi build test clean resolve format docker-up docker-down
 
 openapi:
 	@$(OPENAPI_SCRIPT) run
@@ -35,3 +35,9 @@ resolve:
 
 format:
 	curl -fsSL $(baseUrl)/run-swift-format.sh | bash -s -- --fix
+
+docker-up:
+	docker compose up -d certificates postgres
+
+docker-down:
+	docker compose down -v --remove-orphans

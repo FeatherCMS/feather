@@ -129,7 +129,8 @@ public enum NewsWebPublicContentEventHandlers {
         )
         result["contents"] = ["html": value.content]
         result["categories"] = value.categories.map(summaryContext)
-        result["noindex"] = value.metadata.status != "published"
+        result["noindex"] =
+            value.metadata.status != "published"
             || value.metadata.noIndex
         return result
     }
@@ -146,7 +147,8 @@ public enum NewsWebPublicContentEventHandlers {
         )
         result["contents"] = ["html": value.content]
         result["news"] = value.news.map(summaryContext)
-        result["noindex"] = value.metadata.status != "published"
+        result["noindex"] =
+            value.metadata.status != "published"
             || value.metadata.noIndex
         return result
     }

@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import Foundation
 import AuthDomain
+import Foundation
 import UserApplication
 
 @testable import AuthApplication

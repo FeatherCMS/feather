@@ -101,18 +101,19 @@ struct AppAPIPublicWebMenuListTests {
         else {
             throw MissingMenuError()
         }
-        _ = try await MenuItemDatabaseRepository(context: context).insert(
-            .init(
-                menuId: menu.id,
-                label: "Root only",
-                url: "/admin/",
-                priority: 40,
-                isBlank: false,
-                permission: "system:permissions:list",
-                authentication: .any,
-                notes: "Restricted seeded item for tests."
+        _ = try await MenuItemDatabaseRepository(context: context)
+            .insert(
+                .init(
+                    menuId: menu.id,
+                    label: "Root only",
+                    url: "/admin/",
+                    priority: 40,
+                    isBlank: false,
+                    permission: "system:permissions:list",
+                    authentication: .any,
+                    notes: "Restricted seeded item for tests."
+                )
             )
-        )
     }
 }
 

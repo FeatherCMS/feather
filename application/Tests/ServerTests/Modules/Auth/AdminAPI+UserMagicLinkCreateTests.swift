@@ -17,7 +17,7 @@ struct AdminAPIUserMagicLinkCreateTests {
         try await runner.grantRootPermissions([
             "user:accounts:create",
             "auth:credential:create",
-            "auth:magic-links:create"
+            "auth:magic-links:create",
         ])
         let token = try await runner.authenticateTestAccount()
         let identityID = try await runner.createTestIdentity(token: token)
