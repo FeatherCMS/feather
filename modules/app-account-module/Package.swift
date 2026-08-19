@@ -89,10 +89,6 @@ let package = Package(
             exact: "1.0.0-rc.2"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-mail",
-            exact: "1.0.0-rc.1"
-        ),
-        .package(
             url: "https://github.com/feather-framework/feather-openapi",
             exact: "1.0.0-beta.7"
         ),
@@ -148,10 +144,6 @@ let package = Package(
             url: "https://github.com/apple/swift-nio-ssl.git",
             from: "2.34.0"
         ),
-        .package(
-            url: "https://github.com/feather-framework/feather-mail-ephemeral",
-            exact: "1.0.0-rc.1"
-        ),
     ],
     targets: [
         .target(
@@ -183,7 +175,8 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "AccountContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "SystemApplication", package: "app-system-module"),
+            ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -203,7 +196,8 @@ let package = Package(
                 .target(name: "AccountApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AccountContracts"),],
+                .target(name: "AccountContracts"),
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
@@ -304,7 +298,8 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "AccountContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "SystemApplication", package: "app-system-module"),
+            ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),

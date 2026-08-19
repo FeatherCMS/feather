@@ -6,6 +6,7 @@ import SystemFrontend
 import Testing
 import UserFrontend
 import AccountFrontend
+import FeatherValidation
 
 @testable import WebApp
 
@@ -51,8 +52,7 @@ struct WebAppTestSuite {
     @Test
     func userAccountFormInputValidationAcceptsValidPayload() async {
         let payload = AdminAddUserIdentityFormInput(
-            email: "admin@feathercms.com",
-            password: "password123"
+            status: "invited"
         )
 
         let failures = await payload.validationFailures()
@@ -62,14 +62,13 @@ struct WebAppTestSuite {
     @Test
     func userAccountFormInputValidationRejectsInvalidEmail() async {
         let payload = AdminAddUserIdentityFormInput(
-            email: "invalid-email",
-            password: "pass123"
+            status: " "
         )
 
         let failures = await payload.validationFailures()
         #expect(
             failures.contains(where: {
-                $0.key == "email" && $0.message == "Email is invalid."
+                $0.key == "status" && $0.message == "Status is required."
             })
         )
     }
@@ -77,21 +76,24 @@ struct WebAppTestSuite {
     @Test
     func userAccountFormInputValidationRejectsEmptyPassword() async {
         let payload = AdminAddUserIdentityFormInput(
-            email: "admin@feathercms.com",
-            password: " "
+            status: ""
         )
 
         let failures = await payload.validationFailures()
         #expect(
             failures.contains(where: {
-                $0.key == "password" && $0.message == "Password is required."
+                $0.key == "status" && $0.message == "Status is required."
             })
         )
     }
 
     @Test
     func userRoleFormInputValidationRejectsEmptyName() async {
-        let payload = AdminAddUserRoleFormInput(name: " ", notes: "note")
+        let payload = AdminAddUserRoleFormInput(
+            id: "role",
+            name: " ",
+            notes: "note"
+        )
         let failures = await payload.validationFailures()
         #expect(failures.contains(where: { $0.key == "name" }))
     }
@@ -112,7 +114,12 @@ struct WebAppTestSuite {
 
     @Test
     func systemVariableFormInputValidationRejectsEmptyValue() async {
-        let payload = SystemVariableFormInput(name: "k", value: " ", notes: "n")
+        let payload = SystemVariableFormInput(
+            id: "variable",
+            value: " ",
+            name: "k",
+            notes: "n"
+        )
         let failures = await payload.validationFailures()
         #expect(failures.contains(where: { $0.key == "value" }))
     }
@@ -120,10 +127,10 @@ struct WebAppTestSuite {
     @Test
     func userMagicLinkFormInputValidationRejectsInvalidEmail() async {
         let payload = AdminAddAuthMagicLinkFormInput(
-            email: "bad",
+            credentialId: "",
             isPersistent: .init(value: false)
         )
         let failures = await payload.validationFailures()
-        #expect(failures.contains(where: { $0.key == "email" }))
+        #expect(failures.contains(where: { $0.key == "credential_id" }))
     }
 }

@@ -15,9 +15,17 @@ struct AdminAPIUserMagicLinkCreateTests {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()
         try await runner.grantRootPermissions([
-            "auth:magic-links:create"
+            "user:accounts:create",
+            "auth:credential:create",
+            "auth:magic-links:create",
         ])
         let token = try await runner.authenticateTestAccount()
+        let identityID = try await runner.createTestIdentity(token: token)
+        let credentialID = try await runner.createTestCredential(
+            token: token,
+            userId: identityID,
+            email: "user@example.com"
+        )
 
         try await runner.run(
             request: JSONRequest(
@@ -29,7 +37,7 @@ struct AdminAPIUserMagicLinkCreateTests {
                     )
                 ],
                 body: Components.Schemas.AuthMagicLinkCreateSchema(
-                    email: "user@example.com",
+                    credentialId: credentialID,
                     isPersistent: true
                 )
             )
@@ -38,7 +46,7 @@ struct AdminAPIUserMagicLinkCreateTests {
                 status: .created,
                 Components.Schemas.AuthMagicLinkDetailSchema.self
             )
-            #expect(object.email == "user@example.com")
+            #expect(object.credentialId == credentialID)
             #expect(!object.token.isEmpty)
         }
     }

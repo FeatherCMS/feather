@@ -30,6 +30,7 @@ struct AdminAPISystemPermissionDeleteTests {
                     )
                 ],
                 body: Components.Schemas.SystemPermissionCreateSchema(
+                    id: "system.permissions.example",
                     name: "system.permissions.example",
                     notes: "example notes"
                 )

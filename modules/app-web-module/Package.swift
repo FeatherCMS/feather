@@ -166,7 +166,8 @@ let package = Package(
                 .target(name: "WebDomain"),
                 .target(name: "WebApplication"),
             
-                .product(name: "FeatherContracts", package: "feather-core"),],
+                .product(name: "FeatherContracts", package: "feather-core"),
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),

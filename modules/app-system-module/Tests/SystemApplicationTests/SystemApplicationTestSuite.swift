@@ -28,15 +28,15 @@ struct SystemApplicationTestSuite {
         let authorizer = MockAuthorizer(result: true)
         let useCase = AddVariable(
             authorizer: authorizer,
-            transaction: transaction,
-            idGenerator: FixedIDGenerator(id: "generated-id")
+            transaction: transaction
         )
 
         let result = try await useCase.execute(
             subject: Subject(id: "subject-1"),
             input: AddVariable.Input(
-                name: "var-name",
+                id: "generated-id",
                 value: "var-value",
+                name: "var-name",
                 notes: "var-notes"
             )
         )
@@ -58,16 +58,16 @@ struct SystemApplicationTestSuite {
         let authorizer = MockAuthorizer(result: false)
         let useCase = AddVariable(
             authorizer: authorizer,
-            transaction: transaction,
-            idGenerator: FixedIDGenerator(id: "generated-id")
+            transaction: transaction
         )
 
         await #expect(throws: AuthError.self) {
             _ = try await useCase.execute(
                 subject: Subject(id: "subject-1"),
                 input: AddVariable.Input(
-                    name: "var-name",
+                    id: "generated-id",
                     value: "var-value",
+                    name: "var-name",
                     notes: "var-notes"
                 )
             )
@@ -148,13 +148,16 @@ struct SystemApplicationTestSuite {
         let authorizer = MockAuthorizer(result: true)
         let useCase = AddPermission(
             authorizer: authorizer,
-            transaction: transaction,
-            idGenerator: FixedIDGenerator(id: "generated-permission")
+            transaction: transaction
         )
 
         let result = try await useCase.execute(
             subject: Subject(id: "subject-4"),
-            input: AddPermission.Input(name: "perm-name", notes: "perm-notes")
+            input: AddPermission.Input(
+                id: "generated-permission",
+                name: "perm-name",
+                notes: "perm-notes"
+            )
         )
 
         #expect(result.id == "p-1")
@@ -258,8 +261,8 @@ private func makeVariable(
 ) -> Variable {
     .init(
         id: id,
-        name: "valid-name",
         value: "valid-value",
+        name: "valid-name",
         notes: "valid-notes",
         createdAt: Date(),
         updatedAt: Date()
@@ -283,8 +286,8 @@ private func makeVariableDetail(
 ) -> VariableDetail {
     .init(
         id: id,
-        name: "name-\(id)",
         value: "value-\(id)",
+        name: "name-\(id)",
         notes: "notes-\(id)",
         createdAt: Date(),
         updatedAt: Date()

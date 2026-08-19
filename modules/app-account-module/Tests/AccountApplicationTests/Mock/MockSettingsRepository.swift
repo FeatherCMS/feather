@@ -14,14 +14,14 @@ actor MockSettingsRepository: SettingsRepository {
         userId: String
     ) async throws -> Settings {
         getCallCount += 1
-        result
+        return result
     }
 
     func getOrCreate(
         userId: String
     ) async throws -> Settings {
         getCallCount += 1
-        result
+        return result
     }
 
     func create(

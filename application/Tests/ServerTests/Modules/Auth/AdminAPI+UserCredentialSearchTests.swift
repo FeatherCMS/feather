@@ -27,7 +27,7 @@ struct AdminAPIUserCredentialSearchTests {
             "auth:credential:list",
         ])
         let authentication = try await runner.authenticateTestAccount()
-        let identityId = try await runner.identityId(
+        let identityId = try await runner.identityID(
             token: authentication
         )
         let email = "credential-\(UUID().uuidString.lowercased())@example.com"
@@ -44,7 +44,8 @@ struct AdminAPIUserCredentialSearchTests {
                 body: Components.Schemas.AuthCredentialCreateSchema(
                     userId: identityId,
                     email: email,
-                    password: "very-secure-password"
+                    password: "very-secure-password",
+                    isPersistent: true
                 )
             )
         ) { response in
@@ -96,7 +97,7 @@ struct AdminAPIUserCredentialSearchTests {
             "auth:credential:list",
         ])
         let authentication = try await runner.authenticateTestAccount()
-        let identityId = try await runner.identityId(
+        let identityId = try await runner.identityID(
             token: authentication
         )
         let email = "credential-\(UUID().uuidString.lowercased())@example.com"
@@ -113,7 +114,8 @@ struct AdminAPIUserCredentialSearchTests {
                 body: Components.Schemas.AuthCredentialCreateSchema(
                     userId: identityId,
                     email: email,
-                    password: "very-secure-password"
+                    password: "very-secure-password",
+                    isPersistent: true
                 )
             )
         ) { response in
@@ -161,7 +163,7 @@ struct AdminAPIUserCredentialSearchTests {
             "auth:credential:list",
         ])
         let authentication = try await runner.authenticateTestAccount()
-        let identityId = try await runner.identityId(
+        let identityId = try await runner.identityID(
             token: authentication
         )
         let email = "credential-\(UUID().uuidString.lowercased())@example.com"
@@ -178,7 +180,8 @@ struct AdminAPIUserCredentialSearchTests {
                 body: Components.Schemas.AuthCredentialCreateSchema(
                     userId: identityId,
                     email: email,
-                    password: "very-secure-password"
+                    password: "very-secure-password",
+                    isPersistent: true
                 )
             )
         ) { response in

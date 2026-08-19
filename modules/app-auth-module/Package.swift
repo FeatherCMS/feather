@@ -171,7 +171,9 @@ let package = Package(
                 .target(name: "AuthDomain"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AuthContracts"),                .product(name: "WebApplication", package: "app-web-module")],
+                .target(name: "AuthContracts"),
+                .product(name: "WebApplication", package: "app-web-module"),
+            ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -196,7 +198,9 @@ let package = Package(
                 .product(name: "WebApplication", package: "app-web-module"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AuthContracts"),                .product(name: "UserApplication", package: "app-user-module")],
+                .target(name: "AuthContracts"),
+                .product(name: "UserApplication", package: "app-user-module"),
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
@@ -275,9 +279,9 @@ let package = Package(
                 .product(name: "NanoID", package: "swift-nanoid"),
                 .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),                
-                .product(name: "SystemAdminAPI", package: "app-system-module"),               
-                .product(name: "UserDomain", package: "app-user-module"),                
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "SystemAdminAPI", package: "app-system-module"),
+                .product(name: "UserDomain", package: "app-user-module"),
                 .product(name: "UserBackend", package: "app-user-module"),
                 .target(name: "AuthApplication"),
                 .target(name: "AuthInfrastructure"),

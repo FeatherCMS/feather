@@ -28,6 +28,26 @@ public struct MenuItem: Model {
         public let permission: String
         public let authentication: MenuItemAuthentication
         public let notes: String?
+
+        public init(
+            menuId: String,
+            label: String,
+            url: String,
+            priority: Int,
+            isBlank: Bool,
+            permission: String,
+            authentication: MenuItemAuthentication,
+            notes: String?
+        ) {
+            self.menuId = menuId
+            self.label = label
+            self.url = url
+            self.priority = priority
+            self.isBlank = isBlank
+            self.permission = permission
+            self.authentication = authentication
+            self.notes = notes
+        }
     }
 
     public let id: String

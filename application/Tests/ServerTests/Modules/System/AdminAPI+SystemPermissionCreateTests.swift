@@ -32,6 +32,7 @@ struct AdminAPISystemPermissionCreateTests {
                     )
                 ],
                 body: Components.Schemas.SystemPermissionCreateSchema(
+                    id: name,
                     name: name,
                     notes: notes
                 )

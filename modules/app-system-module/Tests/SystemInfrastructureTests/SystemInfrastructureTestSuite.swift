@@ -74,7 +74,8 @@ struct SystemInfrastructureTestSuite {
                     TableMigration(connection: connection),
                     TableSeedMigration(
                         connection: connection,
-                        events: EventRegistry()
+                        events: EventRegistry(),
+                        idGenerator: Foo()
                     ),
                 ]
             )
@@ -97,15 +98,15 @@ struct SystemInfrastructureTestSuite {
 
         let useCase = AddVariable(
             authorizer: authorizer,
-            transaction: transaction,
-            idGenerator: idGenerator
+            transaction: transaction
         )
 
         let res = try await useCase.execute(
             subject: .init(id: "infra-test"),
             input: .init(
-                name: "foo-bar",
+                id: idGenerator.generate(),
                 value: "bar-bar",
+                name: "foo-bar",
                 notes: "baz-bar"
             )
         )
@@ -126,8 +127,7 @@ struct SystemInfrastructureTestSuite {
 
         let useCase2 = AddVariable(
             authorizer: authorizer,
-            transaction: transaction,
-            idGenerator: idGenerator
+            transaction: transaction
         )
 
         _ = useCase2

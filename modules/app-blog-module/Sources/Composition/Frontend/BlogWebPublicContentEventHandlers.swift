@@ -213,7 +213,8 @@ public enum BlogWebPublicContentEventHandlers {
         result["authors"] = value.authors.map(summaryContext)
         result["tags"] = value.tags.map(summaryContext)
         result["relatedPosts"] = value.relatedPosts.map(summaryContext)
-        result["noindex"] = value.metadata.status != "published"
+        result["noindex"] =
+            value.metadata.status != "published"
             || value.metadata.noIndex
         return result
     }
@@ -232,7 +233,8 @@ public enum BlogWebPublicContentEventHandlers {
         result["contents"] = ["html": value.content]
         result["posts"] = value.posts.map(summaryContext)
         result["postCountLabel"] = "\(value.posts.count) posts"
-        result["noindex"] = value.metadata.status != "published"
+        result["noindex"] =
+            value.metadata.status != "published"
             || value.metadata.noIndex
         return result
     }
@@ -251,7 +253,8 @@ public enum BlogWebPublicContentEventHandlers {
         result["contents"] = ["html": value.content]
         result["posts"] = value.posts.map(summaryContext)
         result["postCountLabel"] = "\(value.posts.count) posts"
-        result["noindex"] = value.metadata.status != "published"
+        result["noindex"] =
+            value.metadata.status != "published"
             || value.metadata.noIndex
         return result
     }

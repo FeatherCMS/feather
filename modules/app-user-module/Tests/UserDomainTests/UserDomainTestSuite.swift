@@ -14,8 +14,8 @@ import struct Foundation.Date
 struct UserDomainTestSuite {
 
     @Test
-    func identityCreateDefaultsToActiveStatus() async throws {
-        let identity = Identity.create()
+    func identityCreatePreservesActiveStatus() async throws {
+        let identity = Identity.create(status: .active)
 
         #expect(identity.status == .active)
     }
@@ -53,6 +53,7 @@ private func makeIdentity() -> Identity {
     .init(
         id: "a1",
         status: .invited,
+        isRoot: false,
         createdAt: Date(),
         updatedAt: Date()
     )

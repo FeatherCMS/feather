@@ -29,7 +29,7 @@ public struct AdminAPI: Sendable {
         sessionToken: String? = nil
     ) {
         self.apiBaseURL = apiBaseURL
-        
+
         self.blogClient = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(

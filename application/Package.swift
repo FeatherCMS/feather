@@ -145,6 +145,10 @@ let package = Package(
             exact: "1.0.0-rc.1"
         ),
         .package(
+            url: "https://github.com/feather-framework/feather-mail-ephemeral",
+            exact: "1.0.0-rc.1"
+        ),
+        .package(
             url: "https://github.com/soto-project/soto-core",
             from: "7.0.0"
         ),
@@ -403,6 +407,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Worker"),
                 .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "FeatherMailEphemeral", package: "feather-mail-ephemeral"),
                 .target(name: "Environment"),
             ],
             swiftSettings: defaultSwiftSettings
@@ -413,6 +418,7 @@ let package = Package(
             dependencies: [
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
                 .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherContracts", package: "feather-core"),
                 .product(name: "AccountFrontend", package: "app-account-module"),
                 .target(name: "WebApp"),
             ],

@@ -18,7 +18,7 @@ services:
             - 'certificates:/certs'
             - 'postgres_data:/var/lib/postgresql'
         ports:
-            - '55436:5432'
+            - '55442:5432'
         restart: always
         environment:
             POSTGRES_USER: postgres

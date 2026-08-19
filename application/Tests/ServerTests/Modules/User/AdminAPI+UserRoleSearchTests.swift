@@ -25,6 +25,7 @@ struct AdminAPIUserRoleSearchTests {
             "user:roles:list",
         ])
         let token = try await runner.authenticateTestAccount()
+        let id = "role-\(UUID().uuidString.lowercased())"
 
         let _ = try await runner.run(
             request: JSONRequest(
@@ -36,6 +37,7 @@ struct AdminAPIUserRoleSearchTests {
                     )
                 ],
                 body: Components.Schemas.UserRoleCreateSchema(
+                    id: id,
                     name: "Role \(UUID().uuidString.prefix(8))",
                     notes: "notes"
                 )

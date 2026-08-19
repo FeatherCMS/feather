@@ -24,7 +24,7 @@ struct AdminAPIUserCredentialCreateTests {
             "auth:credential:create"
         ])
         let authentication = try await runner.authenticateTestAccount()
-        let identityId = try await runner.identityId(
+        let identityId = try await runner.identityID(
             token: authentication
         )
 
@@ -41,7 +41,8 @@ struct AdminAPIUserCredentialCreateTests {
                 body: Components.Schemas.AuthCredentialCreateSchema(
                     userId: identityId,
                     email: email,
-                    password: "very-secure-password"
+                    password: "very-secure-password",
+                    isPersistent: true
                 )
             )
         ) { response in

@@ -162,7 +162,8 @@ let package = Package(
                 .target(name: "AnalyticsApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AnalyticsContracts"),],
+                .target(name: "AnalyticsContracts"),
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),

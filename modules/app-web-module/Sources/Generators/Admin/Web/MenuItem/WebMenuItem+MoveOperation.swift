@@ -10,7 +10,7 @@ struct WebMenuItemMoveOperation: WebMenuItemIDOperation {
     var responseMap: ResponseMap {
         [
             204: CustomResponse(description: "WebMenuItem moved"),
-            404: CustomResponse(description: "WebMenuItem not found")
+            404: CustomResponse(description: "WebMenuItem not found"),
         ]
     }
 }

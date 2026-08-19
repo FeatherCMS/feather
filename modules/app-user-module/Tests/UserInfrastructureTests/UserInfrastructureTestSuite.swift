@@ -68,7 +68,7 @@ struct UserInfrastructureTestSuite {
             ) { _ in }
 
             var events = EventRegistry()
-            UserEventHandlers.register(in: &events)
+            EventHandlers.register(in: &events)
 
             let migrator = Migrator(
                 migrations: [

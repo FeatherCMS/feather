@@ -1,45 +1,11 @@
 SHELL := /bin/bash
 
 COMPOSE := docker compose -f docker-compose.yaml
-MODULE_DIRS := \
-	feather-core \
-	modules/app-system-module \
-	modules/app-user-module \
-	modules/app-auth-module \
-	modules/app-account-module \
-	modules/app-analytics-module \
-	modules/app-blog-module \
-	modules/app-media-module \
-	modules/app-redirect-module \
-	modules/app-web-module
-OPENAPI_MODULE_DIRS := \
-	modules/app-system-module \
-	modules/app-user-module \
-	modules/app-auth-module \
-	modules/app-analytics-module \
-	modules/app-blog-module \
-	modules/app-media-module \
-	modules/app-redirect-module \
-	modules/app-web-module \
-	modules/app-newsletter-module \
-	modules/app-contact-module \
-	modules/app-news-module
-TEST_PACKAGE_DIRS := application $(sort $(dir $(wildcard modules/*/Package.swift)))
-FORMAT_PACKAGE_DIRS := \
-	feather-core \
-	application \
-	modules/app-account-module \
-	modules/app-analytics-module \
-	modules/app-auth-module \
-	modules/app-blog-module \
-	modules/app-contact-module \
-	modules/app-media-module \
-	modules/app-news-module \
-	modules/app-newsletter-module \
-	modules/app-redirect-module \
-	modules/app-system-module \
-	modules/app-user-module \
-	modules/app-web-module
+MODULE_DIRS := $(sort $(patsubst %/,%,$(dir $(wildcard modules/*/Package.swift))))
+DOCKER_MODULE_DIRS := feather-core $(MODULE_DIRS)
+OPENAPI_MODULE_DIRS := $(MODULE_DIRS)
+TEST_PACKAGE_DIRS := application $(MODULE_DIRS)
+FORMAT_PACKAGE_DIRS := feather-core application $(MODULE_DIRS)
 DEPS_SERVICES := certificates postgres migrator
 APPLICATION_SERVICES := $(DEPS_SERVICES) server worker web-static openapi-app openapi-admin web-app
 APPLICATION_RUNTIME_SERVICES := migrator server worker web-static web-app
@@ -143,12 +109,14 @@ format:
 
 docker-up:
 	$(COMPOSE) up -d certificates postgres
-	@for module in $(MODULE_DIRS); do \
+	@set -e; \
+	for module in $(DOCKER_MODULE_DIRS); do \
 		$(MAKE) -C $$module docker-up; \
 	done
 
 docker-down:
-	@for module in $(MODULE_DIRS); do \
+	@set -e; \
+	for module in $(DOCKER_MODULE_DIRS); do \
 		$(MAKE) -C $$module docker-down; \
 	done
 	$(COMPOSE) down -v --remove-orphans

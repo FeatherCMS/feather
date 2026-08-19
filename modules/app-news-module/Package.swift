@@ -52,10 +52,6 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-log", from: "1.0.0"),
         .package(
-            url: "https://github.com/binarybirds/swift-nanoid",
-            from: "1.0.0"
-        ),
-        .package(
             url: "https://github.com/feather-framework/feather-database",
             exact: "1.0.0-rc.2"
         ),
@@ -72,24 +68,12 @@ let package = Package(
             from: "5.0.0"
         ),
         .package(
-            url: "https://github.com/jpsim/Yams",
-            from: "6.2.0"
-        ),
-        .package(
             url: "https://github.com/apple/swift-openapi-runtime",
             from: "1.9.0"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
             from: "2.20.1"
-        ),
-        .package(
-            url: "https://github.com/BinaryBirds/swift-web-standards",
-            exact: "1.0.0-beta.3"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-validation",
-            exact: "1.0.0-beta.1"
         ),
         .package(
             url: "https://github.com/swift-server/swift-openapi-async-http-client",
@@ -102,15 +86,6 @@ let package = Package(
         .package(
             url: "https://github.com/apple/swift-nio",
             from: "2.0.0"
-        ),
-        .package(
-            url:
-                "https://github.com/feather-framework/feather-database-postgres",
-            exact: "1.0.0-rc.2"
-        ),
-        .package(
-            url: "https://github.com/vapor/postgres-nio.git",
-            from: "1.32.2"
         ),
         .package(
             url: "https://github.com/apple/swift-nio-ssl.git",
@@ -149,7 +124,8 @@ let package = Package(
                 .target(name: "NewsDomain"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "NewsContracts"),],
+                .target(name: "NewsContracts"),
+            ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -166,7 +142,8 @@ let package = Package(
                 .target(name: "NewsApplication"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "NewsContracts"),],
+                .target(name: "NewsContracts"),
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
@@ -217,7 +194,8 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "NewsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "SystemApplication", package: "app-system-module"),
+            ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),
@@ -239,8 +217,16 @@ let package = Package(
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "NewsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "SystemApplication", package: "app-system-module"),
+            ],
             path: "Sources/Composition/Frontend",
+            swiftSettings: defaultSwiftSettings
+        ),
+        .testTarget(
+            name: "NewsModuleTests",
+            dependencies: [
+                .target(name: "NewsApplication")
+            ],
             swiftSettings: defaultSwiftSettings
         ),
     ]

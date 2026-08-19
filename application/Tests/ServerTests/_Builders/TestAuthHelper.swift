@@ -3,8 +3,66 @@ import FeatherDatabase
 import HTTPTypes
 import OpenAPIRuntime
 import AuthAdminAPI
+import UserAdminAPI
 
 extension TestRunner {
+
+    func createTestIdentity(
+        token: String,
+        status: UserAdminAPI.Components.Schemas.UserIdentityStatusField? = nil
+    ) async throws -> String {
+        let result = try await run(
+            request: JSONRequest(
+                method: .post,
+                path: "/api/v1/admin/user/identities",
+                headerFields: [
+                    .authorization: bearerAuthorizationHeader(token: token)
+                ],
+                body: UserAdminAPI.Components.Schemas.UserIdentityCreateSchema(
+                    status: status
+                )
+            )
+        ) { response in
+            try await response.json(
+                status: .created,
+                UserAdminAPI.Components.Schemas.UserIdentityDetailSchema.self
+            )
+        }
+
+        return result.id
+    }
+
+    func createTestCredential(
+        token: String,
+        userId: String,
+        email: String,
+        password: String = "very-secure-password",
+        isPersistent: Bool = true
+    ) async throws -> String {
+        let result = try await run(
+            request: JSONRequest(
+                method: .post,
+                path: "/api/v1/admin/auth/credentials",
+                headerFields: [
+                    .authorization: bearerAuthorizationHeader(token: token)
+                ],
+                body: AuthAdminAPI.Components.Schemas
+                    .AuthCredentialCreateSchema(
+                        userId: userId,
+                        email: email,
+                        password: password,
+                        isPersistent: isPersistent
+                    )
+            )
+        ) { response in
+            try await response.json(
+                status: .created,
+                AuthAdminAPI.Components.Schemas.AuthCredentialDetailSchema.self
+            )
+        }
+
+        return result.id
+    }
 
     func identityID(
         token: String
@@ -58,24 +116,6 @@ extension TestRunner {
                                 NOW()
                             )
                             ON CONFLICT (id) DO NOTHING;
-                            """
-                    ) { _ in }
-
-                    try await connection.run(
-                        query: """
-                            INSERT INTO auth_role_permission (
-                                role_id,
-                                permission_id,
-                                created_at,
-                                updated_at
-                            )
-                            VALUES (
-                                'root',
-                                \(permission),
-                                NOW(),
-                                NOW()
-                            )
-                            ON CONFLICT (role_id, permission_id) DO NOTHING;
                             """
                     ) { _ in }
                 }
