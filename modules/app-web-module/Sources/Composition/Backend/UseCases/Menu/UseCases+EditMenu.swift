@@ -13,19 +13,18 @@ import WebInfrastructure
 extension UseCases {
 
     func makeEditMenu() -> EditMenu {
-            let transaction = DatabaseTransactionExecutor(
-                database: database,
-                idGenerator: idGenerator,
-                scope: { context in
-                    WriteMenu(
-                        menu: MenuDatabaseRepository(context: context)
-                    )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                transaction: transaction
-            )
-        }
+        let transaction = DatabaseTransactionExecutor(
+            database: database,
+            idGenerator: idGenerator,
+            scope: { context in
+                WriteMenu(
+                    menu: MenuDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
 }
-

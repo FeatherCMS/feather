@@ -11,19 +11,18 @@ import SystemInfrastructure
 extension UseCases {
 
     func makeAddVariable() -> AddVariable {
-            let transaction = DatabaseTransactionExecutor(
-                database: database,
-                idGenerator: idGenerator,
-                scope: { context in
-                    WriteVariable(
-                        variable: VariableDatabaseRepository(context: context)
-                    )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                transaction: transaction
-            )
-        }
+        let transaction = DatabaseTransactionExecutor(
+            database: database,
+            idGenerator: idGenerator,
+            scope: { context in
+                WriteVariable(
+                    variable: VariableDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
 }
-

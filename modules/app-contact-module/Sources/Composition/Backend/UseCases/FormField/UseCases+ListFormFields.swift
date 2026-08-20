@@ -10,10 +10,9 @@ import Foundation
 extension UseCases {
 
     public func makeListFormFields() -> ListFormFields {
-            .init(
-                authorizer: authorizer,
-                transaction: formTransaction()
-            )
-        }
+        .init(
+            authorizer: authorizer,
+            transaction: formTransaction()
+        )
+    }
 }
-

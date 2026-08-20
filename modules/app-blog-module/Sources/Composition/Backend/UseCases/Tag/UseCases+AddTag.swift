@@ -12,33 +12,32 @@ import WebInfrastructure
 extension UseCases {
 
     public func makeAddTag() -> AddTag {
-            let transaction = DatabaseTransactionExecutor(
-                database: database,
-                idGenerator: idGenerator,
-                scope: { context in
-                    WriteTagMetadata(
-                        tag: TagDatabaseRepository(
-                            context: .init(
-                                connection: context.connection,
-                                idGenerator: idGenerator
-                            )
-                        ),
-                        metadata: MetadataDatabaseRepository(
-                            context: .init(
-                                connection: context.connection,
-                                idGenerator: idGenerator
-                            )
-                        ),
-                        variable: VariableDatabaseQueries(
-                            context: .init(connection: context.connection)
+        let transaction = DatabaseTransactionExecutor(
+            database: database,
+            idGenerator: idGenerator,
+            scope: { context in
+                WriteTagMetadata(
+                    tag: TagDatabaseRepository(
+                        context: .init(
+                            connection: context.connection,
+                            idGenerator: idGenerator
                         )
+                    ),
+                    metadata: MetadataDatabaseRepository(
+                        context: .init(
+                            connection: context.connection,
+                            idGenerator: idGenerator
+                        )
+                    ),
+                    variable: VariableDatabaseQueries(
+                        context: .init(connection: context.connection)
                     )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                transaction: transaction
-            )
-        }
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
 }
-

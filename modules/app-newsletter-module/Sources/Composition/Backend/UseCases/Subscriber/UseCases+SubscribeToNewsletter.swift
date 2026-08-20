@@ -10,7 +10,6 @@ import NewsletterInfrastructure
 extension UseCases {
 
     func makeSubscribeToNewsletter() -> Subscribe {
-            .init(transaction: transaction())
-        }
+        .init(transaction: transaction())
+    }
 }
-

@@ -10,7 +10,6 @@ import NewsletterInfrastructure
 extension UseCases {
 
     func makeGetNewsletterIssue() -> GetIssue {
-            .init(authorizer: authorizer, transaction: transaction())
-        }
+        .init(authorizer: authorizer, transaction: transaction())
+    }
 }
-

@@ -12,7 +12,6 @@ import MediaInfrastructure
 extension UseCases {
 
     public func makeEditProcessor() -> EditMediaProcessor {
-            .init(authorizer: authorizer, transaction: writeTransaction())
-        }
+        .init(authorizer: authorizer, transaction: writeTransaction())
+    }
 }
-

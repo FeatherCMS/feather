@@ -121,7 +121,9 @@ struct AppModules: Sendable {
             authorizer: authorizer
         )
         self.analytics = analytics
-        self.analyticsAdmin = AnalyticsBackend.AdminAPIGateway(useCases: analytics)
+        self.analyticsAdmin = AnalyticsBackend.AdminAPIGateway(
+            useCases: analytics
+        )
         self.analyticsApp = AnalyticsBackend.AppAPIGateway(useCases: analytics)
         let redirect = RedirectBackend.UseCases(
             database: infrastructure.database,
@@ -155,7 +157,9 @@ struct AppModules: Sendable {
             events: infrastructure.events
         )
         self.accountBackend = accountBackend
-        self.accountAdmin = AccountBackend.AdminAPIGateway(useCases: accountBackend)
+        self.accountAdmin = AccountBackend.AdminAPIGateway(
+            useCases: accountBackend
+        )
         self.accountApp = AccountBackend.AppAPIGateway(useCases: accountBackend)
         let auth = AuthBackend.UseCases(
             database: infrastructure.database,
@@ -214,7 +218,11 @@ struct AppModules: Sendable {
             mailQueue: JobNewsletterMailQueue(queue: infrastructure.jobQueue)
         )
         self.newsletter = newsletter
-        self.newsletterAdmin = NewsletterBackend.AdminAPIGateway(useCases: newsletter)
-        self.newsletterApp = NewsletterBackend.AppAPIGateway(useCases: newsletter)
+        self.newsletterAdmin = NewsletterBackend.AdminAPIGateway(
+            useCases: newsletter
+        )
+        self.newsletterApp = NewsletterBackend.AppAPIGateway(
+            useCases: newsletter
+        )
     }
 }

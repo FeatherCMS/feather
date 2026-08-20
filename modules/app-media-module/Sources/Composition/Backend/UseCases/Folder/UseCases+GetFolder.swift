@@ -12,20 +12,19 @@ import MediaInfrastructure
 extension UseCases {
 
     public func makeGetFolder() -> GetMediaFolder {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadMedia(
-                        folders: MediaFolderDatabaseQueries(
-                            context: context
-                        ),
-                        assets: MediaAssetDatabaseQueries(
-                            context: context
-                        )
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadMedia(
+                    folders: MediaFolderDatabaseQueries(
+                        context: context
+                    ),
+                    assets: MediaAssetDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(authorizer: authorizer, query: query)
-        }
+                )
+            }
+        )
+        return .init(authorizer: authorizer, query: query)
+    }
 }
-

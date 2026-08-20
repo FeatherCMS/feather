@@ -11,20 +11,19 @@ import SystemInfrastructure
 extension UseCases {
 
     func makeGetPermissions() -> GetPermission {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadPermission(
-                        permission: PermissionDatabaseQueries(
-                            context: context
-                        )
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadPermission(
+                    permission: PermissionDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                query: query
-            )
-        }
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            query: query
+        )
+    }
 }
-

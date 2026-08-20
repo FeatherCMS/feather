@@ -12,10 +12,9 @@ import MediaInfrastructure
 extension UseCases {
 
     public func makeCreateFolder() -> CreateMediaFolder {
-            .init(
-                authorizer: authorizer,
-                transaction: writeTransaction()
-            )
-        }
+        .init(
+            authorizer: authorizer,
+            transaction: writeTransaction()
+        )
+    }
 }
-

@@ -8,8 +8,7 @@ import RedirectAppAPI
 import RedirectApplication
 import RedirectInfrastructure
 
-public struct UseCases: Sendable
-{
+public struct UseCases: Sendable {
 
     let database: any DatabaseClient
     let idGenerator: any IDGenerator
@@ -37,11 +36,4 @@ public struct UseCases: Sendable
 
 extension UseCases {
 
-
-
-
-
-
-
 }
-

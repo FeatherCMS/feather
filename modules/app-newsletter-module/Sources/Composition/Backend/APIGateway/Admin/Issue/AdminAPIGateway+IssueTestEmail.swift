@@ -12,7 +12,9 @@ extension AdminAPIGateway {
             let key = Permissions.Issues.update
         }
         let action = Action()
-        guard try await useCases.authorizer.can(subject: subject, perform: action) else {
+        guard
+            try await useCases.authorizer.can(subject: subject, perform: action)
+        else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         let body: Components.Schemas.NewsletterIssueTestEmailSchema

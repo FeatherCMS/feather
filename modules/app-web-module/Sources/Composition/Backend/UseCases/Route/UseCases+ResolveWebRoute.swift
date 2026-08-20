@@ -13,17 +13,16 @@ import WebInfrastructure
 extension UseCases {
 
     func makeResolveWebRoute() -> ResolveWebRoute {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadMetadata(
-                        metadata: MetadataDatabaseQueries(
-                            context: context
-                        )
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadMetadata(
+                    metadata: MetadataDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(query: query)
-        }
+                )
+            }
+        )
+        return .init(query: query)
+    }
 }
-

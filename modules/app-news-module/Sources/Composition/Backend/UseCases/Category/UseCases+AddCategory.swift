@@ -12,10 +12,9 @@ import WebInfrastructure
 extension UseCases {
 
     public func makeAddCategory() -> AddCategory {
-            .init(
-                authorizer: authorizer,
-                transaction: categoryTransaction()
-            )
-        }
+        .init(
+            authorizer: authorizer,
+            transaction: categoryTransaction()
+        )
+    }
 }
-

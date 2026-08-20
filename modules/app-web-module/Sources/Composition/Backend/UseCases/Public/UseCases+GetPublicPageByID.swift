@@ -13,23 +13,22 @@ import WebInfrastructure
 extension UseCases {
 
     func makeGetPublicPageByID() -> GetPublicPageByID {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadPageMetadata(
-                        page: PageDatabaseQueries(
-                            context: context,
-                            metadata: MetadataDatabaseQueries(
-                                context: context
-                            )
-                        ),
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadPageMetadata(
+                    page: PageDatabaseQueries(
+                        context: context,
                         metadata: MetadataDatabaseQueries(
                             context: context
                         )
+                    ),
+                    metadata: MetadataDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(query: query)
-        }
+                )
+            }
+        )
+        return .init(query: query)
+    }
 }
-

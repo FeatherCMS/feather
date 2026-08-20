@@ -12,7 +12,6 @@ import WebInfrastructure
 extension UseCases {
 
     public func makeGetArticle() -> GetArticle {
-            .init(authorizer: authorizer, query: articleQuery())
-        }
+        .init(authorizer: authorizer, query: articleQuery())
+    }
 }
-

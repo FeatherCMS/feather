@@ -15,22 +15,21 @@ import UserInfrastructure
 extension UseCases {
 
     func makeRequestMagicLink() -> RequestMagicLink {
-            let transaction = DatabaseTransactionExecutor(
-                database: database,
-                idGenerator: idGenerator,
-                scope: { context in
-                    WriteAuth(
-                        identity: IdentityDatabaseRepository(context: context),
-                        credential: CredentialDatabaseRepository(context: context),
-                        session: SessionDatabaseRepository(context: context),
-                        magicLink: MagicLinkDatabaseRepository(context: context)
-                    )
-                }
-            )
-            return RequestMagicLink(
-                transaction: transaction,
-                mailSender: NoopMailSender()
-            )
-        }
+        let transaction = DatabaseTransactionExecutor(
+            database: database,
+            idGenerator: idGenerator,
+            scope: { context in
+                WriteAuth(
+                    identity: IdentityDatabaseRepository(context: context),
+                    credential: CredentialDatabaseRepository(context: context),
+                    session: SessionDatabaseRepository(context: context),
+                    magicLink: MagicLinkDatabaseRepository(context: context)
+                )
+            }
+        )
+        return RequestMagicLink(
+            transaction: transaction,
+            mailSender: NoopMailSender()
+        )
+    }
 }
-

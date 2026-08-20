@@ -32,7 +32,10 @@ extension AdminAPIGateway {
                 body: .json(
                     .init(
                         query: query,
-                        data: .init(items: list.items.map(useCases.map), total: total)
+                        data: .init(
+                            items: list.items.map(useCases.map),
+                            total: total
+                        )
                     )
                 )
             )

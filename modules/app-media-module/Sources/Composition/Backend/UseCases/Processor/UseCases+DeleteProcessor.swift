@@ -12,7 +12,6 @@ import MediaInfrastructure
 extension UseCases {
 
     public func makeDeleteProcessor() -> DeleteMediaProcessor {
-            .init(authorizer: authorizer, transaction: writeTransaction())
-        }
+        .init(authorizer: authorizer, transaction: writeTransaction())
+    }
 }
-

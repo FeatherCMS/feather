@@ -13,19 +13,18 @@ import UserInfrastructure
 extension UseCases {
 
     func makeGetSettings() -> AccountApplication.GetSettings {
-            let query = DatabaseTransactionExecutor(
-                database: database,
-                idGenerator: idGenerator,
-                scope: { context in
-                    WriteSettings(
-                        settings: SettingsDatabaseRepository(context: context)
-                    )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                query: query
-            )
-        }
+        let query = DatabaseTransactionExecutor(
+            database: database,
+            idGenerator: idGenerator,
+            scope: { context in
+                WriteSettings(
+                    settings: SettingsDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            query: query
+        )
+    }
 }
-

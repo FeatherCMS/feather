@@ -13,20 +13,19 @@ import WebInfrastructure
 extension UseCases {
 
     func makeGetMetadata() -> GetMetadata {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadMetadata(
-                        metadata: MetadataDatabaseQueries(
-                            context: context
-                        )
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadMetadata(
+                    metadata: MetadataDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                query: query
-            )
-        }
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            query: query
+        )
+    }
 }
-

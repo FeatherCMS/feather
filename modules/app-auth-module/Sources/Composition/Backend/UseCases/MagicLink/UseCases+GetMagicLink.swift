@@ -15,17 +15,16 @@ import UserInfrastructure
 extension UseCases {
 
     func makeGetMagicLink() -> GetMagicLink {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadMagicLink(
-                        magicLink: MagicLinkDatabaseQueries(
-                            context: context
-                        )
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadMagicLink(
+                    magicLink: MagicLinkDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return GetMagicLink(authorizer: authorizer, query: query)
-        }
+                )
+            }
+        )
+        return GetMagicLink(authorizer: authorizer, query: query)
+    }
 }
-

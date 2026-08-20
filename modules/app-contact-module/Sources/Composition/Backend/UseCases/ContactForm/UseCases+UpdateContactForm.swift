@@ -10,10 +10,9 @@ import Foundation
 extension UseCases {
 
     public func makeUpdateContactForm() -> UpdateForm {
-            .init(
-                authorizer: authorizer,
-                transaction: formTransaction()
-            )
-        }
+        .init(
+            authorizer: authorizer,
+            transaction: formTransaction()
+        )
+    }
 }
-

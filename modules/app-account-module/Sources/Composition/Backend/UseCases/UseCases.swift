@@ -10,8 +10,7 @@ import FeatherInfrastructure
 import UserApplication
 import UserInfrastructure
 
-public struct UseCases: Sendable
-{
+public struct UseCases: Sendable {
     let database: any DatabaseClient
     let idGenerator: any IDGenerator
     let authorizer: any Authorizer
@@ -32,15 +31,8 @@ public struct UseCases: Sendable
         self.events = events
     }
 
-
-
-
-
-
 }
 
 extension UseCases {
 
-
 }
-

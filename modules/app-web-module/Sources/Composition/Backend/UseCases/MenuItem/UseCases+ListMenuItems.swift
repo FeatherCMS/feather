@@ -13,20 +13,19 @@ import WebInfrastructure
 extension UseCases {
 
     func makeListMenuItems() -> ListMenuItems {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadMenuItem(
-                        menuItem: MenuItemDatabaseQueries(
-                            context: context
-                        )
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadMenuItem(
+                    menuItem: MenuItemDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                query: query
-            )
-        }
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            query: query
+        )
+    }
 }
-

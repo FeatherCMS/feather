@@ -13,23 +13,22 @@ import WebInfrastructure
 extension UseCases {
 
     func makeListPublicMenus() -> ListPublicMenus {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadPublicMenu(
-                        menu: MenuDatabaseQueries(
-                            context: context
-                        ),
-                        menuItem: MenuItemDatabaseQueries(
-                            context: context
-                        )
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadPublicMenu(
+                    menu: MenuDatabaseQueries(
+                        context: context
+                    ),
+                    menuItem: MenuItemDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                query: query
-            )
-        }
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            query: query
+        )
+    }
 }
-

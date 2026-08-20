@@ -12,11 +12,10 @@ import MediaInfrastructure
 extension UseCases {
 
     public func makeDeleteFolder() -> DeleteMediaFolder {
-            .init(
-                authorizer: authorizer,
-                transaction: writeTransaction(),
-                storage: storage()
-            )
-        }
+        .init(
+            authorizer: authorizer,
+            transaction: writeTransaction(),
+            storage: storage()
+        )
+    }
 }
-

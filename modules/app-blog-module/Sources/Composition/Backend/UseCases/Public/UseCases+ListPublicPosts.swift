@@ -12,38 +12,37 @@ import WebInfrastructure
 extension UseCases {
 
     public func makeListPublicPosts() -> ListPublicPosts {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadPublic(
-                        post: PostDatabaseQueries(
-                            context: context,
-                            metadata: MetadataDatabaseQueries(
-                                context: context
-                            )
-                        ),
-                        author: AuthorDatabaseQueries(
-                            context: context,
-                            metadata: MetadataDatabaseQueries(
-                                context: context
-                            )
-                        ),
-                        tag: TagDatabaseQueries(
-                            context: context,
-                            metadata: MetadataDatabaseQueries(
-                                context: context
-                            )
-                        ),
-                        authorLink: AuthorLinkDatabaseQueries(
-                            context: context
-                        ),
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadPublic(
+                    post: PostDatabaseQueries(
+                        context: context,
                         metadata: MetadataDatabaseQueries(
                             context: context
                         )
+                    ),
+                    author: AuthorDatabaseQueries(
+                        context: context,
+                        metadata: MetadataDatabaseQueries(
+                            context: context
+                        )
+                    ),
+                    tag: TagDatabaseQueries(
+                        context: context,
+                        metadata: MetadataDatabaseQueries(
+                            context: context
+                        )
+                    ),
+                    authorLink: AuthorLinkDatabaseQueries(
+                        context: context
+                    ),
+                    metadata: MetadataDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(query: query)
-        }
+                )
+            }
+        )
+        return .init(query: query)
+    }
 }
-

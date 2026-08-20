@@ -12,10 +12,9 @@ import MediaInfrastructure
 extension UseCases {
 
     public func makeCreateProcessor() -> CreateMediaProcessor {
-            .init(
-                authorizer: authorizer,
-                transaction: writeTransaction()
-            )
-        }
+        .init(
+            authorizer: authorizer,
+            transaction: writeTransaction()
+        )
+    }
 }
-

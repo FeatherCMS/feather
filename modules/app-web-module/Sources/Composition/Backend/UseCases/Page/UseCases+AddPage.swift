@@ -13,24 +13,23 @@ import WebInfrastructure
 extension UseCases {
 
     func makeAddPage() -> AddPage {
-            let transaction = DatabaseTransactionExecutor(
-                database: database,
-                idGenerator: idGenerator,
-                scope: { context in
-                    WritePageMetadata(
-                        page: PageDatabaseRepository(context: context),
-                        metadata: MetadataDatabaseRepository(context: context),
-                        settings: SettingsDatabaseRepository(context: context),
-                        variable: VariableDatabaseQueries(
-                            context: .init(connection: context.connection)
-                        )
+        let transaction = DatabaseTransactionExecutor(
+            database: database,
+            idGenerator: idGenerator,
+            scope: { context in
+                WritePageMetadata(
+                    page: PageDatabaseRepository(context: context),
+                    metadata: MetadataDatabaseRepository(context: context),
+                    settings: SettingsDatabaseRepository(context: context),
+                    variable: VariableDatabaseQueries(
+                        context: .init(connection: context.connection)
                     )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                transaction: transaction
-            )
-        }
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
 }
-

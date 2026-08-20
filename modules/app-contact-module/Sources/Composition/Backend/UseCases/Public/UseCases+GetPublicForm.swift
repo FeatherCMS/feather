@@ -10,7 +10,6 @@ import Foundation
 extension UseCases {
 
     public func makeGetPublicForm() -> GetPublicForm {
-            .init(transaction: formTransaction())
-        }
+        .init(transaction: formTransaction())
+    }
 }
-

@@ -10,7 +10,6 @@ import NewsletterInfrastructure
 extension UseCases {
 
     func makeDeleteNewsletterIssue() -> DeleteIssue {
-            .init(authorizer: authorizer, transaction: transaction())
-        }
+        .init(authorizer: authorizer, transaction: transaction())
+    }
 }
-

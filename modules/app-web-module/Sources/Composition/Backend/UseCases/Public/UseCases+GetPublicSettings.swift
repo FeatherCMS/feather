@@ -13,15 +13,14 @@ import WebInfrastructure
 extension UseCases {
 
     func makeGetPublicSettings() -> GetPublicSettings {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    WriteSettings(
-                        settings: SettingsDatabaseRepository(context: context)
-                    )
-                }
-            )
-            return .init(query: query)
-        }
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                WriteSettings(
+                    settings: SettingsDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(query: query)
+    }
 }
-

@@ -11,20 +11,19 @@ import RedirectInfrastructure
 extension UseCases {
 
     func makeListRules() -> ListRules {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadRule(
-                        rule: RuleDatabaseQueries(
-                            context: context
-                        )
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadRule(
+                    rule: RuleDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                query: query
-            )
-        }
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            query: query
+        )
+    }
 }
-

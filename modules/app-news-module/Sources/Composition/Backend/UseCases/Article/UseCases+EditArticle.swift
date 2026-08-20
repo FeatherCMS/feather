@@ -12,7 +12,6 @@ import WebInfrastructure
 extension UseCases {
 
     public func makeEditArticle() -> EditArticle {
-            .init(authorizer: authorizer, transaction: articleTransaction())
-        }
+        .init(authorizer: authorizer, transaction: articleTransaction())
+    }
 }
-

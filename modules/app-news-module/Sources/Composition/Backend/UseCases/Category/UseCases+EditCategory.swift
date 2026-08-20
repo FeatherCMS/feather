@@ -12,7 +12,6 @@ import WebInfrastructure
 extension UseCases {
 
     public func makeEditCategory() -> EditCategory {
-            .init(authorizer: authorizer, transaction: categoryTransaction())
-        }
+        .init(authorizer: authorizer, transaction: categoryTransaction())
+    }
 }
-

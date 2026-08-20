@@ -12,8 +12,7 @@ import UserApplication
 import UserBackend
 import UserInfrastructure
 
-public struct UseCases: Sendable
-{
+public struct UseCases: Sendable {
     let database: any DatabaseClient
     let idGenerator: any IDGenerator
     let authorizer: any Authorizer
@@ -51,26 +50,4 @@ struct NoopMailSender: MailSender {
 
 extension UseCases {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-

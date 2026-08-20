@@ -12,23 +12,22 @@ import WebInfrastructure
 extension UseCases {
 
     public func makeGetTag() -> GetTag {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadTagMetadata(
-                        tag: TagDatabaseQueries(
-                            context: context,
-                            metadata: MetadataDatabaseQueries(
-                                context: context
-                            )
-                        ),
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadTagMetadata(
+                    tag: TagDatabaseQueries(
+                        context: context,
                         metadata: MetadataDatabaseQueries(
                             context: context
                         )
+                    ),
+                    metadata: MetadataDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return .init(authorizer: authorizer, query: query)
-        }
+                )
+            }
+        )
+        return .init(authorizer: authorizer, query: query)
+    }
 }
-

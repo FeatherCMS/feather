@@ -103,14 +103,14 @@ extension UseCases {
         }
     }
 
-
     public func createAssetAndEnqueue(
         subject: Subject,
         input: CreateMediaAsset.Input
     ) async throws -> MediaAssetDetail {
         let result = try await makeCreateAsset()
             .execute(subject: subject, input: input)
-        let matchingProcessors = try await database
+        let matchingProcessors =
+            try await database
             .withConnection { connection in
                 let processorRepo = MediaProcessorDatabaseRepository(
                     context: .init(
@@ -189,9 +189,6 @@ extension UseCases {
         return updatedResult
     }
 
-
-
-
     public func deleteAssetAndFiles(
         subject: Subject,
         assetId: String
@@ -218,21 +215,11 @@ extension UseCases {
             )
     }
 
-
-
-
-
-
-
-
-
-
-
-
     public func readOriginalAssetFile(
         storageKey: String
     ) async throws -> (data: Data, type: String) {
-        let maybeAsset: MediaAssetDetail? = try await database
+        let maybeAsset: MediaAssetDetail? =
+            try await database
             .withConnection { connection -> MediaAssetDetail? in
                 let queries = MediaAssetDatabaseQueries(
                     context: .init(connection: connection)
@@ -407,7 +394,8 @@ extension UseCases {
         type: String,
         folderId: String?
     ) async throws -> (folderId: String?, storageKey: String) {
-        let folder: MediaFolder? = try await database
+        let folder: MediaFolder? =
+            try await database
             .withConnection { connection -> MediaFolder? in
                 guard let folderId else { return nil }
                 return try await MediaFolderDatabaseRepository(

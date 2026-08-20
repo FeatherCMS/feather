@@ -13,18 +13,17 @@ import WebInfrastructure
 extension UseCases {
 
     func makeGetSettings() -> GetSettings {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    WriteSettings(
-                        settings: SettingsDatabaseRepository(context: context)
-                    )
-                }
-            )
-            return .init(
-                authorizer: authorizer,
-                query: query
-            )
-        }
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                WriteSettings(
+                    settings: SettingsDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            query: query
+        )
+    }
 }
-

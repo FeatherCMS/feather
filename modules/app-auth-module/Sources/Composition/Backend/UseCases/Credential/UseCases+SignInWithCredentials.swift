@@ -15,22 +15,21 @@ import UserInfrastructure
 extension UseCases {
 
     func makeSignInWithCredentials() -> SignInWithCredentials {
-            let transaction = DatabaseTransactionExecutor(
-                database: database,
-                idGenerator: idGenerator,
-                scope: { context in
-                    WriteAuth(
-                        identity: IdentityDatabaseRepository(context: context),
-                        credential: CredentialDatabaseRepository(context: context),
-                        session: SessionDatabaseRepository(context: context),
-                        magicLink: MagicLinkDatabaseRepository(context: context)
-                    )
-                }
-            )
-            return SignInWithCredentials(
-                transaction: transaction,
-                passwordHasher: BCryptPasswordHasher()
-            )
-        }
+        let transaction = DatabaseTransactionExecutor(
+            database: database,
+            idGenerator: idGenerator,
+            scope: { context in
+                WriteAuth(
+                    identity: IdentityDatabaseRepository(context: context),
+                    credential: CredentialDatabaseRepository(context: context),
+                    session: SessionDatabaseRepository(context: context),
+                    magicLink: MagicLinkDatabaseRepository(context: context)
+                )
+            }
+        )
+        return SignInWithCredentials(
+            transaction: transaction,
+            passwordHasher: BCryptPasswordHasher()
+        )
+    }
 }
-

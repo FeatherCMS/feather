@@ -58,12 +58,6 @@ public struct UseCases: Sendable {
         )
     }
 
-
-
-
-
-
-
     func enqueueIssueEmails(
         issue: IssueDetail
     ) async throws {
@@ -161,17 +155,4 @@ public struct UseCases: Sendable {
         )
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
 }
-

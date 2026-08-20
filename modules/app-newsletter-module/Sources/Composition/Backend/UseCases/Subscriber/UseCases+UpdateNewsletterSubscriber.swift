@@ -10,10 +10,9 @@ import NewsletterInfrastructure
 extension UseCases {
 
     func makeUpdateNewsletterSubscriber() -> UpdateSubscriber {
-            .init(
-                authorizer: authorizer,
-                transaction: transaction()
-            )
-        }
+        .init(
+            authorizer: authorizer,
+            transaction: transaction()
+        )
+    }
 }
-

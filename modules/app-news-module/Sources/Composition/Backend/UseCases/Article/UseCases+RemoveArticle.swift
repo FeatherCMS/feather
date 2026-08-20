@@ -12,7 +12,6 @@ import WebInfrastructure
 extension UseCases {
 
     public func makeRemoveArticle() -> RemoveArticle {
-            .init(authorizer: authorizer, transaction: articleTransaction())
-        }
+        .init(authorizer: authorizer, transaction: articleTransaction())
+    }
 }
-

@@ -27,20 +27,6 @@ public struct UseCases: Sendable {
 
 extension UseCases {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 extension UseCases {
@@ -140,4 +126,3 @@ extension UseCases {
         )
     }
 }
-

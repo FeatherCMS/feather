@@ -12,10 +12,9 @@ import WebInfrastructure
 extension UseCases {
 
     public func makeRemoveCategory() -> RemoveCategory {
-            .init(
-                authorizer: authorizer,
-                transaction: categoryArticlesTransaction()
-            )
-        }
+        .init(
+            authorizer: authorizer,
+            transaction: categoryArticlesTransaction()
+        )
+    }
 }
-

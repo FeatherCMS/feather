@@ -15,17 +15,16 @@ import UserInfrastructure
 extension UseCases {
 
     func makeGetSession() -> GetSession {
-            let query = DatabaseQueryExecutor(
-                database: database,
-                scope: { context in
-                    ReadSession(
-                        session: SessionDatabaseQueries(
-                            context: context
-                        )
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadSession(
+                    session: SessionDatabaseQueries(
+                        context: context
                     )
-                }
-            )
-            return GetSession(authorizer: authorizer, query: query)
-        }
+                )
+            }
+        )
+        return GetSession(authorizer: authorizer, query: query)
+    }
 }
-
