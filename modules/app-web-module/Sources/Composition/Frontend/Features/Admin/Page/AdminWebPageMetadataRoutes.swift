@@ -12,7 +12,7 @@ enum AdminWebPageMetadataRoutes {
             renderingEngine: renderingEngine,
             templateOptions: templateOptions
         )
-        let path = "/admin/web/pages/{contentID}/edit/metadata/{metadataID}/"
+        let path = "/admin/web/pages/{id}/edit/metadata/{metadataID}/"
         router.get(RouterPath(path)) { request, context in
             try await handler.get(
                 request: request,

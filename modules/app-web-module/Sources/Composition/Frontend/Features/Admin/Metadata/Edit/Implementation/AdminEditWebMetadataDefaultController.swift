@@ -423,6 +423,9 @@ struct AdminEditWebMetadataDefaultController:
             let contentID = context.parameters.get(
                 "contentID",
                 as: String.self
+            ) ?? context.parameters.get(
+                "id",
+                as: String.self
             )
         {
             return try await runtime.interactor.load(
