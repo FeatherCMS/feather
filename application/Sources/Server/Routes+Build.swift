@@ -31,6 +31,10 @@ import BlogAppAPI
 import BlogBackend
 import NewsAppAPI
 import NewsBackend
+import SystemBackend
+import RedirectBackend
+import UserBackend
+import AccountBackend
 import AuthBackend
 import AuthAdminAPI
 import AuthAppAPI
@@ -117,135 +121,123 @@ func buildRouter(
         AuthRenewMiddleware(auth: modules.auth),
     ]
 
-    let systemModule = modules.systemApp
-    try (systemModule as SystemAppAPI.APIProtocol)
+    try SystemBackend.AdminAPIGateway(useCases: modules.system)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (modules.systemAdmin as SystemAdminAPI.APIProtocol)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-
-    let userModule = modules.userApp
-    try (userModule as UserAppAPI.APIProtocol)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-    try (modules.userAdmin as UserAdminAPI.APIProtocol)
+    try SystemBackend.AppAPIGateway(useCases: modules.system)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let accountBackend = modules.accountApp
-    try (accountBackend as AccountAppAPI.APIProtocol)
+    try UserBackend.AppAPIGateway(useCases: modules.user)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (modules.accountAdmin as AccountAdminAPI.APIProtocol)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-
-    let authModule = modules.authApp
-    try (authModule as AuthAppAPI.APIProtocol)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-    try (modules.authAdmin as AuthAdminAPI.APIProtocol)
+    try UserBackend.AdminAPIGateway(useCases: modules.user)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let redirectModule = modules.redirectApp
-    try (redirectModule as RedirectAppAPI.APIProtocol)
+    try AccountBackend.AppAPIGateway(useCases: modules.account)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (modules.redirectAdmin as RedirectAdminAPI.APIProtocol)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-
-    let analyticsModule = modules.analyticsApp
-    try (analyticsModule as AnalyticsAppAPI.APIProtocol)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-    try (modules.analyticsAdmin as AnalyticsAdminAPI.APIProtocol)
+    try AccountBackend.AdminAPIGateway(useCases: modules.account)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let webModule = modules.webApp
-    try (webModule as WebAppAPI.APIProtocol)
+    try AuthBackend.AppAPIGateway(useCases: modules.auth)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (modules.webAdmin as WebAdminAPI.APIProtocol)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-
-    let newsletterModule = modules.newsletterApp
-    try (newsletterModule as NewsletterAppAPI.APIProtocol)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-    try (modules.newsletterAdmin as NewsletterAdminAPI.APIProtocol)
+    try AuthBackend.AdminAPIGateway(useCases: modules.auth)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let contactModule = modules.contactApp
-    try (contactModule as ContactAppAPI.APIProtocol)
+    try RedirectBackend.AppAPIGateway(useCases: modules.redirect)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (modules.contactAdmin as ContactAdminAPI.APIProtocol)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-
-    let mediaModule = modules.mediaAdmin
-    try (mediaModule as MediaAdminAPI.APIProtocol)
+    try RedirectBackend.AdminAPIGateway(useCases: modules.redirect)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let blogModule = modules.blogApp
-    try (blogModule as BlogAppAPI.APIProtocol)
+    try AnalyticsBackend.AppAPIGateway(useCases: modules.analytics)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (modules.blogAdmin as BlogAdminAPI.APIProtocol)
+    try AnalyticsBackend.AdminAPIGateway(useCases: modules.analytics)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let newsModule = modules.newsApp
-    try (newsModule as NewsAppAPI.APIProtocol)
+    try WebBackend.AppAPIGateway(useCases: modules.web)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+    try WebBackend.AdminAPIGateway(useCases: modules.web)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+
+    try NewsletterBackend.AppAPIGateway(useCases: modules.newsletter)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+    try NewsletterBackend.AdminAPIGateway(useCases: modules.newsletter)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+
+    try ContactBackend.AppAPIGateway(useCases: modules.contact)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+    try ContactBackend.AdminAPIGateway(useCases: modules.contact)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+
+    try MediaBackend.AdminAPIGateway(useCases: modules.media)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+
+    try BlogBackend.AppAPIGateway(useCases: modules.blog)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+    try BlogBackend.AdminAPIGateway(useCases: modules.blog)
+        .registerHandlers(
+            on: router,
+            middlewares: middlewares
+        )
+
+    try NewsBackend.AppAPIGateway(useCases: modules.news)
         .registerHandlers(
             on: router,
             middlewares: middlewares
