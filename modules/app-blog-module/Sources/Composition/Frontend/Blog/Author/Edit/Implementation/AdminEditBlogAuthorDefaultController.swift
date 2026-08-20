@@ -1,3 +1,5 @@
+import FeatherContracts
+import MediaContracts
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
@@ -26,7 +28,6 @@ struct AdminEditBlogAuthorDefaultController:
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
-
         do {
             let menu = try await runtime.interactor.load(id: id)
             return runtime.presenter.renderEditPage(
@@ -175,10 +176,10 @@ struct AdminEditBlogAuthorDefaultController:
             metadata: AdminMetadataFieldStateFactory.make(metadata),
             selectedProfileImage: selectedProfileImage,
             canSelectProfileImage: permissions.contains(
-                AdminMedia.Scope.assets.permission(for: .read)
+                MediaPermissions.Assets.read.rawValue
             ),
             canUploadProfileImage: permissions.contains(
-                AdminMedia.Scope.assets.permission(for: .create)
+                MediaPermissions.Assets.create.rawValue
             ),
             error: nil,
             success: nil

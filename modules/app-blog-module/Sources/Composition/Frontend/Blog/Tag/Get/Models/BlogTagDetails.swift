@@ -1,3 +1,5 @@
+import FeatherContracts
+import BlogContracts
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
@@ -56,7 +58,7 @@ struct BlogTagDetails: Component {
                         .class("secondary")
                 }
                 if state.permissions.contains(
-                    AdminBlog.Scope.tags.permission(for: .update)
+                    BlogPermissions.Tags.update.rawValue
                 ) {
                     AdminStatusActionForm(
                         action: "/admin/blog/tags/\(state.rule.id)/status/",
@@ -71,7 +73,7 @@ struct BlogTagDetails: Component {
                     )
                 }
                 if state.permissions.contains(
-                    AdminBlog.Scope.tags.permission(for: .delete)
+                    BlogPermissions.Tags.delete.rawValue
                 ) {
                     AdminNavigationButton(
                         "Remove tag",

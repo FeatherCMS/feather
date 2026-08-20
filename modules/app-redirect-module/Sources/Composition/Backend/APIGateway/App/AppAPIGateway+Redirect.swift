@@ -2,6 +2,7 @@ import FeatherInfrastructure
 import RedirectAppAPI
 import RedirectApplication
 import RedirectDomain
+import RedirectContracts
 
 extension AppAPIGateway {
     public func redirectRuleGet(

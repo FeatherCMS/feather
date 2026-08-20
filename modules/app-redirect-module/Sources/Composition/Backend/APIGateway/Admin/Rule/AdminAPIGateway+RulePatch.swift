@@ -3,6 +3,7 @@ import FeatherContracts
 import RedirectAdminAPI
 import RedirectApplication
 import RedirectDomain
+import RedirectContracts
 
 extension AdminAPIGateway {
 
@@ -18,7 +19,7 @@ extension AdminAPIGateway {
         let useCase = self.useCases.makeEditRule()
         let subject = try await CurrentSubject.require()
         let statusCode = body.statusCode.flatMap(
-            Rule.StatusCode.init(rawValue:)
+            StatusCode.init(rawValue:)
         )
         guard body.statusCode == nil || statusCode != nil else {
             throw Rule.Error.invalidStatusCode

@@ -15,16 +15,6 @@ public struct AdminMedia {
         self.renderingEngine = renderingEngine
     }
 
-    public enum Scope {
-        public static let assets = PermissionScope(
-            module: "media",
-            resource: "assets"
-        )
-        public static let processors = PermissionScope(
-            module: "media",
-            resource: "processors"
-        )
-    }
 
     public func route(
         on router: Router<AppRequestContext>

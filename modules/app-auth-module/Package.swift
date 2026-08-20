@@ -119,7 +119,7 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/async-http-client.git",
+            url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
 
@@ -131,11 +131,11 @@ let package = Package(
             exact: "1.0.0-rc.2"
         ),
         .package(
-            url: "https://github.com/vapor/postgres-nio.git",
+            url: "https://github.com/vapor/postgres-nio",
             from: "1.32.2"
         ),
         .package(
-            url: "https://github.com/apple/swift-nio-ssl.git",
+            url: "https://github.com/apple/swift-nio-ssl",
             from: "2.34.0"
         ),
     ],

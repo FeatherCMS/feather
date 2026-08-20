@@ -17,7 +17,6 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
-
         do {
             let variable = try await runtime.interactor.execute(
                 entity: .init(id: id)

@@ -1,3 +1,5 @@
+import FeatherContracts
+import MediaContracts
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
@@ -158,10 +160,10 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
             ),
             selectedProfileImage: selectedProfileImage,
             canSelectProfileImage: permissions.contains(
-                AdminMedia.Scope.assets.permission(for: .read)
+                MediaPermissions.Assets.read.rawValue
             ),
             canUploadProfileImage: permissions.contains(
-                AdminMedia.Scope.assets.permission(for: .create)
+                MediaPermissions.Assets.create.rawValue
             ),
             error: nil,
             success: nil

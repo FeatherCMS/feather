@@ -18,24 +18,6 @@ import WebStandards
 struct AdminAuth {
     let renderingEngine: any RenderingEngine
 
-    enum Scope {
-        static let magicLinks = PermissionScope(
-            module: "auth",
-            resource: "magic-links"
-        )
-        static let profile = PermissionScope(
-            module: "auth",
-            resource: "profile"
-        )
-        static let accessControl = PermissionScope(
-            module: "auth",
-            resource: "access-control"
-        )
-        static let credentials = PermissionScope(
-            module: "auth",
-            resource: "credential"
-        )
-    }
 
     func route(
         on router: Router<AppRequestContext>

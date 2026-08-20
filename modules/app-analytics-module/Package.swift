@@ -113,7 +113,7 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/async-http-client.git",
+            url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
         .package(

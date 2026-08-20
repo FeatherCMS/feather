@@ -20,8 +20,7 @@ struct AdminListSystemPermissionDefaultController:
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminSystem.Scope.permissions
+            to: SystemPermissions.Permissions.list
         )
         let emptyModel = AdminListSystemPermissionModel(
             items: [],

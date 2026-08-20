@@ -2,6 +2,15 @@ import FeatherContracts
 
 public enum AccountPermissions: PermissionProvider {
 
+    public enum Settings: PermissionProvider {
+        public static let read = PermissionKey("account:settings:read")
+        public static let update = PermissionKey("account:settings:update")
+
+        public static func allPermissions() -> Set<PermissionKey> {
+            [read, update]
+        }
+    }
+
     public enum Invitations: PermissionProvider {
         public static let create = PermissionKey("account:invitations:create")
         public static let read = PermissionKey("account:invitations:read")
@@ -21,6 +30,9 @@ public enum AccountPermissions: PermissionProvider {
     }
 
     public static func allPermissions() -> Set<PermissionKey> {
-        Invitations.allPermissions()
+        var result: Set<PermissionKey> = .init()
+        result.formUnion(Settings.allPermissions())
+        result.formUnion(Invitations.allPermissions())
+        return result
     }
 }

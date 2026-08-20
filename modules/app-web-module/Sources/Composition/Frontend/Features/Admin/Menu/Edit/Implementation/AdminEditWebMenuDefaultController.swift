@@ -20,7 +20,6 @@ struct AdminEditWebMenuDefaultController:
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
-
         do {
             let menu = try await runtime.interactor.load(id: id)
             return runtime.presenter.renderEditPage(

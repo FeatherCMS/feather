@@ -68,11 +68,11 @@ let package = Package(
             from: "1.1.0"
         ),
         .package(
-            url: "https://github.com/vapor/postgres-nio.git",
+            url: "https://github.com/vapor/postgres-nio",
             from: "1.32.2"
         ),
         .package(
-            url: "https://github.com/apple/swift-nio-ssl.git",
+            url: "https://github.com/apple/swift-nio-ssl",
             from: "2.34.0"
         ),
         .package(
@@ -109,7 +109,7 @@ let package = Package(
             from: "1.14.0"
         ),
         .package(
-            url: "https://github.com/apple/swift-system.git",
+            url: "https://github.com/apple/swift-system",
             from: "1.0.0"
         ),
         .package(

@@ -1,6 +1,8 @@
+import AuthContracts
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
+import FeatherContracts
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
@@ -32,12 +34,10 @@ struct AdminListAuthCredentialIdentityDefaultController:
         let permissions = context.currentUserPermissions
         let canAccess =
             context.isCurrentUserAllowed(
-                to: .list,
-                scope: AdminAuth.Scope.credentials
+                to: AuthPermissions.Credential.list
             )
             && context.isCurrentUserAllowed(
-                to: .list,
-                scope: PermissionScope(module: "user", resource: "identities")
+                to: PermissionKey("user:identities:list")
             )
         let page = request.queryPage()
         let pageSize = 20

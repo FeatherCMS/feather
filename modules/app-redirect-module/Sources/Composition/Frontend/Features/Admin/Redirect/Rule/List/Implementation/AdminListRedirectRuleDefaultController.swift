@@ -1,7 +1,8 @@
+import RedirectContracts
 import FeatherAdmin
 import Foundation
 import Hummingbird
-import RedirectDomain
+import RedirectContracts
 
 struct AdminListRedirectRuleDefaultController:
     AdminListRedirectRuleController
@@ -28,11 +29,10 @@ struct AdminListRedirectRuleDefaultController:
         let parsedStatusCode =
             normalizedStatusCode
             .flatMap(Int.init)
-            .flatMap(Rule.StatusCode.init(rawValue:))
+            .flatMap(StatusCode.init(rawValue:))
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminRedirect.Scope.rules
+            to: RedirectPermissions.Rules.list
         )
         let emptyModel = AdminListRedirectRuleModel(
             items: [],

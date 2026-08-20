@@ -1,3 +1,4 @@
+import UserContracts
 import FeatherAdmin
 import HTML
 import Hummingbird

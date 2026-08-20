@@ -1,3 +1,5 @@
+import FeatherContracts
+import AuthContracts
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
@@ -38,8 +40,7 @@ struct AdminGetAuthProfileDefaultController:
         let permissions = account.permissionSet
         guard
             context.isCurrentUserAllowed(
-                to: .read,
-                scope: AdminAuth.Scope.profile
+                to: AuthPermissions.Profile.read
             )
         else {
             return presenter.renderDeniedPage(
@@ -52,7 +53,7 @@ struct AdminGetAuthProfileDefaultController:
             state: .init(
                 profile: profile,
                 canEdit: permissions.contains(
-                    AdminAuth.Scope.profile.permission(for: .update)
+                    AuthPermissions.Profile.update.rawValue
                 ),
                 breadcrumb: breadcrumb()
             ),

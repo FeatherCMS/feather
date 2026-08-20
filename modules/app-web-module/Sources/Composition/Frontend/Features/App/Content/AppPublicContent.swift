@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherApplication
 import FeatherContracts
 
 public struct AppPublicContent {

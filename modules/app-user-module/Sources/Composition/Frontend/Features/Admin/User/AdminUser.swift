@@ -8,16 +8,6 @@ public struct AdminUser {
         self.renderingEngine = renderingEngine
     }
 
-    public enum Scope {
-        public static let identities = PermissionScope(
-            module: "user",
-            resource: "identities"
-        )
-        public static let roles = PermissionScope(
-            module: "user",
-            resource: "roles"
-        )
-    }
 
     public func route(
         on router: Router<AppRequestContext>

@@ -1,3 +1,4 @@
+import UserContracts
 import FeatherAdmin
 import Hummingbird
 import UserAdminAPI
@@ -15,11 +16,10 @@ struct AdminListUserRoleDefaultController: AdminListUserRoleController {
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
-        let permissionScope = AdminUser.Scope.roles
+        let permissionScope = UserPermissions.Roles.list
         do {
             let canAccess = context.isCurrentUserAllowed(
-                to: .list,
-                scope: permissionScope
+                to: permissionScope
             )
             let page = request.queryPage()
             let pageSize = 20

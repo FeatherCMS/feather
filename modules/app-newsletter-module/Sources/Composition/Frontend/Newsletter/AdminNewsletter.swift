@@ -9,20 +9,6 @@ import WebStandards
 public struct AdminNewsletter {
     let renderingEngine: any RenderingEngine
 
-    public enum Scope {
-        public static let campaigns = PermissionScope(
-            module: "newsletter",
-            resource: "campaigns"
-        )
-        public static let subscribers = PermissionScope(
-            module: "newsletter",
-            resource: "subscribers"
-        )
-        public static let issues = PermissionScope(
-            module: "newsletter",
-            resource: "issues"
-        )
-    }
 
     public init(renderingEngine: any RenderingEngine) {
         self.renderingEngine = renderingEngine

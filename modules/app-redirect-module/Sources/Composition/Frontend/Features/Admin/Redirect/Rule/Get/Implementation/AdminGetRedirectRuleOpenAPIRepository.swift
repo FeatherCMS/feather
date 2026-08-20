@@ -3,7 +3,7 @@ import Foundation
 import Hummingbird
 import OpenAPIRuntime
 import RedirectAdminAPI
-import RedirectDomain
+import RedirectContracts
 
 struct AdminGetRedirectRuleOpenAPIRepository: AdminGetRedirectRuleRepository {
     let api: RedirectAdminAPIClient
@@ -25,7 +25,7 @@ struct AdminGetRedirectRuleOpenAPIRepository: AdminGetRedirectRuleRepository {
                     id: rule.id,
                     source: rule.source,
                     destination: rule.destination,
-                    statusCode: Rule.StatusCode(rawValue: rule.statusCode)!,
+                    statusCode: StatusCode(rawValue: rule.statusCode)!,
                     notes: rule.notes
                 )
             case .notFound:

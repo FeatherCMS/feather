@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherApplication
 import FeatherContracts
 import Hummingbird
 
@@ -15,20 +14,6 @@ public struct AdminSystem {
         self.adminEvents = adminEvents
     }
 
-    public enum Scope {
-        public static let permissions = PermissionScope(
-            module: "system",
-            resource: "permissions"
-        )
-        public static let variables = PermissionScope(
-            module: "system",
-            resource: "variables"
-        )
-        public static let jobs = PermissionScope(
-            module: "system",
-            resource: "jobs"
-        )
-    }
 
     public func route(
         on router: Router<AppRequestContext>

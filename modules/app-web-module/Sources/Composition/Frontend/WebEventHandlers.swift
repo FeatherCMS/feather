@@ -1,6 +1,5 @@
 import FeatherContracts
-import WebApplication
-import WebDomain
+import WebContracts
 
 public enum WebEventHandlers {
     public static func register(in registry: inout EventRegistry) {

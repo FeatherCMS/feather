@@ -4,6 +4,7 @@ import FeatherInfrastructure
 import NewsApplication
 import SystemApplication
 import WebApplication
+import WebContracts
 
 public enum EventHandlers {
 

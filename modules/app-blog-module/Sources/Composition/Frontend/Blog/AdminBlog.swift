@@ -23,28 +23,6 @@ public struct AdminBlog {
         self.templateOptions = templateOptions
     }
 
-    public enum Scope {
-        public static let posts = PermissionScope(
-            module: "blog",
-            resource: "posts"
-        )
-        public static let authors = PermissionScope(
-            module: "blog",
-            resource: "authors"
-        )
-        public static let tags = PermissionScope(
-            module: "blog",
-            resource: "tags"
-        )
-        public static let authorLinks = PermissionScope(
-            module: "blog",
-            resource: "author-links"
-        )
-        public static let settings = PermissionScope(
-            module: "blog",
-            resource: "settings"
-        )
-    }
 
     public func route(
         on router: Router<AppRequestContext>

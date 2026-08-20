@@ -1,7 +1,7 @@
 import FeatherAdmin
 import Foundation
 import Hummingbird
-import WebApplication
+import WebContracts
 
 public struct AdminWebMetadataEditHandler: Sendable {
     private let controller: AdminEditWebMetadataDefaultController

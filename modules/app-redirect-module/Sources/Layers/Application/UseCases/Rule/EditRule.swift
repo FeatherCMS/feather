@@ -1,4 +1,3 @@
-import RedirectContracts
 //
 //  EditRule.swift
 //  app-redirect-module
@@ -9,6 +8,7 @@ import FeatherApplication
 import FeatherContracts
 import FeatherDomain
 import RedirectDomain
+import RedirectContracts
 
 public struct EditRule: UseCase {
 
@@ -35,14 +35,14 @@ public struct EditRule: UseCase {
         public let id: String
         public let source: String?
         public let destination: String?
-        public let statusCode: Rule.StatusCode?
+        public let statusCode: StatusCode?
         public let notes: String?
 
         public init(
             id: String,
             source: String?,
             destination: String?,
-            statusCode: Rule.StatusCode?,
+            statusCode: StatusCode?,
             notes: String?
         ) {
             self.id = id

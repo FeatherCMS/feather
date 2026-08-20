@@ -6,12 +6,16 @@
 //
 
 import Foundation
+import FeatherContracts
 import Hummingbird
 import OpenAPIRuntime
 
 public struct AppRequestContext: RequestContext {
-
+    
     public var coreContext: CoreRequestContextStorage
+
+    public var sessionToken: String?
+    public var account: AccountModel?
 
     public init(
         source: ApplicationRequestContextSource,
@@ -19,14 +23,8 @@ public struct AppRequestContext: RequestContext {
         self.coreContext = .init(source: source)
     }
 
-    public var sessionToken: String?
-    public var account: AccountModel?
-    public var currentUserPermissions: Set<String> {
-        account?.permissionSet ?? []
-    }
-
-    public var requestDecoder: URLFormRequestDecoder {
-        .init()
+    public var requestDecoder: URLFormRequestDecoder { 
+        .init() 
     }
 
     // MARK: -
@@ -45,17 +43,14 @@ public struct AppRequestContext: RequestContext {
         return value
     }
 
-    public func hasPermission(
-        _ permission: String
-    ) -> Bool {
-        currentUserPermissions.contains(permission)
+    public var currentUserPermissions: Set<String> {
+        account?.permissionSet ?? []
     }
 
     public func isCurrentUserAllowed(
-        to action: PermissionAction,
-        scope: PermissionScope
+        to permission: PermissionKey
     ) -> Bool {
-        hasPermission(scope.permission(for: action))
+        currentUserPermissions.contains(permission.rawValue)
     }
 
 }

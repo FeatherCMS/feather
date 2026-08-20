@@ -1,4 +1,3 @@
-import SystemContracts
 import FeatherOpenAPI
 
 struct SystemPermissionTag: TagRepresentable {

@@ -1,3 +1,4 @@
+import BlogContracts
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
@@ -28,8 +29,7 @@ struct AdminListBlogAuthorDefaultController:
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminBlog.Scope.authors
+            to: BlogPermissions.Authors.list
         )
         let emptyModel = AdminListBlogAuthorModel(
             items: [],

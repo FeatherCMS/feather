@@ -1,3 +1,5 @@
+import FeatherContracts
+import WebContracts
 import FeatherAdmin
 import HTML
 import Hummingbird
@@ -22,9 +24,8 @@ struct AdminListWebPageDefaultPresenter:
         search: String?,
         error: String?
     ) -> HTMLResponse {
-        let scope = AdminWeb.Scope.pages
-        let canAccess = permissions.contains(scope.permission(for: .list))
-        let canEdit = permissions.contains(scope.permission(for: .update))
+        let canAccess = permissions.contains(WebPermissions.Pages.list.rawValue)
+        let canEdit = permissions.contains(WebPermissions.Pages.update.rawValue)
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -64,7 +65,7 @@ struct AdminListWebPageDefaultPresenter:
                     canEdit: canEdit,
                     permissions: permissions,
                     canAdd: permissions.contains(
-                        scope.permission(for: .create)
+                        WebPermissions.Pages.create.rawValue
                     ),
                     rules: model.items,
                     page: model.page,

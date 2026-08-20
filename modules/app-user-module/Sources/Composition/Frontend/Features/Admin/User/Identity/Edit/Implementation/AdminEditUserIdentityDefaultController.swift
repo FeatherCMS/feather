@@ -1,3 +1,4 @@
+import UserContracts
 import FeatherAdmin
 import FeatherValidation
 import HTML
@@ -19,8 +20,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
         let permissions = context.currentUserPermissions
         guard
             context.isCurrentUserAllowed(
-                to: .update,
-                scope: AdminUser.Scope.identities
+                to: UserPermissions.Identities.update
             )
         else {
             return presenter.renderDeniedPage(
@@ -63,8 +63,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
         let permissions = context.currentUserPermissions
         guard
             context.isCurrentUserAllowed(
-                to: .update,
-                scope: AdminUser.Scope.identities
+                to: UserPermissions.Identities.update
             )
         else {
             return

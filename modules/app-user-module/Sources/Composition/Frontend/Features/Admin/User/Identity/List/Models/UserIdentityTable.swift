@@ -1,3 +1,4 @@
+import FeatherContracts
 import FeatherAdmin
 import FeatherValidation
 import HTML

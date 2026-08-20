@@ -1,3 +1,5 @@
+import FeatherContracts
+import BlogContracts
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
@@ -27,9 +29,8 @@ struct AdminListBlogAuthorDefaultPresenter:
         search: String?,
         error: String?
     ) -> HTMLResponse {
-        let scope = AdminBlog.Scope.authors
-        let canAccess = permissions.contains(scope.permission(for: .list))
-        let canEdit = permissions.contains(scope.permission(for: .update))
+        let canAccess = permissions.contains(BlogPermissions.Authors.list.rawValue)
+        let canEdit = permissions.contains(BlogPermissions.Authors.update.rawValue)
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -69,7 +70,7 @@ struct AdminListBlogAuthorDefaultPresenter:
                     canEdit: canEdit,
                     permissions: permissions,
                     canAdd: permissions.contains(
-                        scope.permission(for: .create)
+                        BlogPermissions.Authors.create.rawValue
                     ),
                     rules: model.items,
                     page: model.page,

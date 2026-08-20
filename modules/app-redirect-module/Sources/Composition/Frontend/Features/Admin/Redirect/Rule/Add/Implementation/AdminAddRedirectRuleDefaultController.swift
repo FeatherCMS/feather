@@ -3,7 +3,7 @@ import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
-import RedirectDomain
+import RedirectContracts
 
 struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
     let buildRuntime:

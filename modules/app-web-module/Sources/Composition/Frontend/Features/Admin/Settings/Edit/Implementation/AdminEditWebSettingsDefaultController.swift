@@ -1,3 +1,5 @@
+import FeatherContracts
+import WebContracts
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
@@ -18,8 +20,7 @@ struct AdminEditWebSettingsDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canRead = context.isCurrentUserAllowed(
-            to: .read,
-            scope: AdminWeb.Scope.settings
+            to: WebPermissions.Settings.read
         )
 
         guard canRead else {
@@ -175,7 +176,7 @@ struct AdminEditWebSettingsDefaultController:
     private func canEdit(
         permissions: Set<String>
     ) -> Bool {
-        permissions.contains(AdminWeb.Scope.settings.permission(for: .update))
+        permissions.contains(WebPermissions.Settings.update.rawValue)
     }
 
     private func makeFormState(

@@ -1,3 +1,5 @@
+import FeatherContracts
+import BlogContracts
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
@@ -26,8 +28,7 @@ struct AdminEditBlogSettingsDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canRead = context.isCurrentUserAllowed(
-            to: .read,
-            scope: AdminBlog.Scope.settings
+            to: BlogPermissions.Settings.read
         )
 
         guard canRead else {
@@ -159,7 +160,7 @@ struct AdminEditBlogSettingsDefaultController:
     private func canEdit(
         permissions: Set<String>
     ) -> Bool {
-        permissions.contains(AdminBlog.Scope.settings.permission(for: .update))
+        permissions.contains(BlogPermissions.Settings.update.rawValue)
     }
 
     private func makeFormState(

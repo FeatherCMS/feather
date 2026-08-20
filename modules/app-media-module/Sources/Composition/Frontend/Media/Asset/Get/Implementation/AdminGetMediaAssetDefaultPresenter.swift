@@ -1,3 +1,5 @@
+import FeatherContracts
+import MediaContracts
 import FeatherAdmin
 import FeatherValidation
 import Foundation
@@ -41,10 +43,10 @@ struct AdminGetMediaAssetDefaultPresenter: AdminGetMediaAssetPresenter {
                     variants: model.variants,
                     breadcrumb: breadcrumb,
                     canEdit: permissions.contains(
-                        AdminMedia.Scope.assets.permission(for: .update)
+                        MediaPermissions.Assets.update.rawValue
                     ),
                     canRemove: permissions.contains(
-                        AdminMedia.Scope.assets.permission(for: .delete)
+                        MediaPermissions.Assets.delete.rawValue
                     )
                 )
             )

@@ -6,8 +6,8 @@ import NIOCore
 import NewsAppAPI
 import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
-import SystemApplication
-import WebApplication
+import SystemContracts
+import WebContracts
 
 public enum NewsWebPublicContentEventHandlers {
     public static func register(

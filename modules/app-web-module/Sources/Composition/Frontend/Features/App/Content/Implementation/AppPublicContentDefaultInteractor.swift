@@ -1,9 +1,8 @@
-import FeatherApplication
 import FeatherContracts
+import SystemContracts
 import Foundation
-import SystemApplication
 import WebAppAPI
-import WebApplication
+import WebContracts
 
 private typealias WebComponents = WebAppAPI.Components
 

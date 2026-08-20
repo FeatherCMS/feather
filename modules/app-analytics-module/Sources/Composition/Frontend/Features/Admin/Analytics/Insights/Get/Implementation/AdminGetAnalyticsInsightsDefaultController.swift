@@ -1,3 +1,5 @@
+import FeatherContracts
+import AnalyticsContracts
 import FeatherAdmin
 import Foundation
 import Hummingbird
@@ -19,8 +21,7 @@ struct AdminGetAnalyticsInsightsDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminAnalytics.Scope.insights
+            to: AnalyticsPermissions.Insights.list
         )
         if !canAccess {
             return presenter.renderDenied(

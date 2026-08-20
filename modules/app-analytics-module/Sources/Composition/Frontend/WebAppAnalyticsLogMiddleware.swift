@@ -1,3 +1,4 @@
+import FeatherContracts
 import AnalyticsAppAPI
 import FeatherAdmin
 import Foundation

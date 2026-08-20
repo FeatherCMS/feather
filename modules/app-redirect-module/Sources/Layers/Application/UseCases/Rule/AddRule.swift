@@ -8,6 +8,7 @@ import RedirectContracts
 import FeatherApplication
 import FeatherContracts
 import RedirectDomain
+import RedirectContracts
 
 public struct AddRule: UseCase {
 
@@ -29,13 +30,13 @@ public struct AddRule: UseCase {
     public struct Input: DTO {
         public let source: String
         public let destination: String
-        public let statusCode: Rule.StatusCode
+        public let statusCode: StatusCode
         public let notes: String?
 
         public init(
             source: String,
             destination: String,
-            statusCode: Rule.StatusCode,
+            statusCode: StatusCode,
             notes: String?
         ) {
             self.source = source

@@ -1,3 +1,4 @@
+import AuthContracts
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
@@ -32,8 +33,7 @@ struct AdminListAuthCredentialDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminAuth.Scope.credentials
+            to: AuthPermissions.Credential.list
         )
         let page = request.queryPage()
         let pageSize = 20

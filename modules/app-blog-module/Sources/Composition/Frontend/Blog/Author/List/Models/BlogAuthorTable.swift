@@ -1,3 +1,5 @@
+import FeatherContracts
+import BlogContracts
 import BlogAdminAPI
 import BlogAppAPI
 import CSS
@@ -283,7 +285,7 @@ struct BlogAuthorTable: Component {
     ) -> some BasicTag {
         Td {
             if state.permissions.contains(
-                AdminBlog.Scope.authors.permission(for: .read)
+                BlogPermissions.Authors.read.rawValue
             ) {
                 A("Details")
                     .href("/admin/blog/authors/\(item.id)/")
@@ -291,7 +293,7 @@ struct BlogAuthorTable: Component {
                 Span(" ")
             }
             if state.permissions.contains(
-                AdminBlog.Scope.authors.permission(for: .update)
+                BlogPermissions.Authors.update.rawValue
             ) {
                 A("Edit")
                     .href("/admin/blog/authors/\(item.id)/edit/")
@@ -299,7 +301,7 @@ struct BlogAuthorTable: Component {
                 Span(" ")
             }
             if state.permissions.contains(
-                AdminBlog.Scope.authors.permission(for: .delete)
+                BlogPermissions.Authors.delete.rawValue
             ) {
                 A("Remove")
                     .href("/admin/blog/authors/\(item.id)/remove/")

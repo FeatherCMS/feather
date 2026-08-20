@@ -1,3 +1,4 @@
+import AnalyticsContracts
 import FeatherAdmin
 import Foundation
 import Hummingbird
@@ -18,8 +19,7 @@ struct AdminGetAnalyticsNotFoundDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminAnalytics.Scope.notFound
+            to: AnalyticsPermissions.NotFound.list
         )
         if !canAccess {
             return presenter.renderDenied(permissions: permissions)

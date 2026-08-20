@@ -7,6 +7,7 @@
 import FeatherDatabase
 import FeatherInfrastructure
 import RedirectDomain
+import RedirectContracts
 
 import struct Foundation.Date
 
@@ -20,7 +21,7 @@ extension RuleTable.Row {
             as: String.self
         )
         let rawStatusCode = try row.decode(column: "status_code", as: Int.self)
-        guard let statusCode = Rule.StatusCode(rawValue: rawStatusCode) else {
+        guard let statusCode = StatusCode(rawValue: rawStatusCode) else {
             throw RepositoryError.invalidEnumValue(String(rawStatusCode))
         }
         self.statusCode = statusCode
@@ -38,14 +39,14 @@ struct RuleTable {
             let id: String
             let source: String
             let destination: String
-            let statusCode: Rule.StatusCode
+            let statusCode: StatusCode
             let notes: String?
         }
 
         let id: String
         let source: String
         let destination: String
-        let statusCode: Rule.StatusCode
+        let statusCode: StatusCode
         let notes: String?
         let createdAt: Date
         let updatedAt: Date
@@ -88,7 +89,7 @@ struct RuleTable {
 
     func list(
         search: String?,
-        statusCode: Rule.StatusCode?,
+        statusCode: StatusCode?,
         orderBy: String,
         limit: Int,
         offset: Int
@@ -120,7 +121,7 @@ struct RuleTable {
 
     func count(
         search: String?,
-        statusCode: Rule.StatusCode?
+        statusCode: StatusCode?
     ) async throws -> Int {
         try await connection.run(
             query: #"""

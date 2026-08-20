@@ -1,6 +1,6 @@
 import FeatherAdmin
 import Foundation
-import RedirectDomain
+import RedirectContracts
 
 public struct RedirectRuleFormInput: Codable, Sendable, Equatable, Hashable {
 
@@ -25,8 +25,8 @@ public struct RedirectRuleFormInput: Codable, Sendable, Equatable, Hashable {
         notes.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    var parsedStatusCode: Rule.StatusCode? {
+    var parsedStatusCode: StatusCode? {
         guard let value = Int(normalizedStatusCode) else { return nil }
-        return Rule.StatusCode(rawValue: value)
+        return StatusCode(rawValue: value)
     }
 }

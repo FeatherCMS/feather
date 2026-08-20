@@ -1,3 +1,5 @@
+import FeatherContracts
+import MediaContracts
 import FeatherAdmin
 import FeatherValidation
 import Foundation
@@ -23,8 +25,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         permissions: Set<String>,
         error: String?
     ) -> HTMLResponse {
-        let scope = AdminMedia.Scope.assets
-        let canAccess = permissions.contains(scope.permission(for: .list))
+        let canAccess = permissions.contains(MediaPermissions.Assets.list.rawValue)
         let content = AssetListView(
             state: .init(
                 folders: model.folders,
@@ -42,7 +43,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 isRemoved: isRemoved,
                 canAccess: canAccess,
                 permissions: permissions,
-                canAdd: permissions.contains(scope.create),
+                canAdd: permissions.contains(MediaPermissions.Assets.create.rawValue),
                 deniedInfo: "Forbidden",
                 deniedMessage:
                     "Your account cannot access media assets.",

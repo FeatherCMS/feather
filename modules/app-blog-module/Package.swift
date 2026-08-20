@@ -107,7 +107,7 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/async-http-client.git",
+            url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
         .package(
@@ -115,7 +115,7 @@ let package = Package(
             from: "2.0.0"
         ),
         .package(
-            url: "https://github.com/apple/swift-nio-ssl.git",
+            url: "https://github.com/apple/swift-nio-ssl",
             from: "2.34.0"
         ),
         .package(path: "../../feather-core"),

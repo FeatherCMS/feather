@@ -16,24 +16,6 @@ import UserFrontend
 import WebStandards
 
 public enum AuthFrontendRoutes {
-    public enum Scope {
-        public static let magicLinks = PermissionScope(
-            module: "auth",
-            resource: "magic-links"
-        )
-        public static let profile = PermissionScope(
-            module: "auth",
-            resource: "profile"
-        )
-        public static let accessControl = PermissionScope(
-            module: "auth",
-            resource: "access-control"
-        )
-        public static let credentials = PermissionScope(
-            module: "auth",
-            resource: "credential"
-        )
-    }
 
     public static func registerAppRoutes(
         router: Router<AppRequestContext>,

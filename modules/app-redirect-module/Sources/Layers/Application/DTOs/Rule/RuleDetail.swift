@@ -7,6 +7,7 @@
 import FeatherApplication
 import FeatherContracts
 import RedirectDomain
+import RedirectContracts
 
 import struct Foundation.Date
 
@@ -14,7 +15,7 @@ public struct RuleDetail: DTO {
     public let id: String
     public let source: String
     public let destination: String
-    public let statusCode: Rule.StatusCode
+    public let statusCode: StatusCode
     public let notes: String?
     public let createdAt: Date
     public let updatedAt: Date
@@ -23,7 +24,7 @@ public struct RuleDetail: DTO {
         id: String,
         source: String,
         destination: String,
-        statusCode: Rule.StatusCode,
+        statusCode: StatusCode,
         notes: String?,
         createdAt: Date,
         updatedAt: Date

@@ -1,3 +1,4 @@
+import MediaContracts
 import FeatherAdmin
 import FeatherValidation
 import Foundation
@@ -25,8 +26,7 @@ struct AdminListMediaProcessorDefaultController:
         let page = request.queryPage()
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminMedia.Scope.processors
+            to: MediaPermissions.Processors.list
         )
         let emptyModel = AdminListMediaProcessorModel(
             items: [],

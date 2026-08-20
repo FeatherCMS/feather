@@ -1,3 +1,5 @@
+import FeatherContracts
+import BlogContracts
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
@@ -192,7 +194,7 @@ struct BlogTagTable: Component {
     ) -> some BasicTag {
         Td {
             if state.permissions.contains(
-                AdminBlog.Scope.tags.permission(for: .read)
+                BlogPermissions.Tags.read.rawValue
             ) {
                 A("Details")
                     .href("/admin/blog/tags/\(item.id)/")
@@ -200,7 +202,7 @@ struct BlogTagTable: Component {
                 Span(" ")
             }
             if state.permissions.contains(
-                AdminBlog.Scope.tags.permission(for: .update)
+                BlogPermissions.Tags.update.rawValue
             ) {
                 A("Edit")
                     .href("/admin/blog/tags/\(item.id)/edit/")
@@ -208,7 +210,7 @@ struct BlogTagTable: Component {
                 Span(" ")
             }
             if state.permissions.contains(
-                AdminBlog.Scope.tags.permission(for: .delete)
+                BlogPermissions.Tags.delete.rawValue
             ) {
                 A("Remove")
                     .href("/admin/blog/tags/\(item.id)/remove/")

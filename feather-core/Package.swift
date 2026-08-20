@@ -63,7 +63,7 @@ let package = Package(
         //            from: "2.0.0"
         //        ),
         .package(
-            url: "https://github.com/swift-server/swift-service-lifecycle.git",
+            url: "https://github.com/swift-server/swift-service-lifecycle",
             from: "2.0.0"
         ),
         //        .package(
@@ -111,7 +111,7 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/async-http-client.git",
+            url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
         .package(
@@ -119,7 +119,7 @@ let package = Package(
             from: "1.9.0"
         ),
         .package(
-            url: "https://github.com/apple/swift-nio.git",
+            url: "https://github.com/apple/swift-nio",
             from: "2.0.0"
         ),
         //        .package(
@@ -145,9 +145,17 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "FeatherDomain",
+            name: "FeatherContracts",
             dependencies: [
 
+            ],
+            path: "Sources/Contracts",
+            swiftSettings: defaultSwiftSettings
+        ),
+        .target(
+            name: "FeatherDomain",
+            dependencies: [
+                .target(name: "FeatherContracts")
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: defaultSwiftSettings
@@ -156,29 +164,17 @@ let package = Package(
             name: "FeatherApplication",
             dependencies: [
                 .target(name: "FeatherDomain"),
-                .target(name: "FeatherContracts")
-                //                .target(name: "FeatherError"),
-                //                .product(name: "FeatherValidation", package: "feather-validation"),
             ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
         .target(
-            name: "FeatherContracts",
-            dependencies: [],
-            path: "Sources/Contracts",
-            swiftSettings: defaultSwiftSettings
-        ),
-        .target(
             name: "FeatherInfrastructure",
             dependencies: [
-                .target(name: "FeatherApplication"),
-                .target(name: "FeatherContracts"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
-                .product(
-                    name: "ServiceLifecycle",
-                    package: "swift-service-lifecycle"
-                ),
+                .product(name: "ServiceLifecycle", package: "swift-service-lifecycle"),
+
+                .target(name: "FeatherApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
@@ -186,13 +182,10 @@ let package = Package(
         .target(
             name: "FeatherBackend",
             dependencies: [
-                .target(name: "FeatherApplication"),
-                .target(name: "FeatherContracts"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                )
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+
+                .target(name: "FeatherInfrastructure"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
@@ -201,7 +194,7 @@ let package = Package(
             name: "FeatherOpenAPIGenerator",
             dependencies: [
                 .product(name: "FeatherOpenAPI", package: "feather-openapi"),
-                .product(name: "OpenAPIKit", package: "OpenAPIKit")
+                .product(name: "OpenAPIKit", package: "OpenAPIKit"),
             ],
             path: "Sources/OpenAPIGenerator",
             swiftSettings: defaultSwiftSettings
@@ -209,15 +202,16 @@ let package = Package(
         .target(
             name: "FeatherAdmin",
             dependencies: [
-                .target(name: "FeatherApplication"),
-                .target(name: "FeatherContracts"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
                 .product(name: "WebStandards", package: "swift-web-standards"),
                 .product(name: "FeatherValidation", package: "feather-validation"),
+                .product(name: "FeatherValidationFoundation", package: "feather-validation"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "NIOCore", package: "swift-nio")
+                .product(name: "NIOCore", package: "swift-nio"),
+
+                .target(name: "FeatherApplication"),
             ],
             path: "Sources/Composition/Frontend/Admin",
             swiftSettings: defaultSwiftSettings

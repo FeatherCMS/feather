@@ -4,6 +4,7 @@ import Foundation
 import RedirectAdminAPI
 import RedirectApplication
 import RedirectDomain
+import RedirectContracts
 
 extension AdminAPIGateway {
     func mapSortDirection(
@@ -50,7 +51,7 @@ extension AdminAPIGateway {
                 },
             search: query.filters.search,
             statusCode: query.filters.statusCode.flatMap {
-                Rule.StatusCode(rawValue: $0)
+                StatusCode(rawValue: $0)
             }
         )
     }
