@@ -1,3 +1,4 @@
+import ContactContracts
 import ContactApplication
 import FeatherContracts
 import FeatherInfrastructure

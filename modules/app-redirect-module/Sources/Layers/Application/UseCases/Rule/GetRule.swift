@@ -1,3 +1,4 @@
+import RedirectContracts
 //
 //  GetRule.swift
 //  app-redirect-module

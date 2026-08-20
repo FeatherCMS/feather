@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  ListPosts.swift
 //  app-blog-module

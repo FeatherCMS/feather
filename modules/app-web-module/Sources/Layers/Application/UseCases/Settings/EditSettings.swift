@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  EditSettings.swift
 //  app-web-module

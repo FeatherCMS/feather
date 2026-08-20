@@ -1,3 +1,4 @@
+import AnalyticsContracts
 //
 //  ListLogs.swift
 //  app-analytics-module

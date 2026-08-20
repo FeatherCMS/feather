@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  AddPage.swift
 //  app-web-module

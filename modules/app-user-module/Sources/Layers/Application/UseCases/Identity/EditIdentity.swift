@@ -1,3 +1,4 @@
+import UserContracts
 //
 //  EditIdentity.swift
 //  app-user-module

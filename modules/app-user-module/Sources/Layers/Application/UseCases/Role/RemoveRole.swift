@@ -1,3 +1,4 @@
+import UserContracts
 //
 //  RemoveRole.swift
 //  app-user-module

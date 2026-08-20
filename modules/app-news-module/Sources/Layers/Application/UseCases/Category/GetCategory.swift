@@ -1,3 +1,4 @@
+import NewsContracts
 //
 //  GetCategory.swift
 //  app-news-module

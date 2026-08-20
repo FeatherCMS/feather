@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  ListIdentitySessions.swift
 //  app-auth-module

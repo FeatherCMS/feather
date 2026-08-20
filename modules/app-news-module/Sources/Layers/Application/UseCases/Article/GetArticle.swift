@@ -1,3 +1,4 @@
+import NewsContracts
 //
 //  GetArticle.swift
 //  app-news-module

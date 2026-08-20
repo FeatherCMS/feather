@@ -1,3 +1,4 @@
+import RedirectContracts
 import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
@@ -23,17 +24,4 @@ public struct UseCases: Sendable {
         self.idGenerator = idGenerator
         self.authorizer = authorizer
     }
-
-    func aggregatedPermissions() {
-        var permissions: [PermissionKey] = []
-        permissions += RedirectPermissions.allPermissions()
-
-        for permission in permissions {
-            print(permission.rawValue)
-        }
-    }
-}
-
-extension UseCases {
-
 }

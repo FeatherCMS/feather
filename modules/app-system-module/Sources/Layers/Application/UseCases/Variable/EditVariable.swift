@@ -1,3 +1,4 @@
+import SystemContracts
 //
 //  EditVariable.swift
 //  app-system-module

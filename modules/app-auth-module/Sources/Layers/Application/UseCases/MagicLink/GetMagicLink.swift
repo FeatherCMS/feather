@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  GetMagicLink.swift
 //  app-auth-module

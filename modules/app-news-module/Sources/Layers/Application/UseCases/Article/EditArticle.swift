@@ -1,3 +1,4 @@
+import NewsContracts
 //
 //  EditArticle.swift
 //  app-news-module

@@ -1,3 +1,4 @@
+import RedirectContracts
 //
 //  RemoveRule.swift
 //  app-redirect-module

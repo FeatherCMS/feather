@@ -1,3 +1,4 @@
+import AnalyticsContracts
 import AnalyticsApplication
 import FeatherContracts
 import FeatherInfrastructure

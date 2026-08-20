@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  EditMenu.swift
 //  app-web-module

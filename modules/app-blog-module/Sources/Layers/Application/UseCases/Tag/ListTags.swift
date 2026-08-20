@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  ListTags.swift
 //  app-blog-module

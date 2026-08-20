@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  ExtendSession.swift
 //  app-auth-module

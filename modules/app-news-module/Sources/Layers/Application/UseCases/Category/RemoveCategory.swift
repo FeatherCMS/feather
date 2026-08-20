@@ -1,3 +1,4 @@
+import NewsContracts
 //
 //  RemoveCategory.swift
 //  app-news-module

@@ -1,3 +1,4 @@
+import ContactContracts
 import ContactApplication
 import ContactInfrastructure
 import FeatherApplication
@@ -34,13 +35,6 @@ public struct UseCases: Sendable {
         self.authorizer = authorizer
         self.mailQueue = mailQueue
     }
-
-    public func aggregatedPermissions() {
-        for permission in ContactPermissions.allPermissions() {
-            print(permission.rawValue)
-        }
-    }
-
 }
 
 extension UseCases {

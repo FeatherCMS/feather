@@ -1,3 +1,6 @@
+import UserContracts
+import SystemContracts
+import AuthContracts
 import AuthAdminAPI
 import AuthAppAPI
 import AuthApplication
@@ -29,17 +32,6 @@ public struct UseCases: Sendable {
         self.authorizer = authorizer
         self.user = user
     }
-
-    func aggregatedPermissions() {
-        var permissions: [PermissionKey] = []
-        permissions += AuthPermissions.allPermissions()
-        permissions += SystemPermissions.allPermissions()
-        permissions += UserPermissions.allPermissions()
-
-        for permission in permissions {
-            print(permission.rawValue)
-        }
-    }
 }
 
 struct NoopMailSender: MailSender {
@@ -48,6 +40,3 @@ struct NoopMailSender: MailSender {
     ) async throws {}
 }
 
-extension UseCases {
-
-}

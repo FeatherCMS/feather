@@ -1,3 +1,4 @@
+import MediaContracts
 //
 //  EditMediaAsset.swift
 //  app-media-module

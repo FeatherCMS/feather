@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  RemoveSession.swift
 //  app-auth-module

@@ -1,3 +1,4 @@
+import RedirectContracts
 //
 //  ListRules.swift
 //  app-redirect-module

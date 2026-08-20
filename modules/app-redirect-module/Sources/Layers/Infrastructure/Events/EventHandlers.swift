@@ -1,3 +1,4 @@
+import RedirectContracts
 import FeatherContracts
 import FeatherInfrastructure
 import RedirectApplication

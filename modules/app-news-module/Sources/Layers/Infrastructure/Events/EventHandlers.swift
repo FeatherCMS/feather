@@ -1,3 +1,4 @@
+import NewsContracts
 import FeatherContracts
 import FeatherInfrastructure
 import NewsApplication

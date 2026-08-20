@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  AddRolePermission.swift
 //  app-auth-module

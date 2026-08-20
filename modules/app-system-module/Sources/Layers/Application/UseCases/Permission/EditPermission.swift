@@ -1,3 +1,4 @@
+import SystemContracts
 //
 //  EditPermission.swift
 //  app-system-module

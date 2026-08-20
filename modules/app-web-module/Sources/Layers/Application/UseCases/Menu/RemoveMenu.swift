@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  RemoveMenu.swift
 //  app-web-module

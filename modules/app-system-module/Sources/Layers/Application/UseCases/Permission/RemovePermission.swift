@@ -1,3 +1,4 @@
+import SystemContracts
 //
 //  RemovePermission.swift
 //  app-system-module

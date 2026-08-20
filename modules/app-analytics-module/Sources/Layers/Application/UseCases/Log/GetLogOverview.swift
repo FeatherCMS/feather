@@ -1,3 +1,4 @@
+import AnalyticsContracts
 //
 //  GetLogOverview.swift
 //  app-analytics-module

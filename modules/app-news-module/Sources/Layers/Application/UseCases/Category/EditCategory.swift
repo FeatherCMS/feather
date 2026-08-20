@@ -1,3 +1,4 @@
+import NewsContracts
 //
 //  EditCategory.swift
 //  app-news-module

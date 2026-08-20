@@ -4,7 +4,6 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-import FeatherApplication
 import FeatherContracts
 
 public enum SettingsPermissions: PermissionProvider {

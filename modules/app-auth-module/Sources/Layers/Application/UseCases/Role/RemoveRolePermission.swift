@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  RemoveRolePermission.swift
 //  app-auth-module

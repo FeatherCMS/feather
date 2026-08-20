@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  GetSession.swift
 //  app-auth-module

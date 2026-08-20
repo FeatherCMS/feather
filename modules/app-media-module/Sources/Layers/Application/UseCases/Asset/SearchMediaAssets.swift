@@ -1,3 +1,4 @@
+import MediaContracts
 //
 //  SearchMediaAssets.swift
 //  app-media-module

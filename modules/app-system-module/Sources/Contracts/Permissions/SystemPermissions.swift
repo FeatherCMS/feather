@@ -18,11 +18,11 @@ public enum SystemPermissions: PermissionProvider {
     }
 
     public enum Permissions: PermissionProvider {
-        static let create = PermissionKey("system:permissions:create")
-        static let read = PermissionKey("system:permissions:read")
-        static let update = PermissionKey("system:permissions:update")
-        static let list = PermissionKey("system:permissions:list")
-        static let delete = PermissionKey("system:permissions:delete")
+        public static let create = PermissionKey("system:permissions:create")
+        public static let read = PermissionKey("system:permissions:read")
+        public static let update = PermissionKey("system:permissions:update")
+        public static let list = PermissionKey("system:permissions:list")
+        public static let delete = PermissionKey("system:permissions:delete")
 
         public static func allPermissions() -> Set<PermissionKey> {
             [
@@ -36,11 +36,11 @@ public enum SystemPermissions: PermissionProvider {
     }
 
     public enum Variables {
-        static let create = PermissionKey("system:variables:create")
-        static let read = PermissionKey("system:variables:read")
-        static let update = PermissionKey("system:variables:update")
-        static let list = PermissionKey("system:variables:list")
-        static let delete = PermissionKey("system:variables:delete")
+        public static let create = PermissionKey("system:variables:create")
+        public static let read = PermissionKey("system:variables:read")
+        public static let update = PermissionKey("system:variables:update")
+        public static let list = PermissionKey("system:variables:list")
+        public static let delete = PermissionKey("system:variables:delete")
 
         public static func allPermissions() -> Set<PermissionKey> {
             [

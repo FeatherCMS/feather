@@ -1,3 +1,4 @@
+import UserContracts
 //
 //  EditRole.swift
 //  app-user-module

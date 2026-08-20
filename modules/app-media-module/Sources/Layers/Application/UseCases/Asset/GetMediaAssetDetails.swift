@@ -1,3 +1,4 @@
+import MediaContracts
 //
 //  GetMediaAssetDetails.swift
 //  app-media-module

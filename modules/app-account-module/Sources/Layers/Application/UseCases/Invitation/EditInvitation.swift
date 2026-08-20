@@ -1,3 +1,4 @@
+import AccountContracts
 //
 //  EditInvitation.swift
 //  app-user-module

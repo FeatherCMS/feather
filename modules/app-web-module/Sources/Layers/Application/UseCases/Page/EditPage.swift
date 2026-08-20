@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  EditPage.swift
 //  app-web-module

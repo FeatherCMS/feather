@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  GetPost.swift
 //  app-blog-module

@@ -1,4 +1,3 @@
-import FeatherApplication
 import FeatherContracts
 
 public enum ContactPermissions: PermissionProvider {

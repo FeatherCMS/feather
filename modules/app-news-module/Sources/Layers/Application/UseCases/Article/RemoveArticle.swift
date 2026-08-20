@@ -1,3 +1,4 @@
+import NewsContracts
 //
 //  RemoveArticle.swift
 //  app-news-module

@@ -1,3 +1,4 @@
+import SystemContracts
 import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
@@ -22,18 +23,5 @@ public struct UseCases: Sendable {
         self.database = database
         self.idGenerator = idGenerator
         self.authorizer = authorizer
-    }
-
-    func aggregatedPermissions() {
-        var permissions: [PermissionKey] = []
-        permissions += SystemPermissions.allPermissions()
-
-        for permission in permissions {
-            print(permission.rawValue)
-        }
-    }
-}
-
-extension UseCases {
-
+    }    
 }

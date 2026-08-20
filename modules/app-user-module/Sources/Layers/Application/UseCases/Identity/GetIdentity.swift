@@ -1,3 +1,4 @@
+import UserContracts
 //
 //  GetIdentity.swift
 //  app-user-module

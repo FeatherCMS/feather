@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  AddPost.swift
 //  app-blog-module

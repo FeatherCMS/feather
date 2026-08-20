@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  RemovePage.swift
 //  app-web-module

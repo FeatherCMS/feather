@@ -1,3 +1,4 @@
+import AuthContracts
 import AuthApplication
 import FeatherContracts
 import FeatherInfrastructure

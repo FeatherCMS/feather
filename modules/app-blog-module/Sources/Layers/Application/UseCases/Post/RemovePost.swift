@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  RemovePost.swift
 //  app-blog-module

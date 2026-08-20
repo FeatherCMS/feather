@@ -139,6 +139,7 @@ let package = Package(
                 .target(name: "UserDomain"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
+                .target(name: "UserContracts"),
                 .product(name: "SystemApplication", package: "app-system-module")],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings

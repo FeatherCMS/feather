@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  AddMenu.swift
 //  app-web-module

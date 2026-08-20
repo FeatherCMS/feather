@@ -1,3 +1,4 @@
+import RedirectContracts
 //
 //  EditRule.swift
 //  app-redirect-module

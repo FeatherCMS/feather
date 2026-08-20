@@ -1,3 +1,4 @@
+import AccountContracts
 //
 //  GetInvitation.swift
 //  app-user-module

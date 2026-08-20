@@ -1,3 +1,4 @@
+import NewsletterContracts
 import FeatherApplication
 import FeatherContracts
 import NewsletterAdminAPI

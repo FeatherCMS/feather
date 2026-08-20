@@ -1,3 +1,4 @@
+import SystemContracts
 //
 //  ListPermissions.swift
 //  app-system-module

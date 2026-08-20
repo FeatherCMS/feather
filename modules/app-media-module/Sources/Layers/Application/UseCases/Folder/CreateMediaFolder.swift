@@ -1,3 +1,4 @@
+import MediaContracts
 //
 //  CreateMediaFolder.swift
 //  app-media-module

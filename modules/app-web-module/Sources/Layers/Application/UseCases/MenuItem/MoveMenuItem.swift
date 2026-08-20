@@ -1,3 +1,4 @@
+import WebContracts
 import FeatherApplication
 import FeatherContracts
 import WebDomain

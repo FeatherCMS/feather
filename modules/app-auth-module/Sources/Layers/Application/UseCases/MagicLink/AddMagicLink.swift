@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  AddMagicLink.swift
 //  app-auth-module
@@ -8,8 +9,6 @@ import AuthDomain
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
-
-import struct Foundation.Date
 
 public struct AddMagicLink: UseCase {
     struct Action: PermissionAction {

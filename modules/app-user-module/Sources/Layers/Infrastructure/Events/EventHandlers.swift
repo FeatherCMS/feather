@@ -1,3 +1,4 @@
+import UserContracts
 import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication

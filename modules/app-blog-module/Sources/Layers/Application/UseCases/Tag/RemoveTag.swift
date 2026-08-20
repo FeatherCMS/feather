@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  RemoveTag.swift
 //  app-blog-module

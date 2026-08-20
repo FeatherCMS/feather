@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  AddMetadata.swift
 //  app-web-module

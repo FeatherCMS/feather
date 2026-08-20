@@ -1,3 +1,4 @@
+import UserContracts
 //
 //  ListRoles.swift
 //  app-user-module

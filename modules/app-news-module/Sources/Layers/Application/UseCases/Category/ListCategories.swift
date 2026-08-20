@@ -1,3 +1,4 @@
+import NewsContracts
 //
 //  ListCategories.swift
 //  app-news-module

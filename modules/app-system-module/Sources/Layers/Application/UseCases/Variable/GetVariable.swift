@@ -1,3 +1,4 @@
+import SystemContracts
 //
 //  GetVariable.swift
 //  app-system-module

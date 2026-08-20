@@ -5,18 +5,17 @@
 //  Created by Tibor Bödecs on 2026. 04. 18.
 //
 
-import FeatherApplication
 import FeatherContracts
 
 public enum AuthPermissions: PermissionProvider {
 
     public enum Credential: PermissionProvider {
-        static let create = PermissionKey("auth:credential:create")
-        static let read = PermissionKey("auth:credential:read")
-        static let update = PermissionKey("auth:credential:update")
-        static let delete = PermissionKey("auth:credential:delete")
-        static let find = PermissionKey("auth:credential:find")
-        static let list = PermissionKey("auth:credential:list")
+        public static let create = PermissionKey("auth:credential:create")
+        public static let read = PermissionKey("auth:credential:read")
+        public static let update = PermissionKey("auth:credential:update")
+        public static let delete = PermissionKey("auth:credential:delete")
+        public static let find = PermissionKey("auth:credential:find")
+        public static let list = PermissionKey("auth:credential:list")
 
         public static func allPermissions() -> Set<PermissionKey> {
             [
@@ -31,11 +30,11 @@ public enum AuthPermissions: PermissionProvider {
     }
 
     public enum MagicLinks: PermissionProvider {
-        static let create = PermissionKey("auth:magic-links:create")
-        static let read = PermissionKey("auth:magic-links:read")
-        static let update = PermissionKey("auth:magic-links:update")
-        static let list = PermissionKey("auth:magic-links:list")
-        static let delete = PermissionKey("auth:magic-links:delete")
+        public static let create = PermissionKey("auth:magic-links:create")
+        public static let read = PermissionKey("auth:magic-links:read")
+        public static let update = PermissionKey("auth:magic-links:update")
+        public static let list = PermissionKey("auth:magic-links:list")
+        public static let delete = PermissionKey("auth:magic-links:delete")
 
         public static func allPermissions() -> Set<PermissionKey> {
             [
@@ -49,11 +48,11 @@ public enum AuthPermissions: PermissionProvider {
     }
 
     public enum AccessControl: PermissionProvider {
-        static let create = PermissionKey("auth:access-control:create")
-        static let read = PermissionKey("auth:access-control:read")
-        static let update = PermissionKey("auth:access-control:update")
-        static let list = PermissionKey("auth:access-control:list")
-        static let delete = PermissionKey("auth:access-control:delete")
+        public static let create = PermissionKey("auth:access-control:create")
+        public static let read = PermissionKey("auth:access-control:read")
+        public static let update = PermissionKey("auth:access-control:update")
+        public static let list = PermissionKey("auth:access-control:list")
+        public static let delete = PermissionKey("auth:access-control:delete")
 
         public static func allPermissions() -> Set<PermissionKey> {
             [
@@ -67,8 +66,8 @@ public enum AuthPermissions: PermissionProvider {
     }
 
     public enum Profile: PermissionProvider {
-        static let read = PermissionKey("auth:profile:read")
-        static let update = PermissionKey("auth:profile:update")
+        public static let read = PermissionKey("auth:profile:read")
+        public static let update = PermissionKey("auth:profile:update")
 
         public static func allPermissions() -> Set<PermissionKey> {
             [
@@ -79,11 +78,11 @@ public enum AuthPermissions: PermissionProvider {
     }
 
     public enum Sessions: PermissionProvider {
-        static let create = PermissionKey("auth:sessions:create")
-        static let read = PermissionKey("auth:sessions:read")
-        static let update = PermissionKey("auth:sessions:update")
-        static let list = PermissionKey("auth:sessions:list")
-        static let delete = PermissionKey("auth:sessions:delete")
+        public static let create = PermissionKey("auth:sessions:create")
+        public static let read = PermissionKey("auth:sessions:read")
+        public static let update = PermissionKey("auth:sessions:update")
+        public static let list = PermissionKey("auth:sessions:list")
+        public static let delete = PermissionKey("auth:sessions:delete")
 
         public static func allPermissions() -> Set<PermissionKey> {
             [

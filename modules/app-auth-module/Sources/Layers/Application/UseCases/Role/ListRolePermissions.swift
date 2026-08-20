@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  ListRolePermissions.swift
 //  app-auth-module

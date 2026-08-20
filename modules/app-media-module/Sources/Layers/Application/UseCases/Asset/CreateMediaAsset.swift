@@ -1,3 +1,4 @@
+import MediaContracts
 //
 //  CreateMediaAsset.swift
 //  app-media-module

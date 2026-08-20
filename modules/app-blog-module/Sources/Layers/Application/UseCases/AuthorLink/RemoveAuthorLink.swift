@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  RemoveAuthorLink.swift
 //  app-blog-module

@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  EditAuthor.swift
 //  app-blog-module

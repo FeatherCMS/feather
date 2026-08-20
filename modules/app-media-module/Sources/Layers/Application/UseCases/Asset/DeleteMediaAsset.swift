@@ -1,3 +1,4 @@
+import MediaContracts
 //
 //  DeleteMediaAsset.swift
 //  app-media-module

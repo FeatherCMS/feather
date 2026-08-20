@@ -287,6 +287,8 @@ let package = Package(
                 .target(name: "AuthInfrastructure"),
                 .target(name: "AuthAdminAPI"),
                 .target(name: "AuthAppAPI"),
+                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "UserContracts", package: "app-user-module"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .target(name: "AuthContracts"),

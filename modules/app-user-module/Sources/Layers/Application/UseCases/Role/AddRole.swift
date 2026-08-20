@@ -1,3 +1,4 @@
+import UserContracts
 //
 //  AddRole.swift
 //  app-user-module

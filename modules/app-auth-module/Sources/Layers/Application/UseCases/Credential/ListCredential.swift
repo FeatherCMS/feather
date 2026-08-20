@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  ListCredential.swift
 //  app-auth-module

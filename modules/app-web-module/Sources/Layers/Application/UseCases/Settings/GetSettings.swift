@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  GetSettings.swift
 //  app-web-module

@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  ListMenuItems.swift
 //  app-web-module

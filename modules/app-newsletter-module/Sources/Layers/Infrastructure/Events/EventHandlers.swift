@@ -1,3 +1,4 @@
+import NewsletterContracts
 import FeatherContracts
 import FeatherInfrastructure
 import NewsletterApplication

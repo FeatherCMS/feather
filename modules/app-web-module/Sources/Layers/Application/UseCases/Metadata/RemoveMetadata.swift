@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  RemoveMetadata.swift
 //  app-web-module

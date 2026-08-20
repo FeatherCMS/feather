@@ -1,3 +1,4 @@
+import AccountContracts
 //
 //  GetSettings.swift
 //  app-account-module

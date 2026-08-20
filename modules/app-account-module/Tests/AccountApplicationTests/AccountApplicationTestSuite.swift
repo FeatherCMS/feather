@@ -1,3 +1,4 @@
+import AccountContracts
 //
 //  AccountApplicationTestSuite.swift
 //  app-account-module

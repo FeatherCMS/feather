@@ -1,3 +1,4 @@
+import MediaContracts
 import FeatherContracts
 import FeatherInfrastructure
 import MediaApplication

@@ -1,3 +1,4 @@
+import SystemContracts
 //
 //  AddPermission.swift
 //  app-system-module

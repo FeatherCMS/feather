@@ -1,3 +1,4 @@
+import NewsletterContracts
 import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
@@ -35,12 +36,6 @@ public struct UseCases: Sendable {
         self.idGenerator = idGenerator
         self.authorizer = authorizer
         self.mailQueue = mailQueue
-    }
-
-    func aggregatedPermissions() {
-        for permission in Permissions.allPermissions() {
-            print(permission.rawValue)
-        }
     }
 
     func transaction() -> DatabaseTransactionExecutor<Write> {

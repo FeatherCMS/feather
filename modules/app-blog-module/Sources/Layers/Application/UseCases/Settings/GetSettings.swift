@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  GetSettings.swift
 //  app-blog-module

@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  AddTag.swift
 //  app-blog-module

@@ -1,3 +1,4 @@
+import MediaContracts
 //
 //  GetMediaProcessor.swift
 //  app-media-module

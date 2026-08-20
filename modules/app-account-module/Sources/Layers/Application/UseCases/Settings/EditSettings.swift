@@ -1,3 +1,4 @@
+import AccountContracts
 //
 //  EditSettings.swift
 //  app-account-module

@@ -1,3 +1,4 @@
+import ContactContracts
 import ContactDomain
 import FeatherApplication
 import FeatherContracts

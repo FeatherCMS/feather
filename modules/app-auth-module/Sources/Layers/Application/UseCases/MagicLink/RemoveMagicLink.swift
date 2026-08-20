@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  RemoveMagicLink.swift
 //  app-auth-module

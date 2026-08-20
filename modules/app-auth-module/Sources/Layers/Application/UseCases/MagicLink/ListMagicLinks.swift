@@ -1,3 +1,4 @@
+import AuthContracts
 //
 //  ListMagicLinks.swift
 //  app-auth-module

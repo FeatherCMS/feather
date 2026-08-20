@@ -1,3 +1,4 @@
+import UserContracts
 //
 //  RemoveIdentity.swift
 //  app-user-module

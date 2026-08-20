@@ -1,3 +1,4 @@
+import AnalyticsContracts
 import AnalyticsAdminAPI
 import AnalyticsAppAPI
 import AnalyticsApplication
@@ -23,17 +24,4 @@ public struct UseCases: Sendable {
         self.idGenerator = idGenerator
         self.authorizer = authorizer
     }
-
-    func aggregatedPermissions() {
-        var permissions: [PermissionKey] = []
-        permissions += AnalyticsPermissions.allPermissions()
-
-        for permission in permissions {
-            print(permission.rawValue)
-        }
-    }
-}
-
-extension UseCases {
-
 }

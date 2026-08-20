@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  GetPage.swift
 //  app-web-module

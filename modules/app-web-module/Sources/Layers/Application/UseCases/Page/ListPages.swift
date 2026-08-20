@@ -1,3 +1,4 @@
+import WebContracts
 //
 //  ListPages.swift
 //  app-web-module

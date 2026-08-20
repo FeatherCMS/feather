@@ -1,3 +1,4 @@
+import AccountContracts
 //
 //  ListInvitations.swift
 //  app-user-module

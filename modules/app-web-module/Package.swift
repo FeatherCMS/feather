@@ -130,7 +130,7 @@ let package = Package(
             name: "WebDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
+
                 .target(name: "WebContracts"),
             ],
             path: "Sources/Layers/Domain",
@@ -139,34 +139,17 @@ let package = Package(
         .target(
             name: "WebApplication",
             dependencies: [
-                .product(name: "FeatherApplication", package: "feather-core"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
+                .product(name: "SystemApplication", package: "app-system-module"),
                 .target(name: "WebDomain"),
-            
-                .product(name: "FeatherContracts", package: "feather-core")],
+            ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
         .target(
             name: "WebInfrastructure",
             dependencies: [
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
-                .product(name: "SystemDomain", package: "app-system-module"),
-                .product(
-                    name: "SystemInfrastructure",
-                    package: "app-system-module"
-                ),
-                .target(name: "WebDomain"),
+                .product(name: "SystemInfrastructure", package: "app-system-module"),
                 .target(name: "WebApplication"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
@@ -176,9 +159,9 @@ let package = Package(
             name: "WebAdminAPI",
             dependencies: [
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
-            
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "SystemApplication", package: "app-system-module")
+            ],
             path: "Sources/APIs/Admin",
             swiftSettings: defaultSwiftSettings
         ),
@@ -186,9 +169,9 @@ let package = Package(
             name: "WebAppAPI",
             dependencies: [
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
-            
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "SystemApplication", package: "app-system-module"),
+            ],
             path: "Sources/APIs/App",
             swiftSettings: defaultSwiftSettings
         ),
@@ -198,7 +181,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "FeatherOpenAPI", package: "feather-openapi"),
-                .product(name: "OpenAPIKit", package: "OpenAPIKit")
+                .product(name: "OpenAPIKit", package: "OpenAPIKit"),
             ],
             path: "Sources/Generators/Shared",
             swiftSettings: defaultSwiftSettings
@@ -206,12 +189,13 @@ let package = Package(
         .executableTarget(
             name: "WebAdminOpenAPIGenerator",
             dependencies: [
-                .target(name: "WebSharedOpenAPIGenerator"),
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "FeatherOpenAPI", package: "feather-openapi"),
                 .product(name: "OpenAPIKit", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
-                .product(name: "Yams", package: "Yams")
+                .product(name: "Yams", package: "Yams"),
+
+                .target(name: "WebSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: defaultSwiftSettings
@@ -219,12 +203,13 @@ let package = Package(
         .executableTarget(
             name: "WebAppOpenAPIGenerator",
             dependencies: [
-                .target(name: "WebSharedOpenAPIGenerator"),
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "FeatherOpenAPI", package: "feather-openapi"),
                 .product(name: "OpenAPIKit", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
-                .product(name: "Yams", package: "Yams")
+                .product(name: "Yams", package: "Yams"),
+
+                .target(name: "WebSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: defaultSwiftSettings
@@ -236,15 +221,15 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .target(name: "WebApplication"),
-                .target(name: "WebInfrastructure"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "SystemApplication", package: "app-system-module"),
+
+                .target(name: "WebInfrastructure"),
                 .target(name: "WebAdminAPI"),
                 .target(name: "WebAppAPI"),
-                .product(name: "Hummingbird", package: "hummingbird"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+            ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),
@@ -255,9 +240,7 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
-                .target(name: "WebApplication"),
-                .target(name: "WebAdminAPI"),
-                .target(name: "WebAppAPI"),
+                
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "WebStandards", package: "swift-web-standards"),
                 .product(name: "HTML", package: "swift-web-standards"),
@@ -271,7 +254,12 @@ let package = Package(
                 .product(name: "NIOCore", package: "swift-nio"),
             
                 .product(name: "FeatherContracts", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "SystemApplication", package: "app-system-module"),
+
+                .target(name: "WebApplication"),
+                .target(name: "WebAdminAPI"),
+                .target(name: "WebAppAPI"),
+            ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings
         ),

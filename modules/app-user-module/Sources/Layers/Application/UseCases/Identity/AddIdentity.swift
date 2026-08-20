@@ -1,3 +1,4 @@
+import UserContracts
 import FeatherApplication
 import FeatherContracts
 import UserDomain

@@ -1,3 +1,4 @@
+import BlogContracts
 //
 //  GetAuthorLink.swift
 //  app-blog-module

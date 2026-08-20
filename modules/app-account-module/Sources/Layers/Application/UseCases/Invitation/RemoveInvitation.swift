@@ -1,3 +1,4 @@
+import AccountContracts
 //
 //  RemoveInvitation.swift
 //  app-user-module
