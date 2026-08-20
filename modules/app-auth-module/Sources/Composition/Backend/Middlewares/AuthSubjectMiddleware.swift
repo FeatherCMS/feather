@@ -11,9 +11,9 @@ import UserApplication
 public struct AuthSubjectMiddleware: ServerMiddleware {
 
     private static let sessionCookieName = "session"
-    private let auth: AuthBackend
+    private let auth: AuthBackend.UseCases
 
-    public init(auth: AuthBackend) {
+    public init(auth: AuthBackend.UseCases) {
         self.auth = auth
     }
 

@@ -50,7 +50,7 @@ private func mediaStorageKeyExtension(
 
 public func registerMediaAssetRoutes<C: RequestContext>(
     on router: Router<C>,
-    media: MediaBackend
+    media: MediaBackend.UseCases
 ) {
     router.get("/media/assets/**") { request, _ in
         guard

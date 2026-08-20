@@ -117,134 +117,134 @@ func buildRouter(
         AuthRenewMiddleware(auth: modules.auth),
     ]
 
-    let systemModule = modules.system
+    let systemModule = modules.systemApp
     try (systemModule as SystemAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (systemModule as SystemAdminAPI.APIProtocol)
+    try (modules.systemAdmin as SystemAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let userModule = modules.user
+    let userModule = modules.userApp
     try (userModule as UserAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (userModule as UserAdminAPI.APIProtocol)
+    try (modules.userAdmin as UserAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let accountBackend = modules.accountBackend
+    let accountBackend = modules.accountApp
     try (accountBackend as AccountAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (accountBackend as AccountAdminAPI.APIProtocol)
+    try (modules.accountAdmin as AccountAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let authModule = modules.auth
+    let authModule = modules.authApp
     try (authModule as AuthAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (authModule as AuthAdminAPI.APIProtocol)
+    try (modules.authAdmin as AuthAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let redirectModule = modules.redirect
+    let redirectModule = modules.redirectApp
     try (redirectModule as RedirectAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (redirectModule as RedirectAdminAPI.APIProtocol)
+    try (modules.redirectAdmin as RedirectAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let analyticsModule = modules.analytics
+    let analyticsModule = modules.analyticsApp
     try (analyticsModule as AnalyticsAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (analyticsModule as AnalyticsAdminAPI.APIProtocol)
+    try (modules.analyticsAdmin as AnalyticsAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let webModule = modules.web
+    let webModule = modules.webApp
     try (webModule as WebAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (webModule as WebAdminAPI.APIProtocol)
+    try (modules.webAdmin as WebAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let newsletterModule = modules.newsletter
+    let newsletterModule = modules.newsletterApp
     try (newsletterModule as NewsletterAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (newsletterModule as NewsletterAdminAPI.APIProtocol)
+    try (modules.newsletterAdmin as NewsletterAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let contactModule = modules.contact
+    let contactModule = modules.contactApp
     try (contactModule as ContactAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (contactModule as ContactAdminAPI.APIProtocol)
+    try (modules.contactAdmin as ContactAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let mediaModule = modules.media
+    let mediaModule = modules.mediaAdmin
     try (mediaModule as MediaAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let blogModule = modules.blog
+    let blogModule = modules.blogApp
     try (blogModule as BlogAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
-    try (blogModule as BlogAdminAPI.APIProtocol)
+    try (modules.blogAdmin as BlogAdminAPI.APIProtocol)
         .registerHandlers(
             on: router,
             middlewares: middlewares
         )
 
-    let newsModule = NewsAppAPIHandler(news: modules.news)
+    let newsModule = modules.newsApp
     try (newsModule as NewsAppAPI.APIProtocol)
         .registerHandlers(
             on: router,
