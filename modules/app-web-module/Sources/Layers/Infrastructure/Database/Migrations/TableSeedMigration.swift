@@ -5,6 +5,7 @@ import FeatherDomain
 import FeatherInfrastructure
 import SystemApplication
 import WebApplication
+import WebContracts
 import WebDomain
 
 public struct TableSeedMigration: DatabaseMigration {

@@ -1,7 +1,9 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
@@ -29,10 +31,9 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissionSet = context.currentUserPermissions
-        let permissions = AdminAuth.Scope.magicLinks
+        let permissions = AuthPermissions.MagicLinks.list
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: permissions
+            to: permissions
         )
         let page = request.queryPage()
         let pageSize = 20
@@ -59,7 +60,9 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                 isRemoved: request.hasQueryFlag("removed"),
                 canAccess: canAccess,
                 permissions: permissionSet,
-                canAdd: permissionSet.contains(permissions.create),
+                canAdd: permissionSet.contains(
+                    AuthPermissions.MagicLinks.create.rawValue
+                ),
                 links: result.items,
                 page: result.page,
                 pageSize: result.size,

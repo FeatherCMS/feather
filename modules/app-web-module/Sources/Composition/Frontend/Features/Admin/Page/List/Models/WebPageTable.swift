@@ -1,10 +1,12 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
+import WebContracts
 import WebStandards
 
 struct WebPageTable: Component {
@@ -188,7 +190,7 @@ struct WebPageTable: Component {
     ) -> some BasicTag {
         Td {
             if state.permissions.contains(
-                AdminWeb.Scope.pages.permission(for: .read)
+                WebPermissions.Pages.read.rawValue
             ) {
                 A("Details")
                     .href("/admin/web/pages/\(item.id)/")
@@ -196,7 +198,7 @@ struct WebPageTable: Component {
                 Span(" ")
             }
             if state.permissions.contains(
-                AdminWeb.Scope.pages.permission(for: .update)
+                WebPermissions.Pages.update.rawValue
             ) {
                 A("Edit")
                     .href("/admin/web/pages/\(item.id)/edit/")
@@ -204,7 +206,7 @@ struct WebPageTable: Component {
                 Span(" ")
             }
             if state.permissions.contains(
-                AdminWeb.Scope.pages.permission(for: .delete)
+                WebPermissions.Pages.delete.rawValue
             ) {
                 A("Remove")
                     .href("/admin/web/pages/\(item.id)/remove/")

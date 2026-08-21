@@ -1,13 +1,14 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDomain
+import WebContracts
+import WebDomain
+
 //
 //  RemoveMetadata.swift
 //  app-web-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import WebDomain
 
 public struct RemoveMetadata: UseCase {
     struct Action: PermissionAction {

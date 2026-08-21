@@ -1,9 +1,11 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
+import MediaContracts
 import OpenAPIRuntime
 import SGML
 import WebStandards
@@ -44,8 +46,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         )
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminMedia.Scope.assets
+            to: MediaPermissions.Assets.list
         )
         let emptyModel = AdminListMediaAssetModel(
             folders: [],

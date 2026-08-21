@@ -1,5 +1,6 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
 import FeatherValidation
@@ -32,8 +33,7 @@ struct AdminListAuthCredentialDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminAuth.Scope.credentials
+            to: AuthPermissions.Credential.list
         )
         let page = request.queryPage()
         let pageSize = 20

@@ -17,9 +17,9 @@ public struct AuthRenewMiddleware: ServerMiddleware {
 
     //    private static let sessionLifetime: Double = 604_800  // 1 week
 
-    let auth: AuthBackend
+    let auth: AuthBackend.UseCases
 
-    public init(auth: AuthBackend) {
+    public init(auth: AuthBackend.UseCases) {
         self.auth = auth
     }
 

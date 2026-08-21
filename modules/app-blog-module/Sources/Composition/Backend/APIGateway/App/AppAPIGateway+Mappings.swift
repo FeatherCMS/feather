@@ -1,0 +1,268 @@
+import BlogAppAPI
+import BlogApplication
+import Foundation
+import MediaApplication
+import MediaBackend
+import WebApplication
+import WebDomain
+
+extension AppAPIGateway {
+
+    func publicMedia(
+        assetId: String?
+    ) async -> PublicContentMedia? {
+        guard let assetId, !assetId.isEmpty else {
+            return nil
+        }
+        guard let asset = try? await useCases.media.getAssetDetails(id: assetId)
+        else {
+            return nil
+        }
+        let originalURL = publicMediaURL(
+            storageKey: asset.storageKey,
+            isVariant: false
+        )
+        let variants =
+            ((try? await useCases.media.listAssociatedVariantFiles(
+                assetId: assetId
+            )) ?? [])
+            .map {
+                PublicContentMediaVariant(
+                    id: $0.variantId,
+                    url: publicMediaURL(
+                        storageKey: $0.storageKey,
+                        isVariant: true
+                    ),
+                    type: publicMediaType(from: $0.storageKey),
+                    width: nil,
+                    height: nil
+                )
+            }
+        let defaultURL = preferredDefaultMediaURL(
+            originalURL: originalURL,
+            variants: variants
+        )
+        return .init(
+            assetId: asset.id,
+            originalURL: originalURL,
+            defaultURL: defaultURL,
+            variants: variants
+        )
+    }
+
+    func publicMediaURL(
+        storageKey: String,
+        isVariant: Bool
+    ) -> String {
+        let prefix = isVariant ? "/media/variants/" : "/media/assets/"
+        return "\(prefix)\(publicEncodedStorageKey(storageKey))"
+    }
+
+    func publicEncodedStorageKey(
+        _ key: String
+    ) -> String {
+        let raw = publicCompactStorageKey(key)
+        let allowed = CharacterSet(
+            charactersIn:
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~/"
+        )
+        return raw.addingPercentEncoding(withAllowedCharacters: allowed) ?? raw
+    }
+
+    func publicCompactStorageKey(
+        _ key: String
+    ) -> String {
+        let prefix = "media/assets/"
+        guard key.hasPrefix(prefix) else { return key }
+        return String(key.dropFirst(prefix.count))
+    }
+
+    func publicMediaType(
+        from storageKey: String
+    ) -> String {
+        let fileName =
+            storageKey.split(separator: "/").last.map(String.init) ?? storageKey
+        guard let dotIndex = fileName.lastIndex(of: "."),
+            dotIndex < fileName.index(before: fileName.endIndex)
+        else {
+            return "bin"
+        }
+        return String(fileName[fileName.index(after: dotIndex)...]).lowercased()
+    }
+
+    func preferredDefaultMediaURL(
+        originalURL: String,
+        variants: [PublicContentMediaVariant]
+    ) -> String {
+        if let preview = variants.first(where: {
+            $0.id.localizedCaseInsensitiveContains("preview")
+                || $0.url.localizedCaseInsensitiveContains("preview")
+                || $0.id.localizedCaseInsensitiveContains("display")
+                || $0.url.localizedCaseInsensitiveContains("display")
+        }) {
+            return preview.url
+        }
+        return variants.first?.url ?? originalURL
+    }
+
+    func publicTimestamp(
+        _ date: Date?
+    ) -> Double? {
+        date?.timeIntervalSince1970
+    }
+
+    func mapPublicMetadata(
+        _ metadata: MetadataDetail,
+        title: String,
+        excerpt: String,
+        imageURL: String
+    ) -> Components.Schemas.WebMetadataContentSchema {
+        let resolved = ResolvedMetadata(
+            metadata: metadata,
+            fallbackTitle: title,
+            fallbackExcerpt: excerpt,
+            fallbackImageURL: imageURL
+        )
+        return .init(
+            slug: metadata.slug,
+            template: publicTemplate(for: metadata),
+            publicationDate: publicTimestamp(metadata.publicationDate),
+            expirationDate: publicTimestamp(metadata.expirationDate),
+            status: metadata.status.rawValue,
+            title: resolved.title,
+            excerpt: resolved.excerpt,
+            imageURL: resolved.imageURL ?? "",
+            canonicalURL: metadata.canonicalURL,
+            noIndex: metadata.noIndex,
+            cssCodeInjection: metadata.cssCodeInjection,
+            javascriptCodeInjection: metadata.javascriptCodeInjection,
+            structuredDataCodeInjection: metadata.structuredDataCodeInjection
+        )
+    }
+
+    private func publicTemplate(
+        for metadata: MetadataDetail
+    ) -> String {
+        guard metadata.template == "default" else {
+            return metadata.template
+        }
+        switch metadata.referenceType {
+        case "blog.post": return "blog.post"
+        case "blog.author": return "blog.author"
+        case "blog.tag": return "blog.tag"
+        default: return metadata.template
+        }
+    }
+
+    func mapPublicPostSummary(
+        _ summary: PublicBlogPostSummary
+    ) async -> BlogAppAPI.Components.Schemas.BlogPostSummarySchema {
+        let media = await publicMedia(assetId: summary.imageAssetId)
+        var authors: [BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema] =
+            []
+        for author in summary.authors {
+            authors.append(await mapPublicAuthorSummary(author))
+        }
+        var tags: [BlogAppAPI.Components.Schemas.BlogTagSummarySchema] = []
+        for tag in summary.tags {
+            tags.append(await mapPublicTagSummary(tag))
+        }
+        return .init(
+            id: summary.id,
+            excerpt: summary.excerpt,
+            imageURL: media?.defaultURL ?? summary.imageURL,
+            media: mapPublicMedia(media),
+            metadata: mapPublicMetadata(
+                summary.metadata,
+                title: summary.title,
+                excerpt: summary.excerpt,
+                imageURL: media?.defaultURL ?? summary.imageURL
+            ),
+            authors: authors,
+            tags: tags
+        )
+    }
+
+    func mapPublicAuthorSummary(
+        _ summary: PublicBlogAuthorSummary
+    ) async -> BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema {
+        let media = await publicMedia(assetId: summary.imageAssetId)
+        return .init(
+            id: summary.id,
+            name: summary.name,
+            excerpt: summary.excerpt,
+            content: summary.content,
+            imageURL: media?.defaultURL ?? summary.imageURL,
+            media: mapPublicMedia(media),
+            metadata: mapPublicMetadata(
+                summary.metadata,
+                title: summary.name,
+                excerpt: summary.excerpt,
+                imageURL: media?.defaultURL ?? summary.imageURL
+            )
+        )
+    }
+
+    func mapPublicTagSummary(
+        _ summary: PublicBlogTagSummary
+    ) async -> BlogAppAPI.Components.Schemas.BlogTagSummarySchema {
+        let media = await publicMedia(assetId: summary.imageAssetId)
+        return .init(
+            id: summary.id,
+            excerpt: summary.excerpt,
+            imageURL: media?.defaultURL ?? summary.imageURL,
+            media: mapPublicMedia(media),
+            metadata: mapPublicMetadata(
+                summary.metadata,
+                title: summary.title,
+                excerpt: summary.excerpt,
+                imageURL: media?.defaultURL ?? summary.imageURL
+            )
+        )
+    }
+
+    func mapPublicAuthorLink(
+        _ link: PublicBlogAuthorLink
+    ) -> BlogAppAPI.Components.Schemas.BlogAuthorLinkSchema {
+        .init(
+            label: link.label,
+            url: link.url,
+            isBlank: link.isBlank
+        )
+    }
+
+    func mapPublicMedia(
+        _ media: PublicContentMedia?
+    ) -> BlogAppAPI.Components.Schemas.MediaAssetSchema? {
+        guard let media else {
+            return nil
+        }
+        return .init(
+            assetId: media.assetId,
+            originalURL: media.originalURL,
+            defaultURL: media.defaultURL,
+            variants: media.variants.map {
+                .init(
+                    id: $0.id,
+                    url: $0.url,
+                    _type: $0.type,
+                    width: $0.width.map(Int64.init),
+                    height: $0.height.map(Int64.init)
+                )
+            }
+        )
+    }
+
+    func mapPublicMediaList(
+        assetIDs: [String]
+    ) async -> [BlogAppAPI.Components.Schemas.MediaAssetSchema] {
+        var result: [BlogAppAPI.Components.Schemas.MediaAssetSchema] = []
+        result.reserveCapacity(assetIDs.count)
+        for assetID in assetIDs {
+            if let media = mapPublicMedia(await publicMedia(assetId: assetID)) {
+                result.append(media)
+            }
+        }
+        return result
+    }
+}

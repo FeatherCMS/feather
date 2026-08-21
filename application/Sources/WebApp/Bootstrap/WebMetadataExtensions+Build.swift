@@ -4,6 +4,7 @@ import BlogFrontend
 import NewsFrontend
 import WebApplication
 import WebFrontend
+import WebContracts
 
 func buildWebMetadataExtensions() async throws -> (
     referenceTypes: [WebMetadataReferenceTypeOption],

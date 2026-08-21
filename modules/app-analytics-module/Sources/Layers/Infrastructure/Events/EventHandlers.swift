@@ -1,7 +1,9 @@
 import AnalyticsApplication
+import AnalyticsContracts
 import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication
+import SystemContracts
 
 public enum EventHandlers {
     public static func register(

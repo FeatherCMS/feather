@@ -1,13 +1,14 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDomain
+import RedirectContracts
+import RedirectDomain
+
 //
 //  ListRules.swift
 //  app-redirect-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import RedirectDomain
 
 public struct ListRules: UseCase {
     struct Action: PermissionAction {

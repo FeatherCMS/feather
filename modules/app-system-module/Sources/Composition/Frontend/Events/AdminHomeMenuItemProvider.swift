@@ -1,4 +1,3 @@
-import FeatherApplication
 import FeatherContracts
 
 public struct AdminHomeMenuItemProvider: Event {

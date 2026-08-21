@@ -56,15 +56,7 @@ let package = Package(
         .package(
             url: "https://github.com/apple/swift-log",
             from: "1.15.0"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-database",
-            exact: "1.0.0-rc.2"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-openapi",
-            exact: "1.0.0-beta.7"
-        ),
+        ),        
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "5.0.0"
@@ -82,35 +74,19 @@ let package = Package(
             from: "2.20.1"
         ),
         .package(
-            url: "https://github.com/BinaryBirds/swift-web-standards",
-            exact: "1.0.0-beta.3"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-validation",
-            exact: "1.0.0-beta.1"
-        ),
-        .package(
-            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/swift-server/async-http-client.git",
-            from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio.git",
-            from: "2.0.0"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-database-postgres",
             exact: "1.0.0-rc.2"
         ),
         .package(
-            url: "https://github.com/vapor/postgres-nio.git",
+            url: "https://github.com/vapor/postgres-nio",
             from: "1.32.2"
         ),
         .package(
-            url: "https://github.com/apple/swift-nio-ssl.git",
+            url: "https://github.com/apple/swift-nio-ssl",
             from: "2.34.0"
         ),
         .package(path: "../../feather-core"),
@@ -128,8 +104,8 @@ let package = Package(
             name: "SystemDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "SystemContracts")
+
+                .target(name: "SystemContracts"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: defaultSwiftSettings
@@ -138,10 +114,9 @@ let package = Package(
             name: "SystemApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+
                 .target(name: "SystemDomain"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                ],
+            ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -149,9 +124,9 @@ let package = Package(
             name: "SystemInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+
                 .target(name: "SystemApplication"),
-            
-                .product(name: "FeatherContracts", package: "feather-core")],
+            ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
@@ -159,26 +134,16 @@ let package = Package(
         .target(
             name: "SystemAdminAPI",
             dependencies: [
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                ),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "SystemApplication")],
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
             path: "Sources/APIs/Admin",
             swiftSettings: defaultSwiftSettings
         ),
         .target(
             name: "SystemAppAPI",
             dependencies: [
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                ),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "SystemApplication")],
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
             path: "Sources/APIs/App",
             swiftSettings: defaultSwiftSettings
         ),
@@ -186,17 +151,10 @@ let package = Package(
         .executableTarget(
             name: "SystemAdminOpenAPIGenerator",
             dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
-                .product(
-                    name: "FeatherOpenAPI",
-                    package: "feather-openapi"
-                ),
-                .product(name: "OpenAPIKit", package: "OpenAPIKit"),
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
-                .product(name: "Yams", package: "Yams")
+                .product(name: "Yams", package: "Yams"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: defaultSwiftSettings
@@ -204,17 +162,10 @@ let package = Package(
         .executableTarget(
             name: "SystemAppOpenAPIGenerator",
             dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
-                .product(
-                    name: "FeatherOpenAPI",
-                    package: "feather-openapi"
-                ),
-                .product(name: "OpenAPIKit", package: "OpenAPIKit"),
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
-                .product(name: "Yams", package: "Yams")
+                .product(name: "Yams", package: "Yams"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: defaultSwiftSettings
@@ -223,16 +174,11 @@ let package = Package(
         .target(
             name: "SystemBackend",
             dependencies: [
-                .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherBackend", package: "feather-core"),
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .product(name: "FeatherDatabase", package: "feather-database"),
-                .target(name: "SystemApplication"),
+                
                 .target(name: "SystemInfrastructure"),
                 .target(name: "SystemAdminAPI"),
                 .target(name: "SystemAppAPI"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
@@ -240,19 +186,12 @@ let package = Package(
         .target(
             name: "SystemFrontend",
             dependencies: [
-                .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherAdmin", package: "feather-core"),
+            
+                .target(name: "SystemContracts"),
                 .target(name: "SystemAdminAPI"),
                 .target(name: "SystemAppAPI"),
-                .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "WebStandards", package: "swift-web-standards"),
-                .product(name: "FeatherValidation", package: "feather-validation"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "NIOCore", package: "swift-nio"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "SystemApplication")],
+            ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings
         ),
@@ -274,13 +213,11 @@ let package = Package(
         .testTarget(
             name: "SystemInfrastructureTests",
             dependencies: [
-                .target(name: "SystemInfrastructure"),
-                .product(
-                    name: "FeatherDatabasePostgres",
-                    package: "feather-database-postgres"
-                ),
+                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
+
+                .target(name: "SystemInfrastructure"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

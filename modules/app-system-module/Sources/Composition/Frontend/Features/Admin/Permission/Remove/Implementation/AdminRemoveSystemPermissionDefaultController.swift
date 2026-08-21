@@ -17,7 +17,6 @@ struct AdminRemoveSystemPermissionDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
-
         do {
             let permission = try await interactor.get(id: id)
             return presenter.renderRemovePage(
@@ -43,7 +42,6 @@ struct AdminRemoveSystemPermissionDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
-
         do {
             try await interactor.delete(id: id)
             return Response(

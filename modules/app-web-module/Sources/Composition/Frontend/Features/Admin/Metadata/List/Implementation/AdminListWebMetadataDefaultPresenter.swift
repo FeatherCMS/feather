@@ -1,9 +1,10 @@
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebApplication
+import WebContracts
 import WebStandards
 
 struct AdminListWebMetadataDefaultPresenter:
@@ -21,8 +22,9 @@ struct AdminListWebMetadataDefaultPresenter:
         referenceType: String?,
         error: String?
     ) -> HTMLResponse {
-        let scope = AdminWeb.Scope.metadata
-        let canAccess = permissions.contains(scope.permission(for: .list))
+        let canAccess = permissions.contains(
+            WebPermissions.Metadata.list.rawValue
+        )
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,

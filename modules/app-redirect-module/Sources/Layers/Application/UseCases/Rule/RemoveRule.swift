@@ -1,13 +1,14 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDomain
+import RedirectContracts
+import RedirectDomain
+
 //
 //  RemoveRule.swift
 //  app-redirect-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import RedirectDomain
 
 public struct RemoveRule: UseCase {
     struct Action: PermissionAction {

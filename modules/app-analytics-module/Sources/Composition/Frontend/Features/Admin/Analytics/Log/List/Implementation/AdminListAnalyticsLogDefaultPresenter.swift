@@ -1,4 +1,6 @@
+import AnalyticsContracts
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
@@ -19,8 +21,9 @@ struct AdminListAnalyticsLogDefaultPresenter:
         responseCode: String?,
         error: String?
     ) -> HTMLResponse {
-        let scope = AdminAnalytics.Scope.logs
-        let canAccess = permissions.contains(scope.permission(for: .list))
+        let canAccess = permissions.contains(
+            AnalyticsPermissions.Logs.list.rawValue
+        )
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,

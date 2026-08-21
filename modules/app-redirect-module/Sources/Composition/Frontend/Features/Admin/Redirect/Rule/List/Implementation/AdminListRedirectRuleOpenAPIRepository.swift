@@ -1,9 +1,10 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import Hummingbird
 import OpenAPIRuntime
 import RedirectAdminAPI
-import RedirectDomain
+import RedirectContracts
 
 struct AdminListRedirectRuleOpenAPIRepository:
     AdminListRedirectRuleRepository
@@ -27,7 +28,7 @@ struct AdminListRedirectRuleOpenAPIRepository:
     func listRedirectRules(
         page: Int,
         search: String?,
-        statusCode: Rule.StatusCode?
+        statusCode: StatusCode?
     ) async throws -> AdminListRedirectRuleModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =

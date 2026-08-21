@@ -1,15 +1,16 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDomain
+import NewsContracts
+import NewsDomain
+import WebApplication
+import WebDomain
+
 //
 //  EditArticle.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import NewsDomain
-import WebApplication
-import WebDomain
 
 public struct EditArticle: UseCase {
     struct Action: PermissionAction {

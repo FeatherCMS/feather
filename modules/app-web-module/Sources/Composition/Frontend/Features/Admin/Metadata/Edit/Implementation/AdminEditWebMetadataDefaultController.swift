@@ -4,7 +4,7 @@ import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
-import WebApplication
+import WebContracts
 
 struct AdminEditWebMetadataDefaultController:
     AdminEditWebMetadataController
@@ -71,7 +71,6 @@ struct AdminEditWebMetadataDefaultController:
         let runtime = buildRuntime(request, context)
         let id = try metadataID(context: context)
         let permissions = context.currentUserPermissions
-
         do {
             let entry = try await loadEntry(
                 runtime: runtime,
@@ -424,6 +423,10 @@ struct AdminEditWebMetadataDefaultController:
                 "contentID",
                 as: String.self
             )
+                ?? context.parameters.get(
+                    "id",
+                    as: String.self
+                )
         {
             return try await runtime.interactor.load(
                 referenceType: referenceType,

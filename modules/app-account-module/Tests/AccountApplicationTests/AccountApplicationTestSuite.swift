@@ -1,9 +1,4 @@
-//
-//  AccountApplicationTestSuite.swift
-//  app-account-module
-//
-//  Created by Binary Birds on 2026. 07. 16.
-
+import AccountContracts
 import AccountDomain
 import FeatherApplication
 import FeatherContracts
@@ -11,6 +6,12 @@ import Foundation
 import Testing
 
 @testable import AccountApplication
+
+//
+//  AccountApplicationTestSuite.swift
+//  app-account-module
+//
+//  Created by Binary Birds on 2026. 07. 16.
 
 @Suite
 struct AccountApplicationTestSuite {

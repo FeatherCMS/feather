@@ -4,7 +4,7 @@ import Foundation
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebApplication
+import WebContracts
 import WebStandards
 
 struct WebMetadataForm: Component, FlowContent {

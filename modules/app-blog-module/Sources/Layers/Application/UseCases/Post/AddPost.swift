@@ -1,9 +1,4 @@
-//
-//  AddPost.swift
-//  app-blog-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
+import BlogContracts
 import BlogDomain
 import FeatherApplication
 import FeatherContracts
@@ -12,6 +7,12 @@ import Foundation
 import SystemApplication
 import WebApplication
 import WebDomain
+
+//
+//  AddPost.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
 
 public struct AddPost: UseCase {
 

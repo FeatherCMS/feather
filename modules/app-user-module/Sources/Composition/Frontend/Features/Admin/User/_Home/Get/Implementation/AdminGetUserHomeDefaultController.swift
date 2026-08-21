@@ -1,5 +1,6 @@
 import FeatherAdmin
 import Hummingbird
+import UserContracts
 
 struct AdminGetUserHomeDefaultController: AdminGetUserHomeController {
     let buildRuntime:

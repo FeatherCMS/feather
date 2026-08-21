@@ -1,6 +1,8 @@
 import BlogAdminAPI
 import BlogAppAPI
+import BlogContracts
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -27,9 +29,8 @@ struct AdminListBlogTagDefaultPresenter:
         search: String?,
         error: String?
     ) -> HTMLResponse {
-        let scope = AdminBlog.Scope.tags
-        let canAccess = permissions.contains(scope.permission(for: .list))
-        let canEdit = permissions.contains(scope.permission(for: .update))
+        let canAccess = permissions.contains(BlogPermissions.Tags.list.rawValue)
+        let canEdit = permissions.contains(BlogPermissions.Tags.update.rawValue)
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -69,7 +70,7 @@ struct AdminListBlogTagDefaultPresenter:
                     canEdit: canEdit,
                     permissions: permissions,
                     canAdd: permissions.contains(
-                        scope.permission(for: .create)
+                        BlogPermissions.Tags.create.rawValue
                     ),
                     rules: model.items,
                     page: model.page,

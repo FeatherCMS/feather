@@ -1,14 +1,15 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDomain
+import NewsContracts
+import NewsDomain
+import WebApplication
+
 //
 //  ListArticles.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 07. 06.
-
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import NewsDomain
-import WebApplication
 
 public struct ListArticles: UseCase {
     struct Action: PermissionAction {

@@ -1,9 +1,10 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import Hummingbird
 import OpenAPIRuntime
 import RedirectAdminAPI
-import RedirectDomain
+import RedirectContracts
 
 struct AdminAddRedirectRuleOpenAPIRepository: AdminAddRedirectRuleRepository {
     let api: RedirectAdminAPIClient

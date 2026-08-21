@@ -26,7 +26,6 @@ struct AdminGetBlogAuthorLinkDefaultController: AdminGetBlogAuthorLinkController
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions
-
         do {
             let rule = try await runtime.interactor.execute(
                 entity: .init(menuId: menuId, id: id)

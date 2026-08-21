@@ -1,8 +1,10 @@
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
+import WebContracts
 import WebStandards
 
 struct AdminListWebMenuDefaultPresenter:
@@ -20,8 +22,7 @@ struct AdminListWebMenuDefaultPresenter:
         search: String?,
         error: String?
     ) -> HTMLResponse {
-        let scope = AdminWeb.Scope.menus
-        let canAccess = permissions.contains(scope.permission(for: .list))
+        let canAccess = permissions.contains(WebPermissions.Menus.list.rawValue)
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -57,7 +58,9 @@ struct AdminListWebMenuDefaultPresenter:
                     isRemoved: isRemoved,
                     canAccess: canAccess,
                     permissions: permissions,
-                    canAdd: permissions.contains(scope.create),
+                    canAdd: permissions.contains(
+                        WebPermissions.Menus.create.rawValue
+                    ),
                     rules: model.items,
                     page: model.page,
                     pageSize: model.pageSize,

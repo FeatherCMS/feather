@@ -8,17 +8,6 @@ public struct AccountAdmin {
         self.renderingEngine = renderingEngine
     }
 
-    public enum Scope {
-        public static let settings = PermissionScope(
-            module: "account",
-            resource: "settings"
-        )
-        public static let invitations = PermissionScope(
-            module: "account",
-            resource: "invitations"
-        )
-    }
-
     public func route(
         on router: Router<AppRequestContext>
     ) {

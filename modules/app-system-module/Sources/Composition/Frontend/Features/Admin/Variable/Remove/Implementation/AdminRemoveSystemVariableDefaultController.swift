@@ -18,7 +18,6 @@ struct AdminRemoveSystemVariableDefaultController:
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
-
         do {
             let variable = try await runtime.interactor.get(id: id)
             return runtime.presenter.renderRemovePage(
@@ -44,7 +43,6 @@ struct AdminRemoveSystemVariableDefaultController:
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
-
         do {
             try await runtime.interactor.delete(id: id)
             return Response(

@@ -27,7 +27,6 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions
-
         do {
             let rule = try await runtime.interactor.get(menuId: menuId, id: id)
             return runtime.presenter.renderRemovePage(
@@ -56,7 +55,6 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions
-
         do {
             try await runtime.interactor.delete(menuId: menuId, id: id)
             return Response(

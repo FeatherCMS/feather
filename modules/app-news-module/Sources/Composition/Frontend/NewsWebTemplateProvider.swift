@@ -1,4 +1,4 @@
-import WebApplication
+import WebContracts
 
 public struct NewsWebTemplateProvider: WebTemplateProvider {
     public let templates: [WebTemplateDefinition] = [

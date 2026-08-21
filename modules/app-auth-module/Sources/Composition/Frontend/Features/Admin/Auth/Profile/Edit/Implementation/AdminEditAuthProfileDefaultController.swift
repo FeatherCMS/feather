@@ -1,5 +1,6 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
 import FeatherValidation
@@ -36,8 +37,7 @@ struct AdminEditAuthProfileDefaultController:
         let permissions = account.permissionSet
         guard
             context.isCurrentUserAllowed(
-                to: .update,
-                scope: AdminAuth.Scope.profile
+                to: AuthPermissions.Profile.update
             )
         else {
             return presenter.renderDeniedPage(permissions: permissions)
@@ -71,8 +71,7 @@ struct AdminEditAuthProfileDefaultController:
         let permissions = account.permissionSet
         guard
             context.isCurrentUserAllowed(
-                to: .update,
-                scope: AdminAuth.Scope.profile
+                to: AuthPermissions.Profile.update
             )
         else {
             return try presenter.renderDeniedPage(permissions: permissions)

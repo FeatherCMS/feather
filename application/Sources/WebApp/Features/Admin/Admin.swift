@@ -1,5 +1,6 @@
 import FeatherContracts
 import WebApplication
+import WebContracts
 import BlogFrontend
 import MediaFrontend
 import ContactFrontend

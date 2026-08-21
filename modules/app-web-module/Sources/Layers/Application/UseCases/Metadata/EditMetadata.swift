@@ -1,15 +1,16 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDomain
+import WebContracts
+import WebDomain
+
+import struct Foundation.Date
+
 //
 //  EditMetadata.swift
 //  app-web-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import WebDomain
-
-import struct Foundation.Date
 
 public struct EditMetadata: UseCase {
 

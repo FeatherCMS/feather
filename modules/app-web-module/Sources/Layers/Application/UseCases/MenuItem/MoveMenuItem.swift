@@ -1,5 +1,6 @@
 import FeatherApplication
 import FeatherContracts
+import WebContracts
 import WebDomain
 
 public struct MoveMenuItem: UseCase {

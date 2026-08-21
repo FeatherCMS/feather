@@ -18,7 +18,6 @@ struct AdminEditSystemPermissionDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
-
         do {
             let permission = try await interactor.load(id: id)
             return presenter.renderEditPage(

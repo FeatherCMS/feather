@@ -1,6 +1,8 @@
 import BlogAdminAPI
 import BlogAppAPI
+import BlogContracts
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -66,7 +68,7 @@ struct BlogPostDetails: Component {
                         .class("secondary")
                 }
                 if state.permissions.contains(
-                    AdminBlog.Scope.posts.permission(for: .update)
+                    BlogPermissions.Posts.update.rawValue
                 ) {
                     AdminStatusActionForm(
                         action: "/admin/blog/posts/\(state.rule.id)/status/",
@@ -81,7 +83,7 @@ struct BlogPostDetails: Component {
                     )
                 }
                 if state.permissions.contains(
-                    AdminBlog.Scope.posts.permission(for: .delete)
+                    BlogPermissions.Posts.delete.rawValue
                 ) {
                     AdminNavigationButton(
                         "Remove post",

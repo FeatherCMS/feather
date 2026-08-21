@@ -1,5 +1,6 @@
 import BlogAdminAPI
 import BlogAppAPI
+import BlogContracts
 import FeatherAdmin
 import FeatherValidation
 import HTML
@@ -29,8 +30,7 @@ struct AdminListBlogAuthorLinkDefaultController:
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminBlog.Scope.authorLinks
+            to: BlogPermissions.AuthorLinks.list
         )
         let emptyModel = AdminListBlogAuthorLinkModel(
             items: [],

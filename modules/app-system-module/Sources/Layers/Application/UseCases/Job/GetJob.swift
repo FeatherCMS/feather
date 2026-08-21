@@ -1,5 +1,6 @@
 import FeatherApplication
 import FeatherContracts
+import SystemContracts
 import SystemDomain
 
 public struct GetJob: UseCase {

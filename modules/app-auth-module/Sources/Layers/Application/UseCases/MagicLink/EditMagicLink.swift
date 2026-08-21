@@ -1,12 +1,13 @@
+import AuthContracts
+import AuthDomain
+import FeatherApplication
+import FeatherContracts
+
 //
 //  EditMagicLink.swift
 //  app-auth-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import AuthDomain
-import FeatherApplication
-import FeatherContracts
 
 public struct EditMagicLink: UseCase {
     struct Action: PermissionAction {

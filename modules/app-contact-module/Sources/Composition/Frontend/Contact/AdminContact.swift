@@ -9,25 +9,6 @@ import WebStandards
 public struct AdminContact {
     let renderingEngine: any RenderingEngine
 
-    public enum Scope {
-        public static let forms = PermissionScope(
-            module: "contact",
-            resource: "forms"
-        )
-        public static let fields = PermissionScope(
-            module: "contact",
-            resource: "form-fields"
-        )
-        public static let submissions = PermissionScope(
-            module: "contact",
-            resource: "form-submissions"
-        )
-        public static let mails = PermissionScope(
-            module: "contact",
-            resource: "form-mails"
-        )
-    }
-
     public init(renderingEngine: any RenderingEngine) {
         self.renderingEngine = renderingEngine
     }
