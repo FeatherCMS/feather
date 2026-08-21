@@ -1,6 +1,6 @@
 import FeatherAdmin
 import Hummingbird
-import WebApplication
+import WebContracts
 import WebFrontend
 
 enum AdminBlogMetadataRoutes {

@@ -7,7 +7,7 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebApplication
+import WebContracts
 import WebFrontend
 import WebStandards
 

@@ -1,4 +1,4 @@
-import WebApplication
+import WebContracts
 
 public struct BlogWebTemplateProvider: WebTemplateProvider {
     public let templates: [WebTemplateDefinition] = [

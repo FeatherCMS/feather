@@ -3,8 +3,8 @@ import FeatherAdmin
 import FeatherContracts
 import Foundation
 import OpenAPIRuntime
-import SystemApplication
-import WebApplication
+import SystemContracts
+import WebContracts
 
 public enum BlogWebPublicContentEventHandlers {
     public static func register(

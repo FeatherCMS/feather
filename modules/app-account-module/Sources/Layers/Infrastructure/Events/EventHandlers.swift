@@ -5,6 +5,8 @@ import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication
 import UserApplication
+import SystemContracts
+import UserContracts
 
 public enum EventHandlers {
 

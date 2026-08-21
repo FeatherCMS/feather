@@ -11,7 +11,7 @@ var defaultSwiftSettings: [SwiftSetting] = [
     .enableExperimentalFeature("Lifetimes"),
     // https://github.com/swiftlang/swift/pull/65218
     .enableExperimentalFeature(
-        "AvailabilityMacro=AnalyticsBackend 1.0:macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0"
+        "AvailabilityMacro=AnalyticsModule 1.0:macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0"
     ),
 ]
 
@@ -30,7 +30,6 @@ defaultSwiftSettings += [
     ),
 ]
 
-
 let package = Package(
     name: "app-analytics-module",
     platforms: [
@@ -43,47 +42,17 @@ let package = Package(
     products: [
         .library(name: "AnalyticsDomain", targets: ["AnalyticsDomain"]),
         .library(name: "AnalyticsContracts", targets: ["AnalyticsContracts"]),
-        .library(
-            name: "AnalyticsApplication",
-            targets: ["AnalyticsApplication"]
-        ),
-        .library(
-            name: "AnalyticsInfrastructure",
-            targets: ["AnalyticsInfrastructure"]
-        ),
-        .library(
-            name: "AnalyticsAdminAPI",
-            targets: ["AnalyticsAdminAPI"]
-        ),
-        .library(
-            name: "AnalyticsAppAPI",
-            targets: ["AnalyticsAppAPI"]
-        ),
-        .executable(
-            name: "AnalyticsAdminOpenAPIGenerator",
-            targets: ["AnalyticsAdminOpenAPIGenerator"]
-        ),
-        .executable(
-            name: "AnalyticsAppOpenAPIGenerator",
-            targets: ["AnalyticsAppOpenAPIGenerator"]
-        ),
-        .library(
-            name: "AnalyticsBackend",
-            targets: ["AnalyticsBackend"]
-        ),
-        .library(
-            name: "AnalyticsFrontend",
-            targets: ["AnalyticsFrontend"]
-        ),
+        .library(name: "AnalyticsApplication", targets: ["AnalyticsApplication"]),
+        .library(name: "AnalyticsInfrastructure", targets: ["AnalyticsInfrastructure"]),
+        .library(name: "AnalyticsAdminAPI", targets: ["AnalyticsAdminAPI"]),
+        .library(name: "AnalyticsAppAPI", targets: ["AnalyticsAppAPI"]),
+        .executable(name: "AnalyticsAdminOpenAPIGenerator", targets: ["AnalyticsAdminOpenAPIGenerator"]),
+        .executable(name: "AnalyticsAppOpenAPIGenerator", targets: ["AnalyticsAppOpenAPIGenerator"]),
+        .library(name: "AnalyticsBackend", targets: ["AnalyticsBackend"]),
+        .library(name: "AnalyticsFrontend", targets: ["AnalyticsFrontend"]),
     ],
     dependencies: [
         // [docc-plugin-placeholder]
-        .package(path: "../../feather-core"),
-        .package(path: "../app-system-module"),
-        .package(
-            url: "https://github.com/feather-framework/feather-openapi",
-            exact: "1.0.0-beta.7"
-        ),
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "5.0.0"
@@ -101,25 +70,11 @@ let package = Package(
             from: "2.20.1"
         ),
         .package(
-            url: "https://github.com/BinaryBirds/swift-web-standards",
-            exact: "1.0.0-beta.3"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-validation",
-            exact: "1.0.0-beta.1"
-        ),
-        .package(
-            url: "https://github.com/swift-server/swift-openapi-async-http-client",
-            from: "1.0.0"
-        ),
-        .package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
-        .package(
-            url: "https://github.com/apple/swift-nio",
-            from: "2.0.0"
-        )
+        .package(path: "../../feather-core"),
+        .package(path: "../app-system-module"),
     ],
     targets: [
         .target(
@@ -134,7 +89,8 @@ let package = Package(
             name: "AnalyticsDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core")
+                
+                .target(name: "AnalyticsContracts"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: defaultSwiftSettings
@@ -143,11 +99,10 @@ let package = Package(
             name: "AnalyticsApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .target(name: "AnalyticsDomain"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AnalyticsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "SystemApplication", package: "app-system-module"),
+                
+                .target(name: "AnalyticsDomain"),    
+            ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -155,14 +110,8 @@ let package = Package(
             name: "AnalyticsInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
+                
                 .target(name: "AnalyticsApplication"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AnalyticsContracts"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
@@ -170,40 +119,23 @@ let package = Package(
         .target(
             name: "AnalyticsAdminAPI",
             dependencies: [
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                ),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AnalyticsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
             path: "Sources/APIs/Admin",
             swiftSettings: defaultSwiftSettings
         ),
         .target(
             name: "AnalyticsAppAPI",
             dependencies: [
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                ),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AnalyticsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
             path: "Sources/APIs/App",
             swiftSettings: defaultSwiftSettings
         ),
         .target(
             name: "AnalyticsSharedOpenAPIGenerator",
             dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
-                .product(name: "FeatherOpenAPI", package: "feather-openapi"),
-                .product(name: "OpenAPIKit", package: "OpenAPIKit")
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
             ],
             path: "Sources/Generators/Shared",
             swiftSettings: defaultSwiftSettings
@@ -211,15 +143,10 @@ let package = Package(
         .executableTarget(
             name: "AnalyticsAdminOpenAPIGenerator",
             dependencies: [
-                .target(name: "AnalyticsSharedOpenAPIGenerator"),
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
-                .product(name: "FeatherOpenAPI", package: "feather-openapi"),
-                .product(name: "OpenAPIKit", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
-                .product(name: "Yams", package: "Yams")
+                .product(name: "Yams", package: "Yams"),
+
+                .target(name: "AnalyticsSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: defaultSwiftSettings
@@ -227,15 +154,10 @@ let package = Package(
         .executableTarget(
             name: "AnalyticsAppOpenAPIGenerator",
             dependencies: [
-                .target(name: "AnalyticsSharedOpenAPIGenerator"),
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
-                .product(name: "FeatherOpenAPI", package: "feather-openapi"),
-                .product(name: "OpenAPIKit", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
-                .product(name: "Yams", package: "Yams")
+                .product(name: "Yams", package: "Yams"),
+
+                .target(name: "AnalyticsSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: defaultSwiftSettings
@@ -243,18 +165,12 @@ let package = Package(
         .target(
             name: "AnalyticsBackend",
             dependencies: [
-                .product(name: "FeatherApplication", package: "feather-core"),
-                .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .target(name: "AnalyticsApplication"),
+                .product(name: "FeatherBackend", package: "feather-core"),
+                
                 .target(name: "AnalyticsInfrastructure"),
                 .target(name: "AnalyticsAdminAPI"),
-                .target(name: "AnalyticsAppAPI"),
-                .product(name: "Hummingbird", package: "hummingbird"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AnalyticsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .target(name: "AnalyticsAppAPI"),    
+            ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),
@@ -262,44 +178,33 @@ let package = Package(
             name: "AnalyticsFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
+
+                .product(name: "SystemContracts", package: "app-system-module"),
+                .target(name: "AnalyticsContracts"),
                 .target(name: "AnalyticsAdminAPI"),
                 .target(name: "AnalyticsAppAPI"),
-                .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "WebStandards", package: "swift-web-standards"),
-                .product(name: "HTML", package: "swift-web-standards"),
-                .product(name: "SGML", package: "swift-web-standards"),
-                .product(name: "CSS", package: "swift-web-standards"),
-                .product(name: "SVG", package: "swift-web-standards"),
-                .product(name: "FeatherValidation", package: "feather-validation"),
-                .product(name: "FeatherValidationFoundation", package: "feather-validation"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "NIOCore", package: "swift-nio"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "AnalyticsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+            ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings
         ),
         .testTarget(
             name: "AnalyticsDomainTests",
             dependencies: [
-                .target(name: "AnalyticsDomain")
+                .target(name: "AnalyticsDomain"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
         .testTarget(
             name: "AnalyticsApplicationTests",
             dependencies: [
-                .target(name: "AnalyticsApplication")
+                .target(name: "AnalyticsApplication"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
         .testTarget(
             name: "AnalyticsInfrastructureTests",
             dependencies: [
-                .target(name: "AnalyticsInfrastructure")
+                .target(name: "AnalyticsInfrastructure"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

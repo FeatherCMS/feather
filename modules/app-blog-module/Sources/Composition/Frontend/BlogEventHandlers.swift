@@ -1,6 +1,6 @@
 import FeatherContracts
-import WebApplication
-import WebDomain
+import WebContracts
+import SystemContracts
 
 public enum BlogEventHandlers {
     public static func register(in registry: inout EventRegistry) {

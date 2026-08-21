@@ -5,6 +5,8 @@ import FeatherInfrastructure
 import SystemApplication
 import WebApplication
 import WebDomain
+import WebContracts
+import SystemContracts
 
 public enum EventHandlers {
     public static func register(
