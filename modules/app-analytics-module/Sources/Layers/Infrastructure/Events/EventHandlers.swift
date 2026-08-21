@@ -1,5 +1,5 @@
-import AnalyticsContracts
 import AnalyticsApplication
+import AnalyticsContracts
 import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication

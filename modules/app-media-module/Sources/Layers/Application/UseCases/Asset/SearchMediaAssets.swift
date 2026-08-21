@@ -1,12 +1,12 @@
+import FeatherApplication
+import FeatherContracts
 import MediaContracts
+
 //
 //  SearchMediaAssets.swift
 //  app-media-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
 
 public struct SearchMediaAssets: UseCase {
     struct Action: PermissionAction {

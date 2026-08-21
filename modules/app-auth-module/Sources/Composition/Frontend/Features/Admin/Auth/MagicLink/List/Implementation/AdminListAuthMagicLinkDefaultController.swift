@@ -1,9 +1,9 @@
-import AuthContracts
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
-import FeatherContracts
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
@@ -60,7 +60,9 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                 isRemoved: request.hasQueryFlag("removed"),
                 canAccess: canAccess,
                 permissions: permissionSet,
-                canAdd: permissionSet.contains(AuthPermissions.MagicLinks.create.rawValue),
+                canAdd: permissionSet.contains(
+                    AuthPermissions.MagicLinks.create.rawValue
+                ),
                 links: result.items,
                 page: result.page,
                 pageSize: result.size,

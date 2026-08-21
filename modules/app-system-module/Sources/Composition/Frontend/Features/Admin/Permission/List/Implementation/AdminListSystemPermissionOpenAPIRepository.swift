@@ -1,8 +1,8 @@
-import SystemContracts
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
 import SystemAdminAPI
+import SystemContracts
 
 struct AdminListSystemPermissionOpenAPIRepository:
     AdminListSystemPermissionRepository

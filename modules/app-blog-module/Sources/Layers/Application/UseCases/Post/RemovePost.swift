@@ -1,15 +1,15 @@
 import BlogContracts
-//
-//  RemovePost.swift
-//  app-blog-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 import BlogDomain
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
 import WebDomain
+
+//
+//  RemovePost.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
 
 public struct RemovePost: UseCase {
     struct Action: PermissionAction {

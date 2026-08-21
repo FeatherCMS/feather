@@ -1,5 +1,5 @@
-import ContactContracts
 import ContactApplication
+import ContactContracts
 import ContactInfrastructure
 import FeatherApplication
 import FeatherContracts

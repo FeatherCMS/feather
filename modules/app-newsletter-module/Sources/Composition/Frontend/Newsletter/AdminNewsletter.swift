@@ -9,7 +9,6 @@ import WebStandards
 public struct AdminNewsletter {
     let renderingEngine: any RenderingEngine
 
-
     public init(renderingEngine: any RenderingEngine) {
         self.renderingEngine = renderingEngine
     }

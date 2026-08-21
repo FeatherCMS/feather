@@ -1,12 +1,12 @@
 import AuthContracts
+import AuthDomain
+import FeatherApplication
+import FeatherContracts
+
 //
 //  ListCredential.swift
 //  app-auth-module
 //
-
-import AuthDomain
-import FeatherApplication
-import FeatherContracts
 
 public struct ListCredential: UseCase {
 

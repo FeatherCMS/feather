@@ -10,7 +10,6 @@ public struct AdminAnalytics {
         self.renderingEngine = renderingEngine
     }
 
-
     public func route(
         on router: Router<AppRequestContext>
     ) {

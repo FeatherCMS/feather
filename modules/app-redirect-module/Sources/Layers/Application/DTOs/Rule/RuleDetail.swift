@@ -6,8 +6,8 @@
 
 import FeatherApplication
 import FeatherContracts
-import RedirectDomain
 import RedirectContracts
+import RedirectDomain
 
 import struct Foundation.Date
 

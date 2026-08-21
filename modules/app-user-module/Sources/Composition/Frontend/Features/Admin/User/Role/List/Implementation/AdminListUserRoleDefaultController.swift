@@ -1,7 +1,7 @@
-import UserContracts
 import FeatherAdmin
 import Hummingbird
 import UserAdminAPI
+import UserContracts
 
 struct AdminListUserRoleDefaultController: AdminListUserRoleController {
     let buildRuntime:

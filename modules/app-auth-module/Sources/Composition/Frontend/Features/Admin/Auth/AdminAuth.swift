@@ -18,7 +18,6 @@ import WebStandards
 struct AdminAuth {
     let renderingEngine: any RenderingEngine
 
-
     func route(
         on router: Router<AppRequestContext>
     ) {

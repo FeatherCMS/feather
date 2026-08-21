@@ -1,13 +1,13 @@
+import FeatherApplication
+import FeatherContracts
 import UserContracts
+import UserDomain
+
 //
 //  GetIdentity.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import UserDomain
 
 public struct GetIdentity: UseCase {
     struct Action: PermissionAction {

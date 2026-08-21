@@ -18,7 +18,6 @@ public struct AdminWeb {
         self.templateOptions = templateOptions
     }
 
-
     public func route(
         on router: Router<AppRequestContext>
     ) {

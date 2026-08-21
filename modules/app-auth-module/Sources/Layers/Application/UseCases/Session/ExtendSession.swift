@@ -1,13 +1,13 @@
 import AuthContracts
+import AuthDomain
+import FeatherApplication
+import FeatherContracts
+
 //
 //  ExtendSession.swift
 //  app-auth-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import AuthDomain
-import FeatherApplication
-import FeatherContracts
 
 public struct ExtendSession: UseCase {
     struct Action: PermissionAction {

@@ -1,7 +1,7 @@
-import UserContracts
 import FeatherAdmin
 import HTML
 import Hummingbird
+import UserContracts
 
 struct AdminGetUserIdentityDefaultController: AdminGetUserIdentityController {
     let buildRuntime:

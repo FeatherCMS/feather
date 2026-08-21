@@ -1,8 +1,8 @@
-import FeatherContracts
-import BlogContracts
 import BlogAdminAPI
 import BlogAppAPI
+import BlogContracts
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -29,8 +29,12 @@ struct AdminListBlogAuthorDefaultPresenter:
         search: String?,
         error: String?
     ) -> HTMLResponse {
-        let canAccess = permissions.contains(BlogPermissions.Authors.list.rawValue)
-        let canEdit = permissions.contains(BlogPermissions.Authors.update.rawValue)
+        let canAccess = permissions.contains(
+            BlogPermissions.Authors.list.rawValue
+        )
+        let canEdit = permissions.contains(
+            BlogPermissions.Authors.update.rawValue
+        )
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,

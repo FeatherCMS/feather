@@ -1,4 +1,3 @@
-import RedirectContracts
 import FeatherAdmin
 import Foundation
 import Hummingbird

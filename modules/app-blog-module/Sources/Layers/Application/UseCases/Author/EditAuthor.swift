@@ -1,16 +1,16 @@
 import BlogContracts
-//
-//  EditAuthor.swift
-//  app-blog-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 import BlogDomain
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
 import WebApplication
 import WebDomain
+
+//
+//  EditAuthor.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
 
 public struct EditAuthor: UseCase {
 

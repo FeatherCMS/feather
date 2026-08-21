@@ -6,8 +6,8 @@
 
 import FeatherApplication
 import FeatherContracts
-import RedirectDomain
 import RedirectContracts
+import RedirectDomain
 
 public struct PublicRedirectRule: DTO {
     public let source: String

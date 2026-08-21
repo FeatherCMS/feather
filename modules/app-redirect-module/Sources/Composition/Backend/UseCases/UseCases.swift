@@ -1,4 +1,3 @@
-import RedirectContracts
 import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
@@ -7,6 +6,7 @@ import FeatherInfrastructure
 import RedirectAdminAPI
 import RedirectAppAPI
 import RedirectApplication
+import RedirectContracts
 import RedirectInfrastructure
 
 public struct UseCases: Sendable {

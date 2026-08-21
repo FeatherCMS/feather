@@ -1,11 +1,11 @@
-import FeatherContracts
-import MediaContracts
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
+import MediaContracts
 import OpenAPIRuntime
 import SGML
 import WebStandards
@@ -25,7 +25,9 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         permissions: Set<String>,
         error: String?
     ) -> HTMLResponse {
-        let canAccess = permissions.contains(MediaPermissions.Assets.list.rawValue)
+        let canAccess = permissions.contains(
+            MediaPermissions.Assets.list.rawValue
+        )
         let content = AssetListView(
             state: .init(
                 folders: model.folders,
@@ -43,7 +45,9 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 isRemoved: isRemoved,
                 canAccess: canAccess,
                 permissions: permissions,
-                canAdd: permissions.contains(MediaPermissions.Assets.create.rawValue),
+                canAdd: permissions.contains(
+                    MediaPermissions.Assets.create.rawValue
+                ),
                 deniedInfo: "Forbidden",
                 deniedMessage:
                     "Your account cannot access media assets.",

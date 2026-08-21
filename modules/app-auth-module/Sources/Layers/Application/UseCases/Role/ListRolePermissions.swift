@@ -1,12 +1,12 @@
 import AuthContracts
+import FeatherApplication
+import FeatherContracts
+
 //
 //  ListRolePermissions.swift
 //  app-auth-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
 
 public struct ListRolePermissions: UseCase {
     struct Action: PermissionAction {

@@ -1,7 +1,7 @@
-import NewsletterContracts
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
+import NewsletterContracts
 import NewsletterDomain
 
 import struct Foundation.Date

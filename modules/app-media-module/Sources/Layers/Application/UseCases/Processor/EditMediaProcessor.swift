@@ -1,13 +1,13 @@
+import FeatherApplication
+import FeatherContracts
 import MediaContracts
+import MediaDomain
+
 //
 //  EditMediaProcessor.swift
 //  app-media-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import MediaDomain
 
 public struct EditMediaProcessor: UseCase {
     struct Action: PermissionAction {

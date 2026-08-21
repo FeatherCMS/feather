@@ -5,8 +5,8 @@ import FeatherDomain
 import FeatherInfrastructure
 import SystemApplication
 import WebApplication
-import WebDomain
 import WebContracts
+import WebDomain
 
 public struct TableSeedMigration: DatabaseMigration {
     public let connection: any DatabaseConnection

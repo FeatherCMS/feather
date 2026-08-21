@@ -1,6 +1,6 @@
-import FeatherContracts
 import AnalyticsContracts
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import Hummingbird
 

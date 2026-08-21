@@ -6,8 +6,8 @@
 
 import FeatherDatabase
 import FeatherInfrastructure
-import RedirectDomain
 import RedirectContracts
+import RedirectDomain
 
 import struct Foundation.Date
 

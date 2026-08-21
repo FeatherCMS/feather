@@ -1,7 +1,7 @@
-import MediaContracts
 import FeatherContracts
 import FeatherInfrastructure
 import MediaApplication
+import MediaContracts
 import SystemApplication
 
 public enum EventHandlers {

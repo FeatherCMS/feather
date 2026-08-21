@@ -1,10 +1,10 @@
-import FeatherContracts
-import WebContracts
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
+import WebContracts
 import WebStandards
 
 struct AdminListWebMenuDefaultPresenter:
@@ -58,7 +58,9 @@ struct AdminListWebMenuDefaultPresenter:
                     isRemoved: isRemoved,
                     canAccess: canAccess,
                     permissions: permissions,
-                    canAdd: permissions.contains(WebPermissions.Menus.create.rawValue),
+                    canAdd: permissions.contains(
+                        WebPermissions.Menus.create.rawValue
+                    ),
                     rules: model.items,
                     page: model.page,
                     pageSize: model.pageSize,

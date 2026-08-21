@@ -1,6 +1,6 @@
-import FeatherContracts
 import AccountContracts
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
@@ -21,7 +21,9 @@ struct AdminListAccountInvitationDefaultPresenter:
         search: String?,
         error: String?
     ) -> HTMLResponse {
-        let canAccess = permissions.contains(AccountPermissions.Invitations.list.rawValue)
+        let canAccess = permissions.contains(
+            AccountPermissions.Invitations.list.rawValue
+        )
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -57,7 +59,9 @@ struct AdminListAccountInvitationDefaultPresenter:
                     isRemoved: isRemoved,
                     canAccess: canAccess,
                     permissions: permissions,
-                    canAdd: permissions.contains(AccountPermissions.Invitations.create.rawValue),
+                    canAdd: permissions.contains(
+                        AccountPermissions.Invitations.create.rawValue
+                    ),
                     invitations: model.items,
                     page: model.page,
                     pageSize: model.pageSize,

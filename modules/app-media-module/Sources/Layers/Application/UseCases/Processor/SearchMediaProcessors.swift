@@ -1,14 +1,14 @@
+import FeatherApplication
+import FeatherContracts
+import Foundation
 import MediaContracts
+import MediaDomain
+
 //
 //  SearchMediaProcessors.swift
 //  app-media-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import Foundation
-import MediaDomain
 
 public struct SearchMediaProcessors: UseCase {
     struct Action: PermissionAction {

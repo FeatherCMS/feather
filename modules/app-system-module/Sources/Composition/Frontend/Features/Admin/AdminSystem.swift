@@ -14,7 +14,6 @@ public struct AdminSystem {
         self.adminEvents = adminEvents
     }
 
-
     public func route(
         on router: Router<AppRequestContext>
     ) {

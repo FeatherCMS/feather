@@ -1,4 +1,3 @@
-import SystemContracts
 import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
@@ -7,6 +6,7 @@ import FeatherInfrastructure
 import SystemAdminAPI
 import SystemAppAPI
 import SystemApplication
+import SystemContracts
 import SystemInfrastructure
 
 public struct UseCases: Sendable {
@@ -23,5 +23,5 @@ public struct UseCases: Sendable {
         self.database = database
         self.idGenerator = idGenerator
         self.authorizer = authorizer
-    }    
+    }
 }

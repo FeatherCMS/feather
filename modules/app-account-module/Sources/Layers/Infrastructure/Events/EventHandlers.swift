@@ -1,11 +1,11 @@
-import AccountContracts
 import AccountApplication
+import AccountContracts
 import AccountDomain
 import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication
-import UserApplication
 import SystemContracts
+import UserApplication
 import UserContracts
 
 public enum EventHandlers {

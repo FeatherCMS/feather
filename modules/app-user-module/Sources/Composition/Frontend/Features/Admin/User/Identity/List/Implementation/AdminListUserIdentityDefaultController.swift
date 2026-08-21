@@ -1,8 +1,8 @@
-import FeatherContracts
-import UserContracts
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
+import UserContracts
 
 struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
     let buildRuntime:
@@ -46,7 +46,9 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
                 isRemoved: request.hasQueryFlag("removed"),
                 canAccess: canAccess,
                 permissions: permissionSet,
-                canAdd: permissionSet.contains(UserPermissions.Identities.create.rawValue),
+                canAdd: permissionSet.contains(
+                    UserPermissions.Identities.create.rawValue
+                ),
                 identities: result.items,
                 page: result.page,
                 pageSize: result.size,

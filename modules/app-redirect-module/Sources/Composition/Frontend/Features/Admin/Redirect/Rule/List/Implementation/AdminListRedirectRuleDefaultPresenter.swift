@@ -1,9 +1,9 @@
-import FeatherContracts
-import RedirectContracts
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import HTML
 import Hummingbird
+import RedirectContracts
 import SGML
 import WebStandards
 
@@ -23,7 +23,9 @@ struct AdminListRedirectRuleDefaultPresenter:
         statusCode: String?,
         error: String?
     ) -> HTMLResponse {
-        let canAccess = permissions.contains(RedirectPermissions.Rules.list.rawValue)
+        let canAccess = permissions.contains(
+            RedirectPermissions.Rules.list.rawValue
+        )
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -59,7 +61,9 @@ struct AdminListRedirectRuleDefaultPresenter:
                     isRemoved: isRemoved,
                     canAccess: canAccess,
                     permissions: permissions,
-                    canAdd: permissions.contains(RedirectPermissions.Rules.create.rawValue),
+                    canAdd: permissions.contains(
+                        RedirectPermissions.Rules.create.rawValue
+                    ),
                     rules: model.items,
                     page: model.page,
                     pageSize: model.pageSize,

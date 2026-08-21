@@ -1,15 +1,15 @@
 import BlogContracts
-//
-//  ListPosts.swift
-//  app-blog-module
-//
-//  Created by Binary Birds on 2026. 07. 06.
-
 import BlogDomain
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
 import WebApplication
+
+//
+//  ListPosts.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 07. 06.
 
 public struct ListPosts: UseCase {
     struct Action: PermissionAction {

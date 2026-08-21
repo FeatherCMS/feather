@@ -1,8 +1,8 @@
-import UserContracts
 import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication
 import UserApplication
+import UserContracts
 import UserDomain
 
 public enum EventHandlers {

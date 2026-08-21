@@ -1,9 +1,9 @@
-import FeatherContracts
-import SystemContracts
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
+import SystemContracts
 import WebStandards
 
 struct AdminListSystemPermissionDefaultPresenter:
@@ -21,7 +21,9 @@ struct AdminListSystemPermissionDefaultPresenter:
         search: String?,
         error: String?
     ) -> HTMLResponse {
-        let canAccess = permissions.contains(SystemPermissions.Permissions.list.rawValue)
+        let canAccess = permissions.contains(
+            SystemPermissions.Permissions.list.rawValue
+        )
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -57,7 +59,9 @@ struct AdminListSystemPermissionDefaultPresenter:
                     isRemoved: isRemoved,
                     canAccess: canAccess,
                     permissions: permissions,
-                    canAdd: permissions.contains(SystemPermissions.Permissions.create.rawValue),
+                    canAdd: permissions.contains(
+                        SystemPermissions.Permissions.create.rawValue
+                    ),
                     items: model.items,
                     page: model.page,
                     pageSize: model.pageSize,

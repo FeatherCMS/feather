@@ -2,8 +2,8 @@ import FeatherApplication
 import FeatherContracts
 import RedirectAdminAPI
 import RedirectApplication
-import RedirectDomain
 import RedirectContracts
+import RedirectDomain
 
 extension AdminAPIGateway {
 

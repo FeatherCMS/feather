@@ -1,7 +1,7 @@
-import SystemContracts
 import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication
+import SystemContracts
 
 public enum EventHandlers {
 

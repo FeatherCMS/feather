@@ -23,7 +23,6 @@ public struct AdminBlog {
         self.templateOptions = templateOptions
     }
 
-
     public func route(
         on router: Router<AppRequestContext>
     ) {

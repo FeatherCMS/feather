@@ -1,14 +1,14 @@
+import FeatherApplication
+import FeatherContracts
+import Foundation
 import MediaContracts
+import MediaDomain
+
 //
 //  EditMediaFolder.swift
 //  app-media-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import Foundation
-import MediaDomain
 
 public struct EditMediaFolder: UseCase {
     public enum Error: UseCaseError {

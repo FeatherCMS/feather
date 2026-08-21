@@ -7,8 +7,8 @@
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
-import RedirectDomain
 import RedirectContracts
+import RedirectDomain
 
 public struct EditRule: UseCase {
 

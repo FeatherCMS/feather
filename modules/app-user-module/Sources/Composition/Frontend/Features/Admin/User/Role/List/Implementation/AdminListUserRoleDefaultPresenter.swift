@@ -1,11 +1,11 @@
-import FeatherContracts
-import UserContracts
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
+import UserContracts
 import WebStandards
 
 struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
@@ -61,7 +61,9 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
                     isRemoved: isRemoved,
                     canAccess: canAccess,
                     permissions: permissions,
-                    canAdd: permissions.contains(UserPermissions.Roles.create.rawValue),
+                    canAdd: permissions.contains(
+                        UserPermissions.Roles.create.rawValue
+                    ),
                     canManageRolePermissions: permissions.contains(
                         rolePermissions.rawValue
                     ),

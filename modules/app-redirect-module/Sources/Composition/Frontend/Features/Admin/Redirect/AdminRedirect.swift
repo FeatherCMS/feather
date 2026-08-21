@@ -9,7 +9,6 @@ public struct AdminRedirect {
         self.renderingEngine = renderingEngine
     }
 
-
     public func route(
         on router: Router<AppRequestContext>
     ) {

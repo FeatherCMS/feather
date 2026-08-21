@@ -5,13 +5,13 @@
 //  Created by Tibor Bödecs on 2026. 03. 01..
 //
 
-import Foundation
 import FeatherContracts
+import Foundation
 import Hummingbird
 import OpenAPIRuntime
 
 public struct AppRequestContext: RequestContext {
-    
+
     public var coreContext: CoreRequestContextStorage
 
     public var sessionToken: String?
@@ -23,8 +23,8 @@ public struct AppRequestContext: RequestContext {
         self.coreContext = .init(source: source)
     }
 
-    public var requestDecoder: URLFormRequestDecoder { 
-        .init() 
+    public var requestDecoder: URLFormRequestDecoder {
+        .init()
     }
 
     // MARK: -

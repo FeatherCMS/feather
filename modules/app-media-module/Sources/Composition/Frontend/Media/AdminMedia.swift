@@ -15,7 +15,6 @@ public struct AdminMedia {
         self.renderingEngine = renderingEngine
     }
 
-
     public func route(
         on router: Router<AppRequestContext>
     ) {

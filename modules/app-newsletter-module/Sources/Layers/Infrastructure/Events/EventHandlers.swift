@@ -1,7 +1,7 @@
-import NewsletterContracts
 import FeatherContracts
 import FeatherInfrastructure
 import NewsletterApplication
+import NewsletterContracts
 import SystemApplication
 
 public enum EventHandlers {

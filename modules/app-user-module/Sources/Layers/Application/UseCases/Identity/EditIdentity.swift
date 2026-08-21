@@ -1,13 +1,13 @@
+import FeatherApplication
+import FeatherContracts
 import UserContracts
+import UserDomain
+
 //
 //  EditIdentity.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-import FeatherApplication
-import FeatherContracts
-import UserDomain
 
 public struct EditIdentity: UseCase {
 

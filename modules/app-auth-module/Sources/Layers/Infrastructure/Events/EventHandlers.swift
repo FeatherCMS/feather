@@ -1,12 +1,12 @@
-import AuthContracts
 import AuthApplication
+import AuthContracts
 import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication
-import WebApplication
-import WebDomain
-import WebContracts
 import SystemContracts
+import WebApplication
+import WebContracts
+import WebDomain
 
 public enum EventHandlers {
     public static func register(
