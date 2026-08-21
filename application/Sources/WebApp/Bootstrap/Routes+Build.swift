@@ -6,6 +6,7 @@ import MediaFrontend
 import ContactFrontend
 import NewsletterFrontend
 import WebFrontend
+import WebContracts
 import AnalyticsFrontend
 import RedirectFrontend
 import UserFrontend

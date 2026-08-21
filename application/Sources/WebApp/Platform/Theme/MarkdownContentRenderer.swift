@@ -14,6 +14,7 @@ import Foundation
 import Logging
 import Markdown
 import WebApplication
+import WebContracts
 
 struct MarkdownContentRenderer: WebContentRenderer {
 
