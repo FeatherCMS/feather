@@ -75,76 +75,6 @@ struct DefaultRenderingEngine: RenderingEngine {
         return .init(html)
     }
 
-    func renderPublicPage<T: FlowContent>(
-        request: Request,
-        title: String,
-        description: String,
-        imageURL: String,
-        canonicalURL: String?,
-        noIndex: Bool,
-        cssCodeInjection: String?,
-        javascriptCodeInjection: String?,
-        structuredDataCodeInjection: String?,
-        content: T
-    ) -> HTMLResponse {
-        let body = Body {
-            content
-            if let javascriptCodeInjection, !javascriptCodeInjection.isEmpty {
-                Script(javascriptCodeInjection)
-            }
-        }
-
-        let collector = ComponentStylesheetCollector()
-        let renderer = StylesheetRenderer(minify: false, indent: 4)
-        let css = renderer.render(collector.getStylesheet(from: body))
-
-        let head = Head {
-            Metadata(
-                canonicalUrl: normalizedCanonicalURL(
-                    requestPath: request.uri.path,
-                    override: canonicalURL
-                ),
-                title: title,
-                description: description,
-                imageUrl: normalizedPublicImageURL(imageURL),
-                noIndex: noIndex
-            )
-            Link(rel: .stylesheet)
-                .href(
-                    normalizedURL(
-                        base: publicOrigins.staticBaseURL,
-                        path: "/base.css"
-                    ) + "?\(assetVersion)"
-                )
-            Link(rel: .stylesheet)
-                .href(
-                    normalizedURL(
-                        base: publicOrigins.staticBaseURL,
-                        path: "/style.css"
-                    ) + "?\(assetVersion)"
-                )
-            Link(rel: .stylesheet).href("/style.css?\(assetVersion)")
-            Style(css)
-            if let cssCodeInjection, !cssCodeInjection.isEmpty {
-                Style(cssCodeInjection)
-            }
-            if let structuredDataCodeInjection,
-                !structuredDataCodeInjection.isEmpty
-            {
-                Script(structuredDataCodeInjection)
-                    .type("application/ld+json")
-            }
-        }
-
-        let html = Html {
-            head
-            body
-        }
-        .lang("en-US")
-
-        return .init(html)
-    }
-
     func renderAdminPage<T: Component>(
         request: Request,
         title: String,
@@ -229,37 +159,6 @@ struct DefaultRenderingEngine: RenderingEngine {
         if normalizedPath.contains(".") { return url }
         if !url.hasSuffix("/") { url += "/" }
         return url
-    }
-
-    private func normalizedCanonicalURL(
-        requestPath: String,
-        override: String?
-    ) -> String {
-        guard let override, !override.isEmpty else {
-            return normalizedURL(
-                base: publicOrigins.siteBaseURL,
-                path: requestPath
-            )
-        }
-        return override
-    }
-
-    private func normalizedPublicImageURL(
-        _ imageURL: String
-    ) -> String {
-        guard !imageURL.isEmpty else {
-            return normalizedURL(
-                base: publicOrigins.staticBaseURL,
-                path: "images/puppy.png"
-            )
-        }
-        if imageURL.hasPrefix("http://") || imageURL.hasPrefix("https://") {
-            return imageURL
-        }
-        return normalizedURL(
-            base: publicOrigins.staticBaseURL,
-            path: imageURL
-        )
     }
 
     func adminSidebarState(

@@ -65,7 +65,7 @@ struct BlogPostForm: Component, FlowContent {
         var links: [AdminPillTabs.Link] = [
             .init(
                 label: "Details",
-                href: "#admin-content-editor-details",
+                href: action,
                 isCurrent: true
             )
         ]
@@ -128,12 +128,6 @@ struct BlogPostForm: Component, FlowContent {
                     error: state.tagIdsError
                 )
             }
-            .id("admin-content-editor-details")
-            .class(
-                "admin-content-editor-panel",
-                "admin-content-editor-panel--details"
-            )
-
             Section {
                 Div {
                     Button(submitLabel)

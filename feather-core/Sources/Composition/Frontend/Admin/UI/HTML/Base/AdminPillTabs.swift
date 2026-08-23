@@ -62,33 +62,7 @@ public struct AdminPillTabs: Component, FlowContent {
                     .href(link.href)
                     .if(link.isCurrent) { $0.class("is-current") }
             }
-            if links.contains(where: {
-                $0.href.hasPrefix("#admin-content-editor-")
-            }) {
-                Script(
-                    """
-                    (function () {
-                        document.querySelectorAll('.admin-pill-tabs a[href^="#admin-content-editor-"]').forEach(function (link) {
-                            if (link.__contentEditorTabBound) return;
-                            link.__contentEditorTabBound = true;
-                            link.addEventListener('click', function (event) {
-                                event.preventDefault();
-                                var form = link.closest('form');
-                                if (!form) return;
-                                var id = link.getAttribute('href').substring(1);
-                                form.querySelectorAll('.admin-content-editor-panel').forEach(function (panel) {
-                                    panel.hidden = panel.id !== id;
-                                });
-                                link.closest('.admin-pill-tabs').querySelectorAll('a').forEach(function (tab) {
-                                    tab.classList.toggle('is-current', tab === link);
-                                });
-                            });
-                        });
-                    })();
-                    """
-                )
-            }
         }
-        .class("admin-media-asset-picker-tabs", "admin-pill-tabs")
+        .class("admin-pill-tabs")
     }
 }
