@@ -8,6 +8,8 @@
 import CSS
 import WebStandards
 
+public enum FeatherCSS {}
+
 extension FeatherCSS {
 
     public struct Base: GlobalStyleComponent {

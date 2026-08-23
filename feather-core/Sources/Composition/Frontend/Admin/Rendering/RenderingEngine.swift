@@ -3,6 +3,7 @@ import Hummingbird
 import WebStandards
 
 public protocol RenderingEngine: Sendable {
+
     func renderPage<T: FlowContent>(
         request: Request,
         title: String,

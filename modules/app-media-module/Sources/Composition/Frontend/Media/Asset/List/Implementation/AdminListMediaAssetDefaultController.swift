@@ -26,14 +26,14 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         let search = request.querySearch()
         let parentId = request.queryString("parent_id")?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .nilIfEmpty
+            .emptyToNil
         let view =
             AdminListMediaAssetModel.ViewMode(
                 rawValue: request.queryString("view") ?? ""
             ) ?? .grid
         let picker = AdminListMediaAssetModel.PickerState(
             isEnabled: request.queryString("picker") == "1",
-            field: request.queryString("field")?.nilIfEmpty,
+            field: request.queryString("field")?.emptyToNil,
             allowedExtensions: request.queryString("extensions")?
                 .split(separator: ",")
                 .map {
@@ -42,7 +42,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
                 }
                 .filter { !$0.isEmpty } ?? [],
             defaultFolderPath: request.queryString("default_folder_path")?
-                .nilIfEmpty
+                .emptyToNil
         )
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
@@ -105,7 +105,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         let search = request.querySearch()
         let parentId = request.queryString("parent_id")?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .nilIfEmpty
+            .emptyToNil
         let view =
             AdminListMediaAssetModel.ViewMode(
                 rawValue: request.queryString("view") ?? ""
@@ -148,7 +148,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         )
         let parentId = request.queryString("parent_id")?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .nilIfEmpty
+            .emptyToNil
         let view =
             AdminListMediaAssetModel.ViewMode(
                 rawValue: request.queryString("view") ?? ""
@@ -191,8 +191,8 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             headers: [
                 .location: redirectLocation(
                     page: payload.page,
-                    search: payload.search.nilIfEmpty,
-                    parentId: payload.parentId.nilIfEmpty,
+                    search: payload.search.emptyToNil,
+                    parentId: payload.parentId.emptyToNil,
                     view: .init(rawValue: payload.view) ?? .grid,
                     title: "Removed",
                     message: "Media folder removed successfully."

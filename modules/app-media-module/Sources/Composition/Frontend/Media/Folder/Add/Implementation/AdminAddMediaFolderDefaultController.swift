@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -22,7 +23,7 @@ struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
         let (interactor, presenter) = buildRuntime(request, context)
         let parentId = request.queryString("parent_id")?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .nilIfEmpty
+            .emptyToNil
         let view = request.queryString("view") ?? "grid"
         let model = try await interactor.getAddMediaFolder(
             parentId: parentId,

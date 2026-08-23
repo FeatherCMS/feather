@@ -1,4 +1,5 @@
 import Foundation
+import FeatherContracts
 import Hummingbird
 
 public struct AdminToastRedirect {
@@ -30,9 +31,9 @@ public struct AdminToastRedirect {
         from request: Request
     ) -> Payload? {
         guard
-            let type = request.queryString(typeKey)?.nilIfEmpty,
-            let title = request.queryString(titleKey)?.nilIfEmpty,
-            let message = request.queryString(messageKey)?.nilIfEmpty
+            let type = request.queryString(typeKey)?.emptyToNil,
+            let title = request.queryString(titleKey)?.emptyToNil,
+            let message = request.queryString(messageKey)?.emptyToNil
         else {
             return nil
         }
@@ -40,7 +41,7 @@ public struct AdminToastRedirect {
             type: type,
             title: title,
             message: message,
-            position: request.queryString(positionKey)?.nilIfEmpty
+            position: request.queryString(positionKey)?.emptyToNil
                 ?? "top-right"
         )
     }

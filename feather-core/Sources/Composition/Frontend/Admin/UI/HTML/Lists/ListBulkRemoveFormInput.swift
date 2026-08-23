@@ -1,4 +1,5 @@
 import Foundation
+import FeatherContracts
 
 public struct ListBulkRemoveFormInput: Decodable, Sendable {
     public var selectedIds: [String]?
@@ -65,6 +66,6 @@ public struct ListBulkRemoveFormInput: Decodable, Sendable {
     }
 
     public var normalizedSearch: String? {
-        search?.nilIfEmpty
+        search?.emptyToNil
     }
 }

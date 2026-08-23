@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -14,7 +15,7 @@ struct MediaFolderAddForm: Decodable {
     var view: String = "grid"
 
     var normalizedParentId: String? {
-        parentId.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
+        parentId.trimmingCharacters(in: .whitespacesAndNewlines).emptyToNil
     }
 
     var normalizedName: String {

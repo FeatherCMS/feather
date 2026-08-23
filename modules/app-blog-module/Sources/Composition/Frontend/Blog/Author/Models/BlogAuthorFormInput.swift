@@ -1,6 +1,7 @@
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -71,7 +72,7 @@ public struct BlogAuthorFormInput: Codable, Sendable, Equatable, Hashable {
     var normalizedProfileImageAssetId: String? {
         profileImageAssetId?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .nilIfEmpty
+            .emptyToNil
     }
 
     func withStatus(
