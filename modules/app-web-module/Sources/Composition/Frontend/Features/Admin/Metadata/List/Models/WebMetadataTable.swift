@@ -6,7 +6,7 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebApplication
+import WebContracts
 import WebStandards
 
 struct WebMetadataTable: Component {

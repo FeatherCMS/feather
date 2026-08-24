@@ -1,0 +1,35 @@
+import ContactAdminAPI
+import ContactApplication
+import ContactDomain
+import FeatherApplication
+import FeatherContracts
+
+extension AdminAPIGateway {
+    public func contactFieldCreate(
+        _ input: Operations.ContactFieldCreate.Input
+    ) async throws -> Operations.ContactFieldCreate.Output {
+        let body: Components.Schemas.FormFieldCreateSchema
+        switch input.body {
+        case .json(let value): body = value
+        }
+        guard let type = FormField.ItemType(rawValue: body._type) else {
+            throw FormField.Error.optionsNotAllowed
+        }
+        let result = try await self.useCases.makeCreateFormField()
+            .execute(
+                subject: try await CurrentSubject.require(),
+                input:
+                    .init(
+                        formId: nil,
+                        key: body.key,
+                        type: type,
+                        label: body.label,
+                        allowedValues: body.allowedValues?
+                            .map { .init(value: $0, label: $0) } ?? [],
+                        isRequired: body.isRequired ?? false,
+                        position: body.position ?? 0
+                    )
+            )
+        return .created(.init(body: .json(map(result))))
+    }
+}

@@ -1,11 +1,10 @@
 import FeatherAdmin
-import FeatherApplication
 import FeatherContracts
 import Foundation
 import OpenAPIRuntime
-import SystemApplication
+import SystemContracts
 import WebAppAPI
-import WebApplication
+import WebContracts
 
 public enum WebPublicContentEventHandlers {
     public static func register(

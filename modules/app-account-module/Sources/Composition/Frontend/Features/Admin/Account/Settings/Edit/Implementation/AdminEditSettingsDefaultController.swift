@@ -1,3 +1,4 @@
+import AccountContracts
 import FeatherAdmin
 import Hummingbird
 
@@ -17,12 +18,10 @@ struct AdminEditSettingsDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canRead = context.isCurrentUserAllowed(
-            to: .read,
-            scope: AccountAdmin.Scope.settings
+            to: AccountPermissions.Settings.read
         )
         let canEdit = context.isCurrentUserAllowed(
-            to: .update,
-            scope: AccountAdmin.Scope.settings
+            to: AccountPermissions.Settings.update
         )
 
         guard canRead else {
@@ -74,8 +73,7 @@ struct AdminEditSettingsDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canEdit = context.isCurrentUserAllowed(
-            to: .update,
-            scope: AccountAdmin.Scope.settings
+            to: AccountPermissions.Settings.update
         )
 
         guard canEdit else {

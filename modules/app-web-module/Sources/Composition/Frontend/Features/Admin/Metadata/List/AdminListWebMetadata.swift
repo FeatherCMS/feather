@@ -1,7 +1,7 @@
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
-import WebApplication
+import WebContracts
 
 struct AdminListWebMetadata {
     let controller: any AdminListWebMetadataController

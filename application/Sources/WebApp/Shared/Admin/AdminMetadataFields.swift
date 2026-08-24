@@ -14,6 +14,7 @@ import HTML
 import SGML
 import WebStandards
 import WebApplication
+import WebContracts
 import Foundation
 
 struct AdminMetadataFields: Component, FlowContent {

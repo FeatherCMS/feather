@@ -9,13 +9,6 @@ public struct AdminRedirect {
         self.renderingEngine = renderingEngine
     }
 
-    public enum Scope {
-        public static let rules = PermissionScope(
-            module: "redirect",
-            resource: "rules"
-        )
-    }
-
     public func route(
         on router: Router<AppRequestContext>
     ) {

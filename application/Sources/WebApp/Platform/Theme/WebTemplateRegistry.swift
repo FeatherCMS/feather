@@ -1,4 +1,5 @@
 import WebApplication
+import WebContracts
 import BlogFrontend
 import NewsFrontend
 import MediaFrontend

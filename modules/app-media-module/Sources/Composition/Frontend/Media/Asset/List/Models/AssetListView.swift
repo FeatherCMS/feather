@@ -1,10 +1,12 @@
 import CSS
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
+import MediaContracts
 import OpenAPIRuntime
 import SGML
 import WebStandards
@@ -618,7 +620,7 @@ extension AssetListView {
     fileprivate func listContent() -> some FlowContent {
         let canRemove =
             state.permissions.contains(
-                AdminMedia.Scope.assets.permission(for: .delete)
+                MediaPermissions.Assets.delete.rawValue
             )
             && !state.picker.isEnabled
         return ListTableBulkRemoveForm(
@@ -714,14 +716,14 @@ extension AssetListView {
             Div {
                 A("Open").href(browsePath(parentId: folder.id)).class("row-btn")
                 if state.permissions.contains(
-                    AdminMedia.Scope.assets.permission(for: .update)
+                    MediaPermissions.Assets.update.rawValue
                 ) && !state.picker.isEnabled {
                     A("Edit")
                         .href(folderEditPath(folder))
                         .class("row-btn", "edit")
                 }
                 if state.permissions.contains(
-                    AdminMedia.Scope.assets.permission(for: .delete)
+                    MediaPermissions.Assets.delete.rawValue
                 ) && !state.picker.isEnabled {
                     folderDeleteForm(folder)
                 }
@@ -814,12 +816,12 @@ extension AssetListView {
                         .data("picker-status", item.asset.status)
                 }
                 else if state.permissions.contains(
-                    AdminMedia.Scope.assets.permission(for: .read)
+                    MediaPermissions.Assets.read.rawValue
                 ) {
                     A("Details").href(detailsURL).class("row-btn")
                 }
                 if state.permissions.contains(
-                    AdminMedia.Scope.assets.permission(for: .update)
+                    MediaPermissions.Assets.update.rawValue
                 ) && !state.picker.isEnabled {
                     A("Edit")
                         .href(
@@ -828,7 +830,7 @@ extension AssetListView {
                         .class("row-btn", "edit")
                 }
                 if state.permissions.contains(
-                    AdminMedia.Scope.assets.permission(for: .delete)
+                    MediaPermissions.Assets.delete.rawValue
                 ) && !state.picker.isEnabled {
                     A("Remove")
                         .href(
@@ -887,7 +889,7 @@ extension AssetListView {
             Td {
                 A("Open").href(browsePath(parentId: folder.id)).class("row-btn")
                 if state.permissions.contains(
-                    AdminMedia.Scope.assets.permission(for: .update)
+                    MediaPermissions.Assets.update.rawValue
                 ) && !state.picker.isEnabled {
                     Span(" ")
                     A("Edit")
@@ -895,7 +897,7 @@ extension AssetListView {
                         .class("row-btn", "edit")
                 }
                 if state.permissions.contains(
-                    AdminMedia.Scope.assets.permission(for: .delete)
+                    MediaPermissions.Assets.delete.rawValue
                 ) && !state.picker.isEnabled {
                     Span(" ")
                     folderDeleteForm(folder)
@@ -973,7 +975,7 @@ extension AssetListView {
                         .class("row-btn")
                 }
                 if state.permissions.contains(
-                    AdminMedia.Scope.assets.permission(for: .update)
+                    MediaPermissions.Assets.update.rawValue
                 ) && !state.picker.isEnabled {
                     Span(" ")
                     A("Edit")
@@ -983,7 +985,7 @@ extension AssetListView {
                         .class("row-btn", "edit")
                 }
                 if state.permissions.contains(
-                    AdminMedia.Scope.assets.permission(for: .delete)
+                    MediaPermissions.Assets.delete.rawValue
                 ) && !state.picker.isEnabled {
                     Span(" ")
                     A("Remove")

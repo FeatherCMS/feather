@@ -1,18 +1,17 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
+import UserContracts
 import WebStandards
 
 struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
     let request: Request
-    private let permissions = AdminUser.Scope.roles
-    private let rolePermissions = PermissionScope(
-        module: "auth",
-        resource: "access-control"
-    )
+    private let permissions = UserPermissions.Roles.list
+    private let rolePermissions = PermissionKey("auth:access-control:update")
     let renderEngine: any RenderingEngine
 
     func renderListPage(
@@ -25,7 +24,7 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
         error: String?
     ) -> HTMLResponse {
         let canAccess = permissions.contains(
-            self.permissions.permission(for: .list)
+            self.permissions.rawValue
         )
         if let error {
             return renderEngine.renderAdminPage(
@@ -62,9 +61,11 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
                     isRemoved: isRemoved,
                     canAccess: canAccess,
                     permissions: permissions,
-                    canAdd: permissions.contains(self.permissions.create),
+                    canAdd: permissions.contains(
+                        UserPermissions.Roles.create.rawValue
+                    ),
                     canManageRolePermissions: permissions.contains(
-                        rolePermissions.update
+                        rolePermissions.rawValue
                     ),
                     roles: model.items,
                     page: model.page,

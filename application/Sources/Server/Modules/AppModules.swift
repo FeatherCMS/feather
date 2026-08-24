@@ -3,22 +3,16 @@ import FeatherApplication
 import FeatherInfrastructure
 import AuthApplication
 import AuthInfrastructure
-import UserApplication
 import UserInfrastructure
 import MediaBackend
 import AnalyticsBackend
-import WebApplication
 import WebInfrastructure
 import WebBackend
 import NewsletterBackend
 import RedirectBackend
 import BlogBackend
-import ContactBackend
-import NewsletterApplication
-import NewsletterInfrastructure
-import AccountApplication
-import AccountInfrastructure
 import AccountBackend
+import ContactBackend
 import SystemBackend
 import UserBackend
 import AuthBackend
@@ -29,19 +23,18 @@ struct AppModules: Sendable {
     private let infrastructure: AppInfrastructure
     private let authorizer: any Authorizer
 
-    let system: SystemBackend
-    let analytics: AnalyticsBackend
-    let redirect: RedirectBackend
-    let web: WebBackend
-    let blog: BlogBackend
-    let news: NewsBackend
-    let user: UserBackend
-    let auth: AuthBackend
-    let media: MediaBackend
-    let contact: ContactBackend
-    let newsletter: NewsletterBackend
-    let account: AccountModule
-    let accountBackend: AccountBackend
+    let system: SystemBackend.UseCases
+    let analytics: AnalyticsBackend.UseCases
+    let redirect: RedirectBackend.UseCases
+    let web: WebBackend.UseCases
+    let blog: BlogBackend.UseCases
+    let news: NewsBackend.UseCases
+    let user: UserBackend.UseCases
+    let auth: AuthBackend.UseCases
+    let media: MediaBackend.UseCases
+    let contact: ContactBackend.UseCases
+    let newsletter: NewsletterBackend.UseCases
+    let account: AccountBackend.UseCases
 
     init(
         infrastructure: AppInfrastructure
@@ -63,80 +56,86 @@ struct AppModules: Sendable {
         )
         self.authorizer = DefaultAuthorizer(query: query)
 
-        self.system = .init(
+        let system = SystemBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer
         )
-        self.analytics = .init(
+        self.system = system
+        let analytics = AnalyticsBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer
         )
-        self.redirect = .init(
+        self.analytics = analytics
+        let redirect = RedirectBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer
         )
-        self.news = .init(
+        self.redirect = redirect
+        let news = NewsBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer
         )
-        self.user = .init(
+        self.news = news
+        let user = UserBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
             events: infrastructure.events
         )
-        self.accountBackend = .init(
+        self.user = user
+        let account = AccountBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
             mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
             events: infrastructure.events
         )
-        self.auth = .init(
+        self.account = account
+        let auth = AuthBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
             user: self.user
         )
-        self.media = .init(
+        self.auth = auth
+        let media = MediaBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             mediaStorageRootPath: infrastructure.mediaStorageRootPath,
             authorizer: authorizer,
             variantQueue: JobMediaVariantQueue(queue: infrastructure.jobQueue)
         )
-        let account = AccountModule(
-            infrastructure: infrastructure,
-            authorizer: authorizer
-        )
-        self.account = account
-
-        self.blog = .init(
+        self.media = media
+        let blog = BlogBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
-            media: self.media
+            media: media
         )
-        self.web = .init(
+        self.blog = blog
+        let web = WebBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer
         )
-        self.contact = .init(
+        self.web = web
+        let contact = ContactBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
             mailQueue: JobContactMailQueue(queue: infrastructure.jobQueue)
         )
-        self.newsletter = .init(
+        self.contact = contact
+        let newsletter = NewsletterBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
             mailQueue: JobNewsletterMailQueue(queue: infrastructure.jobQueue)
         )
+        self.newsletter = newsletter
     }
 }

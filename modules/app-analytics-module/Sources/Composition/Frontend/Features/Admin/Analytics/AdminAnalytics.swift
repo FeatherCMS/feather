@@ -10,21 +10,6 @@ public struct AdminAnalytics {
         self.renderingEngine = renderingEngine
     }
 
-    public enum Scope {
-        public static let logs = PermissionScope(
-            module: "analytics",
-            resource: "logs"
-        )
-        public static let insights = PermissionScope(
-            module: "analytics",
-            resource: "insights"
-        )
-        public static let notFound = PermissionScope(
-            module: "analytics",
-            resource: "not-found"
-        )
-    }
-
     public func route(
         on router: Router<AppRequestContext>
     ) {

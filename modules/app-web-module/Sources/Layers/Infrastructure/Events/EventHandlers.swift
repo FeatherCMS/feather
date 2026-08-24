@@ -2,6 +2,7 @@ import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication
 import WebApplication
+import WebContracts
 import WebDomain
 
 public enum EventHandlers {

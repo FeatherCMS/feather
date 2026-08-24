@@ -1,14 +1,14 @@
 import FeatherAdmin
 import Foundation
 import Hummingbird
-import RedirectDomain
+import RedirectContracts
 
 protocol AdminListRedirectRuleInteractor: Sendable {
 
     func listRedirectRules(
         page: Int,
         search: String?,
-        statusCode: Rule.StatusCode?
+        statusCode: StatusCode?
     ) async throws -> AdminListRedirectRuleModel
 
     func bulkRemove(

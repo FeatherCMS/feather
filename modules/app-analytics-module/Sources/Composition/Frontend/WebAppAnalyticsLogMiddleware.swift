@@ -1,5 +1,6 @@
 import AnalyticsAppAPI
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import HTTPTypes
 import Hummingbird

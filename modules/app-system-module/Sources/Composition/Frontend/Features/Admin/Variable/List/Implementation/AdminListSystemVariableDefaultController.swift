@@ -1,5 +1,6 @@
 import FeatherAdmin
 import Hummingbird
+import SystemContracts
 
 struct AdminListSystemVariableDefaultController:
     AdminListSystemVariableController
@@ -19,8 +20,7 @@ struct AdminListSystemVariableDefaultController:
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminSystem.Scope.variables
+            to: SystemPermissions.Variables.list
         )
         let emptyModel = AdminListSystemVariableModel(
             items: [],

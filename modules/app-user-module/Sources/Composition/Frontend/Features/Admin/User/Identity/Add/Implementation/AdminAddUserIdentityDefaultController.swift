@@ -2,6 +2,7 @@ import FeatherAdmin
 import FeatherValidation
 import HTML
 import Hummingbird
+import UserContracts
 
 struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
     let buildRuntime:

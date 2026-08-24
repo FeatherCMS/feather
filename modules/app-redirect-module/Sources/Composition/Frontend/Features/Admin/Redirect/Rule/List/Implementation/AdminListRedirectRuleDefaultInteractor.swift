@@ -1,7 +1,7 @@
 import FeatherAdmin
 import Foundation
 import Hummingbird
-import RedirectDomain
+import RedirectContracts
 
 struct AdminListRedirectRuleDefaultInteractor:
     AdminListRedirectRuleInteractor
@@ -11,7 +11,7 @@ struct AdminListRedirectRuleDefaultInteractor:
     func listRedirectRules(
         page: Int,
         search: String?,
-        statusCode: Rule.StatusCode?
+        statusCode: StatusCode?
     ) async throws -> AdminListRedirectRuleModel {
         try await repository.listRedirectRules(
             page: page,

@@ -1,5 +1,6 @@
 import FeatherAdmin
 import Hummingbird
+import SystemContracts
 
 struct AdminListSystemPermissionDefaultInteractor:
     AdminListSystemPermissionInteractor

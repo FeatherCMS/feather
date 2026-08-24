@@ -1,6 +1,7 @@
 import FeatherContracts
 import FeatherInfrastructure
 import RedirectApplication
+import RedirectContracts
 import SystemApplication
 
 public enum EventHandlers {

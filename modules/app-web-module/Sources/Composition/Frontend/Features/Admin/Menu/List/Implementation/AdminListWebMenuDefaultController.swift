@@ -1,6 +1,7 @@
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
+import WebContracts
 
 struct AdminListWebMenuDefaultController:
     AdminListWebMenuController
@@ -20,8 +21,7 @@ struct AdminListWebMenuDefaultController:
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminWeb.Scope.menus
+            to: WebPermissions.Menus.list
         )
         let emptyModel = AdminListWebMenuModel(
             items: [],

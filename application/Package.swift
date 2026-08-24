@@ -68,11 +68,11 @@ let package = Package(
             from: "1.1.0"
         ),
         .package(
-            url: "https://github.com/vapor/postgres-nio.git",
+            url: "https://github.com/vapor/postgres-nio",
             from: "1.32.2"
         ),
         .package(
-            url: "https://github.com/apple/swift-nio-ssl.git",
+            url: "https://github.com/apple/swift-nio-ssl",
             from: "2.34.0"
         ),
         .package(
@@ -109,7 +109,7 @@ let package = Package(
             from: "1.14.0"
         ),
         .package(
-            url: "https://github.com/apple/swift-system.git",
+            url: "https://github.com/apple/swift-system",
             from: "1.0.0"
         ),
         .package(
@@ -264,21 +264,17 @@ let package = Package(
         .executableTarget(
             name: "WebApp",
             dependencies: [
+                .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "WebContracts", package: "app-web-module"),
+
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
                 .product(name: "Markdown", package: "swift-markdown"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
-                .product(name: "FeatherValidation", package: "feather-validation"),
-                .product(name: "FeatherValidationFoundation", package: "feather-validation"),
                 .product(name: "Mustache", package: "swift-mustache"),
-                .product(name: "WebStandards", package: "swift-web-standards"),
-                .product(name: "CSS", package: "swift-web-standards"),
-                .product(name: "HTML", package: "swift-web-standards"),
-                .product(name: "SGML", package: "swift-web-standards"),
-                .product(name: "SVG", package: "swift-web-standards"),
-                .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "FeatherDomain", package: "feather-core"),
+
                 .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "UserFrontend", package: "app-user-module"),
                 .product(name: "AccountFrontend", package: "app-account-module"),
@@ -286,26 +282,23 @@ let package = Package(
                 .product(name: "AnalyticsFrontend", package: "app-analytics-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
-                .product(name: "WebAppAPI", package: "app-web-module"),
                 .product(name: "NewsletterFrontend", package: "app-newsletter-module"),
                 .product(name: "ContactFrontend", package: "app-contact-module"),
-                .product(name: "ContactAppAPI", package: "app-contact-module"),
                 .product(name: "MediaFrontend", package: "app-media-module"),
-                .product(name: "MediaAdminAPI", package: "app-media-module"),
                 .product(name: "BlogFrontend", package: "app-blog-module"),
-                .product(name: "BlogAppAPI", package: "app-blog-module"),
                 .product(name: "NewsFrontend", package: "app-news-module"),
-                .product(name: "NewsAppAPI", package: "app-news-module"),
-                .product(name: "BlogAdminAPI", package: "app-blog-module"),
                 .product(name: "AuthFrontend", package: "app-auth-module"),
-                .product(name: "AuthAppAPI", package: "app-auth-module"),
-                .product(name: "WebAdminAPI", package: "app-web-module"),
-                .product(name: "WebInfrastructure", package: "app-web-module"),
-                .product(name: "BlogInfrastructure", package: "app-blog-module"),
-                .product(name: "NewsInfrastructure", package: "app-news-module"),
 
+                .product(name: "WebAppAPI", package: "app-web-module"),
+                .product(name: "ContactAppAPI", package: "app-contact-module"),
+                .product(name: "BlogAppAPI", package: "app-blog-module"),
+                .product(name: "NewsAppAPI", package: "app-news-module"),
+                .product(name: "AuthAppAPI", package: "app-auth-module"),
+
+                .product(name: "MediaAdminAPI", package: "app-media-module"),
+                .product(name: "BlogAdminAPI", package: "app-blog-module"),
+                .product(name: "WebAdminAPI", package: "app-web-module"),
                 .product(name: "AnalyticsAdminAPI", package: "app-analytics-module"),
-                .product(name: "FeatherContracts", package: "feather-core")
             ],
             resources: [
                 .copy("Resources/Themes"),

@@ -1,6 +1,7 @@
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
+import WebContracts
 
 struct AdminListWebPageDefaultController:
     AdminListWebPageController
@@ -20,8 +21,7 @@ struct AdminListWebPageDefaultController:
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminWeb.Scope.pages
+            to: WebPermissions.Pages.list
         )
         let emptyModel = AdminListWebPageModel(
             items: [],

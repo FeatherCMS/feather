@@ -1,6 +1,7 @@
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
+import NewsletterContracts
 import NewsletterDomain
 
 public struct CreateCampaign: UseCase {

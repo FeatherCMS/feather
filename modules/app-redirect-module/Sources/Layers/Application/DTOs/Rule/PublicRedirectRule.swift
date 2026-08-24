@@ -6,17 +6,18 @@
 
 import FeatherApplication
 import FeatherContracts
+import RedirectContracts
 import RedirectDomain
 
 public struct PublicRedirectRule: DTO {
     public let source: String
     public let destination: String
-    public let statusCode: Rule.StatusCode
+    public let statusCode: StatusCode
 
     public init(
         source: String,
         destination: String,
-        statusCode: Rule.StatusCode
+        statusCode: StatusCode
     ) {
         self.source = source
         self.destination = destination

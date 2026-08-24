@@ -3,7 +3,7 @@ import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
-import RedirectDomain
+import RedirectContracts
 
 struct AdminEditRedirectRuleDefaultController:
     AdminEditRedirectRuleController
@@ -21,7 +21,6 @@ struct AdminEditRedirectRuleDefaultController:
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
-
         do {
             let rule = try await runtime.interactor.load(id: id)
             return runtime.presenter.renderEditPage(

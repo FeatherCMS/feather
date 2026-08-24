@@ -1,15 +1,14 @@
-//
-//  AddMagicLink.swift
-//  app-auth-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
+import AuthContracts
 import AuthDomain
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
 
-import struct Foundation.Date
+//
+//  AddMagicLink.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
 
 public struct AddMagicLink: UseCase {
     struct Action: PermissionAction {

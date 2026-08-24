@@ -1,3 +1,4 @@
+import AccountContracts
 import FeatherAdmin
 import Hummingbird
 
@@ -16,12 +17,10 @@ struct AdminListAccountInvitationDefaultController:
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
-        let permissionScope = AccountAdmin.Scope.invitations
-
+        let permissionScope = AccountPermissions.Invitations.list
         do {
             let canAccess = context.isCurrentUserAllowed(
-                to: .list,
-                scope: permissionScope
+                to: permissionScope
             )
             let page = request.queryPage()
             let pageSize = 20

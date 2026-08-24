@@ -1,6 +1,6 @@
 import FeatherAdmin
 import Hummingbird
-import WebApplication
+import WebContracts
 import WebFrontend
 
 enum AdminBlogMetadataRoutes {
@@ -15,15 +15,15 @@ enum AdminBlogMetadataRoutes {
         )
         for route in [
             (
-                "/admin/blog/posts/{contentID}/edit/metadata/{metadataID}/",
+                "/admin/blog/posts/{id}/edit/metadata/{metadataID}/",
                 "blog.post"
             ),
             (
-                "/admin/blog/authors/{contentID}/edit/metadata/{metadataID}/",
+                "/admin/blog/authors/{id}/edit/metadata/{metadataID}/",
                 "blog.author"
             ),
             (
-                "/admin/blog/tags/{contentID}/edit/metadata/{metadataID}/",
+                "/admin/blog/tags/{id}/edit/metadata/{metadataID}/",
                 "blog.tag"
             ),
         ] {

@@ -1,8 +1,10 @@
 import FeatherContracts
 import FeatherInfrastructure
 import NewsApplication
+import NewsContracts
 import SystemApplication
 import WebApplication
+import WebContracts
 
 public enum EventHandlers {
 

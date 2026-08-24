@@ -50,23 +50,14 @@ let package = Package(
         .library(name: "NewsFrontend", targets: ["NewsFrontend"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log", from: "1.0.0"),
         .package(
-            url: "https://github.com/feather-framework/feather-database",
-            exact: "1.0.0-rc.2"
+            url: "https://github.com/apple/swift-log", 
+            from: "1.0.0"
         ),
-        .package(path: "../../feather-core"),
-        .package(path: "../app-system-module"),
-        .package(path: "../app-web-module"),
-        .package(path: "../app-media-module"),
-        .package(
-            url: "https://github.com/feather-framework/feather-openapi",
-            exact: "1.0.0-beta.7"
-        ),
-        .package(
-            url: "https://github.com/mattpolzin/OpenAPIKit",
-            from: "5.0.0"
-        ),
+        // .package(
+        //     url: "https://github.com/mattpolzin/OpenAPIKit",
+        //     from: "5.0.0"
+        // ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
             from: "1.9.0"
@@ -76,21 +67,17 @@ let package = Package(
             from: "2.20.1"
         ),
         .package(
-            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/async-http-client.git",
-            from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio",
-            from: "2.0.0"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio-ssl.git",
+            url: "https://github.com/apple/swift-nio-ssl",
             from: "2.34.0"
         ),
+        .package(path: "../../feather-core"),
+        .package(path: "../app-system-module"),
+        .package(path: "../app-web-module"),
+        .package(path: "../app-media-module"),
     ],
     targets: [
         .target(
@@ -105,8 +92,9 @@ let package = Package(
             name: "NewsDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
                 .product(name: "WebDomain", package: "app-web-module"),
+
+                .target(name: "NewsContracts"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: defaultSwiftSettings
@@ -115,16 +103,10 @@ let package = Package(
             name: "NewsApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
+                .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
-                .product(name: "WebDomain", package: "app-web-module"),
+                
                 .target(name: "NewsDomain"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "NewsContracts"),
             ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
@@ -133,16 +115,10 @@ let package = Package(
             name: "NewsInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
-                .product(name: "WebApplication", package: "app-web-module"),
+                .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
+                
                 .target(name: "NewsApplication"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "NewsContracts"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
@@ -151,15 +127,8 @@ let package = Package(
         .target(
             name: "NewsAppAPI",
             dependencies: [
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                ),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "NewsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebApplication", package: "app-web-module")],
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
             path: "Sources/APIs/App",
             swiftSettings: defaultSwiftSettings
         ),
@@ -167,12 +136,7 @@ let package = Package(
         .target(
             name: "NewsSharedOpenAPIGenerator",
             dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
-                .product(name: "FeatherOpenAPI", package: "feather-openapi"),
-                .product(name: "OpenAPIKit", package: "OpenAPIKit")
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
             ],
             path: "Sources/Generators/Shared",
             swiftSettings: defaultSwiftSettings
@@ -181,20 +145,12 @@ let package = Package(
         .target(
             name: "NewsBackend",
             dependencies: [
-                .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherBackend", package: "feather-core"),
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .product(name: "WebApplication", package: "app-web-module"),
-                .product(name: "WebDomain", package: "app-web-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
-                .target(name: "NewsApplication"),
+
                 .target(name: "NewsInfrastructure"),
                 .target(name: "NewsAppAPI"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "NewsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
@@ -202,30 +158,21 @@ let package = Package(
         .target(
             name: "NewsFrontend",
             dependencies: [
-                .product(name: "WebApplication", package: "app-web-module"),
-                .product(name: "WebDomain", package: "app-web-module"),
                 .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "FeatherDatabase", package: "feather-database"),
-                .target(name: "NewsAppAPI"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
-                .product(name: "NIOCore", package: "swift-nio"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
+                
+                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "WebContracts", package: "app-web-module"),
                 .target(name: "NewsContracts"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .target(name: "NewsAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings
         ),
+        // MARK: - tests
         .testTarget(
             name: "NewsModuleTests",
             dependencies: [
-                .target(name: "NewsApplication")
+                .target(name: "NewsApplication"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

@@ -1,6 +1,7 @@
 import FeatherAdmin
 import HTML
 import Hummingbird
+import UserContracts
 
 struct AdminRemoveUserIdentityDefaultController:
     AdminRemoveUserIdentityController

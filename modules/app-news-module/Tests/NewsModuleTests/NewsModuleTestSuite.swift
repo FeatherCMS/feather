@@ -1,3 +1,4 @@
+import NewsContracts
 import Testing
 
 @testable import NewsApplication

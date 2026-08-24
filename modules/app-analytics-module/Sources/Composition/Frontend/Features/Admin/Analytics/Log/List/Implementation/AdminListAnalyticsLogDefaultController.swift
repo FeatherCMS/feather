@@ -1,3 +1,4 @@
+import AnalyticsContracts
 import FeatherAdmin
 import Foundation
 import Hummingbird
@@ -32,8 +33,7 @@ struct AdminListAnalyticsLogDefaultController:
         let statusCode = normalizedResponseCode.flatMap(Int.init)
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: .list,
-            scope: AdminAnalytics.Scope.logs
+            to: AnalyticsPermissions.Logs.list
         )
         let emptyModel = AdminListAnalyticsLogModel(
             items: [],

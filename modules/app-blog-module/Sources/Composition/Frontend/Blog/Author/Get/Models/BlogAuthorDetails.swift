@@ -1,6 +1,8 @@
 import BlogAdminAPI
 import BlogAppAPI
+import BlogContracts
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -89,7 +91,7 @@ struct BlogAuthorDetails: Component {
                         .class("secondary")
                 }
                 if state.permissions.contains(
-                    AdminBlog.Scope.authors.permission(for: .update)
+                    BlogPermissions.Authors.update.rawValue
                 ) {
                     AdminStatusActionForm(
                         action:
@@ -111,7 +113,7 @@ struct BlogAuthorDetails: Component {
                     )
                 }
                 if state.permissions.contains(
-                    AdminBlog.Scope.authors.permission(for: .delete)
+                    BlogPermissions.Authors.delete.rawValue
                 ) {
                     AdminNavigationButton(
                         "Remove author",
@@ -134,7 +136,7 @@ struct BlogAuthorDetails: Component {
                 P("Link removed successfully.")
             }
             if state.permissions.contains(
-                AdminBlog.Scope.authorLinks.permission(for: .create)
+                BlogPermissions.AuthorLinks.create.rawValue
             ) {
                 Div {
                     AdminNavigationButton(

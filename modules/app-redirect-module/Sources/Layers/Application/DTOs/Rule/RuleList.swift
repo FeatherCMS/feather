@@ -6,6 +6,7 @@
 
 import FeatherApplication
 import FeatherContracts
+import RedirectContracts
 import RedirectDomain
 
 import struct Foundation.Date
@@ -16,7 +17,7 @@ public struct RuleList: DTO {
         public let id: String
         public let source: String
         public let destination: String
-        public let statusCode: Rule.StatusCode
+        public let statusCode: StatusCode
         public let notes: String?
         public let createdAt: Date
         public let updatedAt: Date
@@ -25,7 +26,7 @@ public struct RuleList: DTO {
             id: String,
             source: String,
             destination: String,
-            statusCode: Rule.StatusCode,
+            statusCode: StatusCode,
             notes: String?,
             createdAt: Date,
             updatedAt: Date
@@ -66,13 +67,13 @@ public struct RuleList: DTO {
         public var page: Search.Page
         public var sort: [Sort]
         public var search: String?
-        public var statusCode: Rule.StatusCode?
+        public var statusCode: StatusCode?
 
         public init(
             page: Search.Page = .init(),
             sort: [Sort] = [],
             search: String? = nil,
-            statusCode: Rule.StatusCode? = nil
+            statusCode: StatusCode? = nil
         ) {
             self.page = page
             self.sort = sort

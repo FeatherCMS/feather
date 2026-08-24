@@ -1,7 +1,7 @@
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
-import WebApplication
+import WebContracts
 
 public struct AdminWeb {
     public let renderingEngine: any RenderingEngine
@@ -16,29 +16,6 @@ public struct AdminWeb {
         self.renderingEngine = renderingEngine
         self.referenceTypeOptions = referenceTypeOptions
         self.templateOptions = templateOptions
-    }
-
-    public enum Scope {
-        public static let pages = PermissionScope(
-            module: "web",
-            resource: "pages"
-        )
-        public static let metadata = PermissionScope(
-            module: "web",
-            resource: "metadata"
-        )
-        public static let menus = PermissionScope(
-            module: "web",
-            resource: "menus"
-        )
-        public static let menuItems = PermissionScope(
-            module: "web",
-            resource: "menu-items"
-        )
-        public static let settings = PermissionScope(
-            module: "web",
-            resource: "settings"
-        )
     }
 
     public func route(

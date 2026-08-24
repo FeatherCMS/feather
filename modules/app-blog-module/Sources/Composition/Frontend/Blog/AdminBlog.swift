@@ -7,7 +7,7 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebApplication
+import WebContracts
 import WebFrontend
 import WebStandards
 
@@ -21,29 +21,6 @@ public struct AdminBlog {
     ) {
         self.renderingEngine = renderingEngine
         self.templateOptions = templateOptions
-    }
-
-    public enum Scope {
-        public static let posts = PermissionScope(
-            module: "blog",
-            resource: "posts"
-        )
-        public static let authors = PermissionScope(
-            module: "blog",
-            resource: "authors"
-        )
-        public static let tags = PermissionScope(
-            module: "blog",
-            resource: "tags"
-        )
-        public static let authorLinks = PermissionScope(
-            module: "blog",
-            resource: "author-links"
-        )
-        public static let settings = PermissionScope(
-            module: "blog",
-            resource: "settings"
-        )
     }
 
     public func route(

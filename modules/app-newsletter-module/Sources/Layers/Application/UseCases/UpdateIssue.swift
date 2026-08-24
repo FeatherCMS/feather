@@ -1,6 +1,7 @@
 import FeatherApplication
 import FeatherContracts
 import Foundation
+import NewsletterContracts
 import NewsletterDomain
 
 public struct UpdateIssue: UseCase {

@@ -1,8 +1,10 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import HTML
 import OpenAPIRuntime
 import SGML
+import WebContracts
 import WebStandards
 
 struct WebPageDetails: Component {
@@ -50,7 +52,7 @@ struct WebPageDetails: Component {
                         .class("secondary")
                 }
                 if state.permissions.contains(
-                    AdminWeb.Scope.pages.permission(for: .update)
+                    WebPermissions.Pages.update.rawValue
                 ) {
                     AdminStatusActionForm(
                         action: "/admin/web/pages/\(state.rule.id)/status/",
@@ -65,7 +67,7 @@ struct WebPageDetails: Component {
                     )
                 }
                 if state.permissions.contains(
-                    AdminWeb.Scope.pages.permission(for: .delete)
+                    WebPermissions.Pages.delete.rawValue
                 ) {
                     AdminNavigationButton(
                         "Remove page",

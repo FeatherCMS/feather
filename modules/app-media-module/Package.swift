@@ -52,57 +52,27 @@ let package = Package(
     ],
     dependencies: [
         // [docc-plugin-placeholder]
-        .package(
-            url: "https://github.com/feather-framework/feather-database",
-            exact: "1.0.0-rc.2"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-storage",
-            exact: "1.0.0-beta.2"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-storage-fs",
-            exact: "1.0.0-beta.1"
-        ),
-        .package(
-            url: "https://github.com/swiftlang/swift-subprocess.git",
-            .upToNextMinor(from: "0.4.0")
-        ),
-        .package(path: "../../feather-core"),
-        .package(path: "../app-system-module"),
-        .package(
-            url: "https://github.com/feather-framework/feather-openapi",
-            exact: "1.0.0-beta.7"
-        ),
+        
+        .package(url: "https://github.com/feather-framework/feather-storage", exact: "1.0.0-beta.2"),
+        .package(url: "https://github.com/feather-framework/feather-storage-fs", exact: "1.0.0-beta.1"),
+        .package(url: "https://github.com/swiftlang/swift-subprocess", .upToNextMinor(from: "0.4.0")),
         .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "5.0.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.9.0"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.20.1"),
-        .package(url: "https://github.com/BinaryBirds/swift-web-standards", exact: "1.0.0-beta.3"),
-        .package(url: "https://github.com/feather-framework/feather-validation", exact: "1.0.0-beta.1"),
-        .package(url: "https://github.com/swift-server/swift-openapi-async-http-client", from: "1.0.0"),
-        .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-nio", from: "2.0.0"),
+        .package(url: "https://github.com/swift-server/async-http-client", from: "1.0.0"),
+        .package(url: "https://github.com/feather-framework/feather-database-postgres", exact: "1.0.0-rc.2"),
+        .package(url: "https://github.com/vapor/postgres-nio", from: "1.32.2"),
+        .package(url: "https://github.com/apple/swift-nio-ssl", from: "2.34.0"),
 
-        .package(
-            url:
-                "https://github.com/feather-framework/feather-database-postgres",
-            exact: "1.0.0-rc.2"
-        ),
-        .package(
-            url: "https://github.com/vapor/postgres-nio.git",
-            from: "1.32.2"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio-ssl.git",
-            from: "2.34.0"
-        ),
+        .package(path: "../../feather-core"),
+        .package(path: "../app-system-module"),
     ],
     targets: [
         .target(
             name: "MediaContracts",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherContracts", package: "feather-core"),
             ],
             path: "Sources/Contracts",
             swiftSettings: defaultSwiftSettings
@@ -111,7 +81,8 @@ let package = Package(
             name: "MediaDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core")
+                
+                .target(name: "MediaContracts"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: defaultSwiftSettings
@@ -119,12 +90,11 @@ let package = Package(
         .target(
             name: "MediaApplication",
             dependencies: [
-                .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherApplication", package: "feather-core"),    
+                .product(name: "SystemApplication", package: "app-system-module"),
+
                 .target(name: "MediaDomain"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "MediaContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+            ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
         ),
@@ -132,31 +102,21 @@ let package = Package(
             name: "MediaInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .product(name: "FeatherDatabase", package: "feather-database"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
+                
                 .product(name: "FeatherStorage", package: "feather-storage"),
-                .product(
-                    name: "FeatherStorageFS",
-                    package: "feather-storage-fs"
-                ),
+                .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
                 .product(name: "Subprocess", package: "swift-subprocess"),
+                
                 .target(name: "MediaApplication"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "MediaContracts"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
         ),
         .target(
             name: "MediaAdminAPI",
-            dependencies: [.product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "MediaContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+            dependencies: [
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
             path: "Sources/APIs/Admin",
             swiftSettings: defaultSwiftSettings
         ),
@@ -164,10 +124,9 @@ let package = Package(
             name: "MediaAdminOpenAPIGenerator",
             dependencies: [
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
-                .product(name: "FeatherOpenAPI", package: "feather-openapi"),
-                .product(name: "OpenAPIKit", package: "OpenAPIKit"),
+
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
-                .product(name: "Yams", package: "Yams")
+                .product(name: "Yams", package: "Yams"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: defaultSwiftSettings
@@ -175,19 +134,11 @@ let package = Package(
         .target(
             name: "MediaBackend",
             dependencies: [
-                .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherBackend", package: "feather-core"),
-                .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .target(name: "MediaApplication"),
+                
                 .target(name: "MediaInfrastructure"),
-                .target(name: "MediaDomain"),
-                .target(name: "MediaAdminAPI"),
-                .product(name: "Hummingbird", package: "hummingbird"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .target(name: "MediaContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .target(name: "MediaAdminAPI"),    
+            ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
         ),
@@ -195,47 +146,36 @@ let package = Package(
             name: "MediaFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
-                .target(name: "MediaAdminAPI"),
-                .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "WebStandards", package: "swift-web-standards"),
-                .product(name: "HTML", package: "swift-web-standards"),
-                .product(name: "SGML", package: "swift-web-standards"),
-                .product(name: "FeatherValidation", package: "feather-validation"),
-                .product(name: "FeatherValidationFoundation", package: "feather-validation"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "NIOCore", package: "swift-nio"),
-            
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "SystemContracts", package: "app-system-module"),
+
                 .target(name: "MediaContracts"),
-                .product(name: "SystemApplication", package: "app-system-module")],
+                .target(name: "MediaAdminAPI"),    
+            ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings
         ),
         .testTarget(
             name: "MediaDomainTests",
             dependencies: [
-                .target(name: "MediaDomain")
+                .target(name: "MediaDomain"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
         .testTarget(
             name: "MediaApplicationTests",
             dependencies: [
-                .target(name: "MediaApplication")
+                .target(name: "MediaApplication"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
         .testTarget(
             name: "MediaInfrastructureTests",
             dependencies: [
-                .target(name: "MediaInfrastructure"),
-                .product(
-                    name: "FeatherDatabasePostgres",
-                    package: "feather-database-postgres"
-                ),
+                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
+
+                .target(name: "MediaInfrastructure"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

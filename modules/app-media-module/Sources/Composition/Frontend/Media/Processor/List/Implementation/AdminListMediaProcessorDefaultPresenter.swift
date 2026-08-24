@@ -1,9 +1,11 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
+import MediaContracts
 import OpenAPIRuntime
 import SGML
 import WebStandards
@@ -24,8 +26,9 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
         permissions: Set<String>,
         error: String?
     ) -> HTMLResponse {
-        let scope = AdminMedia.Scope.processors
-        let canAccess = permissions.contains(scope.permission(for: .list))
+        let canAccess = permissions.contains(
+            MediaPermissions.Processors.list.rawValue
+        )
         if error != nil {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -61,7 +64,9 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
                 isRemoved: isRemoved,
                 canAccess: canAccess,
                 permissions: permissions,
-                canAdd: permissions.contains(scope.create),
+                canAdd: permissions.contains(
+                    MediaPermissions.Processors.create.rawValue
+                ),
                 deniedInfo: "Forbidden",
                 deniedMessage:
                     "Your account cannot access media processors.",
