@@ -94,25 +94,24 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}:
     delete:
       tags:
       - UserIdentities
-      operationId: userIdentitySessionDelete
+      operationId: userIdentitySessionBulkDelete
       parameters:
       - $ref: '#/components/parameters/UserIdentityIdParameter'
-      - $ref: '#/components/parameters/UserIdentitySessionIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
       responses:
-        204:
-          description: UserIdentity session deleted
-        404:
-          description: UserIdentity session not found
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
+  /api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}: {}
   /api/v1/admin/auth/credentials:
     post:
       tags:
@@ -215,23 +214,6 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-    delete:
-      tags:
-      - AuthCredentials
-      operationId: authCredentialDelete
-      parameters:
-      - $ref: '#/components/parameters/AuthCredentialIdParameter'
-      responses:
-        204:
-          description: AuthCredential deleted
-        404:
-          description: AuthCredential not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - AuthCredentials
@@ -267,6 +249,21 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - AuthRolePermissions
+      operationId: authRolePermissionBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/auth/role-permissions/search:
     post:
       tags:
@@ -287,23 +284,7 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}:
-    delete:
-      tags:
-      - AuthRolePermissions
-      operationId: authRolePermissionDelete
-      parameters:
-      - $ref: '#/components/parameters/AuthRolePermissionRoleIdParameter'
-      - $ref: '#/components/parameters/AuthRolePermissionPermissionIdParameter'
-      responses:
-        204:
-          description: AuthRolePermission deleted
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
+  /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}: {}
   /api/v1/admin/auth/magic-links:
     post:
       tags:
@@ -398,23 +379,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/AuthMagicLinkDetailResponse'
-        404:
-          description: AuthMagicLink not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - AuthMagicLinks
-      operationId: authMagicLinkDelete
-      parameters:
-      - $ref: '#/components/parameters/AuthMagicLinkIdParameter'
-      responses:
-        204:
-          description: AuthMagicLink deleted
         404:
           description: AuthMagicLink not found
         401:
@@ -579,46 +543,6 @@ components:
       format: double
     UserAuthSessionPersistentField:
       type: boolean
-    AuthCredentialCreateSchema:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: user_7nL3xQ2v
-        email:
-          type: string
-          example: john.doe@example.com
-        password:
-          type: string
-          example: correct-horse-battery-staple
-        isPersistent:
-          type: boolean
-          example: true
-      required:
-      - userId
-      - email
-      - password
-      - isPersistent
-    AuthCredentialDetailSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          example: credential_7nL3xQ2v
-        userId:
-          type: string
-          example: user_7nL3xQ2v
-        email:
-          type: string
-          example: john.doe@example.com
-        isPersistent:
-          type: boolean
-          example: true
-      required:
-      - id
-      - userId
-      - email
-      - isPersistent
     BulkDeleteRequestSchema:
       type: object
       properties:
@@ -677,6 +601,46 @@ components:
       required:
       - results
       - summary
+    AuthCredentialCreateSchema:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: user_7nL3xQ2v
+        email:
+          type: string
+          example: john.doe@example.com
+        password:
+          type: string
+          example: correct-horse-battery-staple
+        isPersistent:
+          type: boolean
+          example: true
+      required:
+      - userId
+      - email
+      - password
+      - isPersistent
+    AuthCredentialDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: credential_7nL3xQ2v
+        userId:
+          type: string
+          example: user_7nL3xQ2v
+        email:
+          type: string
+          example: john.doe@example.com
+        isPersistent:
+          type: boolean
+          example: true
+      required:
+      - id
+      - userId
+      - email
+      - isPersistent
     AuthCredentialSearchFilterSchema:
       type: object
       properties:
@@ -1059,18 +1023,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserAuthSessionListSchema'
-    AuthCredentialDetailResponse:
-      description: User credential response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthCredentialDetailSchema'
     BulkDeleteResponse:
       description: Bulk delete response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BulkDeleteResponseSchema'
+    AuthCredentialDetailResponse:
+      description: User credential response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthCredentialDetailSchema'
     AuthCredentialFiltersResponse:
       description: AuthCredential filter response
       content:
@@ -1121,33 +1085,12 @@ components:
       schema:
         $ref: '#/components/schemas/UserIdentityIDField'
       description: User identity id
-    UserIdentitySessionIdParameter:
-      name: sessionId
-      in: path
-      required: true
-      schema:
-        $ref: '#/components/schemas/UserAuthSessionIdField'
-      description: Auth session id
     AuthCredentialIdParameter:
       name: authCredentialId
       in: path
       required: true
       schema:
         $ref: '#/components/schemas/AuthCredentialIdField'
-    AuthRolePermissionRoleIdParameter:
-      name: userRoleId
-      in: path
-      required: true
-      schema:
-        $ref: '#/components/schemas/AuthRolePermissionRoleIdField'
-      description: User role id
-    AuthRolePermissionPermissionIdParameter:
-      name: systemPermissionId
-      in: path
-      required: true
-      schema:
-        $ref: '#/components/schemas/AuthRolePermissionPermissionIdField'
-      description: System permission id
     AuthMagicLinkIdParameter:
       name: authMagicLinkId
       in: path
@@ -1173,17 +1116,17 @@ components:
           schema:
             $ref: '#/components/schemas/AuthMagicLinkVerifyRequestSchema'
       required: true
-    AuthCredentialRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthCredentialCreateSchema'
-      required: true
     BulkDeleteRequestBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BulkDeleteRequestSchema'
+      required: true
+    AuthCredentialRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthCredentialCreateSchema'
       required: true
     AuthCredentialUpdateRequestBody:
       content:

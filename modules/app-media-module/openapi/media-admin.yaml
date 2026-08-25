@@ -30,6 +30,21 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - MediaAssets
+      operationId: mediaAssetBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/media/assets/search:
     post:
       tags:
@@ -60,23 +75,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/MediaAssetDetailResponse'
-        404:
-          description: MediaAsset not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - MediaAssets
-      operationId: mediaAssetDelete
-      parameters:
-      - $ref: '#/components/parameters/MediaAssetIdParameter'
-      responses:
-        204:
-          description: MediaAsset deleted
         404:
           description: MediaAsset not found
         401:
@@ -138,6 +136,21 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - MediaFolders
+      operationId: mediaFolderBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/media/folders/search:
     post:
       tags:
@@ -168,23 +181,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/MediaFolderDetailResponse'
-        404:
-          description: MediaFolder not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - MediaFolders
-      operationId: mediaFolderDelete
-      parameters:
-      - $ref: '#/components/parameters/MediaFolderIdParameter'
-      responses:
-        204:
-          description: MediaFolder deleted
         404:
           description: MediaFolder not found
         401:
@@ -228,6 +224,21 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - MediaProcessors
+      operationId: mediaProcessorBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/media/processors/search:
     post:
       tags:
@@ -258,23 +269,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/MediaProcessorDetailResponse'
-        404:
-          description: MediaProcessor not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - MediaProcessors
-      operationId: mediaProcessorDelete
-      parameters:
-      - $ref: '#/components/parameters/MediaProcessorIdParameter'
-      responses:
-        204:
-          description: MediaProcessor deleted
         404:
           description: MediaProcessor not found
         401:
@@ -378,6 +372,64 @@ components:
     MediaAssetIdField:
       type: string
       example: media_asset_1
+    BulkDeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            example: id1
+        summary:
+          type: boolean
+          example: true
+      required:
+      - ids
+      - summary
+    BulkDeleteResponseSchema:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: id1
+              status:
+                type: string
+                enum:
+                - deleted
+                - not_found
+                - forbidden
+                example: deleted
+            required:
+            - id
+            - status
+        summary:
+          type: object
+          properties:
+            requested:
+              type: integer
+              example: 1
+            deleted:
+              type: integer
+              example: 1
+            notFound:
+              type: integer
+              example: 1
+            forbidden:
+              type: integer
+              example: 1
+          required:
+          - requested
+          - deleted
+          - notFound
+          - forbidden
+      required:
+      - results
+      - summary
     MediaAssetListItemSearchQuerySchema:
       type: object
       properties:
@@ -848,6 +900,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaAssetDetailSchema'
+    BulkDeleteResponse:
+      description: Bulk delete response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteResponseSchema'
     MediaAssetListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -912,6 +970,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaAssetCreateSchema'
+      required: true
+    BulkDeleteRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteRequestSchema'
       required: true
     MediaAssetPatchRequestBody:
       content:

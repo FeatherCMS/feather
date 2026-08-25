@@ -49,14 +49,7 @@ struct UserIdentitySessionListOperation: UserIdentitySessionOperation {
     }
 }
 
-struct UserIdentitySessionDeleteOperation: UserIdentitySessionIdOperation {
-
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "UserIdentity session deleted"),
-            404: CustomResponse(
-                description: "UserIdentity session not found"
-            ),
-        ]
-    }
+struct UserIdentitySessionBulkDeleteOperation: UserIdentitySessionOperation,
+    BulkDeleteOperation
+{
 }

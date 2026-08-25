@@ -78,11 +78,7 @@ struct MediaFolderUpdateOperation: MediaFolderIDOperation {
     }
 }
 
-struct MediaFolderDeleteOperation: MediaFolderIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "MediaFolder deleted"),
-            404: CustomResponse(description: "MediaFolder not found"),
-        ]
-    }
+struct MediaFolderBulkDeleteOperation: MediaFolderOperation,
+    BulkDeleteOperation
+{
 }

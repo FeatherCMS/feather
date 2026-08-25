@@ -22,28 +22,9 @@ struct AdminRemoveContactFieldOpenAPIRepository {
 
     func remove(id: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            switch try await client.contactFieldDelete(
-                path: .init(formFieldId: id)
-            ) {
-            case .noContent: return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This contact field could not be found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to delete contact fields."
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot delete contact fields."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.contactFieldBulkDelete(
+                body: .json(.init(ids: [id], summary: true))
+            )
         }
     }
     func bulkRemove(ids: [String]) async throws {

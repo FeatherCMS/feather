@@ -2,6 +2,7 @@ import FeatherOpenAPI
 
 struct BlogTagPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { BlogTagCreateOperation() }
+    var delete: OperationRepresentable? { BlogTagBulkDeleteOperation() }
 }
 
 struct BlogTagSearchPathItems: PathItemRepresentable {
@@ -16,5 +17,4 @@ struct BlogTagIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { BlogTagGetOperation() }
     var put: OperationRepresentable? { BlogTagUpdateOperation() }
     var patch: OperationRepresentable? { BlogTagPatchOperation() }
-    var delete: OperationRepresentable? { BlogTagDeleteOperation() }
 }

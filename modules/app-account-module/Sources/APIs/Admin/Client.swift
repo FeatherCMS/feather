@@ -736,48 +736,4 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations/{accountInvitationId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/delete(accountInvitationDelete)`.
-    public func accountInvitationDelete(
-        _ input: Operations.AccountInvitationDelete.Input
-    ) async throws -> Operations.AccountInvitationDelete.Output {
-        try await client.send(
-            input: input,
-            forOperation: Operations.AccountInvitationDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/account/invitations/{}",
-                    parameters: [
-                        input.path.accountInvitationId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
 }

@@ -111,7 +111,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentitySessionDelete(
+                try await server.userIdentitySessionBulkDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -119,7 +119,7 @@ extension APIProtocol {
             },
             method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}"
+                "/api/v1/admin/user/identities/{userIdentityId}/sessions"
             )
         )
         try transport.register(
@@ -215,19 +215,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authCredentialDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/auth/credentials/{authCredentialId}"
-            )
-        )
-        try transport.register(
-            {
                 try await server.authRolePermissionCreate(
                     request: $0,
                     body: $1,
@@ -235,6 +222,19 @@ extension APIProtocol {
                 )
             },
             method: .post,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/auth/role-permissions"
+            )
+        )
+        try transport.register(
+            {
+                try await server.authRolePermissionBulkDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/auth/role-permissions"
             )
@@ -250,19 +250,6 @@ extension APIProtocol {
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/auth/role-permissions/search"
-            )
-        )
-        try transport.register(
-            {
-                try await server.authRolePermissionDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}"
             )
         )
         try transport.register(
@@ -352,19 +339,6 @@ extension APIProtocol {
                 )
             },
             method: .put,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/auth/magic-links/{authMagicLinkId}"
-            )
-        )
-        try transport.register(
-            {
-                try await server.authMagicLinkDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/auth/magic-links/{authMagicLinkId}"
             )
@@ -758,9 +732,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)`.
-    fileprivate func userIdentitySessionDelete(
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
+    fileprivate func userIdentitySessionBulkDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -769,40 +743,77 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserIdentitySessionDelete.id,
+            forOperation: Operations.UserIdentitySessionBulkDelete.id,
             using: {
-                APIHandler.userIdentitySessionDelete($0)
+                APIHandler.userIdentitySessionBulkDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.UserIdentitySessionDelete.Input.Path =
+                let path: Operations.UserIdentitySessionBulkDelete.Input.Path =
                     .init(
                         userIdentityId: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
                             name: "userIdentityId",
                             as: Components.Parameters.UserIdentityIdParameter
                                 .self
-                        ),
-                        sessionId: try converter.getPathParameterAsURI(
-                            in: metadata.pathParameters,
-                            name: "sessionId",
-                            as: Components.Parameters
-                                .UserIdentitySessionIdParameter.self
                         )
                     )
-                return Operations.UserIdentitySessionDelete.Input(path: path)
+                let headers:
+                    Operations.UserIdentitySessionBulkDelete.Input.Headers =
+                        .init(
+                            accept: try converter.extractAcceptHeaderIfPresent(
+                                in: request.headerFields
+                            )
+                        )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.UserIdentitySessionBulkDelete.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
             },
             serializer: { output, request in
                 switch output {
-                case .noContent(let value):
+                case .ok(let value):
                     suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
                     suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case .unauthorized(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
@@ -1417,59 +1428,6 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials/{authCredentialId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)`.
-    fileprivate func authCredentialDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthCredentialDelete.id,
-            using: {
-                APIHandler.authCredentialDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.AuthCredentialDelete.Input.Path = .init(
-                    authCredentialId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "authCredentialId",
-                        as: Components.Parameters.AuthCredentialIdParameter.self
-                    )
-                )
-                return Operations.AuthCredentialDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/post(authRolePermissionCreate)`.
     fileprivate func authRolePermissionCreate(
@@ -1526,6 +1484,94 @@ extension UniversalServer where APIHandler: APIProtocol {
                 case .created(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
+    fileprivate func authRolePermissionBulkDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AuthRolePermissionBulkDelete.id,
+            using: {
+                APIHandler.authRolePermissionBulkDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers:
+                    Operations.AuthRolePermissionBulkDelete.Input.Headers =
+                        .init(
+                            accept: try converter.extractAcceptHeaderIfPresent(
+                                in: request.headerFields
+                            )
+                        )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.AuthRolePermissionBulkDelete.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -1629,62 +1675,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)`.
-    fileprivate func authRolePermissionDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthRolePermissionDelete.id,
-            using: {
-                APIHandler.authRolePermissionDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.AuthRolePermissionDelete.Input.Path =
-                    .init(
-                        userRoleId: try converter.getPathParameterAsURI(
-                            in: metadata.pathParameters,
-                            name: "userRoleId",
-                            as: Components.Parameters
-                                .AuthRolePermissionRoleIdParameter.self
-                        ),
-                        systemPermissionId: try converter.getPathParameterAsURI(
-                            in: metadata.pathParameters,
-                            name: "systemPermissionId",
-                            as: Components.Parameters
-                                .AuthRolePermissionPermissionIdParameter.self
-                        )
-                    )
-                return Operations.AuthRolePermissionDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .unauthorized(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
@@ -2278,59 +2268,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links/{authMagicLinkId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)`.
-    fileprivate func authMagicLinkDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthMagicLinkDelete.id,
-            using: {
-                APIHandler.authMagicLinkDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.AuthMagicLinkDelete.Input.Path = .init(
-                    authMagicLinkId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "authMagicLinkId",
-                        as: Components.Parameters.AuthMagicLinkIdParameter.self
-                    )
-                )
-                return Operations.AuthMagicLinkDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .notFound(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)

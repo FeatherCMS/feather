@@ -112,12 +112,3 @@ struct AuthCredentialPatchOperation: AuthCredentialIdOperation {
         ]
     }
 }
-
-struct AuthCredentialDeleteOperation: AuthCredentialIdOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "AuthCredential deleted"),
-            404: CustomResponse(description: "AuthCredential not found"),
-        ]
-    }
-}

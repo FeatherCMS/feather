@@ -37,11 +37,11 @@ public protocol APIProtocol: Sendable {
     func userIdentitySessionList(
         _ input: Operations.UserIdentitySessionList.Input
     ) async throws -> Operations.UserIdentitySessionList.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)`.
-    func userIdentitySessionDelete(
-        _ input: Operations.UserIdentitySessionDelete.Input
-    ) async throws -> Operations.UserIdentitySessionDelete.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
+    func userIdentitySessionBulkDelete(
+        _ input: Operations.UserIdentitySessionBulkDelete.Input
+    ) async throws -> Operations.UserIdentitySessionBulkDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/credentials`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/post(authCredentialCreate)`.
     func authCredentialCreate(_ input: Operations.AuthCredentialCreate.Input)
@@ -71,25 +71,21 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/put(authCredentialUpdate)`.
     func authCredentialUpdate(_ input: Operations.AuthCredentialUpdate.Input)
         async throws -> Operations.AuthCredentialUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials/{authCredentialId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)`.
-    func authCredentialDelete(_ input: Operations.AuthCredentialDelete.Input)
-        async throws -> Operations.AuthCredentialDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/post(authRolePermissionCreate)`.
     func authRolePermissionCreate(
         _ input: Operations.AuthRolePermissionCreate.Input
     ) async throws -> Operations.AuthRolePermissionCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
+    func authRolePermissionBulkDelete(
+        _ input: Operations.AuthRolePermissionBulkDelete.Input
+    ) async throws -> Operations.AuthRolePermissionBulkDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/search/post(authRolePermissionSearch)`.
     func authRolePermissionSearch(
         _ input: Operations.AuthRolePermissionSearch.Input
     ) async throws -> Operations.AuthRolePermissionSearch.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)`.
-    func authRolePermissionDelete(
-        _ input: Operations.AuthRolePermissionDelete.Input
-    ) async throws -> Operations.AuthRolePermissionDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/magic-links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/post(authMagicLinkCreate)`.
     func authMagicLinkCreate(_ input: Operations.AuthMagicLinkCreate.Input)
@@ -119,10 +115,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/put(authMagicLinkUpdate)`.
     func authMagicLinkUpdate(_ input: Operations.AuthMagicLinkUpdate.Input)
         async throws -> Operations.AuthMagicLinkUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links/{authMagicLinkId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)`.
-    func authMagicLinkDelete(_ input: Operations.AuthMagicLinkDelete.Input)
-        async throws -> Operations.AuthMagicLinkDelete.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -185,13 +177,20 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)`.
-    public func userIdentitySessionDelete(
-        path: Operations.UserIdentitySessionDelete.Input.Path
-    ) async throws -> Operations.UserIdentitySessionDelete.Output {
-        try await userIdentitySessionDelete(
-            Operations.UserIdentitySessionDelete.Input(path: path)
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
+    public func userIdentitySessionBulkDelete(
+        path: Operations.UserIdentitySessionBulkDelete.Input.Path,
+        headers: Operations.UserIdentitySessionBulkDelete.Input.Headers =
+            .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.UserIdentitySessionBulkDelete.Output {
+        try await userIdentitySessionBulkDelete(
+            Operations.UserIdentitySessionBulkDelete.Input(
+                path: path,
+                headers: headers,
+                body: body
+            )
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/auth/credentials`.
@@ -285,15 +284,6 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials/{authCredentialId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)`.
-    public func authCredentialDelete(
-        path: Operations.AuthCredentialDelete.Input.Path
-    ) async throws -> Operations.AuthCredentialDelete.Output {
-        try await authCredentialDelete(
-            Operations.AuthCredentialDelete.Input(path: path)
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/post(authRolePermissionCreate)`.
     public func authRolePermissionCreate(
@@ -302,6 +292,20 @@ extension APIProtocol {
     ) async throws -> Operations.AuthRolePermissionCreate.Output {
         try await authRolePermissionCreate(
             Operations.AuthRolePermissionCreate.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
+    public func authRolePermissionBulkDelete(
+        headers: Operations.AuthRolePermissionBulkDelete.Input.Headers =
+            .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.AuthRolePermissionBulkDelete.Output {
+        try await authRolePermissionBulkDelete(
+            Operations.AuthRolePermissionBulkDelete.Input(
                 headers: headers,
                 body: body
             )
@@ -318,15 +322,6 @@ extension APIProtocol {
                 headers: headers,
                 body: body
             )
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)`.
-    public func authRolePermissionDelete(
-        path: Operations.AuthRolePermissionDelete.Input.Path
-    ) async throws -> Operations.AuthRolePermissionDelete.Output {
-        try await authRolePermissionDelete(
-            Operations.AuthRolePermissionDelete.Input(path: path)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/auth/magic-links`.
@@ -418,15 +413,6 @@ extension APIProtocol {
                 headers: headers,
                 body: body
             )
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links/{authMagicLinkId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)`.
-    public func authMagicLinkDelete(
-        path: Operations.AuthMagicLinkDelete.Input.Path
-    ) async throws -> Operations.AuthMagicLinkDelete.Output {
-        try await authMagicLinkDelete(
-            Operations.AuthMagicLinkDelete.Input(path: path)
         )
     }
 }
@@ -696,76 +682,6 @@ public enum Components {
         public typealias UserAuthSessionTimestampField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/UserAuthSessionPersistentField`.
         public typealias UserAuthSessionPersistentField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema`.
-        public struct AuthCredentialCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema/userId`.
-            public var userId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema/email`.
-            public var email: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema/password`.
-            public var password: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema/isPersistent`.
-            public var isPersistent: Swift.Bool
-            /// Creates a new `AuthCredentialCreateSchema`.
-            ///
-            /// - Parameters:
-            ///   - userId:
-            ///   - email:
-            ///   - password:
-            ///   - isPersistent:
-            public init(
-                userId: Swift.String,
-                email: Swift.String,
-                password: Swift.String,
-                isPersistent: Swift.Bool
-            ) {
-                self.userId = userId
-                self.email = email
-                self.password = password
-                self.isPersistent = isPersistent
-            }
-            public enum CodingKeys: String, CodingKey {
-                case userId
-                case email
-                case password
-                case isPersistent
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema`.
-        public struct AuthCredentialDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema/userId`.
-            public var userId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema/email`.
-            public var email: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema/isPersistent`.
-            public var isPersistent: Swift.Bool
-            /// Creates a new `AuthCredentialDetailSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - userId:
-            ///   - email:
-            ///   - isPersistent:
-            public init(
-                id: Swift.String,
-                userId: Swift.String,
-                email: Swift.String,
-                isPersistent: Swift.Bool
-            ) {
-                self.id = id
-                self.userId = userId
-                self.email = email
-                self.isPersistent = isPersistent
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case userId
-                case email
-                case isPersistent
-            }
-        }
         /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema`.
         public struct BulkDeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/ids`.
@@ -887,6 +803,76 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case results
                 case summary
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema`.
+        public struct AuthCredentialCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema/userId`.
+            public var userId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema/email`.
+            public var email: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema/password`.
+            public var password: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema/isPersistent`.
+            public var isPersistent: Swift.Bool
+            /// Creates a new `AuthCredentialCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - userId:
+            ///   - email:
+            ///   - password:
+            ///   - isPersistent:
+            public init(
+                userId: Swift.String,
+                email: Swift.String,
+                password: Swift.String,
+                isPersistent: Swift.Bool
+            ) {
+                self.userId = userId
+                self.email = email
+                self.password = password
+                self.isPersistent = isPersistent
+            }
+            public enum CodingKeys: String, CodingKey {
+                case userId
+                case email
+                case password
+                case isPersistent
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema`.
+        public struct AuthCredentialDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema/userId`.
+            public var userId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema/email`.
+            public var email: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialDetailSchema/isPersistent`.
+            public var isPersistent: Swift.Bool
+            /// Creates a new `AuthCredentialDetailSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - userId:
+            ///   - email:
+            ///   - isPersistent:
+            public init(
+                id: Swift.String,
+                userId: Swift.String,
+                email: Swift.String,
+                isPersistent: Swift.Bool
+            ) {
+                self.id = id
+                self.userId = userId
+                self.email = email
+                self.isPersistent = isPersistent
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case userId
+                case email
+                case isPersistent
             }
         }
         /// - Remark: Generated from `#/components/schemas/AuthCredentialSearchFilterSchema`.
@@ -1743,24 +1729,9 @@ public enum Components {
         /// - Remark: Generated from `#/components/parameters/UserIdentityIdParameter`.
         public typealias UserIdentityIdParameter = Components.Schemas
             .UserIdentityIDField
-        /// Auth session id
-        ///
-        /// - Remark: Generated from `#/components/parameters/UserIdentitySessionIdParameter`.
-        public typealias UserIdentitySessionIdParameter = Components.Schemas
-            .UserAuthSessionIdField
         /// - Remark: Generated from `#/components/parameters/AuthCredentialIdParameter`.
         public typealias AuthCredentialIdParameter = Components.Schemas
             .AuthCredentialIdField
-        /// User role id
-        ///
-        /// - Remark: Generated from `#/components/parameters/AuthRolePermissionRoleIdParameter`.
-        public typealias AuthRolePermissionRoleIdParameter = Components.Schemas
-            .AuthRolePermissionRoleIdField
-        /// System permission id
-        ///
-        /// - Remark: Generated from `#/components/parameters/AuthRolePermissionPermissionIdParameter`.
-        public typealias AuthRolePermissionPermissionIdParameter = Components
-            .Schemas.AuthRolePermissionPermissionIdField
         /// - Remark: Generated from `#/components/parameters/AuthMagicLinkIdParameter`.
         public typealias AuthMagicLinkIdParameter = Components.Schemas
             .AuthMagicLinkIdField
@@ -1782,15 +1753,15 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/AuthMagicLinkVerifyRequestBody/content/application\/json`.
             case json(Components.Schemas.AuthMagicLinkVerifyRequestSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/AuthCredentialRequestBody`.
-        @frozen public enum AuthCredentialRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/AuthCredentialRequestBody/content/application\/json`.
-            case json(Components.Schemas.AuthCredentialCreateSchema)
-        }
         /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody`.
         @frozen public enum BulkDeleteRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody/content/application\/json`.
             case json(Components.Schemas.BulkDeleteRequestSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/AuthCredentialRequestBody`.
+        @frozen public enum AuthCredentialRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/AuthCredentialRequestBody/content/application\/json`.
+            case json(Components.Schemas.AuthCredentialCreateSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/AuthCredentialUpdateRequestBody`.
         @frozen public enum AuthCredentialUpdateRequestBody: Sendable, Hashable
@@ -1914,6 +1885,34 @@ public enum Components {
                 self.body = body
             }
         }
+        public struct BulkDeleteResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
+                case json(Components.Schemas.BulkDeleteResponseSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.BulkDeleteResponseSchema {
+                    get throws {
+                        switch self {
+                        case .json(let body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.BulkDeleteResponse.Body
+            /// Creates a new `BulkDeleteResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.BulkDeleteResponse.Body) {
+                self.body = body
+            }
+        }
         public struct AuthCredentialDetailResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/AuthCredentialDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -1942,34 +1941,6 @@ public enum Components {
             public init(
                 body: Components.Responses.AuthCredentialDetailResponse.Body
             ) {
-                self.body = body
-            }
-        }
-        public struct BulkDeleteResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
-                case json(Components.Schemas.BulkDeleteResponseSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.BulkDeleteResponseSchema {
-                    get throws {
-                        switch self {
-                        case .json(let body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.BulkDeleteResponse.Body
-            /// Creates a new `BulkDeleteResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BulkDeleteResponse.Body) {
                 self.body = body
             }
         }
@@ -2986,119 +2957,89 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)`.
-    public enum UserIdentitySessionDelete {
-        public static let id: Swift.String = "userIdentitySessionDelete"
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
+    public enum UserIdentitySessionBulkDelete {
+        public static let id: Swift.String = "userIdentitySessionBulkDelete"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/DELETE/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/sessions/DELETE/path`.
             public struct Path: Sendable, Hashable {
                 /// User identity id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/DELETE/path/userIdentityId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/sessions/DELETE/path/userIdentityId`.
                 public var userIdentityId:
                     Components.Parameters.UserIdentityIdParameter
-                /// Auth session id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/DELETE/path/sessionId`.
-                public var sessionId:
-                    Components.Parameters.UserIdentitySessionIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - userIdentityId: User identity id
-                ///   - sessionId: Auth session id
                 public init(
                     userIdentityId: Components.Parameters
-                        .UserIdentityIdParameter,
-                    sessionId: Components.Parameters
-                        .UserIdentitySessionIdParameter
+                        .UserIdentityIdParameter
                 ) {
                     self.userIdentityId = userIdentityId
-                    self.sessionId = sessionId
                 }
             }
-            public var path: Operations.UserIdentitySessionDelete.Input.Path
+            public var path: Operations.UserIdentitySessionBulkDelete.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/sessions/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.UserIdentitySessionBulkDelete
+                            .AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.UserIdentitySessionBulkDelete
+                            .AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers:
+                Operations.UserIdentitySessionBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
-            public init(path: Operations.UserIdentitySessionDelete.Input.Path) {
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.UserIdentitySessionBulkDelete.Input.Path,
+                headers: Operations.UserIdentitySessionBulkDelete.Input
+                    .Headers = .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
                 self.path = path
+                self.headers = headers
+                self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// UserIdentity session deleted
+            /// Bulk delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/200`.
             ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(
-                Operations.UserIdentitySessionDelete.Output.NoContent
-            )
-            /// UserIdentity session deleted
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent:
-                Operations.UserIdentitySessionDelete.Output.NoContent
-            {
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
                 get throws {
                     switch self {
-                    case .noContent(let response):
+                    case .ok(let response):
                         return response
                     default:
                         try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// UserIdentity session not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.UserIdentitySessionDelete.Output.NotFound)
-            /// UserIdentity session not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound:
-                Operations.UserIdentitySessionDelete.Output.NotFound
-            {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
+                            expectedStatus: "ok",
                             response: self
                         )
                     }
@@ -3110,15 +3051,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.UserIdentitySessionDelete.Output.Unauthorized
+                Operations.UserIdentitySessionBulkDelete.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3129,7 +3070,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.UserIdentitySessionDelete.Output.Unauthorized
+                Operations.UserIdentitySessionBulkDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3149,15 +3090,15 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(
-                Operations.UserIdentitySessionDelete.Output.Forbidden
+                Operations.UserIdentitySessionBulkDelete.Output.Forbidden
             )
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3168,7 +3109,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.UserIdentitySessionDelete.Output.Forbidden
+                Operations.UserIdentitySessionBulkDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -3189,6 +3130,31 @@ public enum Operations {
                 statusCode: Swift.Int,
                 OpenAPIRuntime.UndocumentedPayload
             )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/auth/credentials`.
@@ -4576,195 +4542,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials/{authCredentialId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)`.
-    public enum AuthCredentialDelete {
-        public static let id: Swift.String = "authCredentialDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/auth/credentials/{authCredentialId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/auth/credentials/{authCredentialId}/DELETE/path/authCredentialId`.
-                public var authCredentialId:
-                    Components.Parameters.AuthCredentialIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - authCredentialId:
-                public init(
-                    authCredentialId: Components.Parameters
-                        .AuthCredentialIdParameter
-                ) {
-                    self.authCredentialId = authCredentialId
-                }
-            }
-            public var path: Operations.AuthCredentialDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.AuthCredentialDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// AuthCredential deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.AuthCredentialDelete.Output.NoContent)
-            /// AuthCredential deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent:
-                Operations.AuthCredentialDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// AuthCredential not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.AuthCredentialDelete.Output.NotFound)
-            /// AuthCredential not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.AuthCredentialDelete.Output.NotFound
-            {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.AuthCredentialDelete.Output.Unauthorized
-            )
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.AuthCredentialDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AuthCredentialDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.AuthCredentialDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-    }
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/post(authRolePermissionCreate)`.
     public enum AuthRolePermissionCreate {
@@ -4897,6 +4674,184 @@ public enum Operations {
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
                 Operations.AuthRolePermissionCreate.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
+    public enum AuthRolePermissionBulkDelete {
+        public static let id: Swift.String = "authRolePermissionBulkDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/role-permissions/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthRolePermissionBulkDelete
+                            .AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthRolePermissionBulkDelete
+                            .AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers:
+                Operations.AuthRolePermissionBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.AuthRolePermissionBulkDelete.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Bulk delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.AuthRolePermissionBulkDelete.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.AuthRolePermissionBulkDelete.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(
+                Operations.AuthRolePermissionBulkDelete.Output.Forbidden
+            )
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.AuthRolePermissionBulkDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -5132,171 +5087,6 @@ public enum Operations {
                     .json
                 ]
             }
-        }
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)`.
-    public enum AuthRolePermissionDelete {
-        public static let id: Swift.String = "authRolePermissionDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// User role id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/DELETE/path/userRoleId`.
-                public var userRoleId:
-                    Components.Parameters.AuthRolePermissionRoleIdParameter
-                /// System permission id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/DELETE/path/systemPermissionId`.
-                public var systemPermissionId:
-                    Components.Parameters
-                        .AuthRolePermissionPermissionIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - userRoleId: User role id
-                ///   - systemPermissionId: System permission id
-                public init(
-                    userRoleId: Components.Parameters
-                        .AuthRolePermissionRoleIdParameter,
-                    systemPermissionId: Components.Parameters
-                        .AuthRolePermissionPermissionIdParameter
-                ) {
-                    self.userRoleId = userRoleId
-                    self.systemPermissionId = systemPermissionId
-                }
-            }
-            public var path: Operations.AuthRolePermissionDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.AuthRolePermissionDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// AuthRolePermission deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.AuthRolePermissionDelete.Output.NoContent)
-            /// AuthRolePermission deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent:
-                Operations.AuthRolePermissionDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.AuthRolePermissionDelete.Output.Unauthorized
-            )
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.AuthRolePermissionDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AuthRolePermissionDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.AuthRolePermissionDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/auth/magic-links`.
@@ -6671,195 +6461,6 @@ public enum Operations {
                     .json
                 ]
             }
-        }
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links/{authMagicLinkId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)`.
-    public enum AuthMagicLinkDelete {
-        public static let id: Swift.String = "authMagicLinkDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/auth/magic-links/{authMagicLinkId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/auth/magic-links/{authMagicLinkId}/DELETE/path/authMagicLinkId`.
-                public var authMagicLinkId:
-                    Components.Parameters.AuthMagicLinkIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - authMagicLinkId:
-                public init(
-                    authMagicLinkId: Components.Parameters
-                        .AuthMagicLinkIdParameter
-                ) {
-                    self.authMagicLinkId = authMagicLinkId
-                }
-            }
-            public var path: Operations.AuthMagicLinkDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.AuthMagicLinkDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// AuthMagicLink deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.AuthMagicLinkDelete.Output.NoContent)
-            /// AuthMagicLink deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent:
-                Operations.AuthMagicLinkDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// AuthMagicLink not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.AuthMagicLinkDelete.Output.NotFound)
-            /// AuthMagicLink not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.AuthMagicLinkDelete.Output.NotFound
-            {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.AuthMagicLinkDelete.Output.Unauthorized
-            )
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.AuthMagicLinkDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AuthMagicLinkDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.AuthMagicLinkDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
         }
     }
 }

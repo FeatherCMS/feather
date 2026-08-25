@@ -25,5 +25,4 @@ struct UserIdentityIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { UserIdentityGetOperation() }
     var put: OperationRepresentable? { UserIdentityUpdateOperation() }
     var patch: OperationRepresentable? { UserIdentityPatchOperation() }
-    var delete: OperationRepresentable? { UserIdentityDeleteOperation() }
 }

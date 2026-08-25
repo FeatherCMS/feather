@@ -79,13 +79,9 @@ struct MediaAssetUpdateOperation: MediaAssetIDOperation {
     }
 }
 
-struct MediaAssetDeleteOperation: MediaAssetIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "MediaAsset deleted"),
-            404: CustomResponse(description: "MediaAsset not found"),
-        ]
-    }
+struct MediaAssetBulkDeleteOperation: MediaAssetOperation,
+    BulkDeleteOperation
+{
 }
 
 struct MediaAssetVariantSearchOperation: MediaAssetIDOperation {

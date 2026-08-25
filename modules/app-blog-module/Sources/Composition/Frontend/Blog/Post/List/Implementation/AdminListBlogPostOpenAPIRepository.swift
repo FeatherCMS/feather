@@ -113,31 +113,9 @@ struct AdminListBlogPostOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response =
-                try await client
-                .blogPostDelete(path: .init(blogPostId: id))
-
-            switch response {
-            case .noContent:
-                return
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: deleteUnauthorizedMessage
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: deleteForbiddenMessage
-                )
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: deleteNotFoundMessage
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.blogPostBulkDelete(
+                body: .json(.init(ids: [id], summary: true))
+            )
         }
     }
 

@@ -43,13 +43,5 @@ struct ContactFormUpdateOperation: ContactFormIDOperation {
         ]
     }
 }
-struct ContactFormDeleteOperation: ContactFormIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "Contact form deleted"),
-            404: CustomResponse(description: "Contact form not found"),
-        ]
-    }
-}
 struct ContactFormBulkDeleteOperation: ContactFormOperation, BulkDeleteOperation
 {}

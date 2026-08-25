@@ -124,19 +124,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.systemPermissionDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/system/permissions/{systemPermissionId}"
-            )
-        )
-        try transport.register(
-            {
                 try await server.systemVariableCreate(
                     request: $0,
                     body: $1,
@@ -222,19 +209,6 @@ extension APIProtocol {
                 )
             },
             method: .put,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/system/variables/{systemVariableId}"
-            )
-        )
-        try transport.register(
-            {
-                try await server.systemVariableDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/system/variables/{systemVariableId}"
             )
@@ -873,60 +847,6 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions/{systemPermissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/{systemPermissionId}/delete(systemPermissionDelete)`.
-    fileprivate func systemPermissionDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.SystemPermissionDelete.id,
-            using: {
-                APIHandler.systemPermissionDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.SystemPermissionDelete.Input.Path = .init(
-                    systemPermissionId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "systemPermissionId",
-                        as: Components.Parameters.SystemPermissionIdParameter
-                            .self
-                    )
-                )
-                return Operations.SystemPermissionDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/system/variables`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/post(systemVariableCreate)`.
     fileprivate func systemVariableCreate(
@@ -1504,59 +1424,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/system/variables/{systemVariableId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/{systemVariableId}/delete(systemVariableDelete)`.
-    fileprivate func systemVariableDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.SystemVariableDelete.id,
-            using: {
-                APIHandler.systemVariableDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.SystemVariableDelete.Input.Path = .init(
-                    systemVariableId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "systemVariableId",
-                        as: Components.Parameters.SystemVariableIdParameter.self
-                    )
-                )
-                return Operations.SystemVariableDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .notFound(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)

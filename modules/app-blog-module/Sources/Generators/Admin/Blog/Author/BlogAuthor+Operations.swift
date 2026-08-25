@@ -102,11 +102,7 @@ struct BlogAuthorPatchOperation: BlogAuthorIDOperation {
     }
 }
 
-struct BlogAuthorDeleteOperation: BlogAuthorIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "BlogAuthor deleted"),
-            404: CustomResponse(description: "BlogAuthor not found"),
-        ]
-    }
+struct BlogAuthorBulkDeleteOperation: BlogAuthorOperation,
+    BulkDeleteOperation
+{
 }

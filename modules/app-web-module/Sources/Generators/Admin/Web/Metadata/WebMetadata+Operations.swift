@@ -118,12 +118,3 @@ struct WebMetadataPatchOperation: WebMetadataIDOperation {
         ]
     }
 }
-
-struct WebMetadataDeleteOperation: WebMetadataIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "WebMetadata deleted"),
-            404: CustomResponse(description: "WebMetadata not found"),
-        ]
-    }
-}

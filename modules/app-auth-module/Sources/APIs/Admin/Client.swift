@@ -411,20 +411,19 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}/delete(userIdentitySessionDelete)`.
-    public func userIdentitySessionDelete(
-        _ input: Operations.UserIdentitySessionDelete.Input
-    ) async throws -> Operations.UserIdentitySessionDelete.Output {
+    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
+    public func userIdentitySessionBulkDelete(
+        _ input: Operations.UserIdentitySessionBulkDelete.Input
+    ) async throws -> Operations.UserIdentitySessionBulkDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.UserIdentitySessionDelete.id,
+            forOperation: Operations.UserIdentitySessionBulkDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/user/identities/{}/sessions/{}",
+                    template: "/api/v1/admin/user/identities/{}/sessions",
                     parameters: [
-                        input.path.userIdentityId,
-                        input.path.sessionId,
+                        input.path.userIdentityId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -432,14 +431,49 @@ public struct Client: APIProtocol {
                     method: .delete
                 )
                 suppressMutabilityWarning(&request)
-                return (request, nil)
+                converter.setAcceptHeader(
+                    in: &request.headerFields,
+                    contentTypes: input.headers.accept
+                )
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case .json(let value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
             },
             deserializer: { response, responseBody in
                 switch response.status.code {
-                case 204:
-                    return .noContent(.init())
-                case 404:
-                    return .notFound(.init())
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(
+                        in: response.headerFields
+                    )
+                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure(
+                            "bestContentType chose an invalid content type."
+                        )
+                    }
+                    return .ok(.init(body: body))
                 case 401:
                     return .unauthorized(.init())
                 case 403:
@@ -999,50 +1033,6 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials/{authCredentialId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/delete(authCredentialDelete)`.
-    public func authCredentialDelete(
-        _ input: Operations.AuthCredentialDelete.Input
-    ) async throws -> Operations.AuthCredentialDelete.Output {
-        try await client.send(
-            input: input,
-            forOperation: Operations.AuthCredentialDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/auth/credentials/{}",
-                    parameters: [
-                        input.path.authCredentialId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/post(authRolePermissionCreate)`.
     public func authRolePermissionCreate(
@@ -1107,6 +1097,83 @@ public struct Client: APIProtocol {
                         )
                     }
                     return .created(.init(body: body))
+                case 401:
+                    return .unauthorized(.init())
+                case 403:
+                    return .forbidden(.init())
+                default:
+                    return .undocumented(
+                        statusCode: response.status.code,
+                        .init(
+                            headerFields: response.headerFields,
+                            body: responseBody
+                        )
+                    )
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
+    public func authRolePermissionBulkDelete(
+        _ input: Operations.AuthRolePermissionBulkDelete.Input
+    ) async throws -> Operations.AuthRolePermissionBulkDelete.Output {
+        try await client.send(
+            input: input,
+            forOperation: Operations.AuthRolePermissionBulkDelete.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/api/v1/admin/auth/role-permissions",
+                    parameters: []
+                )
+                var request: HTTPTypes.HTTPRequest = .init(
+                    soar_path: path,
+                    method: .delete
+                )
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(
+                    in: &request.headerFields,
+                    contentTypes: input.headers.accept
+                )
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case .json(let value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(
+                        in: response.headerFields
+                    )
+                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure(
+                            "bestContentType chose an invalid content type."
+                        )
+                    }
+                    return .ok(.init(body: body))
                 case 401:
                     return .unauthorized(.init())
                 case 403:
@@ -1188,49 +1255,6 @@ public struct Client: APIProtocol {
                         )
                     }
                     return .ok(.init(body: body))
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}/delete(authRolePermissionDelete)`.
-    public func authRolePermissionDelete(
-        _ input: Operations.AuthRolePermissionDelete.Input
-    ) async throws -> Operations.AuthRolePermissionDelete.Output {
-        try await client.send(
-            input: input,
-            forOperation: Operations.AuthRolePermissionDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/auth/role-permissions/{}/{}",
-                    parameters: [
-                        input.path.userRoleId,
-                        input.path.systemPermissionId,
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
                 case 401:
                     return .unauthorized(.init())
                 case 403:
@@ -1771,50 +1795,6 @@ public struct Client: APIProtocol {
                         )
                     }
                     return .ok(.init(body: body))
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links/{authMagicLinkId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/{authMagicLinkId}/delete(authMagicLinkDelete)`.
-    public func authMagicLinkDelete(
-        _ input: Operations.AuthMagicLinkDelete.Input
-    ) async throws -> Operations.AuthMagicLinkDelete.Output {
-        try await client.send(
-            input: input,
-            forOperation: Operations.AuthMagicLinkDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/auth/magic-links/{}",
-                    parameters: [
-                        input.path.authMagicLinkId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
                 case 404:
                     return .notFound(.init())
                 case 401:

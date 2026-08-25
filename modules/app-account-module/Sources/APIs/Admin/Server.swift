@@ -148,19 +148,6 @@ extension APIProtocol {
                 "/api/v1/admin/account/invitations/{accountInvitationId}"
             )
         )
-        try transport.register(
-            {
-                try await server.accountInvitationDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/account/invitations/{accountInvitationId}"
-            )
-        )
     }
 }
 
@@ -897,60 +884,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations/{accountInvitationId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/delete(accountInvitationDelete)`.
-    fileprivate func accountInvitationDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AccountInvitationDelete.id,
-            using: {
-                APIHandler.accountInvitationDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.AccountInvitationDelete.Input.Path = .init(
-                    accountInvitationId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "accountInvitationId",
-                        as: Components.Parameters.AccountInvitationIdParameter
-                            .self
-                    )
-                )
-                return Operations.AccountInvitationDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .notFound(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)

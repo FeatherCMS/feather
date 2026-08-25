@@ -67,31 +67,9 @@ struct AdminRemoveBlogAuthorOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.blogAuthorDelete(
-                path: .init(blogAuthorId: id)
+            _ = try await client.blogAuthorBulkDelete(
+                body: .json(.init(ids: [id], summary: true))
             )
-            switch response {
-            case .noContent:
-                return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Blog author not found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to delete this blog author."
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot delete blog authors."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
         }
     }
 }

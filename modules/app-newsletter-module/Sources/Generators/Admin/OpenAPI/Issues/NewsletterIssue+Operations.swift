@@ -50,13 +50,9 @@ struct NewsletterIssueUpdateOperation: NewsletterIssueIDOperation {
         ]
     }
 }
-struct NewsletterIssueDeleteOperation: NewsletterIssueIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "Newsletter issue deleted"),
-            404: CustomResponse(description: "Newsletter issue not found"),
-        ]
-    }
+struct NewsletterIssueBulkDeleteOperation: NewsletterIssueOperation,
+    BulkDeleteOperation
+{
 }
 struct NewsletterIssueTestEmailOperation: NewsletterIssueIDOperation {
     var requestBody: RequestBodyRepresentable? {
