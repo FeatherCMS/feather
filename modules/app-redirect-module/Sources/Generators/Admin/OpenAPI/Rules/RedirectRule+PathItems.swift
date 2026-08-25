@@ -17,5 +17,4 @@ struct RedirectRuleIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { RedirectRuleGetOperation() }
     var put: OperationRepresentable? { RedirectRuleUpdateOperation() }
     var patch: OperationRepresentable? { RedirectRulePatchOperation() }
-    var delete: OperationRepresentable? { RedirectRuleDeleteOperation() }
 }

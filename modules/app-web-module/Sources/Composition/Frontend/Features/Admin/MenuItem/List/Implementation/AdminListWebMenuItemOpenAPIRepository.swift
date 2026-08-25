@@ -72,33 +72,10 @@ struct AdminListWebMenuItemOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response =
-                try await client
-                .webMenuItemDelete(
-                    path: .init(webMenuId: menuId, webMenuItemId: id)
-                )
-
-            switch response {
-            case .noContent:
-                return
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: deleteUnauthorizedMessage
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: deleteForbiddenMessage
-                )
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: deleteNotFoundMessage
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.webMenuItemBulkDelete(
+                path: .init(webMenuId: menuId),
+                body: .json(.init(ids: [id], summary: true))
+            )
         }
     }
 

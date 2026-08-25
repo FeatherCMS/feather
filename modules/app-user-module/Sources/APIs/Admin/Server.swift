@@ -124,19 +124,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentityDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/user/identities/{userIdentityId}"
-            )
-        )
-        try transport.register(
-            {
                 try await server.userRoleCreate(
                     request: $0,
                     body: $1,
@@ -222,19 +209,6 @@ extension APIProtocol {
                 )
             },
             method: .put,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/user/roles/{userRoleId}"
-            )
-        )
-        try transport.register(
-            {
-                try await server.userRoleDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/user/roles/{userRoleId}"
             )
@@ -842,59 +816,6 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/delete(userIdentityDelete)`.
-    fileprivate func userIdentityDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.UserIdentityDelete.id,
-            using: {
-                APIHandler.userIdentityDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.UserIdentityDelete.Input.Path = .init(
-                    userIdentityId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "userIdentityId",
-                        as: Components.Parameters.UserIdentityIdParameter.self
-                    )
-                )
-                return Operations.UserIdentityDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)`.
     fileprivate func userRoleCreate(
@@ -1465,59 +1386,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/user/roles/{userRoleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/delete(userRoleDelete)`.
-    fileprivate func userRoleDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.UserRoleDelete.id,
-            using: {
-                APIHandler.userRoleDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.UserRoleDelete.Input.Path = .init(
-                    userRoleId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "userRoleId",
-                        as: Components.Parameters.UserRoleIdParameter.self
-                    )
-                )
-                return Operations.UserRoleDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .notFound(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)

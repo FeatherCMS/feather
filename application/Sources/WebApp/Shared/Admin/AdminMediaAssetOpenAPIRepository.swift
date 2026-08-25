@@ -233,30 +233,9 @@ struct AdminMediaAssetOpenAPIRepository {
         id: String
     ) async throws {
         try await api.withMediaOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.mediaFolderDelete(
-                path: .init(mediaFolderId: id)
+            _ = try await client.mediaFolderBulkDelete(
+                body: .json(.init(ids: [id], summary: true))
             )
-            switch response {
-            case .noContent:
-                return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Media folder not found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: deleteFolderUnauthorizedMessage
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot delete media folders."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
         }
     }
 
@@ -378,32 +357,9 @@ struct AdminMediaAssetOpenAPIRepository {
         id: String
     ) async throws {
         try await api.withMediaOpenAPIRepositoryErrorMapping { client in
-            let response =
-                try await client
-                .mediaAssetDelete(
-                    path: .init(mediaAssetId: id)
-                )
-            switch response {
-            case .noContent:
-                return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Media asset not found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: deleteAssetUnauthorizedMessage
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot delete media assets."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.mediaAssetBulkDelete(
+                body: .json(.init(ids: [id], summary: true))
+            )
         }
     }
 

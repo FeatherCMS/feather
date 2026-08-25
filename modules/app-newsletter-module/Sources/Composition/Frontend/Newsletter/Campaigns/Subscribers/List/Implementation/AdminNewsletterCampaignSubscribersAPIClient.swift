@@ -170,29 +170,10 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
             subscriberId: subscriberId
         )
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.newsletterSubscriberDelete(
-                path: .init(newsletterCampaignId: newsletterId, email: email)
+            _ = try await client.newsletterSubscriberBulkDelete(
+                path: .init(newsletterCampaignId: newsletterId),
+                body: .json(.init(ids: [email], summary: true))
             )
-            switch response {
-            case .noContent: return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This subscriber could not be found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to delete subscribers."
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot delete subscribers."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
         }
     }
 

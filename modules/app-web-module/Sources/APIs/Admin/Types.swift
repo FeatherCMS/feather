@@ -40,14 +40,14 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/put(webMetadataUpdate)`.
     func webMetadataUpdate(_ input: Operations.WebMetadataUpdate.Input)
         async throws -> Operations.WebMetadataUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)`.
-    func webMetadataDelete(_ input: Operations.WebMetadataDelete.Input)
-        async throws -> Operations.WebMetadataDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/pages`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(webPageCreate)`.
     func webPageCreate(_ input: Operations.WebPageCreate.Input) async throws
         -> Operations.WebPageCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)`.
+    func webPageBulkDelete(_ input: Operations.WebPageBulkDelete.Input)
+        async throws -> Operations.WebPageBulkDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/web/pages/filters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)`.
     func webPageFilters(_ input: Operations.WebPageFilters.Input) async throws
@@ -68,14 +68,14 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/put(webPageUpdate)`.
     func webPageUpdate(_ input: Operations.WebPageUpdate.Input) async throws
         -> Operations.WebPageUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)`.
-    func webPageDelete(_ input: Operations.WebPageDelete.Input) async throws
-        -> Operations.WebPageDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/menus`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(webMenuCreate)`.
     func webMenuCreate(_ input: Operations.WebMenuCreate.Input) async throws
         -> Operations.WebMenuCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)`.
+    func webMenuBulkDelete(_ input: Operations.WebMenuBulkDelete.Input)
+        async throws -> Operations.WebMenuBulkDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/web/menus/filters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)`.
     func webMenuFilters(_ input: Operations.WebMenuFilters.Input) async throws
@@ -96,14 +96,14 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/put(webMenuUpdate)`.
     func webMenuUpdate(_ input: Operations.WebMenuUpdate.Input) async throws
         -> Operations.WebMenuUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)`.
-    func webMenuDelete(_ input: Operations.WebMenuDelete.Input) async throws
-        -> Operations.WebMenuDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/post(webMenuItemCreate)`.
     func webMenuItemCreate(_ input: Operations.WebMenuItemCreate.Input)
         async throws -> Operations.WebMenuItemCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)`.
+    func webMenuItemBulkDelete(_ input: Operations.WebMenuItemBulkDelete.Input)
+        async throws -> Operations.WebMenuItemBulkDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/filters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)`.
     func webMenuItemFilters(_ input: Operations.WebMenuItemFilters.Input)
@@ -124,10 +124,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/put(webMenuItemUpdate)`.
     func webMenuItemUpdate(_ input: Operations.WebMenuItemUpdate.Input)
         async throws -> Operations.WebMenuItemUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)`.
-    func webMenuItemDelete(_ input: Operations.WebMenuItemDelete.Input)
-        async throws -> Operations.WebMenuItemDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)`.
     func webMenuItemMove(_ input: Operations.WebMenuItemMove.Input) async throws
@@ -235,15 +231,6 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)`.
-    public func webMetadataDelete(path: Operations.WebMetadataDelete.Input.Path)
-        async throws -> Operations.WebMetadataDelete.Output
-    {
-        try await webMetadataDelete(
-            Operations.WebMetadataDelete.Input(path: path)
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(webPageCreate)`.
     public func webPageCreate(
@@ -252,6 +239,19 @@ extension APIProtocol {
     ) async throws -> Operations.WebPageCreate.Output {
         try await webPageCreate(
             Operations.WebPageCreate.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)`.
+    public func webPageBulkDelete(
+        headers: Operations.WebPageBulkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.WebPageBulkDelete.Output {
+        try await webPageBulkDelete(
+            Operations.WebPageBulkDelete.Input(
                 headers: headers,
                 body: body
             )
@@ -322,13 +322,6 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)`.
-    public func webPageDelete(path: Operations.WebPageDelete.Input.Path)
-        async throws -> Operations.WebPageDelete.Output
-    {
-        try await webPageDelete(Operations.WebPageDelete.Input(path: path))
-    }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(webMenuCreate)`.
     public func webMenuCreate(
@@ -337,6 +330,19 @@ extension APIProtocol {
     ) async throws -> Operations.WebMenuCreate.Output {
         try await webMenuCreate(
             Operations.WebMenuCreate.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)`.
+    public func webMenuBulkDelete(
+        headers: Operations.WebMenuBulkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.WebMenuBulkDelete.Output {
+        try await webMenuBulkDelete(
+            Operations.WebMenuBulkDelete.Input(
                 headers: headers,
                 body: body
             )
@@ -407,13 +413,6 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)`.
-    public func webMenuDelete(path: Operations.WebMenuDelete.Input.Path)
-        async throws -> Operations.WebMenuDelete.Output
-    {
-        try await webMenuDelete(Operations.WebMenuDelete.Input(path: path))
-    }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/post(webMenuItemCreate)`.
     public func webMenuItemCreate(
@@ -423,6 +422,21 @@ extension APIProtocol {
     ) async throws -> Operations.WebMenuItemCreate.Output {
         try await webMenuItemCreate(
             Operations.WebMenuItemCreate.Input(
+                path: path,
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)`.
+    public func webMenuItemBulkDelete(
+        path: Operations.WebMenuItemBulkDelete.Input.Path,
+        headers: Operations.WebMenuItemBulkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.WebMenuItemBulkDelete.Output {
+        try await webMenuItemBulkDelete(
+            Operations.WebMenuItemBulkDelete.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -498,15 +512,6 @@ extension APIProtocol {
                 headers: headers,
                 body: body
             )
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)`.
-    public func webMenuItemDelete(path: Operations.WebMenuItemDelete.Input.Path)
-        async throws -> Operations.WebMenuItemDelete.Output
-    {
-        try await webMenuItemDelete(
-            Operations.WebMenuItemDelete.Input(path: path)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move`.
@@ -4562,191 +4567,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)`.
-    public enum WebMetadataDelete {
-        public static let id: Swift.String = "webMetadataDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// WebMetadata id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/DELETE/path/webMetadataId`.
-                public var webMetadataId:
-                    Components.Parameters.WebMetadataIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - webMetadataId: WebMetadata id
-                public init(
-                    webMetadataId: Components.Parameters.WebMetadataIdParameter
-                ) {
-                    self.webMetadataId = webMetadataId
-                }
-            }
-            public var path: Operations.WebMetadataDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.WebMetadataDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// WebMetadata deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.WebMetadataDelete.Output.NoContent)
-            /// WebMetadata deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.WebMetadataDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// WebMetadata not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMetadataDelete.Output.NotFound)
-            /// WebMetadata not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMetadataDelete.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.WebMetadataDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/delete(webMetadataDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-    }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(webPageCreate)`.
     public enum WebPageCreate {
@@ -4869,6 +4689,175 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.WebPageCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)`.
+    public enum WebPageBulkDelete {
+        public static let id: Swift.String = "webPageBulkDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.WebPageBulkDelete.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.WebPageBulkDelete.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.WebPageBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.WebPageBulkDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Bulk delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.WebPageBulkDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.WebPageBulkDelete.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.WebPageBulkDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.WebPageBulkDelete.Output.Forbidden
+            {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -5915,187 +5904,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)`.
-    public enum WebPageDelete {
-        public static let id: Swift.String = "webPageDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// WebPage id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/DELETE/path/webPageId`.
-                public var webPageId: Components.Parameters.WebPageIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - webPageId: WebPage id
-                public init(webPageId: Components.Parameters.WebPageIdParameter)
-                {
-                    self.webPageId = webPageId
-                }
-            }
-            public var path: Operations.WebPageDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.WebPageDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// WebPage deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.WebPageDelete.Output.NoContent)
-            /// WebPage deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.WebPageDelete.Output.NoContent {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// WebPage not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebPageDelete.Output.NotFound)
-            /// WebPage not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebPageDelete.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPageDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.WebPageDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPageDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/delete(webPageDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPageDelete.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-    }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(webMenuCreate)`.
     public enum WebMenuCreate {
@@ -6218,6 +6026,175 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.WebMenuCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)`.
+    public enum WebMenuBulkDelete {
+        public static let id: Swift.String = "webMenuBulkDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.WebMenuBulkDelete.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.WebMenuBulkDelete.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.WebMenuBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.WebMenuBulkDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Bulk delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.WebMenuBulkDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.WebMenuBulkDelete.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.WebMenuBulkDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.WebMenuBulkDelete.Output.Forbidden
+            {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -7264,187 +7241,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)`.
-    public enum WebMenuDelete {
-        public static let id: Swift.String = "webMenuDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// WebMenu id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/DELETE/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                public init(webMenuId: Components.Parameters.WebMenuIdParameter)
-                {
-                    self.webMenuId = webMenuId
-                }
-            }
-            public var path: Operations.WebMenuDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.WebMenuDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// WebMenu deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.WebMenuDelete.Output.NoContent)
-            /// WebMenu deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.WebMenuDelete.Output.NoContent {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// WebMenu not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMenuDelete.Output.NotFound)
-            /// WebMenu not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMenuDelete.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.WebMenuDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/delete(webMenuDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuDelete.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-    }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/post(webMenuItemCreate)`.
     public enum WebMenuItemCreate {
@@ -7588,6 +7384,200 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.WebMenuItemCreate.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)`.
+    public enum WebMenuItemBulkDelete {
+        public static let id: Swift.String = "webMenuItemBulkDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// WebMenu id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/path/webMenuId`.
+                public var webMenuId:
+                    Components.Parameters.WebMenuItemMenuIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - webMenuId: WebMenu id
+                public init(
+                    webMenuId: Components.Parameters.WebMenuItemMenuIdParameter
+                ) {
+                    self.webMenuId = webMenuId
+                }
+            }
+            public var path: Operations.WebMenuItemBulkDelete.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.WebMenuItemBulkDelete.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.WebMenuItemBulkDelete.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.WebMenuItemBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.WebMenuItemBulkDelete.Input.Path,
+                headers: Operations.WebMenuItemBulkDelete.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Bulk delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.WebMenuItemBulkDelete.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.WebMenuItemBulkDelete.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.WebMenuItemBulkDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.WebMenuItemBulkDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -8717,199 +8707,6 @@ public enum Operations {
                     .json
                 ]
             }
-        }
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)`.
-    public enum WebMenuItemDelete {
-        public static let id: Swift.String = "webMenuItemDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// WebMenu id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/DELETE/path/webMenuId`.
-                public var webMenuId:
-                    Components.Parameters.WebMenuItemMenuIdParameter
-                /// WebMenuItem id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/DELETE/path/webMenuItemId`.
-                public var webMenuItemId:
-                    Components.Parameters.WebMenuItemIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                ///   - webMenuItemId: WebMenuItem id
-                public init(
-                    webMenuId: Components.Parameters.WebMenuItemMenuIdParameter,
-                    webMenuItemId: Components.Parameters.WebMenuItemIdParameter
-                ) {
-                    self.webMenuId = webMenuId
-                    self.webMenuItemId = webMenuItemId
-                }
-            }
-            public var path: Operations.WebMenuItemDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.WebMenuItemDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// WebMenuItem deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.WebMenuItemDelete.Output.NoContent)
-            /// WebMenuItem deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.WebMenuItemDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// WebMenuItem not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMenuItemDelete.Output.NotFound)
-            /// WebMenuItem not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMenuItemDelete.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.WebMenuItemDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/delete(webMenuItemDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move`.

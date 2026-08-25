@@ -39,6 +39,21 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - Newsletter
+      operationId: newsletterCampaignBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/newsletter/campaign/{newsletterCampaignId}:
     get:
       tags:
@@ -49,23 +64,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/NewsletterCampaignResponse'
-        404:
-          description: Newsletter not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - Newsletter
-      operationId: newsletterCampaignDelete
-      parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignIdParameter'
-      responses:
-        204:
-          description: Newsletter deleted
         404:
           description: Newsletter not found
         401:
@@ -126,6 +124,23 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - Newsletter
+      operationId: newsletterIssueBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email:
     post:
       tags:
@@ -155,24 +170,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/NewsletterIssueResponse'
-        404:
-          description: Newsletter issue not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - Newsletter
-      operationId: newsletterIssueDelete
-      parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignIdParameter'
-      - $ref: '#/components/parameters/NewsletterIssueIdParameter'
-      responses:
-        204:
-          description: Newsletter issue deleted
         404:
           description: Newsletter issue not found
         401:
@@ -274,6 +271,23 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - Newsletter
+      operationId: newsletterSubscriberBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}:
     get:
       tags:
@@ -285,24 +299,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/NewsletterSubscriberResponse'
-        404:
-          description: Newsletter subscriber not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - Newsletter
-      operationId: newsletterSubscriberDelete
-      parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignIdParameter'
-      - $ref: '#/components/parameters/NewsletterSubscriberEmailParameter'
-      responses:
-        204:
-          description: Newsletter subscriber deleted
         404:
           description: Newsletter subscriber not found
         401:
@@ -371,6 +367,80 @@ components:
       required:
       - name
       - fromEmail
+      minProperties: 2
+    BulkDeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            examples:
+            - id1
+          minItems: 0
+          uniqueItems: false
+        summary:
+          type: boolean
+          examples:
+          - true
+      required:
+      - ids
+      - summary
+      minProperties: 2
+    BulkDeleteResponseSchema:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - id1
+              status:
+                type: string
+                enum:
+                - deleted
+                - not_found
+                - forbidden
+                examples:
+                - deleted
+            required:
+            - id
+            - status
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        summary:
+          type: object
+          properties:
+            requested:
+              type: integer
+              examples:
+              - 1
+            deleted:
+              type: integer
+              examples:
+              - 1
+            notFound:
+              type: integer
+              examples:
+              - 1
+            forbidden:
+              type: integer
+              examples:
+              - 1
+          required:
+          - requested
+          - deleted
+          - notFound
+          - forbidden
+          minProperties: 4
+      required:
+      - results
+      - summary
       minProperties: 2
     NewsletterIdField:
       type: string
@@ -579,6 +649,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewsletterCampaignSchema'
+    BulkDeleteResponse:
+      description: Bulk delete response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteResponseSchema'
     NewsletterIssueListResponse:
       description: Newsletter issue list response
       content:
@@ -634,6 +710,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewsletterCampaignCreateSchema'
+      required: true
+    BulkDeleteRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteRequestSchema'
       required: true
     NewsletterCampaignPatchRequestBody:
       content:

@@ -49,15 +49,19 @@ struct AdminAPIUserCredentialDeleteTests {
         try await runner.run(
             request: Request(
                 method: .delete,
-                path: "/api/v1/admin/auth/credentials/\(created.id)",
+                path: "/api/v1/admin/auth/credentials",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: authentication
                     )
-                ]
+                ],
+                body: Components.Schemas.BulkDeleteRequestSchema(
+                    ids: [created.id],
+                    summary: true
+                )
             )
         ) { response in
-            #expect(response.response.status == .noContent)
+            #expect(response.response.status == .ok)
         }
     }
 }

@@ -17,5 +17,4 @@ struct AuthCredentialIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { AuthCredentialGetOperation() }
     var put: OperationRepresentable? { AuthCredentialUpdateOperation() }
     var patch: OperationRepresentable? { AuthCredentialPatchOperation() }
-    var delete: OperationRepresentable? { AuthCredentialDeleteOperation() }
 }

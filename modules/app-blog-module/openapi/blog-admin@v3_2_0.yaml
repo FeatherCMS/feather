@@ -34,6 +34,21 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - BlogPosts
+      operationId: blogPostBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/blog/posts/filters:
     get:
       tags:
@@ -105,23 +120,6 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-    delete:
-      tags:
-      - BlogPosts
-      operationId: blogPostDelete
-      parameters:
-      - $ref: '#/components/parameters/BlogPostIdParameter'
-      responses:
-        204:
-          description: BlogPost deleted
-        404:
-          description: BlogPost not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - BlogPosts
@@ -151,6 +149,21 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - BlogAuthors
+      operationId: blogAuthorBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
         401:
           description: Unauthorized
         403:
@@ -228,23 +241,6 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-    delete:
-      tags:
-      - BlogAuthors
-      operationId: blogAuthorDelete
-      parameters:
-      - $ref: '#/components/parameters/BlogAuthorIdParameter'
-      responses:
-        204:
-          description: BlogAuthor deleted
-        404:
-          description: BlogAuthor not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - BlogAuthors
@@ -276,6 +272,23 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - BlogAuthorLinks
+      operationId: blogAuthorLinkBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
         401:
           description: Unauthorized
         403:
@@ -359,24 +372,6 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-    delete:
-      tags:
-      - BlogAuthorLinks
-      operationId: blogAuthorLinkDelete
-      parameters:
-      - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
-      - $ref: '#/components/parameters/BlogAuthorLinkIdParameter'
-      responses:
-        204:
-          description: BlogAuthorLink deleted
-        404:
-          description: BlogAuthorLink not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - BlogAuthorLinks
@@ -436,6 +431,21 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/BlogTagDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - BlogTags
+      operationId: blogTagBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
         401:
           description: Unauthorized
         403:
@@ -505,23 +515,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/BlogTagDetailResponse'
-        404:
-          description: BlogTag not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - BlogTags
-      operationId: blogTagDelete
-      parameters:
-      - $ref: '#/components/parameters/BlogTagIdParameter'
-      responses:
-        204:
-          description: BlogTag deleted
         404:
           description: BlogTag not found
         401:
@@ -744,6 +737,80 @@ components:
       type: string
       examples:
       - wp_home
+    BulkDeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            examples:
+            - id1
+          minItems: 0
+          uniqueItems: false
+        summary:
+          type: boolean
+          examples:
+          - true
+      required:
+      - ids
+      - summary
+      minProperties: 2
+    BulkDeleteResponseSchema:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - id1
+              status:
+                type: string
+                enum:
+                - deleted
+                - not_found
+                - forbidden
+                examples:
+                - deleted
+            required:
+            - id
+            - status
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        summary:
+          type: object
+          properties:
+            requested:
+              type: integer
+              examples:
+              - 1
+            deleted:
+              type: integer
+              examples:
+              - 1
+            notFound:
+              type: integer
+              examples:
+              - 1
+            forbidden:
+              type: integer
+              examples:
+              - 1
+          required:
+          - requested
+          - deleted
+          - notFound
+          - forbidden
+          minProperties: 4
+      required:
+      - results
+      - summary
+      minProperties: 2
     SearchFilterSchema:
       type: object
       properties:
@@ -1594,6 +1661,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogPostDetailSchema'
+    BulkDeleteResponse:
+      description: Bulk delete response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteResponseSchema'
     BlogPostFiltersResponse:
       description: BlogPost filter response
       content:
@@ -1708,6 +1781,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogPostCreateSchema'
+      required: true
+    BulkDeleteRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BulkDeleteRequestSchema'
       required: true
     BlogPostUpdateRequestBody:
       content:

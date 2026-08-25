@@ -120,23 +120,6 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-    delete:
-      tags:
-      - MetadataEntries
-      operationId: webMetadataDelete
-      parameters:
-      - $ref: '#/components/parameters/WebMetadataIdParameter'
-      responses:
-        204:
-          description: WebMetadata deleted
-        404:
-          description: WebMetadata not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - MetadataEntries
@@ -166,6 +149,21 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/WebPageDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - WebPages
+      operationId: webPageBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
         401:
           description: Unauthorized
         403:
@@ -243,23 +241,6 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-    delete:
-      tags:
-      - WebPages
-      operationId: webPageDelete
-      parameters:
-      - $ref: '#/components/parameters/WebPageIdParameter'
-      responses:
-        204:
-          description: WebPage deleted
-        404:
-          description: WebPage not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - WebPages
@@ -289,6 +270,21 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/WebMenuDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - WebMenus
+      operationId: webMenuBulkDelete
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
         401:
           description: Unauthorized
         403:
@@ -366,23 +362,6 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-    delete:
-      tags:
-      - WebMenus
-      operationId: webMenuDelete
-      parameters:
-      - $ref: '#/components/parameters/WebMenuIdParameter'
-      responses:
-        204:
-          description: WebMenu deleted
-        404:
-          description: WebMenu not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - WebMenus
@@ -414,6 +393,23 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/WebMenuItemDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - WebMenuItems
+      operationId: webMenuItemBulkDelete
+      parameters:
+      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BulkDeleteResponse'
         401:
           description: Unauthorized
         403:
@@ -489,24 +485,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/WebMenuItemDetailResponse'
-        404:
-          description: WebMenuItem not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - WebMenuItems
-      operationId: webMenuItemDelete
-      parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
-      - $ref: '#/components/parameters/WebMenuItemIdParameter'
-      responses:
-        204:
-          description: WebMenuItem deleted
         404:
           description: WebMenuItem not found
         401:

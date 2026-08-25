@@ -58,10 +58,7 @@ struct AuthRolePermissionSearchOperation: AuthRolePermissionOperation {
     }
 }
 
-struct AuthRolePermissionDeleteOperation: AuthRolePermissionIdOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "AuthRolePermission deleted")
-        ]
-    }
+struct AuthRolePermissionBulkDeleteOperation: AuthRolePermissionOperation,
+    BulkDeleteOperation
+{
 }

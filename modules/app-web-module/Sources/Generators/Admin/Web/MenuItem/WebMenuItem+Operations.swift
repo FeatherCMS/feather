@@ -116,11 +116,7 @@ struct WebMenuItemPatchOperation: WebMenuItemIDOperation {
     }
 }
 
-struct WebMenuItemDeleteOperation: WebMenuItemIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "WebMenuItem deleted"),
-            404: CustomResponse(description: "WebMenuItem not found"),
-        ]
-    }
+struct WebMenuItemBulkDeleteOperation: WebMenuItemMenuOperation,
+    BulkDeleteOperation
+{
 }

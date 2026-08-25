@@ -107,12 +107,3 @@ struct UserRolePatchOperation: UserRoleIDOperation {
         ]
     }
 }
-
-struct UserRoleDeleteOperation: UserRoleIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "UserRole deleted"),
-            404: CustomResponse(description: "UserRole not found"),
-        ]
-    }
-}

@@ -16,6 +16,10 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/post(blogPostCreate)`.
     func blogPostCreate(_ input: Operations.BlogPostCreate.Input) async throws
         -> Operations.BlogPostCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)`.
+    func blogPostBulkDelete(_ input: Operations.BlogPostBulkDelete.Input)
+        async throws -> Operations.BlogPostBulkDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/posts/filters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)`.
     func blogPostFilters(_ input: Operations.BlogPostFilters.Input) async throws
@@ -36,14 +40,14 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/put(blogPostUpdate)`.
     func blogPostUpdate(_ input: Operations.BlogPostUpdate.Input) async throws
         -> Operations.BlogPostUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts/{blogPostId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)`.
-    func blogPostDelete(_ input: Operations.BlogPostDelete.Input) async throws
-        -> Operations.BlogPostDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/post(blogAuthorCreate)`.
     func blogAuthorCreate(_ input: Operations.BlogAuthorCreate.Input)
         async throws -> Operations.BlogAuthorCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)`.
+    func blogAuthorBulkDelete(_ input: Operations.BlogAuthorBulkDelete.Input)
+        async throws -> Operations.BlogAuthorBulkDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/authors/filters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)`.
     func blogAuthorFilters(_ input: Operations.BlogAuthorFilters.Input)
@@ -64,14 +68,15 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/put(blogAuthorUpdate)`.
     func blogAuthorUpdate(_ input: Operations.BlogAuthorUpdate.Input)
         async throws -> Operations.BlogAuthorUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)`.
-    func blogAuthorDelete(_ input: Operations.BlogAuthorDelete.Input)
-        async throws -> Operations.BlogAuthorDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/post(blogAuthorLinkCreate)`.
     func blogAuthorLinkCreate(_ input: Operations.BlogAuthorLinkCreate.Input)
         async throws -> Operations.BlogAuthorLinkCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)`.
+    func blogAuthorLinkBulkDelete(
+        _ input: Operations.BlogAuthorLinkBulkDelete.Input
+    ) async throws -> Operations.BlogAuthorLinkBulkDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/filters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)`.
     func blogAuthorLinkFilters(_ input: Operations.BlogAuthorLinkFilters.Input)
@@ -92,10 +97,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/put(blogAuthorLinkUpdate)`.
     func blogAuthorLinkUpdate(_ input: Operations.BlogAuthorLinkUpdate.Input)
         async throws -> Operations.BlogAuthorLinkUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)`.
-    func blogAuthorLinkDelete(_ input: Operations.BlogAuthorLinkDelete.Input)
-        async throws -> Operations.BlogAuthorLinkDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/settings/get(blogSettingsGet)`.
     func blogSettingsGet(_ input: Operations.BlogSettingsGet.Input) async throws
@@ -108,6 +109,10 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/post(blogTagCreate)`.
     func blogTagCreate(_ input: Operations.BlogTagCreate.Input) async throws
         -> Operations.BlogTagCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)`.
+    func blogTagBulkDelete(_ input: Operations.BlogTagBulkDelete.Input)
+        async throws -> Operations.BlogTagBulkDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/tags/filters`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)`.
     func blogTagFilters(_ input: Operations.BlogTagFilters.Input) async throws
@@ -128,10 +133,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/put(blogTagUpdate)`.
     func blogTagUpdate(_ input: Operations.BlogTagUpdate.Input) async throws
         -> Operations.BlogTagUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags/{blogTagId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)`.
-    func blogTagDelete(_ input: Operations.BlogTagDelete.Input) async throws
-        -> Operations.BlogTagDelete.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -144,6 +145,19 @@ extension APIProtocol {
     ) async throws -> Operations.BlogPostCreate.Output {
         try await blogPostCreate(
             Operations.BlogPostCreate.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)`.
+    public func blogPostBulkDelete(
+        headers: Operations.BlogPostBulkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.BlogPostBulkDelete.Output {
+        try await blogPostBulkDelete(
+            Operations.BlogPostBulkDelete.Input(
                 headers: headers,
                 body: body
             )
@@ -214,13 +228,6 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts/{blogPostId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)`.
-    public func blogPostDelete(path: Operations.BlogPostDelete.Input.Path)
-        async throws -> Operations.BlogPostDelete.Output
-    {
-        try await blogPostDelete(Operations.BlogPostDelete.Input(path: path))
-    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/post(blogAuthorCreate)`.
     public func blogAuthorCreate(
@@ -229,6 +236,19 @@ extension APIProtocol {
     ) async throws -> Operations.BlogAuthorCreate.Output {
         try await blogAuthorCreate(
             Operations.BlogAuthorCreate.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)`.
+    public func blogAuthorBulkDelete(
+        headers: Operations.BlogAuthorBulkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.BlogAuthorBulkDelete.Output {
+        try await blogAuthorBulkDelete(
+            Operations.BlogAuthorBulkDelete.Input(
                 headers: headers,
                 body: body
             )
@@ -299,15 +319,6 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)`.
-    public func blogAuthorDelete(path: Operations.BlogAuthorDelete.Input.Path)
-        async throws -> Operations.BlogAuthorDelete.Output
-    {
-        try await blogAuthorDelete(
-            Operations.BlogAuthorDelete.Input(path: path)
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/post(blogAuthorLinkCreate)`.
     public func blogAuthorLinkCreate(
@@ -317,6 +328,21 @@ extension APIProtocol {
     ) async throws -> Operations.BlogAuthorLinkCreate.Output {
         try await blogAuthorLinkCreate(
             Operations.BlogAuthorLinkCreate.Input(
+                path: path,
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)`.
+    public func blogAuthorLinkBulkDelete(
+        path: Operations.BlogAuthorLinkBulkDelete.Input.Path,
+        headers: Operations.BlogAuthorLinkBulkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.BlogAuthorLinkBulkDelete.Output {
+        try await blogAuthorLinkBulkDelete(
+            Operations.BlogAuthorLinkBulkDelete.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -394,15 +420,6 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)`.
-    public func blogAuthorLinkDelete(
-        path: Operations.BlogAuthorLinkDelete.Input.Path
-    ) async throws -> Operations.BlogAuthorLinkDelete.Output {
-        try await blogAuthorLinkDelete(
-            Operations.BlogAuthorLinkDelete.Input(path: path)
-        )
-    }
     /// - Remark: HTTP `GET /api/v1/admin/blog/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/settings/get(blogSettingsGet)`.
     public func blogSettingsGet(
@@ -433,6 +450,19 @@ extension APIProtocol {
     ) async throws -> Operations.BlogTagCreate.Output {
         try await blogTagCreate(
             Operations.BlogTagCreate.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)`.
+    public func blogTagBulkDelete(
+        headers: Operations.BlogTagBulkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.BulkDeleteRequestBody
+    ) async throws -> Operations.BlogTagBulkDelete.Output {
+        try await blogTagBulkDelete(
+            Operations.BlogTagBulkDelete.Input(
                 headers: headers,
                 body: body
             )
@@ -502,13 +532,6 @@ extension APIProtocol {
                 body: body
             )
         )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags/{blogTagId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)`.
-    public func blogTagDelete(path: Operations.BlogTagDelete.Input.Path)
-        async throws -> Operations.BlogTagDelete.Output
-    {
-        try await blogTagDelete(Operations.BlogTagDelete.Input(path: path))
     }
 }
 
@@ -802,6 +825,129 @@ public enum Components {
         public typealias AdminWebMetadataReferenceTypeField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AdminWebMetadataReferenceIDField`.
         public typealias AdminWebMetadataReferenceIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema`.
+        public struct BulkDeleteRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/ids`.
+            public var ids: [Swift.String]
+            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/summary`.
+            public var summary: Swift.Bool
+            /// Creates a new `BulkDeleteRequestSchema`.
+            ///
+            /// - Parameters:
+            ///   - ids:
+            ///   - summary:
+            public init(
+                ids: [Swift.String],
+                summary: Swift.Bool
+            ) {
+                self.ids = ids
+                self.summary = summary
+            }
+            public enum CodingKeys: String, CodingKey {
+                case ids
+                case summary
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema`.
+        public struct BulkDeleteResponseSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload`.
+            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/id`.
+                public var id: Swift.String
+                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
+                @frozen
+                public enum StatusPayload: String, Codable, Hashable, Sendable,
+                    CaseIterable
+                {
+                    case deleted = "deleted"
+                    case notFound = "not_found"
+                    case forbidden = "forbidden"
+                }
+                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
+                public var status:
+                    Components.Schemas.BulkDeleteResponseSchema
+                        .ResultsPayloadPayload.StatusPayload
+                /// Creates a new `ResultsPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - id:
+                ///   - status:
+                public init(
+                    id: Swift.String,
+                    status: Components.Schemas.BulkDeleteResponseSchema
+                        .ResultsPayloadPayload.StatusPayload
+                ) {
+                    self.id = id
+                    self.status = status
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case id
+                    case status
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
+            public typealias ResultsPayload = [Components.Schemas
+                .BulkDeleteResponseSchema.ResultsPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
+            public var results:
+                Components.Schemas.BulkDeleteResponseSchema.ResultsPayload
+            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
+            public struct SummaryPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/requested`.
+                public var requested: Swift.Int
+                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/deleted`.
+                public var deleted: Swift.Int
+                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/notFound`.
+                public var notFound: Swift.Int
+                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/forbidden`.
+                public var forbidden: Swift.Int
+                /// Creates a new `SummaryPayload`.
+                ///
+                /// - Parameters:
+                ///   - requested:
+                ///   - deleted:
+                ///   - notFound:
+                ///   - forbidden:
+                public init(
+                    requested: Swift.Int,
+                    deleted: Swift.Int,
+                    notFound: Swift.Int,
+                    forbidden: Swift.Int
+                ) {
+                    self.requested = requested
+                    self.deleted = deleted
+                    self.notFound = notFound
+                    self.forbidden = forbidden
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case requested
+                    case deleted
+                    case notFound
+                    case forbidden
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
+            public var summary:
+                Components.Schemas.BulkDeleteResponseSchema.SummaryPayload
+            /// Creates a new `BulkDeleteResponseSchema`.
+            ///
+            /// - Parameters:
+            ///   - results:
+            ///   - summary:
+            public init(
+                results: Components.Schemas.BulkDeleteResponseSchema
+                    .ResultsPayload,
+                summary: Components.Schemas.BulkDeleteResponseSchema
+                    .SummaryPayload
+            ) {
+                self.results = results
+                self.summary = summary
+            }
+            public enum CodingKeys: String, CodingKey {
+                case results
+                case summary
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/SearchFilterSchema`.
         public struct SearchFilterSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SearchFilterSchema/search`.
@@ -2313,6 +2459,11 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/BlogPostRequestBody/content/application\/json`.
             case json(Components.Schemas.BlogPostCreateSchema)
         }
+        /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody`.
+        @frozen public enum BulkDeleteRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody/content/application\/json`.
+            case json(Components.Schemas.BulkDeleteRequestSchema)
+        }
         /// - Remark: Generated from `#/components/requestBodies/BlogPostUpdateRequestBody`.
         @frozen public enum BlogPostUpdateRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/BlogPostUpdateRequestBody/content/application\/json`.
@@ -2403,6 +2554,34 @@ public enum Components {
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.BlogPostDetailResponse.Body)
             {
+                self.body = body
+            }
+        }
+        public struct BulkDeleteResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
+                case json(Components.Schemas.BulkDeleteResponseSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.BulkDeleteResponseSchema {
+                    get throws {
+                        switch self {
+                        case .json(let body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.BulkDeleteResponse.Body
+            /// Creates a new `BulkDeleteResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.BulkDeleteResponse.Body) {
                 self.body = body
             }
         }
@@ -2920,6 +3099,175 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.BlogPostCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)`.
+    public enum BlogPostBulkDelete {
+        public static let id: Swift.String = "blogPostBulkDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.BlogPostBulkDelete.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.BlogPostBulkDelete.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.BlogPostBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.BlogPostBulkDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Bulk delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.BlogPostBulkDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.BlogPostBulkDelete.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.BlogPostBulkDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.BlogPostBulkDelete.Output.Forbidden
+            {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -3971,188 +4319,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts/{blogPostId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)`.
-    public enum BlogPostDelete {
-        public static let id: Swift.String = "blogPostDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/{blogPostId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// BlogPost id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/{blogPostId}/DELETE/path/blogPostId`.
-                public var blogPostId: Components.Parameters.BlogPostIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - blogPostId: BlogPost id
-                public init(
-                    blogPostId: Components.Parameters.BlogPostIdParameter
-                ) {
-                    self.blogPostId = blogPostId
-                }
-            }
-            public var path: Operations.BlogPostDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.BlogPostDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// BlogPost deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.BlogPostDelete.Output.NoContent)
-            /// BlogPost deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.BlogPostDelete.Output.NoContent {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// BlogPost not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.BlogPostDelete.Output.NotFound)
-            /// BlogPost not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.BlogPostDelete.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogPostDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.BlogPostDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogPostDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/delete(blogPostDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogPostDelete.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/post(blogAuthorCreate)`.
     public enum BlogAuthorCreate {
@@ -4275,6 +4441,179 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.BlogAuthorCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)`.
+    public enum BlogAuthorBulkDelete {
+        public static let id: Swift.String = "blogAuthorBulkDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.BlogAuthorBulkDelete.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.BlogAuthorBulkDelete.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.BlogAuthorBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.BlogAuthorBulkDelete.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Bulk delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.BlogAuthorBulkDelete.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.BlogAuthorBulkDelete.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.BlogAuthorBulkDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.BlogAuthorBulkDelete.Output.Forbidden
+            {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -5336,189 +5675,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)`.
-    public enum BlogAuthorDelete {
-        public static let id: Swift.String = "blogAuthorDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// BlogAuthor id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/DELETE/path/blogAuthorId`.
-                public var blogAuthorId:
-                    Components.Parameters.BlogAuthorIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - blogAuthorId: BlogAuthor id
-                public init(
-                    blogAuthorId: Components.Parameters.BlogAuthorIdParameter
-                ) {
-                    self.blogAuthorId = blogAuthorId
-                }
-            }
-            public var path: Operations.BlogAuthorDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.BlogAuthorDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// BlogAuthor deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.BlogAuthorDelete.Output.NoContent)
-            /// BlogAuthor deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.BlogAuthorDelete.Output.NoContent {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// BlogAuthor not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.BlogAuthorDelete.Output.NotFound)
-            /// BlogAuthor not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.BlogAuthorDelete.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogAuthorDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.BlogAuthorDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/delete(blogAuthorDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogAuthorDelete.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/post(blogAuthorLinkCreate)`.
     public enum BlogAuthorLinkCreate {
@@ -5669,6 +5825,204 @@ public enum Operations {
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
                 Operations.BlogAuthorLinkCreate.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)`.
+    public enum BlogAuthorLinkBulkDelete {
+        public static let id: Swift.String = "blogAuthorLinkBulkDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// BlogAuthor id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/DELETE/path/blogAuthorId`.
+                public var blogAuthorId:
+                    Components.Parameters.BlogAuthorLinkMenuIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - blogAuthorId: BlogAuthor id
+                public init(
+                    blogAuthorId: Components.Parameters
+                        .BlogAuthorLinkMenuIdParameter
+                ) {
+                    self.blogAuthorId = blogAuthorId
+                }
+            }
+            public var path: Operations.BlogAuthorLinkBulkDelete.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.BlogAuthorLinkBulkDelete
+                            .AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.BlogAuthorLinkBulkDelete
+                            .AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers:
+                Operations.BlogAuthorLinkBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.BlogAuthorLinkBulkDelete.Input.Path,
+                headers: Operations.BlogAuthorLinkBulkDelete.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Bulk delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.BlogAuthorLinkBulkDelete.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.BlogAuthorLinkBulkDelete.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.BlogAuthorLinkBulkDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.BlogAuthorLinkBulkDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -6827,206 +7181,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)`.
-    public enum BlogAuthorLinkDelete {
-        public static let id: Swift.String = "blogAuthorLinkDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// BlogAuthor id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/DELETE/path/blogAuthorId`.
-                public var blogAuthorId:
-                    Components.Parameters.BlogAuthorLinkMenuIdParameter
-                /// BlogAuthorLink id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/DELETE/path/blogAuthorLinkId`.
-                public var blogAuthorLinkId:
-                    Components.Parameters.BlogAuthorLinkIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - blogAuthorId: BlogAuthor id
-                ///   - blogAuthorLinkId: BlogAuthorLink id
-                public init(
-                    blogAuthorId: Components.Parameters
-                        .BlogAuthorLinkMenuIdParameter,
-                    blogAuthorLinkId: Components.Parameters
-                        .BlogAuthorLinkIdParameter
-                ) {
-                    self.blogAuthorId = blogAuthorId
-                    self.blogAuthorLinkId = blogAuthorLinkId
-                }
-            }
-            public var path: Operations.BlogAuthorLinkDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.BlogAuthorLinkDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// BlogAuthorLink deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.BlogAuthorLinkDelete.Output.NoContent)
-            /// BlogAuthorLink deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent:
-                Operations.BlogAuthorLinkDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// BlogAuthorLink not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.BlogAuthorLinkDelete.Output.NotFound)
-            /// BlogAuthorLink not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.BlogAuthorLinkDelete.Output.NotFound
-            {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.BlogAuthorLinkDelete.Output.Unauthorized
-            )
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.BlogAuthorLinkDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorLinkDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/delete(blogAuthorLinkDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.BlogAuthorLinkDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-    }
     /// - Remark: HTTP `GET /api/v1/admin/blog/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/settings/get(blogSettingsGet)`.
     public enum BlogSettingsGet {
@@ -7483,6 +7637,175 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.BlogTagCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)`.
+    public enum BlogTagBulkDelete {
+        public static let id: Swift.String = "blogTagBulkDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.BlogTagBulkDelete.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.BlogTagBulkDelete.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.BlogTagBulkDelete.Input.Headers
+            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.BlogTagBulkDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.BulkDeleteRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Bulk delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BulkDeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BulkDeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.BlogTagBulkDelete.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.BlogTagBulkDelete.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.BlogTagBulkDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.BlogTagBulkDelete.Output.Forbidden
+            {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -8527,187 +8850,6 @@ public enum Operations {
                     .json
                 ]
             }
-        }
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags/{blogTagId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)`.
-    public enum BlogTagDelete {
-        public static let id: Swift.String = "blogTagDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/{blogTagId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// BlogTag id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/{blogTagId}/DELETE/path/blogTagId`.
-                public var blogTagId: Components.Parameters.BlogTagIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - blogTagId: BlogTag id
-                public init(blogTagId: Components.Parameters.BlogTagIdParameter)
-                {
-                    self.blogTagId = blogTagId
-                }
-            }
-            public var path: Operations.BlogTagDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.BlogTagDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// BlogTag deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.BlogTagDelete.Output.NoContent)
-            /// BlogTag deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.BlogTagDelete.Output.NoContent {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// BlogTag not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.BlogTagDelete.Output.NotFound)
-            /// BlogTag not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.BlogTagDelete.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogTagDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.BlogTagDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogTagDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/delete(blogTagDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogTagDelete.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
         }
     }
 }

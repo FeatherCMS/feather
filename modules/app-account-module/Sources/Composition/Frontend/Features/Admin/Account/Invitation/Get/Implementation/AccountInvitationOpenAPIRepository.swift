@@ -176,29 +176,9 @@ struct AccountInvitationOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response =
-                try await client
-                .accountInvitationDelete(path: .init(accountInvitationId: id))
-            switch response {
-            case .noContent: return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User invitation not found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: deleteUnauthorizedMessage
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot delete user invitations."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.accountInvitationBulkDelete(
+                body: .json(.init(ids: [id], summary: true))
+            )
         }
     }
 

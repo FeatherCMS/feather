@@ -8,5 +8,4 @@ struct ContactFormPathItems: PathItemRepresentable {
 struct ContactFormIDPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { ContactFormGetOperation() }
     var put: OperationRepresentable? { ContactFormUpdateOperation() }
-    var delete: OperationRepresentable? { ContactFormDeleteOperation() }
 }

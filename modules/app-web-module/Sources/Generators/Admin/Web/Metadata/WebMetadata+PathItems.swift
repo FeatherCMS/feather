@@ -17,5 +17,4 @@ struct WebMetadataIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { WebMetadataGetOperation() }
     var put: OperationRepresentable? { WebMetadataUpdateOperation() }
     var patch: OperationRepresentable? { WebMetadataPatchOperation() }
-    var delete: OperationRepresentable? { WebMetadataDeleteOperation() }
 }

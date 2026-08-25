@@ -122,19 +122,6 @@ extension APIProtocol {
                 "/api/v1/admin/redirect/rules/{redirectRuleId}"
             )
         )
-        try transport.register(
-            {
-                try await server.redirectRuleDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/redirect/rules/{redirectRuleId}"
-            )
-        )
     }
 }
 
@@ -713,59 +700,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules/{redirectRuleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/{redirectRuleId}/delete(redirectRuleDelete)`.
-    fileprivate func redirectRuleDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.RedirectRuleDelete.id,
-            using: {
-                APIHandler.redirectRuleDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.RedirectRuleDelete.Input.Path = .init(
-                    redirectRuleId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "redirectRuleId",
-                        as: Components.Parameters.RedirectRuleIdParameter.self
-                    )
-                )
-                return Operations.RedirectRuleDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .notFound(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)

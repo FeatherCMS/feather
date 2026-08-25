@@ -76,30 +76,9 @@ struct AdminListAuthMagicLinkOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response =
-                try await client
-                .authMagicLinkDelete(path: .init(authMagicLinkId: id))
-            switch response {
-            case .noContent:
-                return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User magic link not found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: deleteUnauthorizedMessage
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot delete user magic links."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.authMagicLinkBulkDelete(
+                body: .json(.init(ids: [id], summary: true))
+            )
         }
     }
 }

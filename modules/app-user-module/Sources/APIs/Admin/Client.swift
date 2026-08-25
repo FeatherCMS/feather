@@ -583,50 +583,6 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/delete(userIdentityDelete)`.
-    public func userIdentityDelete(_ input: Operations.UserIdentityDelete.Input)
-        async throws -> Operations.UserIdentityDelete.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.UserIdentityDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/user/identities/{}",
-                    parameters: [
-                        input.path.userIdentityId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)`.
     public func userRoleCreate(_ input: Operations.UserRoleCreate.Input)
@@ -1145,50 +1101,6 @@ public struct Client: APIProtocol {
                         )
                     }
                     return .ok(.init(body: body))
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/user/roles/{userRoleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/delete(userRoleDelete)`.
-    public func userRoleDelete(_ input: Operations.UserRoleDelete.Input)
-        async throws -> Operations.UserRoleDelete.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.UserRoleDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/user/roles/{}",
-                    parameters: [
-                        input.path.userRoleId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
                 case 404:
                     return .notFound(.init())
                 case 401:

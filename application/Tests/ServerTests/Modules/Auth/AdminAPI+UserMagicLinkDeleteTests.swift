@@ -52,15 +52,19 @@ struct AdminAPIUserMagicLinkDeleteTests {
         try await runner.run(
             request: Request(
                 method: .delete,
-                path: "/api/v1/admin/auth/magic-links/\(detail.id)",
+                path: "/api/v1/admin/auth/magic-links",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
-                ]
+                ],
+                body: Components.Schemas.BulkDeleteRequestSchema(
+                    ids: [detail.id],
+                    summary: true
+                )
             )
         ) { response in
-            #expect(response.response.status == .noContent)
+            #expect(response.response.status == .ok)
         }
     }
 }

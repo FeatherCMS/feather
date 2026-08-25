@@ -127,13 +127,3 @@ struct UserIdentityPatchOperation: UserIdentityIDOperation {
         ]
     }
 }
-
-struct UserIdentityDeleteOperation: UserIdentityIDOperation {
-
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "UserIdentity deleted"),
-            404: CustomResponse(description: "UserIdentity not found"),
-        ]
-    }
-}

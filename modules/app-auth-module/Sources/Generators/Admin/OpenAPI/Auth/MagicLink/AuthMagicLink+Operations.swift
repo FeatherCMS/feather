@@ -113,12 +113,3 @@ struct AuthMagicLinkPatchOperation: AuthMagicLinkIdOperation {
         ]
     }
 }
-
-struct AuthMagicLinkDeleteOperation: AuthMagicLinkIdOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "AuthMagicLink deleted"),
-            404: CustomResponse(description: "AuthMagicLink not found"),
-        ]
-    }
-}

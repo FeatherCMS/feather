@@ -585,50 +585,6 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions/{systemPermissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/{systemPermissionId}/delete(systemPermissionDelete)`.
-    public func systemPermissionDelete(
-        _ input: Operations.SystemPermissionDelete.Input
-    ) async throws -> Operations.SystemPermissionDelete.Output {
-        try await client.send(
-            input: input,
-            forOperation: Operations.SystemPermissionDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/system/permissions/{}",
-                    parameters: [
-                        input.path.systemPermissionId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/system/variables`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/post(systemVariableCreate)`.
     public func systemVariableCreate(
@@ -1153,50 +1109,6 @@ public struct Client: APIProtocol {
                         )
                     }
                     return .ok(.init(body: body))
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/system/variables/{systemVariableId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/{systemVariableId}/delete(systemVariableDelete)`.
-    public func systemVariableDelete(
-        _ input: Operations.SystemVariableDelete.Input
-    ) async throws -> Operations.SystemVariableDelete.Output {
-        try await client.send(
-            input: input,
-            forOperation: Operations.SystemVariableDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/system/variables/{}",
-                    parameters: [
-                        input.path.systemVariableId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
                 case 404:
                     return .notFound(.init())
                 case 401:

@@ -61,32 +61,9 @@ struct AdminRemoveUserRoleOpenAPIRepository: AdminRemoveUserRoleRepository {
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response =
-                try await client
-                .userRoleDelete(
-                    path: .init(userRoleId: id)
-                )
-            switch response {
-            case .noContent:
-                return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User role not found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to delete this user role."
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot delete user roles."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.userRoleBulkDelete(
+                body: .json(.init(ids: [id], summary: true))
+            )
         }
     }
 }

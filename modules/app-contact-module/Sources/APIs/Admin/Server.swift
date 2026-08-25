@@ -98,19 +98,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactFormDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}"
-            )
-        )
-        try transport.register(
-            {
                 try await server.formFieldList(
                     request: $0,
                     body: $1,
@@ -170,19 +157,6 @@ extension APIProtocol {
                 )
             },
             method: .put,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}"
-            )
-        )
-        try transport.register(
-            {
-                try await server.formFieldDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}"
             )
@@ -254,19 +228,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactFieldDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/field/{formFieldId}"
-            )
-        )
-        try transport.register(
-            {
                 try await server.contactFormSubmissionList(
                     request: $0,
                     body: $1,
@@ -313,19 +274,6 @@ extension APIProtocol {
                 )
             },
             method: .patch,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}"
-            )
-        )
-        try transport.register(
-            {
-                try await server.contactFormSubmissionDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}"
             )
@@ -739,59 +687,6 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)`.
-    fileprivate func contactFormDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.ContactFormDelete.id,
-            using: {
-                APIHandler.contactFormDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.ContactFormDelete.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.ContactFormIdParameter.self
-                    )
-                )
-                return Operations.ContactFormDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)`.
     fileprivate func formFieldList(
@@ -815,12 +710,11 @@ extension UniversalServer where APIHandler: APIProtocol {
                         as: Components.Parameters.ContactFormIdParameter.self
                     )
                 )
-                let headers: Operations.FormFieldList.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.FormFieldList.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 return Operations.FormFieldList.Input(
                     path: path,
                     headers: headers
@@ -885,12 +779,11 @@ extension UniversalServer where APIHandler: APIProtocol {
                         as: Components.Parameters.ContactFormIdParameter.self
                     )
                 )
-                let headers: Operations.FormFieldCreate.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.FormFieldCreate.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
@@ -973,15 +866,13 @@ extension UniversalServer where APIHandler: APIProtocol {
                 APIHandler.formFieldBulkDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.FormFieldBulkDelete.Input.Path =
-                    .init(
-                        contactFormId: try converter.getPathParameterAsURI(
-                            in: metadata.pathParameters,
-                            name: "contactFormId",
-                            as: Components.Parameters.ContactFormIdParameter
-                                .self
-                        )
+                let path: Operations.FormFieldBulkDelete.Input.Path = .init(
+                    contactFormId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "contactFormId",
+                        as: Components.Parameters.ContactFormIdParameter.self
                     )
+                )
                 let headers: Operations.FormFieldBulkDelete.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
@@ -1079,16 +970,14 @@ extension UniversalServer where APIHandler: APIProtocol {
                     formFieldId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "formFieldId",
-                        as: Components.Parameters.FormFieldIdParameter
-                            .self
+                        as: Components.Parameters.FormFieldIdParameter.self
                     )
                 )
-                let headers: Operations.FormFieldGet.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.FormFieldGet.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 return Operations.FormFieldGet.Input(
                     path: path,
                     headers: headers
@@ -1160,16 +1049,14 @@ extension UniversalServer where APIHandler: APIProtocol {
                     formFieldId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "formFieldId",
-                        as: Components.Parameters.FormFieldIdParameter
-                            .self
+                        as: Components.Parameters.FormFieldIdParameter.self
                     )
                 )
-                let headers: Operations.FormFieldUpdate.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.FormFieldUpdate.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
@@ -1220,65 +1107,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)`.
-    fileprivate func formFieldDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.FormFieldDelete.id,
-            using: {
-                APIHandler.formFieldDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.FormFieldDelete.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.ContactFormIdParameter.self
-                    ),
-                    formFieldId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "formFieldId",
-                        as: Components.Parameters.FormFieldIdParameter
-                            .self
-                    )
-                )
-                return Operations.FormFieldDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .notFound(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
@@ -1553,8 +1381,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                     formFieldId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "formFieldId",
-                        as: Components.Parameters.FormFieldIdParameter
-                            .self
+                        as: Components.Parameters.FormFieldIdParameter.self
                     )
                 )
                 let headers: Operations.ContactFieldGet.Input.Headers = .init(
@@ -1628,8 +1455,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                     formFieldId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "formFieldId",
-                        as: Components.Parameters.FormFieldIdParameter
-                            .self
+                        as: Components.Parameters.FormFieldIdParameter.self
                     )
                 )
                 let headers: Operations.ContactFieldUpdate.Input.Headers =
@@ -1688,60 +1514,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)`.
-    fileprivate func contactFieldDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.ContactFieldDelete.id,
-            using: {
-                APIHandler.contactFieldDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.ContactFieldDelete.Input.Path = .init(
-                    formFieldId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "formFieldId",
-                        as: Components.Parameters.FormFieldIdParameter
-                            .self
-                    )
-                )
-                return Operations.ContactFieldDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .notFound(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
@@ -2110,68 +1882,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
-    fileprivate func contactFormSubmissionDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.ContactFormSubmissionDelete.id,
-            using: {
-                APIHandler.contactFormSubmissionDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.ContactFormSubmissionDelete.Input.Path =
-                    .init(
-                        contactFormId: try converter.getPathParameterAsURI(
-                            in: metadata.pathParameters,
-                            name: "contactFormId",
-                            as: Components.Parameters.ContactFormIdParameter
-                                .self
-                        ),
-                        contactFormSubmissionId:
-                            try converter.getPathParameterAsURI(
-                                in: metadata.pathParameters,
-                                name: "contactFormSubmissionId",
-                                as: Components.Parameters
-                                    .ContactFormSubmissionIdParameter.self
-                            )
-                    )
-                return Operations.ContactFormSubmissionDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .notFound(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)

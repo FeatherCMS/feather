@@ -52,15 +52,19 @@ struct AdminAPIUserRoleDeleteTests {
         try await runner.run(
             request: Request(
                 method: .delete,
-                path: "/api/v1/admin/user/roles/\(created.id)",
+                path: "/api/v1/admin/user/roles",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
-                ]
+                ],
+                body: Components.Schemas.BulkDeleteRequestSchema(
+                    ids: [created.id],
+                    summary: true
+                )
             )
         ) { response in
-            #expect(response.response.status == .noContent)
+            #expect(response.response.status == .ok)
         }
     }
 }

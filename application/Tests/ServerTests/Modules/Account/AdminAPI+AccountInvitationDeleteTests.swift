@@ -50,15 +50,19 @@ struct AdminAPIAccountInvitationDeleteTests {
         try await runner.run(
             request: Request(
                 method: .delete,
-                path: "/api/v1/admin/account/invitations/\(created.id)",
+                path: "/api/v1/admin/account/invitations",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
-                ]
+                ],
+                body: Components.Schemas.BulkDeleteRequestSchema(
+                    ids: [created.id],
+                    summary: true
+                )
             )
         ) { response in
-            #expect(response.response.status == .noContent)
+            #expect(response.response.status == .ok)
         }
     }
 }

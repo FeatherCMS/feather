@@ -579,48 +579,4 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules/{redirectRuleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/{redirectRuleId}/delete(redirectRuleDelete)`.
-    public func redirectRuleDelete(_ input: Operations.RedirectRuleDelete.Input)
-        async throws -> Operations.RedirectRuleDelete.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.RedirectRuleDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/redirect/rules/{}",
-                    parameters: [
-                        input.path.redirectRuleId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
 }

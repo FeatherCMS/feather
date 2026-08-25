@@ -32,35 +32,26 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)`.
     func contactFormUpdate(_ input: Operations.ContactFormUpdate.Input)
         async throws -> Operations.ContactFormUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)`.
-    func contactFormDelete(_ input: Operations.ContactFormDelete.Input)
-        async throws -> Operations.ContactFormDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)`.
-    func formFieldList(_ input: Operations.FormFieldList.Input)
-        async throws -> Operations.FormFieldList.Output
+    func formFieldList(_ input: Operations.FormFieldList.Input) async throws
+        -> Operations.FormFieldList.Output
     /// - Remark: HTTP `POST /api/v1/admin/contact/form/{contactFormId}/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)`.
-    func formFieldCreate(_ input: Operations.FormFieldCreate.Input)
-        async throws -> Operations.FormFieldCreate.Output
+    func formFieldCreate(_ input: Operations.FormFieldCreate.Input) async throws
+        -> Operations.FormFieldCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldBulkDelete)`.
-    func formFieldBulkDelete(
-        _ input: Operations.FormFieldBulkDelete.Input
-    ) async throws -> Operations.FormFieldBulkDelete.Output
+    func formFieldBulkDelete(_ input: Operations.FormFieldBulkDelete.Input)
+        async throws -> Operations.FormFieldBulkDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)`.
-    func formFieldGet(_ input: Operations.FormFieldGet.Input)
-        async throws -> Operations.FormFieldGet.Output
+    func formFieldGet(_ input: Operations.FormFieldGet.Input) async throws
+        -> Operations.FormFieldGet.Output
     /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)`.
-    func formFieldUpdate(_ input: Operations.FormFieldUpdate.Input)
-        async throws -> Operations.FormFieldUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)`.
-    func formFieldDelete(_ input: Operations.FormFieldDelete.Input)
-        async throws -> Operations.FormFieldDelete.Output
+    func formFieldUpdate(_ input: Operations.FormFieldUpdate.Input) async throws
+        -> Operations.FormFieldUpdate.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/get(contactFieldList)`.
     func contactFieldList(_ input: Operations.ContactFieldList.Input)
@@ -82,10 +73,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)`.
     func contactFieldUpdate(_ input: Operations.ContactFieldUpdate.Input)
         async throws -> Operations.ContactFieldUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)`.
-    func contactFieldDelete(_ input: Operations.ContactFieldDelete.Input)
-        async throws -> Operations.ContactFieldDelete.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)`.
     func contactFormSubmissionList(
@@ -106,11 +93,6 @@ public protocol APIProtocol: Sendable {
     func contactFormSubmissionUpdate(
         _ input: Operations.ContactFormSubmissionUpdate.Input
     ) async throws -> Operations.ContactFormSubmissionUpdate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
-    func contactFormSubmissionDelete(
-        _ input: Operations.ContactFormSubmissionDelete.Input
-    ) async throws -> Operations.ContactFormSubmissionDelete.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -176,15 +158,6 @@ extension APIProtocol {
                 headers: headers,
                 body: body
             )
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)`.
-    public func contactFormDelete(path: Operations.ContactFormDelete.Input.Path)
-        async throws -> Operations.ContactFormDelete.Output
-    {
-        try await contactFormDelete(
-            Operations.ContactFormDelete.Input(path: path)
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field`.
@@ -258,15 +231,6 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)`.
-    public func formFieldDelete(
-        path: Operations.FormFieldDelete.Input.Path
-    ) async throws -> Operations.FormFieldDelete.Output {
-        try await formFieldDelete(
-            Operations.FormFieldDelete.Input(path: path)
-        )
-    }
     /// - Remark: HTTP `GET /api/v1/admin/contact/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/get(contactFieldList)`.
     public func contactFieldList(
@@ -330,15 +294,6 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)`.
-    public func contactFieldDelete(
-        path: Operations.ContactFieldDelete.Input.Path
-    ) async throws -> Operations.ContactFieldDelete.Output {
-        try await contactFieldDelete(
-            Operations.ContactFieldDelete.Input(path: path)
-        )
-    }
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)`.
     public func contactFormSubmissionList(
@@ -394,15 +349,6 @@ extension APIProtocol {
                 headers: headers,
                 body: body
             )
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
-    public func contactFormSubmissionDelete(
-        path: Operations.ContactFormSubmissionDelete.Input.Path
-    ) async throws -> Operations.ContactFormSubmissionDelete.Output {
-        try await contactFormSubmissionDelete(
-            Operations.ContactFormSubmissionDelete.Input(path: path)
         )
     }
 }
@@ -501,8 +447,7 @@ public enum Components {
         /// - Remark: Generated from `#/components/schemas/ContactContentField`.
         public typealias ContactContentField = Swift.String
         /// - Remark: Generated from `#/components/schemas/FormFieldsSchema`.
-        public typealias FormFieldsSchema = [Components.Schemas
-            .FormFieldSchema]
+        public typealias FormFieldsSchema = [Components.Schemas.FormFieldSchema]
         /// - Remark: Generated from `#/components/schemas/FormFieldSchema`.
         public struct FormFieldSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/FormFieldSchema/id`.
@@ -1279,9 +1224,7 @@ public enum Components {
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(
-                body: Components.Responses.FormFieldListResponse.Body
-            ) {
+            public init(body: Components.Responses.FormFieldListResponse.Body) {
                 self.body = body
             }
         }
@@ -2335,189 +2278,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)`.
-    public enum ContactFormDelete {
-        public static let id: Swift.String = "contactFormDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/DELETE/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - contactFormId:
-                public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter
-                ) {
-                    self.contactFormId = contactFormId
-                }
-            }
-            public var path: Operations.ContactFormDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.ContactFormDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// Contact form deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.ContactFormDelete.Output.NoContent)
-            /// Contact form deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.ContactFormDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// Contact form not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.ContactFormDelete.Output.NotFound)
-            /// Contact form not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.ContactFormDelete.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.ContactFormDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.ContactFormDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.ContactFormDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/delete(contactFormDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.ContactFormDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-    }
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)`.
     public enum FormFieldList {
@@ -2572,7 +2332,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Contact form item list response
+            /// Contact form field list response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)/responses/200`.
             ///
@@ -2604,9 +2364,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.FormFieldList.Output.Unauthorized
-            )
+            case unauthorized(Operations.FormFieldList.Output.Unauthorized)
             /// Unauthorized
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)/responses/401`.
@@ -2656,8 +2414,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldList.Output.Forbidden
-            {
+            public var forbidden: Operations.FormFieldList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -2753,8 +2510,7 @@ public enum Operations {
             ///   - body:
             public init(
                 path: Operations.FormFieldCreate.Input.Path,
-                headers: Operations.FormFieldCreate.Input.Headers =
-                    .init(),
+                headers: Operations.FormFieldCreate.Input.Headers = .init(),
                 body: Components.RequestBodies.FormFieldCreateRequestBody
             ) {
                 self.path = path
@@ -2763,7 +2519,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Contact form item response
+            /// Contact form field response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)/responses/201`.
             ///
@@ -2795,9 +2551,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.FormFieldCreate.Output.Unauthorized
-            )
+            case unauthorized(Operations.FormFieldCreate.Output.Unauthorized)
             /// Unauthorized
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)/responses/401`.
@@ -2847,8 +2601,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldCreate.Output.Forbidden
-            {
+            public var forbidden: Operations.FormFieldCreate.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -2920,8 +2673,7 @@ public enum Operations {
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldBulkDelete
-                            .AcceptableContentType
+                        Operations.FormFieldBulkDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2929,8 +2681,7 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldBulkDelete
-                            .AcceptableContentType
+                        Operations.FormFieldBulkDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
@@ -2946,8 +2697,7 @@ public enum Operations {
             ///   - body:
             public init(
                 path: Operations.FormFieldBulkDelete.Input.Path,
-                headers: Operations.FormFieldBulkDelete.Input.Headers =
-                    .init(),
+                headers: Operations.FormFieldBulkDelete.Input.Headers = .init(),
                 body: Components.RequestBodies.BulkDeleteRequestBody
             ) {
                 self.path = path
@@ -3027,9 +2777,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldBulkDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(
-                Operations.FormFieldBulkDelete.Output.Forbidden
-            )
+            case forbidden(Operations.FormFieldBulkDelete.Output.Forbidden)
             /// Forbidden
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldBulkDelete)/responses/403`.
@@ -3111,8 +2859,7 @@ public enum Operations {
                 ///   - formFieldId:
                 public init(
                     contactFormId: Components.Parameters.ContactFormIdParameter,
-                    formFieldId: Components.Parameters
-                        .FormFieldIdParameter
+                    formFieldId: Components.Parameters.FormFieldIdParameter
                 ) {
                     self.contactFormId = contactFormId
                     self.formFieldId = formFieldId
@@ -3152,7 +2899,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Contact form item response
+            /// Contact form field response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/200`.
             ///
@@ -3179,13 +2926,13 @@ public enum Operations {
                 /// Creates a new `NotFound`.
                 public init() {}
             }
-            /// Contact form item not found
+            /// Contact form field not found
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.FormFieldGet.Output.NotFound)
-            /// Contact form item not found
+            /// Contact form field not found
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/404`.
             ///
@@ -3268,8 +3015,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldGet.Output.Forbidden
-            {
+            public var forbidden: Operations.FormFieldGet.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -3336,8 +3082,7 @@ public enum Operations {
                 ///   - formFieldId:
                 public init(
                     contactFormId: Components.Parameters.ContactFormIdParameter,
-                    formFieldId: Components.Parameters
-                        .FormFieldIdParameter
+                    formFieldId: Components.Parameters.FormFieldIdParameter
                 ) {
                     self.contactFormId = contactFormId
                     self.formFieldId = formFieldId
@@ -3372,8 +3117,7 @@ public enum Operations {
             ///   - body:
             public init(
                 path: Operations.FormFieldUpdate.Input.Path,
-                headers: Operations.FormFieldUpdate.Input.Headers =
-                    .init(),
+                headers: Operations.FormFieldUpdate.Input.Headers = .init(),
                 body: Components.RequestBodies.FormFieldPatchRequestBody
             ) {
                 self.path = path
@@ -3382,7 +3126,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Contact form item response
+            /// Contact form field response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/200`.
             ///
@@ -3409,13 +3153,13 @@ public enum Operations {
                 /// Creates a new `NotFound`.
                 public init() {}
             }
-            /// Contact form item not found
+            /// Contact form field not found
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.FormFieldUpdate.Output.NotFound)
-            /// Contact form item not found
+            /// Contact form field not found
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/404`.
             ///
@@ -3427,8 +3171,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.FormFieldUpdate.Output.NotFound
-            {
+            public var notFound: Operations.FormFieldUpdate.Output.NotFound {
                 get throws {
                     switch self {
                     case .notFound(let response):
@@ -3450,9 +3193,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.FormFieldUpdate.Output.Unauthorized
-            )
+            case unauthorized(Operations.FormFieldUpdate.Output.Unauthorized)
             /// Unauthorized
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/401`.
@@ -3502,8 +3243,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldUpdate.Output.Forbidden
-            {
+            public var forbidden: Operations.FormFieldUpdate.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -3550,199 +3290,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)`.
-    public enum FormFieldDelete {
-        public static let id: Swift.String = "formFieldDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/DELETE/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/DELETE/path/formFieldId`.
-                public var formFieldId:
-                    Components.Parameters.FormFieldIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - contactFormId:
-                ///   - formFieldId:
-                public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter,
-                    formFieldId: Components.Parameters
-                        .FormFieldIdParameter
-                ) {
-                    self.contactFormId = contactFormId
-                    self.formFieldId = formFieldId
-                }
-            }
-            public var path: Operations.FormFieldDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.FormFieldDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// Contact form item deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.FormFieldDelete.Output.NoContent)
-            /// Contact form item deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.FormFieldDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// Contact form item not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.FormFieldDelete.Output.NotFound)
-            /// Contact form item not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.FormFieldDelete.Output.NotFound
-            {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.FormFieldDelete.Output.Unauthorized
-            )
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.FormFieldDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.FormFieldDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/delete(formFieldDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-    }
     /// - Remark: HTTP `GET /api/v1/admin/contact/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/get(contactFieldList)`.
     public enum ContactFieldList {
@@ -3778,7 +3325,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Contact form item list response
+            /// Contact form field list response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/get(contactFieldList)/responses/200`.
             ///
@@ -3946,7 +3493,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Contact form item response
+            /// Contact form field response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/post(contactFieldCreate)/responses/201`.
             ///
@@ -4264,8 +3811,7 @@ public enum Operations {
                 /// - Parameters:
                 ///   - formFieldId:
                 public init(
-                    formFieldId: Components.Parameters
-                        .FormFieldIdParameter
+                    formFieldId: Components.Parameters.FormFieldIdParameter
                 ) {
                     self.formFieldId = formFieldId
                 }
@@ -4304,7 +3850,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Contact form item response
+            /// Contact form field response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/get(contactFieldGet)/responses/200`.
             ///
@@ -4483,8 +4029,7 @@ public enum Operations {
                 /// - Parameters:
                 ///   - formFieldId:
                 public init(
-                    formFieldId: Components.Parameters
-                        .FormFieldIdParameter
+                    formFieldId: Components.Parameters.FormFieldIdParameter
                 ) {
                     self.formFieldId = formFieldId
                 }
@@ -4527,7 +4072,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Contact form item response
+            /// Contact form field response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)/responses/200`.
             ///
@@ -4690,190 +4235,6 @@ public enum Operations {
                     .json
                 ]
             }
-        }
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)`.
-    public enum ContactFieldDelete {
-        public static let id: Swift.String = "contactFieldDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/DELETE/path/formFieldId`.
-                public var formFieldId:
-                    Components.Parameters.FormFieldIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - formFieldId:
-                public init(
-                    formFieldId: Components.Parameters
-                        .FormFieldIdParameter
-                ) {
-                    self.formFieldId = formFieldId
-                }
-            }
-            public var path: Operations.ContactFieldDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.ContactFieldDelete.Input.Path) {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// Contact field deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(Operations.ContactFieldDelete.Output.NoContent)
-            /// Contact field deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.ContactFieldDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// Contact field not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.ContactFieldDelete.Output.NotFound)
-            /// Contact field not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.ContactFieldDelete.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.ContactFieldDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.ContactFieldDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.ContactFieldDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/delete(contactFieldDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.ContactFieldDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
         }
     }
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission`.
@@ -5747,209 +5108,6 @@ public enum Operations {
                     .json
                 ]
             }
-        }
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)`.
-    public enum ContactFormSubmissionDelete {
-        public static let id: Swift.String = "contactFormSubmissionDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/DELETE/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/DELETE/path/contactFormSubmissionId`.
-                public var contactFormSubmissionId:
-                    Components.Parameters.ContactFormSubmissionIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - contactFormId:
-                ///   - contactFormSubmissionId:
-                public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter,
-                    contactFormSubmissionId: Components.Parameters
-                        .ContactFormSubmissionIdParameter
-                ) {
-                    self.contactFormId = contactFormId
-                    self.contactFormSubmissionId = contactFormSubmissionId
-                }
-            }
-            public var path: Operations.ContactFormSubmissionDelete.Input.Path
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            public init(path: Operations.ContactFormSubmissionDelete.Input.Path)
-            {
-                self.path = path
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            public struct NoContent: Sendable, Hashable {
-                /// Creates a new `NoContent`.
-                public init() {}
-            }
-            /// Contact form submission deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            case noContent(
-                Operations.ContactFormSubmissionDelete.Output.NoContent
-            )
-            /// Contact form submission deleted
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/204`.
-            ///
-            /// HTTP response code: `204 noContent`.
-            public static var noContent: Self {
-                .noContent(.init())
-            }
-            /// The associated value of the enum case if `self` is `.noContent`.
-            ///
-            /// - Throws: An error if `self` is not `.noContent`.
-            /// - SeeAlso: `.noContent`.
-            public var noContent:
-                Operations.ContactFormSubmissionDelete.Output.NoContent
-            {
-                get throws {
-                    switch self {
-                    case .noContent(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "noContent",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// Contact form submission not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(
-                Operations.ContactFormSubmissionDelete.Output.NotFound
-            )
-            /// Contact form submission not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound:
-                Operations.ContactFormSubmissionDelete.Output.NotFound
-            {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.ContactFormSubmissionDelete.Output.Unauthorized
-            )
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.ContactFormSubmissionDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(
-                Operations.ContactFormSubmissionDelete.Output.Forbidden
-            )
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/delete(contactFormSubmissionDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.ContactFormSubmissionDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
         }
     }
 }

@@ -19,5 +19,4 @@ struct AccountInvitationIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { AccountInvitationGetOperation() }
     var put: OperationRepresentable? { AccountInvitationUpdateOperation() }
     var patch: OperationRepresentable? { AccountInvitationPatchOperation() }
-    var delete: OperationRepresentable? { AccountInvitationDeleteOperation() }
 }

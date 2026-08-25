@@ -19,5 +19,4 @@ struct SystemPermissionIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { SystemPermissionGetOperation() }
     var put: OperationRepresentable? { SystemPermissionUpdateOperation() }
     var patch: OperationRepresentable? { SystemPermissionPatchOperation() }
-    var delete: OperationRepresentable? { SystemPermissionDeleteOperation() }
 }

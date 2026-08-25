@@ -46,6 +46,19 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.mediaAssetBulkDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/media/assets"
+            )
+        )
+        try transport.register(
+            {
                 try await server.mediaAssetSearch(
                     request: $0,
                     body: $1,
@@ -85,19 +98,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaAssetDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/assets/{mediaAssetId}"
-            )
-        )
-        try transport.register(
-            {
                 try await server.mediaAssetVariantSearch(
                     request: $0,
                     body: $1,
@@ -118,6 +118,19 @@ extension APIProtocol {
                 )
             },
             method: .post,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/media/folders"
+            )
+        )
+        try transport.register(
+            {
+                try await server.mediaFolderBulkDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/media/folders"
             )
@@ -163,19 +176,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaFolderDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/folders/{mediaFolderId}"
-            )
-        )
-        try transport.register(
-            {
                 try await server.mediaProcessorCreate(
                     request: $0,
                     body: $1,
@@ -183,6 +183,19 @@ extension APIProtocol {
                 )
             },
             method: .post,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/media/processors"
+            )
+        )
+        try transport.register(
+            {
+                try await server.mediaProcessorBulkDelete(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/media/processors"
             )
@@ -222,19 +235,6 @@ extension APIProtocol {
                 )
             },
             method: .patch,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/processors/{mediaProcessorId}"
-            )
-        )
-        try transport.register(
-            {
-                try await server.mediaProcessorDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/media/processors/{mediaProcessorId}"
             )
@@ -298,6 +298,93 @@ extension UniversalServer where APIHandler: APIProtocol {
                 case .created(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetBulkDelete)`.
+    fileprivate func mediaAssetBulkDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.MediaAssetBulkDelete.id,
+            using: {
+                APIHandler.mediaAssetBulkDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.MediaAssetBulkDelete.Input.Headers =
+                    .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
+                        )
+                    )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.MediaAssetBulkDelete.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -589,59 +676,6 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/assets/{mediaAssetId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/delete(mediaAssetDelete)`.
-    fileprivate func mediaAssetDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.MediaAssetDelete.id,
-            using: {
-                APIHandler.mediaAssetDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.MediaAssetDelete.Input.Path = .init(
-                    mediaAssetId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "mediaAssetId",
-                        as: Components.Parameters.MediaAssetIdParameter.self
-                    )
-                )
-                return Operations.MediaAssetDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `GET /api/v1/admin/media/assets/{mediaAssetId}/variants`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantSearch)`.
     fileprivate func mediaAssetVariantSearch(
@@ -772,6 +806,93 @@ extension UniversalServer where APIHandler: APIProtocol {
                 case .created(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/folders`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderBulkDelete)`.
+    fileprivate func mediaFolderBulkDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.MediaFolderBulkDelete.id,
+            using: {
+                APIHandler.mediaFolderBulkDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.MediaFolderBulkDelete.Input.Headers =
+                    .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
+                        )
+                    )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.MediaFolderBulkDelete.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -1063,59 +1184,6 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/folders/{mediaFolderId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/{mediaFolderId}/delete(mediaFolderDelete)`.
-    fileprivate func mediaFolderDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.MediaFolderDelete.id,
-            using: {
-                APIHandler.mediaFolderDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.MediaFolderDelete.Input.Path = .init(
-                    mediaFolderId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "mediaFolderId",
-                        as: Components.Parameters.MediaFolderIdParameter.self
-                    )
-                )
-                return Operations.MediaFolderDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/media/processors`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)`.
     fileprivate func mediaProcessorCreate(
@@ -1173,6 +1241,93 @@ extension UniversalServer where APIHandler: APIProtocol {
                 case .created(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorBulkDelete)`.
+    fileprivate func mediaProcessorBulkDelete(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.MediaProcessorBulkDelete.id,
+            using: {
+                APIHandler.mediaProcessorBulkDelete($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.MediaProcessorBulkDelete.Input.Headers =
+                    .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
+                        )
+                    )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.MediaProcessorBulkDelete.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -1446,59 +1601,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/processors/{mediaProcessorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/delete(mediaProcessorDelete)`.
-    fileprivate func mediaProcessorDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.MediaProcessorDelete.id,
-            using: {
-                APIHandler.mediaProcessorDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.MediaProcessorDelete.Input.Path = .init(
-                    mediaProcessorId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "mediaProcessorId",
-                        as: Components.Parameters.MediaProcessorIdParameter.self
-                    )
-                )
-                return Operations.MediaProcessorDelete.Input(path: path)
-            },
-            serializer: { output, request in
-                switch output {
-                case .noContent(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
                 case .notFound(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)

@@ -50,11 +50,7 @@ struct NewsletterSubscriberUpdateOperation: NewsletterSubscriberIDOperation {
         ]
     }
 }
-struct NewsletterSubscriberDeleteOperation: NewsletterSubscriberIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "Newsletter subscriber deleted"),
-            404: CustomResponse(description: "Newsletter subscriber not found"),
-        ]
-    }
+struct NewsletterSubscriberBulkDeleteOperation: NewsletterSubscriberOperation,
+    BulkDeleteOperation
+{
 }

@@ -101,11 +101,7 @@ struct BlogPostPatchOperation: BlogPostIDOperation {
     }
 }
 
-struct BlogPostDeleteOperation: BlogPostIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "BlogPost deleted"),
-            404: CustomResponse(description: "BlogPost not found"),
-        ]
-    }
+struct BlogPostBulkDeleteOperation: BlogPostOperation,
+    BulkDeleteOperation
+{
 }
