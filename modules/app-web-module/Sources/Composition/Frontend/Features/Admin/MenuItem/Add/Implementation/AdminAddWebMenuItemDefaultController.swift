@@ -10,21 +10,6 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
             interactor: any AdminAddWebMenuItemInteractor,
             presenter: any AdminAddWebMenuItemPresenter
         )
-    let loadPermissions: @Sendable (AppRequestContext) async throws -> [String]
-
-    init(
-        buildRuntime:
-            @escaping @Sendable (Request, AppRequestContext) -> (
-                interactor: any AdminAddWebMenuItemInteractor,
-                presenter: any AdminAddWebMenuItemPresenter
-            ),
-        loadPermissions:
-            @escaping @Sendable (AppRequestContext) async throws
-            -> [String] = { _ in [] }
-    ) {
-        self.buildRuntime = buildRuntime
-        self.loadPermissions = loadPermissions
-    }
 
     func getAddWebMenuItem(
         request: Request,
@@ -33,7 +18,8 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         do {
-            let availablePermissions = try await loadPermissions(context)
+            let availablePermissions = try await runtime.interactor
+                .loadPermissions()
             return runtime.presenter.renderAddPage(
                 menuId: menuId,
                 state: formState(permissionOptions: availablePermissions),
@@ -71,7 +57,8 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
 
             var permissionLoadError: String?
             do {
-                availablePermissions = try await loadPermissions(context)
+                availablePermissions = try await runtime.interactor
+                    .loadPermissions()
             }
             catch {
                 permissionLoadError = error.displayMessage

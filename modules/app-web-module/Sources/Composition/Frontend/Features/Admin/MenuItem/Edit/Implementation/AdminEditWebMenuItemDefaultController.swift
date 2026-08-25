@@ -12,21 +12,6 @@ struct AdminEditWebMenuItemDefaultController:
             interactor: any AdminEditWebMenuItemInteractor,
             presenter: any AdminEditWebMenuItemPresenter
         )
-    let loadPermissions: @Sendable (AppRequestContext) async throws -> [String]
-
-    init(
-        buildRuntime:
-            @escaping @Sendable (Request, AppRequestContext) -> (
-                interactor: any AdminEditWebMenuItemInteractor,
-                presenter: any AdminEditWebMenuItemPresenter
-            ),
-        loadPermissions:
-            @escaping @Sendable (AppRequestContext) async throws
-            -> [String] = { _ in [] }
-    ) {
-        self.buildRuntime = buildRuntime
-        self.loadPermissions = loadPermissions
-    }
 
     func getEditWebMenuItem(
         request: Request,
@@ -41,7 +26,8 @@ struct AdminEditWebMenuItemDefaultController:
             var availablePermissions: [String] = []
             var permissionLoadError: String?
             do {
-                availablePermissions = try await loadPermissions(context)
+                availablePermissions = try await runtime.interactor
+                    .loadPermissions()
             }
             catch {
                 permissionLoadError = error.displayMessage
@@ -97,7 +83,8 @@ struct AdminEditWebMenuItemDefaultController:
 
             var permissionLoadError: String?
             do {
-                availablePermissions = try await loadPermissions(context)
+                availablePermissions = try await runtime.interactor
+                    .loadPermissions()
             }
             catch {
                 permissionLoadError = error.displayMessage

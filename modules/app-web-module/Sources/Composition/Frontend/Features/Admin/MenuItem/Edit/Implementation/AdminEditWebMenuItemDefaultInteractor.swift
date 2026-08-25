@@ -6,6 +6,12 @@ struct AdminEditWebMenuItemDefaultInteractor:
     AdminEditWebMenuItemInteractor
 {
     let repository: any AdminEditWebMenuItemRepository
+    let permissionRepository: any AdminSystemPermissionRepository
+
+    func loadPermissions(
+    ) async throws -> [String] {
+        try await permissionRepository.listNames()
+    }
 
     func load(
         menuId: String,

@@ -13,19 +13,17 @@ struct AdminEditWebMenuItem {
                     interactor: AdminEditWebMenuItemDefaultInteractor(
                         repository: AdminEditWebMenuItemOpenAPIRepository(
                             api: context.webManagementAPI()
-                        )
+                        ),
+                        permissionRepository:
+                            AdminSystemPermissionOpenAPIRepository(
+                                api: context.systemManagementAPI()
+                            )
                     ),
                     presenter: AdminEditWebMenuItemDefaultPresenter(
                         request: request,
                         renderingEngine: renderingEngine
                     )
                 )
-            },
-            loadPermissions: { context in
-                try await AdminSystemPermissionOpenAPIRepository(
-                    api: context.systemManagementAPI()
-                )
-                .listNames()
             }
         )
     }
