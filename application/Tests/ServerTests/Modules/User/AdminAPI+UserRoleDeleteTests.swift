@@ -58,7 +58,10 @@ struct AdminAPIUserRoleDeleteTests {
                         token: token
                     )
                 ],
-                body: Components.Schemas.BulkDeleteRequestSchema(ids: [created.id], summary: true)
+                body: Components.Schemas.BulkDeleteRequestSchema(
+                    ids: [created.id],
+                    summary: true
+                )
             )
         ) { response in
             #expect(response.response.status == .ok)

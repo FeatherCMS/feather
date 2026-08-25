@@ -165,7 +165,10 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
     }
 
     func remove(newsletterId: String, subscriberId: String) async throws {
-        let email = try await email(newsletterId: newsletterId, subscriberId: subscriberId)
+        let email = try await email(
+            newsletterId: newsletterId,
+            subscriberId: subscriberId
+        )
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.newsletterSubscriberBulkDelete(
                 path: .init(newsletterCampaignId: newsletterId),

@@ -58,7 +58,10 @@ struct AdminAPIUserMagicLinkDeleteTests {
                         token: token
                     )
                 ],
-                body: Components.Schemas.BulkDeleteRequestSchema(ids: [detail.id], summary: true)
+                body: Components.Schemas.BulkDeleteRequestSchema(
+                    ids: [detail.id],
+                    summary: true
+                )
             )
         ) { response in
             #expect(response.response.status == .ok)

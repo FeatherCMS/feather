@@ -54,7 +54,9 @@ struct AdminRemoveRedirectRuleOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.redirectRuleBulkDelete(body: .json(.init(ids: [id], summary: true)))
+            _ = try await client.redirectRuleBulkDelete(
+                body: .json(.init(ids: [id], summary: true))
+            )
         }
     }
 }

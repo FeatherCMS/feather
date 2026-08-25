@@ -87,7 +87,8 @@ struct AdminNewsletterSubscribersAPIClient {
     func bulkRemove(subscriberIds: [String], campaignId: String?) async throws {
         let items = try await list()
         for item in items where subscriberIds.contains(item.id) {
-            let newsletters = campaignId?.isEmpty == false
+            let newsletters =
+                campaignId?.isEmpty == false
                 ? item.newsletters.filter { $0.id == campaignId }
                 : item.newsletters
             for newsletter in newsletters {

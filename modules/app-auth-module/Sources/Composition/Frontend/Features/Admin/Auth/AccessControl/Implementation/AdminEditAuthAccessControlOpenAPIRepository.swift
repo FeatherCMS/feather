@@ -174,10 +174,12 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.authRolePermissionBulkDelete(
-                body: .json(.init(
-                    ids: ["\(pair.roleId):\(pair.permissionId)"],
-                    summary: true
-                ))
+                body: .json(
+                    .init(
+                        ids: ["\(pair.roleId):\(pair.permissionId)"],
+                        summary: true
+                    )
+                )
             )
             switch response {
             case .ok:
