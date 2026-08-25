@@ -413,6 +413,7 @@ let package = Package(
                 .product(name: "FeatherAdmin", package: "feather-core"),
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .product(name: "AccountFrontend", package: "app-account-module"),
+                .product(name: "WebFrontend", package: "app-web-module"),
                 .target(name: "WebApp"),
             ],
             swiftSettings: defaultSwiftSettings

@@ -6,6 +6,7 @@
 
 import FeatherDomain
 
+import struct Foundation.CharacterSet
 import struct Foundation.Date
 
 public struct MenuItem: Model {
@@ -44,7 +45,7 @@ public struct MenuItem: Model {
             self.url = url
             self.priority = priority
             self.isBlank = isBlank
-            self.permission = permission
+            self.permission = MenuItem.normalizePermission(permission)
             self.authentication = authentication
             self.notes = notes
         }
@@ -81,7 +82,7 @@ public struct MenuItem: Model {
         self.url = url
         self.priority = priority
         self.isBlank = isBlank
-        self.permission = permission
+        self.permission = Self.normalizePermission(permission)
         self.authentication = authentication
         self.notes = notes
         self.createdAt = createdAt
@@ -90,6 +91,12 @@ public struct MenuItem: Model {
 }
 
 extension MenuItem {
+
+    private static func normalizePermission(
+        _ permission: String
+    ) -> String {
+        permission.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 
     private static func validate(
         label: String
@@ -153,7 +160,7 @@ extension MenuItem {
             url: url,
             priority: priority,
             isBlank: isBlank,
-            permission: permission,
+            permission: normalizePermission(permission),
             authentication: authentication,
             notes: notes
         )
@@ -171,7 +178,10 @@ extension MenuItem {
         let newLabel = label ?? self.label
         let newURL = url ?? self.url
         let newPriority = priority ?? self.priority
-        let newPermission = permission ?? self.permission
+        let newPermission =
+            permission.map {
+                Self.normalizePermission($0)
+            } ?? self.permission
         let newNotes = notes ?? self.notes
 
         try Self.validate(label: newLabel)

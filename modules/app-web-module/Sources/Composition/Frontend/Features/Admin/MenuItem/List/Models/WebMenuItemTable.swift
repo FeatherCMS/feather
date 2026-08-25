@@ -162,7 +162,6 @@ struct WebMenuItemTable: Component {
                                         if state.canReorder { Th("Order") }
                                         Th("Label")
                                         Th("URL")
-                                        Th("Priority")
                                         Th("Blank")
                                         Th("Permission")
                                         Th("Actions")
@@ -231,15 +230,6 @@ struct WebMenuItemTable: Component {
                                                 .data(
                                                     "label",
                                                     "URL"
-                                                )
-                                            Td("\(item.priority)")
-                                                .data(
-                                                    "label",
-                                                    "Priority"
-                                                )
-                                                .data(
-                                                    "web-menu-item-priority",
-                                                    "true"
                                                 )
                                             Td(item.isBlank ? "Yes" : "No")
                                                 .data(
@@ -336,13 +326,6 @@ struct WebMenuItemTable: Component {
                     });
                 }
 
-                function updatePriorities() {
-                    rows().forEach(function (row, index) {
-                        var priority = row.querySelector('[data-web-menu-item-priority]');
-                        if (priority) { priority.textContent = String(index); }
-                    });
-                }
-
                 function setStatus(message, isError) {
                     if (!status) { return; }
                     status.textContent = message;
@@ -357,7 +340,6 @@ struct WebMenuItemTable: Component {
 
                 function restore(order) {
                     order.forEach(function (row) { list.appendChild(row); });
-                    updatePriorities();
                 }
 
                 async function persistMove(row, beforeRow, previousOrder) {
@@ -403,7 +385,6 @@ struct WebMenuItemTable: Component {
                         list.appendChild(row);
                     }
                     var finalBeforeRow = row.nextElementSibling;
-                    updatePriorities();
                     persistMove(row, finalBeforeRow, previousOrder);
                 }
 

@@ -17,11 +17,24 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
-        return runtime.presenter.renderAddPage(
-            menuId: menuId,
-            state: formState(),
-            permissions: context.currentUserPermissions
-        )
+        do {
+            let availablePermissions = try await runtime.interactor
+                .loadPermissions()
+            return runtime.presenter.renderAddPage(
+                menuId: menuId,
+                state: formState(permissionOptions: availablePermissions),
+                permissions: context.currentUserPermissions
+            )
+        }
+        catch {
+            var state = formState()
+            state.error = error.displayMessage
+            return runtime.presenter.renderAddPage(
+                menuId: menuId,
+                state: state,
+                permissions: context.currentUserPermissions
+            )
+        }
     }
 
     func postAddWebMenuItem(
@@ -32,6 +45,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
         let menuId = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: WebMenuItemFormInput?
+        var availablePermissions: [String] = []
 
         do {
             let payload = try await request.decode(
@@ -40,13 +54,74 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
             )
             lastPayload = payload
             try await payload.validate()
+
+            var permissionLoadError: String?
+            do {
+                availablePermissions = try await runtime.interactor
+                    .loadPermissions()
+            }
+            catch {
+                permissionLoadError = error.displayMessage
+            }
+
+            if let permissionLoadError,
+                !payload.permission.isEmpty
+            {
+                var state = formState(
+                    label: payload.normalizedLabel,
+                    url: payload.normalizedURL,
+                    priority: payload.normalizedPriority,
+                    isBlank: payload.isBlank.value,
+                    permission: payload.permission,
+                    permissionOptions: availablePermissions,
+                    authentication: payload.normalizedAuthentication,
+                    notes: payload.normalizedNotes
+                )
+                state.error = permissionLoadError
+                return try runtime.presenter
+                    .renderAddPage(
+                        menuId: menuId,
+                        state: state,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+
+            if permissionLoadError == nil,
+                !payload.hasValidPermission(
+                    availablePermissions: Set(availablePermissions)
+                )
+            {
+                var state = formState(
+                    label: payload.normalizedLabel,
+                    url: payload.normalizedURL,
+                    priority: payload.normalizedPriority,
+                    isBlank: payload.isBlank.value,
+                    permission: payload.permission,
+                    permissionOptions: availablePermissions,
+                    authentication: payload.normalizedAuthentication,
+                    notes: payload.normalizedNotes
+                )
+                state.apply(errors: [
+                    "permission": "Select a valid permission."
+                ])
+                return try runtime.presenter
+                    .renderAddPage(
+                        menuId: menuId,
+                        state: state,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+
             guard payload.parsedPriority != nil else {
                 var state = formState(
                     label: payload.normalizedLabel,
                     url: payload.normalizedURL,
                     priority: payload.normalizedPriority,
                     isBlank: payload.isBlank.value,
-                    permission: payload.normalizedPermission,
+                    permission: payload.permission,
+                    permissionOptions: availablePermissions,
                     authentication: payload.normalizedAuthentication,
                     notes: payload.normalizedNotes
                 )
@@ -84,7 +159,8 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 url: lastPayload?.normalizedURL ?? "",
                 priority: lastPayload?.normalizedPriority ?? "0",
                 isBlank: lastPayload?.isBlank.value ?? false,
-                permission: lastPayload?.normalizedPermission ?? "",
+                permission: lastPayload?.permission ?? "",
+                permissionOptions: availablePermissions,
                 authentication: lastPayload?.normalizedAuthentication ?? "any",
                 notes: lastPayload?.normalizedNotes ?? ""
             )
@@ -103,7 +179,8 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 url: lastPayload?.normalizedURL ?? "",
                 priority: lastPayload?.normalizedPriority ?? "0",
                 isBlank: lastPayload?.isBlank.value ?? false,
-                permission: lastPayload?.normalizedPermission ?? "",
+                permission: lastPayload?.permission ?? "",
+                permissionOptions: availablePermissions,
                 authentication: lastPayload?.normalizedAuthentication ?? "any",
                 notes: lastPayload?.normalizedNotes ?? ""
             )
@@ -122,7 +199,8 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 url: lastPayload?.normalizedURL ?? "",
                 priority: lastPayload?.normalizedPriority ?? "0",
                 isBlank: lastPayload?.isBlank.value ?? false,
-                permission: lastPayload?.normalizedPermission ?? "",
+                permission: lastPayload?.permission ?? "",
+                permissionOptions: availablePermissions,
                 authentication: lastPayload?.normalizedAuthentication ?? "any",
                 notes: lastPayload?.normalizedNotes ?? ""
             )
@@ -143,6 +221,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
         priority: String = "0",
         isBlank: Bool = false,
         permission: String = "",
+        permissionOptions: [String] = [],
         authentication: String = "any",
         notes: String = ""
     ) -> WebMenuItemForm.State {
@@ -177,6 +256,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 value: permission,
                 error: nil
             ),
+            permissionOptions: permissionOptions,
             authentication: .init(
                 key: "authentication",
                 label: "Visible to",

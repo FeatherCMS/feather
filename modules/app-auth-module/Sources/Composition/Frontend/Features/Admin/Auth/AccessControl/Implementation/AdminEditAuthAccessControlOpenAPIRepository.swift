@@ -88,8 +88,7 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
         }
     }
 
-    func fetchPermissions(  // empty
-        ) async throws -> [SystemAdminAPI.Components.Schemas
+    func fetchPermissions() async throws -> [SystemAdminAPI.Components.Schemas
         .SystemPermissionListItemSchema]
     {
         try await systemAPI.withOpenAPIRepositoryErrorMapping { client in

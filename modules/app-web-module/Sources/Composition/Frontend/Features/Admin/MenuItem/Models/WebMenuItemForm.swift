@@ -27,6 +27,7 @@ struct WebMenuItemForm: Component, FlowContent {
         var priority: FieldState
         var isBlank: CheckboxState
         var permission: FieldState
+        var permissionOptions: [String] = []
         var authentication: FieldState
         var notes: FieldState
         var error: String?
@@ -82,11 +83,16 @@ struct WebMenuItemForm: Component, FlowContent {
                 isRequired: true
             )
             checkbox(state.isBlank)
-            FormInputField(
-                name: state.permission.key,
-                label: state.permission.label,
-                value: state.permission.value,
-                error: state.permission.error
+            AdminAutocompleteField(
+                state: .init(
+                    key: state.permission.key,
+                    label: state.permission.label,
+                    placeholder: "Select a system permission...",
+                    options: permissionOptions,
+                    error: state.permission.error,
+                    selectionMode: .single,
+                    isEnabled: true
+                )
             )
             FormSelectField(
                 name: state.authentication.key,
@@ -148,5 +154,36 @@ struct WebMenuItemForm: Component, FlowContent {
                 )
             )
         }
+    }
+
+    private var permissionOptions: [AdminAutocompleteField.OptionState] {
+        let selectedValue = state.permission.value ?? ""
+        var options = [
+            AdminAutocompleteField.OptionState(
+                label: "No permission",
+                value: "",
+                isSelected: selectedValue.isEmpty
+            )
+        ]
+        let availablePermissions = Set(state.permissionOptions)
+        options += state.permissionOptions.map {
+            .init(
+                label: $0,
+                value: $0,
+                isSelected: $0 == selectedValue
+            )
+        }
+        if !selectedValue.isEmpty,
+            !availablePermissions.contains(selectedValue)
+        {
+            options.append(
+                .init(
+                    label: "\(selectedValue) (unavailable)",
+                    value: selectedValue,
+                    isSelected: true
+                )
+            )
+        }
+        return options
     }
 }
