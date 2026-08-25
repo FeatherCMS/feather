@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -23,7 +24,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         let parentId =
             request.queryString("parent_id")?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .nilIfEmpty ?? ""
+            .emptyToNil ?? ""
         let view = request.queryString("view") ?? "grid"
         let picker = pickerState(request: request)
         var model = try await interactor.getAddMediaAsset()
@@ -37,7 +38,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             error: model.error,
             view: view,
             action: actionPath(
-                parentId: parentId.nilIfEmpty,
+                parentId: parentId.emptyToNil,
                 view: view,
                 picker: picker
             ),
@@ -73,7 +74,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
                     error: nil,
                     view: model.view,
                     action: actionPath(
-                        parentId: payload.parentId.nilIfEmpty,
+                        parentId: payload.parentId.emptyToNil,
                         view: model.view,
                         picker: picker
                     ),
@@ -89,7 +90,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             }
 
             var queryItems: [URLQueryItem] = []
-            if let parentId = payload.parentId.nilIfEmpty {
+            if let parentId = payload.parentId.emptyToNil {
                 queryItems.append(.init(name: "parent_id", value: parentId))
             }
             if model.view != "grid" {
@@ -118,7 +119,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             error: model.error,
             view: model.view,
             action: actionPath(
-                parentId: model.parentId.nilIfEmpty,
+                parentId: model.parentId.emptyToNil,
                 view: model.view,
                 picker: picker
             ),
@@ -147,7 +148,7 @@ extension AdminAddMediaAssetDefaultController {
     ) -> PickerState {
         .init(
             isEnabled: request.queryString("picker") == "1",
-            field: request.queryString("field")?.nilIfEmpty,
+            field: request.queryString("field")?.emptyToNil,
             allowedExtensions: request.queryString("extensions")?
                 .split(separator: ",")
                 .map {
@@ -156,7 +157,7 @@ extension AdminAddMediaAssetDefaultController {
                 }
                 .filter { !$0.isEmpty } ?? [],
             defaultFolderPath: request.queryString("default_folder_path")?
-                .nilIfEmpty
+                .emptyToNil
         )
     }
 

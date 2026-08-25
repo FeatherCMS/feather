@@ -1,96 +1,103 @@
 import CSS
+import FeatherContracts
 import HTML
 import SGML
 import WebStandards
 
-public struct FormSelectField: Component, FlowContent {
-    public struct Option: Sendable {
-        public var label: String
-        public var value: String
-        public var isDisabled: Bool
-
-        public init(
-            label: String,
-            value: String,
-            isDisabled: Bool = false
-        ) {
-            self.label = label
-            self.value = value
-            self.isDisabled = isDisabled
-        }
-    }
-
+public struct FormInputField: Component, FlowContent {
     public struct State: Sendable {
         public var name: String
         public var label: String
-        public var options: [Option]
-        public var selectedValue: String?
+        public var prefix: String?
+        public var value: String?
         public var error: String?
         public var help: String?
         public var id: String
+        public var type: Input.Types
+        public var placeholder: String?
+        public var autocomplete: String?
         public var isRequired: Bool
         public var isDisabled: Bool
+        public var isReadOnly: Bool
         public var wrapperClass: String?
-        public var selectClass: String?
+        public var inputClass: String?
 
         public init(
             name: String,
             label: String,
-            options: [Option],
-            selectedValue: String? = nil,
+            prefix: String? = nil,
+            value: String? = nil,
             error: String? = nil,
             help: String? = nil,
             id: String? = nil,
+            type: Input.Types = .text,
+            placeholder: String? = nil,
+            autocomplete: String? = nil,
             isRequired: Bool = false,
             isDisabled: Bool = false,
+            isReadOnly: Bool = false,
             wrapperClass: String? = nil,
-            selectClass: String? = nil
+            inputClass: String? = nil
         ) {
             self.name = name
             self.label = label
-            self.options = options
-            self.selectedValue = selectedValue
+            self.prefix = prefix
+            self.value = value
             self.error = error
             self.help = help
             self.id = id ?? name
+            self.type = type
+            self.placeholder = placeholder
+            self.autocomplete = autocomplete
             self.isRequired = isRequired
             self.isDisabled = isDisabled
+            self.isReadOnly = isReadOnly
             self.wrapperClass = wrapperClass
-            self.selectClass = selectClass
+            self.inputClass = inputClass
         }
     }
 
     public var state: State
 
-    public init(state: State) {
+    public init(
+        state: State
+    ) {
         self.state = state
     }
 
     public init(
         name: String,
         label: String,
-        options: [Option],
-        selectedValue: String? = nil,
+        prefix: String? = nil,
+        value: String? = nil,
         error: String? = nil,
         help: String? = nil,
         id: String? = nil,
+        type: Input.Types = .text,
+        placeholder: String? = nil,
+        autocomplete: String? = nil,
         isRequired: Bool = false,
         isDisabled: Bool = false,
+        isReadOnly: Bool = false,
         wrapperClass: String? = nil,
-        selectClass: String? = nil
+        inputClass: String? = nil
     ) {
         self.state = .init(
             name: name,
             label: label,
-            options: options,
-            selectedValue: selectedValue,
+            prefix: prefix,
+            value: value,
             error: error,
             help: help,
             id: id,
+            type: type,
+            placeholder: placeholder,
+            autocomplete: autocomplete,
             isRequired: isRequired,
             isDisabled: isDisabled,
+            isReadOnly: isReadOnly,
             wrapperClass: wrapperClass,
-            selectClass: selectClass
+            inputClass: inputClass
         )
     }
 
@@ -107,7 +114,17 @@ public struct FormSelectField: Component, FlowContent {
         Section {
             Label {
                 fieldLabel()
-                select()
+                if let prefix = state.prefix {
+                    Div {
+                        Span(prefix)
+                            .class("admin-metadata-fields__prefix")
+                        input()
+                    }
+                    .class("admin-metadata-fields__prefixed-input")
+                }
+                else {
+                    input()
+                }
             }
             .for(state.id)
 
@@ -116,6 +133,7 @@ public struct FormSelectField: Component, FlowContent {
                     .id(helpID)
                     .class("field-help")
             }
+
             if let error = state.error {
                 Span(error)
                     .id(errorID)
@@ -131,40 +149,42 @@ public struct FormSelectField: Component, FlowContent {
         }
     }
 
-    private func select() -> Select {
-        var select = Select {
-            for option in state.options {
-                HTML.Option(option.label)
-                    .value(option.value)
-                    .if(option.value == state.selectedValue) {
-                        $0.selected()
-                    }
-                    .if(option.isDisabled) {
-                        $0.disabled()
-                    }
-            }
-        }
-        .id(state.id)
-        .name(state.name)
+    private func input() -> Input {
+        var input = Input()
+            .type(state.type)
+            .id(state.id)
+            .name(state.name)
 
-        if let describedBy {
-            select = select.ariaDescribedBy(describedBy)
+        if let value = state.value {
+            input = input.value(value)
         }
-        select = select.ariaInvalid(state.error == nil ? .false : .true)
+        if let placeholder = state.placeholder {
+            input = input.placeholder(placeholder)
+        }
+        if let autocomplete = state.autocomplete {
+            input = input.autocomplete(autocomplete)
+        }
+        if let describedBy {
+            input = input.ariaDescribedBy(describedBy)
+        }
+        input = input.ariaInvalid(state.error == nil ? .false : .true)
         if state.error != nil {
-            select = select.ariaErrorMessage(errorID)
+            input = input.ariaErrorMessage(errorID)
         }
         if state.isRequired {
-            select = select.required()
+            input = input.required()
         }
         if state.isDisabled {
-            select = select.disabled()
+            input = input.disabled()
         }
-        if let selectClass = state.selectClass {
-            select = select.class(selectClass)
+        if state.isReadOnly {
+            input = input.readOnly()
+        }
+        if let inputClass = state.inputClass {
+            input = input.class(inputClass)
         }
 
-        return select
+        return input
     }
 
     private func fieldLabel() -> some BasicTag {
@@ -178,8 +198,13 @@ public struct FormSelectField: Component, FlowContent {
         .class("field-label")
     }
 
-    private var helpID: String { "\(state.id)-help" }
-    private var errorID: String { "\(state.id)-error" }
+    private var helpID: String {
+        "\(state.id)-help"
+    }
+
+    private var errorID: String {
+        "\(state.id)-error"
+    }
 
     private var describedBy: String? {
         [
@@ -188,6 +213,6 @@ public struct FormSelectField: Component, FlowContent {
         ]
         .compactMap { $0 }
         .joined(separator: " ")
-        .nilIfEmpty
+        .emptyToNil
     }
 }

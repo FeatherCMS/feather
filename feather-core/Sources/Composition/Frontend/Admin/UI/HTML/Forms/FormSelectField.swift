@@ -1,52 +1,63 @@
 import CSS
+import FeatherContracts
 import HTML
 import SGML
 import WebStandards
 
-public struct FormTextAreaField: Component, FlowContent {
+public struct FormSelectField: Component, FlowContent {
+    public struct Option: Sendable {
+        public var label: String
+        public var value: String
+        public var isDisabled: Bool
+
+        public init(
+            label: String,
+            value: String,
+            isDisabled: Bool = false
+        ) {
+            self.label = label
+            self.value = value
+            self.isDisabled = isDisabled
+        }
+    }
+
     public struct State: Sendable {
-        var name: String
-        var label: String
-        var value: String?
-        var error: String?
-        var help: String?
-        var id: String
-        var placeholder: String?
-        var rows: Int
-        var isRequired: Bool
-        var isDisabled: Bool
-        var isReadOnly: Bool
-        var wrapperClass: String?
-        var textareaClass: String?
+        public var name: String
+        public var label: String
+        public var options: [Option]
+        public var selectedValue: String?
+        public var error: String?
+        public var help: String?
+        public var id: String
+        public var isRequired: Bool
+        public var isDisabled: Bool
+        public var wrapperClass: String?
+        public var selectClass: String?
 
         public init(
             name: String,
             label: String,
-            value: String? = nil,
+            options: [Option],
+            selectedValue: String? = nil,
             error: String? = nil,
             help: String? = nil,
             id: String? = nil,
-            placeholder: String? = nil,
-            rows: Int = 8,
             isRequired: Bool = false,
             isDisabled: Bool = false,
-            isReadOnly: Bool = false,
             wrapperClass: String? = nil,
-            textareaClass: String? = nil
+            selectClass: String? = nil
         ) {
             self.name = name
             self.label = label
-            self.value = value
+            self.options = options
+            self.selectedValue = selectedValue
             self.error = error
             self.help = help
             self.id = id ?? name
-            self.placeholder = placeholder
-            self.rows = rows
             self.isRequired = isRequired
             self.isDisabled = isDisabled
-            self.isReadOnly = isReadOnly
             self.wrapperClass = wrapperClass
-            self.textareaClass = textareaClass
+            self.selectClass = selectClass
         }
     }
 
@@ -59,32 +70,28 @@ public struct FormTextAreaField: Component, FlowContent {
     public init(
         name: String,
         label: String,
-        value: String? = nil,
+        options: [Option],
+        selectedValue: String? = nil,
         error: String? = nil,
         help: String? = nil,
         id: String? = nil,
-        placeholder: String? = nil,
-        rows: Int = 8,
         isRequired: Bool = false,
         isDisabled: Bool = false,
-        isReadOnly: Bool = false,
         wrapperClass: String? = nil,
-        textareaClass: String? = nil
+        selectClass: String? = nil
     ) {
         self.state = .init(
             name: name,
             label: label,
-            value: value,
+            options: options,
+            selectedValue: selectedValue,
             error: error,
             help: help,
             id: id,
-            placeholder: placeholder,
-            rows: rows,
             isRequired: isRequired,
             isDisabled: isDisabled,
-            isReadOnly: isReadOnly,
             wrapperClass: wrapperClass,
-            textareaClass: textareaClass
+            selectClass: selectClass
         )
     }
 
@@ -101,15 +108,19 @@ public struct FormTextAreaField: Component, FlowContent {
         Section {
             Label {
                 fieldLabel()
-                textarea()
+                select()
             }
             .for(state.id)
 
             if let help = state.help {
-                Span(help).id(helpID).class("field-help")
+                Span(help)
+                    .id(helpID)
+                    .class("field-help")
             }
             if let error = state.error {
-                Span(error).id(errorID).class("field-error")
+                Span(error)
+                    .id(errorID)
+                    .class("field-error")
             }
         }
         .if(state.error != nil) { $0.class("has-error") }
@@ -121,42 +132,48 @@ public struct FormTextAreaField: Component, FlowContent {
         }
     }
 
-    private func textarea() -> Textarea {
-        var textarea = Textarea(state.value ?? "")
-            .id(state.id)
-            .name(state.name)
-            .rows(state.rows)
+    private func select() -> Select {
+        var select = Select {
+            for option in state.options {
+                HTML.Option(option.label)
+                    .value(option.value)
+                    .if(option.value == state.selectedValue) {
+                        $0.selected()
+                    }
+                    .if(option.isDisabled) {
+                        $0.disabled()
+                    }
+            }
+        }
+        .id(state.id)
+        .name(state.name)
 
-        if let placeholder = state.placeholder {
-            textarea = textarea.placeholder(placeholder)
-        }
         if let describedBy {
-            textarea = textarea.ariaDescribedBy(describedBy)
+            select = select.ariaDescribedBy(describedBy)
         }
-        textarea = textarea.ariaInvalid(state.error == nil ? .false : .true)
+        select = select.ariaInvalid(state.error == nil ? .false : .true)
         if state.error != nil {
-            textarea = textarea.ariaErrorMessage(errorID)
+            select = select.ariaErrorMessage(errorID)
         }
         if state.isRequired {
-            textarea = textarea.required()
+            select = select.required()
         }
         if state.isDisabled {
-            textarea = textarea.disabled()
+            select = select.disabled()
         }
-        if state.isReadOnly {
-            textarea = textarea.readOnly()
+        if let selectClass = state.selectClass {
+            select = select.class(selectClass)
         }
-        if let textareaClass = state.textareaClass {
-            textarea = textarea.class(textareaClass)
-        }
-        return textarea
+
+        return select
     }
 
     private func fieldLabel() -> some BasicTag {
         Span {
             InlineText(state.label)
             if !state.isRequired {
-                Span(" (Optional)").class("field-label__optional")
+                Span(" (Optional)")
+                    .class("field-label__optional")
             }
         }
         .class("field-label")
@@ -172,6 +189,6 @@ public struct FormTextAreaField: Component, FlowContent {
         ]
         .compactMap { $0 }
         .joined(separator: " ")
-        .nilIfEmpty
+        .emptyToNil
     }
 }

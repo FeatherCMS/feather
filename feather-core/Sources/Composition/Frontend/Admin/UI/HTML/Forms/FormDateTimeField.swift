@@ -1,4 +1,5 @@
 import CSS
+import FeatherContracts
 import HTML
 import SGML
 import WebStandards
@@ -335,7 +336,7 @@ public struct FormDateTimeField: Component, FlowContent {
     private var errorID: String { "\(state.id)-error" }
     private var describedBy: String? {
         [state.help == nil ? nil : helpID, state.error == nil ? nil : errorID]
-            .compactMap { $0 }.joined(separator: " ").nilIfEmpty
+            .compactMap { $0 }.joined(separator: " ").emptyToNil
     }
 
     private func script() -> String {

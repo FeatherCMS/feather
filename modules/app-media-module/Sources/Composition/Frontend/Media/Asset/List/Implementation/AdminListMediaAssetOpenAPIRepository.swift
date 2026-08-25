@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -305,15 +306,15 @@ struct AdminMediaAssetOpenAPIRepository: Sendable {
                                 .trimmingCharacters(
                                     in: .whitespacesAndNewlines
                                 )
-                                .nilIfEmpty,
+                                .emptyToNil,
                             fileName: payload.fileName.trimmingCharacters(
                                 in: .whitespacesAndNewlines
                             ),
                             _type: payload.type.trimmingCharacters(
                                 in: .whitespacesAndNewlines
                             ),
-                            title: payload.title.nilIfEmpty,
-                            altText: payload.altText.nilIfEmpty,
+                            title: payload.title.emptyToNil,
+                            altText: payload.altText.emptyToNil,
                             data: payload.data.trimmingCharacters(
                                 in: .whitespacesAndNewlines
                             )

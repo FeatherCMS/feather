@@ -1,102 +1,91 @@
 import CSS
+import FeatherContracts
 import HTML
 import SGML
 import WebStandards
 
-public struct FormInputField: Component, FlowContent {
+public struct FormTextAreaField: Component, FlowContent {
     public struct State: Sendable {
-        public var name: String
-        public var label: String
-        public var prefix: String?
-        public var value: String?
-        public var error: String?
-        public var help: String?
-        public var id: String
-        public var type: Input.Types
-        public var placeholder: String?
-        public var autocomplete: String?
-        public var isRequired: Bool
-        public var isDisabled: Bool
-        public var isReadOnly: Bool
-        public var wrapperClass: String?
-        public var inputClass: String?
+        var name: String
+        var label: String
+        var value: String?
+        var error: String?
+        var help: String?
+        var id: String
+        var placeholder: String?
+        var rows: Int
+        var isRequired: Bool
+        var isDisabled: Bool
+        var isReadOnly: Bool
+        var wrapperClass: String?
+        var textareaClass: String?
 
         public init(
             name: String,
             label: String,
-            prefix: String? = nil,
             value: String? = nil,
             error: String? = nil,
             help: String? = nil,
             id: String? = nil,
-            type: Input.Types = .text,
             placeholder: String? = nil,
-            autocomplete: String? = nil,
+            rows: Int = 8,
             isRequired: Bool = false,
             isDisabled: Bool = false,
             isReadOnly: Bool = false,
             wrapperClass: String? = nil,
-            inputClass: String? = nil
+            textareaClass: String? = nil
         ) {
             self.name = name
             self.label = label
-            self.prefix = prefix
             self.value = value
             self.error = error
             self.help = help
             self.id = id ?? name
-            self.type = type
             self.placeholder = placeholder
-            self.autocomplete = autocomplete
+            self.rows = rows
             self.isRequired = isRequired
             self.isDisabled = isDisabled
             self.isReadOnly = isReadOnly
             self.wrapperClass = wrapperClass
-            self.inputClass = inputClass
+            self.textareaClass = textareaClass
         }
     }
 
     public var state: State
 
-    public init(
-        state: State
-    ) {
+    public init(state: State) {
         self.state = state
     }
 
     public init(
         name: String,
         label: String,
-        prefix: String? = nil,
         value: String? = nil,
         error: String? = nil,
         help: String? = nil,
         id: String? = nil,
-        type: Input.Types = .text,
         placeholder: String? = nil,
-        autocomplete: String? = nil,
+        rows: Int = 8,
         isRequired: Bool = false,
         isDisabled: Bool = false,
         isReadOnly: Bool = false,
         wrapperClass: String? = nil,
-        inputClass: String? = nil
+        textareaClass: String? = nil
     ) {
         self.state = .init(
             name: name,
             label: label,
-            prefix: prefix,
             value: value,
             error: error,
             help: help,
             id: id,
-            type: type,
             placeholder: placeholder,
-            autocomplete: autocomplete,
+            rows: rows,
             isRequired: isRequired,
             isDisabled: isDisabled,
             isReadOnly: isReadOnly,
             wrapperClass: wrapperClass,
-            inputClass: inputClass
+            textareaClass: textareaClass
         )
     }
 
@@ -113,30 +102,15 @@ public struct FormInputField: Component, FlowContent {
         Section {
             Label {
                 fieldLabel()
-                if let prefix = state.prefix {
-                    Div {
-                        Span(prefix)
-                            .class("admin-metadata-fields__prefix")
-                        input()
-                    }
-                    .class("admin-metadata-fields__prefixed-input")
-                }
-                else {
-                    input()
-                }
+                textarea()
             }
             .for(state.id)
 
             if let help = state.help {
-                Span(help)
-                    .id(helpID)
-                    .class("field-help")
+                Span(help).id(helpID).class("field-help")
             }
-
             if let error = state.error {
-                Span(error)
-                    .id(errorID)
-                    .class("field-error")
+                Span(error).id(errorID).class("field-error")
             }
         }
         .if(state.error != nil) { $0.class("has-error") }
@@ -148,62 +122,49 @@ public struct FormInputField: Component, FlowContent {
         }
     }
 
-    private func input() -> Input {
-        var input = Input()
-            .type(state.type)
+    private func textarea() -> Textarea {
+        var textarea = Textarea(state.value ?? "")
             .id(state.id)
             .name(state.name)
+            .rows(state.rows)
 
-        if let value = state.value {
-            input = input.value(value)
-        }
         if let placeholder = state.placeholder {
-            input = input.placeholder(placeholder)
-        }
-        if let autocomplete = state.autocomplete {
-            input = input.autocomplete(autocomplete)
+            textarea = textarea.placeholder(placeholder)
         }
         if let describedBy {
-            input = input.ariaDescribedBy(describedBy)
+            textarea = textarea.ariaDescribedBy(describedBy)
         }
-        input = input.ariaInvalid(state.error == nil ? .false : .true)
+        textarea = textarea.ariaInvalid(state.error == nil ? .false : .true)
         if state.error != nil {
-            input = input.ariaErrorMessage(errorID)
+            textarea = textarea.ariaErrorMessage(errorID)
         }
         if state.isRequired {
-            input = input.required()
+            textarea = textarea.required()
         }
         if state.isDisabled {
-            input = input.disabled()
+            textarea = textarea.disabled()
         }
         if state.isReadOnly {
-            input = input.readOnly()
+            textarea = textarea.readOnly()
         }
-        if let inputClass = state.inputClass {
-            input = input.class(inputClass)
+        if let textareaClass = state.textareaClass {
+            textarea = textarea.class(textareaClass)
         }
-
-        return input
+        return textarea
     }
 
     private func fieldLabel() -> some BasicTag {
         Span {
             InlineText(state.label)
             if !state.isRequired {
-                Span(" (Optional)")
-                    .class("field-label__optional")
+                Span(" (Optional)").class("field-label__optional")
             }
         }
         .class("field-label")
     }
 
-    private var helpID: String {
-        "\(state.id)-help"
-    }
-
-    private var errorID: String {
-        "\(state.id)-error"
-    }
+    private var helpID: String { "\(state.id)-help" }
+    private var errorID: String { "\(state.id)-error" }
 
     private var describedBy: String? {
         [
@@ -212,6 +173,6 @@ public struct FormInputField: Component, FlowContent {
         ]
         .compactMap { $0 }
         .joined(separator: " ")
-        .nilIfEmpty
+        .emptyToNil
     }
 }

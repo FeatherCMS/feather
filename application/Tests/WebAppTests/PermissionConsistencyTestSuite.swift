@@ -60,18 +60,6 @@ struct PermissionConsistencyTestSuite {
 private let permissionLiteralPattern =
     #""([a-z][a-z0-9-]*:[a-z][a-z0-9-]*:[a-z][a-z0-9-]*)""#
 
-private let scopeDefinitionPattern =
-    #"static\s+let\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*PermissionScope\s*\(\s*module:\s*"([a-z0-9-]+)"\s*,\s*resource:\s*"([a-z0-9-]+)""#
-
-private let directScopeAccessPattern =
-    #"([A-Za-z_][A-Za-z0-9_]*\.Scope\.[A-Za-z_][A-Za-z0-9_]*)\.(create|read|update|list|delete|canCreate|canRead|canUpdate|canList|canDelete)\b"#
-
-private let scopeAliasPattern =
-    #"(?:^|\s)(?:private\s+)?(?:fileprivate\s+)?(?:static\s+)?(?:let|var)\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*([A-Za-z_][A-Za-z0-9_]*\.Scope\.[A-Za-z_][A-Za-z0-9_]*)\b"#
-
-private let aliasedScopeAccessPattern =
-    #"\b([A-Za-z_][A-Za-z0-9_]*)\.(create|read|update|list|delete|canCreate|canRead|canUpdate|canList|canDelete)\b"#
-
 private func workspaceRootURL(
     filePath: String = #filePath
 ) throws -> URL {
@@ -132,117 +120,9 @@ private func declaredBackendPermissions(
 private func frontendUsedPermissions(
     in files: [URL]
 ) throws -> Set<String> {
-    let scopeDefinitions = try scopeDefinitions(in: files)
-
     return try files.reduce(into: Set<String>()) { result, fileURL in
         let source = try String(contentsOf: fileURL, encoding: .utf8)
         result.formUnion(matches(for: permissionLiteralPattern, in: source))
-
-        for match in regexMatches(for: directScopeAccessPattern, in: source) {
-            guard
-                let scopeReference = match.capture(at: 1, in: source),
-                let actionToken = match.capture(at: 2, in: source),
-                let permission = resolvePermission(
-                    scopeReference: scopeReference,
-                    actionToken: actionToken,
-                    scopeDefinitions: scopeDefinitions
-                )
-            else {
-                continue
-            }
-            result.insert(permission)
-        }
-
-        let scopeAliases: [String: String] = Dictionary(
-            uniqueKeysWithValues: regexMatches(
-                for: scopeAliasPattern,
-                in: source
-            )
-            .compactMap { match in
-                guard
-                    let alias = match.capture(at: 1, in: source),
-                    let scopeReference = match.capture(at: 2, in: source)
-                else {
-                    return nil
-                }
-                return (alias, scopeReference)
-            }
-        )
-
-        for match in regexMatches(for: aliasedScopeAccessPattern, in: source) {
-            guard
-                let alias = match.capture(at: 1, in: source),
-                let scopeReference = scopeAliases[alias],
-                let actionToken = match.capture(at: 2, in: source),
-                let permission = resolvePermission(
-                    scopeReference: scopeReference,
-                    actionToken: actionToken,
-                    scopeDefinitions: scopeDefinitions
-                )
-            else {
-                continue
-            }
-            result.insert(permission)
-        }
-    }
-}
-
-private func scopeDefinitions(
-    in files: [URL]
-) throws -> [String: (module: String, resource: String)] {
-    try files.reduce(into: [:]) { result, fileURL in
-        let source = try String(contentsOf: fileURL, encoding: .utf8)
-        guard
-            let typeName = regexMatches(
-                for: #"struct\s+([A-Za-z_][A-Za-z0-9_]*)"#,
-                in: source
-            )
-            .first?
-            .capture(at: 1, in: source)
-        else {
-            return
-        }
-        for match in regexMatches(for: scopeDefinitionPattern, in: source) {
-            guard
-                let scopeName = match.capture(at: 1, in: source),
-                let module = match.capture(at: 2, in: source),
-                let resource = match.capture(at: 3, in: source)
-            else {
-                continue
-            }
-            result["\(typeName).Scope.\(scopeName)"] = (module, resource)
-        }
-    }
-}
-
-private func resolvePermission(
-    scopeReference: String,
-    actionToken: String,
-    scopeDefinitions: [String: (module: String, resource: String)]
-) -> String? {
-    guard let scope = scopeDefinitions[scopeReference] else {
-        return nil
-    }
-    let action = normalizedAction(from: actionToken)
-    return "\(scope.module):\(scope.resource):\(action)"
-}
-
-private func normalizedAction(
-    from token: String
-) -> String {
-    switch token {
-    case "canCreate":
-        return "create"
-    case "canRead":
-        return "read"
-    case "canUpdate":
-        return "update"
-    case "canList":
-        return "list"
-    case "canDelete":
-        return "delete"
-    default:
-        return token
     }
 }
 

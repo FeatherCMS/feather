@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import OpenAPIRuntime
 
@@ -62,7 +63,7 @@ public struct WebPageFormInput: Codable, Sendable, Equatable, Hashable {
     var normalizedImageAssetId: String? {
         imageAssetId?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .nilIfEmpty
+            .emptyToNil
     }
 
     func withStatus(

@@ -55,7 +55,7 @@ struct BlogAuthorForm: Component, FlowContent {
         var links: [AdminPillTabs.Link] = [
             .init(
                 label: "Details",
-                href: "#admin-content-editor-details",
+                href: action,
                 isCurrent: true
             )
         ]
@@ -104,12 +104,6 @@ struct BlogAuthorForm: Component, FlowContent {
                 textarea(state.excerpt, required: true, rows: 4)
                 textarea(state.content, required: true)
             }
-            .id("admin-content-editor-details")
-            .class(
-                "admin-content-editor-panel",
-                "admin-content-editor-panel--details"
-            )
-
             Section {
                 Div {
                     Button(submitLabel)

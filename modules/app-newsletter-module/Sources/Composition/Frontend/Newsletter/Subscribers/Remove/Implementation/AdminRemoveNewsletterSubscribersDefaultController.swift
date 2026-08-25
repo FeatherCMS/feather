@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -37,7 +38,7 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
         )
         try await interactor.remove(
             ids: payload.normalizedSelectedIds,
-            campaignId: payload.campaignId?.nilIfEmpty
+            campaignId: payload.campaignId?.emptyToNil
         )
         return Response(
             status: .seeOther,
