@@ -17,5 +17,4 @@ struct SystemVariableIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { SystemVariableGetOperation() }
     var put: OperationRepresentable? { SystemVariableUpdateOperation() }
     var patch: OperationRepresentable? { SystemVariablePatchOperation() }
-    var delete: OperationRepresentable? { SystemVariableDeleteOperation() }
 }

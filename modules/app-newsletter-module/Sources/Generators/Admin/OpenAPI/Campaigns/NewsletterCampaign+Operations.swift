@@ -45,11 +45,7 @@ struct NewsletterCampaignUpdateOperation: NewsletterCampaignIDOperation {
         ]
     }
 }
-struct NewsletterCampaignDeleteOperation: NewsletterCampaignIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "Newsletter deleted"),
-            404: CustomResponse(description: "Newsletter not found"),
-        ]
-    }
+struct NewsletterCampaignBulkDeleteOperation: NewsletterCampaignOperation,
+    BulkDeleteOperation
+{
 }

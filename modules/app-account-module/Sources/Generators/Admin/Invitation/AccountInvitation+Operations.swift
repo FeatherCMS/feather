@@ -110,12 +110,3 @@ struct AccountInvitationPatchOperation: AccountInvitationIDOperation {
         ]
     }
 }
-
-struct AccountInvitationDeleteOperation: AccountInvitationIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "AccountInvitation deleted"),
-            404: CustomResponse(description: "AccountInvitation not found"),
-        ]
-    }
-}

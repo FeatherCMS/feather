@@ -17,5 +17,4 @@ struct AuthMagicLinkIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { AuthMagicLinkGetOperation() }
     var put: OperationRepresentable? { AuthMagicLinkUpdateOperation() }
     var patch: OperationRepresentable? { AuthMagicLinkPatchOperation() }
-    var delete: OperationRepresentable? { AuthMagicLinkDeleteOperation() }
 }

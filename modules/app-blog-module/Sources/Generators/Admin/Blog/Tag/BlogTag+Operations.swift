@@ -101,11 +101,7 @@ struct BlogTagPatchOperation: BlogTagIDOperation {
     }
 }
 
-struct BlogTagDeleteOperation: BlogTagIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "BlogTag deleted"),
-            404: CustomResponse(description: "BlogTag not found"),
-        ]
-    }
+struct BlogTagBulkDeleteOperation: BlogTagOperation,
+    BulkDeleteOperation
+{
 }

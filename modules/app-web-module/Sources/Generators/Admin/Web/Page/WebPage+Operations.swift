@@ -101,11 +101,7 @@ struct WebPagePatchOperation: WebPageIDOperation {
     }
 }
 
-struct WebPageDeleteOperation: WebPageIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "WebPage deleted"),
-            404: CustomResponse(description: "WebPage not found"),
-        ]
-    }
+struct WebPageBulkDeleteOperation: WebPageOperation,
+    BulkDeleteOperation
+{
 }

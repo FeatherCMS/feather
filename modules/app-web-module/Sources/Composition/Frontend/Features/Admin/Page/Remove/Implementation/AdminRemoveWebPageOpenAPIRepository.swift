@@ -60,30 +60,7 @@ struct AdminRemoveWebPageOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.webPageDelete(
-                path: .init(webPageId: id)
-            )
-            switch response {
-            case .noContent:
-                return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Web page not found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to delete this web page."
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot delete web pages."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.webPageBulkDelete(body: .json(.init(ids: [id], summary: true)))
         }
     }
 

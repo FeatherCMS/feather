@@ -110,12 +110,3 @@ struct RedirectRulePatchOperation: RedirectRuleIDOperation {
         ]
     }
 }
-
-struct RedirectRuleDeleteOperation: RedirectRuleIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "RedirectRule deleted"),
-            404: CustomResponse(description: "RedirectRule not found"),
-        ]
-    }
-}

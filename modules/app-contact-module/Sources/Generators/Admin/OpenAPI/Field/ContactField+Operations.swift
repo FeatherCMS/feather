@@ -58,14 +58,6 @@ struct ContactFieldUpdateOperation: ContactFieldIDOperation {
         ]
     }
 }
-struct ContactFieldDeleteOperation: ContactFieldIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "Contact field deleted"),
-            404: CustomResponse(description: "Contact field not found"),
-        ]
-    }
-}
 struct ContactFieldBulkDeleteOperation: ContactFieldOperation,
     BulkDeleteOperation
 {}
@@ -98,14 +90,6 @@ struct FormFieldUpdateOperation: FormFieldIDOperation {
     var responseMap: ResponseMap {
         [
             200: FormFieldResponse().reference(),
-            404: CustomResponse(description: "Contact form field not found"),
-        ]
-    }
-}
-struct FormFieldDeleteOperation: FormFieldIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "Contact form field deleted"),
             404: CustomResponse(description: "Contact form field not found"),
         ]
     }

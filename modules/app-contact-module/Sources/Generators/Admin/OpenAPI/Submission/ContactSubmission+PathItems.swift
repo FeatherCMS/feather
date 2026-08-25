@@ -11,7 +11,4 @@ struct ContactFormSubmissionIDPathItems: PathItemRepresentable {
     var patch: OperationRepresentable? {
         ContactFormSubmissionUpdateOperation()
     }
-    var delete: OperationRepresentable? {
-        ContactFormSubmissionDeleteOperation()
-    }
 }

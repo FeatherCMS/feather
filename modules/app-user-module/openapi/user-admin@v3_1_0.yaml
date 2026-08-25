@@ -116,23 +116,6 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-    delete:
-      tags:
-      - UserIdentities
-      operationId: userIdentityDelete
-      parameters:
-      - $ref: '#/components/parameters/UserIdentityIdParameter'
-      responses:
-        204:
-          description: UserIdentity deleted
-        404:
-          description: UserIdentity not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - UserIdentities
@@ -246,23 +229,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/UserRoleDetailResponse'
-        404:
-          description: UserRole not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - UserRoles
-      operationId: userRoleDelete
-      parameters:
-      - $ref: '#/components/parameters/UserRoleIdParameter'
-      responses:
-        204:
-          description: UserRole deleted
         404:
           description: UserRole not found
         401:

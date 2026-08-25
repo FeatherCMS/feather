@@ -108,12 +108,3 @@ struct SystemPermissionPatchOperation: SystemPermissionIDOperation {
         ]
     }
 }
-
-struct SystemPermissionDeleteOperation: SystemPermissionIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "SystemPermission deleted"),
-            404: CustomResponse(description: "SystemPermission not found"),
-        ]
-    }
-}

@@ -45,15 +45,16 @@ struct AdminAPISystemPermissionDeleteTests {
         try await runner.run(
             request: Request(
                 method: .delete,
-                path: "/api/v1/admin/system/permissions/\(created.id)",
+                path: "/api/v1/admin/system/permissions",
                 headerFields: [
                     .authorization: runner.bearerAuthorizationHeader(
                         token: token
                     )
-                ]
+                ],
+                body: Components.Schemas.BulkDeleteRequestSchema(ids: [created.id], summary: true)
             )
         ) { response in
-            #expect(response.response.status == .noContent)
+            #expect(response.response.status == .ok)
         }
     }
 }

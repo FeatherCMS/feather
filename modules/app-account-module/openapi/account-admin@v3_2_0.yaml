@@ -143,23 +143,6 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-    delete:
-      tags:
-      - AccountInvitations
-      operationId: accountInvitationDelete
-      parameters:
-      - $ref: '#/components/parameters/AccountInvitationIdParameter'
-      responses:
-        204:
-          description: AccountInvitation deleted
-        404:
-          description: AccountInvitation not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - AccountInvitations

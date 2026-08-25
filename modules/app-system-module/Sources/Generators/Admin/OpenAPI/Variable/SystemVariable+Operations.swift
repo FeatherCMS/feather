@@ -109,12 +109,3 @@ struct SystemVariablePatchOperation: SystemVariableIDOperation {
         ]
     }
 }
-
-struct SystemVariableDeleteOperation: SystemVariableIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "SystemVariable deleted"),
-            404: CustomResponse(description: "SystemVariable not found"),
-        ]
-    }
-}

@@ -79,11 +79,7 @@ struct MediaProcessorUpdateOperation: MediaProcessorIDOperation {
     }
 }
 
-struct MediaProcessorDeleteOperation: MediaProcessorIDOperation {
-    var responseMap: ResponseMap {
-        [
-            204: CustomResponse(description: "MediaProcessor deleted"),
-            404: CustomResponse(description: "MediaProcessor not found"),
-        ]
-    }
+struct MediaProcessorBulkDeleteOperation: MediaProcessorOperation,
+    BulkDeleteOperation
+{
 }

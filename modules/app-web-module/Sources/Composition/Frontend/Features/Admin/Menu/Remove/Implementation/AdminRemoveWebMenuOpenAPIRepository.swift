@@ -51,30 +51,7 @@ struct AdminRemoveWebMenuOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.webMenuDelete(
-                path: .init(webMenuId: id)
-            )
-            switch response {
-            case .noContent:
-                return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Web menu not found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to delete this web menu."
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot delete web menus."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.webMenuBulkDelete(body: .json(.init(ids: [id], summary: true)))
         }
     }
 }

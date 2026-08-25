@@ -85,38 +85,16 @@ struct AdminNewsletterSubscribersAPIClient {
     }
 
     func bulkRemove(subscriberIds: [String], campaignId: String?) async throws {
-        let selectedIds = Set(subscriberIds)
-        let items = try await list().filter { selectedIds.contains($0.id) }
-        for item in items {
-            let newsletters =
-                campaignId?.isEmpty == false
+        let items = try await list()
+        for item in items where subscriberIds.contains(item.id) {
+            let newsletters = campaignId?.isEmpty == false
                 ? item.newsletters.filter { $0.id == campaignId }
                 : item.newsletters
             for newsletter in newsletters {
-                let response = try await api.withOpenAPIRepositoryErrorMapping {
-                    client in
-                    try await client.newsletterSubscriberDelete(
-                        path: .init(
-                            newsletterCampaignId: newsletter.id,
-                            email: item.email
-                        )
-                    )
-                }
-                switch response {
-                case .noContent: break
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized(
-                        message: "Please sign in again to delete subscribers."
-                    )
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden(
-                        message: "Your account cannot delete subscribers."
-                    )
-                case .notFound: break
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
+                try await api.withOpenAPIRepositoryErrorMapping { client in
+                    _ = try await client.newsletterSubscriberBulkDelete(
+                        path: .init(newsletterCampaignId: newsletter.id),
+                        body: .json(.init(ids: [item.email], summary: true))
                     )
                 }
             }

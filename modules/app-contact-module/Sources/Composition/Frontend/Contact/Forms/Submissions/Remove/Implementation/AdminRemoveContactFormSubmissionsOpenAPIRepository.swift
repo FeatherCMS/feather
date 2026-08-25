@@ -17,29 +17,7 @@ struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
     }
     func remove(formId: String, id: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.contactFormSubmissionDelete(
-                path: .init(contactFormId: formId, contactFormSubmissionId: id)
-            )
-            switch response {
-            case .noContent: return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This submission could not be found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to delete submissions."
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot delete submissions."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.contactFormSubmissionBulkDelete(path: .init(contactFormId: formId), body: .json(.init(ids: [id], summary: true)))
         }
     }
     func bulkRemove(formId: String, ids: [String]) async throws {

@@ -17,5 +17,4 @@ struct UserRoleIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { UserRoleGetOperation() }
     var put: OperationRepresentable? { UserRoleUpdateOperation() }
     var patch: OperationRepresentable? { UserRolePatchOperation() }
-    var delete: OperationRepresentable? { UserRoleDeleteOperation() }
 }

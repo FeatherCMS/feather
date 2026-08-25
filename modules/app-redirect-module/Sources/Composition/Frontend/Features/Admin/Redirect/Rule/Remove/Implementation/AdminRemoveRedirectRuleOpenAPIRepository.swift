@@ -54,32 +54,7 @@ struct AdminRemoveRedirectRuleOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.redirectRuleDelete(
-                path: .init(redirectRuleId: id)
-            )
-            switch response {
-            case .noContent:
-                return
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Redirect rule not found."
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to delete this redirect rule."
-                )
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot delete redirect rules."
-                )
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
+            _ = try await client.redirectRuleBulkDelete(body: .json(.init(ids: [id], summary: true)))
         }
     }
 }
