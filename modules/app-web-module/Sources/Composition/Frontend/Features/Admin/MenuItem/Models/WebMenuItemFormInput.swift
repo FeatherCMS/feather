@@ -70,10 +70,6 @@ public struct WebMenuItemFormInput: Codable, Sendable, Equatable, Hashable {
         priority.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    var normalizedPermission: String {
-        permission.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
     var normalizedAuthentication: String {
         authentication.trimmingCharacters(in: .whitespacesAndNewlines)
     }

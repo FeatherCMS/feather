@@ -6,6 +6,7 @@ import SystemFrontend
 import Testing
 import UserFrontend
 import AccountFrontend
+@testable import WebFrontend
 import FeatherValidation
 
 @testable import WebApp
@@ -110,6 +111,44 @@ struct WebAppTestSuite {
         let payload = SystemPermissionFormInput(name: "perm", notes: " ")
         let failures = await payload.validationFailures()
         #expect(failures.isEmpty)
+    }
+
+    @Test
+    func webMenuItemPermissionValidationAcceptsEmptyPermission() {
+        let payload = WebMenuItemFormInput(
+            label: "Home",
+            url: "/",
+            priority: "0",
+            isBlank: .init(value: false),
+            permission: " ",
+            authentication: "any",
+            notes: ""
+        )
+
+        #expect(
+            payload.hasValidPermission(
+                availablePermissions: ["web:pages:read"]
+            )
+        )
+    }
+
+    @Test
+    func webMenuItemPermissionValidationRejectsUnknownPermission() {
+        let payload = WebMenuItemFormInput(
+            label: "Home",
+            url: "/",
+            priority: "0",
+            isBlank: .init(value: false),
+            permission: "web:pages:missing",
+            authentication: "any",
+            notes: ""
+        )
+
+        #expect(
+            !payload.hasValidPermission(
+                availablePermissions: ["web:pages:read"]
+            )
+        )
     }
 
     @Test

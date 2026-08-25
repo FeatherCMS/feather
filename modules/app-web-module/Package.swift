@@ -206,6 +206,8 @@ let package = Package(
                 .target(name: "WebContracts"),
                 .target(name: "WebAdminAPI"),
                 .target(name: "WebAppAPI"),
+                .product(name: "SystemAdminAPI", package: "app-system-module"),
+                .product(name: "SystemFrontend", package: "app-system-module")
             ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings

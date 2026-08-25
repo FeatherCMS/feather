@@ -108,9 +108,7 @@ public struct ListPublicMenus: Sendable {
             guard subject != nil else { return false }
         }
 
-        let permission = item.permission.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
+        let permission = item.permission
 
         guard !permission.isEmpty else {
             return true

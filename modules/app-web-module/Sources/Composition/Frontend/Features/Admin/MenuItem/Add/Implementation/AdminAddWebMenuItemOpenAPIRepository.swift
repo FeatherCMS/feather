@@ -21,7 +21,7 @@ struct AdminAddWebMenuItemOpenAPIRepository: AdminAddWebMenuItemRepository {
                         url: input.normalizedURL,
                         priority: input.parsedPriority ?? 0,
                         isBlank: input.isBlank.value,
-                        permission: input.normalizedPermission,
+                        permission: input.permission,
                         authentication: input.normalizedAuthentication,
                         notes: input.normalizedNotes
                     )

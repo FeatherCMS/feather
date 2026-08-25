@@ -12,6 +12,21 @@ struct AdminEditWebMenuItemDefaultController:
             interactor: any AdminEditWebMenuItemInteractor,
             presenter: any AdminEditWebMenuItemPresenter
         )
+    let loadPermissions: @Sendable (AppRequestContext) async throws -> [String]
+
+    init(
+        buildRuntime:
+            @escaping @Sendable (Request, AppRequestContext) -> (
+                interactor: any AdminEditWebMenuItemInteractor,
+                presenter: any AdminEditWebMenuItemPresenter
+            ),
+        loadPermissions:
+            @escaping @Sendable (AppRequestContext) async throws
+            -> [String] = { _ in [] }
+    ) {
+        self.buildRuntime = buildRuntime
+        self.loadPermissions = loadPermissions
+    }
 
     func getEditWebMenuItem(
         request: Request,
@@ -23,18 +38,29 @@ struct AdminEditWebMenuItemDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let item = try await runtime.interactor.load(menuId: menuId, id: id)
+            var availablePermissions: [String] = []
+            var permissionLoadError: String?
+            do {
+                availablePermissions = try await loadPermissions(context)
+            }
+            catch {
+                permissionLoadError = error.displayMessage
+            }
+            var state = formState(
+                label: item.label,
+                url: item.url,
+                priority: "\(item.priority)",
+                isBlank: item.isBlank,
+                permission: item.permission,
+                permissionOptions: availablePermissions,
+                authentication: item.authentication,
+                notes: item.notes
+            )
+            state.error = permissionLoadError
             return runtime.presenter.renderEditPage(
                 menuId: menuId,
                 id: id,
-                state: formState(
-                    label: item.label,
-                    url: item.url,
-                    priority: "\(item.priority)",
-                    isBlank: item.isBlank,
-                    permission: item.permission,
-                    authentication: item.authentication,
-                    notes: item.notes
-                ),
+                state: state,
                 isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
@@ -59,6 +85,7 @@ struct AdminEditWebMenuItemDefaultController:
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions
         var lastPayload: WebMenuItemFormInput?
+        var availablePermissions: [String] = []
 
         do {
             let payload = try await request.decode(
@@ -67,13 +94,77 @@ struct AdminEditWebMenuItemDefaultController:
             )
             lastPayload = payload
             try await payload.validate()
+
+            var permissionLoadError: String?
+            do {
+                availablePermissions = try await loadPermissions(context)
+            }
+            catch {
+                permissionLoadError = error.displayMessage
+            }
+
+            if let permissionLoadError,
+                !payload.permission.isEmpty
+            {
+                var state = formState(
+                    label: payload.normalizedLabel,
+                    url: payload.normalizedURL,
+                    priority: payload.normalizedPriority,
+                    isBlank: payload.isBlank.value,
+                    permission: payload.permission,
+                    permissionOptions: availablePermissions,
+                    authentication: payload.normalizedAuthentication,
+                    notes: payload.normalizedNotes
+                )
+                state.error = permissionLoadError
+                return try runtime.presenter
+                    .renderEditPage(
+                        menuId: menuId,
+                        id: id,
+                        state: state,
+                        isEdited: false,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+
+            if permissionLoadError == nil,
+                !payload.hasValidPermission(
+                    availablePermissions: Set(availablePermissions)
+                )
+            {
+                var state = formState(
+                    label: payload.normalizedLabel,
+                    url: payload.normalizedURL,
+                    priority: payload.normalizedPriority,
+                    isBlank: payload.isBlank.value,
+                    permission: payload.permission,
+                    permissionOptions: availablePermissions,
+                    authentication: payload.normalizedAuthentication,
+                    notes: payload.normalizedNotes
+                )
+                state.apply(errors: [
+                    "permission": "Select a valid permission."
+                ])
+                return try runtime.presenter
+                    .renderEditPage(
+                        menuId: menuId,
+                        id: id,
+                        state: state,
+                        isEdited: false,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+
             guard payload.parsedPriority != nil else {
                 var state = formState(
                     label: payload.normalizedLabel,
                     url: payload.normalizedURL,
                     priority: payload.normalizedPriority,
                     isBlank: payload.isBlank.value,
-                    permission: payload.normalizedPermission,
+                    permission: payload.permission,
+                    permissionOptions: availablePermissions,
                     authentication: payload.normalizedAuthentication,
                     notes: payload.normalizedNotes
                 )
@@ -118,7 +209,8 @@ struct AdminEditWebMenuItemDefaultController:
                 url: lastPayload?.normalizedURL ?? "",
                 priority: lastPayload?.normalizedPriority ?? "0",
                 isBlank: lastPayload?.isBlank.value ?? false,
-                permission: lastPayload?.normalizedPermission ?? "",
+                permission: lastPayload?.permission ?? "",
+                permissionOptions: availablePermissions,
                 authentication: lastPayload?.normalizedAuthentication ?? "any",
                 notes: lastPayload?.normalizedNotes ?? ""
             )
@@ -139,7 +231,8 @@ struct AdminEditWebMenuItemDefaultController:
                 url: lastPayload?.normalizedURL ?? "",
                 priority: lastPayload?.normalizedPriority ?? "0",
                 isBlank: lastPayload?.isBlank.value ?? false,
-                permission: lastPayload?.normalizedPermission ?? "",
+                permission: lastPayload?.permission ?? "",
+                permissionOptions: availablePermissions,
                 authentication: lastPayload?.normalizedAuthentication ?? "any",
                 notes: lastPayload?.normalizedNotes ?? ""
             )
@@ -160,7 +253,8 @@ struct AdminEditWebMenuItemDefaultController:
                 url: lastPayload?.normalizedURL ?? "",
                 priority: lastPayload?.normalizedPriority ?? "0",
                 isBlank: lastPayload?.isBlank.value ?? false,
-                permission: lastPayload?.normalizedPermission ?? "",
+                permission: lastPayload?.permission ?? "",
+                permissionOptions: availablePermissions,
                 authentication: lastPayload?.normalizedAuthentication ?? "any",
                 notes: lastPayload?.normalizedNotes ?? ""
             )
@@ -183,6 +277,7 @@ struct AdminEditWebMenuItemDefaultController:
         priority: String = "0",
         isBlank: Bool = false,
         permission: String = "",
+        permissionOptions: [String] = [],
         authentication: String = "any",
         notes: String? = nil
     ) -> WebMenuItemForm.State {
@@ -217,6 +312,7 @@ struct AdminEditWebMenuItemDefaultController:
                 value: permission,
                 error: nil
             ),
+            permissionOptions: permissionOptions,
             authentication: .init(
                 key: "authentication",
                 label: "Visible to",

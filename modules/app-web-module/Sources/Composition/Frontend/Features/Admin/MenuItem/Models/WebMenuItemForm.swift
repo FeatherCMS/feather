@@ -27,6 +27,7 @@ struct WebMenuItemForm: Component, FlowContent {
         var priority: FieldState
         var isBlank: CheckboxState
         var permission: FieldState
+        var permissionOptions: [String] = []
         var authentication: FieldState
         var notes: FieldState
         var error: String?
@@ -82,11 +83,11 @@ struct WebMenuItemForm: Component, FlowContent {
                 isRequired: true
             )
             checkbox(state.isBlank)
-            FormInputField(
-                name: state.permission.key,
-                label: state.permission.label,
-                value: state.permission.value,
-                error: state.permission.error
+            WebMenuItemPermissionPicker(
+                state: .init(
+                    field: state.permission,
+                    permissions: state.permissionOptions
+                )
             )
             FormSelectField(
                 name: state.authentication.key,

@@ -1,6 +1,7 @@
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
+import SystemFrontend
 
 struct AdminEditWebMenuItem {
     let controller: any AdminEditWebMenuItemController
@@ -19,6 +20,12 @@ struct AdminEditWebMenuItem {
                         renderingEngine: renderingEngine
                     )
                 )
+            },
+            loadPermissions: { context in
+                try await AdminSystemPermissionOpenAPIRepository(
+                    api: context.systemManagementAPI()
+                )
+                .listNames()
             }
         )
     }

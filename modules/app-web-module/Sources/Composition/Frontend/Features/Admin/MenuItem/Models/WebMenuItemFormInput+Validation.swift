@@ -67,4 +67,11 @@ extension WebMenuItemFormInput {
     func validationFailures() async -> [Failure] {
         await validator.failures()
     }
+
+    func hasValidPermission(
+        availablePermissions: Set<String>
+    ) -> Bool {
+        let permission = self.permission
+        return permission.isEmpty || availablePermissions.contains(permission)
+    }
 }
