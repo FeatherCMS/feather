@@ -10,11 +10,11 @@ struct AdminGetNewsletterCampaignDefaultController:
     AdminGetNewsletterCampaignController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetNewsletterCampaignInteractor,
             presenter: any AdminGetNewsletterCampaignPresenter
         )
-    func get(request: Request, context: AppRequestContext) async throws
+    func get(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)

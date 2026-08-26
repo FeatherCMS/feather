@@ -13,7 +13,7 @@ struct AppContactFormSubmissionDefaultController:
 
     func submit(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let formId = try context.requiredParameter("formId")
         let form = try await request.decode(

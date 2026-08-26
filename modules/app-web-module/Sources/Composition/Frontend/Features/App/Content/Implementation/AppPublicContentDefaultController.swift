@@ -4,14 +4,14 @@ import Hummingbird
 struct AppPublicContentDefaultController: AppPublicContentController {
 
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AppPublicContentInteractor,
             presenter: any AppPublicContentPresenter
         )
 
     func getContent(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         try await render(
             path: request.uri.path,
@@ -26,7 +26,7 @@ extension AppPublicContentDefaultController {
     fileprivate func render(
         path: String,
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         guard let content = try await interactor.resolve(path: path) else {

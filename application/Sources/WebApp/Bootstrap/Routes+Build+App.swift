@@ -1,3 +1,4 @@
+import Foundation
 import FeatherContracts
 import BlogFrontend
 import MediaFrontend
@@ -16,8 +17,8 @@ import WebApplication
 import NewsFrontend
 
 func buildAppRoutes(
-    router: Router<AppRequestContext>,
-    authRouter: Router<AppRequestContext>,
+    router: Router<DefaultRequestContext>,
+    authRouter: Router<DefaultRequestContext>,
     renderingEngine: DefaultRenderingEngine,
     themeRenderer: ThemeRenderer,
     publicContentRepository: any AppPublicContentRepository,
@@ -47,4 +48,4 @@ func buildAppRoutes(
     .controller.route(on: router)
 
 }
-import Foundation
+

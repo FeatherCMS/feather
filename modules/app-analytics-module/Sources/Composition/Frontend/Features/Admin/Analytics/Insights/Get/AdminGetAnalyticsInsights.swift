@@ -33,7 +33,7 @@ struct AdminGetAnalyticsInsights {
     }
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         switch source {
         case .api:

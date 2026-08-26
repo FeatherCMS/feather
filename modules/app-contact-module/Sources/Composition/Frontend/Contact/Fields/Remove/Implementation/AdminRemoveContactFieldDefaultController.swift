@@ -10,12 +10,12 @@ struct AdminRemoveContactFieldDefaultController:
     AdminRemoveContactFieldController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveContactFieldInteractor,
             presenter: any AdminRemoveContactFieldPresenter
         )
 
-    func confirm(request: Request, context: AppRequestContext) async throws
+    func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
@@ -28,7 +28,7 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func remove(request: Request, context: AppRequestContext) async throws
+    func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)
@@ -47,7 +47,7 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func bulkConfirm(request: Request, context: AppRequestContext) async throws
+    func bulkConfirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
@@ -57,7 +57,7 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func bulkRemove(request: Request, context: AppRequestContext) async throws
+    func bulkRemove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
         let payload = try await request.decode(

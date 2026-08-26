@@ -13,14 +13,14 @@ import WebStandards
 struct AdminGetBlogAuthorLinkDefaultController: AdminGetBlogAuthorLinkController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetBlogAuthorLinkInteractor,
             presenter: any AdminGetBlogAuthorLinkPresenter
         )
 
     func getBlogAuthorLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()

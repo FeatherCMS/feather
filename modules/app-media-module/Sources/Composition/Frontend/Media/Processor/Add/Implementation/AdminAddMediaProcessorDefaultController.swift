@@ -12,14 +12,14 @@ struct AdminAddMediaProcessorDefaultController:
     AdminAddMediaProcessorController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddMediaProcessorInteractor,
             presenter: any AdminAddMediaProcessorPresenter
         )
 
     func getAddMediaProcessor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         return presenter.renderPage(
@@ -30,7 +30,7 @@ struct AdminAddMediaProcessorDefaultController:
 
     func postAddMediaProcessor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let payload = try await request.decode(

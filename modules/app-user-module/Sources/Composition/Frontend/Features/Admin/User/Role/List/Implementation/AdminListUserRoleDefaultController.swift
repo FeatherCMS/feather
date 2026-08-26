@@ -5,14 +5,14 @@ import UserContracts
 
 struct AdminListUserRoleDefaultController: AdminListUserRoleController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListUserRoleInteractor,
             presenter: any AdminListUserRolePresenter
         )
 
     func getUserRoles(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
@@ -78,7 +78,7 @@ struct AdminListUserRoleDefaultController: AdminListUserRoleController {
 
     func getUserRolesBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -110,7 +110,7 @@ struct AdminListUserRoleDefaultController: AdminListUserRoleController {
 
     func postUserRolesBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let payload = try await request.decode(
             as: ListBulkRemoveFormInput.self,

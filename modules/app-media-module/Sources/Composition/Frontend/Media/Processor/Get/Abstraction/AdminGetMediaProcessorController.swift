@@ -12,14 +12,14 @@ protocol AdminGetMediaProcessorController: Sendable {
 
     func getMediaProcessor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminGetMediaProcessorController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/media/processors/{id}/",

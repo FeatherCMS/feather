@@ -20,14 +20,14 @@ struct AdminListAuthCredentialDefaultController:
     AdminListAuthCredentialController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListAuthCredentialInteractor,
             presenter: any AdminListAuthCredentialPresenter
         )
 
     func getCredentials(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let identityId = try context.requiredID()
         let (interactor, presenter) = buildRuntime(request, context)

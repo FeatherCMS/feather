@@ -7,14 +7,14 @@ import SGML
 import WebStandards
 
 protocol AdminAddContactFormController: Sendable {
-    func add(request: Request, context: AppRequestContext) async throws
+    func add(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
-    func create(request: Request, context: AppRequestContext) async throws
+    func create(request: Request, context: DefaultRequestContext) async throws
         -> Response
 }
 
 extension AdminAddContactFormController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get("/admin/contact/forms/add/", use: add)
         router.post("/admin/contact/forms/add/", use: create)
     }

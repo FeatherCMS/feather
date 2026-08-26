@@ -4,6 +4,6 @@ import Hummingbird
 
 func buildTestRouter(
     modules: AppModules
-) throws -> Router<AppRequestContext> {
+) throws -> Router<DefaultRequestContext> {
     try buildRouter(modules: modules)
 }

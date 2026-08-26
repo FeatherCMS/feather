@@ -7,11 +7,11 @@ import SGML
 import WebStandards
 
 protocol AdminListNewsletterCampaignSubscribersController: Sendable {
-    func list(request: Request, context: AppRequestContext) async throws
+    func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
 }
 extension AdminListNewsletterCampaignSubscribersController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get("/admin/newsletters/:newsletterId/subscribers/", use: list)
     }
 }

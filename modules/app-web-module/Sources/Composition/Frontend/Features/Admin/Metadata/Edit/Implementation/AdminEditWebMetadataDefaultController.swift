@@ -11,14 +11,14 @@ struct AdminEditWebMetadataDefaultController:
 {
     let templateOptions: [WebPageTemplateOption]
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditWebMetadataInteractor,
             presenter: any AdminEditWebMetadataPresenter
         )
 
     func getEditWebMetadataForContent(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         referenceType: String,
         navigationTabs: [AdminPillTabs.Link],
         configuration: AdminWebMetadataEditConfiguration?
@@ -34,7 +34,7 @@ struct AdminEditWebMetadataDefaultController:
 
     func postEditWebMetadataForContent(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         referenceType: String,
         navigationTabs: [AdminPillTabs.Link],
         configuration: AdminWebMetadataEditConfiguration?
@@ -50,7 +50,7 @@ struct AdminEditWebMetadataDefaultController:
 
     func getEditWebMetadata(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         try await renderEditWebMetadata(
             request: request,
@@ -63,7 +63,7 @@ struct AdminEditWebMetadataDefaultController:
 
     private func renderEditWebMetadata(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         referenceType: String?,
         navigationTabs: [AdminPillTabs.Link],
         configuration: AdminWebMetadataEditConfiguration?
@@ -119,7 +119,7 @@ struct AdminEditWebMetadataDefaultController:
 
     func postEditWebMetadata(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         try await renderPostEditWebMetadata(
             request: request,
@@ -132,7 +132,7 @@ struct AdminEditWebMetadataDefaultController:
 
     private func renderPostEditWebMetadata(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         referenceType: String?,
         navigationTabs: [AdminPillTabs.Link],
         configuration: AdminWebMetadataEditConfiguration?
@@ -398,7 +398,7 @@ struct AdminEditWebMetadataDefaultController:
     }
 
     private func metadataID(
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) throws -> String {
         if let metadataID = context.parameters.get(
             "metadataID",
@@ -415,7 +415,7 @@ struct AdminEditWebMetadataDefaultController:
             presenter: any AdminEditWebMetadataPresenter
         ),
         id: String,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         referenceType: String?
     ) async throws -> WebMetadataDetailsModel {
         if let referenceType,

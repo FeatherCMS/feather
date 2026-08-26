@@ -15,6 +15,7 @@ import FeatherAdmin
 import Hummingbird
 import HummingbirdAuth
 import AuthFrontend
+import AuthAppAPI
 import AccountFrontend
 import Logging
 import WebStandards
@@ -25,14 +26,14 @@ func buildRouter(
     environment: AppEnvironment,
     referenceTypeOptions: [WebMetadataReferenceTypeOption],
     templateOptions: [WebPageTemplateOption]
-) async throws -> Router<AppRequestContext> {
+) async throws -> Router<DefaultRequestContext> {
 
-    let router = Router(context: AppRequestContext.self)
+    let router = Router(context: DefaultRequestContext.self)
 
     router.addMiddleware {
         LogRequestsMiddleware(Logger.current.logLevel)
         WebAppAnalyticsLogMiddleware(apiBaseURL: environment.apiBaseURL)
-        HTTPErrorMiddleware<AppRequestContext>()
+        HTTPErrorMiddleware<DefaultRequestContext>()
         RedirectRuleMiddleware(
             apiBaseURL: environment.apiBaseURL,
             siteBaseURL: environment.publicOrigins.siteBaseURL
@@ -117,7 +118,7 @@ func buildRouter(
         )
     }
 
-    let appClient = ApplicationAPI(
+    let appClient = AppAPI(
         apiBaseURL: environment.apiBaseURL
     )
     let authAppClient = AuthAppAPIClient(
@@ -125,7 +126,7 @@ func buildRouter(
     )
     let publicContentRepository = appClient
     var adminEvents = EventRegistry()
-    AdminHomeEventHandlers.register(in: &adminEvents)
+    EventHandlers.register(in: &adminEvents)
     AdminMenuEventHandlers.register(in: &adminEvents)
     AuthAdminMenuEventHandlers.register(in: &adminEvents)
     AccountAdminMenuEventHandlers.register(in: &adminEvents)
@@ -153,7 +154,25 @@ func buildRouter(
         api: appClient
     )
 
-    let authRouter = router.add(middleware: AuthMiddleware())
+    let authRouter = router.add(
+        middleware: AuthMiddleware<DefaultRequestContext>(
+            secureCookies: environment.publicOrigins.usesSecureCookies
+        ) { sessionToken in
+            let api = AppAPI(
+                apiBaseURL: environment.apiBaseURL,
+                sessionToken: sessionToken
+            )
+            return try await api.withAuthOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.authMe()
+                let payload = try response.ok.body.json
+                return AccountModel(
+                    user: .init(id: payload.user.id),
+                    permissions: payload.permissions,
+                    roles: payload.roles
+                )
+            }
+        }
+    )
     buildAppRoutes(
         router: router,
         authRouter: authRouter,
@@ -172,7 +191,12 @@ func buildRouter(
 
     // MARK: - admin
 
-    let adminRouter = authRouter.add(middleware: AdminAuthMiddleware())
+    let adminRouter = authRouter.add(
+        middleware: AdminAuthMiddleware<DefaultRequestContext>(
+            loginPath: "/login/",
+            unauthorizedPath: "/"
+        )
+    )
     buildAdminRoutes(
         router: adminRouter,
         renderingEngine: renderingEngine,

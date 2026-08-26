@@ -7,19 +7,19 @@ protocol AdminAddWebMenuItemController: Sendable {
 
     func getAddWebMenuItem(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postAddWebMenuItem(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminAddWebMenuItemController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/web/menus/{id}/items/add/",

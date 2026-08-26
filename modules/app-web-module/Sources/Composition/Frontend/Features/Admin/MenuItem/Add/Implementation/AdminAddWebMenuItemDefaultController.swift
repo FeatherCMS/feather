@@ -6,14 +6,14 @@ import OpenAPIRuntime
 
 struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddWebMenuItemInteractor,
             presenter: any AdminAddWebMenuItemPresenter
         )
 
     func getAddWebMenuItem(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -39,7 +39,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
 
     func postAddWebMenuItem(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()

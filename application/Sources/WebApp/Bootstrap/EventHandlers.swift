@@ -3,7 +3,7 @@ import SystemFrontend
 import AnalyticsFrontend
 import RedirectFrontend
 
-enum AdminHomeEventHandlers {
+enum EventHandlers {
 
     static func register(
         in events: inout EventRegistry

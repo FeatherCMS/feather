@@ -1,30 +1,24 @@
-import BlogFrontend
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
-import WebFrontend
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import SystemFrontend
 import FeatherAdmin
-import AuthAppAPI
-//
-//  File.swift
-//  web-app
-//
-//  Created by Tibor Bödecs on 2026. 03. 01..
-//
-
 import Hummingbird
 
-struct AuthMiddleware: RouterMiddleware {
+public struct AuthMiddleware<Context: AuthRequestContext>: RouterMiddleware {
 
-    func handle(
+    private let authenticate: @Sendable (String) async throws -> AccountModel
+    private let secureCookies: Bool
+
+    public init(
+        secureCookies: Bool = false,
+        authenticate: @escaping @Sendable (String) async throws -> AccountModel
+    ) {
+        self.authenticate = authenticate
+        self.secureCookies = secureCookies
+    }
+
+    public func handle(
         _ request: Request,
-        context: AppRequestContext,
-        next: @concurrent (Request, AppRequestContext) async throws -> Response
-    ) async throws -> HummingbirdCore.Response {
+        context: Context,
+        next: @concurrent (Request, Context) async throws -> Response
+    ) async throws -> Response {
         let path = request.uri.path
 
         if path.hasPrefix("/.well-known") || path.hasSuffix("favicon.ico") {
@@ -41,24 +35,12 @@ struct AuthMiddleware: RouterMiddleware {
         var context = context
         context.sessionToken = sessionToken
         do {
-            let account = try await context.applicationAPI()
-                .withAuthOpenAPIRepositoryErrorMapping { client in
-                    let response = try await client.authMe()
-
-                    let payload = try response.ok.body.json
-                    return AccountModel(
-                        user: .init(
-                            id: payload.user.id,
-                            email: ""
-                        ),
-                        permissions: payload.permissions,
-                        roles: payload.roles
-                    )
-                }
+            let account = try await authenticate(sessionToken)
             context.account = account
         }
         catch {
-            let shouldClearSession = error.httpStatus.code == 500
+            let shouldClearSession =
+                (error as? OpenAPIRepositoryError)?.httpStatus.code == 500
             let userAgent = request.headers[.userAgent] ?? "-"
             let referer = request.headers[.referer] ?? "-"
             let origin = request.headers[.origin] ?? "-"
@@ -85,8 +67,7 @@ struct AuthMiddleware: RouterMiddleware {
                         value: "",
                         maxAge: 0,
                         path: "/",
-                        secure: AppEnvironmentStore.current.publicOrigins
-                            .usesSecureCookies,
+                        secure: secureCookies,
                         httpOnly: true,
                         sameSite: .lax
                     )

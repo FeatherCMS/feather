@@ -5,14 +5,14 @@ import Hummingbird
 struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetSystemVariableInteractor,
             presenter: any AdminGetSystemVariablePresenter
         )
 
     func getSystemVariable(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()

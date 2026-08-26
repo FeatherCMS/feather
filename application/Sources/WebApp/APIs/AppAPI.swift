@@ -18,7 +18,7 @@ import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import FeatherAdmin
 
-public struct ApplicationAPI: Sendable, AppPublicContentRepository {
+public struct AppAPI: Sendable, AppPublicContentRepository {
 
     private let apiBaseURL: URL
     private let authClient: AuthAppAPI.Client
@@ -85,7 +85,7 @@ public struct ApplicationAPI: Sendable, AppPublicContentRepository {
     public func withSessionToken(
         _ sessionToken: String?
     ) -> any AppPublicContentRepository {
-        ApplicationAPI(
+        AppAPI(
             apiBaseURL: apiBaseURL,
             sessionToken: sessionToken
         )

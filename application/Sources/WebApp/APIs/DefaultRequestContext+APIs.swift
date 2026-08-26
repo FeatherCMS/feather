@@ -9,16 +9,16 @@ import UserFrontend
 import SystemFrontend
 import FeatherAdmin
 
-extension AppRequestContext {
+extension DefaultRequestContext {
 
-    func applicationAPI() -> ApplicationAPI {
+    func appAPI() -> AppAPI {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }
 
-    func managementAPI() -> AdminAPI {
+    func adminAPI() -> AdminAPI {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken

@@ -19,8 +19,8 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
 
     public func handle(
         _ request: Request,
-        context: AppRequestContext,
-        next: @concurrent (Request, AppRequestContext) async throws -> Response
+        context: DefaultRequestContext,
+        next: @concurrent (Request, DefaultRequestContext) async throws -> Response
     ) async throws -> Response {
         let path = request.uri.path
         guard shouldLookupRedirect(for: path) else {

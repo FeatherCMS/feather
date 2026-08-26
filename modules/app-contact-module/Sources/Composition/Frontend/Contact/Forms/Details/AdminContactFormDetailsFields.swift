@@ -9,7 +9,7 @@ import WebStandards
 struct AdminContactFormDetailsFields {
     let renderingEngine: any RenderingEngine
 
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         AdminListContactFormFields(renderingEngine: renderingEngine)
             .route(on: router)
         AdminAddContactFormField(renderingEngine: renderingEngine)

@@ -6,14 +6,14 @@ struct AdminGetAccountInvitationDefaultController:
     AdminGetAccountInvitationController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetAccountInvitationInteractor,
             presenter: any AdminGetAccountInvitationPresenter
         )
 
     func getAccountInvitation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()

@@ -12,14 +12,14 @@ struct AdminRemoveMediaProcessorDefaultController:
     AdminRemoveMediaProcessorController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveMediaProcessorInteractor,
             presenter: any AdminRemoveMediaProcessorPresenter
         )
 
     func getRemoveMediaProcessor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -33,7 +33,7 @@ struct AdminRemoveMediaProcessorDefaultController:
 
     func postRemoveMediaProcessor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()

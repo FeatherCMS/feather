@@ -18,14 +18,14 @@ import WebStandards
 
 struct AppLoginAuthDefaultController: AppLoginAuthController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AppLoginAuthInteractor,
             presenter: any AppLoginAuthPresenter
         )
 
     func getLogin(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderPage(
@@ -40,7 +40,7 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
 
     func postLogin(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         var lastPayload: LoginFormInput?
@@ -118,7 +118,7 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
 
     private func loginFormResponse(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         presenter: any AppLoginAuthPresenter,
         state: LoginForm.State
     ) throws -> Response {
@@ -131,7 +131,7 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
 
     private func loginFormErrorResponse(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         presenter: any AppLoginAuthPresenter,
         state: LoginForm.State,
         message: String

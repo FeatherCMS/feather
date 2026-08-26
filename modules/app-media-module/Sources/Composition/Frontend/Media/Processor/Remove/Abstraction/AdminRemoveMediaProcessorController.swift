@@ -12,19 +12,19 @@ protocol AdminRemoveMediaProcessorController: Sendable {
 
     func getRemoveMediaProcessor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveMediaProcessor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveMediaProcessorController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/media/processors/{id}/remove/",

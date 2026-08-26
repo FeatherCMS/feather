@@ -7,14 +7,14 @@ struct AdminListWebMenuItemDefaultController:
     AdminListWebMenuItemController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListWebMenuItemInteractor,
             presenter: any AdminListWebMenuItemPresenter
         )
 
     func getWebMenuItems(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -64,7 +64,7 @@ struct AdminListWebMenuItemDefaultController:
 
     func getWebMenuItemsBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -98,7 +98,7 @@ struct AdminListWebMenuItemDefaultController:
 
     func postWebMenuItemsBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -130,7 +130,7 @@ struct AdminListWebMenuItemDefaultController:
 
     func postWebMenuItemMove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let menuId = try context.requiredID()

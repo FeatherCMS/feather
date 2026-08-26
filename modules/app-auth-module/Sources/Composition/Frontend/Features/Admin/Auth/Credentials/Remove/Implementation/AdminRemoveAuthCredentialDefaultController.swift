@@ -19,12 +19,12 @@ struct AdminRemoveAuthCredentialDefaultController:
     AdminRemoveAuthCredentialController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveAuthCredentialInteractor,
             presenter: any AdminRemoveAuthCredentialPresenter
         )
 
-    func getRemoveCredential(request: Request, context: AppRequestContext)
+    func getRemoveCredential(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
         let id = try context.requiredID()
@@ -44,7 +44,7 @@ struct AdminRemoveAuthCredentialDefaultController:
         }
     }
 
-    func postRemoveCredential(request: Request, context: AppRequestContext)
+    func postRemoveCredential(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
         let id = try context.requiredID()

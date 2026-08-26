@@ -15,7 +15,7 @@ import FoundationEssentials
 import Foundation
 #endif
 
-typealias AppRequestContext = BasicRequestContext
+typealias DefaultRequestContext = BasicRequestContext
 
 func buildServer(
     config: ServerConfig

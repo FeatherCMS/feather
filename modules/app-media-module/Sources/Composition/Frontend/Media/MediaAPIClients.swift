@@ -47,7 +47,7 @@ public struct MediaAdminAPIClient: Sendable {
     }
 }
 
-extension AppRequestContext {
+extension DefaultRequestContext {
     public func mediaManagementAPI() -> MediaAdminAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,

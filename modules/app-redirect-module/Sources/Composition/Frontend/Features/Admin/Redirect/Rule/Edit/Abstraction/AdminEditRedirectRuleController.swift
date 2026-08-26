@@ -7,19 +7,19 @@ protocol AdminEditRedirectRuleController: Sendable {
 
     func getEditRedirectRule(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postEditRedirectRule(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditRedirectRuleController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/redirect/rules/{id}/edit/",

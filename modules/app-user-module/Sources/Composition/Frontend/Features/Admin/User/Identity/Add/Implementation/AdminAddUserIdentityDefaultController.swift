@@ -6,14 +6,14 @@ import UserContracts
 
 struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddUserIdentityInteractor,
             presenter: any AdminAddUserIdentityPresenter
         )
 
     func getAddUserIdentity(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderPage(
@@ -24,7 +24,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
 
     func postAddUserIdentity(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         var lastPayload: AdminAddUserIdentityFormInput?
@@ -98,7 +98,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
 
     private func createFormResponse(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         presenter: any AdminAddUserIdentityPresenter,
         state: UserIdentityForm.State
     ) throws -> Response {

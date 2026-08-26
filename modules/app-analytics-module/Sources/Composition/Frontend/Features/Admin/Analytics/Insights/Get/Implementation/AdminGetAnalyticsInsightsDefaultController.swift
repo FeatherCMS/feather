@@ -9,14 +9,14 @@ struct AdminGetAnalyticsInsightsDefaultController:
 {
     let source: AdminAnalyticsInsightsPage.Source
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetAnalyticsInsightsInteractor,
             presenter: any AdminGetAnalyticsInsightsPresenter
         )
 
     func getInsights(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions

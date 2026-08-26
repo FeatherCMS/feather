@@ -17,14 +17,14 @@ import WebStandards
 
 struct AdminGetAuthMagicLinkDefaultController: AdminGetAuthMagicLinkController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetAuthMagicLinkInteractor,
             presenter: any AdminGetAuthMagicLinkPresenter
         )
 
     func getAuthMagicLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let id = try context.requiredID()
         let (interactor, presenter) = buildRuntime(

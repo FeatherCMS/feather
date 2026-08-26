@@ -13,7 +13,7 @@ import Foundation
 
 struct ContactFormBlockRenderer: MarkdownBlockRenderer {
     let name = "ContactForm"
-    let api: ApplicationAPI
+    let api: AppAPI
 
     func render(
         identifier: String,

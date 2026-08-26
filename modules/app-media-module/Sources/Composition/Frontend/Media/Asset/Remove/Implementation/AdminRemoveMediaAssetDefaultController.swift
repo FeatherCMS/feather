@@ -10,14 +10,14 @@ import WebStandards
 
 struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveMediaAssetInteractor,
             presenter: any AdminRemoveMediaAssetPresenter
         )
 
     func getRemoveMediaAsset(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -31,7 +31,7 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
 
     func postRemoveMediaAsset(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()

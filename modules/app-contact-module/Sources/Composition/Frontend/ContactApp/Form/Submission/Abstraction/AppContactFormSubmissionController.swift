@@ -10,14 +10,14 @@ protocol AppContactFormSubmissionController: Sendable {
 
     func submit(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AppContactFormSubmissionController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.post(
             "/contact/forms/:formId/submissions",

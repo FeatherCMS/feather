@@ -19,7 +19,7 @@ struct AdminAuth {
     let renderingEngine: any RenderingEngine
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         AdminGetAuthHome(
             renderingEngine: renderingEngine

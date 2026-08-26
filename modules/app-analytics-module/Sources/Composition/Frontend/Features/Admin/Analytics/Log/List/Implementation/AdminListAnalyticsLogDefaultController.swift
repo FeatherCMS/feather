@@ -7,14 +7,14 @@ struct AdminListAnalyticsLogDefaultController:
     AdminListAnalyticsLogController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListAnalyticsLogInteractor,
             presenter: any AdminListAnalyticsLogPresenter
         )
 
     func getAnalyticsLogs(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let page = request.queryPage()

@@ -6,14 +6,14 @@ struct AdminListSystemVariableDefaultController:
     AdminListSystemVariableController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListSystemVariableInteractor,
             presenter: any AdminListSystemVariablePresenter
         )
 
     func getSystemVariables(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let page = request.queryPage()
@@ -60,7 +60,7 @@ struct AdminListSystemVariableDefaultController:
 
     func getSystemVariablesBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -92,7 +92,7 @@ struct AdminListSystemVariableDefaultController:
 
     func postSystemVariablesBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(

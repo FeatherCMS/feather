@@ -5,19 +5,19 @@ protocol AdminRemoveAuthSessionController: Sendable {
 
     func getRemoveAuthSession(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveAuthSession(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveAuthSessionController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/user/identities/{id}/sessions/{sessionId}/remove/",

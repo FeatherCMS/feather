@@ -7,14 +7,14 @@ struct AdminRemoveWebMenuItemDefaultController:
     AdminRemoveWebMenuItemController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveWebMenuItemInteractor,
             presenter: any AdminRemoveWebMenuItemPresenter
         )
 
     func getRemoveWebMenuItem(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -42,7 +42,7 @@ struct AdminRemoveWebMenuItemDefaultController:
 
     func postRemoveWebMenuItem(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()

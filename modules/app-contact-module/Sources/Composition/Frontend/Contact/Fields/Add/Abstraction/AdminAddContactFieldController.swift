@@ -7,13 +7,13 @@ import SGML
 import WebStandards
 
 protocol AdminAddContactFieldController: Sendable {
-    func getAddContactField(request: Request, context: AppRequestContext)
+    func getAddContactField(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
-    func postAddContactField(request: Request, context: AppRequestContext)
+    func postAddContactField(request: Request, context: DefaultRequestContext)
         async throws -> Response
 }
 extension AdminAddContactFieldController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get("/admin/contact/fields/add/", use: getAddContactField)
         router.post("/admin/contact/fields/add/", use: postAddContactField)
     }

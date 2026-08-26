@@ -10,7 +10,7 @@ import Foundation
 import Hummingbird
 import OpenAPIRuntime
 
-public struct AppRequestContext: RequestContext {
+public struct DefaultRequestContext: AuthRequestContext {
 
     public var coreContext: CoreRequestContextStorage
 
@@ -36,21 +36,12 @@ public struct AppRequestContext: RequestContext {
     public func requiredParameter(
         _ name: String
     ) throws -> String {
-        guard let value = parameters.get(name, as: String.self), !value.isEmpty
+        guard 
+            let value = parameters.get(name, as: String.self), !value.isEmpty
         else {
             throw HTTPError(.badRequest)
         }
         return value
-    }
-
-    public var currentUserPermissions: Set<String> {
-        account?.permissionSet ?? []
-    }
-
-    public func isCurrentUserAllowed(
-        to permission: PermissionKey
-    ) -> Bool {
-        currentUserPermissions.contains(permission.rawValue)
     }
 
 }

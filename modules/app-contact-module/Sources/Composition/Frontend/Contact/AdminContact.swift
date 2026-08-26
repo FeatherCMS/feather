@@ -13,7 +13,7 @@ public struct AdminContact {
         self.renderingEngine = renderingEngine
     }
 
-    public func route(on router: Router<AppRequestContext>) {
+    public func route(on router: Router<DefaultRequestContext>) {
         let details = AdminContactFormDetails(renderingEngine: renderingEngine)
         AdminListContactForms(details: details).route(on: router)
         AdminAddContactForm(details: details).route(on: router)

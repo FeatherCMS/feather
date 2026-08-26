@@ -6,14 +6,14 @@ import Hummingbird
 struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddSystemVariableInteractor,
             presenter: any AdminAddSystemVariablePresenter
         )
 
     func getAddSystemVariable(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         return runtime.presenter.renderAddPage(
@@ -24,7 +24,7 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
 
     func postAddSystemVariable(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions

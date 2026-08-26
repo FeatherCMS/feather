@@ -10,11 +10,11 @@ struct AdminRemoveContactSubmissionsDefaultController:
     AdminRemoveContactSubmissionsController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveContactSubmissionsInteractor,
             presenter: any AdminRemoveContactSubmissionsPresenter
         )
-    func bulkConfirm(request: Request, context: AppRequestContext) async throws
+    func bulkConfirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
@@ -23,7 +23,7 @@ struct AdminRemoveContactSubmissionsDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func bulkRemove(request: Request, context: AppRequestContext) async throws
+    func bulkRemove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
         let payload = try await request.decode(

@@ -13,14 +13,14 @@ import WebStandards
 
 struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddBlogTagInteractor,
             presenter: any AdminAddBlogTagPresenter
         )
 
     func getAddBlogTag(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
@@ -32,7 +32,7 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
 
     func postAddBlogTag(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
@@ -159,7 +159,7 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
     }
 
     private func slugPrefix(
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> String {
         try await slugPrefix(
             context: context,
@@ -168,7 +168,7 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
     }
 
     private func slugPrefix(
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         keyPath: KeyPath<AppPublicBlogRouteSettings, String>
     ) async throws -> String {
         let schema = try await AppPublicContentOpenAPIRepository(

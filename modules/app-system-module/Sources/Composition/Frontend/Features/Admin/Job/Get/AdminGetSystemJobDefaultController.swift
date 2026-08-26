@@ -3,12 +3,12 @@ import Hummingbird
 
 struct AdminGetSystemJobDefaultController: AdminGetSystemJobController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             repository: any AdminGetSystemJobRepository,
             presenter: AdminGetSystemJobDefaultPresenter
         )
 
-    func getSystemJob(request: Request, context: AppRequestContext) async throws
+    func getSystemJob(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let runtime = buildRuntime(request, context)

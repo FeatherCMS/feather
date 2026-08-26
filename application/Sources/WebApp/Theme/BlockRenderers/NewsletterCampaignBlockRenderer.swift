@@ -12,7 +12,7 @@ import Foundation
 
 struct NewsletterCampaignBlockRenderer: MarkdownBlockRenderer {
     let name = "NewsletterCampaign"
-    let api: ApplicationAPI
+    let api: AppAPI
 
     func render(
         identifier: String,

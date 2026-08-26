@@ -15,14 +15,14 @@ import WebStandards
 
 struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddBlogAuthorInteractor,
             presenter: any AdminAddBlogAuthorPresenter
         )
 
     func getAddBlogAuthor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
@@ -38,7 +38,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
 
     func postAddBlogAuthor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
@@ -171,7 +171,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
     }
 
     private func slugPrefix(
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> String {
         try await slugPrefix(
             context: context,
@@ -180,7 +180,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
     }
 
     private func slugPrefix(
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         keyPath: KeyPath<AppPublicBlogRouteSettings, String>
     ) async throws -> String {
         let schema = try await AppPublicContentOpenAPIRepository(

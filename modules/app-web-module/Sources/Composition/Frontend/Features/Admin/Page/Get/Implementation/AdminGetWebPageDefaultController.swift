@@ -5,14 +5,14 @@ import OpenAPIRuntime
 
 struct AdminGetWebPageDefaultController: AdminGetWebPageController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetWebPageInteractor,
             presenter: any AdminGetWebPagePresenter
         )
 
     func getWebPage(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()

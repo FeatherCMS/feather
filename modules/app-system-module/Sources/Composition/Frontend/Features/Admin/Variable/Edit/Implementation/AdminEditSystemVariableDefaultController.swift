@@ -7,14 +7,14 @@ struct AdminEditSystemVariableDefaultController:
     AdminEditSystemVariableController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditSystemVariableInteractor,
             presenter: any AdminEditSystemVariablePresenter
         )
 
     func getEditSystemVariable(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -45,7 +45,7 @@ struct AdminEditSystemVariableDefaultController:
 
     func postEditSystemVariable(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()

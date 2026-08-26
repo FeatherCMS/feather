@@ -6,7 +6,7 @@ import WebApplication
 enum MarkdownBlockRendererEventHandlers {
     static func register(
         in registry: inout EventRegistry,
-        api: ApplicationAPI
+        api: AppAPI
     ) {
         registry.register(
             event: WebMarkdownBlockRendererProvider.self,

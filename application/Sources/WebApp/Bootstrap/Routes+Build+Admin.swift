@@ -11,13 +11,14 @@ import RedirectFrontend
 import UserFrontend
 import AccountFrontend
 import SystemFrontend
+import AuthFrontend
 import FeatherAdmin
 import FeatherApplication
 import Hummingbird
 import WebApplication
 
 func buildAdminRoutes(
-    router: Router<AppRequestContext>,
+    router: Router<DefaultRequestContext>,
     renderingEngine: any RenderingEngine,
     referenceTypeOptions: [WebMetadataReferenceTypeOption],
     templateOptions: [WebPageTemplateOption],
@@ -56,4 +57,4 @@ func buildAdminRoutes(
     AdminContact(renderingEngine: renderingEngine)
         .route(on: router)
 }
-import AuthFrontend
+

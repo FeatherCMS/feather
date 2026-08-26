@@ -6,14 +6,14 @@ struct AdminRemoveSystemVariableDefaultController:
     AdminRemoveSystemVariableController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveSystemVariableInteractor,
             presenter: any AdminRemoveSystemVariablePresenter
         )
 
     func getRemoveSystemVariable(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -38,7 +38,7 @@ struct AdminRemoveSystemVariableDefaultController:
 
     func postRemoveSystemVariable(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
