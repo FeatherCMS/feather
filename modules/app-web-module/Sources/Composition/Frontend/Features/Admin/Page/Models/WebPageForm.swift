@@ -148,7 +148,7 @@ struct WebPageForm: Component, FlowContent {
             AdminFieldLabel(label: field.label, required: true)
             Link(rel: .stylesheet)
                 .href(
-                    "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin-markdown-editor.css"
+                    "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.css"
                 )
             Div {
                 Div {

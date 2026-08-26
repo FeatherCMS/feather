@@ -54,17 +54,13 @@ public struct AdminBody<T: Component>: Component, FlowContent {
         .class("container")
 
         Script()
-            .src(
-                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/toast.js"
-            )
+            .src("\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/toast.js")
             .defer()
         Script()
-            .src("/admin-navigation.js")
+            .src("\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/navigation.js")
             .defer()
         Script()
-            .src(
-                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin-markdown-editor.js?v=5"
-            )
+            .src("\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.js")
             .defer()
     }
 }

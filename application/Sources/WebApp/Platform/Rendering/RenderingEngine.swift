@@ -17,8 +17,6 @@ struct DefaultRenderingEngine: RenderingEngine {
         self.adminMenuCatalog = adminMenuCatalog
     }
 
-    private let assetVersion = "v=2"
-
     func renderPage<T: FlowContent>(
         request: Request,
         title: String,
@@ -52,17 +50,23 @@ struct DefaultRenderingEngine: RenderingEngine {
                 .href(
                     normalizedURL(
                         base: publicOrigins.staticBaseURL,
-                        path: "/base.css"
-                    ) + "?\(assetVersion)"
+                        path: "/admin/base.css"
+                    )
                 )
             Link(rel: .stylesheet)
                 .href(
                     normalizedURL(
                         base: publicOrigins.staticBaseURL,
-                        path: "/style.css"
-                    ) + "?\(assetVersion)"
+                        path: "/admin/style.css"
+                    )
                 )
-            Link(rel: .stylesheet).href("/style.css?\(assetVersion)")
+            Link(rel: .stylesheet)
+                .href(
+                    normalizedURL(
+                        base: publicOrigins.staticBaseURL,
+                        path: "/admin/toast.css"
+                    )
+                )
             Style(css)
         }
 
@@ -116,24 +120,23 @@ struct DefaultRenderingEngine: RenderingEngine {
                 .href(
                     normalizedURL(
                         base: publicOrigins.staticBaseURL,
-                        path: "/base.css"
-                    ) + "?\(assetVersion)"
+                        path: "/admin/base.css"
+                    )
                 )
             Link(rel: .stylesheet)
                 .href(
                     normalizedURL(
                         base: publicOrigins.staticBaseURL,
-                        path: "/style.css"
-                    ) + "?\(assetVersion)"
+                        path: "/admin/style.css"
+                    )
                 )
             Link(rel: .stylesheet)
                 .href(
                     normalizedURL(
                         base: publicOrigins.staticBaseURL,
-                        path: "/toast.css"
-                    ) + "?\(assetVersion)"
+                        path: "/admin/toast.css"
+                    )
                 )
-            Link(rel: .stylesheet).href("/style.css?\(assetVersion)")
             Style(css)
         }
 

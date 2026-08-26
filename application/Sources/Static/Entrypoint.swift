@@ -9,7 +9,7 @@ struct Entrypoint {
     static func main() async throws {
         let reader = try await ConfigReader(
             providers: [
-                //            CommandLineArgumentsProvider(),
+                CommandLineArgumentsProvider(),
                 EnvironmentVariablesProvider(),
                 EnvironmentVariablesProvider(
                     environmentFilePath: ".env",

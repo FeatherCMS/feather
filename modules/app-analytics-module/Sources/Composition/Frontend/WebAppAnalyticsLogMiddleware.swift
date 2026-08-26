@@ -81,16 +81,10 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
         path: String,
         responseCode: Int
     ) -> Bool {
-        if path == "/health" {
-            return false
-        }
         if responseCode == 404 {
             return true
         }
-        if path == "/admin-navigation.js" {
-            return false
-        }
-        if path.hasPrefix("/images/") {
+        if path == "/health" {
             return false
         }
         let lowercased = path.lowercased()

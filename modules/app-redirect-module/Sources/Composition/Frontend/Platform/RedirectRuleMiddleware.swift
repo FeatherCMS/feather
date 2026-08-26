@@ -49,10 +49,7 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
     private func shouldLookupRedirect(
         for path: String
     ) -> Bool {
-        if path.isEmpty || path == "/" || path == "/health"
-            || path == "/admin-navigation.js"
-            || path == "/style.css"
-        {
+        if path.isEmpty || path == "/" || path == "/health" {
             return false
         }
         if path.hasPrefix("/admin/") || path == "/admin" {
