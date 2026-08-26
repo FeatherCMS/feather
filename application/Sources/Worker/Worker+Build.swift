@@ -185,9 +185,7 @@ func buildWorker(
         )
     )
 
-    var services: [any Service] = [
-        postgresClient, AWSClientLifecycleService(client: awsClient),
-    ]
+    var services: [any Service] = [postgresClient, awsClient]
     services.append(
         jobQueue.processor(
             options: JobQueueProcessorOptions(
