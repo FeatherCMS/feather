@@ -1,0 +1,188 @@
+    <textarea id="debug-source" hidden>{{.}}</textarea>
+    <div id="debug" hidden>
+        <div class="debug-header"><div class="debug-header-actions"><button type="button" data-open-all>Open all</button><button type="button" data-close-all>Collapse all</button></div><button type="button" data-close aria-label="Close debug browser">Close</button></div>
+        <div class="debug-content"><div class="debug-context-title">Mustache Context Variables</div><div data-tree></div></div>
+    </div>
+    <button id="debug-open" type="button">Debug</button>
+    <script type="application/javascript">
+    (() => {
+        const debug = document.getElementById("debug");
+        const opener = document.getElementById("debug-open");
+        const tree = document.querySelector("[data-tree]");
+        const source = document.getElementById("debug-source")?.value || "";
+        const limit = 32;
+        if (!debug || !opener || !tree) return;
+
+        class Parser {
+            constructor(input) { this.input = input.trim(); this.index = 0; }
+            parse() { const result = this.value(); this.space(); if (this.index !== this.input.length) throw Error("Unexpected content"); return result; }
+            value() {
+                this.space();
+                if (this.input[this.index] === "[") return this.container();
+                if (this.input[this.index] === '"') return this.string();
+                const start = this.index;
+                while (this.index < this.input.length && !/[\s,\]]/.test(this.input[this.index])) this.index++;
+                const token = this.input.slice(start, this.index);
+                if (token === "true") return true;
+                if (token === "false") return false;
+                if (token === "null") return null;
+                if (/^-?(?:\d+\.?\d*|\.\d+)$/.test(token)) return Number(token);
+                return token;
+            }
+            container() {
+                this.index++; this.space();
+                if (this.input[this.index] === "]") { this.index++; return []; }
+                const object = this.input[this.index] === '"' && this.isObject();
+                const result = object ? {} : [];
+                while (this.index < this.input.length) {
+                    this.space();
+                    if (object) { const key = this.string(); this.space(); this.expect(":"); result[key] = this.value(); }
+                    else result.push(this.value());
+                    this.space();
+                    if (this.input[this.index] === ",") { this.index++; continue; }
+                    this.expect("]"); return result;
+                }
+                throw Error("Unterminated container");
+            }
+            isObject() {
+                let i = this.index + 1, escaped = false;
+                while (i < this.input.length) {
+                    const c = this.input[i];
+                    if (!escaped && c === '"') { i++; while (/\s/.test(this.input[i])) i++; return this.input[i] === ":"; }
+                    escaped = c === "\\" && !escaped; if (c !== "\\") escaped = false; i++;
+                }
+                return false;
+            }
+            string() {
+                this.expect('"'); let result = "";
+                while (this.index < this.input.length) {
+                    const c = this.input[this.index++];
+                    if (c === '"') return result;
+                    if (c !== "\\") { result += c; continue; }
+                    const e = this.input[this.index++];
+                    const map = { b:"\b", f:"\f", n:"\n", r:"\r", t:"\t", '"':'"', "\\":"\\", "/":"/" };
+                    if (e === "u") { const code = this.input.slice(this.index, this.index + 4); result += String.fromCharCode(parseInt(code, 16)); this.index += 4; }
+                    else result += Object.prototype.hasOwnProperty.call(map, e) ? map[e] : e;
+                }
+                throw Error("Unterminated string");
+            }
+            space() { while (/\s/.test(this.input[this.index])) this.index++; }
+            expect(c) { if (this.input[this.index] !== c) throw Error("Expected " + c); this.index++; }
+        }
+
+        const type = (value) => value === null ? "Null" : Array.isArray(value) ? "Array(" + value.length + ")" : typeof value === "string" ? "String(" + value.length + ")" : typeof value === "number" ? (Number.isInteger(value) ? "Integer" : "Double") : typeof value === "boolean" ? "Boolean" : "Object(" + Object.keys(value).length + ")";
+        const valueKind = (value) => value === null ? "null" : typeof value === "boolean" ? "boolean" : typeof value === "number" ? (Number.isInteger(value) ? "integer" : "double") : typeof value === "string" ? "string" : "object";
+        const mustache = (value, path) => {
+            const l = "{" + "{", r = "}" + "}";
+            if (!path) return l + "." + r;
+            if (value === null || typeof value !== "object") return l + path + r;
+            if (Array.isArray(value)) {
+                const first = value[0];
+                const body = first && typeof first === "object" && !Array.isArray(first) ? Object.keys(first).sort().map((k) => "    " + l + k + r).join("\n") : "    " + l + "." + r;
+                return l + "#" + path + r + "\n\n" + body + "\n" + l + "/" + path + r + "\n\n" + l + "^" + path + r + "Empty" + l + "/" + path + r;
+            }
+            return l + "#" + path + r + "\n" + Object.keys(value).sort().map((k) => "    " + k + ": " + l + k + r).join("\n") + "\n" + l + "/" + path + r;
+        };
+
+        function copy(icon, title, value) {
+            const node = document.createElement("button");
+            node.type = "button"; node.className = "debug-action"; node.textContent = icon; node.title = title; node.setAttribute("aria-label", title);
+            node.onclick = async () => {
+                try { await navigator.clipboard.writeText(value); }
+                catch (_) { const area = document.createElement("textarea"); area.value = value; document.body.append(area); area.select(); document.execCommand("copy"); area.remove(); }
+                node.textContent = "✓"; setTimeout(() => { node.textContent = icon; }, 600);
+            };
+            return node;
+        }
+
+        function makeRow(key, value, path, depth) {
+            const row = document.createElement("div"); row.className = "debug-row";
+            row.addEventListener("mouseenter", () => row.classList.add("debug-hover"));
+            row.addEventListener("mouseleave", () => row.classList.remove("debug-hover"));
+            const keyCell = document.createElement("div"); keyCell.className = "debug-key-cell";
+            const expandable = value !== null && typeof value === "object";
+            let children;
+            let expanded;
+            if (expandable) {
+                const toggle = document.createElement("button"); toggle.type = "button"; toggle.className = "debug-toggle"; toggle.textContent = "▼"; toggle.setAttribute("aria-label", "Toggle " + key);
+                children = document.createElement("div"); children.className = "debug-children"; children.hidden = false;
+                const childKeys = Array.isArray(value) ? Object.keys(value) : Object.keys(value).sort((a, b) => a.localeCompare(b));
+                childKeys.forEach((childKey) => children.append(makeRow(childKey, value[childKey], Array.isArray(value) ? path : path + "." + childKey, depth + 1)));
+                toggle.onclick = () => { children.hidden = !children.hidden; toggle.textContent = children.hidden ? "▶" : "▼"; };
+                keyCell.append(toggle);
+            }
+            keyCell.append(text(key, "debug-key"), text(type(value), "debug-type"));
+            const mustacheButton = copy("🧩", "Copy Mustache code", mustache(value, path)); mustacheButton.classList.add("debug-mustache");
+
+            const valueCell = document.createElement("div"); valueCell.className = "debug-value-cell";
+            const raw = value === null ? "null" : typeof value === "object" ? JSON.stringify(value, null, 2) : String(value);
+            if (typeof value === "string" && value.length > limit) {
+                const preview = document.createElement("button"); preview.type = "button"; preview.className = "debug-value-preview debug-value-" + valueKind(value); preview.title = "Open full value"; preview.setAttribute("aria-label", "Open full value"); preview.textContent = JSON.stringify(value.slice(0, limit)) + "…";
+                expanded = document.createElement("div"); expanded.className = "debug-expanded-value"; expanded.hidden = true; expanded.append(text(value, "debug-full-text"));
+                preview.onclick = () => { expanded.hidden = !expanded.hidden; };
+                valueCell.append(preview, mustacheButton, copy("📋", "Copy value", raw));
+            } else {
+                if (value === null || typeof value !== "object") {
+                    valueCell.append(text(typeof value === "string" ? JSON.stringify(value) : raw, "debug-value debug-value-" + valueKind(value)));
+                }
+                valueCell.append(mustacheButton, copy("📋", "Copy value", raw));
+            }
+            row.append(keyCell, valueCell); if (expanded) row.append(expanded); if (children) row.append(children);
+            return row;
+        }
+
+        function text(value, className) { const node = document.createElement("span"); node.className = className || ""; node.textContent = value; return node; }
+
+        try {
+            const parsed = new Parser(source).parse();
+            const entries = Array.isArray(parsed) ? Object.entries(parsed) : Object.keys(parsed).sort((a, b) => a.localeCompare(b)).map((key) => [key, parsed[key]]);
+            entries.forEach(([key, value]) => tree.append(makeRow(key, value, key, 0)));
+        }
+        catch (error) { tree.append(text("Unable to parse debug value: " + error.message, "debug-error"), text(source, "debug-full-text")); }
+
+        const toggleFor = (children) => {
+            const row = children.parentElement;
+            const keyCell = Array.from(row.children).find((child) => child.classList.contains("debug-key-cell"));
+            return keyCell?.querySelector(".debug-toggle");
+        };
+        const childrenFor = (row) => Array.from(row.children).find((child) => child.classList.contains("debug-children"));
+        const setDescendants = (container, open) => Array.from(container.children).filter((child) => child.classList.contains("debug-row")).forEach((row) => {
+            const children = childrenFor(row);
+            if (!children) return;
+            children.hidden = !open;
+            const toggle = toggleFor(children);
+            if (toggle) toggle.textContent = open ? "▼" : "▶";
+            setDescendants(children, open);
+        });
+        const setCollections = (open, keepTopLevelOpen = false) => Array.from(tree.children).filter((row) => row.classList.contains("debug-row")).forEach((row) => {
+            const children = childrenFor(row);
+            if (!children) return;
+            const shouldOpen = keepTopLevelOpen || open;
+            children.hidden = !shouldOpen;
+            const toggle = toggleFor(children);
+            if (toggle) toggle.textContent = shouldOpen ? "▼" : "▶";
+            setDescendants(children, open);
+        });
+        debug.querySelector("[data-open-all]").onclick = () => setCollections(true);
+        debug.querySelector("[data-close-all]").onclick = () => setCollections(false);
+        debug.querySelector("[data-close]").onclick = () => { debug.hidden = true; opener.hidden = false; };
+        opener.onclick = () => { debug.hidden = false; opener.hidden = true; };
+
+        const style = document.createElement("style");
+        style.textContent = `
+            #debug { position:fixed; z-index:2147483647; right:1rem; bottom:1rem; width:min(80vw,72rem); max-height:min(60rem,calc(100vh - 2rem)); overflow:hidden; color:#e8edf2; background:#111820; border:1px solid #425466; border-radius:.6rem; box-shadow:0 1rem 3rem #0008; font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace; }
+            #debug[hidden],#debug-open[hidden] { display:none; } #debug-open { position:fixed; z-index:2147483647; right:1rem; bottom:1rem; padding:.55rem .8rem; color:#fff; background:#1b2836; border:1px solid #425466; border-radius:.4rem; cursor:pointer; font:13px ui-monospace,SFMono-Regular,Menlo,monospace; }
+            .debug-header { display:flex; justify-content:space-between; padding:.55rem .75rem; color:#fff; background:#1b2836; border-bottom:1px solid #425466; } .debug-header-actions { display:flex; gap:.35rem; } .debug-header button { padding:.25rem .4rem; color:inherit; background:transparent; border:1px solid #425466; border-radius:.25rem; cursor:pointer; font:12px inherit; } .debug-header button[data-open-all],.debug-header button[data-close-all] { transform:scale(1.0125); }
+            .debug-content { max-height:calc(min(60rem,100vh - 2rem) - 3rem); overflow:auto; padding:.8rem 1rem 1rem; } .debug-context-title { margin-bottom:.65rem; padding-bottom:.55rem; color:#fff; border-bottom:1px solid #425466; font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; }
+            .debug-row { display:grid; grid-template-columns:minmax(14rem,30%) minmax(0,1fr); box-sizing:border-box; width:100%; margin:0 0 1px; padding:0; background:transparent; border:1px solid transparent; border-radius:.25rem; } .debug-row.debug-hover { background:rgba(255,255,255,.025); border-color:rgba(255,255,255,.1); } .debug-key-cell,.debug-value-cell { min-width:0; height:2.25rem; }
+            .debug-key-cell { display:flex; align-items:center; gap:.45rem; padding-left:8px; white-space:nowrap; } .debug-key { color:#9cdcfe; overflow:hidden; text-overflow:ellipsis; } .debug-type { color:#8496a8; font-size:11px; white-space:nowrap; }
+            .debug-value-cell { display:flex; align-items:center; gap:.45rem; padding-right:8px; } .debug-value { flex:1 1 auto; min-width:0; color:#ce9178; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .debug-value-boolean { color:#569cd6; } .debug-value-integer { color:#b5cea8; } .debug-value-double { color:#dcdcaa; }
+            .debug-mustache { margin-left:auto; } .debug-value-cell > .debug-action:last-child { margin-left:0; }
+            .debug-children { grid-column:1 / -1; width:100%; padding-left:48px; background:transparent; border-radius:.25rem; } .debug-children[hidden],.debug-expanded-value[hidden] { display:none; } .debug-toggle { flex:0 0 auto; width:24px; height:24px; padding:4px; color:#d19a66; background:transparent; border:0; cursor:pointer; font:12px inherit; line-height:1; }
+            .debug-action { flex:0 0 auto; padding:2px 4px; color:#b9c7d5; background:transparent; border:1px solid #425466; border-radius:.25rem; cursor:pointer; font:11px inherit; line-height:1.2; } .debug-value-preview { flex:1 1 auto; min-width:0; padding:0; color:#ce9178; background:transparent; border:0; cursor:pointer; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .debug-expanded-value { grid-column:1 / -1; margin:8px; padding:.5rem; color:#ce9178; background:#0b1117; border:1px solid #334452; border-radius:.25rem; white-space:pre-wrap; overflow-wrap:anywhere; } .debug-full-text { white-space:pre-wrap; overflow-wrap:anywhere; }
+            @media (max-width:700px) { #debug { right:.5rem; bottom:.5rem; width:calc(100vw - 1rem); } .debug-content { padding:.65rem; } .debug-row { grid-template-columns:minmax(9rem,35%) minmax(0,1fr); } }
+        `;
+        document.head.append(style);
+        debug.hidden = true; opener.hidden = false;
+    })();
+    </script>

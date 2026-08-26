@@ -25,6 +25,12 @@ struct AuthMiddleware: RouterMiddleware {
         context: AppRequestContext,
         next: @concurrent (Request, AppRequestContext) async throws -> Response
     ) async throws -> HummingbirdCore.Response {
+        let path = request.uri.path
+
+        if path.hasPrefix("/.well-known") || path.hasSuffix("favicon.ico") {
+            return try await next(request, context)
+        }
+
         guard
             let sessionToken = request.cookies["session_token"]?.value,
             !sessionToken.isEmpty
@@ -52,9 +58,41 @@ struct AuthMiddleware: RouterMiddleware {
             context.account = account
         }
         catch {
+            let shouldClearSession = error.httpStatus.code == 500
+            let userAgent = request.headers[.userAgent] ?? "-"
+            let referer = request.headers[.referer] ?? "-"
+            let origin = request.headers[.origin] ?? "-"
+            let secFetchSite = request.headers[.init("Sec-Fetch-Site")!] ?? "-"
+            let secFetchMode = request.headers[.init("Sec-Fetch-Mode")!] ?? "-"
+            let secFetchDest = request.headers[.init("Sec-Fetch-Dest")!] ?? "-"
+
             print("==== SESSION ERROR ====")
+            print("Request: \(request.method) \(request.uri)")
+            print("User-Agent: \(userAgent)")
+            print("Referer: \(referer)")
+            print("Origin: \(origin)")
+            print("Sec-Fetch-Site: \(secFetchSite)")
+            print("Sec-Fetch-Mode: \(secFetchMode)")
+            print("Sec-Fetch-Dest: \(secFetchDest)")
             print("\(type(of: error))")
             print("\(error)")
+
+            var response = try await next(request, context)
+            if shouldClearSession {
+                response.setCookie(
+                    Cookie(
+                        name: "session_token",
+                        value: "",
+                        maxAge: 0,
+                        path: "/",
+                        secure: AppEnvironmentStore.current.publicOrigins
+                            .usesSecureCookies,
+                        httpOnly: true,
+                        sameSite: .lax
+                    )
+                )
+            }
+            return response
         }
         return try await next(request, context)
     }
