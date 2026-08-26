@@ -81,10 +81,6 @@ let package = Package(
             traits: [.defaults, "CommandLineArguments"]
         ),
         .package(
-            url: "https://github.com/BinaryBirds/swift-web-standards",
-            exact: "1.0.0-beta.3"
-        ),
-        .package(
             url: "https://github.com/hummingbird-project/swift-mustache",
             from: "2.0.0"
         ),
@@ -95,10 +91,6 @@ let package = Package(
         .package(
             url: "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-validation",
-            exact: "1.0.0-beta.1"
         ),
         .package(
             url: "https://github.com/apple/swift-nio",

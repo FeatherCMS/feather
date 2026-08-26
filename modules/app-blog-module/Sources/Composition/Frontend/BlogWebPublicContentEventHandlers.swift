@@ -275,12 +275,14 @@ public enum BlogWebPublicContentEventHandlers {
             "id": id,
             "title": title,
             "description": description,
-            "image": resolvedImageURL,
             "hasImage": !resolvedImageURL.isEmpty,
             "permalink": permalink.hasPrefix("/")
                 ? permalink
                 : "/\(permalink)",
         ]
+        if let image = resolvedImageURL.emptyToNil {
+            result["image"] = image
+        }
         if let publicationDate {
             result["publicationLabel"] = ISO8601DateFormatter()
                 .string(

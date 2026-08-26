@@ -65,24 +65,10 @@ public enum WebPublicContentEventHandlers {
                 base: origins.staticBaseURL,
                 path: "theme"
             ),
-            "site": [
-                "name": siteSettings.title.isEmpty
-                    ? "Feather CMS" : siteSettings.title,
-                "language": siteSettings.locale,
-                "description": siteSettings.excerpt,
-                "navigation": navigation,
-                "logo": siteSettings.logo,
-                "logoDark": siteSettings.logoDark,
-                "metaImage": siteSettings.metaImage,
-                "noIndex": siteSettings.noIndex,
-                "primaryColor": siteSettings.primaryColor,
-                "secondaryColor": siteSettings.secondaryColor,
-                "tertiaryColor": siteSettings.tertiaryColor,
-                "primaryFont": siteSettings.primaryFont,
-                "secondaryFont": siteSettings.secondaryFont,
-                "cssCodeInjection": siteSettings.css,
-                "javascriptCodeInjection": siteSettings.js,
-            ],
+            "site": siteContext(
+                settings: siteSettings,
+                navigation: navigation
+            ),
             "generation": [
                 "year": String(
                     Calendar.current.component(.year, from: Date())
@@ -133,6 +119,40 @@ public enum WebPublicContentEventHandlers {
         return .init(payload: payload)
     }
 
+    private static func siteContext(
+        settings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
+        navigation: [[String: Any]]
+    ) -> [String: Any] {
+        var context: [String: Any] = [
+            "name": settings.title.emptyToNil ?? "Feather CMS",
+            "navigation": navigation,
+            "noIndex": settings.noIndex,
+        ]
+
+        let values = [
+            "language": settings.locale,
+            "description": settings.excerpt,
+            "logo": settings.logo,
+            "logoDark": settings.logoDark,
+            "metaImage": settings.metaImage,
+            "primaryColor": settings.primaryColor,
+            "secondaryColor": settings.secondaryColor,
+            "tertiaryColor": settings.tertiaryColor,
+            "primaryFont": settings.primaryFont,
+            "secondaryFont": settings.secondaryFont,
+            "cssCodeInjection": settings.css,
+            "javascriptCodeInjection": settings.js,
+        ]
+
+        for (key, value) in values {
+            if let value = value.emptyToNil {
+                context[key] = value
+            }
+        }
+
+        return context
+    }
+
     private static func pageContext(
         page: WebAppAPI.Components.Schemas.WebPageDetailSchema,
         requestPath: String,
@@ -145,16 +165,19 @@ public enum WebPublicContentEventHandlers {
         let description =
             page.metadata.excerpt.isEmpty
             ? siteSettings.excerpt : page.metadata.excerpt
-        return [
+        let image: String?
+        if let imageURL = page.metadata.imageURL.emptyToNil {
+            image = WebImageURLResolver.resolve(
+                imageURL,
+                mediaBaseURL: FeatherAdmin.AppEnvironmentStore.current
+                    .publicOrigins.mediaBaseURL.absoluteString
+            ).emptyToNil
+        } else {
+            image = siteSettings.metaImage.emptyToNil
+        }
+        var context: [String: Any] = [
             "title": title,
             "description": description,
-            "image": page.metadata.imageURL.isEmpty
-                ? siteSettings.metaImage
-                : WebImageURLResolver.resolve(
-                    page.metadata.imageURL,
-                    mediaBaseURL: FeatherAdmin.AppEnvironmentStore.current
-                        .publicOrigins.mediaBaseURL.absoluteString
-                ),
             "permalink": normalizedURL(
                 base: siteBaseURL,
                 path: requestPath
@@ -162,10 +185,20 @@ public enum WebPublicContentEventHandlers {
             "noindex": siteSettings.noIndex
                 || page.metadata.noIndex
                 || page.metadata.status != "published",
-            "css": page.metadata.cssCodeInjection as Any,
-            "js": page.metadata.javascriptCodeInjection as Any,
             "contents": ["html": page.content],
         ]
+
+        if let image {
+            context["image"] = image
+        }
+        if let css = page.metadata.cssCodeInjection {
+            context["css"] = css
+        }
+        if let js = page.metadata.javascriptCodeInjection {
+            context["js"] = js
+        }
+
+        return context
     }
 
     private static func menuItemContext(

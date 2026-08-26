@@ -1,13 +1,3 @@
-import BlogFrontend
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
-import WebFrontend
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import SystemFrontend
-import FeatherAdmin
 import Configuration
 import Hummingbird
 import Logging
@@ -19,7 +9,7 @@ struct Entrypoint {
     static func main() async throws {
         let reader = try await ConfigReader(
             providers: [
-                //            CommandLineArgumentsProvider(),
+                CommandLineArgumentsProvider(),
                 EnvironmentVariablesProvider(),
                 EnvironmentVariablesProvider(
                     environmentFilePath: ".env",
