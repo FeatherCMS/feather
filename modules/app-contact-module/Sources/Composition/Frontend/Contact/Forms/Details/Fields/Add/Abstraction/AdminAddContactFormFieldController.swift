@@ -7,9 +7,15 @@ import SGML
 import WebStandards
 
 protocol AdminAddContactFormFieldController: Sendable {
-    func getAddContactFormField(request: Request, context: DefaultRequestContext)
+    func getAddContactFormField(
+        request: Request,
+        context: DefaultRequestContext
+    )
         async throws -> HTMLResponse
-    func postAddContactFormField(request: Request, context: DefaultRequestContext)
+    func postAddContactFormField(
+        request: Request,
+        context: DefaultRequestContext
+    )
         async throws -> Response
 }
 extension AdminAddContactFormFieldController {

@@ -8,7 +8,8 @@ struct AdminGetSystemJobDefaultController: AdminGetSystemJobController {
             presenter: AdminGetSystemJobDefaultPresenter
         )
 
-    func getSystemJob(request: Request, context: DefaultRequestContext) async throws
+    func getSystemJob(request: Request, context: DefaultRequestContext)
+        async throws
         -> HTMLResponse
     {
         let runtime = buildRuntime(request, context)

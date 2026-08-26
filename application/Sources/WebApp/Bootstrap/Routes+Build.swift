@@ -162,7 +162,8 @@ func buildRouter(
                 apiBaseURL: environment.apiBaseURL,
                 sessionToken: sessionToken
             )
-            return try await api.withAuthOpenAPIRepositoryErrorMapping { client in
+            return try await api.withAuthOpenAPIRepositoryErrorMapping {
+                client in
                 let response = try await client.authMe()
                 let payload = try response.ok.body.json
                 return AccountModel(

@@ -167,12 +167,15 @@ public enum WebPublicContentEventHandlers {
             ? siteSettings.excerpt : page.metadata.excerpt
         let image: String?
         if let imageURL = page.metadata.imageURL.emptyToNil {
-            image = WebImageURLResolver.resolve(
-                imageURL,
-                mediaBaseURL: FeatherAdmin.AppEnvironmentStore.current
-                    .publicOrigins.mediaBaseURL.absoluteString
-            ).emptyToNil
-        } else {
+            image =
+                WebImageURLResolver.resolve(
+                    imageURL,
+                    mediaBaseURL: FeatherAdmin.AppEnvironmentStore.current
+                        .publicOrigins.mediaBaseURL.absoluteString
+                )
+                .emptyToNil
+        }
+        else {
             image = siteSettings.metaImage.emptyToNil
         }
         var context: [String: Any] = [

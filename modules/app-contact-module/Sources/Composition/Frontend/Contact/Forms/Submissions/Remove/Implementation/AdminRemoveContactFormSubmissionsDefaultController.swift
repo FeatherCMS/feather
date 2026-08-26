@@ -47,7 +47,8 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         )
     }
 
-    func bulkConfirm(request: Request, context: DefaultRequestContext) async throws
+    func bulkConfirm(request: Request, context: DefaultRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
@@ -58,7 +59,8 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         )
     }
 
-    func bulkRemove(request: Request, context: DefaultRequestContext) async throws
+    func bulkRemove(request: Request, context: DefaultRequestContext)
+        async throws
         -> Response
     {
         let formId = try context.requiredParameter("formId")

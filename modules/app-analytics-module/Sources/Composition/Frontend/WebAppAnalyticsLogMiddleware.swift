@@ -18,7 +18,9 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
     public func handle(
         _ request: Request,
         context: DefaultRequestContext,
-        next: @concurrent (Request, DefaultRequestContext) async throws -> Response
+        next:
+            @concurrent (Request, DefaultRequestContext) async throws ->
+            Response
     ) async throws -> Response {
         let path = request.uri.path
         let response = try await next(request, context)

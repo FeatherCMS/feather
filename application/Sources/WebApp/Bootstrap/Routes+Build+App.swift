@@ -48,4 +48,3 @@ func buildAppRoutes(
     .controller.route(on: router)
 
 }
-

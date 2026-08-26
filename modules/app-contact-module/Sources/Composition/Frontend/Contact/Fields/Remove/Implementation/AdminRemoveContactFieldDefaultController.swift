@@ -47,7 +47,8 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func bulkConfirm(request: Request, context: DefaultRequestContext) async throws
+    func bulkConfirm(request: Request, context: DefaultRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
@@ -57,7 +58,8 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func bulkRemove(request: Request, context: DefaultRequestContext) async throws
+    func bulkRemove(request: Request, context: DefaultRequestContext)
+        async throws
         -> Response
     {
         let payload = try await request.decode(

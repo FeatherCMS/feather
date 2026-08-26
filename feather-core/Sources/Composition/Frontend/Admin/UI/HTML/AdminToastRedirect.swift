@@ -1,5 +1,5 @@
-import Foundation
 import FeatherContracts
+import Foundation
 import Hummingbird
 
 public struct AdminToastRedirect {

@@ -11,9 +11,11 @@ protocol AdminRemoveContactFormSubmissionsController: Sendable {
         -> HTMLResponse
     func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
-    func bulkConfirm(request: Request, context: DefaultRequestContext) async throws
+    func bulkConfirm(request: Request, context: DefaultRequestContext)
+        async throws
         -> HTMLResponse
-    func bulkRemove(request: Request, context: DefaultRequestContext) async throws
+    func bulkRemove(request: Request, context: DefaultRequestContext)
+        async throws
         -> Response
 }
 

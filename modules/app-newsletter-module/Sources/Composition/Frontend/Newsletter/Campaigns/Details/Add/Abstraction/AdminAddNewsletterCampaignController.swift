@@ -7,9 +7,15 @@ import SGML
 import WebStandards
 
 protocol AdminAddNewsletterCampaignController: Sendable {
-    func getAddNewsletterCampaign(request: Request, context: DefaultRequestContext)
+    func getAddNewsletterCampaign(
+        request: Request,
+        context: DefaultRequestContext
+    )
         async throws -> HTMLResponse
-    func postAddNewsletterCampaign(request: Request, context: DefaultRequestContext)
+    func postAddNewsletterCampaign(
+        request: Request,
+        context: DefaultRequestContext
+    )
         async throws -> Response
 }
 

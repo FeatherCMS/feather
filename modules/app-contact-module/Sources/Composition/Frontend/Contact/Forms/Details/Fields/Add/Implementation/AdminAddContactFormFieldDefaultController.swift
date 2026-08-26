@@ -14,7 +14,10 @@ struct AdminAddContactFormFieldDefaultController:
             interactor: any AdminAddContactFormFieldInteractor,
             presenter: any AdminAddContactFormFieldPresenter
         )
-    func getAddContactFormField(request: Request, context: DefaultRequestContext)
+    func getAddContactFormField(
+        request: Request,
+        context: DefaultRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
@@ -24,7 +27,10 @@ struct AdminAddContactFormFieldDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func postAddContactFormField(request: Request, context: DefaultRequestContext)
+    func postAddContactFormField(
+        request: Request,
+        context: DefaultRequestContext
+    )
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime(request, context)

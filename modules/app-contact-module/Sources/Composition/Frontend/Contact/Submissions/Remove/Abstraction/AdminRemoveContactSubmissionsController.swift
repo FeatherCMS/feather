@@ -7,9 +7,11 @@ import SGML
 import WebStandards
 
 protocol AdminRemoveContactSubmissionsController: Sendable {
-    func bulkConfirm(request: Request, context: DefaultRequestContext) async throws
+    func bulkConfirm(request: Request, context: DefaultRequestContext)
+        async throws
         -> HTMLResponse
-    func bulkRemove(request: Request, context: DefaultRequestContext) async throws
+    func bulkRemove(request: Request, context: DefaultRequestContext)
+        async throws
         -> Response
 }
 

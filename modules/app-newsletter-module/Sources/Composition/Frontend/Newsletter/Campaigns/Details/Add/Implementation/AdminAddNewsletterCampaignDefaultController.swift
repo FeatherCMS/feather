@@ -15,7 +15,10 @@ struct AdminAddNewsletterCampaignDefaultController:
             presenter: any AdminAddNewsletterCampaignPresenter
         )
 
-    func getAddNewsletterCampaign(request: Request, context: DefaultRequestContext)
+    func getAddNewsletterCampaign(
+        request: Request,
+        context: DefaultRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
@@ -25,7 +28,10 @@ struct AdminAddNewsletterCampaignDefaultController:
         )
     }
 
-    func postAddNewsletterCampaign(request: Request, context: DefaultRequestContext)
+    func postAddNewsletterCampaign(
+        request: Request,
+        context: DefaultRequestContext
+    )
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime(request, context)

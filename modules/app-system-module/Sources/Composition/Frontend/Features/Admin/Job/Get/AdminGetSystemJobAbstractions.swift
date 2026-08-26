@@ -3,7 +3,8 @@ import Hummingbird
 import SystemAdminAPI
 
 protocol AdminGetSystemJobController: Sendable {
-    func getSystemJob(request: Request, context: DefaultRequestContext) async throws
+    func getSystemJob(request: Request, context: DefaultRequestContext)
+        async throws
         -> HTMLResponse
 }
 

@@ -36,7 +36,7 @@ public struct DefaultRequestContext: AuthRequestContext {
     public func requiredParameter(
         _ name: String
     ) throws -> String {
-        guard 
+        guard
             let value = parameters.get(name, as: String.self), !value.isEmpty
         else {
             throw HTTPError(.badRequest)

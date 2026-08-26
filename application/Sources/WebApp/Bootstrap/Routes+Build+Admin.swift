@@ -57,4 +57,3 @@ func buildAdminRoutes(
     AdminContact(renderingEngine: renderingEngine)
         .route(on: router)
 }
-
