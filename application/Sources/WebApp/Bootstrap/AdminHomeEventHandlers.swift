@@ -9,85 +9,12 @@ enum AdminHomeEventHandlers {
         in events: inout EventRegistry
     ) {
         events.register(
-            event: AdminHomeMenuItemProvider.self,
-            context: AdminDashboardEventContext.self
-        ) { event, _ in
-            guard event.menuKey == "home" else { return [] }
-            return [
-                .init(
-                    label: "Posts",
-                    addLabel: "Add new",
-                    addHref: "/admin/blog/posts/add/",
-                    manageLabel: "Edit posts",
-                    manageHref: "/admin/blog/posts/",
-                    createPermission: "blog:posts:create",
-                    listPermission: "blog:posts:list"
-                ),
-                .init(
-                    label: "Authors",
-                    addLabel: "Add new",
-                    addHref: "/admin/blog/authors/add/",
-                    manageLabel: "Edit authors",
-                    manageHref: "/admin/blog/authors/",
-                    createPermission: "blog:authors:create",
-                    listPermission: "blog:authors:list"
-                ),
-                .init(
-                    label: "Tags",
-                    addLabel: "Add new",
-                    addHref: "/admin/blog/tags/add/",
-                    manageLabel: "Edit tags",
-                    manageHref: "/admin/blog/tags/",
-                    createPermission: "blog:tags:create",
-                    listPermission: "blog:tags:list"
-                ),
-                .init(
-                    label: "Pages",
-                    addLabel: "Add new",
-                    addHref: "/admin/web/pages/add/",
-                    manageLabel: "Edit pages",
-                    manageHref: "/admin/web/pages/",
-                    createPermission: "web:pages:create",
-                    listPermission: "web:pages:list"
-                ),
-                .init(
-                    label: "Menus",
-                    addLabel: "Add new",
-                    addHref: "/admin/web/menus/add/",
-                    manageLabel: "Edit menus",
-                    manageHref: "/admin/web/menus/",
-                    createPermission: "web:menus:create",
-                    listPermission: "web:menus:list"
-                ),
-                .init(
-                    label: "Redirects",
-                    addLabel: "Add new",
-                    addHref: "/admin/redirect/rules/add/",
-                    manageLabel: "Edit redirects",
-                    manageHref: "/admin/redirect/rules/",
-                    createPermission: "redirect:rules:create",
-                    listPermission: "redirect:rules:list"
-                ),
-            ]
-        }
-
-        events.register(
             event: AdminHomeOverviewProvider.self,
             context: AdminDashboardEventContext.self
         ) { _, context in
-            let repository = AdminGetHomeOpenAPIRepository(
-                api: .init(
-                    apiBaseURL: context.apiBaseURL,
-                    sessionToken: context.sessionToken
-                ),
-                analyticsAPI: .init(
-                    apiBaseURL: context.apiBaseURL,
-                    sessionToken: context.sessionToken
-                ),
-                redirectAPI: .init(
-                    apiBaseURL: context.apiBaseURL,
-                    sessionToken: context.sessionToken
-                )
+            let repository = AdminAPI(
+                apiBaseURL: context.apiBaseURL,
+                sessionToken: context.sessionToken
             )
 
             var contentStats: [AdminGetHomeModel.ContentStat] = []

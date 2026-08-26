@@ -8,21 +8,23 @@ import RedirectFrontend
 import UserFrontend
 import SystemFrontend
 import AsyncHTTPClient
-import BlogAdminAPI
+import AuthAppAPI
+import BlogAppAPI
+import ContactAppAPI
+import WebAppAPI
 import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import FeatherAdmin
-import WebAdminAPI
-import MediaAdminAPI
 
-public struct AdminAPI: Sendable {
+public struct ApplicationAPI: Sendable, AppPublicContentRepository {
 
     private let apiBaseURL: URL
-    private let blogClient: BlogAdminAPI.Client
-    private let webClient: WebAdminAPI.Client
-    private let mediaClient: MediaAdminAPI.Client
+    private let authClient: AuthAppAPI.Client
+    private let blogClient: BlogAppAPI.Client
+    private let contactClient: ContactAppAPI.Client
+    private let webClient: WebAppAPI.Client
 
     public init(
         apiBaseURL: URL,
@@ -30,7 +32,31 @@ public struct AdminAPI: Sendable {
     ) {
         self.apiBaseURL = apiBaseURL
 
+        self.authClient = .init(
+            serverURL: apiBaseURL,
+            transport: AsyncHTTPClientTransport(
+                configuration: .init(
+                    client: .shared,
+                    timeout: .seconds(3)
+                )
+            ),
+            middlewares: [
+                ClientAPIAuthMiddleware(sessionToken: sessionToken)
+            ]
+        )
         self.blogClient = .init(
+            serverURL: apiBaseURL,
+            transport: AsyncHTTPClientTransport(
+                configuration: .init(
+                    client: .shared,
+                    timeout: .seconds(3)
+                )
+            ),
+            middlewares: [
+                ClientAPIAuthMiddleware(sessionToken: sessionToken)
+            ]
+        )
+        self.contactClient = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(
                 configuration: .init(
@@ -54,18 +80,52 @@ public struct AdminAPI: Sendable {
                 ClientAPIAuthMiddleware(sessionToken: sessionToken)
             ]
         )
-        self.mediaClient = .init(
-            serverURL: apiBaseURL,
-            transport: AsyncHTTPClientTransport(
-                configuration: .init(
-                    client: .shared,
-                    timeout: .seconds(3)
-                )
-            ),
-            middlewares: [
-                ClientAPIAuthMiddleware(sessionToken: sessionToken)
-            ]
+    }
+
+    public func withSessionToken(
+        _ sessionToken: String?
+    ) -> any AppPublicContentRepository {
+        ApplicationAPI(
+            apiBaseURL: apiBaseURL,
+            sessionToken: sessionToken
         )
+    }
+
+    public func resolveWebRoute(
+        slug: String
+    ) async throws -> WebAppAPI.Components.Schemas.WebMetadataSchema? {
+        try await withWebOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.webMetadataGet(
+                .init(path: .init(slug: slug))
+            )
+            switch response {
+            case .ok(let ok):
+                return try ok.body.json
+            case .notFound:
+                return nil
+            case .undocumented(let statusCode, let response):
+                throw try await failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
+    public func withAuthOpenAPIRepositoryErrorMapping<T: Sendable>(
+        _ operation: @Sendable (AuthAppAPI.Client) async throws -> T
+    ) async throws(OpenAPIRepositoryError) -> T {
+        do {
+            return try await operation(authClient)
+        }
+        catch let error as OpenAPIRepositoryError {
+            throw error
+        }
+        catch {
+            throw OpenAPIRepositoryError.transport(
+                description: String(describing: error)
+            )
+        }
     }
 
     public func failure(
@@ -80,7 +140,7 @@ public struct AdminAPI: Sendable {
     }
 
     public func withBlogOpenAPIRepositoryErrorMapping<T: Sendable>(
-        _ operation: @Sendable (BlogAdminAPI.Client) async throws -> T
+        _ operation: @Sendable (BlogAppAPI.Client) async throws -> T
     ) async throws(OpenAPIRepositoryError) -> T {
         do {
             return try await operation(blogClient)
@@ -95,8 +155,24 @@ public struct AdminAPI: Sendable {
         }
     }
 
+    public func withContactOpenAPIRepositoryErrorMapping<T: Sendable>(
+        _ operation: @Sendable (ContactAppAPI.Client) async throws -> T
+    ) async throws(OpenAPIRepositoryError) -> T {
+        do {
+            return try await operation(contactClient)
+        }
+        catch let error as OpenAPIRepositoryError {
+            throw error
+        }
+        catch {
+            throw OpenAPIRepositoryError.transport(
+                description: String(describing: error)
+            )
+        }
+    }
+
     public func withWebOpenAPIRepositoryErrorMapping<T: Sendable>(
-        _ operation: @Sendable (WebAdminAPI.Client) async throws -> T
+        _ operation: @Sendable (WebAppAPI.Client) async throws -> T
     ) async throws(OpenAPIRepositoryError) -> T {
         do {
             return try await operation(webClient)
@@ -110,21 +186,4 @@ public struct AdminAPI: Sendable {
             )
         }
     }
-
-    public func withMediaOpenAPIRepositoryErrorMapping<T: Sendable>(
-        _ operation: @Sendable (MediaAdminAPI.Client) async throws -> T
-    ) async throws(OpenAPIRepositoryError) -> T {
-        do {
-            return try await operation(mediaClient)
-        }
-        catch let error as OpenAPIRepositoryError {
-            throw error
-        }
-        catch {
-            throw OpenAPIRepositoryError.transport(
-                description: String(describing: error)
-            )
-        }
-    }
-
 }

@@ -93,29 +93,6 @@ public struct AdminGetHomeModel: Sendable {
         }
     }
 
-    struct QuickLinkGroup: Sendable {
-        let label: String
-        let actions: [QuickLinkAction]
-    }
-
-    struct QuickLinkAction: Sendable {
-        enum Style: Sendable {
-            case primary
-            case secondary
-
-            var cssClass: String {
-                switch self {
-                case .primary: ""
-                case .secondary: "secondary"
-                }
-            }
-        }
-
-        let label: String
-        let href: String
-        let style: Style
-    }
-
     let title: String
     let description: String
     let summary: String
@@ -123,5 +100,4 @@ public struct AdminGetHomeModel: Sendable {
     let dailyTraffic: [TrafficPoint]?
     let topPages: [BreakdownItem]?
     let webInsightCards: [InsightCard]
-    let quickLinkGroups: [QuickLinkGroup]
 }

@@ -16,14 +16,20 @@ import OpenAPIRuntime
 import RedirectAdminAPI
 import WebAdminAPI
 
-struct AdminGetHomeOpenAPIRepository {
-    let api: AdminAPI
-    let analyticsAPI: AnalyticsAdminAPIClient
-    let redirectAPI: RedirectAdminAPIClient
-    private let unauthorizedMessage =
+extension AdminAPI {
+    private var api: AdminAPI { self }
+    private var analyticsAPI: AnalyticsAdminAPIClient {
+        analyticsClient
+    }
+    private var redirectAPI: RedirectAdminAPIClient {
+        redirectClient
+    }
+    private var unauthorizedMessage: String {
         "Please sign in again to load the admin dashboard."
-    private let forbiddenMessage =
+    }
+    private var forbiddenMessage: String {
         "Your account cannot access the admin dashboard."
+    }
 
     func blogPostsTotal() async throws -> Int {
         try await api.withBlogOpenAPIRepositoryErrorMapping { client in

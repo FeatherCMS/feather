@@ -32,7 +32,7 @@ func buildRouter(
     router.addMiddleware {
         LogRequestsMiddleware(Logger.current.logLevel)
         WebAppAnalyticsLogMiddleware(apiBaseURL: environment.apiBaseURL)
-        HTTPErrorMiddleware()
+        HTTPErrorMiddleware<AppRequestContext>()
         RedirectRuleMiddleware(
             apiBaseURL: environment.apiBaseURL,
             siteBaseURL: environment.publicOrigins.siteBaseURL
@@ -123,9 +123,7 @@ func buildRouter(
     let authAppClient = AuthAppAPIClient(
         apiBaseURL: environment.apiBaseURL
     )
-    let publicContentRepository = AppPublicContentOpenAPIRepository(
-        api: appClient
-    )
+    let publicContentRepository = appClient
     var adminEvents = EventRegistry()
     AdminHomeEventHandlers.register(in: &adminEvents)
     AdminMenuEventHandlers.register(in: &adminEvents)
@@ -175,13 +173,13 @@ func buildRouter(
     // MARK: - admin
 
     let adminRouter = authRouter.add(middleware: AdminAuthMiddleware())
-    Admin(
+    buildAdminRoutes(
+        router: adminRouter,
         renderingEngine: renderingEngine,
         referenceTypeOptions: referenceTypeOptions,
         templateOptions: templateOptions,
         adminEvents: adminEvents
     )
-    .route(on: adminRouter)
 
     return router
 }

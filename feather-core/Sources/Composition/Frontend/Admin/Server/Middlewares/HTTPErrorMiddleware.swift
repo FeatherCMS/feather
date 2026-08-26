@@ -1,28 +1,13 @@
-import BlogFrontend
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
-import WebFrontend
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import SystemFrontend
-import FeatherAdmin
-//
-//  File.swift
-//  web-app
-//
-//  Created by Tibor Bödecs on 2026. 05. 26..
-//
-
 import Hummingbird
 
-struct HTTPErrorMiddleware: RouterMiddleware {
+public struct HTTPErrorMiddleware<Context: RequestContext>: RouterMiddleware {
 
-    func handle(
+    public init() {}
+
+    public func handle(
         _ request: Request,
-        context: AppRequestContext,
-        next: @concurrent (Request, AppRequestContext) async throws -> Response
+        context: Context,
+        next: @concurrent (Request, Context) async throws -> Response
     ) async throws -> HummingbirdCore.Response {
         do {
             return try await next(request, context)

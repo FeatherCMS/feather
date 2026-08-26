@@ -206,6 +206,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
+                .product(name: "CSS", package: "swift-web-standards"),
+                .product(name: "HTML", package: "swift-web-standards"),
+                .product(name: "SGML", package: "swift-web-standards"),
+                .product(name: "SVG", package: "swift-web-standards"),
                 .product(name: "WebStandards", package: "swift-web-standards"),
                 .product(name: "FeatherValidation", package: "feather-validation"),
                 .product(name: "FeatherValidationFoundation", package: "feather-validation"),

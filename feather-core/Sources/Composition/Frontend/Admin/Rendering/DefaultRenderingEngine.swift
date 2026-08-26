@@ -1,23 +1,50 @@
 import CSS
 import HTML
 import Hummingbird
-import FeatherAdmin
 import SGML
 import SVG
 import WebStandards
 
-struct DefaultRenderingEngine: RenderingEngine {
-    let publicOrigins: AppPublicOriginConfiguration
-    let adminMenuCatalog: AdminMenuCatalog
-    init(
+public struct RenderingEngineAssetConfiguration: Sendable {
+    public let publicStylesheetPaths: [String]
+    public let adminStylesheetPaths: [String]
+    public let rootStylesheetPath: String?
+
+    public init(
+        publicStylesheetPaths: [String] = [
+            "/admin/base.css",
+            "/admin/style.css",
+            "/admin/toast.css",
+        ],
+        adminStylesheetPaths: [String] = [
+            "/admin/base.css",
+            "/admin/style.css",
+            "/admin/toast.css",
+        ],
+        rootStylesheetPath: String? = nil
+    ) {
+        self.publicStylesheetPaths = publicStylesheetPaths
+        self.adminStylesheetPaths = adminStylesheetPaths
+        self.rootStylesheetPath = rootStylesheetPath
+    }
+}
+
+public struct DefaultRenderingEngine: RenderingEngine {
+    public let publicOrigins: AppPublicOriginConfiguration
+    public let adminMenuCatalog: AdminMenuCatalog
+    public let assets: RenderingEngineAssetConfiguration
+
+    public init(
         publicOrigins: AppPublicOriginConfiguration,
-        adminMenuCatalog: AdminMenuCatalog
+        adminMenuCatalog: AdminMenuCatalog,
+        assets: RenderingEngineAssetConfiguration = .init()
     ) {
         self.publicOrigins = publicOrigins
         self.adminMenuCatalog = adminMenuCatalog
+        self.assets = assets
     }
 
-    func renderPage<T: FlowContent>(
+    public func renderPage<T: FlowContent>(
         request: Request,
         title: String,
         description: String,
@@ -46,27 +73,14 @@ struct DefaultRenderingEngine: RenderingEngine {
                 ),
                 noIndex: false
             )
-            Link(rel: .stylesheet)
-                .href(
-                    normalizedURL(
-                        base: publicOrigins.staticBaseURL,
-                        path: "/admin/base.css"
-                    )
-                )
-            Link(rel: .stylesheet)
-                .href(
-                    normalizedURL(
-                        base: publicOrigins.staticBaseURL,
-                        path: "/admin/style.css"
-                    )
-                )
-            Link(rel: .stylesheet)
-                .href(
-                    normalizedURL(
-                        base: publicOrigins.staticBaseURL,
-                        path: "/admin/toast.css"
-                    )
-                )
+            for path in assets.publicStylesheetPaths {
+                Link(rel: .stylesheet)
+                    .href(stylesheetURL(path: path))
+            }
+            if let path = assets.rootStylesheetPath {
+                Link(rel: .stylesheet)
+                    .href(path)
+            }
             Style(css)
         }
 
@@ -79,7 +93,7 @@ struct DefaultRenderingEngine: RenderingEngine {
         return .init(html)
     }
 
-    func renderAdminPage<T: Component>(
+    public func renderAdminPage<T: Component>(
         request: Request,
         title: String,
         description: String,
@@ -116,27 +130,14 @@ struct DefaultRenderingEngine: RenderingEngine {
                 ),
                 noIndex: false
             )
-            Link(rel: .stylesheet)
-                .href(
-                    normalizedURL(
-                        base: publicOrigins.staticBaseURL,
-                        path: "/admin/base.css"
-                    )
-                )
-            Link(rel: .stylesheet)
-                .href(
-                    normalizedURL(
-                        base: publicOrigins.staticBaseURL,
-                        path: "/admin/style.css"
-                    )
-                )
-            Link(rel: .stylesheet)
-                .href(
-                    normalizedURL(
-                        base: publicOrigins.staticBaseURL,
-                        path: "/admin/toast.css"
-                    )
-                )
+            for path in assets.adminStylesheetPaths {
+                Link(rel: .stylesheet)
+                    .href(stylesheetURL(path: path))
+            }
+            if let path = assets.rootStylesheetPath {
+                Link(rel: .stylesheet)
+                    .href(path)
+            }
             Style(css)
         }
 
@@ -164,7 +165,11 @@ struct DefaultRenderingEngine: RenderingEngine {
         return url
     }
 
-    func adminSidebarState(
+    private func stylesheetURL(path: String) -> String {
+        normalizedURL(base: publicOrigins.staticBaseURL, path: path)
+    }
+
+    public func adminSidebarState(
         request: Request,
         permissions: Set<String>
     ) -> AdminSidebar.State {
