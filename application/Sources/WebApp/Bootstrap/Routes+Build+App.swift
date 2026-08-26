@@ -20,7 +20,7 @@ func buildAppRoutes(
     router: Router<DefaultRequestContext>,
     authRouter: Router<DefaultRequestContext>,
     renderingEngine: DefaultRenderingEngine,
-    themeRenderer: ThemeRenderer,
+    themeRenderer: DefaultThemeRenderer,
     publicContentRepository: any AppPublicContentRepository,
     publicContentEvents: any EventPublisher,
     styleshetCollector: GlobalStylesheetCollector

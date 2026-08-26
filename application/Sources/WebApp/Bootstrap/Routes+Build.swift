@@ -1,3 +1,4 @@
+import Foundation
 import FeatherContracts
 import WebApplication
 import BlogFrontend
@@ -143,7 +144,16 @@ func buildRouter(
         publicOrigins: environment.publicOrigins,
         adminMenuCatalog: adminMenuCatalog
     )
-    let themeRenderer = ThemeRenderer()
+    guard let themesURL = Bundle.module.url(
+        forResource: "Themes",
+        withExtension: nil
+    ) else {
+        throw CocoaError(.fileNoSuchFile)
+    }
+    let themeRenderer = try DefaultThemeRenderer(
+        templateLoader: DefaultTemplateLoader(paths: [themesURL]),
+        templatePath: { WebTemplateRegistry.shared.templatePath(for: $0) }
+    )
     var publicContentEvents = EventRegistry()
     WebPublicContentEventHandlers.register(in: &publicContentEvents)
     BlogWebPublicContentEventHandlers.register(in: &publicContentEvents)
