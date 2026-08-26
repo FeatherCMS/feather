@@ -70,10 +70,10 @@ let package = Package(
         //            url: "https://github.com/apple/swift-log",
         //            from: "1.0.0"
         //        ),
-        //        .package(
-        //            url: "https://github.com/BinaryBirds/swift-nanoid",
-        //            from: "1.0.0"
-        //        ),
+        .package(
+            url: "https://github.com/BinaryBirds/swift-nanoid",
+            from: "1.0.0"
+        ),
         //        .package(
         //            url: "https://github.com/binarybirds/swift-bcrypt",
         //            from: "2.0.1"
@@ -173,8 +173,10 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "ServiceLifecycle", package: "swift-service-lifecycle"),
+                .product(name: "NanoID", package: "swift-nanoid"),
 
                 .target(name: "FeatherApplication"),
+                .target(name: "FeatherDomain"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings

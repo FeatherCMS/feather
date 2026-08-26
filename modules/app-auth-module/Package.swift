@@ -64,10 +64,6 @@ let package = Package(
             from: "2.0.0"
         ),
         .package(
-            url: "https://github.com/binarybirds/swift-nanoid",
-            from: "1.0.0"
-        ),
-        .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "5.0.0"
         ),
@@ -205,7 +201,6 @@ let package = Package(
                 .product(name: "FeatherBackend", package: "feather-core"),
                 
                 .product(name: "BCrypt", package: "swift-bcrypt"),
-                .product(name: "NanoID", package: "swift-nanoid"),
                 .product(name: "NIOPosix", package: "swift-nio"),
 
                 .product(name: "SystemAdminAPI", package: "app-system-module"),

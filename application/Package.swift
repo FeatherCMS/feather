@@ -113,10 +113,6 @@ let package = Package(
             from: "2.0.1"
         ),
         .package(
-            url: "https://github.com/BinaryBirds/swift-nanoid",
-            from: "1.0.0"
-        ),
-        .package(
             url: "https://github.com/binarybirds/swift-bcrypt",
             from: "2.0.1"
         ),
@@ -174,7 +170,6 @@ let package = Package(
             name: "Migrator",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "NanoID", package: "swift-nanoid"),
                 .product(name: "BCrypt", package: "swift-bcrypt"),
                 .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
@@ -207,7 +202,6 @@ let package = Package(
             name: "Worker",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "NanoID", package: "swift-nanoid"),
                 .product(name: "BCrypt", package: "swift-bcrypt"),
                 .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
@@ -302,7 +296,6 @@ let package = Package(
             name: "Server",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "NanoID", package: "swift-nanoid"),
                 .product(name: "BCrypt", package: "swift-bcrypt"),
                 .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),

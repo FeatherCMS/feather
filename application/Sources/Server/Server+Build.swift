@@ -8,6 +8,7 @@ import NIOSSL
 import PostgresMigrations
 import PostgresNIO
 import Environment
+import FeatherInfrastructure
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
