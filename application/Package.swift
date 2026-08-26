@@ -113,10 +113,6 @@ let package = Package(
             from: "2.0.1"
         ),
         .package(
-            url: "https://github.com/binarybirds/swift-bcrypt",
-            from: "2.0.1"
-        ),
-        .package(
             url: "https://github.com/feather-framework/feather-database-postgres",
             exact: "1.0.0-rc.2"
         ),
@@ -170,8 +166,6 @@ let package = Package(
             name: "Migrator",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "BCrypt", package: "swift-bcrypt"),
-                .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
@@ -202,8 +196,6 @@ let package = Package(
             name: "Worker",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "BCrypt", package: "swift-bcrypt"),
-                .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
@@ -296,8 +288,6 @@ let package = Package(
             name: "Server",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "BCrypt", package: "swift-bcrypt"),
-                .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
 

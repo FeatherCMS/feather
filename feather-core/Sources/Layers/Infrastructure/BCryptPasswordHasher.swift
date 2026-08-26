@@ -2,14 +2,19 @@ import BCrypt
 import FeatherDomain
 import NIOPosix
 
-struct BCryptPasswordHasher: PasswordHasher {
-    func hash(_ original: String) async throws -> String {
+public struct BCryptPasswordHasher: PasswordHasher {
+
+    public init() {}
+
+    public func hash(
+        _ original: String
+    ) async throws -> String {
         try await NIOThreadPool.singleton.runIfActive {
             try BCrypt().hash(original)
         }
     }
 
-    func verify(
+    public func verify(
         _ original: String,
         hash: String
     ) async throws -> Bool {

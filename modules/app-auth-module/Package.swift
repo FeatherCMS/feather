@@ -56,10 +56,6 @@ let package = Package(
         // [docc-plugin-placeholder]
 
         .package(
-            url: "https://github.com/binarybirds/swift-bcrypt",
-            from: "2.0.1"
-        ),
-        .package(
             url: "https://github.com/apple/swift-nio",
             from: "2.0.0"
         ),
@@ -140,8 +136,6 @@ let package = Package(
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
 
                 .product(name: "UserInfrastructure", package: "app-user-module"),
-                .product(name: "BCrypt", package: "swift-bcrypt"),
-                .product(name: "NIOPosix", package: "swift-nio"),
                 
                 .target(name: "AuthApplication"),
             ],
@@ -200,8 +194,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
                 
-                .product(name: "BCrypt", package: "swift-bcrypt"),
-                .product(name: "NIOPosix", package: "swift-nio"),
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
 
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
                 .product(name: "UserBackend", package: "app-user-module"),

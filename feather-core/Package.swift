@@ -74,10 +74,10 @@ let package = Package(
             url: "https://github.com/BinaryBirds/swift-nanoid",
             from: "1.0.0"
         ),
-        //        .package(
-        //            url: "https://github.com/binarybirds/swift-bcrypt",
-        //            from: "2.0.1"
-        //        ),
+        .package(
+            url: "https://github.com/binarybirds/swift-bcrypt",
+            from: "2.0.1"
+        ),
         .package(
             url: "https://github.com/feather-framework/feather-database",
             exact: "1.0.0-rc.2"
@@ -174,6 +174,8 @@ let package = Package(
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "ServiceLifecycle", package: "swift-service-lifecycle"),
                 .product(name: "NanoID", package: "swift-nanoid"),
+                .product(name: "BCrypt", package: "swift-bcrypt"),
+                .product(name: "NIOPosix", package: "swift-nio"),
 
                 .target(name: "FeatherApplication"),
                 .target(name: "FeatherDomain"),
