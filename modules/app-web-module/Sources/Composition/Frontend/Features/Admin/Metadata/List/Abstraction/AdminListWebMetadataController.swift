@@ -6,14 +6,14 @@ protocol AdminListWebMetadataController: Sendable {
 
     func getMetadataEntries(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminListWebMetadataController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/web/metadata",

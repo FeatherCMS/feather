@@ -23,7 +23,7 @@ struct AdminEditMediaAssetDefaultPresenter: AdminEditMediaAssetPresenter {
             request: request,
             title: "Edit media asset - Feather CMS",
             description: "Edit media asset - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -51,7 +51,7 @@ struct AdminEditMediaAssetDefaultPresenter: AdminEditMediaAssetPresenter {
             request: request,
             title: "Edit media asset - Feather CMS",
             description: "Edit media asset - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

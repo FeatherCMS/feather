@@ -15,7 +15,7 @@ struct AdminListUserIdentityDefaultPresenter:
             request: request,
             title: "User identities",
             description: "List of user identities",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: state.permissions
@@ -31,7 +31,7 @@ struct AdminListUserIdentityDefaultPresenter:
             request: request,
             title: "User identities",
             description: "List of user identities",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: []
@@ -56,7 +56,7 @@ struct AdminListUserIdentityDefaultPresenter:
             request: request,
             title: "Remove selected identities",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

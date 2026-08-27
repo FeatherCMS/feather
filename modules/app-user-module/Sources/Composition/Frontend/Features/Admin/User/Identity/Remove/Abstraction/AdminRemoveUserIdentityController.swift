@@ -5,19 +5,19 @@ protocol AdminRemoveUserIdentityController: Sendable {
 
     func getRemoveUserIdentity(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveUserIdentity(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveUserIdentityController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/user/identities/{id}/remove/",

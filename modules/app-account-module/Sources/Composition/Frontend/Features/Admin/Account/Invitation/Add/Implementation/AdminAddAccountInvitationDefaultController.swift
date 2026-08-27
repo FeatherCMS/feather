@@ -7,14 +7,14 @@ struct AdminAddAccountInvitationDefaultController:
     AdminAddAccountInvitationController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddAccountInvitationInteractor,
             presenter: any AdminAddAccountInvitationPresenter
         )
 
     func getAddAccountInvitation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderPage(
@@ -25,7 +25,7 @@ struct AdminAddAccountInvitationDefaultController:
 
     func postAddAccountInvitation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         var lastPayload: AdminAddAccountInvitationFormInput?
@@ -93,7 +93,7 @@ struct AdminAddAccountInvitationDefaultController:
 
     private func createResponse(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         presenter: any AdminAddAccountInvitationPresenter,
         state: AccountInvitationForm.State
     ) throws -> Response {

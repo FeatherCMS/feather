@@ -16,7 +16,7 @@ struct AdminEditUserRoleDefaultPresenter: AdminEditUserRolePresenter {
             request: request,
             title: "Edit user role - Feather CMS",
             description: "Edit a management user role",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -42,7 +42,7 @@ struct AdminEditUserRoleDefaultPresenter: AdminEditUserRolePresenter {
             request: request,
             title: "Edit user role - Feather CMS",
             description: "Edit a management user role",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -57,14 +57,5 @@ public enum EventHandlers {
             ]
         }
 
-        registry.register(
-            event: WebPageTemplateOptionProvider.self,
-            context: WebEventContext.self
-        ) { _, _ in
-            [
-                .init(value: "news.articles", title: "News articles"),
-                .init(value: "news.categories", title: "News categories"),
-            ]
-        }
     }
 }

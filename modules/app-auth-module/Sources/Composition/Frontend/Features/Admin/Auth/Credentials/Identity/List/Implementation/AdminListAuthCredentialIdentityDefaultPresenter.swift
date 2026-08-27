@@ -28,7 +28,7 @@ struct AdminListAuthCredentialIdentityDefaultPresenter:
             request: request,
             title: "Credentials",
             description: "Select a user to manage credentials",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: state.permissions
@@ -44,7 +44,7 @@ struct AdminListAuthCredentialIdentityDefaultPresenter:
             request: request,
             title: "Credentials",
             description: "Credentials error",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: []

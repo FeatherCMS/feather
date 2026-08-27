@@ -48,7 +48,9 @@ func buildApplication(
         styleshetCollector: styleshetCollector,
         environment: environment,
         referenceTypeOptions: webMetadataExtensions.referenceTypes,
-        templateOptions: webMetadataExtensions.templates
+        templateOptions: webMetadataExtensions.templates,
+        templateDefinitions: webMetadataExtensions.templateDefinitions,
+        templatePaths: webMetadataExtensions.templatePaths
     )
 
     let app = Application(

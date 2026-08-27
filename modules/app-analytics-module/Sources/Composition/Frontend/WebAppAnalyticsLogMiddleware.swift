@@ -17,8 +17,10 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
 
     public func handle(
         _ request: Request,
-        context: AppRequestContext,
-        next: @concurrent (Request, AppRequestContext) async throws -> Response
+        context: DefaultRequestContext,
+        next:
+            @concurrent (Request, DefaultRequestContext) async throws ->
+            Response
     ) async throws -> Response {
         let path = request.uri.path
         let response = try await next(request, context)
@@ -81,16 +83,10 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
         path: String,
         responseCode: Int
     ) -> Bool {
-        if path == "/health" {
-            return false
-        }
         if responseCode == 404 {
             return true
         }
-        if path == "/admin-navigation.js" {
-            return false
-        }
-        if path.hasPrefix("/images/") {
+        if path == "/health" {
             return false
         }
         let lowercased = path.lowercased()

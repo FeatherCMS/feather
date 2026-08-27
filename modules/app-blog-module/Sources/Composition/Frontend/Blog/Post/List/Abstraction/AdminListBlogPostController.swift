@@ -14,29 +14,29 @@ protocol AdminListBlogPostController: Sendable {
 
     func getBlogPosts(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func getBlogPostsBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 
     func postBlogPostsBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 
     func postBlogPostStatus(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminListBlogPostController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/blog/posts",

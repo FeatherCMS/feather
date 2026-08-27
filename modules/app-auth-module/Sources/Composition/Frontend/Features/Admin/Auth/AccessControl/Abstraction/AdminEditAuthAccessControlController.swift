@@ -19,19 +19,19 @@ protocol AdminEditAuthAccessControlController: Sendable {
 
     func getAuthAccessControl(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postAuthAccessControl(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditAuthAccessControlController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/auth/access-control/",

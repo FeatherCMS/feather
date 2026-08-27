@@ -38,7 +38,7 @@ struct AdminGetNewsletterCampaignSubscriberDefaultPresenter:
             request: request,
             title: "Campaign subscriber - Feather CMS",
             description: "View campaign subscriber",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

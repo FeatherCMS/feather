@@ -66,7 +66,7 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
             request: request,
             title: "Edit user magic link - Feather CMS",
             description: "Edit a management user magic link",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -91,7 +91,7 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
             request: request,
             title: "Edit user magic link - Feather CMS",
             description: "Edit a management user magic link",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

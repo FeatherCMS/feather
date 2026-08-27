@@ -21,7 +21,7 @@ struct AdminListContactFormEmailsDefaultPresenter:
             request: request,
             title: "Contact form emails - Feather CMS",
             description: "Manage contact form emails",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

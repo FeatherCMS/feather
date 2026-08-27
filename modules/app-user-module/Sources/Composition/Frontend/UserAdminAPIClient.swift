@@ -55,7 +55,7 @@ public struct UserAdminAPIClient: Sendable {
     }
 }
 
-extension AppRequestContext {
+extension DefaultRequestContext {
     public func userAdminAPI() -> UserAdminAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,

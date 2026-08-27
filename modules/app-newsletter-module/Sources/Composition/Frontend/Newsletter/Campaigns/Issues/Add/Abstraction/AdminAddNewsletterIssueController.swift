@@ -9,15 +9,15 @@ import WebStandards
 protocol AdminAddNewsletterIssueController: Sendable {
     func getAddNewsletterIssue(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
     func postAddNewsletterIssue(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 extension AdminAddNewsletterIssueController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get(
             "/admin/newsletters/:newsletterId/issues/add/",
             use: getAddNewsletterIssue

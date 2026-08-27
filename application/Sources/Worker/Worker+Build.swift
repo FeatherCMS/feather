@@ -6,7 +6,6 @@ import FeatherInfrastructure
 import Jobs
 import JobsPostgres
 import Logging
-import NanoID
 import FeatherDatabasePostgres
 import NIOSSL
 import PostgresMigrations
@@ -186,9 +185,7 @@ func buildWorker(
         )
     )
 
-    var services: [any Service] = [
-        postgresClient, AWSClientLifecycleService(client: awsClient),
-    ]
+    var services: [any Service] = [postgresClient, awsClient]
     services.append(
         jobQueue.processor(
             options: JobQueueProcessorOptions(

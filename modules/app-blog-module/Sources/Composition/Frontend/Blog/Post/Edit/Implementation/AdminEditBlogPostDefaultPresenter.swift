@@ -24,7 +24,7 @@ struct AdminEditBlogPostDefaultPresenter: AdminEditBlogPostPresenter {
             request: request,
             title: "Edit post - Feather CMS",
             description: "Edit a management post",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -50,7 +50,7 @@ struct AdminEditBlogPostDefaultPresenter: AdminEditBlogPostPresenter {
             request: request,
             title: "Edit post - Feather CMS",
             description: "Edit a management post",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

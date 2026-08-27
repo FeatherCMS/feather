@@ -19,14 +19,14 @@ protocol AppLogoutAuthController: Sendable {
 
     func getLogout(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AppLogoutAuthController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/logout/",

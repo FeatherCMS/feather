@@ -20,14 +20,14 @@ struct AdminEditAuthProfileDefaultController:
     AdminEditAuthProfileController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditAuthProfileInteractor,
             presenter: any AdminEditAuthProfilePresenter
         )
 
     func getEditAuthProfile(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         guard let account = context.account else {
@@ -60,7 +60,7 @@ struct AdminEditAuthProfileDefaultController:
 
     func postEditAuthProfile(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         guard let account = context.account else {
@@ -229,7 +229,7 @@ struct AdminEditAuthProfileDefaultController:
 
     private func renderEditResponse(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         presenter: any AdminEditAuthProfilePresenter,
         permissions: Set<String>,
         state: AuthProfileEdit.State

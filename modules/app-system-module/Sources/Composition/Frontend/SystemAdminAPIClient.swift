@@ -94,7 +94,7 @@ extension SystemAdminAPI.Client {
     }
 }
 
-extension AppRequestContext {
+extension DefaultRequestContext {
     public func systemManagementAPI() -> SystemAdminAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
@@ -152,7 +152,7 @@ public struct SystemAppAPIClient: Sendable {
     }
 }
 
-extension AppRequestContext {
+extension DefaultRequestContext {
     public func systemAppAPI() -> SystemAppAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,

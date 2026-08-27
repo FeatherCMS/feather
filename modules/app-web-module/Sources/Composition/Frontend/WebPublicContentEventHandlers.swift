@@ -57,14 +57,10 @@ public enum WebPublicContentEventHandlers {
         var payload: [String: Any] = [
             "baseUrl": normalizedURL(
                 base: origins.staticBaseURL,
-                path: "theme"
+                path: ""
             ),
             "siteBaseUrl": origins.siteBaseURL,
             "staticBaseUrl": origins.staticBaseURL,
-            "themeBaseUrl": normalizedURL(
-                base: origins.staticBaseURL,
-                path: "theme"
-            ),
             "site": siteContext(
                 settings: siteSettings,
                 navigation: navigation
@@ -167,12 +163,15 @@ public enum WebPublicContentEventHandlers {
             ? siteSettings.excerpt : page.metadata.excerpt
         let image: String?
         if let imageURL = page.metadata.imageURL.emptyToNil {
-            image = WebImageURLResolver.resolve(
-                imageURL,
-                mediaBaseURL: FeatherAdmin.AppEnvironmentStore.current
-                    .publicOrigins.mediaBaseURL.absoluteString
-            ).emptyToNil
-        } else {
+            image =
+                WebImageURLResolver.resolve(
+                    imageURL,
+                    mediaBaseURL: FeatherAdmin.AppEnvironmentStore.current
+                        .publicOrigins.mediaBaseURL.absoluteString
+                )
+                .emptyToNil
+        }
+        else {
             image = siteSettings.metaImage.emptyToNil
         }
         var context: [String: Any] = [
@@ -185,7 +184,7 @@ public enum WebPublicContentEventHandlers {
             "noindex": siteSettings.noIndex
                 || page.metadata.noIndex
                 || page.metadata.status != "published",
-            "contents": ["html": page.content],
+            "contents": ["html": page.content] as [String: Any],
         ]
 
         if let image {

@@ -14,14 +14,14 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
     AdminRemoveBlogAuthorLinkController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveBlogAuthorLinkInteractor,
             presenter: any AdminRemoveBlogAuthorLinkPresenter
         )
 
     func getRemoveBlogAuthorLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -49,7 +49,7 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
 
     func postRemoveBlogAuthorLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()

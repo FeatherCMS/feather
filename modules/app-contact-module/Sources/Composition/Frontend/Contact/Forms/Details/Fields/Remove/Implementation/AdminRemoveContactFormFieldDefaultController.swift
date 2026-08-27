@@ -10,11 +10,11 @@ struct AdminRemoveContactFormFieldDefaultController:
     AdminRemoveContactFormFieldController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveContactFormFieldInteractor,
             presenter: any AdminRemoveContactFormFieldPresenter
         )
-    func confirm(request: Request, context: AppRequestContext) async throws
+    func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
@@ -28,7 +28,7 @@ struct AdminRemoveContactFormFieldDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func remove(request: Request, context: AppRequestContext) async throws
+    func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)
@@ -49,7 +49,8 @@ struct AdminRemoveContactFormFieldDefaultController:
             ]
         )
     }
-    func bulkConfirm(request: Request, context: AppRequestContext) async throws
+    func bulkConfirm(request: Request, context: DefaultRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
@@ -59,7 +60,8 @@ struct AdminRemoveContactFormFieldDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func bulkRemove(request: Request, context: AppRequestContext) async throws
+    func bulkRemove(request: Request, context: DefaultRequestContext)
+        async throws
         -> Response
     {
         let formId = try context.requiredParameter("formId")

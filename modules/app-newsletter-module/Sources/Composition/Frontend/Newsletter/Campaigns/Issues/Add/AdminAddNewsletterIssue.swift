@@ -9,7 +9,7 @@ import WebStandards
 struct AdminAddNewsletterIssue {
     let controller: any AdminAddNewsletterIssueController
 
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         controller.route(on: router)
     }
 }

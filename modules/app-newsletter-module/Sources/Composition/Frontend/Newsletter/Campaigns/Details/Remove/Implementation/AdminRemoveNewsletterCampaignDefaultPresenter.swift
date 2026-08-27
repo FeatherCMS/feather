@@ -16,7 +16,7 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
             request: request,
             title: "Remove campaign - Feather CMS",
             description: "Remove campaign",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

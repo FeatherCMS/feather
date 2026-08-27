@@ -6,14 +6,14 @@ import OpenAPIRuntime
 
 struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddWebMenuInteractor,
             presenter: any AdminAddWebMenuPresenter
         )
 
     func getAddWebMenu(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         return runtime.presenter.renderAddPage(
@@ -24,7 +24,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
 
     func postAddWebMenu(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions

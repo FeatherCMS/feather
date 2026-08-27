@@ -13,18 +13,18 @@ import WebStandards
 protocol AdminEditBlogSettingsController: Sendable {
     func getEditBlogSettings(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postEditBlogSettings(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditBlogSettingsController {
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/blog/settings/",

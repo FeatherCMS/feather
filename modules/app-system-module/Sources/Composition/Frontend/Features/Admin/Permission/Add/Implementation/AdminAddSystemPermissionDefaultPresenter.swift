@@ -18,7 +18,7 @@ struct AdminAddSystemPermissionDefaultPresenter:
             request: request,
             title: "Add system permission - Feather CMS",
             description: "Add a system permission in management",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

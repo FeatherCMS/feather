@@ -28,7 +28,7 @@ struct AdminAddNewsletterIssueDefaultPresenter:
             request: request,
             title: "Add campaign issue - Feather CMS",
             description: "Add campaign issue - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

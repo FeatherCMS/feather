@@ -6,14 +6,14 @@ import UserContracts
 
 struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditUserRoleInteractor,
             presenter: any AdminEditUserRolePresenter
         )
 
     func getEditUserRole(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -43,7 +43,7 @@ struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
 
     func postEditUserRole(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -121,7 +121,7 @@ struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
 
     private func updateResponse(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         id: String,
         presenter: any AdminEditUserRolePresenter,
         state: UserRoleForm.State

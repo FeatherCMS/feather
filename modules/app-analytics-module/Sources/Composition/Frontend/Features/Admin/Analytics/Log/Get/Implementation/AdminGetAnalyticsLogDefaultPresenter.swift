@@ -17,7 +17,7 @@ struct AdminGetAnalyticsLogDefaultPresenter: AdminGetAnalyticsLogPresenter {
             request: request,
             title: "Analytics log details - Feather CMS",
             description: "Analytics log details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -40,7 +40,7 @@ struct AdminGetAnalyticsLogDefaultPresenter: AdminGetAnalyticsLogPresenter {
             request: request,
             title: "Analytics log details - Feather CMS",
             description: "Analytics log details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -6,14 +6,14 @@ struct AdminRemoveAuthSessionDefaultController:
     AdminRemoveAuthSessionController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveAuthSessionInteractor,
             presenter: any AdminRemoveAuthSessionPresenter
         )
 
     func getRemoveAuthSession(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let identityId = try context.requiredID()
@@ -47,7 +47,7 @@ struct AdminRemoveAuthSessionDefaultController:
 
     func postRemoveAuthSession(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let identityId = try context.requiredID()

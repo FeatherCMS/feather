@@ -82,7 +82,7 @@ public struct ContactAppAPIClient: Sendable {
     }
 }
 
-extension AppRequestContext {
+extension DefaultRequestContext {
     public func contactManagementAPI() -> ContactAdminAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,

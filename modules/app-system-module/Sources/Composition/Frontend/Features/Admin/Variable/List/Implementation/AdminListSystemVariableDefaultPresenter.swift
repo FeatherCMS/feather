@@ -29,7 +29,7 @@ struct AdminListSystemVariableDefaultPresenter:
                 request: request,
                 title: "Manage system variables - Feather CMS",
                 description: "Management system variable list",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -47,7 +47,7 @@ struct AdminListSystemVariableDefaultPresenter:
             request: request,
             title: "Manage system variables - Feather CMS",
             description: "Management system variable list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -86,7 +86,7 @@ struct AdminListSystemVariableDefaultPresenter:
             request: request,
             title: "Remove selected variables",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

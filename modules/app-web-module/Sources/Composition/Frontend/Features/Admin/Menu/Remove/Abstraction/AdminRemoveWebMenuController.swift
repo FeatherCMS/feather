@@ -7,19 +7,19 @@ protocol AdminRemoveWebMenuController: Sendable {
 
     func getRemoveWebMenu(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveWebMenu(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveWebMenuController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/web/menus/{id}/remove/",

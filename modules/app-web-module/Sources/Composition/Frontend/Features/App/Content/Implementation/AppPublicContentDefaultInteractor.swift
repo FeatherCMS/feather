@@ -4,8 +4,6 @@ import SystemContracts
 import WebAppAPI
 import WebContracts
 
-private typealias WebComponents = WebAppAPI.Components
-
 struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
     let repository: any AppPublicContentRepository
     let events: any EventPublisher
@@ -107,13 +105,20 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
         requestPath: String
     ) async -> [String: Any] {
         var result = page
-        guard
-            let contents = page["contents"] as? [String: Any],
-            let markdown = contents["html"] as? String
-        else {
-            return result
+        let markdown: String?
+        if let contents = page["contents"] as? [String: Any] {
+            markdown = contents["html"] as? String
         }
-        var renderedContents = contents
+        else if let contents = page["contents"] as? [String: String] {
+            markdown = contents["html"]
+        }
+        else {
+            markdown = page["content"] as? String
+        }
+        guard let markdown else { return result }
+        var renderedContents: [String: Any] =
+            (page["contents"] as? [String: Any])
+            ?? ["html": markdown]
         renderedContents["html"] = await contentRenderer.render(
             markdown: markdown,
             requestPath: requestPath

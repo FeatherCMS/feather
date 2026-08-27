@@ -21,14 +21,14 @@ struct AdminGetAuthProfileDefaultController:
     AdminGetAuthProfileController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetAuthProfileInteractor,
             presenter: any AdminGetAuthProfilePresenter
         )
 
     func getAuthProfile(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         guard let account = context.account else {

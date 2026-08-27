@@ -16,7 +16,7 @@ struct AdminEditUserIdentityDefaultPresenter:
             request: request,
             title: "Edit identity",
             description: "Edit user identity",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -33,7 +33,7 @@ struct AdminEditUserIdentityDefaultPresenter:
             request: request,
             title: "Edit identity",
             description: "Edit user identity",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -50,7 +50,7 @@ struct AdminEditUserIdentityDefaultPresenter:
             request: request,
             title: "No permission - Feather CMS",
             description: "No permission",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

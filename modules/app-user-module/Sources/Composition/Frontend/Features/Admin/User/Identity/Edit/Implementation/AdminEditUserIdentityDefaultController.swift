@@ -6,14 +6,14 @@ import UserContracts
 
 struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditUserIdentityInteractor,
             presenter: any AdminEditUserIdentityPresenter
         )
 
     func getEditUserIdentity(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -56,7 +56,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
 
     func postEditUserIdentity(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -269,7 +269,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
 
     private func renderEditResponse(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         presenter: any AdminEditUserIdentityPresenter,
         id: String,
         permissions: Set<String>,

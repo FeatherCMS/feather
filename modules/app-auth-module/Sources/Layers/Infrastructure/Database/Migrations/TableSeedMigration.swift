@@ -5,11 +5,9 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import AuthDomain
-import BCrypt
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
-import NIOPosix
 import UserDomain
 import UserInfrastructure
 
@@ -34,9 +32,7 @@ public struct TableSeedMigration: DatabaseMigration {
             idGenerator: idGenerator
         )
 
-        let rootPassword = try await NIOThreadPool.singleton.runIfActive {
-            try BCrypt().hash("root")
-        }
+        let rootPassword = try await BCryptPasswordHasher().hash("root")
         let identityRepository = IdentityDatabaseRepository(context: context)
         let credentialRepository = CredentialDatabaseRepository(
             context: context

@@ -19,14 +19,14 @@ protocol AdminGetAuthProfileController: Sendable {
 
     func getAuthProfile(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminGetAuthProfileController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/auth/profile/",

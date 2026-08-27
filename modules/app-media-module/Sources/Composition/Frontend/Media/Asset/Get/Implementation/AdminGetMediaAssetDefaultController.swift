@@ -10,14 +10,14 @@ import WebStandards
 
 struct AdminGetMediaAssetDefaultController: AdminGetMediaAssetController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetMediaAssetInteractor,
             presenter: any AdminGetMediaAssetPresenter
         )
 
     func getMediaAsset(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()

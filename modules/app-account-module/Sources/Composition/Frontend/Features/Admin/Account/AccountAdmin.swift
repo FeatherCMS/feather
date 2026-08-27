@@ -9,7 +9,7 @@ public struct AccountAdmin {
     }
 
     public func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         AdminGetAccountHome(
             renderingEngine: renderingEngine

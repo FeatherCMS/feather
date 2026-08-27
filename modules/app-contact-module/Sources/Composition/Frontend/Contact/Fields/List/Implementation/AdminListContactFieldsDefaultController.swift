@@ -11,12 +11,12 @@ struct AdminListContactFieldsDefaultController:
     AdminListContactFieldsController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListContactFieldsInteractor,
             presenter: any AdminListContactFieldsPresenter
         )
 
-    func list(request: Request, context: AppRequestContext) async throws
+    func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)

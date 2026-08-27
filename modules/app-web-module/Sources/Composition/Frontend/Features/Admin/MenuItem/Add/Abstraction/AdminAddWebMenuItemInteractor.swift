@@ -4,8 +4,7 @@ import OpenAPIRuntime
 
 protocol AdminAddWebMenuItemInteractor: Sendable {
 
-    func loadPermissions(
-    ) async throws -> [String]
+    func loadPermissions() async throws -> [String]
 
     func execute(
         menuId: String,

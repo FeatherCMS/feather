@@ -16,7 +16,7 @@ struct AdminAddAccountInvitationDefaultPresenter:
             request: request,
             title: "Add user invitation - Feather CMS",
             description: "Add a user invitation in management",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -218,6 +218,7 @@ let package = Package(
                 .product(name: "FeatherAdmin", package: "feather-core"),
                 
                 .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),
                 .product(name: "MediaFrontend", package: "app-media-module"),
@@ -227,6 +228,9 @@ let package = Package(
                 .target(name: "BlogAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
+            resources: [
+                .copy("Resources/Templates")
+            ],
             swiftSettings: defaultSwiftSettings
         ),
         // MARK: -

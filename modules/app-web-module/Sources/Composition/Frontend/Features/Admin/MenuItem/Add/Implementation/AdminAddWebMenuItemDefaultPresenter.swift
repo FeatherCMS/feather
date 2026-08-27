@@ -18,7 +18,7 @@ struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
             request: request,
             title: "Add item - Feather CMS",
             description: "Add an item in management",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -12,14 +12,14 @@ protocol AdminGetMediaAssetController: Sendable {
 
     func getMediaAsset(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminGetMediaAssetController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/media/assets/{id}/",

@@ -3,12 +3,13 @@ import Hummingbird
 import SystemAdminAPI
 
 protocol AdminGetSystemJobController: Sendable {
-    func getSystemJob(request: Request, context: AppRequestContext) async throws
+    func getSystemJob(request: Request, context: DefaultRequestContext)
+        async throws
         -> HTMLResponse
 }
 
 extension AdminGetSystemJobController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get("/admin/system/jobs/{id}/", use: getSystemJob)
     }
 }

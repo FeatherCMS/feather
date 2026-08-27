@@ -5,24 +5,24 @@ protocol AdminListSystemVariableController: Sendable {
 
     func getSystemVariables(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func getSystemVariablesBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 
     func postSystemVariablesBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminListSystemVariableController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/system/variables",

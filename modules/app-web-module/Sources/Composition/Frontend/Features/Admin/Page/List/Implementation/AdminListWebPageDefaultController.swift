@@ -7,14 +7,14 @@ struct AdminListWebPageDefaultController:
     AdminListWebPageController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListWebPageInteractor,
             presenter: any AdminListWebPagePresenter
         )
 
     func getWebPages(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let page = request.queryPage()
@@ -63,7 +63,7 @@ struct AdminListWebPageDefaultController:
 
     func getWebPagesBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -95,7 +95,7 @@ struct AdminListWebPageDefaultController:
 
     func postWebPagesBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
@@ -123,7 +123,7 @@ struct AdminListWebPageDefaultController:
 
     func postWebPageStatus(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
         let payload = try await request.decode(

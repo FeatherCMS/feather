@@ -10,11 +10,11 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
     AdminRemoveNewsletterCampaignSubscriberController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveNewsletterCampaignSubscriberInteractor,
             presenter: any AdminRemoveNewsletterCampaignSubscriberPresenter
         )
-    func confirm(request: Request, context: AppRequestContext) async throws
+    func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
@@ -31,7 +31,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func remove(request: Request, context: AppRequestContext) async throws
+    func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)
@@ -52,7 +52,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             ]
         )
     }
-    func removeSelected(request: Request, context: AppRequestContext)
+    func removeSelected(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
         let (interactor, _) = buildRuntime(request, context)

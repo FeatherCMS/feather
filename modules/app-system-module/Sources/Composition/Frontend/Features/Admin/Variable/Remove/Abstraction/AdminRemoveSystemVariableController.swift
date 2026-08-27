@@ -6,19 +6,19 @@ protocol AdminRemoveSystemVariableController: Sendable {
 
     func getRemoveSystemVariable(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveSystemVariable(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveSystemVariableController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/system/variables/{id}/remove/",

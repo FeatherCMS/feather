@@ -5,19 +5,19 @@ protocol AdminRemoveSystemPermissionController: Sendable {
 
     func getRemoveSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveSystemPermissionController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/system/permissions/{id}/remove/",

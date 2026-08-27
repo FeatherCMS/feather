@@ -17,7 +17,7 @@ struct AdminAddRedirectRuleDefaultPresenter: AdminAddRedirectRulePresenter {
             request: request,
             title: "Add redirect rule - Feather CMS",
             description: "Add a redirect rule in management",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

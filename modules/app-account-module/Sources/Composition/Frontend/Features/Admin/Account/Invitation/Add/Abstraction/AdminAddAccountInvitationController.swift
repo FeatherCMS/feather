@@ -5,19 +5,19 @@ protocol AdminAddAccountInvitationController: Sendable {
 
     func getAddAccountInvitation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postAddAccountInvitation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminAddAccountInvitationController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/account/invitations/add/",

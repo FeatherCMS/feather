@@ -7,12 +7,12 @@ import SGML
 import WebStandards
 
 protocol AdminGetContactFormSubmissionController: Sendable {
-    func get(request: Request, context: AppRequestContext) async throws
+    func get(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
 }
 
 extension AdminGetContactFormSubmissionController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get(
             "/admin/contact/forms/:formId/submissions/:submissionId/",
             use: get

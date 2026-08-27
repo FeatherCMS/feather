@@ -28,7 +28,7 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
             request: request,
             title: "Login - Feather CMS",
             description: "This is the login page for the Feather CMS app",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             content: LoginPage(
                 state: .init(
                     form: form,

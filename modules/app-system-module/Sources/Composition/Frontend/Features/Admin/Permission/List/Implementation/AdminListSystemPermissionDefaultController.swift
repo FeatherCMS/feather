@@ -6,14 +6,14 @@ struct AdminListSystemPermissionDefaultController:
     AdminListSystemPermissionController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListSystemPermissionInteractor,
             presenter: any AdminListSystemPermissionPresenter
         )
 
     func getSystemPermissions(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let page = request.queryPage()
@@ -60,7 +60,7 @@ struct AdminListSystemPermissionDefaultController:
 
     func getSystemPermissionsBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -92,7 +92,7 @@ struct AdminListSystemPermissionDefaultController:
 
     func postSystemPermissionsBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(

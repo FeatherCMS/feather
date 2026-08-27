@@ -29,7 +29,7 @@ struct AdminListSystemPermissionDefaultPresenter:
                 request: request,
                 title: "Manage system permissions - Feather CMS",
                 description: "Management system permission list",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -47,7 +47,7 @@ struct AdminListSystemPermissionDefaultPresenter:
             request: request,
             title: "Manage system permissions - Feather CMS",
             description: "Management system permission list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -86,7 +86,7 @@ struct AdminListSystemPermissionDefaultPresenter:
             request: request,
             title: "Remove selected permissions",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

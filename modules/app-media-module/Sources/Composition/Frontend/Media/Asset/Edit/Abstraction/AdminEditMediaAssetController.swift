@@ -11,18 +11,18 @@ import WebStandards
 protocol AdminEditMediaAssetController: Sendable {
     func getEditMediaAsset(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postEditMediaAsset(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditMediaAssetController {
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/media/assets/{id}/edit/",

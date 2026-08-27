@@ -8,14 +8,14 @@ struct AdminEditWebMenuItemDefaultController:
     AdminEditWebMenuItemController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditWebMenuItemInteractor,
             presenter: any AdminEditWebMenuItemPresenter
         )
 
     func getEditWebMenuItem(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -64,7 +64,7 @@ struct AdminEditWebMenuItemDefaultController:
 
     func postEditWebMenuItem(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()

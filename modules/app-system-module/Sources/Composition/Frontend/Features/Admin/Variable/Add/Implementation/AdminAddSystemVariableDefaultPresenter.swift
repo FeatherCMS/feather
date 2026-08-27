@@ -16,7 +16,7 @@ struct AdminAddSystemVariableDefaultPresenter: AdminAddSystemVariablePresenter {
             request: request,
             title: "Add system variable - Feather CMS",
             description: "Add a system variable in management",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

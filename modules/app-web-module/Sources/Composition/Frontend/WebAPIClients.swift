@@ -105,7 +105,7 @@ public struct WebAppAPIClient: Sendable {
     }
 }
 
-extension AppRequestContext {
+extension DefaultRequestContext {
     public func webManagementAPI() -> WebAdminAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,

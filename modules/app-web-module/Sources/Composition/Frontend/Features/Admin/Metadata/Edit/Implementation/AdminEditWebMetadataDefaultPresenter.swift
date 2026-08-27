@@ -23,7 +23,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
             request: request,
             title: "\(title) - Feather CMS",
             description: "Edit a management web metadata",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -54,7 +54,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
             request: request,
             title: "\(title) - Feather CMS",
             description: "Edit a management web metadata",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

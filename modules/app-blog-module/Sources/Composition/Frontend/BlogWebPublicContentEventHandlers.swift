@@ -209,7 +209,7 @@ public enum BlogWebPublicContentEventHandlers {
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate
         )
-        result["contents"] = ["html": value.content]
+        result["contents"] = ["html": value.content] as [String: Any]
         result["authors"] = value.authors.map(summaryContext)
         result["tags"] = value.tags.map(summaryContext)
         result["relatedPosts"] = value.relatedPosts.map(summaryContext)
@@ -230,7 +230,7 @@ public enum BlogWebPublicContentEventHandlers {
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate
         )
-        result["contents"] = ["html": value.content]
+        result["contents"] = ["html": value.content] as [String: Any]
         result["posts"] = value.posts.map(summaryContext)
         result["postCountLabel"] = "\(value.posts.count) posts"
         result["noindex"] =
@@ -250,7 +250,7 @@ public enum BlogWebPublicContentEventHandlers {
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate
         )
-        result["contents"] = ["html": value.content]
+        result["contents"] = ["html": value.content] as [String: Any]
         result["posts"] = value.posts.map(summaryContext)
         result["postCountLabel"] = "\(value.posts.count) posts"
         result["noindex"] =

@@ -6,14 +6,14 @@ struct AdminEditSystemPermissionDefaultController:
     AdminEditSystemPermissionController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditSystemPermissionInteractor,
             presenter: any AdminEditSystemPermissionPresenter
         )
 
     func getEditSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -42,7 +42,7 @@ struct AdminEditSystemPermissionDefaultController:
 
     func postEditSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()

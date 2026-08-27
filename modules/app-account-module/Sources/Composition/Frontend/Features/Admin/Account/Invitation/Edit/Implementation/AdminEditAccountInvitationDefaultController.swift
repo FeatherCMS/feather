@@ -7,14 +7,14 @@ struct AdminEditAccountInvitationDefaultController:
     AdminEditAccountInvitationController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditAccountInvitationInteractor,
             presenter: any AdminEditAccountInvitationPresenter
         )
 
     func getEditAccountInvitation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -41,7 +41,7 @@ struct AdminEditAccountInvitationDefaultController:
 
     func postEditAccountInvitation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -112,7 +112,7 @@ struct AdminEditAccountInvitationDefaultController:
 
     private func updateResponse(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         id: String,
         presenter: any AdminEditAccountInvitationPresenter,
         state: AccountInvitationForm.State

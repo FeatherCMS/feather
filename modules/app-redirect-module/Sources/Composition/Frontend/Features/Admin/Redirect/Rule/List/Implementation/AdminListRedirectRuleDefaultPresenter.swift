@@ -31,7 +31,7 @@ struct AdminListRedirectRuleDefaultPresenter:
                 request: request,
                 title: "Manage redirect rules - Feather CMS",
                 description: "Management redirect rule list",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -49,7 +49,7 @@ struct AdminListRedirectRuleDefaultPresenter:
             request: request,
             title: "Manage redirect rules - Feather CMS",
             description: "Management redirect rule list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -89,7 +89,7 @@ struct AdminListRedirectRuleDefaultPresenter:
             request: request,
             title: "Remove selected rules",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

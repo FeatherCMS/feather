@@ -26,7 +26,7 @@ struct AdminAddContactFormField {
         )
     }
 
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         controller.route(on: router)
     }
 }

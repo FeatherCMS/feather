@@ -14,19 +14,19 @@ protocol AdminRemoveBlogTagController: Sendable {
 
     func getRemoveBlogTag(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveBlogTag(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveBlogTagController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/blog/tags/{id}/remove/",

@@ -20,7 +20,7 @@ struct AdminRemoveWebMenuDefaultPresenter:
             request: request,
             title: "Remove menu - Feather CMS",
             description: "Remove confirmation for a management menu",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -45,7 +45,7 @@ struct AdminRemoveWebMenuDefaultPresenter:
             request: request,
             title: "Remove menu - Feather CMS",
             description: "Remove confirmation for a management menu",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

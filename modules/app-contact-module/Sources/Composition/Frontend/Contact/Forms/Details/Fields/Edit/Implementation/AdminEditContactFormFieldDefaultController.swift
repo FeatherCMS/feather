@@ -10,11 +10,11 @@ struct AdminEditContactFormFieldDefaultController:
     AdminEditContactFormFieldController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditContactFormFieldInteractor,
             presenter: any AdminEditContactFormFieldPresenter
         )
-    func edit(request: Request, context: AppRequestContext) async throws
+    func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
@@ -46,7 +46,7 @@ struct AdminEditContactFormFieldDefaultController:
             )
         }
     }
-    func update(request: Request, context: AppRequestContext) async throws
+    func update(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
         let (interactor, presenter) = buildRuntime(request, context)

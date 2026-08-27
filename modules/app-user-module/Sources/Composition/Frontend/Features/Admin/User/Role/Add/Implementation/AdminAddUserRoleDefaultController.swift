@@ -6,14 +6,14 @@ import UserContracts
 
 struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddUserRoleInteractor,
             presenter: any AdminAddUserRolePresenter
         )
 
     func getAddUserRole(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderPage(
@@ -24,7 +24,7 @@ struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
 
     func postAddUserRole(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         var lastPayload: AdminAddUserRoleFormInput?
@@ -101,7 +101,7 @@ struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
 
     private func createResponse(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         presenter: any AdminAddUserRolePresenter,
         state: UserRoleForm.State
     ) throws -> Response {

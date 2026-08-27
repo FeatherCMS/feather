@@ -17,7 +17,7 @@ struct AdminAddWebPageDefaultPresenter: AdminAddWebPagePresenter {
             request: request,
             title: "Add page - Feather CMS",
             description: "Add a page in management",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

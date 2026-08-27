@@ -28,7 +28,7 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
             request: request,
             title: "Remove credential",
             description: "Remove a user credential",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -53,7 +53,7 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
             request: request,
             title: "Remove credential",
             description: "Credentials error",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -19,7 +19,7 @@ struct AdminCredentials {
     let renderingEngine: any RenderingEngine
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         AdminListAuthCredentialIdentity(
             renderingEngine: renderingEngine

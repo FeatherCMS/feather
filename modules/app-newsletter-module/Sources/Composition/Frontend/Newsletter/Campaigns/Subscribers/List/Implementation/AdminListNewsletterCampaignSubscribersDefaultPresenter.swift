@@ -42,7 +42,7 @@ struct AdminListNewsletterCampaignSubscribersDefaultPresenter:
             request: request,
             title: "Campaign subscribers - Feather CMS",
             description: "Manage campaign subscribers",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

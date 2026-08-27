@@ -10,11 +10,11 @@ struct AdminAddContactFieldDefaultController:
     AdminAddContactFieldController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddContactFieldInteractor,
             presenter: any AdminAddContactFieldPresenter
         )
-    func getAddContactField(request: Request, context: AppRequestContext)
+    func getAddContactField(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
@@ -23,7 +23,7 @@ struct AdminAddContactFieldDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func postAddContactField(request: Request, context: AppRequestContext)
+    func postAddContactField(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime(request, context)

@@ -5,19 +5,19 @@ protocol AdminAddSystemPermissionController: Sendable {
 
     func getAddSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postAddSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminAddSystemPermissionController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/system/permissions/add/",

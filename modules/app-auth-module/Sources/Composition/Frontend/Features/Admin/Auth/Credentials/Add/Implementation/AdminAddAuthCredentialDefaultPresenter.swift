@@ -28,7 +28,7 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
             request: request,
             title: "Add credential",
             description: "Add a user credential",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

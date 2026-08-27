@@ -5,7 +5,7 @@ import UserContracts
 
 struct AdminGetUserIdentityDefaultController: AdminGetUserIdentityController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetUserIdentityInteractor,
             presenter: any AdminGetUserIdentityPresenter,
             roleRepository: AdminEditUserIdentityRoleOpenAPIRepository
@@ -13,7 +13,7 @@ struct AdminGetUserIdentityDefaultController: AdminGetUserIdentityController {
 
     func getUserIdentity(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter, roleRepository) = buildRuntime(
             request,

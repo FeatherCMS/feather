@@ -30,7 +30,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
 
     public func get(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         referenceType: String,
         navigationTabs: [AdminPillTabs.Link] = [],
         configuration: AdminWebMetadataEditConfiguration? = nil
@@ -50,7 +50,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
 
     public func post(
         request: Request,
-        context: AppRequestContext,
+        context: DefaultRequestContext,
         referenceType: String,
         navigationTabs: [AdminPillTabs.Link] = [],
         configuration: AdminWebMetadataEditConfiguration? = nil

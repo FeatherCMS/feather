@@ -12,7 +12,7 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
 {
     func subscribe(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let campaignId = try context.requiredParameter("campaignId")
         let form = try await request.decode(

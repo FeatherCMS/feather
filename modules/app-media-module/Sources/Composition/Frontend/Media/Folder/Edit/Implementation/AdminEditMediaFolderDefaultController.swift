@@ -10,14 +10,14 @@ import WebStandards
 
 struct AdminEditMediaFolderDefaultController: AdminEditMediaFolderController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditMediaFolderInteractor,
             presenter: any AdminEditMediaFolderPresenter
         )
 
     func getEditMediaFolder(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -42,7 +42,7 @@ struct AdminEditMediaFolderDefaultController: AdminEditMediaFolderController {
 
     func postEditMediaFolder(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()

@@ -30,7 +30,7 @@ struct AdminListWebMetadataDefaultPresenter:
                 request: request,
                 title: "Manage metadata entries - Feather CMS",
                 description: "Management web metadata list",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -48,7 +48,7 @@ struct AdminListWebMetadataDefaultPresenter:
             request: request,
             title: "Manage metadata entries - Feather CMS",
             description: "Management web metadata list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

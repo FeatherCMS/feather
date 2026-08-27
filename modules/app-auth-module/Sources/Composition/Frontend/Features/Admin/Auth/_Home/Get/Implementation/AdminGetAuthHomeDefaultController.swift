@@ -17,14 +17,14 @@ import WebStandards
 
 struct AdminGetAuthHomeDefaultController: AdminGetAuthHomeController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetAuthHomeInteractor,
             presenter: any AdminGetAuthHomePresenter
         )
 
     func getHome(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let model = try await interactor.getHome()

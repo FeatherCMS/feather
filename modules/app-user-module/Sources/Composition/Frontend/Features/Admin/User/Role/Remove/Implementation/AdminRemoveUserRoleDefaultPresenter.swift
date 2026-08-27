@@ -15,7 +15,7 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
             request: request,
             title: "Manage user roles - Feather CMS",
             description: "Management user role list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -40,7 +40,7 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
             request: request,
             title: "Remove user role - Feather CMS",
             description: "Remove confirmation for a management user role",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

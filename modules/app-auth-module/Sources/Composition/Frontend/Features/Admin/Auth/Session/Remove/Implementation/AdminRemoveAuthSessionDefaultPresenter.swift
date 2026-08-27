@@ -17,7 +17,7 @@ struct AdminRemoveAuthSessionDefaultPresenter:
             request: request,
             title: "Remove session",
             description: "Remove confirmation for user identity session",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -36,7 +36,7 @@ struct AdminRemoveAuthSessionDefaultPresenter:
             request: request,
             title: "Remove session",
             description: "Remove confirmation for user identity session",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

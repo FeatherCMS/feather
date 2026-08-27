@@ -22,7 +22,7 @@ struct AdminAddBlogAuthorDefaultPresenter: AdminAddBlogAuthorPresenter {
             request: request,
             title: "Add author - Feather CMS",
             description: "Add an author in management",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

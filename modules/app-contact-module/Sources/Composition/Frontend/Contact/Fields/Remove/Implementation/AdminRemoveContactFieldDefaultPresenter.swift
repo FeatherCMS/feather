@@ -20,7 +20,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
             request: request,
             title: "Remove contact form field - Feather CMS",
             description: "Remove contact form field",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -46,7 +46,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
             request: request,
             title: "Remove contact fields - Feather CMS",
             description: "Remove contact fields",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

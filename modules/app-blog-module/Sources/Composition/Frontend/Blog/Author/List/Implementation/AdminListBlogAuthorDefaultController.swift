@@ -15,14 +15,14 @@ struct AdminListBlogAuthorDefaultController:
     AdminListBlogAuthorController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListBlogAuthorInteractor,
             presenter: any AdminListBlogAuthorPresenter
         )
 
     func getBlogAuthors(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let page = request.queryPage()
@@ -71,7 +71,7 @@ struct AdminListBlogAuthorDefaultController:
 
     func getBlogAuthorsBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -103,7 +103,7 @@ struct AdminListBlogAuthorDefaultController:
 
     func postBlogAuthorsBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
@@ -131,7 +131,7 @@ struct AdminListBlogAuthorDefaultController:
 
     func postBlogAuthorStatus(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
         let payload = try await request.decode(

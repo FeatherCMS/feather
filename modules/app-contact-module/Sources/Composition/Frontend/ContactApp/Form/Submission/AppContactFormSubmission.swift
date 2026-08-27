@@ -13,7 +13,7 @@ public struct AppContactFormSubmission {
         self.controller = AppContactFormSubmissionDefaultController()
     }
 
-    public func route(on router: Router<AppRequestContext>) {
+    public func route(on router: Router<DefaultRequestContext>) {
         controller.route(on: router)
     }
 }

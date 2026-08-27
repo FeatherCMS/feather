@@ -14,7 +14,7 @@ struct AdminAddUserRoleDefaultPresenter: AdminAddUserRolePresenter {
             request: request,
             title: "Add user role - Feather CMS",
             description: "Add a user role in management",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

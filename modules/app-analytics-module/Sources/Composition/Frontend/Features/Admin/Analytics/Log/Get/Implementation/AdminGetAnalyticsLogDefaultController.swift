@@ -4,14 +4,14 @@ import Hummingbird
 
 struct AdminGetAnalyticsLogDefaultController: AdminGetAnalyticsLogController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetAnalyticsLogInteractor,
             presenter: any AdminGetAnalyticsLogPresenter
         )
 
     func getAnalyticsLog(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()

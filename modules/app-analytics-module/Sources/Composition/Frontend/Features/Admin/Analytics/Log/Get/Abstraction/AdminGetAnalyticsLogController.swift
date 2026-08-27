@@ -5,14 +5,14 @@ protocol AdminGetAnalyticsLogController: Sendable {
 
     func getAnalyticsLog(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminGetAnalyticsLogController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/analytics/logs/{id}/",

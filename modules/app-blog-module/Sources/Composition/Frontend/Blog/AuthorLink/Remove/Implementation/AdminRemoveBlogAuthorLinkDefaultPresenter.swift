@@ -27,7 +27,7 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
             title: "Remove blog author link - Feather CMS",
             description:
                 "Remove confirmation for a management blog author link",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -55,7 +55,7 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
             title: "Remove blog author link - Feather CMS",
             description:
                 "Remove confirmation for a management blog author link",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

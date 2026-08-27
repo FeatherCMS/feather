@@ -36,18 +36,6 @@ public enum EventHandlers {
         }
 
         registry.register(
-            event: WebPageTemplateOptionProvider.self,
-            context: WebEventContext.self
-        ) { _, _ in
-            [
-                .init(
-                    value: "default",
-                    title: "Default"
-                )
-            ]
-        }
-
-        registry.register(
             event: PermissionSeedProvider.self,
             context: EventContext.self
         ) { _, _ in

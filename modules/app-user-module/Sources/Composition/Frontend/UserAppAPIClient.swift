@@ -55,7 +55,7 @@ public struct UserAppAPIClient: Sendable {
     }
 }
 
-extension AppRequestContext {
+extension DefaultRequestContext {
     public func userAppAPI() -> UserAppAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,

@@ -6,13 +6,23 @@ import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
-import MediaAdminAPI
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
 import WebFrontend
 import WebStandards
+
+extension AdminMediaAssetOpenAPIRepository {
+    init(api: BlogAdminAPIClient) {
+        self.init(
+            api: MediaAdminAPIClient(
+                apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+                sessionToken: api.sessionToken
+            )
+        )
+    }
+}
 
 struct AdminMetadataFields: Component, FlowContent {
     struct FieldState: FeatherAdmin.Object {
@@ -306,102 +316,6 @@ struct AdminMetadataFieldStateFactory {
                 error: nil
             )
         )
-    }
-}
-
-struct AdminMetadataSchemaBuilder {
-    static func createSchema(
-        input: AdminMetadataFormValue
-    ) -> WebAdminAPI.Components.Schemas.WebMetadataCreateSchema {
-        .init(
-            slug: input.slug,
-            template: input.template,
-            publicationDate: nil,
-            expirationDate: nil,
-            status: input.status,
-            title: input.title.isEmpty ? nil : input.title,
-            excerpt: input.excerpt.isEmpty ? nil : input.excerpt,
-            imageUrl: input.imageUrl.isEmpty ? nil : input.imageUrl,
-            canonicalUrl: input.canonicalUrl.isEmpty ? nil : input.canonicalUrl,
-            noIndex: input.noIndex,
-            primaryKeyword: input.primaryKeyword,
-            cssCodeInjection: input.cssCodeInjection.isEmpty
-                ? nil : input.cssCodeInjection,
-            javascriptCodeInjection: input.javascriptCodeInjection.isEmpty
-                ? nil : input.javascriptCodeInjection,
-            structuredDataCodeInjection: input.structuredDataCodeInjection
-                .isEmpty ? nil : input.structuredDataCodeInjection
-        )
-    }
-
-    static func formValue(
-        from detail: BlogAdminAPI.Components.Schemas.WebMetadataDetailSchema,
-        fallbackTitle: String = "",
-        fallbackExcerpt: String = ""
-    ) -> AdminMetadataFormValue {
-        .init(
-            slug: detail.slug,
-            template: detail.template,
-            publicationDate: "",
-            expirationDate: "",
-            status: detail.status,
-            title: detail.title ?? fallbackTitle,
-            excerpt: detail.excerpt ?? fallbackExcerpt,
-            imageUrl: detail.imageUrl ?? "",
-            canonicalUrl: detail.canonicalUrl ?? "",
-            noIndex: detail.noIndex,
-            primaryKeyword: detail.primaryKeyword,
-            cssCodeInjection: detail.cssCodeInjection ?? "",
-            javascriptCodeInjection: detail.javascriptCodeInjection ?? "",
-            structuredDataCodeInjection: detail.structuredDataCodeInjection
-                ?? ""
-        )
-    }
-
-    static func parseTimestamp(_ value: String) -> Date? {
-        DateFormatter.webDate.date(from: value)
-    }
-}
-
-extension DateFormatter {
-    fileprivate static let webDate: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter
-    }()
-}
-
-struct AdminMediaAssetOpenAPIRepository: Sendable {
-    public let api: MediaAdminAPIClient
-
-    init(api: MediaAdminAPIClient) {
-        self.api = api
-    }
-
-    init(api: BlogAdminAPIClient) {
-        self.api = .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: api.sessionToken
-        )
-    }
-
-    func getAsset(
-        id: String
-    ) async throws -> MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema? {
-        let response = try await api.client.mediaAssetGet(
-            .init(path: .init(mediaAssetId: id))
-        )
-        switch response {
-        case .ok(let value):
-            return try value.body.json
-        case .notFound:
-            return nil
-        case .unauthorized, .forbidden:
-            return nil
-        case .undocumented:
-            return nil
-        }
     }
 }
 

@@ -45,12 +45,12 @@ RUN --mount=type=cache,id=application-swift-build,target=/build/application/.bui
     cp "$BIN_PATH/Server" "$BIN_PATH/Migrator" "$BIN_PATH/Worker" /staging/backend/ && \
     cp "$BIN_PATH/WebApp" /staging/web-app/ && \
     cp "$BIN_PATH/Static" /staging/web-static/ && \
-    find -L "$BIN_PATH/" \
-        \( -regex '.*\\.resources$' -o -regex '.*\\.bundle$' \) \
-        -exec cp -Ra {} /staging/web-app/ \;
+    for resourceBundle in "$BIN_PATH"/*.resources "$BIN_PATH"/*.bundle; do \
+        if [ -e "$resourceBundle" ]; then cp -Ra "$resourceBundle" /staging/web-app/; fi; \
+    done
 
 RUN mkdir -p /staging/web-app/application_WebApp.resources && \
-    cp -Ra /build/application/Sources/WebApp/Resources/. /staging/web-app/application_WebApp.resources/
+    cp -Ra /build/application/Sources/WebApp/Resources/Templates/. /staging/web-app/application_WebApp.resources/
 
 # FileMiddleware serves from the `public` directory relative to the process
 # working directory. Preserve that directory in the static image.

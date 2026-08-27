@@ -20,14 +20,14 @@ import WebStandards
 struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListAuthMagicLinkInteractor,
             presenter: any AdminListAuthMagicLinkPresenter
         )
 
     func getAuthMagicLinks(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissionSet = context.currentUserPermissions
@@ -89,7 +89,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
 
     func getAuthMagicLinksBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -121,7 +121,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
 
     func postAuthMagicLinksBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
