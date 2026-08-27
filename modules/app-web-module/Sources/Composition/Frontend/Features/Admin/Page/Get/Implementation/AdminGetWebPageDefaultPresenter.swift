@@ -20,7 +20,7 @@ struct AdminGetWebPageDefaultPresenter: AdminGetWebPagePresenter {
             request: request,
             title: "Web page details - Feather CMS",
             description: "Management web page details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -47,7 +47,7 @@ struct AdminGetWebPageDefaultPresenter: AdminGetWebPagePresenter {
             request: request,
             title: "Web page details - Feather CMS",
             description: "Management web page details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -3,10 +3,10 @@ import Foundation
 import Hummingbird
 import Logging
 
-typealias AppRequestContext = BasicRequestContext
+typealias DefaultRequestContext = BasicRequestContext
 
-func buildRouter() -> Router<AppRequestContext> {
-    let router = Router(context: AppRequestContext.self)
+func buildRouter() -> Router<DefaultRequestContext> {
+    let router = Router(context: DefaultRequestContext.self)
 
     router.addMiddleware {
         LogRequestsMiddleware(.info)

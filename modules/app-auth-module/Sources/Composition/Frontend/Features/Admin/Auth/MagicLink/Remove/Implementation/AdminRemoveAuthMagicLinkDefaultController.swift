@@ -19,14 +19,14 @@ struct AdminRemoveAuthMagicLinkDefaultController:
     AdminRemoveAuthMagicLinkController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveAuthMagicLinkInteractor,
             presenter: any AdminRemoveAuthMagicLinkPresenter
         )
 
     func getRemoveAuthMagicLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -50,7 +50,7 @@ struct AdminRemoveAuthMagicLinkDefaultController:
 
     func postRemoveAuthMagicLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()

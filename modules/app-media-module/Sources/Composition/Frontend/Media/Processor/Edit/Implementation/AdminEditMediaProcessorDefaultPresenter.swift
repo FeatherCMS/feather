@@ -21,7 +21,7 @@ struct AdminEditMediaProcessorDefaultPresenter: AdminEditMediaProcessorPresenter
             request: request,
             title: "Edit media processor - Feather CMS",
             description: "Edit media processor - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

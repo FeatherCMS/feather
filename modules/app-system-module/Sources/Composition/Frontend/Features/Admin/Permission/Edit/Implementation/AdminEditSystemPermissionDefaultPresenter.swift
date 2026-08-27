@@ -20,7 +20,7 @@ struct AdminEditSystemPermissionDefaultPresenter:
             request: request,
             title: "Edit system permission - Feather CMS",
             description: "Edit a management system permission",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -46,7 +46,7 @@ struct AdminEditSystemPermissionDefaultPresenter:
             request: request,
             title: "Edit system permission - Feather CMS",
             description: "Edit a management system permission",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -19,7 +19,7 @@ struct AdminGetContactFormDefaultPresenter: AdminGetContactFormPresenter {
             request: request,
             title: "Contact form - Feather CMS",
             description: "View contact form",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

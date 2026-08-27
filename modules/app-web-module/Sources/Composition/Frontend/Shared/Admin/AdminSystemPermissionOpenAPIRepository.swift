@@ -9,9 +9,9 @@ struct AdminSystemPermissionOpenAPIRepository:
 {
     let api: SystemAdminAPIClient
 
-    func listNames(
-        // empty
-    ) async throws -> [String] {
+    func listNames(  // empty
+        ) async throws -> [String]
+    {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.systemPermissionSearch(
                 headers: .init(accept: [.init(contentType: .json)]),

@@ -13,14 +13,14 @@ struct AdminListMediaProcessorDefaultController:
     AdminListMediaProcessorController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListMediaProcessorInteractor,
             presenter: any AdminListMediaProcessorPresenter
         )
 
     func getListMediaProcessors(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let page = request.queryPage()
@@ -65,7 +65,7 @@ struct AdminListMediaProcessorDefaultController:
 
     func bulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -97,7 +97,7 @@ struct AdminListMediaProcessorDefaultController:
 
     func bulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(

@@ -20,7 +20,7 @@ struct AdminAddMediaFolderDefaultPresenter: AdminAddMediaFolderPresenter {
             request: request,
             title: "Add media folder - Feather CMS",
             description: "Add media folder - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

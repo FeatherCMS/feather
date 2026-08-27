@@ -11,14 +11,14 @@ import WebStandards
 
 struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddMediaAssetInteractor,
             presenter: any AdminAddMediaAssetPresenter
         )
 
     func getAddMediaAsset(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let parentId =
@@ -53,7 +53,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
 
     func postAddMediaAsset(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let payload = try await request.decode(

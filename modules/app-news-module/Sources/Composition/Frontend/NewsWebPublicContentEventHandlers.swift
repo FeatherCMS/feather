@@ -127,7 +127,7 @@ public enum NewsWebPublicContentEventHandlers {
             image: value.imageURL,
             permalink: value.metadata.slug
         )
-        result["contents"] = ["html": value.content]
+        result["contents"] = ["html": value.content] as [String: Any]
         result["categories"] = value.categories.map(summaryContext)
         result["noindex"] =
             value.metadata.status != "published"
@@ -145,7 +145,7 @@ public enum NewsWebPublicContentEventHandlers {
             image: value.imageURL,
             permalink: value.metadata.slug
         )
-        result["contents"] = ["html": value.content]
+        result["contents"] = ["html": value.content] as [String: Any]
         result["news"] = value.news.map(summaryContext)
         result["noindex"] =
             value.metadata.status != "published"

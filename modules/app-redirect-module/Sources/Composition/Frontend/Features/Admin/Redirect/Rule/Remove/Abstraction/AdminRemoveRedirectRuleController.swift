@@ -7,19 +7,19 @@ protocol AdminRemoveRedirectRuleController: Sendable {
 
     func getRemoveRedirectRule(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveRedirectRule(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveRedirectRuleController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/redirect/rules/{id}/remove/",

@@ -25,7 +25,7 @@ struct AdminRemoveBlogAuthorDefaultPresenter:
             request: request,
             title: "Remove author - Feather CMS",
             description: "Remove confirmation for a management author",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -50,7 +50,7 @@ struct AdminRemoveBlogAuthorDefaultPresenter:
             request: request,
             title: "Remove author - Feather CMS",
             description: "Remove confirmation for a management author",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

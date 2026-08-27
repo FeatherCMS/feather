@@ -10,14 +10,14 @@ import WebStandards
 
 struct AdminGetMediaHomeDefaultController: AdminGetMediaHomeController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetMediaHomeInteractor,
             presenter: any AdminGetMediaHomePresenter
         )
 
     func getHome(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         return presenter.renderPage(

@@ -19,8 +19,10 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
 
     public func handle(
         _ request: Request,
-        context: AppRequestContext,
-        next: @concurrent (Request, AppRequestContext) async throws -> Response
+        context: DefaultRequestContext,
+        next:
+            @concurrent (Request, DefaultRequestContext) async throws ->
+            Response
     ) async throws -> Response {
         let path = request.uri.path
         guard shouldLookupRedirect(for: path) else {
@@ -49,10 +51,7 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
     private func shouldLookupRedirect(
         for path: String
     ) -> Bool {
-        if path.isEmpty || path == "/" || path == "/health"
-            || path == "/admin-navigation.js"
-            || path == "/style.css"
-        {
+        if path.isEmpty || path == "/" || path == "/health" {
             return false
         }
         if path.hasPrefix("/admin/") || path == "/admin" {

@@ -60,7 +60,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                     request: request,
                     title: "Select media asset",
                     description: "Select media asset",
-                    imagePath: "images/puppy.png",
+                    imagePath: "images/logos/logo.png",
                     content: Div {
                         MediaAssetErrorView(
                             info: "Unable to load media assets.",
@@ -74,7 +74,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 request: request,
                 title: "Media assets - Feather CMS",
                 description: "Media assets - Feather CMS",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -91,7 +91,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 request: request,
                 title: "Select media asset",
                 description: "Select media asset",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 content: Div {
                     content
                 }
@@ -101,7 +101,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             request: request,
             title: "Media assets - Feather CMS",
             description: "Media assets - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -122,7 +122,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             request: request,
             title: "Remove selected assets",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

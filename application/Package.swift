@@ -85,16 +85,8 @@ let package = Package(
             from: "2.0.0"
         ),
         .package(
-            url: "https://github.com/apple/swift-markdown",
-            from: "0.8.0"
-        ),
-        .package(
             url: "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio",
-            from: "2.0.0"
         ),
         .package(
             url: "https://github.com/apple/swift-log",
@@ -110,14 +102,6 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
-            from: "2.0.1"
-        ),
-        .package(
-            url: "https://github.com/BinaryBirds/swift-nanoid",
-            from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/binarybirds/swift-bcrypt",
             from: "2.0.1"
         ),
         .package(
@@ -174,9 +158,6 @@ let package = Package(
             name: "Migrator",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "NanoID", package: "swift-nanoid"),
-                .product(name: "BCrypt", package: "swift-bcrypt"),
-                .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
@@ -207,9 +188,6 @@ let package = Package(
             name: "Worker",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "NanoID", package: "swift-nanoid"),
-                .product(name: "BCrypt", package: "swift-bcrypt"),
-                .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
@@ -263,8 +241,6 @@ let package = Package(
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
-                .product(name: "Markdown", package: "swift-markdown"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "Mustache", package: "swift-mustache"),
 
                 .product(name: "SystemFrontend", package: "app-system-module"),
@@ -281,19 +257,13 @@ let package = Package(
                 .product(name: "NewsFrontend", package: "app-news-module"),
                 .product(name: "AuthFrontend", package: "app-auth-module"),
 
-                .product(name: "WebAppAPI", package: "app-web-module"),
                 .product(name: "ContactAppAPI", package: "app-contact-module"),
                 .product(name: "BlogAppAPI", package: "app-blog-module"),
                 .product(name: "NewsAppAPI", package: "app-news-module"),
-                .product(name: "AuthAppAPI", package: "app-auth-module"),
 
-                .product(name: "MediaAdminAPI", package: "app-media-module"),
-                .product(name: "BlogAdminAPI", package: "app-blog-module"),
-                .product(name: "WebAdminAPI", package: "app-web-module"),
-                .product(name: "AnalyticsAdminAPI", package: "app-analytics-module"),
             ],
             resources: [
-                .copy("Resources/Themes"),
+                .copy("Resources/Templates"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
@@ -302,9 +272,6 @@ let package = Package(
             name: "Server",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "NanoID", package: "swift-nanoid"),
-                .product(name: "BCrypt", package: "swift-bcrypt"),
-                .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
 

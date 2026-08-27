@@ -7,12 +7,12 @@ import SGML
 import WebStandards
 
 protocol AdminTestNewsletterIssueEmailController: Sendable {
-    func send(request: Request, context: AppRequestContext) async throws
+    func send(request: Request, context: DefaultRequestContext) async throws
         -> Response
 }
 
 extension AdminTestNewsletterIssueEmailController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.post(
             "/admin/newsletters/:newsletterId/issues/test-email/",
             use: send

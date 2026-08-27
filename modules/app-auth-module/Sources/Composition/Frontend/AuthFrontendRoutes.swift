@@ -18,7 +18,7 @@ import WebStandards
 public enum AuthFrontendRoutes {
 
     public static func registerAppRoutes(
-        router: Router<AppRequestContext>,
+        router: Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine,
         authAppClient: AuthAppAPIClient
     ) {
@@ -40,7 +40,7 @@ public enum AuthFrontendRoutes {
     }
 
     public static func registerAdminRoutes(
-        router: Router<AppRequestContext>,
+        router: Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine
     ) {
         AdminAuth(renderingEngine: renderingEngine).route(on: router)

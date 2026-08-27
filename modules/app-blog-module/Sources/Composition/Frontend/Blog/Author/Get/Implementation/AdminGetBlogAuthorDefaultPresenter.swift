@@ -27,7 +27,7 @@ struct AdminGetBlogAuthorDefaultPresenter: AdminGetBlogAuthorPresenter {
             request: request,
             title: "Blog author details - Feather CMS",
             description: "Management blog author details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -56,7 +56,7 @@ struct AdminGetBlogAuthorDefaultPresenter: AdminGetBlogAuthorPresenter {
             request: request,
             title: "Blog author details - Feather CMS",
             description: "Management blog author details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

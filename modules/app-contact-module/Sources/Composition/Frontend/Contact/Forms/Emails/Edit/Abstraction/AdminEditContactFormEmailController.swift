@@ -7,14 +7,14 @@ import SGML
 import WebStandards
 
 protocol AdminEditContactFormEmailController: Sendable {
-    func edit(request: Request, context: AppRequestContext) async throws
+    func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
-    func update(request: Request, context: AppRequestContext) async throws
+    func update(request: Request, context: DefaultRequestContext) async throws
         -> Response
 }
 
 extension AdminEditContactFormEmailController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get(
             "/admin/contact/forms/:formId/emails/:mailId/edit/",
             use: edit

@@ -113,20 +113,6 @@ public enum EventHandlers {
         }
 
         registry.register(
-            event: WebPageTemplateOptionProvider.self,
-            context: WebEventContext.self
-        ) { _, _ in
-            [
-                .init(value: "blog.post", title: "Blog post"),
-                .init(value: "blog.author", title: "Blog author"),
-                .init(value: "blog.tag", title: "Blog tag"),
-                .init(value: "blog.posts", title: "Blog posts"),
-                .init(value: "blog.authors", title: "Blog authors"),
-                .init(value: "blog.tags", title: "Blog tags"),
-            ]
-        }
-
-        registry.register(
             event: WebPageProvider.self,
             context: WebEventContext.self
         ) { _, _ in

@@ -16,14 +16,14 @@ import UserFrontend
 import WebStandards
 
 protocol AdminEditAuthCredentialController: Sendable {
-    func getEditCredential(request: Request, context: AppRequestContext)
+    func getEditCredential(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
-    func postEditCredential(request: Request, context: AppRequestContext)
+    func postEditCredential(request: Request, context: DefaultRequestContext)
         async throws -> Response
 }
 
 extension AdminEditAuthCredentialController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get("/admin/auth/credentials/{id}/edit", use: getEditCredential)
         router.post(
             "/admin/auth/credentials/{id}/edit",

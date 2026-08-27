@@ -22,7 +22,7 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
             request: request,
             title: "Remove subscribers - Feather CMS",
             description: "Confirm subscriber removal",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

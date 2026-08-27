@@ -25,7 +25,7 @@ struct AdminRemoveBlogTagDefaultPresenter:
             request: request,
             title: "Remove tag - Feather CMS",
             description: "Remove confirmation for a management tag",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -50,7 +50,7 @@ struct AdminRemoveBlogTagDefaultPresenter:
             request: request,
             title: "Remove tag - Feather CMS",
             description: "Remove confirmation for a management tag",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

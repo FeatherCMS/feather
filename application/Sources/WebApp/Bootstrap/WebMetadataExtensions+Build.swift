@@ -1,3 +1,4 @@
+import Foundation
 import FeatherContracts
 import WebApplication
 import BlogFrontend
@@ -8,7 +9,9 @@ import WebContracts
 
 func buildWebMetadataExtensions() async throws -> (
     referenceTypes: [WebMetadataReferenceTypeOption],
-    templates: [WebPageTemplateOption]
+    templates: [WebPageTemplateOption],
+    templateDefinitions: [WebTemplateDefinition],
+    templatePaths: [URL]
 ) {
     var events = EventRegistry()
     WebFrontend.WebEventHandlers.register(in: &events)
@@ -19,12 +22,17 @@ func buildWebMetadataExtensions() async throws -> (
         event: WebMetadataReferenceTypeOptionProvider(),
         using: WebEventContext()
     )
-    let templateContributions = try await events.trigger(
-        event: WebPageTemplateOptionProvider(),
+    let templateProviders = try await events.trigger(
+        event: WebTemplateProviderEvent(),
         using: WebEventContext()
     )
+    let templateDefinitions = templateProviders.flatMap(\.templates)
     return (
         referenceTypes: referenceTypeContributions.flatMap { $0 },
-        templates: templateContributions.flatMap { $0 }
+        templates: templateDefinitions.map {
+            .init(value: $0.id, title: $0.title)
+        },
+        templateDefinitions: templateDefinitions,
+        templatePaths: templateProviders.flatMap(\.bundledTemplatePaths)
     )
 }

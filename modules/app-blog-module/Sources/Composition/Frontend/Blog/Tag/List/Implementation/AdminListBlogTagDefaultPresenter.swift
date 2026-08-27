@@ -36,7 +36,7 @@ struct AdminListBlogTagDefaultPresenter:
                 request: request,
                 title: "Manage blog tags - Feather CMS",
                 description: "Management blog tag list",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -54,7 +54,7 @@ struct AdminListBlogTagDefaultPresenter:
             request: request,
             title: "Manage blog tags - Feather CMS",
             description: "Management blog tag list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -96,7 +96,7 @@ struct AdminListBlogTagDefaultPresenter:
             request: request,
             title: "Remove selected pages",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

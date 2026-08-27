@@ -8,14 +8,14 @@ struct AdminListWebMetadataDefaultController:
     AdminListWebMetadataController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListWebMetadataInteractor,
             presenter: any AdminListWebMetadataPresenter
         )
 
     func getMetadataEntries(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let page = request.queryPage()

@@ -20,7 +20,7 @@ struct AdminGetMediaHomeDefaultPresenter: AdminGetMediaHomePresenter {
             request: request,
             title: model.title,
             description: "Manage the media gallery, assets, and variants",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

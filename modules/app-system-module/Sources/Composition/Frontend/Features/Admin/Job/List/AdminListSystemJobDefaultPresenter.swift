@@ -18,7 +18,7 @@ struct AdminListSystemJobDefaultPresenter {
             request: request,
             title: "Worker jobs - Feather CMS",
             description: "Inspect worker jobs",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -42,7 +42,7 @@ struct AdminListSystemJobDefaultPresenter {
             request: request,
             title: "Worker jobs - Feather CMS",
             description: "Inspect worker jobs",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

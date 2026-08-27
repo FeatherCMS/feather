@@ -17,14 +17,14 @@ import WebStandards
 
 struct AppLogoutAuthDefaultController: AppLogoutAuthController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AppLogoutAuthInteractor,
             presenter: any AppLogoutAuthPresenter
         )
 
     func getLogout(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         if let sessionToken = context.sessionToken, !sessionToken.isEmpty {

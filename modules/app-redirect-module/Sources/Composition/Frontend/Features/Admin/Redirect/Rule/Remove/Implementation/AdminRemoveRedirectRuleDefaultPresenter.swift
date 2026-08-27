@@ -20,7 +20,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter:
             request: request,
             title: "Remove redirect rule - Feather CMS",
             description: "Remove confirmation for a management redirect rule",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -45,7 +45,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter:
             request: request,
             title: "Remove redirect rule - Feather CMS",
             description: "Remove confirmation for a management redirect rule",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -19,7 +19,7 @@ struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
             request: request,
             title: "Edit page - Feather CMS",
             description: "Edit a management page",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -45,7 +45,7 @@ struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
             request: request,
             title: "Edit page - Feather CMS",
             description: "Edit a management page",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

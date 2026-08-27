@@ -17,7 +17,7 @@ struct AdminGetAnalyticsInsightsDefaultPresenter:
             request: request,
             title: page.source.pageTitle,
             description: page.source.summary,
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -39,7 +39,7 @@ struct AdminGetAnalyticsInsightsDefaultPresenter:
             request: request,
             title: source.pageTitle,
             description: source.summary,
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -73,7 +73,7 @@ struct AdminGetAnalyticsInsightsDefaultPresenter:
             request: request,
             title: source.pageTitle,
             description: source.summary,
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

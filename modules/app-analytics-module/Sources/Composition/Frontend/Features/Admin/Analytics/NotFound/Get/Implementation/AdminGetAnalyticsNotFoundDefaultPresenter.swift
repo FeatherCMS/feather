@@ -16,7 +16,7 @@ struct AdminGetAnalyticsNotFoundDefaultPresenter:
             request: request,
             title: model.title,
             description: model.description,
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -32,7 +32,7 @@ struct AdminGetAnalyticsNotFoundDefaultPresenter:
             request: request,
             title: "404s",
             description: "404 trends and missing routes.",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -56,7 +56,7 @@ struct AdminGetAnalyticsNotFoundDefaultPresenter:
             request: request,
             title: "404s",
             description: "404 trends and missing routes.",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

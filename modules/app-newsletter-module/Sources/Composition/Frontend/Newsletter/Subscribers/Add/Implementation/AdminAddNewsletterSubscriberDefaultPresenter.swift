@@ -21,7 +21,7 @@ struct AdminAddNewsletterSubscriberDefaultPresenter:
             request: request,
             title: "Add subscriber - Feather CMS",
             description: "Add newsletter subscriber",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

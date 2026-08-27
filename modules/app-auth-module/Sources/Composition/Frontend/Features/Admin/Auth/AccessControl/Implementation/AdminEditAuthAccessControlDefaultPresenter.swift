@@ -30,7 +30,7 @@ struct AdminEditAuthAccessControlDefaultPresenter:
             request: request,
             title: "No permission - Feather CMS",
             description: "No permission",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -55,7 +55,7 @@ struct AdminEditAuthAccessControlDefaultPresenter:
             request: request,
             title: "Access Control - Feather CMS",
             description: "Manage access control assignments",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

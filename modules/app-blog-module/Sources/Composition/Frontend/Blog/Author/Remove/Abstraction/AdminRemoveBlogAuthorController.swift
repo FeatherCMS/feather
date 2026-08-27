@@ -14,19 +14,19 @@ protocol AdminRemoveBlogAuthorController: Sendable {
 
     func getRemoveBlogAuthor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveBlogAuthor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveBlogAuthorController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/blog/authors/{id}/remove/",

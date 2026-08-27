@@ -18,12 +18,12 @@ import WebStandards
 struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddAuthCredentialInteractor,
             presenter: any AdminAddAuthCredentialPresenter
         )
 
-    func getAddCredential(request: Request, context: AppRequestContext)
+    func getAddCredential(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
         let identityId = try context.requiredID()
@@ -35,7 +35,7 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         )
     }
 
-    func postAddCredential(request: Request, context: AppRequestContext)
+    func postAddCredential(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
         let identityId = try context.requiredID()

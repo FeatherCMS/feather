@@ -19,19 +19,19 @@ protocol AdminRemoveAuthMagicLinkController: Sendable {
 
     func getRemoveAuthMagicLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveAuthMagicLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveAuthMagicLinkController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/auth/magic-links/{id}/remove/",

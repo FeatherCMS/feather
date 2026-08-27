@@ -5,14 +5,14 @@ import UserContracts
 
 struct AdminGetUserRoleDefaultController: AdminGetUserRoleController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetUserRoleInteractor,
             presenter: any AdminGetUserRolePresenter
         )
 
     func getUserRole(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()

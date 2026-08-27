@@ -16,7 +16,7 @@ public struct AdminMedia {
     }
 
     public func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         AdminGetMediaHome(
             renderingEngine: renderingEngine

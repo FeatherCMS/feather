@@ -14,14 +14,14 @@ protocol AdminGetBlogTagController: Sendable {
 
     func getBlogTag(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminGetBlogTagController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/blog/tags/{id}/",

@@ -4,7 +4,7 @@ import WebContracts
 
 enum AdminWebPageMetadataRoutes {
     static func register(
-        router: Router<AppRequestContext>,
+        router: Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine,
         templateOptions: [WebPageTemplateOption]
     ) {

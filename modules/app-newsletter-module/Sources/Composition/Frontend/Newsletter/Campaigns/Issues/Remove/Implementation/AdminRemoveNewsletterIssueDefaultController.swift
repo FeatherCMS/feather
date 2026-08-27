@@ -10,11 +10,11 @@ struct AdminRemoveNewsletterIssueDefaultController:
     AdminRemoveNewsletterIssueController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveNewsletterIssueInteractor,
             presenter: any AdminRemoveNewsletterIssuePresenter
         )
-    func confirm(request: Request, context: AppRequestContext) async throws
+    func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
@@ -24,7 +24,7 @@ struct AdminRemoveNewsletterIssueDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func remove(request: Request, context: AppRequestContext) async throws
+    func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)

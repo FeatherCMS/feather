@@ -24,7 +24,7 @@ struct AdminEditBlogTagDefaultPresenter: AdminEditBlogTagPresenter {
             request: request,
             title: "Edit tag - Feather CMS",
             description: "Edit a management tag",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -50,7 +50,7 @@ struct AdminEditBlogTagDefaultPresenter: AdminEditBlogTagPresenter {
             request: request,
             title: "Edit tag - Feather CMS",
             description: "Edit a management tag",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

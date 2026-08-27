@@ -7,14 +7,14 @@ struct AdminListRedirectRuleDefaultController:
     AdminListRedirectRuleController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListRedirectRuleInteractor,
             presenter: any AdminListRedirectRulePresenter
         )
 
     func getRedirectRules(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let page = request.queryPage()
@@ -74,7 +74,7 @@ struct AdminListRedirectRuleDefaultController:
 
     func getRedirectRulesBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -106,7 +106,7 @@ struct AdminListRedirectRuleDefaultController:
 
     func postRedirectRulesBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(

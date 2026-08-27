@@ -48,9 +48,6 @@ struct AdminGetHomeComponent: Component {
                 dailyTrafficCard(dailyTraffic)
             }
             webInsightsGrid
-            H2("Quick actions")
-                .style("margin:0 0 16px 0;")
-            quickActionsGrid
         }
     }
 
@@ -94,41 +91,6 @@ struct AdminGetHomeComponent: Component {
         }
         .style(
             "border:1px solid var(--cms-gray-3);border-radius:10px;padding:14px;background:var(--cms-white);color:var(--cms-strong-font);"
-        )
-    }
-
-    private var quickActionsGrid: some FlowContent {
-        Div {
-            if model.quickLinkGroups.isEmpty {
-                emptyCard("No quick actions available.")
-            }
-            else {
-                for group in model.quickLinkGroups {
-                    quickActionCard(group)
-                }
-            }
-        }
-        .class("grid", "grid-321")
-        .style("display:grid;column-gap:16px;row-gap:16px;margin-top:16px;")
-    }
-
-    private func quickActionCard(
-        _ group: AdminGetHomeModel.QuickLinkGroup
-    ) -> some FlowContent {
-        Div {
-            H3(group.label)
-                .style("margin:0 0 12px 0;font-size:1.15rem;")
-            Div {
-                for action in group.actions {
-                    A(action.label)
-                        .href(action.href)
-                        .class(action.style.cssClass)
-                }
-            }
-            .class("button-row")
-        }
-        .style(
-            "padding:16px;border:1px solid var(--cms-gray-3);border-radius:12px;background:var(--cms-white);color:var(--cms-strong-font);"
         )
     }
 

@@ -41,8 +41,8 @@ import AuthAppAPI
 
 func buildRouter(
     modules: AppModules
-) throws -> Router<AppRequestContext> {
-    let router = Router(context: AppRequestContext.self)
+) throws -> Router<DefaultRequestContext> {
+    let router = Router(context: DefaultRequestContext.self)
 
     router.addMiddleware {
         // LOG

@@ -166,6 +166,9 @@ let package = Package(
                 .target(name: "NewsAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
+            resources: [
+                .copy("Resources/Templates")
+            ],
             swiftSettings: defaultSwiftSettings
         ),
         // MARK: - tests

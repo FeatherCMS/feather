@@ -31,7 +31,7 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
                 request: request,
                 title: "Manage user roles - Feather CMS",
                 description: "Management user role list",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -49,7 +49,7 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
             request: request,
             title: "Manage user roles - Feather CMS",
             description: "Management user role list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -90,7 +90,7 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
             request: request,
             title: "Remove selected roles",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

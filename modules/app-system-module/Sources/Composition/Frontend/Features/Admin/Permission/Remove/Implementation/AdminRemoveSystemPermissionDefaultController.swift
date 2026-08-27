@@ -5,14 +5,14 @@ struct AdminRemoveSystemPermissionDefaultController:
     AdminRemoveSystemPermissionController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveSystemPermissionInteractor,
             presenter: any AdminRemoveSystemPermissionPresenter
         )
 
     func getRemoveSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -37,7 +37,7 @@ struct AdminRemoveSystemPermissionDefaultController:
 
     func postRemoveSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()

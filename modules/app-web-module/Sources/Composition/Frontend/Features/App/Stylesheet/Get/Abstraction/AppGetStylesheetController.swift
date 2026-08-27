@@ -6,14 +6,14 @@ protocol AppGetStylesheetController: Sendable {
 
     func getStyleCSS(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> CSSResponse
 }
 
 extension AppGetStylesheetController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/style.css",

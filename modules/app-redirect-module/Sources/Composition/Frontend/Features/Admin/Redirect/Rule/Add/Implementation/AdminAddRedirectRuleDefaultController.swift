@@ -7,14 +7,14 @@ import RedirectContracts
 
 struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddRedirectRuleInteractor,
             presenter: any AdminAddRedirectRulePresenter
         )
 
     func getAddRedirectRule(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         return runtime.presenter.renderAddPage(
@@ -25,7 +25,7 @@ struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
 
     func postAddRedirectRule(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions

@@ -1,3 +1,4 @@
+import Foundation
 import FeatherContracts
 import BlogFrontend
 import MediaFrontend
@@ -16,11 +17,11 @@ import WebApplication
 import NewsFrontend
 
 func buildAppRoutes(
-    router: Router<AppRequestContext>,
-    authRouter: Router<AppRequestContext>,
+    router: Router<DefaultRequestContext>,
+    authRouter: Router<DefaultRequestContext>,
     renderingEngine: DefaultRenderingEngine,
-    themeRenderer: ThemeRenderer,
-    publicContentRepository: AppPublicContentOpenAPIRepository,
+    themeRenderer: DefaultThemeRenderer,
+    publicContentRepository: any AppPublicContentRepository,
     publicContentEvents: any EventPublisher,
     styleshetCollector: GlobalStylesheetCollector
 ) {
@@ -38,7 +39,7 @@ func buildAppRoutes(
         repository: publicContentRepository,
         events: publicContentEvents,
         themeRenderer: themeRenderer,
-        contentRenderer: MarkdownContentRenderer(
+        contentRenderer: DefaultMarkdownRenderer(
             events: publicContentEvents,
             mediaBaseURL: AppEnvironmentStore.current.publicOrigins
                 .mediaBaseURL.absoluteString
@@ -47,4 +48,3 @@ func buildAppRoutes(
     .controller.route(on: router)
 
 }
-import Foundation

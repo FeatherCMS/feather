@@ -7,13 +7,13 @@ import SGML
 import WebStandards
 
 protocol AdminEditNewsletterCampaignSubscriberController: Sendable {
-    func edit(request: Request, context: AppRequestContext) async throws
+    func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
-    func update(request: Request, context: AppRequestContext) async throws
+    func update(request: Request, context: DefaultRequestContext) async throws
         -> Response
 }
 extension AdminEditNewsletterCampaignSubscriberController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get(
             "/admin/newsletters/:newsletterId/subscribers/:subscriberId/edit/",
             use: edit

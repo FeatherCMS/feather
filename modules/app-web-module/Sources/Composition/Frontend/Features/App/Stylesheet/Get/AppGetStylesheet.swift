@@ -20,7 +20,7 @@ public struct AppGetStylesheet {
     }
 
     public func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         controller.route(on: router)
     }

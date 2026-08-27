@@ -75,6 +75,7 @@ let package = Package(
 
         .package(path: "../../feather-core"),
         .package(path: "../app-system-module"),
+        .package(path: "../app-web-module"),
     ],
     targets: [
         .target(
@@ -177,6 +178,7 @@ let package = Package(
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "WebFrontend", package: "app-web-module"),
                 .target(name: "NewsletterContracts"),
                 .target(name: "NewsletterAdminAPI"),
                 .target(name: "NewsletterAppAPI"),

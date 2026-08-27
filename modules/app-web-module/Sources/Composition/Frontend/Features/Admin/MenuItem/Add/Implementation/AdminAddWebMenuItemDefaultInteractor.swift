@@ -6,8 +6,7 @@ struct AdminAddWebMenuItemDefaultInteractor: AdminAddWebMenuItemInteractor {
     let repository: any AdminAddWebMenuItemRepository
     let permissionRepository: any AdminSystemPermissionRepository
 
-    func loadPermissions(
-    ) async throws -> [String] {
+    func loadPermissions() async throws -> [String] {
         try await permissionRepository.listNames()
     }
 

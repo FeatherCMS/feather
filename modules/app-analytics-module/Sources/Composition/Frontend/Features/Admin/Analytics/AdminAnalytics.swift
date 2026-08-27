@@ -11,7 +11,7 @@ public struct AdminAnalytics {
     }
 
     public func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         AdminGetAnalyticsHome(
             renderingEngine: renderingEngine

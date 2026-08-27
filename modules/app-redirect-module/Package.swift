@@ -196,6 +196,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
                 .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemFrontend", package: "app-system-module"),
 
                 .target(name: "RedirectContracts"),
                 .target(name: "RedirectAdminAPI"),

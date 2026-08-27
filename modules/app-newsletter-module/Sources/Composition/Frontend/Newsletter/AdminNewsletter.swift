@@ -13,7 +13,7 @@ public struct AdminNewsletter {
         self.renderingEngine = renderingEngine
     }
 
-    public func route(on router: Router<AppRequestContext>) {
+    public func route(on router: Router<DefaultRequestContext>) {
         AdminListNewsletterCampaigns(renderingEngine: renderingEngine)
             .route(on: router)
         AdminGetNewsletterCampaign(renderingEngine: renderingEngine)

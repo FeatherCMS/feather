@@ -8,14 +8,14 @@ struct AdminEditWebPageDefaultController:
     AdminEditWebPageController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditWebPageInteractor,
             presenter: any AdminEditWebPagePresenter
         )
 
     func getEditWebPage(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -48,7 +48,7 @@ struct AdminEditWebPageDefaultController:
 
     func postEditWebPage(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()

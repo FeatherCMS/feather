@@ -6,14 +6,14 @@ struct AdminEditSettingsDefaultController:
     AdminEditSettingsController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditSettingsInteractor,
             presenter: any AdminEditSettingsPresenter
         )
 
     func getEditSettings(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
@@ -79,7 +79,7 @@ struct AdminEditSettingsDefaultController:
 
     func postEditSettings(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions

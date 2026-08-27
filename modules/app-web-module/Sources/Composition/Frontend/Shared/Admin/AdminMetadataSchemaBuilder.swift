@@ -5,8 +5,8 @@ import Foundation
 import OpenAPIRuntime
 import WebAdminAPI
 
-struct AdminMetadataSchemaBuilder {
-    static func createSchema(
+public struct AdminMetadataSchemaBuilder {
+    public static func createSchema(
         input: AdminMetadataFormValue
     ) -> Components.Schemas.WebMetadataCreateSchema {
         .init(
@@ -29,8 +29,8 @@ struct AdminMetadataSchemaBuilder {
         )
     }
 
-    static func formValue(
-        from detail: Components.Schemas.WebMetadataDetailSchema
+    public static func formValue<Detail: AdminMetadataDetailSchema>(
+        from detail: Detail
     ) -> AdminMetadataFormValue {
         .init(
             slug: detail.slug,
@@ -51,8 +51,8 @@ struct AdminMetadataSchemaBuilder {
         )
     }
 
-    static func formValue(
-        from detail: Components.Schemas.WebMetadataDetailSchema,
+    public static func formValue<Detail: AdminMetadataDetailSchema>(
+        from detail: Detail,
         fallbackTitle: String,
         fallbackExcerpt: String
     ) -> AdminMetadataFormValue {
@@ -81,7 +81,7 @@ struct AdminMetadataSchemaBuilder {
         )
     }
 
-    static func parseTimestamp(
+    public static func parseTimestamp(
         _ value: String
     ) -> Double? {
         parseDate(value.trimmingCharacters(in: .whitespacesAndNewlines))

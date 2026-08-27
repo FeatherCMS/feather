@@ -14,14 +14,14 @@ struct AdminEditBlogAuthorLinkDefaultController:
     AdminEditBlogAuthorLinkController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditBlogAuthorLinkInteractor,
             presenter: any AdminEditBlogAuthorLinkPresenter
         )
 
     func getEditBlogAuthorLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -57,7 +57,7 @@ struct AdminEditBlogAuthorLinkDefaultController:
 
     func postEditBlogAuthorLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()

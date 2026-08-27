@@ -19,7 +19,7 @@ struct AdminEditRedirectRuleDefaultPresenter: AdminEditRedirectRulePresenter {
             request: request,
             title: "Edit redirect rule - Feather CMS",
             description: "Edit a management redirect rule",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -45,7 +45,7 @@ struct AdminEditRedirectRuleDefaultPresenter: AdminEditRedirectRulePresenter {
             request: request,
             title: "Edit redirect rule - Feather CMS",
             description: "Edit a management redirect rule",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

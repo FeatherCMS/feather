@@ -9,13 +9,13 @@ import WebStandards
 protocol AppNewsletterCampaignSubscriptionController: Sendable {
     func subscribe(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AppNewsletterCampaignSubscriptionController {
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.post(
             "/newsletter/campaigns/:campaignId/subscribe",

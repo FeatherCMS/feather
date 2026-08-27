@@ -15,14 +15,14 @@ struct AdminListBlogAuthorLinkDefaultController:
     AdminListBlogAuthorLinkController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListBlogAuthorLinkInteractor,
             presenter: any AdminListBlogAuthorLinkPresenter
         )
 
     func getBlogAuthorLinks(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -72,7 +72,7 @@ struct AdminListBlogAuthorLinkDefaultController:
 
     func getBlogAuthorLinksBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let menuId = try context.requiredID()
@@ -100,7 +100,7 @@ struct AdminListBlogAuthorLinkDefaultController:
 
     func postBlogAuthorLinksBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let menuId = try context.requiredID()

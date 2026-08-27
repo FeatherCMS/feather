@@ -22,7 +22,7 @@ struct AdminAddMediaProcessorDefaultPresenter:
             request: request,
             title: "Add media processor - Feather CMS",
             description: "Add media processor - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

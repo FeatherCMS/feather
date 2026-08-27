@@ -4,14 +4,14 @@ import UserContracts
 
 struct AdminGetUserHomeDefaultController: AdminGetUserHomeController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetUserHomeInteractor,
             presenter: any AdminGetUserHomePresenter
         )
 
     func getHome(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         return presenter.renderPage(

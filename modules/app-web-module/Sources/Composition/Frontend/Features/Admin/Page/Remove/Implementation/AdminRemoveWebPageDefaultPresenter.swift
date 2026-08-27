@@ -20,7 +20,7 @@ struct AdminRemoveWebPageDefaultPresenter:
             request: request,
             title: "Remove page - Feather CMS",
             description: "Remove confirmation for a management page",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -45,7 +45,7 @@ struct AdminRemoveWebPageDefaultPresenter:
             request: request,
             title: "Remove page - Feather CMS",
             description: "Remove confirmation for a management page",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

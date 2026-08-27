@@ -19,14 +19,14 @@ protocol AdminGetAuthMagicLinkController: Sendable {
 
     func getAuthMagicLink(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminGetAuthMagicLinkController {
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/auth/magic-links/{id}/",

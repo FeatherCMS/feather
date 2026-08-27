@@ -5,18 +5,18 @@ import OpenAPIRuntime
 protocol AdminEditWebSettingsController: Sendable {
     func getEditWebSettings(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
     func postEditWebSettings(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditWebSettingsController {
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/web/settings/",

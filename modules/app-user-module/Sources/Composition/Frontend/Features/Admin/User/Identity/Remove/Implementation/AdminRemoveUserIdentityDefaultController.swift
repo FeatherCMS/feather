@@ -7,7 +7,7 @@ struct AdminRemoveUserIdentityDefaultController:
     AdminRemoveUserIdentityController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             getInteractor: any AdminGetUserIdentityInteractor,
             removeInteractor: any AdminRemoveUserIdentityInteractor,
             presenter: any AdminRemoveUserIdentityPresenter
@@ -15,7 +15,7 @@ struct AdminRemoveUserIdentityDefaultController:
 
     func getRemoveUserIdentity(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (getInteractor, _, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -40,7 +40,7 @@ struct AdminRemoveUserIdentityDefaultController:
 
     func postRemoveUserIdentity(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, removeInteractor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()

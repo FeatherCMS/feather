@@ -8,13 +8,14 @@ import NIOSSL
 import PostgresMigrations
 import PostgresNIO
 import Environment
+import FeatherInfrastructure
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
 import Foundation
 #endif
 
-typealias AppRequestContext = BasicRequestContext
+typealias DefaultRequestContext = BasicRequestContext
 
 func buildServer(
     config: ServerConfig

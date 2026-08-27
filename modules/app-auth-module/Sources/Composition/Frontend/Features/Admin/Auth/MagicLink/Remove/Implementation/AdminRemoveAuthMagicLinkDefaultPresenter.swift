@@ -45,7 +45,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
             request: request,
             title: "Manage user magic links - Feather CMS",
             description: "Management user magic link list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -70,7 +70,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
             title: "Remove user magic link - Feather CMS",
             description:
                 "Remove confirmation for a management user magic link",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -12,14 +12,14 @@ import WebStandards
 
 struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListMediaAssetInteractor,
             presenter: any AdminListMediaAssetPresenter
         )
 
     func getListMediaAssets(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let page = request.queryPage()
@@ -97,7 +97,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
 
     func bulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -139,7 +139,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
 
     func bulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
@@ -175,7 +175,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
 
     func deleteFolder(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         guard let id = context.parameters.get("id", as: String.self) else {

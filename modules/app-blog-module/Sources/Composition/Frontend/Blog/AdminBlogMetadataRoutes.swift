@@ -5,7 +5,7 @@ import WebFrontend
 
 enum AdminBlogMetadataRoutes {
     static func register(
-        router: Router<AppRequestContext>,
+        router: Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine,
         templateOptions: [WebPageTemplateOption]
     ) {

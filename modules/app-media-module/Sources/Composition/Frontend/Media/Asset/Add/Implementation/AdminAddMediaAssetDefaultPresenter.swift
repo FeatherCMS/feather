@@ -39,7 +39,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                 request: request,
                 title: "Upload media asset",
                 description: "Upload media asset",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 content: Div {
                     content
                 }
@@ -49,7 +49,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
             request: request,
             title: "Add media asset - Feather CMS",
             description: "Add media asset - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

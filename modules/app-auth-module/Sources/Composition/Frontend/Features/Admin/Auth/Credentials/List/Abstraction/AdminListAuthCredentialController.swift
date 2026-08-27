@@ -18,13 +18,13 @@ import WebStandards
 protocol AdminListAuthCredentialController: Sendable {
     func getCredentials(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminListAuthCredentialController {
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get(
             "/admin/auth/credentials/{id}",

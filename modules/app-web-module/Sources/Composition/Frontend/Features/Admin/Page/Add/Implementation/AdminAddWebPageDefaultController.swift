@@ -6,14 +6,14 @@ import OpenAPIRuntime
 
 struct AdminAddWebPageDefaultController: AdminAddWebPageController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddWebPageInteractor,
             presenter: any AdminAddWebPagePresenter
         )
 
     func getAddWebPage(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         return runtime.presenter.renderAddPage(
@@ -24,7 +24,7 @@ struct AdminAddWebPageDefaultController: AdminAddWebPageController {
 
     func postAddWebPage(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
@@ -148,7 +148,7 @@ struct AdminAddWebPageDefaultController: AdminAddWebPageController {
     }
 
     private func slugPrefix(
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) -> String {
         "/"
     }

@@ -14,14 +14,14 @@ struct AdminRemoveBlogAuthorDefaultController:
     AdminRemoveBlogAuthorController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminRemoveBlogAuthorInteractor,
             presenter: any AdminRemoveBlogAuthorPresenter
         )
 
     func getRemoveBlogAuthor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
@@ -46,7 +46,7 @@ struct AdminRemoveBlogAuthorDefaultController:
 
     func postRemoveBlogAuthor(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()

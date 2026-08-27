@@ -19,7 +19,7 @@ public struct AdminWeb {
     }
 
     public func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         AdminGetWebHome(
             renderingEngine: renderingEngine

@@ -8,12 +8,12 @@ import WebStandards
 
 struct AdminEditContactFormDefaultController: AdminEditContactFormController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditContactFormInteractor,
             presenter: any AdminEditContactFormPresenter
         )
 
-    func edit(request: Request, context: AppRequestContext) async throws
+    func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
@@ -43,7 +43,7 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         }
     }
 
-    func update(request: Request, context: AppRequestContext) async throws
+    func update(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)

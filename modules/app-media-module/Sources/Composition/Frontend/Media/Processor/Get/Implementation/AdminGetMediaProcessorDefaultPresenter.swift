@@ -31,7 +31,7 @@ struct AdminGetMediaProcessorDefaultPresenter: AdminGetMediaProcessorPresenter {
                 request: request,
                 title: "Media processor details - Feather CMS",
                 description: "Media processor details - Feather CMS",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -46,7 +46,7 @@ struct AdminGetMediaProcessorDefaultPresenter: AdminGetMediaProcessorPresenter {
             request: request,
             title: "Media processor details - Feather CMS",
             description: "Media processor details - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

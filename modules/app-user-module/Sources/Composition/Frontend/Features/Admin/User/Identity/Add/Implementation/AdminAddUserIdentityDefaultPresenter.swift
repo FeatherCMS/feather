@@ -14,7 +14,7 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
             request: request,
             title: "Add identity",
             description: "Add user identity",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

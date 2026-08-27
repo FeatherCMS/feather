@@ -17,7 +17,7 @@ struct AdminEditWebSettingsDefaultPresenter:
             request: request,
             title: "Settings - Feather CMS",
             description: "Edit web settings",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -35,7 +35,7 @@ struct AdminEditWebSettingsDefaultPresenter:
             request: request,
             title: "No permission - Feather CMS",
             description: "No permission",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

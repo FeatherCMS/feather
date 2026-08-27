@@ -6,14 +6,14 @@ struct AdminAddSystemPermissionDefaultController:
     AdminAddSystemPermissionController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminAddSystemPermissionInteractor,
             presenter: any AdminAddSystemPermissionPresenter
         )
 
     func getAddSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderAddPage(
@@ -24,7 +24,7 @@ struct AdminAddSystemPermissionDefaultController:
 
     func postAddSystemPermission(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions

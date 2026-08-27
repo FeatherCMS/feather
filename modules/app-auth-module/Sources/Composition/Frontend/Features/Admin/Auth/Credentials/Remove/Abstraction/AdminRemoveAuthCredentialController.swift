@@ -16,14 +16,14 @@ import UserFrontend
 import WebStandards
 
 protocol AdminRemoveAuthCredentialController: Sendable {
-    func getRemoveCredential(request: Request, context: AppRequestContext)
+    func getRemoveCredential(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
-    func postRemoveCredential(request: Request, context: AppRequestContext)
+    func postRemoveCredential(request: Request, context: DefaultRequestContext)
         async throws -> Response
 }
 
 extension AdminRemoveAuthCredentialController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get(
             "/admin/auth/credentials/{id}/remove",
             use: getRemoveCredential

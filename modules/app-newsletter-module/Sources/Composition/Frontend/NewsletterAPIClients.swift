@@ -131,7 +131,7 @@ public struct NewsletterAppAPIClient: Sendable {
     }
 }
 
-extension AppRequestContext {
+extension DefaultRequestContext {
     public func newsletterManagementAPI() -> NewsletterAdminAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,

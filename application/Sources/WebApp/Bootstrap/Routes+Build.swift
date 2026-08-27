@@ -1,3 +1,4 @@
+import Foundation
 import FeatherContracts
 import WebApplication
 import BlogFrontend
@@ -24,15 +25,17 @@ func buildRouter(
     styleshetCollector: GlobalStylesheetCollector,
     environment: AppEnvironment,
     referenceTypeOptions: [WebMetadataReferenceTypeOption],
-    templateOptions: [WebPageTemplateOption]
-) async throws -> Router<AppRequestContext> {
+    templateOptions: [WebPageTemplateOption],
+    templateDefinitions: [WebTemplateDefinition],
+    templatePaths: [URL]
+) async throws -> Router<DefaultRequestContext> {
 
-    let router = Router(context: AppRequestContext.self)
+    let router = Router(context: DefaultRequestContext.self)
 
     router.addMiddleware {
         LogRequestsMiddleware(Logger.current.logLevel)
         WebAppAnalyticsLogMiddleware(apiBaseURL: environment.apiBaseURL)
-        HTTPErrorMiddleware()
+        HTTPErrorMiddleware<DefaultRequestContext>()
         RedirectRuleMiddleware(
             apiBaseURL: environment.apiBaseURL,
             siteBaseURL: environment.publicOrigins.siteBaseURL
@@ -43,91 +46,17 @@ func buildRouter(
         Response(status: .ok)
     }
 
-    router.get("/admin-navigation.js") { _, _ in
-        let script = """
-            (function () {
-                var key = "adminMenuCollapsed";
-                var menuToggle = document.getElementById("menuToggle");
-                var toastNode = document.getElementById("admin-toast");
-                var mobileMedia = window.matchMedia("(max-width: 599px)");
-
-                if (menuToggle) {
-                    try {
-                        var collapsed = window.localStorage.getItem(key);
-                        if (collapsed === "1") { menuToggle.checked = true; }
-                    } catch (_) {}
-
-                    menuToggle.addEventListener("change", function () {
-                        try {
-                            window.localStorage.setItem(key, menuToggle.checked ? "1" : "0");
-                        } catch (_) {}
-                    });
-
-                    document.querySelectorAll("nav .sub-menu a[href], nav > ul > li a[href]").forEach(function (link) {
-                        link.addEventListener("click", function () {
-                            if (!mobileMedia.matches) { return; }
-                            menuToggle.checked = false;
-                            try {
-                                window.localStorage.setItem(key, "0");
-                            } catch (_) {}
-                        });
-                    });
-                }
-
-                if (!toastNode || !window.toast) { return; }
-
-                window.toast.show({
-                    type: toastNode.dataset.toastType || "success",
-                    title: toastNode.dataset.toastTitle || "Success",
-                    message: toastNode.dataset.toastMessage || "",
-                    position: toastNode.dataset.toastPosition || "top-right",
-                    duration: 3000,
-                    persistent: false
-                });
-
-                try {
-                    var url = new URL(window.location.href);
-                    [
-                        "toastType",
-                        "toastTitle",
-                        "toastMessage",
-                        "toastPosition"
-                    ].forEach(function (queryKey) {
-                        url.searchParams.delete(queryKey);
-                    });
-                    var next = url.pathname;
-                    var search = url.searchParams.toString();
-                    if (search) {
-                        next += "?" + search;
-                    }
-                    if (url.hash) {
-                        next += url.hash;
-                    }
-                    window.history.replaceState(window.history.state, "", next);
-                } catch (_) {}
-            })();
-            """
-        return Response(
-            status: .ok,
-            headers: [
-                .contentType: "application/javascript; charset=utf-8",
-                .cacheControl: "no-cache",
-            ],
-            body: .init(byteBuffer: ByteBuffer(string: script))
-        )
-    }
-
-    let appClient = ApplicationAPI(
-        apiBaseURL: environment.apiBaseURL
-    )
     let authAppClient = AuthAppAPIClient(
         apiBaseURL: environment.apiBaseURL
     )
-    let publicContentRepository = AppPublicContentOpenAPIRepository(
-        api: appClient
+    let publicContentRepository = WebPublicContentRepository(
+        apiBaseURL: environment.apiBaseURL
     )
     var adminEvents = EventRegistry()
-    AdminHomeEventHandlers.register(in: &adminEvents)
+    BlogAdminDashboardEventHandlers.register(in: &adminEvents)
+    WebAdminDashboardEventHandlers.register(in: &adminEvents)
+    RedirectAdminDashboardEventHandlers.register(in: &adminEvents)
+    AnalyticsAdminDashboardEventHandlers.register(in: &adminEvents)
     AdminMenuEventHandlers.register(in: &adminEvents)
     AuthAdminMenuEventHandlers.register(in: &adminEvents)
     AccountAdminMenuEventHandlers.register(in: &adminEvents)
@@ -144,18 +73,36 @@ func buildRouter(
         publicOrigins: environment.publicOrigins,
         adminMenuCatalog: adminMenuCatalog
     )
-    let themeRenderer = ThemeRenderer()
+    let applicationTemplatePaths = Bundle.module.url(
+        forResource: "Templates",
+        withExtension: nil
+    )
+    let themeRenderer = try DefaultThemeRenderer(
+        templateLoader: DefaultTemplateLoader(
+            paths: templatePaths + (applicationTemplatePaths.map { [$0] } ?? [])
+        ),
+        templatePath: { identifier in
+            templateDefinitions.first { $0.id == identifier }?.path
+        }
+    )
     var publicContentEvents = EventRegistry()
     WebPublicContentEventHandlers.register(in: &publicContentEvents)
+    WebMarkdownEventHandlers.register(in: &publicContentEvents)
     BlogWebPublicContentEventHandlers.register(in: &publicContentEvents)
     NewsWebPublicContentEventHandlers.register(in: &publicContentEvents)
 
-    MarkdownBlockRendererEventHandlers.register(
+    ContactMarkdownEventHandlers.register(
         in: &publicContentEvents,
-        api: appClient
+        api: ContactAppAPIClient(apiBaseURL: environment.apiBaseURL)
     )
+    NewsletterMarkdownEventHandlers.register(in: &publicContentEvents)
 
-    let authRouter = router.add(middleware: AuthMiddleware())
+    let authRouter = router.add(
+        middleware: DefaultAuthMiddleware<DefaultRequestContext>(
+            apiBaseURL: environment.apiBaseURL,
+            secureCookies: environment.publicOrigins.usesSecureCookies
+        )
+    )
     buildAppRoutes(
         router: router,
         authRouter: authRouter,
@@ -174,14 +121,19 @@ func buildRouter(
 
     // MARK: - admin
 
-    let adminRouter = authRouter.add(middleware: AdminAuthMiddleware())
-    Admin(
+    let adminRouter = authRouter.add(
+        middleware: AdminAuthMiddleware<DefaultRequestContext>(
+            loginPath: "/login/",
+            unauthorizedPath: "/"
+        )
+    )
+    buildAdminRoutes(
+        router: adminRouter,
         renderingEngine: renderingEngine,
         referenceTypeOptions: referenceTypeOptions,
         templateOptions: templateOptions,
         adminEvents: adminEvents
     )
-    .route(on: adminRouter)
 
     return router
 }

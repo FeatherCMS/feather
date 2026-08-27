@@ -6,14 +6,14 @@ struct AdminListAccountInvitationDefaultController:
     AdminListAccountInvitationController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListAccountInvitationInteractor,
             presenter: any AdminListAccountInvitationPresenter
         )
 
     func getAccountInvitations(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
@@ -73,7 +73,7 @@ struct AdminListAccountInvitationDefaultController:
 
     func getAccountInvitationsBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -105,7 +105,7 @@ struct AdminListAccountInvitationDefaultController:
 
     func postAccountInvitationsBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let payload = try await request.decode(
             as: ListBulkRemoveFormInput.self,

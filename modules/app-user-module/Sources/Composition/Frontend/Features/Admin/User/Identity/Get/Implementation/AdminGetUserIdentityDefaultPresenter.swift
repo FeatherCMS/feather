@@ -15,7 +15,7 @@ struct AdminGetUserIdentityDefaultPresenter: AdminGetUserIdentityPresenter {
             request: request,
             title: "User identity details - Feather CMS",
             description: "Management user identity details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -39,7 +39,7 @@ struct AdminGetUserIdentityDefaultPresenter: AdminGetUserIdentityPresenter {
             request: request,
             title: "User identity details - Feather CMS",
             description: "Management user identity details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

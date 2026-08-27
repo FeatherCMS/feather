@@ -7,16 +7,16 @@ import SGML
 import WebStandards
 
 protocol AdminRemoveNewsletterCampaignController: Sendable {
-    func confirm(request: Request, context: AppRequestContext) async throws
+    func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
-    func remove(request: Request, context: AppRequestContext) async throws
+    func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
-    func removeSelected(request: Request, context: AppRequestContext)
+    func removeSelected(request: Request, context: DefaultRequestContext)
         async throws -> Response
 }
 
 extension AdminRemoveNewsletterCampaignController {
-    func route(on router: Router<AppRequestContext>) {
+    func route(on router: Router<DefaultRequestContext>) {
         router.get("/admin/newsletters/:newsletterId/remove/", use: confirm)
         router.post("/admin/newsletters/:newsletterId/remove/", use: remove)
         router.post("/admin/newsletters/remove/", use: removeSelected)

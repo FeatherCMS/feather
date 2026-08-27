@@ -20,7 +20,7 @@ struct AdminEditContactFieldDefaultPresenter:
             request: request,
             title: "Edit contact form field - Feather CMS",
             description: "Edit contact form field",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

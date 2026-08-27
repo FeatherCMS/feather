@@ -6,14 +6,14 @@ import UserContracts
 
 struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListUserIdentityInteractor,
             presenter: any AdminListUserIdentityPresenter
         )
 
     func getUserIdentities(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissionSet = context.currentUserPermissions
@@ -80,7 +80,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
 
     func getUserIdentitiesBulkRemoveConfirmation(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
@@ -112,7 +112,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
 
     func postUserIdentitiesBulkRemove(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(

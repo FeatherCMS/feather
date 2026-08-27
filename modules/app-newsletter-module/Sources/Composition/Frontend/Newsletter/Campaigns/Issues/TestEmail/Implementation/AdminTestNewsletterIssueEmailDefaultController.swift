@@ -10,7 +10,7 @@ import WebStandards
 struct AdminTestNewsletterIssueEmailDefaultController:
     AdminTestNewsletterIssueEmailController
 {
-    func send(request: Request, context: AppRequestContext) async throws
+    func send(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
         let newsletterId = try context.requiredParameter("newsletterId")

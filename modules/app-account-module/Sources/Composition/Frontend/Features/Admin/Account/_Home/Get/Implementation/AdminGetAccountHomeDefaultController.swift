@@ -3,14 +3,14 @@ import Hummingbird
 
 struct AdminGetAccountHomeDefaultController: AdminGetAccountHomeController {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetAccountHomeInteractor,
             presenter: any AdminGetAccountHomePresenter
         )
 
     func getHome(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let model = try await interactor.getHome()
