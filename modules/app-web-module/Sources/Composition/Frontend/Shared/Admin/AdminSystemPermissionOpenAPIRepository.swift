@@ -9,7 +9,7 @@ struct AdminSystemPermissionOpenAPIRepository:
 {
     let api: SystemAdminAPIClient
 
-    func listNames(// empty
+    func listNames(  // empty
         ) async throws -> [String]
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in

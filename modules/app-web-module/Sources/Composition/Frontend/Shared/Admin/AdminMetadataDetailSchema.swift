@@ -18,4 +18,5 @@ public protocol AdminMetadataDetailSchema {
 }
 
 extension Components.Schemas.WebMetadataDetailSchema:
-    AdminMetadataDetailSchema {}
+    AdminMetadataDetailSchema
+{}

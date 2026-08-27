@@ -3,7 +3,9 @@ import FeatherAdmin
 import Foundation
 import Hummingbird
 
-public struct DefaultAuthMiddleware<Context: AuthRequestContext>: RouterMiddleware {
+public struct DefaultAuthMiddleware<Context: AuthRequestContext>:
+    RouterMiddleware
+{
     private let middleware: AuthMiddleware<Context>
 
     public init(

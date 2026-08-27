@@ -1,5 +1,5 @@
-import WebFrontend
 import Foundation
+import WebFrontend
 
 struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "NewsletterCampaign"

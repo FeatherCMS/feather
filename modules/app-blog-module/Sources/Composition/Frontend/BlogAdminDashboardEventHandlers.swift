@@ -56,56 +56,108 @@ public enum BlogAdminDashboardEventHandlers {
         }
     }
 
-    private static func countPosts(using api: BlogAdminAPIClient) async throws -> Int {
+    private static func countPosts(using api: BlogAdminAPIClient) async throws
+        -> Int
+    {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.blogPostSearch(
                 headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(.init(page: .init(size: 1, number: 1), filters: .init(search: nil)))
+                body: .json(
+                    .init(
+                        page: .init(size: 1, number: 1),
+                        filters: .init(search: nil)
+                    )
+                )
             )
             switch response {
             case .ok(let value): return try value.body.json.data.total
-            case .unauthorized: throw OpenAPIRepositoryError.unauthorized(message: unauthorizedMessage)
-            case .forbidden: throw OpenAPIRepositoryError.forbidden(message: forbiddenMessage)
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: unauthorizedMessage
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: forbiddenMessage
+                )
             case .undocumented(let statusCode, let response):
-                throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }
 
-    private static func countAuthors(using api: BlogAdminAPIClient) async throws -> Int {
+    private static func countAuthors(using api: BlogAdminAPIClient) async throws
+        -> Int
+    {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.blogAuthorSearch(
                 headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(.init(page: .init(size: 1, number: 1), filters: .init(search: nil)))
+                body: .json(
+                    .init(
+                        page: .init(size: 1, number: 1),
+                        filters: .init(search: nil)
+                    )
+                )
             )
             switch response {
             case .ok(let value): return try value.body.json.data.total
-            case .unauthorized: throw OpenAPIRepositoryError.unauthorized(message: unauthorizedMessage)
-            case .forbidden: throw OpenAPIRepositoryError.forbidden(message: forbiddenMessage)
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: unauthorizedMessage
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: forbiddenMessage
+                )
             case .undocumented(let statusCode, let response):
-                throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }
 
-    private static func countTags(using api: BlogAdminAPIClient) async throws -> Int {
+    private static func countTags(using api: BlogAdminAPIClient) async throws
+        -> Int
+    {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.blogTagSearch(
                 headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(.init(page: .init(size: 1, number: 1), filters: .init(search: nil)))
+                body: .json(
+                    .init(
+                        page: .init(size: 1, number: 1),
+                        filters: .init(search: nil)
+                    )
+                )
             )
             switch response {
             case .ok(let value): return try value.body.json.data.total
-            case .unauthorized: throw OpenAPIRepositoryError.unauthorized(message: unauthorizedMessage)
-            case .forbidden: throw OpenAPIRepositoryError.forbidden(message: forbiddenMessage)
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: unauthorizedMessage
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: forbiddenMessage
+                )
             case .undocumented(let statusCode, let response):
-                throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }
 
-    private static var unauthorizedMessage: String { "Please sign in again to load the admin dashboard." }
-    private static var forbiddenMessage: String { "Your account cannot access the admin dashboard." }
+    private static var unauthorizedMessage: String {
+        "Please sign in again to load the admin dashboard."
+    }
+    private static var forbiddenMessage: String {
+        "Your account cannot access the admin dashboard."
+    }
 
     private static func appendCount(
         label: String,
@@ -114,7 +166,9 @@ public enum BlogAdminDashboardEventHandlers {
         operation: @escaping @Sendable () async throws -> Int,
         to contentStats: inout [AdminGetHomeModel.ContentStat]
     ) async {
-        guard permissions.contains(permission), let count = try? await operation() else { return }
+        guard permissions.contains(permission),
+            let count = try? await operation()
+        else { return }
         contentStats.append(.init(label: label, value: "\(count)"))
     }
 }

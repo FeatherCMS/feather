@@ -1,5 +1,5 @@
-import FeatherContracts
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import Logging
 import Markdown
@@ -34,8 +34,9 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
                 using: WebMarkdownSourceTransformerRequest(
                     requestPath: requestPath
                 )
-            ).compactMap { $0 }
-                .sorted { $0.priority < $1.priority }) ?? []
+            )
+            .compactMap { $0 }
+            .sorted { $0.priority < $1.priority }) ?? []
         for transformer in transformers {
             source = await transformer.transform(
                 source,
@@ -48,14 +49,16 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         )
         let renderers: [any WebMarkdownBlockRenderer]
         do {
-            renderers = try await events.trigger(
-                event: WebMarkdownBlockRendererProvider(
-                    request: .init(requestPath: requestPath)
-                ),
-                using: WebMarkdownBlockRendererRequest(
-                    requestPath: requestPath
+            renderers =
+                try await events.trigger(
+                    event: WebMarkdownBlockRendererProvider(
+                        request: .init(requestPath: requestPath)
+                    ),
+                    using: WebMarkdownBlockRendererRequest(
+                        requestPath: requestPath
+                    )
                 )
-            ).compactMap { $0 }
+                .compactMap { $0 }
         }
         catch {
             Logger.current.error(
@@ -92,13 +95,13 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         return output
     }
 
-
     private func renderDocument(
         source: String,
         renderers: [any WebMarkdownBlockRenderer],
         requestPath: String,
     ) async -> String {
-        let normalizedSource = source
+        let normalizedSource =
+            source
             .replacingOccurrences(of: "\r\n", with: "\n")
             .replacingOccurrences(of: "\r", with: "\n")
         let document = Document(
@@ -129,24 +132,28 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         var children: [WebMarkdownBlockRendererRequest.Child] = []
         for child in directive.children {
             if let childDirective = child as? BlockDirective {
-                children.append(.init(
-                    name: childDirective.name,
-                    arguments: directiveArguments(
-                        from: childDirective.argumentText
-                    ),
-                    html: await render(
-                        childDirective,
-                        renderers: renderers,
-                        requestPath: requestPath
+                children.append(
+                    .init(
+                        name: childDirective.name,
+                        arguments: directiveArguments(
+                            from: childDirective.argumentText
+                        ),
+                        html: await render(
+                            childDirective,
+                            renderers: renderers,
+                            requestPath: requestPath
+                        )
                     )
-                ))
+                )
                 continue
             }
-            children.append(.init(
-                name: "",
-                arguments: [:],
-                html: HTMLFormatter.format(child)
-            ))
+            children.append(
+                .init(
+                    name: "",
+                    arguments: [:],
+                    html: HTMLFormatter.format(child)
+                )
+            )
         }
 
         let request = WebMarkdownBlockRendererRequest(
@@ -154,9 +161,11 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
             arguments: arguments,
             children: children
         )
-        guard let renderer = renderers.first(where: {
-            $0.name.caseInsensitiveCompare(directive.name) == .orderedSame
-        }) else {
+        guard
+            let renderer = renderers.first(where: {
+                $0.name.caseInsensitiveCompare(directive.name) == .orderedSame
+            })
+        else {
             if directive.name.caseInsensitiveCompare("Cell") == .orderedSame {
                 return children.map { $0.html }.joined()
             }
@@ -170,7 +179,8 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         from arguments: DirectiveArgumentText
     ) -> [String: String] {
         Dictionary(
-            uniqueKeysWithValues: arguments
+            uniqueKeysWithValues:
+                arguments
                 .parseNameValueArguments()
                 .map { ($0.name, $0.value) }
         )

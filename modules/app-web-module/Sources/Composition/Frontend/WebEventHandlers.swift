@@ -1,5 +1,5 @@
-import Foundation
 import FeatherContracts
+import Foundation
 import WebContracts
 
 public enum WebEventHandlers {
