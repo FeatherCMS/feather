@@ -3,11 +3,11 @@ import Hummingbird
 
 struct AdminResendAccountInvitationDefaultController: Sendable {
     let buildRepository:
-        @Sendable (AppRequestContext) -> any AdminResendAccountInvitationRepository
+        @Sendable (DefaultRequestContext) -> any AdminResendAccountInvitationRepository
 
     func resend(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let repository = buildRepository(context)
         do {

@@ -66,7 +66,7 @@ struct AppAcceptAccountInvitation {
 
     func get(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         guard !token.isEmpty else {
@@ -105,7 +105,7 @@ struct AppAcceptAccountInvitation {
 
     func post(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let payload = try await request.decode(as: FormInput.self, context: context)
         guard payload.password.count >= 8 else {
@@ -196,7 +196,7 @@ struct AppAcceptAccountInvitation {
     }
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get("/account/invitation/accept/", use: get)
         router.post("/account/invitation/accept/", use: post)

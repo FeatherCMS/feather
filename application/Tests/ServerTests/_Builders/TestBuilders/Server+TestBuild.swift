@@ -5,6 +5,7 @@ import FeatherDatabasePostgres
 import NIOSSL
 import PostgresNIO
 import Environment
+import FeatherInfrastructure
 import Jobs
 #if canImport(FoundationEssentials)
 import FoundationEssentials

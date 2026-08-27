@@ -211,6 +211,7 @@ let package = Package(
 
                 .product(name: "SystemContracts", package: "app-system-module"),
                 .product(name: "UserContracts", package: "app-user-module"),
+                .product(name: "UserFrontend", package: "app-user-module"),
                 
                 .target(name: "AccountContracts"),
                 .target(name: "AccountAdminAPI"),

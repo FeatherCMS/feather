@@ -48,7 +48,7 @@ struct AppMagicLink {
 
     func getRequest(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         render(
             request: request,
@@ -60,7 +60,7 @@ struct AppMagicLink {
 
     func postRequest(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let input = try await request.decode(as: RequestInput.self, context: context)
         do {
@@ -96,7 +96,7 @@ struct AppMagicLink {
 
     func verify(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         do {
@@ -162,7 +162,7 @@ struct AppMagicLink {
     }
 
     func route(
-        on router: Router<AppRequestContext>
+        on router: Router<DefaultRequestContext>
     ) {
         router.get("/magic-link/", use: getRequest)
         router.post("/magic-link/", use: postRequest)

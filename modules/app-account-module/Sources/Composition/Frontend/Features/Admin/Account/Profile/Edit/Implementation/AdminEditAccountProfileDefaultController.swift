@@ -6,14 +6,14 @@ struct AdminEditAccountProfileDefaultController:
     AdminEditAccountProfileController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             repository: any AdminEditAccountProfileRepository,
             presenter: any AdminEditAccountProfilePresenter
         )
 
     func get(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let userID = try context.requiredParameter("userId")
@@ -38,7 +38,7 @@ struct AdminEditAccountProfileDefaultController:
 
     func post(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let userID = try context.requiredParameter("userId")

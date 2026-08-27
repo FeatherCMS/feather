@@ -131,10 +131,14 @@ struct AdminEditAccountInvitationDefaultController:
     }
 
     private func roleOptions(
-        _ context: AppRequestContext,
+        _ context: DefaultRequestContext,
         selected: [String]
     ) async -> [AccountInvitationForm.RoleOptionState] {
-        guard let response = try? await context.userAdminAPI()
+        let userAPI = UserAdminAPIClient(
+            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            sessionToken: context.sessionToken
+        )
+        guard let response = try? await userAPI
             .withOpenAPIRepositoryErrorMapping({ client in
                 try await client.userRoleSearch(
                     headers: .init(accept: [.init(contentType: .json)]),

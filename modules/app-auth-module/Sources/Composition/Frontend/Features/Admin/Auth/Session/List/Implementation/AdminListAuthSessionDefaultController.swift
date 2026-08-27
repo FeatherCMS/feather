@@ -6,14 +6,14 @@ struct AdminListAuthSessionDefaultController:
     AdminListAuthSessionController
 {
     let buildRuntime:
-        @Sendable (Request, AppRequestContext) -> (
+        @Sendable (Request, DefaultRequestContext) -> (
             repository: any AdminListAuthSessionRepository,
             presenter: AdminListAuthSessionDefaultPresenter
         )
 
     func get(
         request: Request,
-        context: AppRequestContext
+        context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
