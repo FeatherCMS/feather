@@ -94,6 +94,10 @@ let package = Package(
             url: "https://github.com/hummingbird-project/swift-mustache",
             from: "2.0.0"
         ),
+        .package(
+            url: "https://github.com/apple/swift-markdown",
+            from: "0.8.0"
+        ),
         .package(path: "../../feather-core"),
         .package(path: "../app-system-module"),
     ],
@@ -205,6 +209,7 @@ let package = Package(
             name: "WebFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "Markdown", package: "swift-markdown"),
                 .product(name: "Mustache", package: "swift-mustache"),
                 .product(name: "SystemContracts", package: "app-system-module"),
 

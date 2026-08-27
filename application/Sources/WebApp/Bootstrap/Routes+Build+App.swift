@@ -39,7 +39,7 @@ func buildAppRoutes(
         repository: publicContentRepository,
         events: publicContentEvents,
         themeRenderer: themeRenderer,
-        contentRenderer: MarkdownContentRenderer(
+        contentRenderer: DefaultMarkdownRenderer(
             events: publicContentEvents,
             mediaBaseURL: AppEnvironmentStore.current.publicOrigins
                 .mediaBaseURL.absoluteString

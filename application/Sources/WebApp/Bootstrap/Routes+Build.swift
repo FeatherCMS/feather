@@ -160,13 +160,15 @@ func buildRouter(
     )
     var publicContentEvents = EventRegistry()
     WebPublicContentEventHandlers.register(in: &publicContentEvents)
+    WebMarkdownEventHandlers.register(in: &publicContentEvents)
     BlogWebPublicContentEventHandlers.register(in: &publicContentEvents)
     NewsWebPublicContentEventHandlers.register(in: &publicContentEvents)
 
-    MarkdownBlockRendererEventHandlers.register(
+    ContactMarkdownEventHandlers.register(
         in: &publicContentEvents,
-        api: appClient
+        api: ContactAppAPIClient(apiBaseURL: environment.apiBaseURL)
     )
+    NewsletterMarkdownEventHandlers.register(in: &publicContentEvents)
 
     let authRouter = router.add(
         middleware: AuthMiddleware<DefaultRequestContext>(

@@ -1,24 +1,18 @@
 import FeatherContracts
-import ContactFrontend
-import NewsletterFrontend
-import WebApplication
 
-enum MarkdownBlockRendererEventHandlers {
-    static func register(
-        in registry: inout EventRegistry,
-        api: AppAPI
-    ) {
+public enum WebMarkdownEventHandlers {
+    public static func register(in registry: inout EventRegistry) {
         registry.register(
             event: WebMarkdownBlockRendererProvider.self,
             context: WebMarkdownBlockRendererRequest.self
         ) { _, _ in
-            ContactFormBlockRenderer(api: api)
+            GridMarkdownBlockRenderer()
         }
         registry.register(
             event: WebMarkdownBlockRendererProvider.self,
             context: WebMarkdownBlockRendererRequest.self
         ) { _, _ in
-            NewsletterCampaignBlockRenderer(api: api)
+            CellMarkdownBlockRenderer()
         }
     }
 }

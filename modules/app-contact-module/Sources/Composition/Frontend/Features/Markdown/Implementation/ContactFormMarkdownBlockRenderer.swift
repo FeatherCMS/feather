@@ -1,27 +1,20 @@
-import BlogFrontend
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
 import WebFrontend
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import SystemFrontend
-import FeatherAdmin
 import ContactAppAPI
 import Foundation
 
-struct ContactFormBlockRenderer: MarkdownBlockRenderer {
+struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "ContactForm"
-    let api: AppAPI
+    let api: ContactAppAPIClient
 
     func render(
-        identifier: String,
-        requestPath: String
+        request: WebMarkdownBlockRendererRequest
     ) async -> String? {
+        guard let identifier = request.arguments["id"] else {
+            return nil
+        }
         do {
             let response =
-                try await api.withContactOpenAPIRepositoryErrorMapping {
+                try await api.withOpenAPIRepositoryErrorMapping {
                     client in
                     try await client.appContactFormGet(
                         path: .init(contactFormId: identifier)

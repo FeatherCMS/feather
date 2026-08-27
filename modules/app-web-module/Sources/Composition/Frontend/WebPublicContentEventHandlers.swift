@@ -188,7 +188,7 @@ public enum WebPublicContentEventHandlers {
             "noindex": siteSettings.noIndex
                 || page.metadata.noIndex
                 || page.metadata.status != "published",
-            "contents": ["html": page.content],
+            "contents": ["html": page.content] as [String: Any],
         ]
 
         if let image {

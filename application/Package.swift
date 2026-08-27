@@ -85,10 +85,6 @@ let package = Package(
             from: "2.0.0"
         ),
         .package(
-            url: "https://github.com/apple/swift-markdown",
-            from: "0.8.0"
-        ),
-        .package(
             url: "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
         ),
@@ -245,7 +241,6 @@ let package = Package(
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
-                .product(name: "Markdown", package: "swift-markdown"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "Mustache", package: "swift-mustache"),
 

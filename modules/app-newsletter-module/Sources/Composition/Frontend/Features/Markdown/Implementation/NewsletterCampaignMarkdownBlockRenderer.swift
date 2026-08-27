@@ -1,23 +1,13 @@
-import BlogFrontend
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
 import WebFrontend
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import SystemFrontend
-import FeatherAdmin
 import Foundation
 
-struct NewsletterCampaignBlockRenderer: MarkdownBlockRenderer {
+struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "NewsletterCampaign"
-    let api: AppAPI
 
     func render(
-        identifier: String,
-        requestPath: String
+        request: WebMarkdownBlockRendererRequest
     ) async -> String? {
+        guard let identifier = request.arguments["id"] else { return nil }
         guard !identifier.isEmpty else { return nil }
         return
             "<form method=\"post\" action=\"/newsletter/campaigns/\(escape(identifier))/subscribe\" class=\"newsletter-subscription-form\"><label for=\"newsletter-campaign-\(escape(identifier))\">Email</label><input type=\"email\" id=\"newsletter-campaign-\(escape(identifier))\" name=\"email\" required><button type=\"submit\">Subscribe</button></form>"
