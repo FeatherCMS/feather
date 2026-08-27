@@ -26,7 +26,9 @@ func buildRouter(
     styleshetCollector: GlobalStylesheetCollector,
     environment: AppEnvironment,
     referenceTypeOptions: [WebMetadataReferenceTypeOption],
-    templateOptions: [WebPageTemplateOption]
+    templateOptions: [WebPageTemplateOption],
+    templateDefinitions: [WebTemplateDefinition],
+    templatePaths: [URL]
 ) async throws -> Router<DefaultRequestContext> {
 
     let router = Router(context: DefaultRequestContext.self)
@@ -144,15 +146,17 @@ func buildRouter(
         publicOrigins: environment.publicOrigins,
         adminMenuCatalog: adminMenuCatalog
     )
-    guard let themesURL = Bundle.module.url(
-        forResource: "Themes",
+    let applicationTemplatePaths = Bundle.module.url(
+        forResource: "Templates",
         withExtension: nil
-    ) else {
-        throw CocoaError(.fileNoSuchFile)
-    }
+    )
     let themeRenderer = try DefaultThemeRenderer(
-        templateLoader: DefaultTemplateLoader(paths: [themesURL]),
-        templatePath: { WebTemplateRegistry.shared.templatePath(for: $0) }
+        templateLoader: DefaultTemplateLoader(
+            paths: templatePaths + (applicationTemplatePaths.map { [$0] } ?? [])
+        ),
+        templatePath: { identifier in
+            templateDefinitions.first { $0.id == identifier }?.path
+        }
     )
     var publicContentEvents = EventRegistry()
     WebPublicContentEventHandlers.register(in: &publicContentEvents)

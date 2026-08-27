@@ -227,6 +227,9 @@ let package = Package(
                 .target(name: "BlogAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
+            resources: [
+                .copy("Resources/Templates")
+            ],
             swiftSettings: defaultSwiftSettings
         ),
         // MARK: -

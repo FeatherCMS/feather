@@ -4,6 +4,13 @@ import WebContracts
 public enum NewsEventHandlers {
     public static func register(in registry: inout EventRegistry) {
         registry.register(
+            event: WebTemplateProviderEvent.self,
+            context: WebEventContext.self
+        ) { _, _ in
+            NewsWebTemplateProvider()
+        }
+
+        registry.register(
             event: WebMetadataReferenceTypeOptionProvider.self,
             context: WebEventContext.self
         ) { _, _ in
@@ -13,14 +20,5 @@ public enum NewsEventHandlers {
             ]
         }
 
-        registry.register(
-            event: WebPageTemplateOptionProvider.self,
-            context: WebEventContext.self
-        ) { _, _ in
-            [
-                .init(value: "news.articles", title: "News articles"),
-                .init(value: "news.categories", title: "News categories"),
-            ]
-        }
     }
 }

@@ -275,7 +275,7 @@ let package = Package(
                 .product(name: "AnalyticsAdminAPI", package: "app-analytics-module"),
             ],
             resources: [
-                .copy("Resources/Themes"),
+                .copy("Resources/Templates"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

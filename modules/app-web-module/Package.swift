@@ -215,6 +215,9 @@ let package = Package(
                 .product(name: "SystemFrontend", package: "app-system-module")
             ],
             path: "Sources/Composition/Frontend",
+            resources: [
+                .copy("Resources/Templates")
+            ],
             swiftSettings: defaultSwiftSettings
         ),
         // MARK: -

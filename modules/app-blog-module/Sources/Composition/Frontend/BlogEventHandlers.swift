@@ -5,6 +5,13 @@ import WebContracts
 public enum BlogEventHandlers {
     public static func register(in registry: inout EventRegistry) {
         registry.register(
+            event: WebTemplateProviderEvent.self,
+            context: WebEventContext.self
+        ) { _, _ in
+            BlogWebTemplateProvider()
+        }
+
+        registry.register(
             event: WebMenuItemProvider.self,
             context: WebEventContext.self
         ) { event, _ in
@@ -24,20 +31,6 @@ public enum BlogEventHandlers {
                 .init(value: "blog.post", title: "Blog post"),
                 .init(value: "blog.author", title: "Blog author"),
                 .init(value: "blog.tag", title: "Blog tag"),
-            ]
-        }
-
-        registry.register(
-            event: WebPageTemplateOptionProvider.self,
-            context: WebEventContext.self
-        ) { _, _ in
-            [
-                .init(value: "blog.post", title: "Blog post"),
-                .init(value: "blog.author", title: "Blog author"),
-                .init(value: "blog.tag", title: "Blog tag"),
-                .init(value: "blog.posts", title: "Blog posts"),
-                .init(value: "blog.authors", title: "Blog authors"),
-                .init(value: "blog.tags", title: "Blog tags"),
             ]
         }
 
