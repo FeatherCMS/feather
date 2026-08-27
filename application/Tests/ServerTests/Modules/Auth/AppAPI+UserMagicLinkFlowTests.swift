@@ -89,5 +89,17 @@ struct AppAPIUserMagicLinkFlowTests {
         }
         #expect(!authenticated.token.isEmpty)
         #expect(authenticated.user.id == identityID)
+
+        try await runner.run(
+            request: JSONRequest(
+                method: .post,
+                path: "/api/v1/auth/magic-link/verify",
+                body: AuthAppAPI.Components.Schemas.AuthMagicLinkVerifyRequestSchema(
+                    token: magicLink.token
+                )
+            )
+        ) { response in
+            #expect(response.response.status == .unauthorized)
+        }
     }
 }

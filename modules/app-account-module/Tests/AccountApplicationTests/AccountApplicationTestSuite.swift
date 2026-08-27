@@ -41,7 +41,7 @@ struct AccountApplicationTestSuite {
             userId: "user-1",
             email: "user@example.com",
             token: "token-123456",
-            roleIDs: ["role-editor"],
+            roleIDs: ["role-editor", "role-admin"],
             expiresAt: Date().addingTimeInterval(3600),
             createdAt: Date(),
             updatedAt: Date()
@@ -185,6 +185,60 @@ struct AccountApplicationTestSuite {
     }
 
     @Test
+    func addInvitationEmailContainsResolvedURL() async throws {
+        let identity = Identity(
+            id: "user-1",
+            status: .invited,
+            isRoot: false,
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let token = "token-123456"
+        let invitationRepository = MockInvitationRepository(
+            result: Invitation(
+                id: "invitation-1",
+                userId: identity.id,
+                email: "user@example.com",
+                token: token,
+                roleIDs: [],
+                expiresAt: Date().addingTimeInterval(3600),
+                createdAt: Date(),
+                updatedAt: Date()
+            )
+        )
+        let transaction = MockContextualTransactionExecutor(
+            context: WriteInvitation(
+                invitation: invitationRepository,
+                identity: MockIdentityRepository(identity: identity),
+                role: MockRoleRepository(),
+                credential: MockInvitationCredentialWriter()
+            )
+        )
+        let mailSender = MockMailSender()
+        let useCase = AddInvitation(
+            authorizer: MockPermissionAuthorizer(
+                permissions: [AccountPermissions.Invitations.create]
+            ),
+            transaction: transaction,
+            events: MockEventPublisher(),
+            mailSender: mailSender,
+            publicBaseURL: "https://example.test"
+        )
+
+        _ = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(email: "user@example.com", roleIDs: [])
+        )
+
+        #expect(
+            await mailSender.lastMessage?.body.contains(
+                "https://example.test/account/invitation/accept/?token=\(token)"
+            ) == true
+        )
+        #expect(await mailSender.lastMessage?.body.contains("\\(") == false)
+    }
+
+    @Test
     func resendInvitationRenewsTokenAndSendsEmail() async throws {
         let invitation = Invitation(
             id: "invitation-1",
@@ -222,6 +276,11 @@ struct AccountApplicationTestSuite {
         #expect(result.token != invitation.token)
         #expect(await repository.updateCallCount == 1)
         #expect(await mailSender.sendCallCount == 1)
+        #expect(
+            await mailSender.lastMessage?.body.contains(
+                "This is a reminder for your application identity invitation."
+            ) == true
+        )
         #expect(await mailSender.lastMessage?.body.contains(result.token) == true)
     }
 

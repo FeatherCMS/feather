@@ -33,9 +33,15 @@ public struct SignInWithMagicLink: SignIn {
         _ input: Input
     ) async throws -> Output {
         try await transaction.run { scope in
-            let usedLink = try await scope.magicLink.consumeByToken(
-                token: input.token
-            )
+            let usedLink: MagicLink
+            do {
+                usedLink = try await scope.magicLink.consumeByToken(
+                    token: input.token
+                )
+            }
+            catch is MagicLink.Error {
+                throw UseCaseError.authentication()
+            }
 
             guard
                 let credential = try await scope.credential.findBy(

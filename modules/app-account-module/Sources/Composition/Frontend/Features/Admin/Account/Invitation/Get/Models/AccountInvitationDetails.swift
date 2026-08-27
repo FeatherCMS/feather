@@ -19,9 +19,9 @@ struct AccountInvitationDetails: Component {
             AdminDetailsField(label: "Email", value: state.invitation.email)
             AdminDetailsField(
                 label: "Roles",
-                value: state.invitation.roleIds.isEmpty
+                value: state.invitation.roleNames.isEmpty
                     ? "No roles assigned"
-                    : state.invitation.roleIds.joined(separator: ", ")
+                    : state.invitation.roleNames.joined(separator: ", ")
             )
             Div {
                 AdminNavigationButton(

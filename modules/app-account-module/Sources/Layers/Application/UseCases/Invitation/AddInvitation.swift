@@ -111,7 +111,7 @@ public struct AddInvitation: UseCase {
                     You have been invited to create your application identity.
                     Open this invitation link to complete registration:
 
-                    \(publicBaseURL)/account/invitation/accept/?token=\(model.token)
+                    \#(publicBaseURL)/account/invitation/accept/?token=\#(model.token)
 
                     Cheers,
                     Application Team.

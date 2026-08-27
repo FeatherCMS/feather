@@ -65,7 +65,17 @@ public struct ResendInvitation: UseCase {
                 from: .init("info@binarybirds.com"),
                 to: [.init(invitation.email)],
                 subject: "Application - Invitation",
-                body: "Open this invitation link to complete registration: \(publicBaseURL)/account/invitation/accept/?token=\(invitation.token)"
+                body: """
+                    Hello,
+
+                    This is a reminder for your application identity invitation.
+                    Open this invitation link to complete registration:
+
+                    \(publicBaseURL)/account/invitation/accept/?token=\(invitation.token)
+
+                    Cheers,
+                    Application Team.
+                    """
             )
         )
         return invitation.asDetail

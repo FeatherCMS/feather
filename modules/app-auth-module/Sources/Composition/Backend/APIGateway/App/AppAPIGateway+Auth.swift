@@ -114,25 +114,29 @@ extension AppAPIGateway {
         }
 
         let useCase = self.useCases.makeSignInWithMagicLink()
-        let result = try await useCase.execute(
-            .init(token: body.token)
-        )
+        do {
+            let result = try await useCase.execute(
+                .init(token: body.token)
+            )
 
-        return .ok(
-            .init(
-                body: .json(
-                    .init(
-                        user: .init(
-                            id: result.user.id,
-                            status: .init(rawValue: result.user.status.rawValue)
-                                ?? .active
-                        ),
-                        roles: result.roles,
-                        permissions: result.permissions,
-                        token: result.session.token
+            return .ok(
+                .init(
+                    body: .json(
+                        .init(
+                            user: .init(
+                                id: result.user.id,
+                                status: .init(rawValue: result.user.status.rawValue)
+                                    ?? .active
+                            ),
+                            roles: result.roles,
+                            permissions: result.permissions,
+                            token: result.session.token
+                        )
                     )
                 )
             )
-        )
+        } catch is AuthApplication.UseCaseError {
+            return .unauthorized
+        }
     }
 }

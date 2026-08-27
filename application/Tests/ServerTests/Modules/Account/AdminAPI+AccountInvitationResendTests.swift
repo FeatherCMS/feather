@@ -55,5 +55,16 @@ struct AdminAPIAccountInvitationResendTests {
 
         #expect(resent.id == invitation.id)
         #expect(resent.token != invitation.token)
+
+        try await runner.run(
+            request: JSONRequest(
+                method: .get,
+                path: "/api/v1/account/invitation/exchange?token=\(invitation.token)",
+                body: [String: String]()
+            )
+        ) { response in
+            #expect(response.response.status == .notFound)
+        }
+
     }
 }

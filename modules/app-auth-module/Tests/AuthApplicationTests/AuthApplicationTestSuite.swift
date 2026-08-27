@@ -133,6 +133,27 @@ struct AuthApplicationTestSuite {
     }
 
     @Test
+    func signInWithInvalidMagicLinkReturnsAuthenticationError() async throws {
+        let magicLinkRepository = MockMagicLinkRepository(
+            result: makeMagicLink(id: "m-invalid"),
+            consumeError: .alreadyUsed
+        )
+        let transaction = MockTransactionExecutor(
+            context: WriteAuth(
+                identity: MockAuthIdentityRepository(),
+                credential: MockCredentialRepository(result: makeCredential()),
+                session: MockAuthSessionRepository(),
+                magicLink: magicLinkRepository
+            )
+        )
+        let useCase = SignInWithMagicLink(transaction: transaction)
+
+        await #expect(throws: UseCaseError.self) {
+            _ = try await useCase.execute(.init(token: "used-token"))
+        }
+    }
+
+    @Test
     func listMagicLinksForbidden() async throws {
         let queries = MockMagicLinkQueries(
             listResult: .init(items: []),

@@ -14,13 +14,16 @@ actor MockMagicLinkRepository: MagicLinkRepository {
 
     private let result: MagicLink
     private let deleteResult: Bool
+    private let consumeError: MagicLink.Error?
 
     init(
         result: MagicLink,
-        deleteResult: Bool = false
+        deleteResult: Bool = false,
+        consumeError: MagicLink.Error? = nil
     ) {
         self.result = result
         self.deleteResult = deleteResult
+        self.consumeError = consumeError
     }
 
     func findById(
@@ -47,6 +50,9 @@ actor MockMagicLinkRepository: MagicLinkRepository {
     ) async throws -> MagicLink {
         consumeCallCount += 1
         consumedToken = token
+        if let consumeError {
+            throw consumeError
+        }
         return result
     }
 

@@ -74,6 +74,19 @@ struct AppAPIAccountInvitationAcceptanceTests {
 
         #expect(exchanged.user.status == .active)
 
+        try await runner.run(
+            request: JSONRequest(
+                method: .post,
+                path: "/api/v1/account/invitation/exchange",
+                body: AccountAppAPI.Components.Schemas.AccountInvitationExchangeRequestSchema(
+                    token: invitation.token,
+                    password: "invitation-password"
+                )
+            )
+        ) { response in
+            #expect(response.response.status == .notFound)
+        }
+
         let login = try await runner.run(
             request: JSONRequest(
                 method: .post,

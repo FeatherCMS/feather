@@ -124,6 +124,13 @@ struct AppMagicLink {
                         .setCookie: cookie.description
                     ]
                 )
+            case .unauthorized:
+                return try render(
+                    request: request,
+                    email: "",
+                    error: "This magic link is invalid, expired, or has already been used.",
+                    message: nil
+                ).response(from: request, context: context)
             case .undocumented(let statusCode, let response):
                 throw try await context.authAppAPI().failure(
                     statusCode: statusCode,
