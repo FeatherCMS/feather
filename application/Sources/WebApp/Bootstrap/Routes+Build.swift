@@ -129,7 +129,10 @@ func buildRouter(
     )
     let publicContentRepository = appClient
     var adminEvents = EventRegistry()
-    EventHandlers.register(in: &adminEvents)
+    BlogAdminDashboardEventHandlers.register(in: &adminEvents)
+    WebAdminDashboardEventHandlers.register(in: &adminEvents)
+    RedirectAdminDashboardEventHandlers.register(in: &adminEvents)
+    AnalyticsAdminDashboardEventHandlers.register(in: &adminEvents)
     AdminMenuEventHandlers.register(in: &adminEvents)
     AuthAdminMenuEventHandlers.register(in: &adminEvents)
     AccountAdminMenuEventHandlers.register(in: &adminEvents)

@@ -13,7 +13,11 @@ struct AdminGetHomeDefaultInteractor: AdminGetHomeInteractor {
                 using: context
             )
             .flatMap { $0 }
-        let firstOverview = overview.first
+        let firstOverview = overview.first {
+            $0.dailyTraffic != nil
+                || $0.topPages != nil
+                || !$0.insightCards.isEmpty
+        }
         return .init(
             title: "Admin - Home",
             description:
