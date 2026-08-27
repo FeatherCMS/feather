@@ -16,7 +16,6 @@ import FeatherAdmin
 import Hummingbird
 import HummingbirdAuth
 import AuthFrontend
-import AuthAppAPI
 import AccountFrontend
 import Logging
 import WebStandards
@@ -47,87 +46,12 @@ func buildRouter(
         Response(status: .ok)
     }
 
-    router.get("/admin-navigation.js") { _, _ in
-        let script = """
-            (function () {
-                var key = "adminMenuCollapsed";
-                var menuToggle = document.getElementById("menuToggle");
-                var toastNode = document.getElementById("admin-toast");
-                var mobileMedia = window.matchMedia("(max-width: 599px)");
-
-                if (menuToggle) {
-                    try {
-                        var collapsed = window.localStorage.getItem(key);
-                        if (collapsed === "1") { menuToggle.checked = true; }
-                    } catch (_) {}
-
-                    menuToggle.addEventListener("change", function () {
-                        try {
-                            window.localStorage.setItem(key, menuToggle.checked ? "1" : "0");
-                        } catch (_) {}
-                    });
-
-                    document.querySelectorAll("nav .sub-menu a[href], nav > ul > li a[href]").forEach(function (link) {
-                        link.addEventListener("click", function () {
-                            if (!mobileMedia.matches) { return; }
-                            menuToggle.checked = false;
-                            try {
-                                window.localStorage.setItem(key, "0");
-                            } catch (_) {}
-                        });
-                    });
-                }
-
-                if (!toastNode || !window.toast) { return; }
-
-                window.toast.show({
-                    type: toastNode.dataset.toastType || "success",
-                    title: toastNode.dataset.toastTitle || "Success",
-                    message: toastNode.dataset.toastMessage || "",
-                    position: toastNode.dataset.toastPosition || "top-right",
-                    duration: 3000,
-                    persistent: false
-                });
-
-                try {
-                    var url = new URL(window.location.href);
-                    [
-                        "toastType",
-                        "toastTitle",
-                        "toastMessage",
-                        "toastPosition"
-                    ].forEach(function (queryKey) {
-                        url.searchParams.delete(queryKey);
-                    });
-                    var next = url.pathname;
-                    var search = url.searchParams.toString();
-                    if (search) {
-                        next += "?" + search;
-                    }
-                    if (url.hash) {
-                        next += url.hash;
-                    }
-                    window.history.replaceState(window.history.state, "", next);
-                } catch (_) {}
-            })();
-            """
-        return Response(
-            status: .ok,
-            headers: [
-                .contentType: "application/javascript; charset=utf-8",
-                .cacheControl: "no-cache",
-            ],
-            body: .init(byteBuffer: ByteBuffer(string: script))
-        )
-    }
-
-    let appClient = AppAPI(
-        apiBaseURL: environment.apiBaseURL
-    )
     let authAppClient = AuthAppAPIClient(
         apiBaseURL: environment.apiBaseURL
     )
-    let publicContentRepository = appClient
+    let publicContentRepository = WebPublicContentRepository(
+        apiBaseURL: environment.apiBaseURL
+    )
     var adminEvents = EventRegistry()
     BlogAdminDashboardEventHandlers.register(in: &adminEvents)
     WebAdminDashboardEventHandlers.register(in: &adminEvents)
@@ -174,24 +98,10 @@ func buildRouter(
     NewsletterMarkdownEventHandlers.register(in: &publicContentEvents)
 
     let authRouter = router.add(
-        middleware: AuthMiddleware<DefaultRequestContext>(
+        middleware: DefaultAuthMiddleware<DefaultRequestContext>(
+            apiBaseURL: environment.apiBaseURL,
             secureCookies: environment.publicOrigins.usesSecureCookies
-        ) { sessionToken in
-            let api = AppAPI(
-                apiBaseURL: environment.apiBaseURL,
-                sessionToken: sessionToken
-            )
-            return try await api.withAuthOpenAPIRepositoryErrorMapping {
-                client in
-                let response = try await client.authMe()
-                let payload = try response.ok.body.json
-                return AccountModel(
-                    user: .init(id: payload.user.id),
-                    permissions: payload.permissions,
-                    roles: payload.roles
-                )
-            }
-        }
+        )
     )
     buildAppRoutes(
         router: router,

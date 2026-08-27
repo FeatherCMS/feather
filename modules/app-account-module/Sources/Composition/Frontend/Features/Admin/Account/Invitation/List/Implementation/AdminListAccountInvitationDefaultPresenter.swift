@@ -29,7 +29,7 @@ struct AdminListAccountInvitationDefaultPresenter:
                 request: request,
                 title: "Manage user invitations - Feather CMS",
                 description: "Management user invitation list",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -47,7 +47,7 @@ struct AdminListAccountInvitationDefaultPresenter:
             request: request,
             title: "Manage user invitations - Feather CMS",
             description: "Management user invitation list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -86,7 +86,7 @@ struct AdminListAccountInvitationDefaultPresenter:
             request: request,
             title: "Remove selected invitations",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -20,7 +20,7 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
             title: "Remove system permission - Feather CMS",
             description:
                 "Remove confirmation for a management system permission",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -46,7 +46,7 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
             title: "Remove system permission - Feather CMS",
             description:
                 "Remove confirmation for a management system permission",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

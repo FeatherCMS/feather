@@ -31,7 +31,7 @@ struct AdminListWebMenuItemDefaultPresenter:
                 request: request,
                 title: "Manage items - Feather CMS",
                 description: "Management item list",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -49,7 +49,7 @@ struct AdminListWebMenuItemDefaultPresenter:
             request: request,
             title: "Manage items - Feather CMS",
             description: "Management item list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -93,7 +93,7 @@ struct AdminListWebMenuItemDefaultPresenter:
             request: request,
             title: "Remove selected items",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

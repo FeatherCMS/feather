@@ -27,7 +27,7 @@ struct AdminGetAuthHomeDefaultPresenter: AdminGetAuthHomePresenter {
             request: request,
             title: model.title,
             description: "This is the admin home interface",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

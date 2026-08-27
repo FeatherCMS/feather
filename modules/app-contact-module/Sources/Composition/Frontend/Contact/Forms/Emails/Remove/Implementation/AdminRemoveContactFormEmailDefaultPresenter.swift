@@ -21,7 +21,7 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
             request: request,
             title: "Remove contact form email - Feather CMS",
             description: "Remove contact form email",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -56,7 +56,7 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
             request: request,
             title: "Remove contact form emails - Feather CMS",
             description: "Remove contact form emails",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -15,7 +15,7 @@ struct AdminGetHomeDefaultPresenter: AdminGetHomePresenter {
             request: request,
             title: model.title,
             description: model.description,
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

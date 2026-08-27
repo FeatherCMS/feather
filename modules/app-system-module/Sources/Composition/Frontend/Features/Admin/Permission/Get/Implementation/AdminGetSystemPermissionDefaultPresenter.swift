@@ -30,7 +30,7 @@ struct AdminGetSystemPermissionDefaultPresenter:
             request: request,
             title: "System permission details - Feather CMS",
             description: "Management system permission details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -54,7 +54,7 @@ struct AdminGetSystemPermissionDefaultPresenter:
             request: request,
             title: "System permission details - Feather CMS",
             description: "Management system permission details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

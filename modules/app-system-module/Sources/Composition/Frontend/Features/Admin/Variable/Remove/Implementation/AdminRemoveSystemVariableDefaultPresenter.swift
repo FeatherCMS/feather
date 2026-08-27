@@ -19,7 +19,7 @@ struct AdminRemoveSystemVariableDefaultPresenter:
             request: request,
             title: "Remove system variable - Feather CMS",
             description: "Remove confirmation for a management system variable",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -44,7 +44,7 @@ struct AdminRemoveSystemVariableDefaultPresenter:
             request: request,
             title: "Remove system variable - Feather CMS",
             description: "Remove confirmation for a management system variable",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

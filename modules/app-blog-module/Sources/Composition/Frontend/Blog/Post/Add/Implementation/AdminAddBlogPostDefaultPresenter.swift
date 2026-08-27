@@ -22,7 +22,7 @@ struct AdminAddBlogPostDefaultPresenter: AdminAddBlogPostPresenter {
             request: request,
             title: "Add post - Feather CMS",
             description: "Add a post in management",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

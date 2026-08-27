@@ -29,7 +29,7 @@ struct AdminGetAuthProfileDefaultPresenter:
             request: request,
             title: "Profile - Feather CMS",
             description: "View your profile details",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -45,7 +45,7 @@ struct AdminGetAuthProfileDefaultPresenter:
             request: request,
             title: "No permission - Feather CMS",
             description: "No permission",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

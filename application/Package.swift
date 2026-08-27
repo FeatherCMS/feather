@@ -241,7 +241,6 @@ let package = Package(
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "Mustache", package: "swift-mustache"),
 
                 .product(name: "SystemFrontend", package: "app-system-module"),
@@ -258,11 +257,9 @@ let package = Package(
                 .product(name: "NewsFrontend", package: "app-news-module"),
                 .product(name: "AuthFrontend", package: "app-auth-module"),
 
-                .product(name: "WebAppAPI", package: "app-web-module"),
                 .product(name: "ContactAppAPI", package: "app-contact-module"),
                 .product(name: "BlogAppAPI", package: "app-blog-module"),
                 .product(name: "NewsAppAPI", package: "app-news-module"),
-                .product(name: "AuthAppAPI", package: "app-auth-module"),
 
             ],
             resources: [

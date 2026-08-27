@@ -21,7 +21,7 @@ struct AdminListContactSubmissionsDefaultPresenter:
             request: request,
             title: "Contact submissions - Feather CMS",
             description: "View all contact form submissions",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

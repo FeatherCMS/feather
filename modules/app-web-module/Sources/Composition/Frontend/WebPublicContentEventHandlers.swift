@@ -57,14 +57,10 @@ public enum WebPublicContentEventHandlers {
         var payload: [String: Any] = [
             "baseUrl": normalizedURL(
                 base: origins.staticBaseURL,
-                path: "theme"
+                path: ""
             ),
             "siteBaseUrl": origins.siteBaseURL,
             "staticBaseUrl": origins.staticBaseURL,
-            "themeBaseUrl": normalizedURL(
-                base: origins.staticBaseURL,
-                path: "theme"
-            ),
             "site": siteContext(
                 settings: siteSettings,
                 navigation: navigation

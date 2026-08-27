@@ -40,7 +40,7 @@ struct AdminListBlogPostDefaultPresenter:
                 request: request,
                 title: "Manage blog posts - Feather CMS",
                 description: "Management blog post list",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -58,7 +58,7 @@ struct AdminListBlogPostDefaultPresenter:
             request: request,
             title: "Manage blog posts - Feather CMS",
             description: "Management blog post list",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -100,7 +100,7 @@ struct AdminListBlogPostDefaultPresenter:
             request: request,
             title: "Remove selected pages",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

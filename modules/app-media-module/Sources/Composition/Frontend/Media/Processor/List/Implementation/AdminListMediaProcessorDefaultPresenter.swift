@@ -34,7 +34,7 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
                 request: request,
                 title: "Media processors - Feather CMS",
                 description: "Media processors - Feather CMS",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -49,7 +49,7 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
             request: request,
             title: "Media processors - Feather CMS",
             description: "Media processors - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -85,7 +85,7 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
             request: request,
             title: "Remove selected processors",
             description: "Confirm bulk remove",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

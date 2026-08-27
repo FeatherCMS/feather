@@ -18,7 +18,7 @@ struct AdminEditAccountInvitationDefaultPresenter:
             request: request,
             title: "Edit user invitation - Feather CMS",
             description: "Edit a management user invitation",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -44,7 +44,7 @@ struct AdminEditAccountInvitationDefaultPresenter:
             request: request,
             title: "Edit user invitation - Feather CMS",
             description: "Edit a management user invitation",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

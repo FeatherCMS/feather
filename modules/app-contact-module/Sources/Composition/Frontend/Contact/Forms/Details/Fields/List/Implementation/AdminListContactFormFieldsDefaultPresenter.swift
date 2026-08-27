@@ -22,7 +22,7 @@ struct AdminListContactFormFieldsDefaultPresenter:
             request: request,
             title: "Contact form fields - Feather CMS",
             description: "Manage contact form fields",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

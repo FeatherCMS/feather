@@ -19,7 +19,7 @@ struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
             request: request,
             title: "Edit system variable - Feather CMS",
             description: "Edit a management system variable",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
@@ -45,7 +45,7 @@ struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
             request: request,
             title: "Edit system variable - Feather CMS",
             description: "Edit a management system variable",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

@@ -20,7 +20,7 @@ struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
             request: request,
             title: "Remove media asset - Feather CMS",
             description: "Remove media asset - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

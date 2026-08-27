@@ -22,7 +22,7 @@ struct AdminAddContactFormEmailDefaultPresenter:
             request: request,
             title: "Add contact form email - Feather CMS",
             description: "Add contact form email",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions

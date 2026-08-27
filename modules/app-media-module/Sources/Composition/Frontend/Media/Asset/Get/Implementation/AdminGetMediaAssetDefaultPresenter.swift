@@ -33,7 +33,7 @@ struct AdminGetMediaAssetDefaultPresenter: AdminGetMediaAssetPresenter {
                 request: request,
                 title: "Media asset details - Feather CMS",
                 description: "Media asset details - Feather CMS",
-                imagePath: "images/puppy.png",
+                imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
                     permissions: permissions
@@ -55,7 +55,7 @@ struct AdminGetMediaAssetDefaultPresenter: AdminGetMediaAssetPresenter {
             request: request,
             title: "Media asset details - Feather CMS",
             description: "Media asset details - Feather CMS",
-            imagePath: "images/puppy.png",
+            imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
