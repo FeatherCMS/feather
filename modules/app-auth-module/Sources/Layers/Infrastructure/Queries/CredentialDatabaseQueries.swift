@@ -11,7 +11,6 @@ extension CredentialTable.Row {
             id: id,
             userId: userId,
             email: email,
-            isPersistent: isPersistent,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -22,7 +21,6 @@ extension CredentialTable.Row {
             id: id,
             userId: userId,
             email: email,
-            isPersistent: isPersistent,
             createdAt: createdAt,
             updatedAt: updatedAt
         )

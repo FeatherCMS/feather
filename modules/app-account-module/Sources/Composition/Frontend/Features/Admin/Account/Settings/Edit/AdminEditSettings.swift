@@ -10,7 +10,9 @@ struct AdminEditSettings {
                 (
                     interactor: AdminEditSettingsDefaultInteractor(
                         repository: AdminEditSettingsOpenAPIRepository(
-                            api: context.accountAdminAPI()
+                            api: context.accountAdminAPI(),
+                            targetUserID: AdminEditSettingsOpenAPIRepository
+                                .targetUserID(for: request)
                         )
                     ),
                     presenter: AdminEditSettingsDefaultPresenter(

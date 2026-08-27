@@ -5,6 +5,8 @@ info:
 tags:
 - name: AccountSettings
   description: Manage account settings.
+- name: Account
+  description: Account endpoints.
 - name: AccountInvitations
   description: Manage user invitations.
 servers:
@@ -41,6 +43,60 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+  /api/v1/admin/account/users/{userId}/profile:
+    get:
+      tags:
+      - Account
+      operationId: adminAccountProfileGet
+      parameters:
+      - $ref: '#/components/parameters/AccountProfileUserIDParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Account
+      operationId: adminAccountProfileUpdate
+      parameters:
+      - $ref: '#/components/parameters/AccountProfileUserIDParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AccountProfileUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/account/users/{userId}/settings:
+    get:
+      tags:
+      - AccountSettings
+      operationId: adminAccountSettingsGet
+      parameters:
+      - $ref: '#/components/parameters/AccountSettingsUserIDParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountSettingsDetailResponse'
+    put:
+      tags:
+      - AccountSettings
+      operationId: adminAccountSettingsUpdate
+      parameters:
+      - $ref: '#/components/parameters/AccountSettingsUserIDParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AccountSettingsUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountSettingsDetailResponse'
   /api/v1/admin/account/invitations:
     post:
       tags:
@@ -162,6 +218,24 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+  /api/v1/admin/account/invitations/{accountInvitationId}/resend:
+    post:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationResend
+      parameters:
+      - $ref: '#/components/parameters/AccountInvitationIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountInvitationDetailResponse'
+        404:
+          description: AccountInvitation not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
 components:
   schemas:
     AccountSettingsDetailSchema:
@@ -190,6 +264,34 @@ components:
       - language
       - timezone
       - pageSize
+    AccountProfileUserIDField:
+      type: string
+    AccountProfileResponseSchema:
+      type: object
+      properties:
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        imageURL:
+          type: string
+          nullable: true
+    AccountProfileUpdateSchema:
+      type: object
+      properties:
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        imageURL:
+          type: string
+          nullable: true
+    AccountSettingsUserIDField:
+      type: string
     AccountInvitationCreateSchema:
       type: object
       properties:
@@ -216,6 +318,10 @@ components:
         token:
           type: string
           example: eyJhbGciOi...
+        roleIds:
+          type: array
+          items:
+            type: string
         expiresAt:
           type: number
           format: double
@@ -224,6 +330,7 @@ components:
       - id
       - email
       - token
+      - roleIds
       - expiresAt
     BulkDeleteRequestSchema:
       type: object
@@ -374,12 +481,15 @@ components:
           $ref: '#/components/schemas/AccountInvitationEmailField'
         token:
           $ref: '#/components/schemas/AccountInvitationTokenField'
+        roleIds:
+          $ref: '#/components/schemas/AccountInvitationRoleIDsField'
         expiresAt:
           $ref: '#/components/schemas/AccountInvitationExpiresAtField'
       required:
       - id
       - email
       - token
+      - roleIds
       - expiresAt
     AccountInvitationIdField:
       type: string
@@ -399,6 +509,8 @@ components:
       properties:
         email:
           $ref: '#/components/schemas/AccountInvitationEmailField'
+        roleIds:
+          $ref: '#/components/schemas/AccountInvitationRoleIDsField'
   responses:
     AccountSettingsDetailResponse:
       description: Account settings
@@ -406,6 +518,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountSettingsDetailSchema'
+    AccountProfileResponse:
+      description: Account profile response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountProfileResponseSchema'
     AccountInvitationDetailResponse:
       description: AccountInvitation response
       content:
@@ -431,6 +549,18 @@ components:
           schema:
             $ref: '#/components/schemas/AccountInvitationListItemSearchSchema'
   parameters:
+    AccountProfileUserIDParameter:
+      name: userId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AccountProfileUserIDField'
+    AccountSettingsUserIDParameter:
+      name: userId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AccountSettingsUserIDField'
     AccountInvitationIdParameter:
       name: accountInvitationId
       in: path
@@ -444,6 +574,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountSettingsUpdateSchema'
+      required: true
+    AccountProfileUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountProfileUpdateSchema'
       required: true
     AccountInvitationRequestBody:
       content:

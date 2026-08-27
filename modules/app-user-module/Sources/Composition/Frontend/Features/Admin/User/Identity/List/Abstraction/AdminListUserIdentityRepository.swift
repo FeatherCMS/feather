@@ -7,7 +7,8 @@ protocol AdminListUserIdentityRepository: Sendable {
     func list(
         page: Int,
         size: Int,
-        search: String?
+        search: String?,
+        role: String?
     ) async throws -> (
         items: [Components.Schemas.UserIdentityListItemSchema],
         total: Int,

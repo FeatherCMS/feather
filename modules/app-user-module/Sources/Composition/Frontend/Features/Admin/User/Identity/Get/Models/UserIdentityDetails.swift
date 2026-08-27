@@ -17,6 +17,34 @@ struct UserIdentityDetails: Component {
             AdminDetailFieldStyleAnchor()
             AdminBreadcrumb(state: state.breadcrumb)
             H1("User identity details")
+            AdminPillTabs(links: [
+                .init(
+                    label: "Details",
+                    href: "/admin/user/identities/\(state.identity.id)/",
+                    isCurrent: true
+                ),
+                .init(
+                    label: "Profile",
+                    href: "/admin/account/users/\(state.identity.id)/profile/",
+                    isCurrent: false
+                ),
+                .init(
+                    label: "Settings",
+                    href: "/admin/account/users/\(state.identity.id)/settings/",
+                    isCurrent: false
+                ),
+                .init(
+                    label: "Sessions",
+                    href: "/admin/user/identities/\(state.identity.id)/sessions/",
+                    isCurrent: false
+                ),
+                .init(
+                    label: "Magic links",
+                    href: "/admin/auth/magic-links/?userId=\(state.identity.id)",
+                    isCurrent: false
+                ),
+            ])
+            
             AdminDetailsField(label: "Status", value: state.identity.status)
             if state.identity.roleNames.isEmpty {
                 AdminDetailsField(label: "Roles", value: "No roles assigned")
@@ -54,4 +82,5 @@ struct UserIdentityDetails: Component {
         }
         .class("cms-section")
     }
+
 }

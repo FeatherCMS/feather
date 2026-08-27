@@ -12,6 +12,8 @@ public protocol IdentityRepository: Repository {
         id: String
     ) async throws -> Identity?
 
+    func findRoot() async throws -> Identity?
+
     func findRolesBy(
         identityId: String
     ) async throws -> [String]

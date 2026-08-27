@@ -7,7 +7,6 @@ public struct CredentialDetail: DTO {
     public let id: String
     public let userId: String
     public let email: String
-    public let isPersistent: Bool
     public let createdAt: Date
     public let updatedAt: Date
 
@@ -15,14 +14,12 @@ public struct CredentialDetail: DTO {
         id: String,
         userId: String,
         email: String,
-        isPersistent: Bool,
         createdAt: Date,
         updatedAt: Date
     ) {
         self.id = id
         self.userId = userId
         self.email = email
-        self.isPersistent = isPersistent
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }

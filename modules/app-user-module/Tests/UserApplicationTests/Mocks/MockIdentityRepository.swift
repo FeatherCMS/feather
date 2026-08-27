@@ -36,6 +36,10 @@ actor MockIdentityRepository: IdentityRepository {
         return findByIdResult
     }
 
+    func findRoot() async throws -> Identity? {
+        findByIdResult
+    }
+
     func findRolesBy(
         identityId: String
     ) async throws -> [String] {

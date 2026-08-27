@@ -33,13 +33,13 @@ public struct TableSeedMigration: DatabaseMigration {
         let roleDefinitions =
             try await events.trigger(
                 event: UserRoleSeedProvider(),
-                using: UserEventContext()
+                using: UserEventContext(idGenerator: idGenerator)
             )
             .flatMap { $0 }
 
         let roleRepository = RoleDatabaseRepository(context: context)
         for definition in roleDefinitions
-        where try await roleRepository.findBy(id: definition.id) == nil {
+        where try await roleRepository.findBy(name: definition.name ?? "") == nil {
             _ = try await roleRepository.insert(
                 try Role.create(
                     id: definition.id,
@@ -52,12 +52,20 @@ public struct TableSeedMigration: DatabaseMigration {
         let identityDefinitions =
             try await events.trigger(
                 event: UserIdentitySeedProvider(),
-                using: UserEventContext()
+                using: UserEventContext(idGenerator: idGenerator)
             )
             .flatMap { $0 }
 
         let identityRepository = IdentityDatabaseRepository(context: context)
         for definition in identityDefinitions {
+            if definition.isRoot,
+                try await identityRepository.findRoot() != nil
+            {
+                continue
+            }
+            if try await identityRepository.findBy(id: definition.id) != nil {
+                continue
+            }
             let identity = try await identityRepository.insert(
                 id: definition.id,
                 model: Identity.create(

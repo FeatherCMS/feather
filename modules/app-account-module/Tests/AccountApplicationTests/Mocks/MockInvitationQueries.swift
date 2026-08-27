@@ -15,19 +15,29 @@ actor MockInvitationQueries: InvitationQueries {
 
     private let listResult: InvitationList
     private let countResult: Int
+    private let tokenResult: InvitationDetail?
 
     init(
         listResult: InvitationList,
-        countResult: Int
+        countResult: Int,
+        tokenResult: InvitationDetail? = nil
     ) {
         self.listResult = listResult
         self.countResult = countResult
+        self.tokenResult = tokenResult
     }
 
     func getBy(
         id: String
     ) async throws -> InvitationDetail {
         fatalError("not needed in tests")
+    }
+
+    func getBy(
+        token: String
+    ) async throws -> InvitationDetail {
+        guard let tokenResult else { fatalError("not needed in tests") }
+        return tokenResult
     }
 
     func list(

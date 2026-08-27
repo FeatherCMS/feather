@@ -9,6 +9,8 @@ import AuthDomain
 actor MockMagicLinkRepository: MagicLinkRepository {
     private(set) var insertCallCount = 0
     private(set) var deleteCallCount = 0
+    private(set) var consumeCallCount = 0
+    private(set) var consumedToken: String?
 
     private let result: MagicLink
     private let deleteResult: Bool
@@ -37,13 +39,15 @@ actor MockMagicLinkRepository: MagicLinkRepository {
     func update(
         _ model: MagicLink
     ) async throws -> MagicLink {
-        model
+        return model
     }
 
     func consumeByToken(
         token: String
     ) async throws -> MagicLink {
-        result
+        consumeCallCount += 1
+        consumedToken = token
+        return result
     }
 
     func delete(

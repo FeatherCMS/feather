@@ -12,7 +12,7 @@ import FeatherContracts
 public struct EditSettings: UseCase {
 
     struct Action: PermissionAction {
-        let key = SettingsPermissions.Settings.update
+        let key: PermissionKey
     }
 
     let authorizer: any Authorizer
@@ -30,15 +30,18 @@ public struct EditSettings: UseCase {
         public let language: String
         public let timezone: String
         public let pageSize: Int
+        public let userId: String?
 
         public init(
             language: String,
             timezone: String,
-            pageSize: Int
+            pageSize: Int,
+            userId: String? = nil
         ) {
             self.language = language
             self.timezone = timezone
             self.pageSize = pageSize
+            self.userId = userId
         }
     }
 
@@ -46,13 +49,18 @@ public struct EditSettings: UseCase {
         subject: Subject,
         input: Input
     ) async throws -> SettingsDetail {
-        let action = Action()
+        let userId = input.userId ?? subject.id
+        let action = Action(
+            key: userId == subject.id
+                ? AccountPermissions.Settings.update
+                : AccountPermissions.Settings.manage
+        )
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
         let model = try await transaction.run { scope in
-            var model = try await scope.settings.get(userId: subject.id)
+            var model = try await scope.settings.get(userId: userId)
             try model.update(
                 language: input.language,
                 timezone: input.timezone,

@@ -64,6 +64,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
         selectedIds: [String],
         page: Int,
         search: String?,
+        userID: String?,
         permissions: Set<String>
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
@@ -86,10 +87,21 @@ struct AdminListAuthMagicLinkDefaultPresenter:
                         path: "/admin/auth/magic-links/",
                         page: page,
                         search: search,
+                        queryItems: userID.map { [("userId", $0)] } ?? [],
                         title: nil,
                         message: nil
                     ),
-                    selectedIds: selectedIds
+                    selectedIds: selectedIds,
+                    hiddenFields:
+                        [
+                            .init(name: "page", value: "\(page)"),
+                        ]
+                        + (search.map {
+                            [.init(name: "search", value: $0)]
+                        } ?? [])
+                        + (userID.map {
+                            [.init(name: "userId", value: $0)]
+                        } ?? [])
                 )
             )
         )

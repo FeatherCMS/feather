@@ -16,10 +16,13 @@ extension IdentityTable.Row {
         .init(rawValue: status) ?? .deactivated
     }
 
-    var asQueryListItem: IdentityList.Item {
+    func asQueryListItem(
+        roles: [String]
+    ) -> IdentityList.Item {
         .init(
             id: id,
             status: asIdentityStatus,
+            roles: roles,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -115,14 +118,21 @@ public struct IdentityDatabaseQueries: IdentityQueries {
         let orderBy = orderBySystemIdentity(query)
 
         let table = IdentityTable(connection: context.connection)
-        let items =
-            try await table.list(
-                search: search,
-                orderBy: orderBy,
-                limit: page.size,
-                offset: page.offset
+        let rows = try await table.list(
+            search: search,
+            role: query.role,
+            orderBy: orderBy,
+            limit: page.size,
+            offset: page.offset
+        )
+        var items: [IdentityList.Item] = []
+        for row in rows {
+            items.append(
+                row.asQueryListItem(
+                    roles: try await table.listRoleNames(identityId: row.id)
+                )
             )
-            .map(\.asQueryListItem)
+        }
 
         return .init(items: items)
     }
@@ -131,6 +141,6 @@ public struct IdentityDatabaseQueries: IdentityQueries {
         query: IdentityList.Query
     ) async throws -> Int {
         let table = IdentityTable(connection: context.connection)
-        return try await table.count(search: query.search)
+        return try await table.count(search: query.search, role: query.role)
     }
 }

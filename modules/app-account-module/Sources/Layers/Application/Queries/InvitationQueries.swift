@@ -12,6 +12,10 @@ public protocol InvitationQueries: Sendable {
         id: String
     ) async throws -> InvitationDetail
 
+    func getBy(
+        token: String
+    ) async throws -> InvitationDetail
+
     func list(
         query: InvitationList.Query
     ) async throws -> InvitationList

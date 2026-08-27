@@ -17,11 +17,17 @@ struct AdminEditSettingsDefaultController:
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
+        let isTargetUser = AdminEditSettingsOpenAPIRepository
+            .targetUserID(for: request) != nil
         let canRead = context.isCurrentUserAllowed(
-            to: AccountPermissions.Settings.read
+            to: isTargetUser
+                ? AccountPermissions.Settings.manage
+                : AccountPermissions.Settings.read
         )
         let canEdit = context.isCurrentUserAllowed(
-            to: AccountPermissions.Settings.update
+            to: isTargetUser
+                ? AccountPermissions.Settings.manage
+                : AccountPermissions.Settings.update
         )
 
         guard canRead else {
@@ -35,6 +41,11 @@ struct AdminEditSettingsDefaultController:
         let settings = try await interactor.loadSettings()
         return presenter.renderPage(
             state: .init(
+                userID: isTargetUser
+                    ? AdminEditSettingsOpenAPIRepository.targetUserID(
+                        for: request
+                    )
+                    : nil,
                 isEdited: request.hasQueryFlag("edited"),
                 canEdit: canEdit,
                 form: .init(
@@ -72,8 +83,12 @@ struct AdminEditSettingsDefaultController:
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
+        let isTargetUser = AdminEditSettingsOpenAPIRepository
+            .targetUserID(for: request) != nil
         let canEdit = context.isCurrentUserAllowed(
-            to: AccountPermissions.Settings.update
+            to: isTargetUser
+                ? AccountPermissions.Settings.manage
+                : AccountPermissions.Settings.update
         )
 
         guard canEdit else {
@@ -95,7 +110,7 @@ struct AdminEditSettingsDefaultController:
             status: .seeOther,
             headers: [
                 .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/account/settings/",
+                    defaultPath: request.uri.path,
                     title: "Saved",
                     message: "Settings edited successfully."
                 )

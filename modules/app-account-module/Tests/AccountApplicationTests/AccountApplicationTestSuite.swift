@@ -1,11 +1,13 @@
 import AccountContracts
-import AccountDomain
 import FeatherApplication
 import FeatherContracts
 import Foundation
 import Testing
 
 @testable import AccountApplication
+@testable import AccountDomain
+@testable import UserDomain
+import UserApplication
 
 //
 //  AccountApplicationTestSuite.swift
@@ -17,29 +19,500 @@ import Testing
 struct AccountApplicationTestSuite {
 
     @Test
+    func exposesAccountProfilePermissions() {
+        #expect(
+            AccountPermissions.Profile.allPermissions() == [
+                AccountPermissions.Profile.read,
+                AccountPermissions.Profile.update,
+                AccountPermissions.Profile.manage,
+            ]
+        )
+        #expect(
+            AccountPermissions.allPermissions().contains(
+                AccountPermissions.Profile.read
+            )
+        )
+    }
+
+    @Test
+    func validateInvitationReturnsUnexpiredInvitation() async throws {
+        let invitation = InvitationDetail(
+            id: "invitation-1",
+            userId: "user-1",
+            email: "user@example.com",
+            token: "token-123456",
+            roleIDs: ["role-editor"],
+            expiresAt: Date().addingTimeInterval(3600),
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let queries = MockInvitationQueries(
+            listResult: .init(items: []),
+            countResult: 0,
+            tokenResult: invitation
+        )
+        let useCase = ValidateInvitation(
+            query: MockQueryExecutor(context: ReadInvitation(invitation: queries))
+        )
+
+        let result = try await useCase.execute(
+            input: .init(token: invitation.token)
+        )
+
+        #expect(result.email == invitation.email)
+        #expect(result.roleIDs == invitation.roleIDs)
+    }
+
+    @Test
+    func validateInvitationRejectsExpiredInvitation() async throws {
+        let invitation = InvitationDetail(
+            id: "invitation-1",
+            userId: "user-1",
+            email: "user@example.com",
+            token: "token-123456",
+            expiresAt: Date().addingTimeInterval(-1),
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let queries = MockInvitationQueries(
+            listResult: .init(items: []),
+            countResult: 0,
+            tokenResult: invitation
+        )
+        let useCase = ValidateInvitation(
+            query: MockQueryExecutor(context: ReadInvitation(invitation: queries))
+        )
+
+        await #expect(throws: ValidateInvitation.Error.self) {
+            _ = try await useCase.execute(input: .init(token: invitation.token))
+        }
+    }
+
+    @Test
+    func completesInvitationRegistrationTransactionally() async throws {
+        let invitation = Invitation(
+            id: "invitation-1",
+            userId: "user-1",
+            email: "user@example.com",
+            token: "token-123456",
+            roleIDs: ["role-editor"],
+            expiresAt: Date().addingTimeInterval(3600),
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let identity = Identity(
+            id: "user-1",
+            status: .invited,
+            isRoot: false,
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let invitationRepository = MockInvitationRepository(
+            result: invitation,
+            findByTokenResult: invitation,
+            deleteResult: true
+        )
+        let identityRepository = MockIdentityRepository(identity: identity)
+        let credentialWriter = MockInvitationCredentialWriter()
+        let transaction = MockContextualTransactionExecutor(
+            context: WriteInvitation(
+                invitation: invitationRepository,
+                identity: identityRepository,
+                role: MockRoleRepository(),
+                credential: credentialWriter
+            )
+        )
+        let useCase = CompleteInvitationRegistration(transaction: transaction)
+
+        let result = try await useCase.execute(
+            input: .init(token: invitation.token, password: "password-123")
+        )
+
+        #expect(result.id == identity.id)
+        #expect(result.status == .active)
+        #expect(await credentialWriter.createCallCount == 1)
+        #expect(await identityRepository.replacedRoleIds == invitation.roleIDs)
+        #expect(await identityRepository.updateCallCount == 1)
+        #expect(await invitationRepository.deleteCallCount == 1)
+        #expect(await transaction.runCallCount == 1)
+    }
+
+    @Test
+    func addInvitationRejectsUnknownRole() async throws {
+        let identity = Identity(
+            id: "user-1",
+            status: .invited,
+            isRoot: false,
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let identityRepository = MockIdentityRepository(identity: identity)
+        let transaction = MockContextualTransactionExecutor(
+            context: WriteInvitation(
+                invitation: MockInvitationRepository(
+                    result: Invitation(
+                        id: "invitation-1",
+                        userId: identity.id,
+                        email: "user@example.com",
+                        token: "token-123456",
+                        roleIDs: [],
+                        expiresAt: Date().addingTimeInterval(3600),
+                        createdAt: Date(),
+                        updatedAt: Date()
+                    )
+                ),
+                identity: identityRepository,
+                role: MockRoleRepository(),
+                credential: MockInvitationCredentialWriter()
+            )
+        )
+        let useCase = AddInvitation(
+            authorizer: MockPermissionAuthorizer(
+                permissions: [AccountPermissions.Invitations.create]
+            ),
+            transaction: transaction,
+            events: MockEventPublisher(),
+            mailSender: MockMailSender(),
+            publicBaseURL: "http://localhost:3456"
+        )
+
+        await #expect(throws: AddInvitation.Error.self) {
+            _ = try await useCase.execute(
+                subject: Subject(id: "admin-1"),
+                input: .init(email: "user@example.com", roleIDs: ["missing"])
+            )
+        }
+    }
+
+    @Test
+    func resendInvitationRenewsTokenAndSendsEmail() async throws {
+        let invitation = Invitation(
+            id: "invitation-1",
+            userId: "user-1",
+            email: "user@example.com",
+            token: "token-123456",
+            roleIDs: ["role-editor"],
+            expiresAt: Date().addingTimeInterval(60),
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let repository = MockInvitationRepository(result: invitation)
+        let transaction = MockTransactionExecutor(
+            context: WriteInvitationOnly(
+                invitation: repository,
+                role: MockRoleRepository()
+            )
+        )
+        let mailSender = MockMailSender()
+        let useCase = ResendInvitation(
+            authorizer: MockPermissionAuthorizer(
+                permissions: [AccountPermissions.Invitations.create]
+            ),
+            transaction: transaction,
+            mailSender: mailSender,
+            publicBaseURL: "https://example.test"
+        )
+
+        let result = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(id: invitation.id)
+        )
+
+        #expect(result.id == invitation.id)
+        #expect(result.token != invitation.token)
+        #expect(await repository.updateCallCount == 1)
+        #expect(await mailSender.sendCallCount == 1)
+        #expect(await mailSender.lastMessage?.body.contains(result.token) == true)
+    }
+
+    @Test
+    func getAccountProfileReturnsOwnProfile() async throws {
+        let profile = makeAccountProfile()
+        let repository = MockAccountProfileRepository(result: profile)
+        let query = MockQueryExecutor(
+            context: ReadAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.read]
+        )
+        let useCase = GetAccountProfile(authorizer: authorizer, query: query)
+
+        let result = try await useCase.execute(
+            subject: Subject(id: profile.userId),
+            input: .init()
+        )
+
+        #expect(result.userId == profile.userId)
+        #expect(result.firstName == profile.firstName)
+        #expect(result.lastName == profile.lastName)
+        #expect(await repository.getCallCount == 1)
+        #expect(await repository.requestedUserIds == [profile.userId])
+        #expect(await query.runCallCount == 1)
+    }
+
+    @Test
+    func getAccountProfileDoesNotReadWithoutPermission() async throws {
+        let repository = MockAccountProfileRepository(result: makeAccountProfile())
+        let query = MockQueryExecutor(
+            context: ReadAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.update]
+        )
+        let useCase = GetAccountProfile(authorizer: authorizer, query: query)
+
+        await #expect(throws: AuthError.self) {
+            _ = try await useCase.execute(
+                subject: Subject(id: "account-1"),
+                input: .init()
+            )
+        }
+
+        #expect(await repository.getCallCount == 0)
+        #expect(await query.runCallCount == 0)
+    }
+
+    @Test
+    func getAccountProfileReadsTargetUserWithManagePermission() async throws {
+        let profile = makeAccountProfile()
+        let repository = MockAccountProfileRepository(result: profile)
+        let query = MockQueryExecutor(
+            context: ReadAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.manage]
+        )
+        let useCase = GetAccountProfile(authorizer: authorizer, query: query)
+
+        _ = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(userId: profile.userId)
+        )
+
+        #expect(await repository.requestedUserIds == [profile.userId])
+    }
+
+    @Test
+    func getAccountProfileDoesNotReadTargetUserWithOwnPermission() async throws {
+        let profile = makeAccountProfile()
+        let repository = MockAccountProfileRepository(result: profile)
+        let query = MockQueryExecutor(
+            context: ReadAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.read]
+        )
+        let useCase = GetAccountProfile(authorizer: authorizer, query: query)
+
+        await #expect(throws: AuthError.self) {
+            _ = try await useCase.execute(
+                subject: Subject(id: "admin-1"),
+                input: .init(userId: profile.userId)
+            )
+        }
+
+        #expect(await repository.requestedUserIds.isEmpty)
+        #expect(await query.runCallCount == 0)
+    }
+
+    @Test
+    func editAccountProfilePersistsTargetUserWithManagePermission() async throws {
+        let profile = makeAccountProfile()
+        let repository = MockAccountProfileRepository(result: profile)
+        let transaction = MockTransactionExecutor(
+            context: WriteAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.manage]
+        )
+        let useCase = EditAccountProfile(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+
+        let result = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(
+                firstName: "Grace",
+                lastName: "Hopper",
+                imageURL: nil,
+                userId: profile.userId
+            )
+        )
+
+        #expect(result.userId == profile.userId)
+        #expect(result.firstName == "Grace")
+        #expect(await repository.requestedUserIds == [profile.userId])
+        #expect(await repository.updateCallCount == 1)
+        #expect(await transaction.runCallCount == 1)
+    }
+
+    @Test
+    func editAccountProfileDoesNotWriteTargetUserWithOwnPermission() async throws {
+        let profile = makeAccountProfile()
+        let repository = MockAccountProfileRepository(result: profile)
+        let transaction = MockTransactionExecutor(
+            context: WriteAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.update]
+        )
+        let useCase = EditAccountProfile(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+
+        await #expect(throws: AuthError.self) {
+            _ = try await useCase.execute(
+                subject: Subject(id: "admin-1"),
+                input: .init(
+                    firstName: "Grace",
+                    lastName: "Hopper",
+                    imageURL: nil,
+                    userId: profile.userId
+                )
+            )
+        }
+
+        #expect(await repository.updateCallCount == 0)
+        #expect(await transaction.runCallCount == 0)
+    }
+
+    @Test
+    func editAccountProfilePersistsValidatedChanges() async throws {
+        let profile = makeAccountProfile()
+        let repository = MockAccountProfileRepository(result: profile)
+        let transaction = MockTransactionExecutor(
+            context: WriteAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.update]
+        )
+        let useCase = EditAccountProfile(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+
+        let result = try await useCase.execute(
+            subject: Subject(id: profile.userId),
+            input: .init(
+                firstName: "Grace",
+                lastName: "Hopper",
+                imageURL: "https://example.com/grace.png"
+            )
+        )
+
+        #expect(result.firstName == "Grace")
+        #expect(result.lastName == "Hopper")
+        #expect(await repository.updateCallCount == 1)
+        #expect(await repository.updatedModel?.firstName == "Grace")
+        #expect(await repository.updatedModel?.lastName == "Hopper")
+        #expect(await transaction.runCallCount == 1)
+    }
+
+    @Test
+    func editAccountProfileDoesNotWriteWithoutPermission() async throws {
+        let repository = MockAccountProfileRepository(result: makeAccountProfile())
+        let transaction = MockTransactionExecutor(
+            context: WriteAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.read]
+        )
+        let useCase = EditAccountProfile(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+
+        await #expect(throws: AuthError.self) {
+            _ = try await useCase.execute(
+                subject: Subject(id: "account-1"),
+                input: .init(firstName: "Grace", lastName: "Hopper", imageURL: nil)
+            )
+        }
+
+        #expect(await repository.updateCallCount == 0)
+        #expect(await transaction.runCallCount == 0)
+    }
+
+    @Test
+    func editAccountProfileDoesNotPersistInvalidNames() async throws {
+        let repository = MockAccountProfileRepository(result: makeAccountProfile())
+        let transaction = MockTransactionExecutor(
+            context: WriteAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.update]
+        )
+        let useCase = EditAccountProfile(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+
+        await #expect(throws: AccountProfile.Error.self) {
+            _ = try await useCase.execute(
+                subject: Subject(id: "account-1"),
+                input: .init(
+                    firstName: String(repeating: "A", count: 256),
+                    lastName: "Lovelace",
+                    imageURL: nil
+                )
+            )
+        }
+
+        #expect(await repository.updateCallCount == 0)
+        #expect(await transaction.runCallCount == 1)
+    }
+
+    @Test
     func exposesAllSettingsPermissions() {
-        let settingsPermissions = SettingsPermissions.Settings
+        let settingsPermissions = AccountPermissions.Settings
             .allPermissions()
-        let allPermissions = SettingsPermissions.allPermissions()
+        let allPermissions = AccountPermissions.allPermissions()
 
         #expect(
             settingsPermissions == [
-                SettingsPermissions.Settings.read,
-                SettingsPermissions.Settings.update,
+                AccountPermissions.Settings.read,
+                AccountPermissions.Settings.update,
+                AccountPermissions.Settings.manage,
             ]
         )
-        #expect(allPermissions == settingsPermissions)
+        #expect(
+            allPermissions == AccountPermissions.Profile.allPermissions()
+                .union(settingsPermissions)
+                .union(AccountPermissions.Invitations.allPermissions())
+        )
+    }
+
+    @Test
+    func getSettingsReadsTargetUserWithManagePermission() async throws {
+        let settings = makeSettings()
+        let repository = MockSettingsRepository(result: settings)
+        let query = MockQueryExecutor(
+            context: ReadSettings(settings: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Settings.manage]
+        )
+        let useCase = GetSettings(authorizer: authorizer, query: query)
+
+        _ = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(userId: settings.userId)
+        )
+
+        #expect(await repository.getCallCount == 1)
     }
 
     @Test
     func getSettingsReturnsMappedDetailForAuthorizedSubject() async throws {
         let settings = makeSettings()
         let repository = MockSettingsRepository(result: settings)
-        let query = MockTransactionExecutor(
-            context: WriteSettings(settings: repository)
+        let query = MockQueryExecutor(
+            context: ReadSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [SettingsPermissions.Settings.read]
+            permissions: [AccountPermissions.Settings.read]
         )
         let useCase = GetSettings(
             authorizer: authorizer,
@@ -63,11 +536,11 @@ struct AccountApplicationTestSuite {
     @Test
     func getSettingsDoesNotQueryForForbiddenSubject() async throws {
         let repository = MockSettingsRepository(result: makeSettings())
-        let query = MockTransactionExecutor(
-            context: WriteSettings(settings: repository)
+        let query = MockQueryExecutor(
+            context: ReadSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [SettingsPermissions.Settings.update]
+            permissions: [AccountPermissions.Settings.update]
         )
         let useCase = GetSettings(
             authorizer: authorizer,
@@ -96,7 +569,7 @@ struct AccountApplicationTestSuite {
             context: WriteSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [SettingsPermissions.Settings.update]
+            permissions: [AccountPermissions.Settings.update]
         )
         let useCase = EditSettings(
             authorizer: authorizer,
@@ -131,7 +604,7 @@ struct AccountApplicationTestSuite {
             context: WriteSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [SettingsPermissions.Settings.read]
+            permissions: [AccountPermissions.Settings.read]
         )
         let useCase = EditSettings(
             authorizer: authorizer,
@@ -160,6 +633,17 @@ struct AccountApplicationTestSuite {
             language: "en",
             timezone: "UTC",
             pageSize: 20,
+            createdAt: Date(timeIntervalSince1970: 1),
+            updatedAt: Date(timeIntervalSince1970: 2)
+        )
+    }
+
+    private func makeAccountProfile() -> AccountProfile {
+        AccountProfile(
+            userId: "account-1",
+            firstName: "Ada",
+            lastName: "Lovelace",
+            imageURL: nil,
             createdAt: Date(timeIntervalSince1970: 1),
             updatedAt: Date(timeIntervalSince1970: 2)
         )

@@ -390,6 +390,7 @@ let package = Package(
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
                 .product(name: "PostgresMigrations", package: "postgres-migrations"),
                 .product(name: "AccountAdminAPI", package: "app-account-module"),
+                .product(name: "UserAdminAPI", package: "app-user-module"),
                 .target(name: "Server"),
             ],
             swiftSettings: defaultSwiftSettings

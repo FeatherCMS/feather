@@ -14,6 +14,7 @@ extension Invitation {
             userId: userId,
             email: email,
             token: token,
+            roleIDs: roleIDs,
             expiresAt: expiresAt,
             createdAt: createdAt,
             updatedAt: updatedAt

@@ -21,6 +21,11 @@ public struct AccountAdmin {
         )
         .controller.route(on: router)
 
+        AdminEditAccountProfile(
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+
         AdminListAccountInvitation(
             renderingEngine: renderingEngine
         )
@@ -45,5 +50,7 @@ public struct AccountAdmin {
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
+
+        AdminResendAccountInvitation().route(on: router)
     }
 }

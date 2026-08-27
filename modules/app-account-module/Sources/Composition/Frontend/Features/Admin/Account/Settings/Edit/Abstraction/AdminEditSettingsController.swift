@@ -27,5 +27,13 @@ extension AdminEditSettingsController {
             "/admin/account/settings/",
             use: postEditSettings
         )
+        router.get(
+            "/admin/account/users/{userId}/settings/",
+            use: getEditSettings
+        )
+        router.post(
+            "/admin/account/users/{userId}/settings/",
+            use: postEditSettings
+        )
     }
 }

@@ -13,7 +13,6 @@ extension CredentialTable.Row {
             userId: userId,
             email: email,
             passwordHash: passwordHash,
-            isPersistent: isPersistent,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -58,7 +57,6 @@ public struct CredentialDatabaseRepository: CredentialRepository {
                 userId: model.userId,
                 email: model.email,
                 passwordHash: model.passwordHash,
-                isPersistent: model.isPersistent,
                 createdAt: .init(timeIntervalSince1970: 0),
                 updatedAt: .init(timeIntervalSince1970: 0)
             )
@@ -77,7 +75,6 @@ public struct CredentialDatabaseRepository: CredentialRepository {
                 userId: model.userId,
                 email: model.email,
                 passwordHash: model.passwordHash,
-                isPersistent: model.isPersistent,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

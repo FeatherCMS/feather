@@ -27,6 +27,9 @@ struct AuthProfileForm: Component, FlowContent {
     struct State: FeatherAdmin.Object {
         var email: FieldState
         var password: FieldState
+        var firstName: FieldState
+        var lastName: FieldState
+        var imageURL: FieldState
         var error: String?
         var success: String?
 
@@ -35,6 +38,9 @@ struct AuthProfileForm: Component, FlowContent {
         ) {
             email.error = errors[email.key]
             password.error = errors[password.key]
+            firstName.error = errors[firstName.key]
+            lastName.error = errors[lastName.key]
+            imageURL.error = errors[imageURL.key]
         }
     }
 
@@ -67,6 +73,38 @@ struct AuthProfileForm: Component, FlowContent {
                 error: state.password.error,
                 type: .password,
                 inputClass: "text-input"
+            )
+
+            FormInputField(
+                name: state.firstName.key,
+                label: state.firstName.label,
+                value: state.firstName.value,
+                error: state.firstName.error,
+                isRequired: false,
+                inputClass: "text-input"
+            )
+            FormInputField(
+                name: state.lastName.key,
+                label: state.lastName.label,
+                value: state.lastName.value,
+                error: state.lastName.error,
+                isRequired: false,
+                inputClass: "text-input"
+            )
+            AdminMediaAssetPicker(
+                state: .init(
+                    field: .init(
+                        key: state.imageURL.key,
+                        label: state.imageURL.label,
+                        value: state.imageURL.value,
+                        error: state.imageURL.error
+                    ),
+                    selectedAsset: nil,
+                    browsePath:
+                        "/admin/media/assets/?picker=1&field=imageURL&extensions=png,jpg,jpeg,webp",
+                    allowedExtensions: ["png", "jpg", "jpeg", "webp"],
+                    outputMode: .originalURL
+                )
             )
 
             Section {

@@ -21,6 +21,7 @@ struct UserIdentityTable: Component {
         let pageSize: Int
         let total: Int
         let search: String
+        let role: String
         let deniedInfo: String
         let deniedMessage: String
         let breadcrumb: AdminBreadcrumb.State
@@ -62,9 +63,29 @@ struct UserIdentityTable: Component {
                     state: .init(
                         action: "/admin/user/identities/",
                         placeholder: "Quick search identities",
-                        search: state.search
+                        search: state.search,
+                        queryItems: state.role.isEmpty
+                            ? []
+                            : [("role", state.role)]
                     )
                 )
+                Form {
+                    Input()
+                        .type(.search)
+                        .name("role")
+                        .value(state.role)
+                        .placeholder("Filter by role")
+                    if !state.search.isEmpty {
+                        Input()
+                            .type(.hidden)
+                            .name("search")
+                            .value(state.search)
+                    }
+                    Button("Filter").type(.submit)
+                }
+                .method(.get)
+                .action("/admin/user/identities/")
+                .class("table-search-form")
 
                 if state.identities.isEmpty {
                     let totalPages = max(
@@ -112,6 +133,7 @@ struct UserIdentityTable: Component {
                                             ListTableSelectAllCheckbox()
                                         }
                                         Th("Status")
+                                        Th("Roles")
                                         Th("Actions")
                                     }
                                 }
@@ -127,6 +149,12 @@ struct UserIdentityTable: Component {
                                             }
                                             Td(identity.status.rawValue)
                                                 .data("label", "Status")
+                                            Td(
+                                                identity.roles.isEmpty
+                                                    ? "No roles assigned"
+                                                    : identity.roles.joined(separator: ", ")
+                                            )
+                                                .data("label", "Roles")
                                             ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",

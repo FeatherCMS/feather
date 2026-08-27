@@ -50,7 +50,10 @@ struct AdminEditAuthProfileDefaultController:
                 isEdited: request.hasQueryFlag("edited"),
                 form: formState(
                     email: profile.email,
-                    password: ""
+                    password: "",
+                    firstName: profile.firstName,
+                    lastName: profile.lastName,
+                    imageURL: profile.imageURL
                 ),
                 breadcrumb: breadcrumb()
             ),
@@ -79,17 +82,20 @@ struct AdminEditAuthProfileDefaultController:
         }
 
         let profile = try await interactor.loadProfile(account: account)
+        let payload = try await request.decode(
+            as: AdminEditAuthProfileFormInput.self,
+            context: context
+        )
         do {
-            let payload = try await request.decode(
-                as: AdminEditAuthProfileFormInput.self,
-                context: context
-            )
             try await payload.validate()
             try await interactor.execute(
                 entity: .init(
                     id: profile.id,
                     email: payload.normalizedEmail,
-                    password: payload.normalizedPassword
+                    password: payload.normalizedPassword,
+                    firstName: payload.firstName,
+                    lastName: payload.lastName,
+                    imageURL: payload.imageURL
                 )
             )
             return Response(
@@ -113,6 +119,9 @@ struct AdminEditAuthProfileDefaultController:
                     id: profile.id,
                     email: profile.email,
                     password: "",
+                    firstName: payload.firstName,
+                    lastName: payload.lastName,
+                    imageURL: payload.imageURL,
                     failures: error.failures
                 )
             )
@@ -127,6 +136,9 @@ struct AdminEditAuthProfileDefaultController:
                     id: profile.id,
                     email: profile.email,
                     password: "",
+                    firstName: payload.firstName,
+                    lastName: payload.lastName,
+                    imageURL: payload.imageURL,
                     error: error
                 )
             )
@@ -141,6 +153,9 @@ struct AdminEditAuthProfileDefaultController:
                     id: profile.id,
                     email: profile.email,
                     password: "",
+                    firstName: payload.firstName,
+                    lastName: payload.lastName,
+                    imageURL: payload.imageURL,
                     message: error.displayMessage
                 )
             )
@@ -149,7 +164,10 @@ struct AdminEditAuthProfileDefaultController:
 
     private func formState(
         email: String,
-        password: String
+        password: String,
+        firstName: String?,
+        lastName: String?,
+        imageURL: String?
     ) -> AuthProfileForm.State {
         .init(
             email: .init(
@@ -164,6 +182,24 @@ struct AdminEditAuthProfileDefaultController:
                 value: password,
                 error: nil
             ),
+            firstName: .init(
+                key: "firstName",
+                label: "First name",
+                value: firstName,
+                error: nil
+            ),
+            lastName: .init(
+                key: "lastName",
+                label: "Last name",
+                value: lastName,
+                error: nil
+            ),
+            imageURL: .init(
+                key: "imageURL",
+                label: "Profile image",
+                value: imageURL,
+                error: nil
+            ),
             error: nil,
             success: nil
         )
@@ -173,12 +209,21 @@ struct AdminEditAuthProfileDefaultController:
         id: String,
         email: String,
         password: String,
+        firstName: String?,
+        lastName: String?,
+        imageURL: String?,
         failures: [FeatherValidation.Failure]
     ) -> AuthProfileEdit.State {
         var state = AuthProfileEdit.State(
             id: id,
             isEdited: false,
-            form: formState(email: email, password: password),
+            form: formState(
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                imageURL: imageURL
+            ),
             breadcrumb: breadcrumb()
         )
         var errors: [String: String] = [:]
@@ -193,12 +238,21 @@ struct AdminEditAuthProfileDefaultController:
         id: String,
         email: String,
         password: String,
+        firstName: String?,
+        lastName: String?,
+        imageURL: String?,
         error: OpenAPIRepositoryError
     ) -> AuthProfileEdit.State {
         var state = AuthProfileEdit.State(
             id: id,
             isEdited: false,
-            form: formState(email: email, password: password),
+            form: formState(
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                imageURL: imageURL
+            ),
             breadcrumb: breadcrumb()
         )
         state.form.error = format(error: error)
@@ -209,12 +263,21 @@ struct AdminEditAuthProfileDefaultController:
         id: String,
         email: String,
         password: String,
+        firstName: String?,
+        lastName: String?,
+        imageURL: String?,
         message: String
     ) -> AuthProfileEdit.State {
         var state = AuthProfileEdit.State(
             id: id,
             isEdited: false,
-            form: formState(email: email, password: password),
+            form: formState(
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                imageURL: imageURL
+            ),
             breadcrumb: breadcrumb()
         )
         state.form.error = message

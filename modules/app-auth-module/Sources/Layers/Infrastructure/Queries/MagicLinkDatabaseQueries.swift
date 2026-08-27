@@ -100,6 +100,7 @@ public struct MagicLinkDatabaseQueries: MagicLinkQueries {
         let table = MagicLinkTable(connection: context.connection)
         let items =
             try await table.list(
+                userId: query.userId,
                 search: search,
                 orderBy: orderBy,
                 limit: page.size,
@@ -114,6 +115,9 @@ public struct MagicLinkDatabaseQueries: MagicLinkQueries {
         query: MagicLinkList.Query
     ) async throws -> Int {
         let table = MagicLinkTable(connection: context.connection)
-        return try await table.count(search: query.search)
+        return try await table.count(
+            userId: query.userId,
+            search: query.search
+        )
     }
 }

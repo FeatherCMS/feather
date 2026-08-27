@@ -20,3 +20,7 @@ struct AccountInvitationIdPathItems: PathItemRepresentable {
     var put: OperationRepresentable? { AccountInvitationUpdateOperation() }
     var patch: OperationRepresentable? { AccountInvitationPatchOperation() }
 }
+
+struct AccountInvitationResendPathItems: PathItemRepresentable {
+    var post: OperationRepresentable? { AccountInvitationResendOperation() }
+}

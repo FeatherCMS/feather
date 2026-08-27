@@ -38,7 +38,8 @@ extension AdminAPIGateway {
                         direction: mapSortDirection(rule.direction)
                     )
                 },
-            search: query.filters.search
+            search: query.filters.search,
+            role: query.filters.role
         )
     }
 
@@ -57,7 +58,8 @@ extension AdminAPIGateway {
     ) -> Components.Schemas.UserIdentityListItemSchema {
         .init(
             id: item.id,
-            status: .init(rawValue: item.status.rawValue)!
+            status: .init(rawValue: item.status.rawValue)!,
+            roles: item.roles
         )
     }
 

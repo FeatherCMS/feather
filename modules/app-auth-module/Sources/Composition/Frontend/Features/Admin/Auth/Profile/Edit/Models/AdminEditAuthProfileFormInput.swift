@@ -22,6 +22,9 @@ public struct AdminEditAuthProfileFormInput: Codable, Sendable, Equatable,
 
     public let email: String
     public let password: String
+    public var firstName: String? = nil
+    public var lastName: String? = nil
+    public var imageURL: String? = nil
 
     var normalizedEmail: String {
         email.trimmingCharacters(in: .whitespacesAndNewlines)

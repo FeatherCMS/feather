@@ -18,7 +18,8 @@ extension UseCases {
             idGenerator: idGenerator,
             scope: { context in
                 WriteInvitationOnly(
-                    invitation: InvitationDatabaseRepository(context: context)
+                    invitation: InvitationDatabaseRepository(context: context),
+                    role: RoleDatabaseRepository(context: context)
                 )
             }
         )

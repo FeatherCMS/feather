@@ -33,7 +33,11 @@ struct AdminRemoveAccountInvitationOpenAPIRepository:
             switch response {
             case .ok(let ok):
                 let item = try ok.body.json
-                return .init(id: item.id, email: item.email)
+                return .init(
+                    id: item.id,
+                    email: item.email,
+                    roleIds: item.roleIds
+                )
             case .notFound:
                 throw OpenAPIRepositoryError.notFound(
                     message: "User invitation not found."

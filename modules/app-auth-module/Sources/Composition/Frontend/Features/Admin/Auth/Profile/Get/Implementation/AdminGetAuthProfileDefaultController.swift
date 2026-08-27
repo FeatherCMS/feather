@@ -23,16 +23,17 @@ struct AdminGetAuthProfileDefaultController:
     let buildRuntime:
         @Sendable (Request, AppRequestContext) -> (
             interactor: any AdminGetAuthProfileInteractor,
-            presenter: any AdminGetAuthProfilePresenter
+            presenter: any AdminGetAuthProfilePresenter,
+            accountProfileRepository: any AdminAuthAccountProfileRepository
         )
 
     func getAuthProfile(
         request: Request,
         context: AppRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let runtime = buildRuntime(request, context)
         guard let account = context.account else {
-            return presenter.renderDeniedPage(
+            return runtime.presenter.renderDeniedPage(
                 permissions: []
             )
         }
@@ -43,13 +44,17 @@ struct AdminGetAuthProfileDefaultController:
                 to: AuthPermissions.Profile.read
             )
         else {
-            return presenter.renderDeniedPage(
+            return runtime.presenter.renderDeniedPage(
                 permissions: permissions
             )
         }
 
-        let profile = try await interactor.getProfile(account: account)
-        return presenter.renderPage(
+        let accountProfile = try await runtime.accountProfileRepository.get()
+        let profile = try await runtime.interactor.getProfile(
+            account: account,
+            accountProfile: accountProfile
+        )
+        return runtime.presenter.renderPage(
             state: .init(
                 profile: profile,
                 canEdit: permissions.contains(

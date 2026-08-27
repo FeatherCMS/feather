@@ -42,42 +42,30 @@ public struct TableSeedMigration: DatabaseMigration {
             context: context
         )
 
-        let samples:
-            [(
-                id: String, email: String, passwordHash: String,
-                isPersistent: Bool
-            )] = [
-                ("root", "mail.tib@gmail.com", rootPassword, true)
-            ]
-
-        for sample in samples {
-            let identity: Identity
-            if let existing = try await identityRepository.findBy(id: sample.id)
-            {
-                identity = existing
-            }
-            else {
-                identity = try await identityRepository.insert(
-                    id: sample.id,
-                    model: Identity.create(status: .active)
-                )
-            }
-
-            guard
-                try await credentialRepository.findBy(userId: identity.id)
-                    == nil
-            else {
-                continue
-            }
-
-            _ = try await credentialRepository.insert(
-                Credential.create(
-                    userId: identity.id,
-                    email: sample.email,
-                    passwordHash: sample.passwordHash,
-                    isPersistent: sample.isPersistent
-                )
+        let identity: Identity
+        if let existing = try await identityRepository.findRoot() {
+            identity = existing
+        }
+        else {
+            identity = try await identityRepository.insert(
+                id: idGenerator.generate(),
+                model: Identity.create(status: .active, isRoot: true)
             )
         }
+
+        guard
+            try await credentialRepository.findBy(userId: identity.id)
+                == nil
+        else {
+            return
+        }
+
+        _ = try await credentialRepository.insert(
+            Credential.create(
+                userId: identity.id,
+                email: "mail.tib@gmail.com",
+                passwordHash: rootPassword
+            )
+        )
     }
 }

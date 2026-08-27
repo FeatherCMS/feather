@@ -16,14 +16,12 @@ public struct Credential: Model {
         public let userId: String
         public let email: String
         public let passwordHash: String
-        public let isPersistent: Bool
     }
 
     public let id: String
     public let userId: String
     public var email: String
     public var passwordHash: String
-    public var isPersistent: Bool
     public let createdAt: Date
     public var updatedAt: Date
 
@@ -32,7 +30,6 @@ public struct Credential: Model {
         userId: String,
         email: String,
         passwordHash: String,
-        isPersistent: Bool,
         createdAt: Date,
         updatedAt: Date
     ) {
@@ -40,7 +37,6 @@ public struct Credential: Model {
         self.userId = userId
         self.email = email
         self.passwordHash = passwordHash
-        self.isPersistent = isPersistent
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
@@ -82,7 +78,6 @@ extension Credential {
         userId: String,
         email: String,
         passwordHash: String,
-        isPersistent: Bool
     ) throws(Self.Error) -> Self.New {
         try validate(userId: userId)
         try validate(email: email)
@@ -92,14 +87,12 @@ extension Credential {
             userId: userId,
             email: email,
             passwordHash: passwordHash,
-            isPersistent: isPersistent
         )
     }
 
     public mutating func update(
         email: String? = nil,
         passwordHash: String? = nil,
-        isPersistent: Bool? = nil
     ) throws(Self.Error) {
         let newEmail = email ?? self.email
         let newPasswordHash = passwordHash ?? self.passwordHash
@@ -109,9 +102,6 @@ extension Credential {
 
         self.email = newEmail
         self.passwordHash = newPasswordHash
-        if let isPersistent {
-            self.isPersistent = isPersistent
-        }
         self.updatedAt = .init()
     }
 }

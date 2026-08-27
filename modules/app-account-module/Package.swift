@@ -126,7 +126,6 @@ let package = Package(
             name: "AccountApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-
                 .product(name: "BCrypt", package: "swift-bcrypt"),
                 .product(name: "NIOPosix", package: "swift-nio"),
 
@@ -220,9 +219,11 @@ let package = Package(
             name: "AccountFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
 
                 .product(name: "SystemContracts", package: "app-system-module"),
                 .product(name: "UserContracts", package: "app-user-module"),
+                .product(name: "UserFrontend", package: "app-user-module"),
                 
                 .target(name: "AccountContracts"),
                 .target(name: "AccountAdminAPI"),
@@ -242,6 +243,10 @@ let package = Package(
             name: "AccountApplicationTests",
             dependencies: [
                 .target(name: "AccountApplication"),
+                .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "UserApplication", package: "app-user-module"),
+                .product(name: "UserDomain", package: "app-user-module"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
@@ -253,6 +258,8 @@ let package = Package(
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
 
                 .target(name: "AccountInfrastructure"),
+                .target(name: "AccountDomain"),
+                .product(name: "UserApplication", package: "app-user-module"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

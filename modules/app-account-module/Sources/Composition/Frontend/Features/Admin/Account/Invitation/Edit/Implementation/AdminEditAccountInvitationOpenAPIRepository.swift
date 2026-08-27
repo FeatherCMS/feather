@@ -33,7 +33,11 @@ struct AdminEditAccountInvitationOpenAPIRepository:
             switch response {
             case .ok(let ok):
                 let item = try ok.body.json
-                return .init(id: item.id, email: item.email)
+                return .init(
+                    id: item.id,
+                    email: item.email,
+                    roleIds: item.roleIds
+                )
             case .notFound:
                 throw OpenAPIRepositoryError.notFound(
                     message: "User invitation not found."
@@ -67,7 +71,9 @@ struct AdminEditAccountInvitationOpenAPIRepository:
                 .accountInvitationUpdate(
                     path: .init(accountInvitationId: id),
                     headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(.init(email: payload.email))
+                    body: .json(
+                        .init(email: payload.email, roleIds: payload.roleIDs)
+                    )
                 )
             switch response {
             case .ok:

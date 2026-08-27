@@ -17,6 +17,7 @@ import SystemBackend
 import UserBackend
 import AuthBackend
 import NewsBackend
+import Foundation
 
 struct AppModules: Sendable {
 
@@ -87,19 +88,25 @@ struct AppModules: Sendable {
             events: infrastructure.events
         )
         self.user = user
+        let publicBaseURL = ProcessInfo.processInfo.environment["WEB_PUBLIC_BASE_URL"]
+            ?? "http://localhost:3456"
         let account = AccountBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
             mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
-            events: infrastructure.events
+            events: infrastructure.events,
+            credentialWriter: InvitationCredentialWriterAdapter(),
+            publicBaseURL: publicBaseURL
         )
         self.account = account
         let auth = AuthBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
-            user: self.user
+            user: self.user,
+            mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
+            publicBaseURL: publicBaseURL
         )
         self.auth = auth
         let media = MediaBackend.UseCases(

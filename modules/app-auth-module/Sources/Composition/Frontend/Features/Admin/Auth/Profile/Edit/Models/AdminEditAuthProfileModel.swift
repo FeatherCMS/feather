@@ -20,8 +20,15 @@ struct AdminEditAuthProfileModel: Sendable {
     let id: String
     let email: String
     let password: String?
+    let firstName: String?
+    let lastName: String?
+    let imageURL: String?
 
     var payload: AdminEditAuthProfileFormPayloadModel {
         .init(email: email, password: password)
+    }
+
+    var accountProfile: AdminAuthAccountProfileModel {
+        .init(firstName: firstName, lastName: lastName, imageURL: imageURL)
     }
 }

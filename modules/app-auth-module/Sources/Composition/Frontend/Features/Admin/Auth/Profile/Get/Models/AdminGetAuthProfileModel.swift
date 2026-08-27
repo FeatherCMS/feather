@@ -21,11 +21,20 @@ struct AdminGetAuthProfileModel: Sendable {
     let email: String
     let roles: [String]
     let permissions: [String]
+    let firstName: String?
+    let lastName: String?
+    let imageURL: String?
 
-    init(account: AccountModel) {
+    init(
+        account: AccountModel,
+        accountProfile: AdminAuthAccountProfileModel
+    ) {
         self.id = account.user.id
         self.email = account.user.email
         self.roles = account.roles
         self.permissions = account.permissions
+        self.firstName = accountProfile.firstName
+        self.lastName = accountProfile.lastName
+        self.imageURL = accountProfile.imageURL
     }
 }

@@ -35,8 +35,7 @@ struct AdminAPIUserCredentialDeleteTests {
                 body: Components.Schemas.AuthCredentialCreateSchema(
                     userId: identityId,
                     email: "credential-delete@example.com",
-                    password: "very-secure-password",
-                    isPersistent: true
+                    password: "very-secure-password"
                 )
             )
         ) { response in
@@ -47,7 +46,7 @@ struct AdminAPIUserCredentialDeleteTests {
         }
 
         try await runner.run(
-            request: Request(
+            request: JSONRequest(
                 method: .delete,
                 path: "/api/v1/admin/auth/credentials",
                 headerFields: [

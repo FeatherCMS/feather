@@ -17,7 +17,18 @@ struct AccountInvitationDetails: Component {
             H1("User invitation details")
             AdminDetailsField(label: "ID", value: state.invitation.id)
             AdminDetailsField(label: "Email", value: state.invitation.email)
+            AdminDetailsField(
+                label: "Roles",
+                value: state.invitation.roleIds.isEmpty
+                    ? "No roles assigned"
+                    : state.invitation.roleIds.joined(separator: ", ")
+            )
             Div {
+                AdminNavigationButton(
+                    "Resend invitation",
+                    href:
+                        "/admin/account/invitations/\(state.invitation.id)/resend/"
+                )
                 AdminNavigationButton(
                     "Edit invitation",
                     href:

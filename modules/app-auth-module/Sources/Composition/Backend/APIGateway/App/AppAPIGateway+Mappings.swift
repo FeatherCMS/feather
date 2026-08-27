@@ -53,7 +53,7 @@ extension AdminAPIGateway {
                         field: field,
                         direction: mapSortDirection(rule.direction)
                     )
-                },
+            },
             search: query.filters.search
         )
     }
@@ -147,8 +147,7 @@ extension AdminAPIGateway {
         .init(
             id: detail.id,
             userId: detail.userId,
-            email: detail.email,
-            isPersistent: detail.isPersistent
+            email: detail.email
         )
     }
 
@@ -158,8 +157,7 @@ extension AdminAPIGateway {
         .init(
             id: item.id,
             userId: item.userId,
-            email: item.email,
-            isPersistent: item.isPersistent
+            email: item.email
         )
     }
 }

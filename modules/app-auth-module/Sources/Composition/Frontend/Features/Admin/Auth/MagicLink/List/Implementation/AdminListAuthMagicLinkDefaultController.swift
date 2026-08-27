@@ -38,6 +38,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
         let page = request.queryPage()
         let pageSize = 20
         let search = request.querySearch()
+        let userID = request.uri.queryParameters["userId"].map(String.init)
 
         do {
             let result =
@@ -45,7 +46,8 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                 ? try await interactor.execute(
                     page: page,
                     size: pageSize,
-                    search: search
+                    search: search,
+                    userID: userID
                 )
                 : (
                     items: [],
@@ -68,6 +70,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                 pageSize: result.size,
                 total: result.total,
                 search: search ?? "",
+                userID: userID,
                 deniedInfo: "Forbidden",
                 deniedMessage:
                     "Your identity cannot access user magic links.",
@@ -95,6 +98,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
         let selectedIds = request.queryStrings("selectedIds")
         let page = request.queryPage()
         let search = request.querySearch()
+        let userID = request.uri.queryParameters["userId"].map(String.init)
         guard !selectedIds.isEmpty else {
             return Response(
                 status: .seeOther,
@@ -103,6 +107,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                         path: "/admin/auth/magic-links/",
                         page: page,
                         search: search,
+                        queryItems: userID.map { [("userId", $0)] } ?? [],
                         title: nil,
                         message: nil
                     )
@@ -114,6 +119,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                 selectedIds: selectedIds,
                 page: page,
                 search: search,
+                userID: userID,
                 permissions: context.currentUserPermissions
             )
             .response(from: request, context: context)
@@ -125,7 +131,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: AdminListAuthMagicLinkBulkRemoveInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
@@ -138,6 +144,9 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                     path: "/admin/auth/magic-links/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,
+                    queryItems: payload.normalizedUserID.map {
+                        [("userId", $0)]
+                    } ?? [],
                     title: !payload.normalizedSelectedIds.isEmpty
                         ? "Removed" : nil,
                     message: !payload.normalizedSelectedIds.isEmpty

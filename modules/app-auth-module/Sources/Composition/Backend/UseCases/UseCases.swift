@@ -20,22 +20,22 @@ public struct UseCases: Sendable {
     let idGenerator: any IDGenerator
     let authorizer: any Authorizer
     public let user: UserBackend.UseCases
+    let mailSender: any MailSender
+    let publicBaseURL: String
 
     public init(
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
         authorizer: any Authorizer,
-        user: UserBackend.UseCases
+        user: UserBackend.UseCases,
+        mailSender: any MailSender,
+        publicBaseURL: String
     ) {
         self.database = database
         self.idGenerator = idGenerator
         self.authorizer = authorizer
         self.user = user
+        self.mailSender = mailSender
+        self.publicBaseURL = publicBaseURL
     }
-}
-
-struct NoopMailSender: MailSender {
-    func send(
-        _ message: MailMessage
-    ) async throws {}
 }

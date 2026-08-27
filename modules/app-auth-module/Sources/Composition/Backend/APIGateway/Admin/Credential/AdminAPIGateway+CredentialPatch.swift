@@ -21,8 +21,7 @@ extension AdminAPIGateway {
             input: .init(
                 id: input.path.authCredentialId,
                 email: body.email,
-                password: body.password,
-                isPersistent: body.isPersistent
+                password: body.password
             )
         )
 

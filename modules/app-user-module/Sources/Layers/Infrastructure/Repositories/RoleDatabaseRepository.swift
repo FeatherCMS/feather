@@ -38,6 +38,13 @@ public struct RoleDatabaseRepository: RoleRepository {
         return try await table.find(id: id)?.asDomain
     }
 
+    public func findBy(
+        name: String
+    ) async throws -> Role? {
+        let table = RoleTable(connection: context.connection)
+        return try await table.find(name: name)?.asDomain
+    }
+
     public func insert(
         _ model: Role.New
     ) async throws -> Role {

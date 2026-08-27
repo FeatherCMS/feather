@@ -21,7 +21,8 @@ protocol AdminListAuthMagicLinkInteractor: Sendable {
     func execute(
         page: Int,
         size: Int,
-        search: String?
+        search: String?,
+        userID: String?
     ) async throws -> (
         items: [AuthAdminAPI.Components.Schemas.AuthMagicLinkListItemSchema],
         total: Int,

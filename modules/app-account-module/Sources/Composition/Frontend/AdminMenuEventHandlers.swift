@@ -33,6 +33,13 @@ public enum AccountAdminMenuEventHandlers {
                 ),
                 .init(
                     menuKey: "account",
+                    label: "Users",
+                    icon: "users",
+                    link: "/admin/user/identities/",
+                    permission: "user:identities:list"
+                ),
+                .init(
+                    menuKey: "account",
                     label: "Settings",
                     icon: "settings",
                     link: "/admin/account/settings/",

@@ -7,8 +7,6 @@ import WebStandards
 struct AccountInvitationForm: Component, FlowContent {
 
     struct FieldState: FeatherAdmin.Object {
-        // TODO: Render the requested-role selector once invitation creation
-        // exposes roleIds in the frontend form.
         var key: String
         var label: String
         var value: String?
@@ -17,6 +15,8 @@ struct AccountInvitationForm: Component, FlowContent {
 
     struct State: FeatherAdmin.Object {
         var email: FieldState
+        var roleIds: FieldState
+        var roleOptions: [RoleOptionState]
         var error: String?
         var success: String?
 
@@ -24,7 +24,14 @@ struct AccountInvitationForm: Component, FlowContent {
             errors: [String: String]
         ) {
             email.error = errors[email.key]
+            roleIds.error = errors[roleIds.key]
         }
+    }
+
+    struct RoleOptionState: FeatherAdmin.Object {
+        var value: String
+        var label: String
+        var isSelected: Bool
     }
 
     var state: State
@@ -49,6 +56,31 @@ struct AccountInvitationForm: Component, FlowContent {
                 error: state.email.error,
                 isRequired: true
             )
+            Section {
+                if state.roleOptions.isEmpty {
+                    P("No roles available.")
+                }
+                else {
+                    AdminFieldLabel(label: "Roles", required: false)
+                    Div {
+                        for option in state.roleOptions {
+                            Label {
+                                Input()
+                                    .type(.checkbox)
+                                    .name("roleIds[]")
+                                    .value(option.value)
+                                    .if(option.isSelected) { $0.checked() }
+                                InlineText(option.label)
+                            }
+                            .class("multi-option")
+                        }
+                    }
+                    .class("checkbox-multiselect")
+                    if let error = state.roleIds.error {
+                        Span(error).class("field-error")
+                    }
+                }
+            }
 
             Section {
                 Div {

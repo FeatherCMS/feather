@@ -24,6 +24,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
         let page = request.queryPage()
         let pageSize = 20
         let search = request.querySearch()
+        let role = request.uri.queryParameters["role"].map(String.init)
 
         do {
             let result =
@@ -31,7 +32,8 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
                 ? try await interactor.execute(
                     page: page,
                     size: pageSize,
-                    search: search
+                    search: search,
+                    role: role
                 )
                 : (
                     items: [],
@@ -54,6 +56,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
                 pageSize: result.size,
                 total: result.total,
                 search: search ?? "",
+                role: role ?? "",
                 deniedInfo: "Forbidden",
                 deniedMessage:
                     "Your identity cannot access user identities.",

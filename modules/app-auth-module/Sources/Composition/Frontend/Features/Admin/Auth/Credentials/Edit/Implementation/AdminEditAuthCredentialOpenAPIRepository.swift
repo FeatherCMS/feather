@@ -65,8 +65,7 @@ struct AdminEditAuthCredentialOpenAPIRepository:
                 body: .json(
                     .init(
                         email: payload.email,
-                        password: payload.password,
-                        isPersistent: payload.isPersistent
+                        password: payload.password
                     )
                 )
             )

@@ -1,7 +1,10 @@
 import AccountDomain
 
-actor MockSettingsRepository: SettingsRepository {
+@testable import AccountApplication
+
+actor MockSettingsRepository: SettingsRepository, SettingsQueries {
     private(set) var getCallCount = 0
+    private(set) var getOrCreateCallCount = 0
     private(set) var updateCallCount = 0
     private(set) var updatedModel: Settings?
     private let result: Settings
@@ -20,7 +23,7 @@ actor MockSettingsRepository: SettingsRepository {
     func getOrCreate(
         userId: String
     ) async throws -> Settings {
-        getCallCount += 1
+        getOrCreateCallCount += 1
         return result
     }
 

@@ -1,5 +1,6 @@
 import CSS
 import AuthFrontend
+import FeatherAdmin
 import HTML
 import SGML
 import SystemFrontend
@@ -120,7 +121,7 @@ struct WebAppTestSuite {
             url: "/",
             priority: "0",
             isBlank: .init(value: false),
-            permission: " ",
+            permission: "",
             authentication: "any",
             notes: ""
         )

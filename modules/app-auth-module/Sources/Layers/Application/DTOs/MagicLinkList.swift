@@ -65,15 +65,18 @@ public struct MagicLinkList: DTO {
         public var page: Search.Page
         public var sort: [Sort]
         public var search: String?
+        public var userId: String?
 
         public init(
             page: Search.Page = .init(),
             sort: [Sort] = [],
-            search: String? = nil
+            search: String? = nil,
+            userId: String? = nil
         ) {
             self.page = page
             self.sort = sort
             self.search = search
+            self.userId = userId
         }
     }
 

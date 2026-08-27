@@ -20,7 +20,8 @@ extension UseCases {
                 WriteInvitation(
                     invitation: InvitationDatabaseRepository(context: context),
                     identity: IdentityDatabaseRepository(context: context),
-                    role: RoleDatabaseRepository(context: context)
+                    role: RoleDatabaseRepository(context: context),
+                    credential: credentialWriter
                 )
             }
         )
@@ -28,7 +29,8 @@ extension UseCases {
             authorizer: authorizer,
             transaction: transaction,
             events: events,
-            mailSender: mailSender
+            mailSender: mailSender,
+            publicBaseURL: publicBaseURL
         )
     }
 }

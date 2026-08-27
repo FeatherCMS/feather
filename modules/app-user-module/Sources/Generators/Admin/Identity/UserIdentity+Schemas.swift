@@ -15,6 +15,7 @@ struct UserIdentityListItemSchema: ObjectSchemaRepresentable {
         [
             "id": UserIdentityIDField().reference(),
             "status": UserIdentityStatusField().reference(),
+            "roles": UserIdentityRoleIDListSchema().reference(),
         ]
     }
 }

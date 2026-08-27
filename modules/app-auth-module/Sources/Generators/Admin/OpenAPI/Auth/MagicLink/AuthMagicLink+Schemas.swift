@@ -25,6 +25,8 @@ struct AuthMagicLinkIsPersistentField: BoolSchemaRepresentable {
     var example: Bool? = true
 }
 
+struct AuthMagicLinkUserIdField: StringSchemaRepresentable {}
+
 struct AuthMagicLinkCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [

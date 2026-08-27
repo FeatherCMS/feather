@@ -2,6 +2,9 @@ import FeatherAdmin
 import FeatherValidation
 import HTML
 import Hummingbird
+import OpenAPIRuntime
+import UserAdminAPI
+import UserFrontend
 
 struct AdminAddAccountInvitationDefaultController:
     AdminAddAccountInvitationController
@@ -18,7 +21,9 @@ struct AdminAddAccountInvitationDefaultController:
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderPage(
-            form: presenter.formState(email: ""),
+            form: presenter.formState(
+                email: "", roleIDs: [], roleOptions: await roleOptions(context)
+            ),
             permissions: context.currentUserPermissions
         )
     }
@@ -29,6 +34,7 @@ struct AdminAddAccountInvitationDefaultController:
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         var lastPayload: AdminAddAccountInvitationFormInput?
+        let availableRoleOptions = await roleOptions(context)
         do {
             let payload = try await request.decode(
                 as: AdminAddAccountInvitationFormInput.self,
@@ -38,7 +44,10 @@ struct AdminAddAccountInvitationDefaultController:
             try await payload.validate()
             let (interactor, _) = runtime
             try await interactor.execute(
-                entity: .init(email: payload.normalizedEmail)
+                entity: .init(
+                    email: payload.normalizedEmail,
+                    roleIDs: payload.normalizedRoleIDs
+                )
             )
             return Response(
                 status: .seeOther,
@@ -55,7 +64,9 @@ struct AdminAddAccountInvitationDefaultController:
             var errs: [String: String] = [:]
             for f in error.failures { errs[f.key] = f.message }
             var state = runtime.presenter.formState(
-                email: lastPayload?.normalizedEmail ?? ""
+                email: lastPayload?.normalizedEmail ?? "",
+                roleIDs: lastPayload?.normalizedRoleIDs ?? [],
+                roleOptions: availableRoleOptions
             )
             state.apply(errors: errs)
             return try createResponse(
@@ -67,7 +78,9 @@ struct AdminAddAccountInvitationDefaultController:
         }
         catch let error as OpenAPIRepositoryError {
             var state = runtime.presenter.formState(
-                email: lastPayload?.normalizedEmail ?? ""
+                email: lastPayload?.normalizedEmail ?? "",
+                roleIDs: lastPayload?.normalizedRoleIDs ?? [],
+                roleOptions: availableRoleOptions
             )
             state.error = runtime.presenter.format(error: error)
             return try createResponse(
@@ -79,7 +92,9 @@ struct AdminAddAccountInvitationDefaultController:
         }
         catch {
             var state = runtime.presenter.formState(
-                email: lastPayload?.normalizedEmail ?? ""
+                email: lastPayload?.normalizedEmail ?? "",
+                roleIDs: lastPayload?.normalizedRoleIDs ?? [],
+                roleOptions: availableRoleOptions
             )
             state.error = error.displayMessage
             return try createResponse(
@@ -88,6 +103,28 @@ struct AdminAddAccountInvitationDefaultController:
                 presenter: runtime.presenter,
                 state: state
             )
+        }
+    }
+
+    private func roleOptions(
+        _ context: AppRequestContext
+    ) async -> [AccountInvitationForm.RoleOptionState] {
+        guard let response = try? await context.userAdminAPI()
+            .withOpenAPIRepositoryErrorMapping({ client in
+                try await client.userRoleSearch(
+                    headers: .init(accept: [.init(contentType: .json)]),
+                    body: .json(
+                        .init(
+                            page: .init(size: 100, number: 1),
+                            filters: .init(search: nil)
+                        )
+                    )
+                )
+            }) else { return [] }
+        guard case .ok(let value) = response,
+            let body = try? value.body.json else { return [] }
+        return body.data.items.map {
+            .init(value: $0.id, label: $0.name ?? $0.id, isSelected: false)
         }
     }
 

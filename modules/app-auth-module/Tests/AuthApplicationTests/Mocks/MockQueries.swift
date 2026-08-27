@@ -15,6 +15,7 @@ actor MockMagicLinkQueries: MagicLinkQueries {
     private(set) var listCallCount = 0
     private(set) var countCallCount = 0
     private(set) var lastFindId: String?
+    private(set) var lastListQuery: MagicLinkList.Query?
 
     private let findResult: MagicLinkDetail
     private let listResult: MagicLinkList
@@ -51,6 +52,7 @@ actor MockMagicLinkQueries: MagicLinkQueries {
         query: MagicLinkList.Query
     ) async throws -> MagicLinkList {
         listCallCount += 1
+        lastListQuery = query
         return listResult
     }
 

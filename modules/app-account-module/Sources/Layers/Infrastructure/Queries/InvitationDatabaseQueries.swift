@@ -18,6 +18,7 @@ extension InvitationTable.Row {
             userId: userId,
             email: email,
             token: token,
+            roleIDs: roleIDs,
             expiresAt: expiresAt,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -30,6 +31,7 @@ extension InvitationTable.Row {
             userId: userId,
             email: email,
             token: token,
+            roleIDs: roleIDs,
             expiresAt: expiresAt,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -83,6 +85,16 @@ public struct InvitationDatabaseQueries: InvitationQueries {
     ) async throws -> InvitationDetail {
         let table = InvitationTable(connection: context.connection)
         guard let row = try await table.find(id: id) else {
+            throw RepositoryError.notFound
+        }
+        return row.asDetail
+    }
+
+    public func getBy(
+        token: String
+    ) async throws -> InvitationDetail {
+        let table = InvitationTable(connection: context.connection)
+        guard let row = try await table.find(token: token) else {
             throw RepositoryError.notFound
         }
         return row.asDetail

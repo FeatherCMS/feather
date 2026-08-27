@@ -9,6 +9,7 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/account/invitation/exchange":
                 AccountInvitationExchangePathItems(),
             "api/v1/account/settings": AccountSettingsPathItems(),
+            "api/v1/account/profile": AccountProfilePathItems(),
         ]
     }
 }

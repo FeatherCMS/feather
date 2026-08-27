@@ -101,6 +101,7 @@ let package = Package(
             from: "2.34.0"
         ),
         .package(path: "../../feather-core"),
+        .package(path: "../app-account-module"),
         .package(path: "../app-system-module"),
         .package(path: "../app-user-module"),
         .package(path: "../app-web-module"),
@@ -209,6 +210,7 @@ let package = Package(
                 .product(name: "NIOPosix", package: "swift-nio"),
 
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
+                .product(name: "SystemInfrastructure", package: "app-system-module"),
                 .product(name: "UserBackend", package: "app-user-module"),
 
                 .target(name: "AuthInfrastructure"),
@@ -223,6 +225,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
+                .product(name: "AccountAppAPI", package: "app-account-module"),
                 .product(name: "UserFrontend", package: "app-user-module"),
                 .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),
@@ -245,6 +248,10 @@ let package = Package(
             name: "AuthApplicationTests",
             dependencies: [
                 .target(name: "AuthApplication"),
+                .target(name: "AuthDomain"),
+                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "UserDomain", package: "app-user-module"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
