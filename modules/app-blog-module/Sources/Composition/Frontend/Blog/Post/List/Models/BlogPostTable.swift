@@ -292,7 +292,7 @@ struct BlogPostTable: Component {
             return "-"
         }
         return DateFormatting.formatUnixTimestamp(
-            timestamp.timeIntervalSince1970
+            timestamp
         )
     }
 

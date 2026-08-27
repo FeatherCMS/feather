@@ -1,32 +1,16 @@
-import BlogFrontend
-import FeatherContracts
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
-import WebFrontend
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import SystemFrontend
 import FeatherAdmin
-import MediaAdminAPI
+import FeatherContracts
+import FeatherValidation
 import Foundation
+import HTML
 import Hummingbird
+import MediaAdminAPI
 import OpenAPIRuntime
+import SGML
+import WebStandards
 
-private struct AssetAddForm: Decodable {
-    var parentId: String = ""
-    var fileName: String = ""
-    var type: String = "bin"
-    var title: String = ""
-    var altText: String = ""
-    var data: String = ""
-    var view: String = "grid"
-}
-
-struct AdminMediaAssetOpenAPIRepository {
-    typealias Components = MediaAdminAPI.Components
-    let api: AdminAPI
+public struct AdminMediaAssetOpenAPIRepository: Sendable {
+    let api: MediaAdminAPIClient
     private let listFoldersUnauthorizedMessage =
         "Please sign in again to view media folders."
     private let createFolderUnauthorizedMessage =
@@ -50,6 +34,10 @@ struct AdminMediaAssetOpenAPIRepository {
     private let searchAssetsUnauthorizedMessage =
         "Please sign in again to view media assets."
 
+    public init(api: MediaAdminAPIClient) {
+        self.api = api
+    }
+
     func listAssets(
         page: Int,
         search: String?,
@@ -59,7 +47,7 @@ struct AdminMediaAssetOpenAPIRepository {
         items: [Components.Schemas.MediaAssetListItemSchema], total: Int,
         page: Int, pageSize: Int
     ) {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let normalizedExtensions = Set(
                 allowedExtensions.map { $0.lowercased() }.filter { !$0.isEmpty }
             )
@@ -103,7 +91,7 @@ struct AdminMediaAssetOpenAPIRepository {
     func listFolders(
         parentId: String?
     ) async throws -> [Components.Schemas.MediaFolderListItemSchema] {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
                 .mediaFolderSearch(
@@ -139,7 +127,7 @@ struct AdminMediaAssetOpenAPIRepository {
         name: String,
         parentId: String?
     ) async throws -> Components.Schemas.MediaFolderDetailSchema {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
                 .mediaFolderCreate(
@@ -168,7 +156,7 @@ struct AdminMediaAssetOpenAPIRepository {
     func getFolder(
         id: String
     ) async throws -> Components.Schemas.MediaFolderDetailSchema {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
                 .mediaFolderGet(path: .init(mediaFolderId: id))
@@ -200,7 +188,7 @@ struct AdminMediaAssetOpenAPIRepository {
         id: String,
         name: String
     ) async throws {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.mediaFolderUpdate(
                 path: .init(mediaFolderId: id),
                 body: .json(.init(name: name))
@@ -232,17 +220,17 @@ struct AdminMediaAssetOpenAPIRepository {
     func deleteFolder(
         id: String
     ) async throws {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.mediaFolderBulkDelete(
                 body: .json(.init(ids: [id], summary: true))
             )
         }
     }
 
-    func getAsset(
+    public func getAsset(
         id: String
-    ) async throws -> Components.Schemas.MediaAssetDetailSchema {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+    ) async throws -> MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
                 .mediaAssetGet(
@@ -275,7 +263,7 @@ struct AdminMediaAssetOpenAPIRepository {
     func getVariants(
         id: String
     ) async throws -> [Components.Schemas.MediaAssetVariantListItemSchema] {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
                 .mediaAssetVariantSearch(
@@ -305,10 +293,10 @@ struct AdminMediaAssetOpenAPIRepository {
         }
     }
 
-    fileprivate func createAsset(
+    func createAsset(
         payload: AssetAddForm
     ) async throws -> Components.Schemas.MediaAssetDetailSchema {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
                 .mediaAssetCreate(
@@ -356,7 +344,7 @@ struct AdminMediaAssetOpenAPIRepository {
     func deleteAsset(
         id: String
     ) async throws {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.mediaAssetBulkDelete(
                 body: .json(.init(ids: [id], summary: true))
             )
@@ -374,7 +362,7 @@ struct AdminMediaAssetOpenAPIRepository {
         title: String?,
         altText: String?
     ) async throws -> Components.Schemas.MediaAssetDetailSchema {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
                 .mediaAssetUpdate(
@@ -422,7 +410,7 @@ extension AdminMediaAssetOpenAPIRepository {
         items: [Components.Schemas.MediaAssetListItemSchema], total: Int,
         page: Int, pageSize: Int
     ) {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
                 .mediaAssetSearch(
@@ -465,7 +453,7 @@ extension AdminMediaAssetOpenAPIRepository {
         parentId: String?,
         allowedExtensions: Set<String>
     ) async throws -> [Components.Schemas.MediaAssetListItemSchema] {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let items = try await loadAllAssets(
                 search: search,
                 parentId: parentId
@@ -486,7 +474,7 @@ extension AdminMediaAssetOpenAPIRepository {
         search: String?,
         parentId: String?
     ) async throws -> [Components.Schemas.MediaAssetListItemSchema] {
-        try await api.withMediaOpenAPIRepositoryErrorMapping { client in
+        try await api.withOpenAPIRepositoryErrorMapping { client in
             let backendPageSize = 200
             var backendPage = 1
             var items: [Components.Schemas.MediaAssetListItemSchema] = []

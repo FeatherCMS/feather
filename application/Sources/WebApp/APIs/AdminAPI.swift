@@ -15,16 +15,13 @@ import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import FeatherAdmin
 import WebAdminAPI
-import MediaAdminAPI
 import AnalyticsAdminAPI
 import RedirectAdminAPI
 
 public struct AdminAPI: Sendable {
 
-    private let apiBaseURL: URL
     private let blogClient: BlogAdminAPI.Client
     private let webClient: WebAdminAPI.Client
-    private let mediaClient: MediaAdminAPI.Client
     let analyticsClient: AnalyticsAdminAPIClient
     let redirectClient: RedirectAdminAPIClient
 
@@ -32,8 +29,6 @@ public struct AdminAPI: Sendable {
         apiBaseURL: URL,
         sessionToken: String? = nil
     ) {
-        self.apiBaseURL = apiBaseURL
-
         self.blogClient = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(
@@ -47,18 +42,6 @@ public struct AdminAPI: Sendable {
             ]
         )
         self.webClient = .init(
-            serverURL: apiBaseURL,
-            transport: AsyncHTTPClientTransport(
-                configuration: .init(
-                    client: .shared,
-                    timeout: .seconds(3)
-                )
-            ),
-            middlewares: [
-                ClientAPIAuthMiddleware(sessionToken: sessionToken)
-            ]
-        )
-        self.mediaClient = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(
                 configuration: .init(
@@ -112,22 +95,6 @@ public struct AdminAPI: Sendable {
     ) async throws(OpenAPIRepositoryError) -> T {
         do {
             return try await operation(webClient)
-        }
-        catch let error as OpenAPIRepositoryError {
-            throw error
-        }
-        catch {
-            throw OpenAPIRepositoryError.transport(
-                description: String(describing: error)
-            )
-        }
-    }
-
-    public func withMediaOpenAPIRepositoryErrorMapping<T: Sendable>(
-        _ operation: @Sendable (MediaAdminAPI.Client) async throws -> T
-    ) async throws(OpenAPIRepositoryError) -> T {
-        do {
-            return try await operation(mediaClient)
         }
         catch let error as OpenAPIRepositoryError {
             throw error

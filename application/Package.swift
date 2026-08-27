@@ -264,7 +264,6 @@ let package = Package(
                 .product(name: "NewsAppAPI", package: "app-news-module"),
                 .product(name: "AuthAppAPI", package: "app-auth-module"),
 
-                .product(name: "MediaAdminAPI", package: "app-media-module"),
                 .product(name: "BlogAdminAPI", package: "app-blog-module"),
                 .product(name: "WebAdminAPI", package: "app-web-module"),
                 .product(name: "AnalyticsAdminAPI", package: "app-analytics-module"),

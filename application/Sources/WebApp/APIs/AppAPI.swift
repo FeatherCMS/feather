@@ -9,8 +9,6 @@ import UserFrontend
 import SystemFrontend
 import AsyncHTTPClient
 import AuthAppAPI
-import BlogAppAPI
-import ContactAppAPI
 import WebAppAPI
 import Foundation
 import NIOCore
@@ -22,8 +20,6 @@ public struct AppAPI: Sendable, AppPublicContentRepository {
 
     private let apiBaseURL: URL
     private let authClient: AuthAppAPI.Client
-    private let blogClient: BlogAppAPI.Client
-    private let contactClient: ContactAppAPI.Client
     private let webClient: WebAppAPI.Client
 
     public init(
@@ -33,30 +29,6 @@ public struct AppAPI: Sendable, AppPublicContentRepository {
         self.apiBaseURL = apiBaseURL
 
         self.authClient = .init(
-            serverURL: apiBaseURL,
-            transport: AsyncHTTPClientTransport(
-                configuration: .init(
-                    client: .shared,
-                    timeout: .seconds(3)
-                )
-            ),
-            middlewares: [
-                ClientAPIAuthMiddleware(sessionToken: sessionToken)
-            ]
-        )
-        self.blogClient = .init(
-            serverURL: apiBaseURL,
-            transport: AsyncHTTPClientTransport(
-                configuration: .init(
-                    client: .shared,
-                    timeout: .seconds(3)
-                )
-            ),
-            middlewares: [
-                ClientAPIAuthMiddleware(sessionToken: sessionToken)
-            ]
-        )
-        self.contactClient = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(
                 configuration: .init(
@@ -137,38 +109,6 @@ public struct AppAPI: Sendable, AppPublicContentRepository {
             statusCode: statusCode,
             responseBody: body
         )
-    }
-
-    public func withBlogOpenAPIRepositoryErrorMapping<T: Sendable>(
-        _ operation: @Sendable (BlogAppAPI.Client) async throws -> T
-    ) async throws(OpenAPIRepositoryError) -> T {
-        do {
-            return try await operation(blogClient)
-        }
-        catch let error as OpenAPIRepositoryError {
-            throw error
-        }
-        catch {
-            throw OpenAPIRepositoryError.transport(
-                description: String(describing: error)
-            )
-        }
-    }
-
-    public func withContactOpenAPIRepositoryErrorMapping<T: Sendable>(
-        _ operation: @Sendable (ContactAppAPI.Client) async throws -> T
-    ) async throws(OpenAPIRepositoryError) -> T {
-        do {
-            return try await operation(contactClient)
-        }
-        catch let error as OpenAPIRepositoryError {
-            throw error
-        }
-        catch {
-            throw OpenAPIRepositoryError.transport(
-                description: String(describing: error)
-            )
-        }
     }
 
     public func withWebOpenAPIRepositoryErrorMapping<T: Sendable>(
