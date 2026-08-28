@@ -15,10 +15,10 @@ struct AdminEditSettingsDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
+        let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
-        let isTargetUser = AdminEditSettingsOpenAPIRepository
-            .targetUserID(for: request) != nil
+        let isTargetUser = targetUserID != nil
         let canRead = context.isCurrentUserAllowed(
             to: isTargetUser
                 ? AccountPermissions.Settings.manage
@@ -41,11 +41,7 @@ struct AdminEditSettingsDefaultController:
         let settings = try await interactor.loadSettings()
         return presenter.renderPage(
             state: .init(
-                userID: isTargetUser
-                    ? AdminEditSettingsOpenAPIRepository.targetUserID(
-                        for: request
-                    )
-                    : nil,
+                userID: targetUserID,
                 isEdited: request.hasQueryFlag("edited"),
                 canEdit: canEdit,
                 form: .init(
@@ -81,10 +77,10 @@ struct AdminEditSettingsDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
+        let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
-        let isTargetUser = AdminEditSettingsOpenAPIRepository
-            .targetUserID(for: request) != nil
+        let isTargetUser = targetUserID != nil
         let canEdit = context.isCurrentUserAllowed(
             to: isTargetUser
                 ? AccountPermissions.Settings.manage

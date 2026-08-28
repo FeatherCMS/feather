@@ -13,6 +13,15 @@ public struct GetSettings: UseCase {
 
     struct Action: PermissionAction {
         let key: PermissionKey
+
+        init(
+            subjectID: String,
+            userID: String
+        ) {
+            key = subjectID == userID
+                ? AccountPermissions.Settings.read
+                : AccountPermissions.Settings.manage
+        }
     }
 
     let authorizer: any Authorizer
@@ -39,11 +48,7 @@ public struct GetSettings: UseCase {
         input: Input
     ) async throws -> SettingsDetail {
         let userId = input.userId ?? subject.id
-        let action = Action(
-            key: userId == subject.id
-                ? AccountPermissions.Settings.read
-                : AccountPermissions.Settings.manage
-        )
+        let action = Action(subjectID: subject.id, userID: userId)
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }

@@ -17,7 +17,6 @@ import SystemBackend
 import UserBackend
 import AuthBackend
 import NewsBackend
-import Foundation
 
 struct AppModules: Sendable {
 
@@ -38,7 +37,8 @@ struct AppModules: Sendable {
     let account: AccountBackend.UseCases
 
     init(
-        infrastructure: AppInfrastructure
+        infrastructure: AppInfrastructure,
+        publicBaseURL: String
     ) {
         self.infrastructure = infrastructure
 
@@ -88,8 +88,6 @@ struct AppModules: Sendable {
             events: infrastructure.events
         )
         self.user = user
-        let publicBaseURL = ProcessInfo.processInfo.environment["WEB_PUBLIC_BASE_URL"]
-            ?? "http://localhost:3456"
         let account = AccountBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,

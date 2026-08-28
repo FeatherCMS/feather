@@ -8,8 +8,10 @@ struct AdminListAuthSession {
         controller = AdminListAuthSessionDefaultController(
             buildRuntime: { request, context in
                 (
-                    repository: AdminListAuthSessionOpenAPIRepository(
-                        api: context.authAdminAPI()
+                    interactor: AdminListAuthSessionDefaultInteractor(
+                        repository: AdminListAuthSessionOpenAPIRepository(
+                            api: context.authAdminAPI()
+                        )
                     ),
                     presenter: AdminListAuthSessionDefaultPresenter(
                         request: request,

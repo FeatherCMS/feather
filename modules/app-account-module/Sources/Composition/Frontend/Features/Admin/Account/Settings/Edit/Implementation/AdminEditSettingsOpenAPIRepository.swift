@@ -1,6 +1,5 @@
 import AccountAdminAPI
 import FeatherAdmin
-import Hummingbird
 import OpenAPIRuntime
 
 struct AdminEditSettingsOpenAPIRepository:
@@ -8,14 +7,6 @@ struct AdminEditSettingsOpenAPIRepository:
 {
     let api: AccountAdminAPIClient
     let targetUserID: String?
-
-    static func targetUserID(for request: Request) -> String? {
-        let components = request.uri.path.split(separator: "/")
-        guard components.count == 5, components[2] == "users" else {
-            return nil
-        }
-        return String(components[3])
-    }
 
     func loadSettings() async throws -> AdminEditSettingsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in

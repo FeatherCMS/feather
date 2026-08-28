@@ -34,6 +34,10 @@ struct ServerConfigLoader {
                 default: 8080
             ),
             serverName: reader.string(forKey: "serverName"),
+            publicBaseURL: reader.string(
+                forKey: "web.publicBaseURL",
+                default: "http://localhost:3456"
+            ),
             system: system,
             queue: .init(
                 name: queueReader.string(

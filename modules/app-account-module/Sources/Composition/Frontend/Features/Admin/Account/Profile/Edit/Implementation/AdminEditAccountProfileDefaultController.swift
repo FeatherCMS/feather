@@ -7,7 +7,7 @@ struct AdminEditAccountProfileDefaultController:
 {
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
-            repository: any AdminEditAccountProfileRepository,
+            interactor: any AdminEditAccountProfileInteractor,
             presenter: any AdminEditAccountProfilePresenter
         )
 
@@ -26,7 +26,7 @@ struct AdminEditAccountProfileDefaultController:
                 permissions: context.currentUserPermissions
             )
         }
-        let model = try await runtime.repository.load(userID: userID)
+        let model = try await runtime.interactor.loadProfile(userID: userID)
         return runtime.presenter.render(
             userID: userID,
             model: model,
@@ -50,7 +50,7 @@ struct AdminEditAccountProfileDefaultController:
             as: AdminEditAccountProfileFormInput.self,
             context: context
         )
-        try await runtime.repository.save(userID: userID, input: input)
+        try await runtime.interactor.saveProfile(userID: userID, input: input)
         return Response(
             status: .seeOther,
             headers: [

@@ -6,6 +6,7 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherInfrastructure
 
+/// Adapts Account's registration port to Auth's credential infrastructure.
 struct InvitationCredentialWriterAdapter: InvitationCredentialWriter {
 
     func create(

@@ -8,8 +8,10 @@ struct AdminEditAccountProfile {
         controller = AdminEditAccountProfileDefaultController(
             buildRuntime: { request, context in
                 (
-                    repository: AdminEditAccountProfileOpenAPIRepository(
-                        api: context.accountAdminAPI()
+                    interactor: AdminEditAccountProfileDefaultInteractor(
+                        repository: AdminEditAccountProfileOpenAPIRepository(
+                            api: context.accountAdminAPI()
+                        )
                     ),
                     presenter: AdminEditAccountProfileDefaultPresenter(
                         request: request,

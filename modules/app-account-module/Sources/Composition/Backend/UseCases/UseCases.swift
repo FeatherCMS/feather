@@ -17,6 +17,7 @@ public struct UseCases: Sendable {
     let mailSender: any MailSender
     let events: any EventPublisher
     let credentialWriter: any InvitationCredentialWriter
+    /// Public web URL used to build invitation acceptance links.
     let publicBaseURL: String
 
     public init(
