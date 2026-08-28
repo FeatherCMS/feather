@@ -13,6 +13,24 @@ import UserAdminAPI
 struct AppAPIUserMagicLinkFlowTests {
 
     @Test
+    func invalidMagicLinkReturnsUnauthorized() async throws {
+        let runner = try await TestRunner()
+        try await runner.setupMigratedDatabase()
+
+        try await runner.run(
+            request: JSONRequest(
+                method: .post,
+                path: "/api/v1/auth/magic-link/verify",
+                body: AuthAppAPI.Components.Schemas.AuthMagicLinkVerifyRequestSchema(
+                    token: "invalid-magic-link-token"
+                )
+            )
+        ) { response in
+            #expect(response.response.status == .unauthorized)
+        }
+    }
+
+    @Test
     func requestedMagicLinkCanBeVerifiedOnce() async throws {
         let runner = try await TestRunner()
         try await runner.setupMigratedDatabase()

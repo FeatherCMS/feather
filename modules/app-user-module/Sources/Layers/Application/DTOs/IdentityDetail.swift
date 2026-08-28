@@ -17,7 +17,7 @@ public struct IdentityDetail: DTO {
     public let createdAt: Date
     public let updatedAt: Date
 
-    package init(
+    public init(
         id: String,
         roleIds: [String] = [],
         status: IdentityStatus,

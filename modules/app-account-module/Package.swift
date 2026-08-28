@@ -56,10 +56,6 @@ let package = Package(
         // [docc-plugin-placeholder]
 
         .package(
-            url: "https://github.com/apple/swift-nio",
-            from: "2.0.0"
-        ),
-        .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "5.0.0"
         ),

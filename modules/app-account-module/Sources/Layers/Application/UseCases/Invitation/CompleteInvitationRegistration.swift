@@ -12,8 +12,12 @@ import UserApplication
 import UserDomain
 
 public struct CompleteInvitationRegistration: UseCase {
-    struct Error: UseCaseError {
-        let message: String
+    public struct Error: UseCaseError {
+        public let message: String
+
+        public init(message: String) {
+            self.message = message
+        }
     }
 
     let transaction: any ContextualTransactionExecutor<WriteInvitation>
@@ -64,7 +68,13 @@ public struct CompleteInvitationRegistration: UseCase {
             guard try await scope.invitation.delete(id: invitation.id) else {
                 throw Error(message: "Invitation already used")
             }
-            return updated.asDetail
+            return .init(
+                id: updated.id,
+                roleIds: invitation.roleIDs,
+                status: .init(rawValue: updated.status.rawValue) ?? .invited,
+                createdAt: updated.createdAt,
+                updatedAt: updated.updatedAt
+            )
         }
     }
 }

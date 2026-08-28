@@ -130,6 +130,7 @@ struct AccountApplicationTestSuite {
 
         #expect(result.id == identity.id)
         #expect(result.status == .active)
+        #expect(result.roleIds == invitation.roleIDs)
         #expect(await credentialWriter.createCallCount == 1)
         #expect(await identityRepository.replacedRoleIds == invitation.roleIDs)
         #expect(await identityRepository.updateCallCount == 1)
@@ -282,6 +283,87 @@ struct AccountApplicationTestSuite {
             ) == true
         )
         #expect(await mailSender.lastMessage?.body.contains(result.token) == true)
+    }
+
+    @Test
+    func completeInvitationRegistrationRejectsNonInvitedIdentity()
+        async throws
+    {
+        let invitation = Invitation(
+            id: "invitation-1",
+            userId: "user-1",
+            email: "user@example.com",
+            token: "token-123456",
+            roleIDs: [],
+            expiresAt: Date().addingTimeInterval(3600),
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let identity = Identity(
+            id: "user-1",
+            status: .active,
+            isRoot: false,
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let credentialWriter = MockInvitationCredentialWriter()
+        let transaction = MockContextualTransactionExecutor(
+            context: WriteInvitation(
+                invitation: MockInvitationRepository(
+                    result: invitation,
+                    findByTokenResult: invitation
+                ),
+                identity: MockIdentityRepository(identity: identity),
+                role: MockRoleRepository(),
+                credential: credentialWriter
+            )
+        )
+        let useCase = CompleteInvitationRegistration(transaction: transaction)
+
+        await #expect(throws: CompleteInvitationRegistration.Error.self) {
+            _ = try await useCase.execute(
+                input: .init(token: invitation.token, password: "password-123")
+            )
+        }
+
+        #expect(await credentialWriter.createCallCount == 0)
+    }
+
+    @Test
+    func resendInvitationRequiresCreatePermission() async throws {
+        let repository = MockInvitationRepository(
+            result: Invitation(
+                id: "invitation-1",
+                userId: "user-1",
+                email: "user@example.com",
+                token: "token-123456",
+                roleIDs: [],
+                expiresAt: Date().addingTimeInterval(3600),
+                createdAt: Date(),
+                updatedAt: Date()
+            )
+        )
+        let transaction = MockTransactionExecutor(
+            context: WriteInvitationOnly(
+                invitation: repository,
+                role: MockRoleRepository()
+            )
+        )
+        let useCase = ResendInvitation(
+            authorizer: MockPermissionAuthorizer(permissions: []),
+            transaction: transaction,
+            mailSender: MockMailSender(),
+            publicBaseURL: "https://example.test"
+        )
+
+        await #expect(throws: AuthError.self) {
+            _ = try await useCase.execute(
+                subject: Subject(id: "admin-1"),
+                input: .init(id: "invitation-1")
+            )
+        }
+
+        #expect(await transaction.runCallCount == 0)
     }
 
     @Test

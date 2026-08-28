@@ -1,6 +1,8 @@
 import CSS
 import AuthFrontend
+import AuthContracts
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import SGML
 import SystemFrontend
@@ -14,6 +16,22 @@ import FeatherValidation
 
 @Suite
 struct WebAppTestSuite {
+
+    @Test
+    func authCredentialsMenuItemUsesRegisteredPermission() async throws {
+        var events = EventRegistry()
+        AuthAdminMenuEventHandlers.register(in: &events)
+
+        let items = try await events.trigger(
+            event: AdminMenuItemProvider(menuKey: "auth"),
+            using: AdminEventContext(path: "/admin/auth/", permissions: [])
+        )
+
+        let credentials = items.flatMap { $0 }
+            .first { $0.link == "/admin/auth/credentials/" }
+
+        #expect(credentials?.permission == AuthPermissions.Credential.list.rawValue)
+    }
 
     @Test
     func loginFormInputValidationAcceptsValidPayload() async throws {

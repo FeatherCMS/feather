@@ -10,8 +10,12 @@ public struct ResendInvitation: UseCase {
         let key = AccountPermissions.Invitations.create
     }
 
-    struct Error: UseCaseError {
-        let message: String
+    public struct Error: UseCaseError {
+        public let message: String
+
+        public init(message: String) {
+            self.message = message
+        }
     }
 
     let authorizer: any Authorizer
