@@ -9,7 +9,6 @@ import FeatherDomain
 import FeatherInfrastructure
 import UserApplication
 import UserInfrastructure
-import SystemApplication
 
 public struct UseCases: Sendable {
     let database: any DatabaseClient
@@ -18,7 +17,6 @@ public struct UseCases: Sendable {
     let mailSender: any MailSender
     let events: any EventPublisher
     let credentialWriter: any InvitationCredentialWriter
-    let variable: any VariableQueries
 
     public init(
         database: any DatabaseClient,
@@ -26,8 +24,7 @@ public struct UseCases: Sendable {
         authorizer: any Authorizer,
         mailSender: any MailSender,
         events: any EventPublisher,
-        credentialWriter: any InvitationCredentialWriter,
-        variable: any VariableQueries
+        credentialWriter: any InvitationCredentialWriter
     ) {
         self.database = database
         self.idGenerator = idGenerator
@@ -35,7 +32,6 @@ public struct UseCases: Sendable {
         self.mailSender = mailSender
         self.events = events
         self.credentialWriter = credentialWriter
-        self.variable = variable
     }
 
 }

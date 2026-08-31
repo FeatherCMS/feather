@@ -20,18 +20,18 @@ extension UseCases {
             database: database,
             idGenerator: idGenerator,
             scope: { context in
-                WriteAuth(
-                    identity: IdentityDatabaseRepository(context: context),
+                WriteRequestMagicLink(
                     credential: CredentialDatabaseRepository(context: context),
-                    session: SessionDatabaseRepository(context: context),
-                    magicLink: MagicLinkDatabaseRepository(context: context)
+                    magicLink: MagicLinkDatabaseRepository(context: context),
+                    variable: VariableDatabaseQueries(
+                        context: .init(connection: context.connection)
+                    )
                 )
             }
         )
         return RequestMagicLink(
             transaction: transaction,
-            mailSender: mailSender,
-            variable: variable
+            mailSender: mailSender
         )
     }
 }

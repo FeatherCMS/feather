@@ -2,6 +2,7 @@ import AccountContracts
 import FeatherApplication
 import FeatherContracts
 import Foundation
+import SystemApplication
 import Testing
 
 @testable import AccountApplication
@@ -149,7 +150,7 @@ struct AccountApplicationTestSuite {
         )
         let identityRepository = MockIdentityRepository(identity: identity)
         let transaction = MockContextualTransactionExecutor(
-            context: WriteInvitation(
+            context: WriteInvitationWithVariable(
                 invitation: MockInvitationRepository(
                     result: Invitation(
                         id: "invitation-1",
@@ -164,7 +165,8 @@ struct AccountApplicationTestSuite {
                 ),
                 identity: identityRepository,
                 role: MockRoleRepository(),
-                credential: MockInvitationCredentialWriter()
+                credential: MockInvitationCredentialWriter(),
+                variable: MockVariableQueries(value: "https://example.test")
             )
         )
         let useCase = AddInvitation(
@@ -173,8 +175,7 @@ struct AccountApplicationTestSuite {
             ),
             transaction: transaction,
             events: MockEventPublisher(),
-            mailSender: MockMailSender(),
-            variable: MockVariableQueries(value: "http://localhost:3456")
+            mailSender: MockMailSender()
         )
 
         await #expect(throws: AddInvitation.Error.self) {
@@ -208,11 +209,12 @@ struct AccountApplicationTestSuite {
             )
         )
         let transaction = MockContextualTransactionExecutor(
-            context: WriteInvitation(
+            context: WriteInvitationWithVariable(
                 invitation: invitationRepository,
                 identity: MockIdentityRepository(identity: identity),
                 role: MockRoleRepository(),
-                credential: MockInvitationCredentialWriter()
+                credential: MockInvitationCredentialWriter(),
+                variable: MockVariableQueries(value: "https://example.test")
             )
         )
         let mailSender = MockMailSender()
@@ -222,8 +224,7 @@ struct AccountApplicationTestSuite {
             ),
             transaction: transaction,
             events: MockEventPublisher(),
-            mailSender: mailSender,
-            variable: MockVariableQueries(value: "https://example.test")
+            mailSender: mailSender
         )
 
         _ = try await useCase.execute(
@@ -253,9 +254,10 @@ struct AccountApplicationTestSuite {
         )
         let repository = MockInvitationRepository(result: invitation)
         let transaction = MockTransactionExecutor(
-            context: WriteInvitationOnly(
+            context: WriteInvitationOnlyWithVariable(
                 invitation: repository,
-                role: MockRoleRepository()
+                role: MockRoleRepository(),
+                variable: MockVariableQueries(value: "https://example.test")
             )
         )
         let mailSender = MockMailSender()
@@ -264,8 +266,7 @@ struct AccountApplicationTestSuite {
                 permissions: [AccountPermissions.Invitations.create]
             ),
             transaction: transaction,
-            mailSender: mailSender,
-            variable: MockVariableQueries(value: "https://example.test")
+            mailSender: mailSender
         )
 
         let result = try await useCase.execute(
@@ -344,16 +345,16 @@ struct AccountApplicationTestSuite {
             )
         )
         let transaction = MockTransactionExecutor(
-            context: WriteInvitationOnly(
+            context: WriteInvitationOnlyWithVariable(
                 invitation: repository,
-                role: MockRoleRepository()
+                role: MockRoleRepository(),
+                variable: MockVariableQueries(value: "https://example.test")
             )
         )
         let useCase = ResendInvitation(
             authorizer: MockPermissionAuthorizer(permissions: []),
             transaction: transaction,
-            mailSender: MockMailSender(),
-            variable: MockVariableQueries(value: "https://example.test")
+            mailSender: MockMailSender()
         )
 
         await #expect(throws: AuthError.self) {

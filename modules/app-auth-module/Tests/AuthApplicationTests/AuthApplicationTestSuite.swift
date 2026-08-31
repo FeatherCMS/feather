@@ -6,6 +6,7 @@
 
 import FeatherApplication
 import FeatherContracts
+import SystemApplication
 import Testing
 
 import struct Foundation.Date
@@ -76,18 +77,16 @@ struct AuthApplicationTestSuite {
             result: makeMagicLink(id: "m-request")
         )
         let transaction = MockTransactionExecutor(
-            context: WriteAuth(
-                identity: MockAuthIdentityRepository(),
+            context: WriteRequestMagicLink(
                 credential: credentialRepository,
-                session: MockAuthSessionRepository(),
-                magicLink: magicLinkRepository
+                magicLink: magicLinkRepository,
+                variable: MockVariableQueries(value: "https://example.test")
             )
         )
         let mailSender = MockMailSender()
         let useCase = RequestMagicLink(
             transaction: transaction,
-            mailSender: mailSender,
-            variable: MockVariableQueries(value: "https://example.test")
+            mailSender: mailSender
         )
 
         let sent = try await useCase.execute(

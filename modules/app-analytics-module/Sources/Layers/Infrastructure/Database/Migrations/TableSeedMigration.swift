@@ -4,10 +4,6 @@ import FeatherInfrastructure
 public struct TableSeedMigration: DatabaseMigration {
     public let connection: any DatabaseConnection
 
-    public var id: String {
-        "AnalyticsInfrastructure.TableSeedMigration.v2"
-    }
-
     public init(
         connection: any DatabaseConnection
     ) {

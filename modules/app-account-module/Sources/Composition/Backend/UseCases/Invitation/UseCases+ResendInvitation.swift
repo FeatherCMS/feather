@@ -5,6 +5,8 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherInfrastructure
 import UserInfrastructure
+import SystemApplication
+import SystemInfrastructure
 
 extension UseCases {
 
@@ -13,17 +15,19 @@ extension UseCases {
             database: database,
             idGenerator: idGenerator,
             scope: { context in
-                WriteInvitationOnly(
+                WriteInvitationOnlyWithVariable(
                     invitation: InvitationDatabaseRepository(context: context),
-                    role: RoleDatabaseRepository(context: context)
+                    role: RoleDatabaseRepository(context: context),
+                    variable: VariableDatabaseQueries(
+                        context: .init(connection: context.connection)
+                    )
                 )
             }
         )
         return .init(
             authorizer: authorizer,
             transaction: transaction,
-            mailSender: mailSender,
-            variable: variable
+            mailSender: mailSender
         )
     }
 }
