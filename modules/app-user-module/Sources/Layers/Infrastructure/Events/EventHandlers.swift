@@ -1,4 +1,5 @@
 import FeatherContracts
+import FeatherDomain
 import FeatherInfrastructure
 import SystemApplication
 import UserApplication
@@ -23,10 +24,10 @@ public enum EventHandlers {
         registry.register(
             event: UserRoleSeedProvider.self,
             context: UserEventContext.self
-        ) { _, _ in
+        ) { _, context in
             [
                 .init(
-                    id: "editor",
+                    id: context.idGenerator.generate(),
                     name: "Editor"
                 )
             ]
@@ -35,9 +36,9 @@ public enum EventHandlers {
         registry.register(
             event: UserIdentitySeedProvider.self,
             context: UserEventContext.self
-        ) { _, _ in
+        ) { _, context in
             [
-                .init(id: "root", isRoot: true)
+                .init(id: context.idGenerator.generate(), isRoot: true)
             ]
         }
     }

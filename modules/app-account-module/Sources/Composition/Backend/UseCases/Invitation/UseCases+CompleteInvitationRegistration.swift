@@ -22,7 +22,8 @@ extension UseCases {
                 WriteInvitation(
                     invitation: InvitationDatabaseRepository(context: context),
                     identity: IdentityDatabaseRepository(context: context),
-                    role: RoleDatabaseRepository(context: context)
+                    role: RoleDatabaseRepository(context: context),
+                    credential: credentialWriter
                 )
             }
         )

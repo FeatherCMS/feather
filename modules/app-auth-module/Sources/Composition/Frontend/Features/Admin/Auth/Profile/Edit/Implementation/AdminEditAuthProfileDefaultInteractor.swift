@@ -20,14 +20,19 @@ struct AdminEditAuthProfileDefaultInteractor:
     AdminEditAuthProfileInteractor
 {
     let repository: any AdminEditAuthProfileRepository
+    let accountProfileRepository: any AdminAuthAccountProfileRepository
 
     func loadProfile(
         account: AccountModel
     ) async throws -> AdminEditAuthProfileModel {
-        .init(
+        let accountProfile = try await accountProfileRepository.get()
+        return .init(
             id: account.user.id,
             email: account.user.email,
-            password: nil
+            password: nil,
+            firstName: accountProfile.firstName,
+            lastName: accountProfile.lastName,
+            imageURL: accountProfile.imageURL
         )
     }
 
@@ -37,6 +42,9 @@ struct AdminEditAuthProfileDefaultInteractor:
         try await repository.update(
             id: entity.id,
             payload: entity.payload
+        )
+        try await accountProfileRepository.update(
+            profile: entity.accountProfile
         )
     }
 }

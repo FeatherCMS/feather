@@ -4,7 +4,6 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AuthDomain
 import FeatherApplication
 import FeatherContracts
 import Testing
@@ -12,6 +11,8 @@ import Testing
 import struct Foundation.Date
 
 @testable import AuthApplication
+@testable import AuthDomain
+@testable import UserDomain
 
 @Suite
 struct AuthApplicationTestSuite {
@@ -36,6 +37,120 @@ struct AuthApplicationTestSuite {
         #expect(result.id == "m-1")
         #expect(await repo.insertCallCount == 1)
         #expect(await authorizer.canCallCount == 1)
+    }
+
+    @Test
+    func addCredentialPersistsHashedPasswordWithoutPersistenceField()
+        async throws
+    {
+        let credential = makeCredential()
+        let repository = MockCredentialRepository(result: credential)
+        let transaction = MockTransactionExecutor(
+            context: WriteCredentialLink(credential: repository)
+        )
+        let useCase = AddCredential(
+            authorizer: MockAuthorizer(result: true),
+            transaction: transaction,
+            passwordHasher: MockPasswordHasher()
+        )
+
+        let result = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(
+                userId: credential.userId,
+                email: credential.email,
+                password: "password-123"
+            )
+        )
+
+        #expect(result.userId == credential.userId)
+        #expect(await repository.insertCallCount == 1)
+        #expect(await repository.insertedModel?.passwordHash == "hashed-password-123")
+    }
+
+    @Test
+    func requestMagicLinkSendsConfiguredTemplate() async throws {
+        let credential = makeCredential()
+        let credentialRepository = MockCredentialRepository(result: credential)
+        let magicLinkRepository = MockMagicLinkRepository(
+            result: makeMagicLink(id: "m-request")
+        )
+        let transaction = MockTransactionExecutor(
+            context: WriteAuth(
+                identity: MockAuthIdentityRepository(),
+                credential: credentialRepository,
+                session: MockAuthSessionRepository(),
+                magicLink: magicLinkRepository
+            )
+        )
+        let mailSender = MockMailSender()
+        let useCase = RequestMagicLink(
+            transaction: transaction,
+            mailSender: mailSender,
+            publicBaseURL: "https://example.test",
+            variable: MockVariableQueries(value: "{{email}} {{token}} {{url}}")
+        )
+
+        let sent = try await useCase.execute(
+            .init(email: credential.email, isPersistent: true)
+        )
+
+        #expect(sent)
+        #expect(await magicLinkRepository.insertCallCount == 1)
+        #expect(await mailSender.sendCallCount == 1)
+        #expect(await mailSender.lastMessage?.body.contains("user@example.com") == true)
+        #expect(await mailSender.lastMessage?.body.contains("https://example.test/magic-link/verify/") == true)
+    }
+
+    @Test
+    func signInWithMagicLinkConsumesLinkAndCreatesSession() async throws {
+        let credential = makeCredential()
+        let identity = makeIdentity()
+        let magicLinkRepository = MockMagicLinkRepository(
+            result: makeMagicLink(id: "m-sign-in")
+        )
+        let sessionRepository = MockAuthSessionRepository()
+        let transaction = MockTransactionExecutor(
+            context: WriteAuth(
+                identity: MockAuthIdentityRepository(identity: identity),
+                credential: MockCredentialRepository(result: credential),
+                session: sessionRepository,
+                magicLink: magicLinkRepository
+            )
+        )
+        let useCase = SignInWithMagicLink(transaction: transaction)
+
+        let result = try await useCase.execute(.init(token: "valid-token"))
+
+        #expect(result.user.id == identity.id)
+        #expect(result.session.identityId == identity.id)
+        #expect(result.session.authenticationType == Session.AuthenticationTypes.magicLink)
+        #expect(result.session.authenticationReference == "m-sign-in")
+        #expect(result.roles == ["editor"])
+        #expect(result.permissions == ["account:read"])
+        #expect(await magicLinkRepository.consumeCallCount == 1)
+        #expect(await magicLinkRepository.consumedToken == "valid-token")
+    }
+
+    @Test
+    func signInWithInvalidMagicLinkReturnsAuthenticationError() async throws {
+        let magicLinkRepository = MockMagicLinkRepository(
+            result: makeMagicLink(id: "m-invalid"),
+            consumeError: .alreadyUsed
+        )
+        let transaction = MockTransactionExecutor(
+            context: WriteAuth(
+                identity: MockAuthIdentityRepository(),
+                credential: MockCredentialRepository(result: makeCredential()),
+                session: MockAuthSessionRepository(),
+                magicLink: magicLinkRepository
+            )
+        )
+        let useCase = SignInWithMagicLink(transaction: transaction)
+
+        await #expect(throws: UseCaseError.self) {
+            _ = try await useCase.execute(.init(token: "used-token"))
+        }
     }
 
     @Test
@@ -84,6 +199,28 @@ struct AuthApplicationTestSuite {
 
         #expect(count == 4)
         #expect(await queries.countCallCount == 1)
+    }
+
+    @Test
+    func listMagicLinksPreservesUserFilter() async throws {
+        let queries = MockMagicLinkQueries(
+            listResult: .init(items: []),
+            countResult: 0
+        )
+        let queryExecutor = MockQueryExecutor(
+            context: ReadMagicLink(magicLink: queries)
+        )
+        let useCase = ListMagicLinks(
+            authorizer: MockAuthorizer(result: true),
+            query: queryExecutor
+        )
+
+        _ = try await useCase.execute(
+            subject: Subject(id: "subject-4"),
+            input: .init(query: .init(userId: "user-4"))
+        )
+
+        #expect(await queries.lastListQuery?.userId == "user-4")
     }
 
     @Test
@@ -311,6 +448,27 @@ private func makeMagicLink(
         expiresAt: Date().addingTimeInterval(3600),
         isPersistent: true,
         isUsed: false,
+        createdAt: Date(),
+        updatedAt: Date()
+    )
+}
+
+private func makeCredential() -> Credential {
+    .init(
+        id: "credential-1",
+        userId: "identity-1",
+        email: "user@example.com",
+        passwordHash: "password-hash",
+        createdAt: Date(),
+        updatedAt: Date()
+    )
+}
+
+private func makeIdentity() -> Identity {
+    .init(
+        id: "identity-1",
+        status: .active,
+        isRoot: false,
         createdAt: Date(),
         updatedAt: Date()
     )

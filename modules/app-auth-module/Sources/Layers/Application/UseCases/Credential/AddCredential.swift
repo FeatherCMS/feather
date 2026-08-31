@@ -27,18 +27,15 @@ public struct AddCredential: UseCase {
         public let userId: String
         public let email: String
         public let password: String
-        public let isPersistent: Bool
 
         public init(
             userId: String,
             email: String,
             password: String,
-            isPersistent: Bool
         ) {
             self.userId = userId
             self.email = email
             self.password = password
-            self.isPersistent = isPersistent
         }
     }
 
@@ -58,8 +55,7 @@ public struct AddCredential: UseCase {
                 Credential.create(
                     userId: input.userId,
                     email: input.email,
-                    passwordHash: passwordHash,
-                    isPersistent: input.isPersistent
+                    passwordHash: passwordHash
                 )
             )
         }

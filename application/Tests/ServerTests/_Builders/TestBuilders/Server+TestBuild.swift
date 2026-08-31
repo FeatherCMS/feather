@@ -5,6 +5,7 @@ import FeatherDatabasePostgres
 import NIOSSL
 import PostgresNIO
 import Environment
+import FeatherInfrastructure
 import Jobs
 #if canImport(FoundationEssentials)
 import FoundationEssentials
@@ -39,7 +40,8 @@ func buildTestServer(
             events: eventPublisher,
             jobQueue: jobQueue,
             mediaStorageRootPath: config.media.storageRootPath
-        )
+        ),
+        publicBaseURL: config.publicBaseURL
     )
 
     let router = try buildRouter(

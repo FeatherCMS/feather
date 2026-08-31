@@ -51,8 +51,7 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
                 userId: identityId,
                 payload: .init(
                     email: payload!.normalizedEmail,
-                    password: payload!.normalizedPassword,
-                    isPersistent: false
+                    password: payload!.normalizedPassword
                 )
             )
             return Response(

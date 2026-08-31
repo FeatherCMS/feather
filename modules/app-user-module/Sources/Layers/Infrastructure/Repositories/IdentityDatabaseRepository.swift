@@ -125,6 +125,11 @@ public struct IdentityDatabaseRepository: IdentityRepository {
         return try await table.find(id: id)?.asDomain
     }
 
+    public func findRoot() async throws -> Identity? {
+        let table = IdentityTable(connection: context.connection)
+        return try await table.findRoot()?.asDomain
+    }
+
     public func findRolesBy(
         identityId: String
     ) async throws -> [String] {

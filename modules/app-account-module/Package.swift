@@ -56,10 +56,6 @@ let package = Package(
         // [docc-plugin-placeholder]
 
         .package(
-            url: "https://github.com/apple/swift-nio",
-            from: "2.0.0"
-        ),
-        .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "5.0.0"
         ),
@@ -211,6 +207,7 @@ let package = Package(
 
                 .product(name: "SystemContracts", package: "app-system-module"),
                 .product(name: "UserContracts", package: "app-user-module"),
+                .product(name: "UserFrontend", package: "app-user-module"),
                 
                 .target(name: "AccountContracts"),
                 .target(name: "AccountAdminAPI"),

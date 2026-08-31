@@ -26,6 +26,7 @@ public struct Invitation: Model {
         public let userId: String
         public let email: String
         public let token: String
+        public let roleIDs: [String]
         public let expiresAtInterval: Double
     }
 
@@ -33,7 +34,7 @@ public struct Invitation: Model {
     public let userId: String
     public let email: String
     public let token: String
-    // TODO: isUsed?
+    public let roleIDs: [String]
     public let expiresAt: Date
     public let createdAt: Date
     public let updatedAt: Date
@@ -43,6 +44,7 @@ public struct Invitation: Model {
         userId: String,
         email: String,
         token: String,
+        roleIDs: [String],
         expiresAt: Date,
         createdAt: Date,
         updatedAt: Date,
@@ -51,6 +53,7 @@ public struct Invitation: Model {
         self.userId = userId
         self.email = email
         self.token = token
+        self.roleIDs = roleIDs
         self.expiresAt = expiresAt
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -63,6 +66,7 @@ extension Invitation {
         id: String,
         email: String,
         token: String,
+        roleIDs: [String] = [],
         expiresAt: Date,
         createdAt: Date,
         updatedAt: Date
@@ -72,6 +76,7 @@ extension Invitation {
             userId: id,
             email: email,
             token: token,
+            roleIDs: roleIDs,
             expiresAt: expiresAt,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -103,7 +108,8 @@ extension Invitation {
     public static func create(
         userId: String,
         email: String,
-        token: String
+        token: String,
+        roleIDs: [String] = []
     ) throws(Self.Error) -> Self.New {
         try validate(email: email)
         try validate(token: token)
@@ -112,23 +118,44 @@ extension Invitation {
             userId: userId,
             email: email,
             token: token,
+            roleIDs: roleIDs,
             expiresAtInterval: lifetime
         )
     }
 
     public mutating func update(
-        email: String?
+        email: String?,
+        roleIDs: [String]? = nil
     ) throws(Self.Error) {
-        guard let email else {
+        let updatedEmail = email ?? self.email
+        guard email != nil || roleIDs != nil else {
             return
         }
 
-        try Self.validate(email: email)
+        try Self.validate(email: updatedEmail)
+        self = .init(
+            id: id,
+            userId: userId,
+            email: updatedEmail,
+            token: token,
+            roleIDs: roleIDs ?? self.roleIDs,
+            expiresAt: expiresAt,
+            createdAt: createdAt,
+            updatedAt: .init()
+        )
+    }
+
+    public mutating func renew(
+        token: String,
+        expiresAt: Date
+    ) throws(Self.Error) {
+        try Self.validate(token: token)
         self = .init(
             id: id,
             userId: userId,
             email: email,
             token: token,
+            roleIDs: roleIDs,
             expiresAt: expiresAt,
             createdAt: createdAt,
             updatedAt: .init()
@@ -138,12 +165,8 @@ extension Invitation {
     public mutating func consume(
         now: Date = .init()
     ) throws(Self.Error) {
-        //        guard !self.isUsed else {
-        //            throw .alreadyUsed
-        //        }
         guard expiresAt > now else {
             throw .expired
         }
-        //        self.isUsed = true
     }
 }

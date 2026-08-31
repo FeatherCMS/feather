@@ -43,7 +43,6 @@ public struct TableMigration: DatabaseMigration {
                 user_id TEXT NOT NULL,
                 email TEXT NOT NULL,
                 password_hash TEXT NOT NULL,
-                is_persistent BOOLEAN NOT NULL DEFAULT FALSE,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 FOREIGN KEY(user_id) REFERENCES user_identity(id) ON DELETE CASCADE

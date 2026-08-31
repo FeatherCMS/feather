@@ -4,6 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
+import AuthApplication
 import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
@@ -16,6 +17,7 @@ import NIOSSL
 import PostgresNIO
 import SystemInfrastructure
 import Testing
+import UserDomain
 import UserInfrastructure
 
 @testable import AuthInfrastructure
@@ -24,7 +26,7 @@ import UserInfrastructure
 struct AuthInfrastructureTestSuite {
 
     @Test
-    func example() async throws {
+    func seedsGeneratedRootIdentityAndFiltersMagicLinksByUser() async throws {
         var tlsConfiguration = TLSConfiguration.makeClientConfiguration()
         tlsConfiguration.certificateVerification = .none
 
@@ -94,35 +96,57 @@ struct AuthInfrastructureTestSuite {
             )
 
             try await migrator.apply(on: connection)
+            try await migrator.apply(on: connection)
 
-            let permissionIds = try await connection.run(
-                query: #"""
-                    SELECT id
-                    FROM system_permission
-                    ORDER BY id;
-                    """#
-            ) { sequence in
-                try await sequence.collect()
-                    .map {
-                        try $0.decode(column: "id", as: String.self)
-                    }
-            }
+            let context = DatabaseTransactionContext(
+                connection: connection,
+                idGenerator: idGenerator
+            )
 
-            let rootPermissionIds = try await connection.run(
-                query: #"""
-                    SELECT permission_id
-                    FROM auth_role_permission
-                    WHERE role_id = 'root'
-                    ORDER BY permission_id;
-                    """#
-            ) { sequence in
-                try await sequence.collect()
-                    .map {
-                        try $0.decode(column: "permission_id", as: String.self)
-                    }
-            }
+            _ = try await IdentityDatabaseRepository(context: context).insert(
+                id: "user-2",
+                model: Identity.create(status: .active)
+            )
+            _ = try await CredentialTable(connection: connection).save(
+                row: .init(
+                    id: "credential-2",
+                    userId: "user-2",
+                    email: "user-2@example.com",
+                    passwordHash: "hash",
+                    createdAt: .distantPast,
+                    updatedAt: .distantPast
+                )
+            )
+            _ = try await MagicLinkTable(connection: connection).save(
+                row: .init(
+                    id: "magic-link-2",
+                    credentialId: "credential-2",
+                    token: "token-user-2",
+                    expiresAtInterval: 3600,
+                    isPersistent: false,
+                    isUsed: false
+                )
+            )
 
-            #expect(Set(rootPermissionIds) == Set(permissionIds))
+            let magicLinks = try await MagicLinkDatabaseQueries(
+                context: .init(connection: connection)
+            ).list(
+                query: .init(userId: "user-2")
+            )
+            #expect(magicLinks.items.map(\.id) == ["magic-link-2"])
+
+            let rootIdentity = try await IdentityDatabaseRepository(
+                context: context
+            ).findRoot()
+
+            #expect(rootIdentity != nil)
+            #expect(rootIdentity?.id.isEmpty == false)
+            #expect(rootIdentity?.id != "root")
+
+            let rootCredential = try await CredentialDatabaseRepository(
+                context: context
+            ).findBy(userId: rootIdentity?.id ?? "")
+            #expect(rootCredential != nil)
         }
     }
 }

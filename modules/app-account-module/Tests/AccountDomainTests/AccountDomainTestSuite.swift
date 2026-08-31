@@ -13,6 +13,85 @@ import Testing
 struct AccountDomainTestSuite {
 
     @Test
+    func createsAccountProfileWithEmptyDefaults() throws {
+        let profile = try AccountProfile.create(userId: "account-1")
+
+        #expect(profile.userId == "account-1")
+        #expect(profile.firstName == nil)
+        #expect(profile.lastName == nil)
+        #expect(profile.imageURL == nil)
+    }
+
+    @Test
+    func rejectsInvalidAccountProfileValues() {
+        #expect(throws: AccountProfile.Error.self) {
+            _ = try AccountProfile.create(userId: "")
+        }
+        #expect(throws: AccountProfile.Error.self) {
+            _ = try AccountProfile.create(
+                userId: "account-1",
+                firstName: String(repeating: "A", count: 256)
+            )
+        }
+        #expect(throws: AccountProfile.Error.self) {
+            _ = try AccountProfile.create(
+                userId: "account-1",
+                lastName: String(repeating: "A", count: 256)
+            )
+        }
+        #expect(throws: AccountProfile.Error.self) {
+            _ = try AccountProfile.create(
+                userId: "account-1",
+                imageURL: String(repeating: "A", count: 2049)
+            )
+        }
+    }
+
+    @Test
+    func updatesAccountProfile() throws {
+        var profile = AccountProfile(
+            userId: "account-1",
+            firstName: "Ada",
+            lastName: "Lovelace",
+            imageURL: nil,
+            createdAt: .now,
+            updatedAt: .now
+        )
+
+        try profile.update(
+            firstName: "Grace",
+            lastName: "Hopper",
+            imageURL: "https://example.com/grace.png"
+        )
+
+        #expect(profile.firstName == "Grace")
+        #expect(profile.lastName == "Hopper")
+        #expect(profile.imageURL == "https://example.com/grace.png")
+    }
+
+    @Test
+    func preservesAccountProfileWhenUpdateIsInvalid() throws {
+        var profile = AccountProfile(
+            userId: "account-1",
+            firstName: "Ada",
+            lastName: "Lovelace",
+            imageURL: nil,
+            createdAt: .now,
+            updatedAt: .now
+        )
+
+        #expect(throws: AccountProfile.Error.self) {
+            try profile.update(
+                firstName: String(repeating: "A", count: 256),
+                lastName: "Hopper",
+                imageURL: nil
+            )
+        }
+        #expect(profile.firstName == "Ada")
+        #expect(profile.lastName == "Lovelace")
+    }
+
+    @Test
     func createsSettingsWithCurrentDefaults() throws {
         let settings = try Settings.create(
             userId: "account-1",

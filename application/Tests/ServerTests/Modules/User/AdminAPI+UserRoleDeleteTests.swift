@@ -50,7 +50,7 @@ struct AdminAPIUserRoleDeleteTests {
         }
 
         try await runner.run(
-            request: Request(
+            request: JSONRequest(
                 method: .delete,
                 path: "/api/v1/admin/user/roles",
                 headerFields: [

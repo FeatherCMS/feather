@@ -33,6 +33,18 @@ struct AuthProfileDetails: Component {
 
             AdminDetailsField(label: "ID", value: state.profile.id)
             AdminDetailsField(label: "Email", value: state.profile.email)
+            AdminDetailsField(
+                label: "First name",
+                value: state.profile.firstName ?? ""
+            )
+            AdminDetailsField(
+                label: "Last name",
+                value: state.profile.lastName ?? ""
+            )
+            AdminDetailsField(
+                label: "Image URL",
+                value: state.profile.imageURL ?? ""
+            )
 
             Div {
                 P("Roles")
@@ -51,12 +63,10 @@ struct AuthProfileDetails: Component {
             }
             .class("admin-details-field")
 
-            Div {
-                P("Permissions")
-                    .class("admin-details-field__label")
+            Details {
+                Summary("Permissions")
                 if state.profile.permissions.isEmpty {
                     P("No permissions assigned")
-                        .class("admin-details-field__value")
                 }
                 else {
                     Ul {

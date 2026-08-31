@@ -31,6 +31,69 @@ public struct AccountSettingsPageSizeField: IntSchemaRepresentable {
     public init() {}
 }
 
+public struct AccountProfileNameField: SchemaRepresentable {
+    public var required: Bool
+
+    public init(required: Bool = true) {
+        self.required = required
+    }
+
+    public func openAPISchema() -> JSONSchema {
+        .string(required: required, nullable: true)
+    }
+}
+
+public struct AccountProfileImageURLField: SchemaRepresentable {
+    public var required: Bool
+
+    public init(required: Bool = true) {
+        self.required = required
+    }
+
+    public func openAPISchema() -> JSONSchema {
+        .string(required: required, nullable: true)
+    }
+}
+
+public struct AccountProfileResponseSchema: ObjectSchemaRepresentable {
+    public var propertyMap: SchemaMap {
+        [
+            "firstName": AccountProfileNameField(required: false),
+            "lastName": AccountProfileNameField(required: false),
+            "imageURL": AccountProfileImageURLField(required: false),
+        ]
+    }
+
+    public init() {}
+}
+
+public struct AccountProfileResponse: JSONResponseRepresentable {
+    public var description: String = "Account profile response"
+    public var schema = AccountProfileResponseSchema().reference()
+
+    public init() {}
+}
+
+public struct AccountProfileUpdateSchema: ObjectSchemaRepresentable {
+    public var propertyMap: SchemaMap {
+        [
+            "firstName": AccountProfileNameField(required: false),
+            "lastName": AccountProfileNameField(required: false),
+            "imageURL": AccountProfileImageURLField(required: false),
+        ]
+    }
+
+    public init() {}
+}
+
+public struct AccountProfileUpdateRequestBody: RequestBodyRepresentable {
+    public var contentMap: ContentMap {
+        [.json: Content(AccountProfileUpdateSchema().reference())]
+    }
+
+    public init() {}
+}
+
 public struct AccountAuthResponseSchema: ObjectSchemaRepresentable {
     public var propertyMap: SchemaMap {
         [

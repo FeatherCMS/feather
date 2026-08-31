@@ -1,6 +1,7 @@
 import AccountAppAPI
 import AccountApplication
 import UserApplication
+import Foundation
 
 extension AppAPIGateway {
 
@@ -15,10 +16,7 @@ extension AppAPIGateway {
 
         let identity = try await useCases.makeCompleteInvitationRegistration()
             .execute(
-                input: .init(
-                    token: body.token,
-                    password: body.password
-                )
+                input: .init(token: body.token, password: body.password)
             )
 
         return .ok(
@@ -33,6 +31,24 @@ extension AppAPIGateway {
                         roles: identity.roleIds,
                         permissions: [],
                         token: ""
+                    )
+                )
+            )
+        )
+    }
+
+    public func accountInvitationValidation(
+        _ input: Operations.AccountInvitationValidation.Input
+    ) async throws -> Operations.AccountInvitationValidation.Output {
+        let invitation = try await useCases.makeValidateInvitation().execute(
+            input: .init(token: input.query.token)
+        )
+        return .ok(
+            .init(
+                body: .json(
+                    .init(
+                        email: invitation.email,
+                        expiresAt: invitation.expiresAt.timeIntervalSince1970
                     )
                 )
             )

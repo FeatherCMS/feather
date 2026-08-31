@@ -32,6 +32,11 @@ public enum AuthFrontendRoutes {
             repository: AppLogoutAuthOpenAPIRepository(appClient: authAppClient)
         )
         .controller.route(on: router)
+
+        AppAcceptAccountInvitation(
+            renderingEngine: renderingEngine
+        ).route(on: router)
+        AppMagicLink(renderingEngine: renderingEngine).route(on: router)
     }
 
     public static func registerAdminRoutes(
@@ -39,6 +44,9 @@ public enum AuthFrontendRoutes {
         renderingEngine: any RenderingEngine
     ) {
         AdminAuth(renderingEngine: renderingEngine).route(on: router)
+        AdminListAuthSession(renderingEngine: renderingEngine)
+            .controller
+            .route(on: router)
         AdminRemoveAuthSession(renderingEngine: renderingEngine)
             .controller
             .route(on: router)

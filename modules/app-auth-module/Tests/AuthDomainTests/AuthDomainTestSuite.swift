@@ -19,14 +19,12 @@ struct AuthDomainTestSuite {
         let credentials = try Credential.create(
             userId: "user-1",
             email: "user@example.com",
-            passwordHash: "valid-password-hash",
-            isPersistent: true
+            passwordHash: "valid-password-hash"
         )
 
         #expect(credentials.userId == "user-1")
         #expect(credentials.email == "user@example.com")
         #expect(credentials.passwordHash == "valid-password-hash")
-        #expect(credentials.isPersistent)
     }
 
     @Test
@@ -35,8 +33,7 @@ struct AuthDomainTestSuite {
             _ = try Credential.create(
                 userId: "",
                 email: "user@example.com",
-                passwordHash: "valid-password-hash",
-                isPersistent: false
+                passwordHash: "valid-password-hash"
             )
         }
     }
@@ -47,8 +44,7 @@ struct AuthDomainTestSuite {
             _ = try Credential.create(
                 userId: "user-1",
                 email: "abc",
-                passwordHash: "valid-password-hash",
-                isPersistent: false
+                passwordHash: "valid-password-hash"
             )
         }
 
@@ -56,8 +52,7 @@ struct AuthDomainTestSuite {
             _ = try Credential.create(
                 userId: "user-1",
                 email: String(repeating: "a", count: 255),
-                passwordHash: "valid-password-hash",
-                isPersistent: false
+                passwordHash: "valid-password-hash"
             )
         }
     }
@@ -68,8 +63,7 @@ struct AuthDomainTestSuite {
             _ = try Credential.create(
                 userId: "user-1",
                 email: "user@example.com",
-                passwordHash: "12345678",
-                isPersistent: false
+                passwordHash: "12345678"
             )
         }
 
@@ -77,8 +71,7 @@ struct AuthDomainTestSuite {
             _ = try Credential.create(
                 userId: "user-1",
                 email: "user@example.com",
-                passwordHash: String(repeating: "a", count: 255),
-                isPersistent: false
+                passwordHash: String(repeating: "a", count: 255)
             )
         }
     }
@@ -217,7 +210,6 @@ private func makeCredential() -> Credential {
         userId: "user-1",
         email: "user@example.com",
         passwordHash: "valid-password-hash",
-        isPersistent: true,
         createdAt: Date(),
         updatedAt: Date()
     )

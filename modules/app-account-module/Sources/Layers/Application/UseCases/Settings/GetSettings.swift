@@ -12,35 +12,49 @@ import FeatherContracts
 public struct GetSettings: UseCase {
 
     struct Action: PermissionAction {
-        let key = SettingsPermissions.Settings.read
+        let key: PermissionKey
+
+        init(
+            subjectID: String,
+            userID: String
+        ) {
+            key = subjectID == userID
+                ? AccountPermissions.Settings.read
+                : AccountPermissions.Settings.manage
+        }
     }
 
     let authorizer: any Authorizer
-    let query: any TransactionExecutor<WriteSettings>
+    let query: any QueryExecutor<ReadSettings>
 
     public init(
         authorizer: any Authorizer,
-        query: any TransactionExecutor<WriteSettings>
+        query: any QueryExecutor<ReadSettings>
     ) {
         self.authorizer = authorizer
         self.query = query
     }
 
     public struct Input: DTO {
-        public init() {}
+        public let userId: String?
+
+        public init(userId: String? = nil) {
+            self.userId = userId
+        }
     }
 
     public func execute(
         subject: Subject,
         input: Input
     ) async throws -> SettingsDetail {
-        let action = Action()
+        let userId = input.userId ?? subject.id
+        let action = Action(subjectID: subject.id, userID: userId)
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
         return try await query.run { scope in
-            try await scope.settings.getOrCreate(userId: subject.id).asDetail
+            try await scope.settings.get(userId: userId).asDetail
         }
     }
 }

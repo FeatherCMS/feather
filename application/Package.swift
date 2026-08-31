@@ -85,10 +85,6 @@ let package = Package(
             from: "2.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/swift-openapi-async-http-client",
-            from: "1.0.0"
-        ),
-        .package(
             url: "https://github.com/apple/swift-log",
             from: "1.14.0"
         ),
@@ -349,6 +345,7 @@ let package = Package(
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
                 .product(name: "PostgresMigrations", package: "postgres-migrations"),
                 .product(name: "AccountAdminAPI", package: "app-account-module"),
+                .product(name: "UserAdminAPI", package: "app-user-module"),
                 .target(name: "Server"),
             ],
             swiftSettings: defaultSwiftSettings

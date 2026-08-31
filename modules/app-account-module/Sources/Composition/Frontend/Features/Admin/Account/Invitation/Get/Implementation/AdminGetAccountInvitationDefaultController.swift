@@ -8,7 +8,8 @@ struct AdminGetAccountInvitationDefaultController:
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetAccountInvitationInteractor,
-            presenter: any AdminGetAccountInvitationPresenter
+            presenter: any AdminGetAccountInvitationPresenter,
+            roleNames: @Sendable ([String]) async -> [String]
         )
 
     func getAccountInvitation(
@@ -22,8 +23,14 @@ struct AdminGetAccountInvitationDefaultController:
             let invitation = try await runtime.interactor.execute(
                 entity: .init(id: id)
             )
+            let roleNames = await runtime.roleNames(invitation.roleIds)
             return runtime.presenter.renderDetailsPage(
-                invitation: invitation,
+                invitation: .init(
+                    id: invitation.id,
+                    email: invitation.email,
+                    roleIds: invitation.roleIds,
+                    roleNames: roleNames
+                ),
                 breadcrumb: runtime.presenter.breadcrumb(id: id),
                 permissions: permissions
             )

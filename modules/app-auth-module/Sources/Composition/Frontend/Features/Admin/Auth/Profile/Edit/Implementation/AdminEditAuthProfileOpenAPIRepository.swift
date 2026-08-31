@@ -1,39 +1,58 @@
 import AuthAdminAPI
-import AuthAppAPI
 import CSS
 import FeatherAdmin
-import FeatherValidation
-import FeatherValidationFoundation
-import Foundation
-import HTML
-import Hummingbird
 import OpenAPIRuntime
-import SGML
-import SystemAdminAPI
-import SystemFrontend
-import UserAdminAPI
-import UserAppAPI
-import UserFrontend
-import WebStandards
 
 struct AdminEditAuthProfileOpenAPIRepository:
     AdminEditAuthProfileRepository
 {
-    let api: UserAdminAPIClient
+    let api: AuthAdminAPIClient
 
     func update(
         id: String,
         payload: AdminEditAuthProfileFormPayloadModel
     ) async throws {
-        _ = payload
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.userIdentityPatch(
-                path: .init(userIdentityId: id),
+            let searchResponse = try await client.authCredentialSearch(
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
-                        status: nil,
-                        roleIds: nil
+                        page: .init(size: 1, number: 1),
+                        filters: .init(search: nil, userId: id)
+                    )
+                )
+            )
+            let credentialID: String
+            switch searchResponse {
+            case .ok(let value):
+                guard let credential = try value.body.json.data.items.first else {
+                    throw OpenAPIRepositoryError.notFound(
+                        message: "User credential not found."
+                    )
+                }
+                credentialID = credential.id
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to update the profile."
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your identity cannot update the profile."
+                )
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+
+            let response = try await client.authCredentialPatch(
+                path: .init(authCredentialId: credentialID),
+                headers: .init(accept: [.init(contentType: .json)]),
+                body: .json(
+                    .init(
+                        email: payload.email,
+                        password: payload.password
                     )
                 )
             )
@@ -42,15 +61,15 @@ struct AdminEditAuthProfileOpenAPIRepository:
                 return
             case .notFound:
                 throw OpenAPIRepositoryError.notFound(
-                    message: "User identity not found."
+                    message: "User credential not found."
                 )
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to edit the profile."
+                    message: "Please sign in again to update the profile."
                 )
             case .forbidden:
                 throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot edit the profile."
+                    message: "Your identity cannot update the profile."
                 )
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(

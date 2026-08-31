@@ -6,6 +6,7 @@ import WebStandards
 struct SettingsEdit: Component {
 
     struct State {
+        let userID: String?
         let isEdited: Bool
         let canEdit: Bool
         let form: SettingsForm.State
@@ -19,6 +20,16 @@ struct SettingsEdit: Component {
             AdminBreadcrumb(state: state.breadcrumb)
 
             H1("Settings")
+
+            if let userID = state.userID {
+                AdminPillTabs(links: [
+                    .init(label: "Details", href: "/admin/user/identities/\(userID)/", isCurrent: false),
+                    .init(label: "Profile", href: "/admin/account/users/\(userID)/profile/", isCurrent: false),
+                    .init(label: "Settings", href: "/admin/account/users/\(userID)/settings/", isCurrent: true),
+                    .init(label: "Sessions", href: "/admin/user/identities/\(userID)/sessions/", isCurrent: false),
+                    .init(label: "Magic links", href: "/admin/auth/magic-links/?userId=\(userID)", isCurrent: false),
+                ])
+            }
 
             if !state.canEdit {
                 P(

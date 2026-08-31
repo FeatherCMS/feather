@@ -21,6 +21,15 @@ paths:
         201:
           $ref: '#/components/responses/AccountAuthResponse'
   /api/v1/account/invitation/exchange:
+    get:
+      tags:
+      - Account
+      operationId: accountInvitationValidation
+      parameters:
+      - $ref: '#/components/parameters/AccountInvitationTokenParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountInvitationValidationResponse'
     post:
       tags:
       - Account
@@ -38,6 +47,35 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/AccountSettingsResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/account/profile:
+    get:
+      tags:
+      - Account
+      operationId: accountProfileGet
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Account
+      operationId: accountProfileUpdate
+      requestBody:
+        $ref: '#/components/requestBodies/AccountProfileUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
         401:
           description: Unauthorized
         403:
@@ -127,6 +165,30 @@ components:
       type: string
       examples:
       - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    AccountAuthMagicLinkTokenField:
+      type: string
+      examples:
+      - mgl_3XbY...
+    AccountInvitationValidationSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/AccountInvitationRegistrationEmailField'
+        expiresAt:
+          $ref: '#/components/schemas/AccountInvitationRegistrationExpiresAtField'
+      required:
+      - email
+      - expiresAt
+      minProperties: 2
+    AccountInvitationRegistrationEmailField:
+      type: string
+      examples:
+      - user@example.com
+    AccountInvitationRegistrationExpiresAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
     AccountInvitationExchangeRequestSchema:
       type: object
       properties:
@@ -138,10 +200,6 @@ components:
       - token
       - password
       minProperties: 2
-    AccountAuthMagicLinkTokenField:
-      type: string
-      examples:
-      - mgl_3XbY...
     AccountSettingsResponseSchema:
       type: object
       properties:
@@ -168,6 +226,38 @@ components:
       type: integer
       examples:
       - 20
+    AccountProfileResponseSchema:
+      type: object
+      properties:
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        imageURL:
+          type:
+          - string
+          - 'null'
+      minProperties: 0
+    AccountProfileUpdateSchema:
+      type: object
+      properties:
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        imageURL:
+          type:
+          - string
+          - 'null'
+      minProperties: 0
   responses:
     AccountAuthResponse:
       description: Account authentication response
@@ -175,12 +265,33 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountAuthResponseSchema'
+    AccountInvitationValidationResponse:
+      description: Invitation validation response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountInvitationValidationSchema'
     AccountSettingsResponse:
       description: Account settings response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountSettingsResponseSchema'
+    AccountProfileResponse:
+      description: Account profile response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountProfileResponseSchema'
+  parameters:
+    AccountInvitationTokenParameter:
+      name: token
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/AccountAuthMagicLinkTokenField'
+      description: Invitation token
   requestBodies:
     AccountRegisterRequestBody:
       content:
@@ -194,6 +305,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountInvitationExchangeRequestSchema'
+      required: true
+    AccountProfileUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountProfileUpdateSchema'
       required: true
   securitySchemes:
     bearerAuth:

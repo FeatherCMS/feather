@@ -6,7 +6,7 @@ import FeatherDomain
 import UserApplication
 import UserDomain
 
-import struct Foundation.Date
+import Foundation
 
 //
 //  AddInvitation.swift
@@ -34,17 +34,20 @@ public struct AddInvitation: UseCase {
     let transaction: any ContextualTransactionExecutor<WriteInvitation>
     let events: any EventPublisher
     let mailSender: any MailSender
+    let publicBaseURL: String
 
     public init(
         authorizer: any Authorizer,
         transaction: any ContextualTransactionExecutor<WriteInvitation>,
         events: any EventPublisher,
-        mailSender: any MailSender
+        mailSender: any MailSender,
+        publicBaseURL: String
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.events = events
         self.mailSender = mailSender
+        self.publicBaseURL = publicBaseURL
     }
 
     public struct Input: DTO {
@@ -87,7 +90,8 @@ public struct AddInvitation: UseCase {
                 Invitation.create(
                     userId: identity.id,
                     email: input.email,
-                    token: token
+                    token: token,
+                    roleIDs: input.roleIDs
                 )
             )
             try await events.trigger(
@@ -105,9 +109,9 @@ public struct AddInvitation: UseCase {
                     Hello,
 
                     You have been invited to create your application identity.
-                    Use this invitation token to complete registration:
+                    Open this invitation link to complete registration:
 
-                    \(model.token)
+                    \#(publicBaseURL)/account/invitation/accept/?token=\#(model.token)
 
                     Cheers,
                     Application Team.

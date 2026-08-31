@@ -38,6 +38,14 @@ public struct SettingsDatabaseRepository: SettingsRepository {
             try await create(userId: userId)
             return try await get(userId: userId)
         }
+        catch let error as DatabaseError {
+            guard case .query(let underlying) = error,
+                let repositoryError = underlying as? RepositoryError,
+                repositoryError.reason == .database(.notFound)
+            else { throw error }
+            try await create(userId: userId)
+            return try await get(userId: userId)
+        }
     }
 
     public func create(

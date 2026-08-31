@@ -86,7 +86,16 @@ public struct MagicLinkDatabaseRepository: MagicLinkRepository {
         let table = MagicLinkTable(connection: context.connection)
         guard let consumed = try await table.consume(token: token)
         else {
-            throw RepositoryError.notFound
+            guard let existing = try await table.find(token: token) else {
+                throw MagicLink.Error.invalidToken
+            }
+            if existing.isUsed {
+                throw MagicLink.Error.alreadyUsed
+            }
+            if existing.expiresAt <= Date() {
+                throw MagicLink.Error.expired
+            }
+            throw MagicLink.Error.invalidToken
         }
         return consumed.asDomain
     }

@@ -22,7 +22,7 @@ import Testing
 struct UserInfrastructureTestSuite {
 
     @Test
-    func example() async throws {
+    func seedsGeneratedRoleAndRootIdentityIdentifiers() async throws {
         var tlsConfiguration = TLSConfiguration.makeClientConfiguration()
         tlsConfiguration.certificateVerification = .none
 
@@ -82,6 +82,50 @@ struct UserInfrastructureTestSuite {
             )
 
             try await migrator.apply(on: connection)
+            try await migrator.apply(on: connection)
+
+            let roles = try await RoleTable(connection: connection).list(
+                search: "Editor",
+                orderBy: "id ASC",
+                limit: 10,
+                offset: 0
+            )
+            #expect(roles.count == 1)
+            #expect(roles[0].id.isEmpty == false)
+            #expect(roles[0].id != "editor")
+
+            _ = try await IdentityTable(connection: connection).save(
+                row: .init(
+                    id: "role-filter-test-user",
+                    status: "active",
+                    isRoot: false
+                )
+            )
+            try await IdentityTable(connection: connection).replaceRoleIds(
+                identityId: "role-filter-test-user",
+                roleIds: [roles[0].id]
+            )
+            let filteredIdentities = try await IdentityTable(connection: connection)
+                .list(
+                    search: nil,
+                    role: roles[0].id,
+                    orderBy: "id ASC",
+                    limit: 10,
+                    offset: 0
+                )
+            #expect(filteredIdentities.contains { $0.id == "role-filter-test-user" })
+
+            let identities = try await IdentityTable(connection: connection)
+                .list(
+                    search: nil,
+                    orderBy: "id ASC",
+                    limit: 10,
+                    offset: 0
+                )
+            let rootIdentities = identities.filter(\.isRoot)
+            #expect(rootIdentities.count == 1)
+            #expect(rootIdentities[0].id.isEmpty == false)
+            #expect(rootIdentities[0].id != "root")
         }
     }
 }

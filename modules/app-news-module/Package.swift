@@ -176,6 +176,7 @@ let package = Package(
             name: "NewsModuleTests",
             dependencies: [
                 .target(name: "NewsApplication"),
+                .target(name: "NewsDomain"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

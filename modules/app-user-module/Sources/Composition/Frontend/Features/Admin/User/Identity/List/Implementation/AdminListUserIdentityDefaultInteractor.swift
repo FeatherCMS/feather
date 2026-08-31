@@ -8,7 +8,8 @@ struct AdminListUserIdentityDefaultInteractor: AdminListUserIdentityInteractor {
     func execute(
         page: Int,
         size: Int,
-        search: String?
+        search: String?,
+        role: String?
     ) async throws -> (
         items: [Components.Schemas.UserIdentityListItemSchema], total: Int,
         page: Int, size: Int
@@ -16,7 +17,8 @@ struct AdminListUserIdentityDefaultInteractor: AdminListUserIdentityInteractor {
         try await repository.list(
             page: page,
             size: size,
-            search: search
+            search: search,
+            role: role
         )
     }
 

@@ -65,8 +65,7 @@ struct AdminEditAuthCredentialDefaultController:
                 id: id,
                 payload: .init(
                     email: payload!.normalizedEmail,
-                    password: payload!.normalizedPassword,
-                    isPersistent: nil
+                    password: payload!.normalizedPassword
                 )
             )
             return Response(

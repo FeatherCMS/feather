@@ -7,7 +7,10 @@
 import FeatherDatabase
 import FeatherInfrastructure
 
+import struct Foundation.Data
 import struct Foundation.Date
+import class Foundation.JSONDecoder
+import class Foundation.JSONEncoder
 
 extension InvitationTable.Row {
 
@@ -18,6 +21,11 @@ extension InvitationTable.Row {
         self.userId = try row.decode(column: "user_id", as: String.self)
         self.email = try row.decode(column: "email", as: String.self)
         self.token = try row.decode(column: "token", as: String.self)
+        let roleIDs = try row.decode(column: "role_ids", as: String.self)
+        self.roleIDs = try JSONDecoder().decode(
+            [String].self,
+            from: Data(roleIDs.utf8)
+        )
         self.expiresAt = try row.decode(
             column: "expires_at",
             as: Date.self
@@ -41,6 +49,7 @@ struct InvitationTable {
             let userId: String
             let email: String
             let token: String
+            let roleIDs: [String]
             let expiresAtInterval: Double
         }
 
@@ -48,6 +57,7 @@ struct InvitationTable {
         let userId: String
         let email: String
         let token: String
+        let roleIDs: [String]
         let expiresAt: Date
         let createdAt: Date
         let updatedAt: Date
@@ -58,13 +68,18 @@ struct InvitationTable {
     func save(
         row: Row.Create
     ) async throws -> Row {
-        try await connection.run(
+        let roleIDs = String(
+            decoding: try JSONEncoder().encode(row.roleIDs),
+            as: UTF8.self
+        )
+        return try await connection.run(
             query: #"""
                 INSERT INTO account_invitation (
                     id,
                     user_id,
                     email,
                     token,
+                    role_ids,
                     expires_at,
                     created_at,
                     updated_at
@@ -74,6 +89,7 @@ struct InvitationTable {
                     \#(row.userId),
                     \#(row.email),
                     \#(row.token),
+                    \#(roleIDs),
                     NOW() + (\#(row.expiresAtInterval) * INTERVAL '1 second'),
                     NOW(),
                     NOW() 
@@ -94,7 +110,7 @@ struct InvitationTable {
         limit: Int,
         offset: Int
     ) async throws -> [Row] {
-        try await connection.run(
+        return try await connection.run(
             query: #"""
                 SELECT *
                 FROM account_invitation
@@ -174,7 +190,11 @@ struct InvitationTable {
         id: String,
         row: Row
     ) async throws -> Row? {
-        try await connection.run(
+        let roleIDs = String(
+            decoding: try JSONEncoder().encode(row.roleIDs),
+            as: UTF8.self
+        )
+        return try await connection.run(
             query: #"""
                 UPDATE account_invitation
                 SET
@@ -182,12 +202,13 @@ struct InvitationTable {
                     user_id=\#(row.userId),
                     email=\#(row.email),
                     token=\#(row.token),
+                    role_ids=\#(roleIDs),
                     expires_at=TO_TIMESTAMP(\#(row.expiresAt.timeIntervalSince1970)),
                     updated_at=NOW()
                 WHERE id=\#(id)
                 RETURNING *;
                 """#
-        ) { sequence in
+        ) { sequence -> Row? in
             guard let row = try await sequence.collect().first else {
                 return nil
             }

@@ -33,13 +33,16 @@ public struct EditInvitation: UseCase {
     public struct Input: DTO {
         public let id: String
         public let email: String?
+        public let roleIDs: [String]?
 
         public init(
             id: String,
-            email: String?
+            email: String?,
+            roleIDs: [String]? = nil
         ) {
             self.id = id
             self.email = email
+            self.roleIDs = roleIDs
         }
     }
 
@@ -59,7 +62,13 @@ public struct EditInvitation: UseCase {
                 throw Error(message: "Invitation not found")
             }
 
-            try model.update(email: input.email)
+            for roleID in input.roleIDs ?? [] {
+                guard try await scope.role.findBy(id: roleID) != nil else {
+                    throw Error(message: "Role not found: \(roleID)")
+                }
+            }
+
+            try model.update(email: input.email, roleIDs: input.roleIDs)
             return try await scope.invitation.update(model)
         }
 

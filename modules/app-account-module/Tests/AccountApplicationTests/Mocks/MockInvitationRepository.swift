@@ -11,6 +11,7 @@ actor MockInvitationRepository: InvitationRepository {
     private(set) var createCallCount = 0
     private(set) var insertedModel: Invitation.New?
     private(set) var deleteCallCount = 0
+    private(set) var updateCallCount = 0
 
     private let result: Invitation
     private let findByTokenResult: Invitation?
@@ -29,7 +30,7 @@ actor MockInvitationRepository: InvitationRepository {
     func findBy(
         id: String
     ) async throws -> Invitation? {
-        nil
+        id == result.id ? result : nil
     }
 
     func findBy(
@@ -49,7 +50,8 @@ actor MockInvitationRepository: InvitationRepository {
     func update(
         _ model: Invitation
     ) async throws -> Invitation {
-        model
+        updateCallCount += 1
+        return model
     }
 
     func delete(

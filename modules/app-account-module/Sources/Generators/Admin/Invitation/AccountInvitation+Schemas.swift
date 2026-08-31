@@ -38,7 +38,8 @@ struct AccountInvitationCreateSchema: ObjectSchemaRepresentable {
 struct AccountInvitationPatchSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "email": AccountInvitationEmailField().reference(required: false)
+            "email": AccountInvitationEmailField().reference(required: false),
+            "roleIds": AccountInvitationRoleIDsField().reference(required: false)
         ]
     }
 }
@@ -49,6 +50,7 @@ struct AccountInvitationDetailSchema: ObjectSchemaRepresentable {
             "id": AccountInvitationIdField(),
             "email": AccountInvitationEmailField(),
             "token": AccountInvitationTokenField(),
+            "roleIds": AccountInvitationRoleIDsField(),
             "expiresAt": AccountInvitationExpiresAtField(),
         ]
     }
@@ -60,6 +62,7 @@ struct AccountInvitationListItemSchema: ObjectSchemaRepresentable {
             "id": AccountInvitationIdField().reference(),
             "email": AccountInvitationEmailField().reference(),
             "token": AccountInvitationTokenField().reference(),
+            "roleIds": AccountInvitationRoleIDsField().reference(),
             "expiresAt": AccountInvitationExpiresAtField().reference(),
         ]
     }

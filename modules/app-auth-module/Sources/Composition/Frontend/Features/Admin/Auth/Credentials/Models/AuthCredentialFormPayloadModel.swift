@@ -18,5 +18,4 @@ import WebStandards
 struct AuthCredentialFormPayloadModel: Sendable {
     let email: String
     let password: String?
-    let isPersistent: Bool?
 }

@@ -19,8 +19,9 @@ import WebStandards
 struct AdminGetAuthProfileDefaultInteractor: AdminGetAuthProfileInteractor {
 
     func getProfile(
-        account: AccountModel
+        account: AccountModel,
+        accountProfile: AdminAuthAccountProfileModel
     ) async throws -> AdminGetAuthProfileModel {
-        .init(account: account)
+        .init(account: account, accountProfile: accountProfile)
     }
 }

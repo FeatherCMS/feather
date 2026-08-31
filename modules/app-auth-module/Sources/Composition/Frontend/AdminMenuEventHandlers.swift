@@ -50,7 +50,7 @@ public enum AuthAdminMenuEventHandlers {
                     label: "Credentials",
                     icon: "key",
                     link: "/admin/auth/credentials/",
-                    permission: "auth:credentials:list"
+                    permission: "auth:credential:list"
                 ),
             ]
         }

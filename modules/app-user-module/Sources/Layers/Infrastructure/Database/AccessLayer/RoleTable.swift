@@ -134,6 +134,24 @@ struct RoleTable {
         }
     }
 
+    func find(
+        name: String
+    ) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT *
+                FROM user_role
+                WHERE name=\#(name)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try Row(from: row)
+        }
+    }
+
     func update(
         id: String,
         row: Row

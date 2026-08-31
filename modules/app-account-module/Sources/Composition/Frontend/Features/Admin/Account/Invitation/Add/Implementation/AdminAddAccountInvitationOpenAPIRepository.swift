@@ -18,7 +18,9 @@ struct AdminAddAccountInvitationOpenAPIRepository:
                 try await client
                 .accountInvitationCreate(
                     headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(.init(email: payload.email))
+                    body: .json(
+                        .init(email: payload.email, roleIds: payload.roleIDs)
+                    )
                 )
             switch response {
             case .created:

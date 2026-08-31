@@ -22,6 +22,27 @@ public struct TableMigration: DatabaseMigration {
     ) async throws {
         try await connection.run(
             query: #"""
+                CREATE TABLE IF NOT EXISTS account_profile (
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT NOT NULL UNIQUE REFERENCES user_identity(id) ON DELETE CASCADE,
+                    first_name TEXT,
+                    last_name TEXT,
+                    image_url TEXT,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                    updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
+                );
+                """#
+        ) { _ in }
+        try await connection.run(
+            query: #"""
+                ALTER TABLE account_profile
+                    ALTER COLUMN first_name DROP NOT NULL,
+                    ALTER COLUMN last_name DROP NOT NULL,
+                    ALTER COLUMN image_url DROP NOT NULL;
+                """#
+        ) { _ in }
+        try await connection.run(
+            query: #"""
                 CREATE TABLE IF NOT EXISTS account_settings (
                     id TEXT PRIMARY KEY,
                     user_id TEXT NOT NULL UNIQUE REFERENCES user_identity(id) ON DELETE CASCADE,
@@ -43,11 +64,15 @@ public struct TableMigration: DatabaseMigration {
                         ON DELETE CASCADE,
                     email TEXT NOT NULL,
                     token TEXT NOT NULL UNIQUE,
+                    role_ids TEXT NOT NULL DEFAULT '[]',
                     expires_at TIMESTAMPTZ NOT NULL,
                     created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
                 );
                 """#
+        ) { _ in }
+        try await connection.run(
+            query: #"ALTER TABLE account_invitation ADD COLUMN IF NOT EXISTS role_ids TEXT NOT NULL DEFAULT '[]';"#
         ) { _ in }
     }
 }

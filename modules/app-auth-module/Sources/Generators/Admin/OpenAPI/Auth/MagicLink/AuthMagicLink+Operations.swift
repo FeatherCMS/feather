@@ -61,7 +61,12 @@ struct AuthMagicLinkSearchOperation: AuthMagicLinkOperation {
                 "isPersistent",
                 "isUsed",
             ],
-            filters: SearchFilterSchema()
+            filters: SearchFilterSchema(
+                additionalProperties: [
+                    "userId": AuthMagicLinkUserIdField()
+                        .reference(required: false)
+                ]
+            )
         )
     }
 
