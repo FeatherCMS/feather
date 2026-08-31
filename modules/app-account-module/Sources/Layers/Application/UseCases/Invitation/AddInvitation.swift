@@ -5,6 +5,7 @@ import FeatherContracts
 import FeatherDomain
 import UserApplication
 import UserDomain
+import SystemApplication
 
 import Foundation
 
@@ -17,11 +18,14 @@ import Foundation
 public struct AddInvitation: UseCase {
     enum Error: UseCaseError {
         case roleNotFound(String)
+        case publicBaseURLNotConfigured
 
         var message: String {
             switch self {
             case .roleNotFound(let roleID):
                 "Role not found: \(roleID)"
+            case .publicBaseURLNotConfigured:
+                "The public site URL is not configured."
             }
         }
     }
@@ -34,20 +38,20 @@ public struct AddInvitation: UseCase {
     let transaction: any ContextualTransactionExecutor<WriteInvitation>
     let events: any EventPublisher
     let mailSender: any MailSender
-    let publicBaseURL: String
+    let variable: any VariableQueries
 
     public init(
         authorizer: any Authorizer,
         transaction: any ContextualTransactionExecutor<WriteInvitation>,
         events: any EventPublisher,
         mailSender: any MailSender,
-        publicBaseURL: String
+        variable: any VariableQueries
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.events = events
         self.mailSender = mailSender
-        self.publicBaseURL = publicBaseURL
+        self.variable = variable
     }
 
     public struct Input: DTO {
@@ -100,6 +104,12 @@ public struct AddInvitation: UseCase {
             )
             return invitation
         }
+        guard let publicBaseURL = try await variable.get("web-settings-public-base-url"),
+              !publicBaseURL.isEmpty
+        else {
+            throw Error.publicBaseURLNotConfigured
+        }
+
         try await mailSender.send(
             .init(
                 from: .init("info@binarybirds.com"),

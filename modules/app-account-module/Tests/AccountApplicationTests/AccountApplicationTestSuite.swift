@@ -174,7 +174,7 @@ struct AccountApplicationTestSuite {
             transaction: transaction,
             events: MockEventPublisher(),
             mailSender: MockMailSender(),
-            publicBaseURL: "http://localhost:3456"
+            variable: MockVariableQueries(value: "http://localhost:3456")
         )
 
         await #expect(throws: AddInvitation.Error.self) {
@@ -223,7 +223,7 @@ struct AccountApplicationTestSuite {
             transaction: transaction,
             events: MockEventPublisher(),
             mailSender: mailSender,
-            publicBaseURL: "https://example.test"
+            variable: MockVariableQueries(value: "https://example.test")
         )
 
         _ = try await useCase.execute(
@@ -265,7 +265,7 @@ struct AccountApplicationTestSuite {
             ),
             transaction: transaction,
             mailSender: mailSender,
-            publicBaseURL: "https://example.test"
+            variable: MockVariableQueries(value: "https://example.test")
         )
 
         let result = try await useCase.execute(
@@ -353,7 +353,7 @@ struct AccountApplicationTestSuite {
             authorizer: MockPermissionAuthorizer(permissions: []),
             transaction: transaction,
             mailSender: MockMailSender(),
-            publicBaseURL: "https://example.test"
+            variable: MockVariableQueries(value: "https://example.test")
         )
 
         await #expect(throws: AuthError.self) {

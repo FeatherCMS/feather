@@ -2,6 +2,7 @@ import AccountContracts
 import AccountDomain
 import FeatherApplication
 import FeatherContracts
+import SystemApplication
 
 import struct Foundation.Date
 
@@ -21,18 +22,18 @@ public struct ResendInvitation: UseCase {
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteInvitationOnly>
     let mailSender: any MailSender
-    let publicBaseURL: String
+    let variable: any VariableQueries
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteInvitationOnly>,
         mailSender: any MailSender,
-        publicBaseURL: String
+        variable: any VariableQueries
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.mailSender = mailSender
-        self.publicBaseURL = publicBaseURL
+        self.variable = variable
     }
 
     public struct Input: DTO {
@@ -62,6 +63,12 @@ public struct ResendInvitation: UseCase {
                 expiresAt: Date().addingTimeInterval(Invitation.lifetime)
             )
             return try await scope.invitation.update(invitation)
+        }
+
+        guard let publicBaseURL = try await variable.get("web-settings-public-base-url"),
+              !publicBaseURL.isEmpty
+        else {
+            throw Error(message: "The public site URL is not configured.")
         }
 
         try await mailSender.send(

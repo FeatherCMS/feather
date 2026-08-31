@@ -79,6 +79,12 @@ public enum EventHandlers {
                     notes: "Logo of the website"
                 ),
                 .init(
+                    id: "web-settings-public-base-url",
+                    value: "",
+                    name: "web.site.public_base_url",
+                    notes: "Canonical public URL of the website"
+                ),
+                .init(
                     id: "web-settings-logo-dark",
                     value: "",
                     name: "web.site.logo_dark",

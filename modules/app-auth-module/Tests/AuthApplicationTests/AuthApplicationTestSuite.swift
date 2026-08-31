@@ -87,8 +87,7 @@ struct AuthApplicationTestSuite {
         let useCase = RequestMagicLink(
             transaction: transaction,
             mailSender: mailSender,
-            publicBaseURL: "https://example.test",
-            variable: MockVariableQueries(value: "{{email}} {{token}} {{url}}")
+            variable: MockVariableQueries(value: "https://example.test")
         )
 
         let sent = try await useCase.execute(

@@ -1,6 +1,7 @@
 import FeatherContracts
 import FeatherApplication
 import FeatherInfrastructure
+import FeatherDatabase
 import AuthApplication
 import AuthInfrastructure
 import UserInfrastructure
@@ -14,6 +15,8 @@ import BlogBackend
 import AccountBackend
 import ContactBackend
 import SystemBackend
+import SystemApplication
+import SystemInfrastructure
 import UserBackend
 import AuthBackend
 import NewsBackend
@@ -37,8 +40,7 @@ struct AppModules: Sendable {
     let account: AccountBackend.UseCases
 
     init(
-        infrastructure: AppInfrastructure,
-        publicBaseURL: String
+        infrastructure: AppInfrastructure
     ) {
         self.infrastructure = infrastructure
 
@@ -95,7 +97,7 @@ struct AppModules: Sendable {
             mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
             events: infrastructure.events,
             credentialWriter: InvitationCredentialWriterAdapter(),
-            publicBaseURL: publicBaseURL
+            variable: makeVariableQueries(database: infrastructure.database)
         )
         self.account = account
         let auth = AuthBackend.UseCases(
@@ -104,7 +106,7 @@ struct AppModules: Sendable {
             authorizer: authorizer,
             user: self.user,
             mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
-            publicBaseURL: publicBaseURL
+            variable: makeVariableQueries(database: infrastructure.database)
         )
         self.auth = auth
         let media = MediaBackend.UseCases(
@@ -142,5 +144,51 @@ struct AppModules: Sendable {
             mailQueue: JobNewsletterMailQueue(queue: infrastructure.jobQueue)
         )
         self.newsletter = newsletter
+    }
+}
+
+private func makeVariableQueries(
+    database: any DatabaseClient
+) -> any VariableQueries {
+    let query = DatabaseQueryExecutor(
+        database: database,
+        scope: { context in
+            ReadVariable(
+                variable: VariableDatabaseQueries(context: context)
+            )
+        }
+    )
+    return VariableDatabaseQueryExecutor(executor: query)
+}
+
+private struct VariableDatabaseQueryExecutor: VariableQueries {
+    let query: DatabaseQueryExecutor<ReadVariable>
+
+    init(executor: DatabaseQueryExecutor<ReadVariable>) {
+        self.query = executor
+    }
+
+    func get(_ id: String) async throws -> String? {
+        try await query.run { scope in
+            try await scope.variable.get(id)
+        }
+    }
+
+    func find(id: String) async throws -> VariableDetail {
+        try await query.run { scope in
+            try await scope.variable.find(id: id)
+        }
+    }
+
+    func list(query: VariableList.Query) async throws -> VariableList {
+        try await self.query.run { scope in
+            try await scope.variable.list(query: query)
+        }
+    }
+
+    func count(query: VariableList.Query) async throws -> Int {
+        try await self.query.run { scope in
+            try await scope.variable.count(query: query)
+        }
     }
 }

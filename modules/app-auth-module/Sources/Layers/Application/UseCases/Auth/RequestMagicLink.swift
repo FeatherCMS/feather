@@ -15,18 +15,15 @@ import Foundation
 public struct RequestMagicLink: UseCase {
     let transaction: any TransactionExecutor<WriteAuth>
     let mailSender: any MailSender
-    let publicBaseURL: String
     let variable: any VariableQueries
 
     public init(
         transaction: any TransactionExecutor<WriteAuth>,
         mailSender: any MailSender,
-        publicBaseURL: String,
         variable: any VariableQueries
     ) {
         self.transaction = transaction
         self.mailSender = mailSender
-        self.publicBaseURL = publicBaseURL
         self.variable = variable
     }
 
@@ -70,6 +67,16 @@ public struct RequestMagicLink: UseCase {
 
         guard let token else {
             return false
+        }
+
+        guard let publicBaseURL = try await variable.get("web-settings-public-base-url"),
+              !publicBaseURL.isEmpty
+        else {
+            throw UseCaseError(
+                reason: .validation,
+                logMessage: "public_site_url_not_configured",
+                userFriendlyMessage: "The public site URL is not configured."
+            )
         }
 
         let template = try await variable.get("auth.magic_link.email.template")

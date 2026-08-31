@@ -21,7 +21,7 @@ public struct UseCases: Sendable {
     let authorizer: any Authorizer
     public let user: UserBackend.UseCases
     let mailSender: any MailSender
-    let publicBaseURL: String
+    let variable: any VariableQueries
 
     public init(
         database: any DatabaseClient,
@@ -29,13 +29,13 @@ public struct UseCases: Sendable {
         authorizer: any Authorizer,
         user: UserBackend.UseCases,
         mailSender: any MailSender,
-        publicBaseURL: String
+        variable: any VariableQueries
     ) {
         self.database = database
         self.idGenerator = idGenerator
         self.authorizer = authorizer
         self.user = user
         self.mailSender = mailSender
-        self.publicBaseURL = publicBaseURL
+        self.variable = variable
     }
 }

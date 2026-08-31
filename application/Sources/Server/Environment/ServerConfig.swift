@@ -13,7 +13,6 @@ struct ServerConfig: Sendable {
     let host: String
     let port: Int
     let serverName: String?
-    let publicBaseURL: String
 
     let system: SystemConfig
     let queue: QueueConfig

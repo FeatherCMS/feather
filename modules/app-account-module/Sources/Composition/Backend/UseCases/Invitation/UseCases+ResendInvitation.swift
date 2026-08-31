@@ -23,7 +23,7 @@ extension UseCases {
             authorizer: authorizer,
             transaction: transaction,
             mailSender: mailSender,
-            publicBaseURL: publicBaseURL
+            variable: variable
         )
     }
 }

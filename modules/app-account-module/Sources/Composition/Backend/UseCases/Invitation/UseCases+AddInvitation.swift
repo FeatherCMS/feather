@@ -30,7 +30,7 @@ extension UseCases {
             transaction: transaction,
             events: events,
             mailSender: mailSender,
-            publicBaseURL: publicBaseURL
+            variable: variable
         )
     }
 }

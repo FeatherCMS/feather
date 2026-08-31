@@ -7,12 +7,7 @@ actor MockVariableQueries: VariableQueries {
         self.value = value
     }
 
-    func get(_ id: String) async throws -> String? {
-        if id == "auth.magic_link.email.template" {
-            return "{{email}} {{token}} {{url}}"
-        }
-        return value
-    }
+    func get(_ id: String) async throws -> String? { value }
 
     func find(id: String) async throws -> VariableDetail { fatalError("not needed") }
 
