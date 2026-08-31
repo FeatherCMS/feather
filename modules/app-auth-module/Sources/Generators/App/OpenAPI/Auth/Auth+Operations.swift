@@ -35,7 +35,10 @@ struct AuthMagicLinkVerifyOperation: OperationRepresentable {
     }
 
     var responseMap: ResponseMap {
-        [200: AuthResponse().reference()]
+        [
+            200: AuthResponse().reference(),
+            401: CustomResponse(description: "Unauthorized")
+        ]
     }
 }
 

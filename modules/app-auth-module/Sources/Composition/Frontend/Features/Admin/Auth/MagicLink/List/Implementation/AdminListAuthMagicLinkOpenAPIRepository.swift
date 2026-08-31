@@ -28,7 +28,8 @@ struct AdminListAuthMagicLinkOpenAPIRepository:
     func list(
         page: Int,
         size: Int,
-        search: String?
+        search: String?,
+        userID: String?
     ) async throws -> (
         items: [AuthAdminAPI.Components.Schemas.AuthMagicLinkListItemSchema],
         total: Int,
@@ -42,7 +43,7 @@ struct AdminListAuthMagicLinkOpenAPIRepository:
                     body: .json(
                         .init(
                             page: .init(size: size, number: page),
-                            filters: .init(search: search)
+                            filters: .init(search: search, userId: userID)
                         )
                     )
                 )

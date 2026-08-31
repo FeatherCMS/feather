@@ -21,12 +21,11 @@ struct AccountModule: Sendable {
 extension AccountModule {
 
     func makeGetSettings() -> GetSettings {
-        let query = DatabaseTransactionExecutor(
+        let query = DatabaseQueryExecutor(
             database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
             scope: { context in
-                return WriteSettings(
-                    settings: SettingsDatabaseRepository(context: context)
+                ReadSettings(
+                    settings: SettingsDatabaseQueries(context: context)
                 )
             }
         )

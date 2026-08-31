@@ -12,6 +12,13 @@ This file documents the backend permission keys and what they allow a user to do
 - `auth:magic-links:list`: List and search magic links.
 - `auth:magic-links:delete`: Delete a magic link.
 
+- `auth:credential:create`: Create user credentials.
+- `auth:credential:read`: View user credentials.
+- `auth:credential:update`: Update user credentials.
+- `auth:credential:list`: List and search user credentials.
+- `auth:credential:find`: Find user credentials by email or ID.
+- `auth:credential:delete`: Delete user credentials.
+
 - `auth:access-control:create`: Assign a permission to a role.
 - `auth:access-control:read`: View a specific role-permission assignment.
 - `auth:access-control:update`: Update role-permission assignments.

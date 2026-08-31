@@ -19,6 +19,7 @@ import WebStandards
 protocol AdminGetAuthProfileInteractor: Sendable {
 
     func getProfile(
-        account: AccountModel
+        account: AccountModel,
+        accountProfile: AdminAuthAccountProfileModel
     ) async throws -> AdminGetAuthProfileModel
 }

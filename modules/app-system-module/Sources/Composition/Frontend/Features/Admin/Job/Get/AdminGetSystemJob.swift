@@ -8,8 +8,10 @@ struct AdminGetSystemJob {
         controller = AdminGetSystemJobDefaultController(
             buildRuntime: { request, context in
                 (
-                    repository: AdminGetSystemJobOpenAPIRepository(
-                        api: context.systemManagementAPI()
+                    interactor: AdminGetSystemJobDefaultInteractor(
+                        repository: AdminGetSystemJobOpenAPIRepository(
+                            api: context.systemManagementAPI()
+                        )
                     ),
                     presenter: AdminGetSystemJobDefaultPresenter(
                         request: request,

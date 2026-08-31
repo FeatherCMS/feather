@@ -10,7 +10,9 @@ protocol AdminAddAccountInvitationPresenter: Sendable {
     ) -> HTMLResponse
 
     func formState(
-        email: String
+        email: String,
+        roleIDs: [String],
+        roleOptions: [AccountInvitationForm.RoleOptionState]
     ) -> AccountInvitationForm.State
 
     func breadcrumb() -> AdminBreadcrumb.State

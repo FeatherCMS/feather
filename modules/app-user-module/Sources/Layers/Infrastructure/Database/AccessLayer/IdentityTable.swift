@@ -77,19 +77,27 @@ struct IdentityTable {
 
     func list(
         search: String?,
+        role: String? = nil,
         orderBy: String,
         limit: Int,
         offset: Int
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT *
-                FROM user_identity
+                SELECT ui.*
+                FROM user_identity ui
                 WHERE (
                     \#(search == nil)
                     OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(status) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 )
+                AND (\#(role == nil) OR EXISTS (
+                    SELECT 1 FROM user_identity_role uir
+                    INNER JOIN user_role ur ON ur.id=uir.role_id
+                    WHERE uir.identity_id=ui.id
+                    AND (LOWER(ur.id)=LOWER(\#(role ?? ""))
+                         OR LOWER(COALESCE(ur.name, ''))=LOWER(\#(role ?? "")))
+                ))
                 ORDER BY \#(unescaped: orderBy)
                 LIMIT \#(limit)
                 OFFSET \#(offset);
@@ -100,7 +108,8 @@ struct IdentityTable {
     }
 
     func count(
-        search: String?
+        search: String?,
+        role: String? = nil
     ) async throws -> Int {
         try await connection.run(
             query: #"""
@@ -110,7 +119,14 @@ struct IdentityTable {
                     \#(search == nil)
                     OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(status) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                );
+                )
+                AND (\#(role == nil) OR EXISTS (
+                    SELECT 1 FROM user_identity_role uir
+                    INNER JOIN user_role ur ON ur.id=uir.role_id
+                    WHERE uir.identity_id=user_identity.id
+                    AND (LOWER(ur.id)=LOWER(\#(role ?? ""))
+                         OR LOWER(COALESCE(ur.name, ''))=LOWER(\#(role ?? "")))
+                ));
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -128,6 +144,23 @@ struct IdentityTable {
                 SELECT *
                 FROM user_identity
                 WHERE id=\#(id)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try Row(from: row)
+        }
+    }
+
+    func findRoot() async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT *
+                FROM user_identity
+                WHERE is_root=TRUE
+                ORDER BY created_at ASC
                 LIMIT 1;
                 """#
         ) { sequence in

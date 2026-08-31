@@ -29,6 +29,7 @@ protocol AdminListAuthMagicLinkPresenter: Sendable {
         selectedIds: [String],
         page: Int,
         search: String?,
+        userID: String?,
         permissions: Set<String>
     ) -> HTMLResponse
 }

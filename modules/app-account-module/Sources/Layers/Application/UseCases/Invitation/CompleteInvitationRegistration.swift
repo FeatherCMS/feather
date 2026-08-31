@@ -12,13 +12,17 @@ import UserApplication
 import UserDomain
 
 public struct CompleteInvitationRegistration: UseCase {
-    struct Error: UseCaseError {
-        let message: String
+    public struct Error: UseCaseError {
+        public let message: String
+
+        public init(message: String) {
+            self.message = message
+        }
     }
 
-    let transaction: any TransactionExecutor<WriteInvitation>
+    let transaction: any ContextualTransactionExecutor<WriteInvitation>
     public init(
-        transaction: any TransactionExecutor<WriteInvitation>
+        transaction: any ContextualTransactionExecutor<WriteInvitation>
     ) {
         self.transaction = transaction
     }
@@ -26,9 +30,6 @@ public struct CompleteInvitationRegistration: UseCase {
     public struct Input: DTO {
         public let token: String
         public let password: String
-
-        // TODO: Add profile and identity-settings input once the identity-settings
-        // persistence and API contract are available.
 
         public init(token: String, password: String) {
             self.token = token
@@ -39,8 +40,7 @@ public struct CompleteInvitationRegistration: UseCase {
     public func execute(
         input: Input
     ) async throws -> IdentityDetail {
-        _ = input.password
-        return try await transaction.run { scope in
+        return try await transaction.run { scope, context in
             guard
                 var invitation = try await scope.invitation.findBy(
                     token: input.token
@@ -52,13 +52,29 @@ public struct CompleteInvitationRegistration: UseCase {
             else {
                 throw Error(message: "Invitation or identity not found")
             }
+            try await scope.credential.create(
+                userID: identity.id,
+                email: invitation.email,
+                password: input.password,
+                context: context
+            )
+            try await scope.identity.replaceRoleIds(
+                identityId: identity.id,
+                roleIds: invitation.roleIDs
+            )
             try invitation.consume()
             identity.update(status: .active)
             let updated = try await scope.identity.update(identity)
             guard try await scope.invitation.delete(id: invitation.id) else {
                 throw Error(message: "Invitation already used")
             }
-            return updated.asDetail
+            return .init(
+                id: updated.id,
+                roleIds: invitation.roleIDs,
+                status: .init(rawValue: updated.status.rawValue) ?? .invited,
+                createdAt: updated.createdAt,
+                updatedAt: updated.updatedAt
+            )
         }
     }
 }

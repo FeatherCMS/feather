@@ -41,8 +41,7 @@ struct AdminAPIUserCredentialCreateTests {
                 body: Components.Schemas.AuthCredentialCreateSchema(
                     userId: identityId,
                     email: email,
-                    password: "very-secure-password",
-                    isPersistent: true
+                    password: "very-secure-password"
                 )
             )
         ) { response in

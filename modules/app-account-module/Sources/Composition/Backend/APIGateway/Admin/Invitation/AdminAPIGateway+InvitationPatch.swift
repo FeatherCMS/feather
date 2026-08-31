@@ -20,7 +20,8 @@ extension AdminAPIGateway {
             subject: subject,
             input: AccountApplication.EditInvitation.Input(
                 id: input.path.accountInvitationId,
-                email: body.email
+                email: body.email,
+                roleIDs: body.roleIds
             )
         )
 

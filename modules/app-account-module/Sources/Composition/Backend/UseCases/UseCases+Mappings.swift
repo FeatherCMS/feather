@@ -47,6 +47,7 @@ extension AdminAPIGateway {
             id: detail.id,
             email: detail.email,
             token: detail.token,
+            roleIds: detail.roleIDs,
             expiresAt: timestamp(detail.expiresAt)
         )
     }
@@ -58,6 +59,7 @@ extension AdminAPIGateway {
             id: item.id,
             email: item.email,
             token: item.token,
+            roleIds: item.roleIDs,
             expiresAt: timestamp(item.expiresAt)
         )
     }

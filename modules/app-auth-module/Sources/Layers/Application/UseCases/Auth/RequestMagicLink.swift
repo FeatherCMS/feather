@@ -9,19 +9,25 @@ import FeatherApplication
 import FeatherContracts
 import FeatherDomain
 import UserDomain
-
-import struct Foundation.Date
+import SystemApplication
+import Foundation
 
 public struct RequestMagicLink: UseCase {
     let transaction: any TransactionExecutor<WriteAuth>
     let mailSender: any MailSender
+    let publicBaseURL: String
+    let variable: any VariableQueries
 
     public init(
         transaction: any TransactionExecutor<WriteAuth>,
-        mailSender: any MailSender
+        mailSender: any MailSender,
+        publicBaseURL: String,
+        variable: any VariableQueries
     ) {
         self.transaction = transaction
         self.mailSender = mailSender
+        self.publicBaseURL = publicBaseURL
+        self.variable = variable
     }
 
     public struct Input: DTO {
@@ -66,23 +72,28 @@ public struct RequestMagicLink: UseCase {
             return false
         }
 
+        let template = try await variable.get("auth.magic_link.email.template")
+            ?? #"""
+                Hello,
+
+                This is your sign-in link:
+
+                {{url}}
+
+                Cheers,
+                Application Team.
+                """#
+        let body = template
+            .replacingOccurrences(of: "{{url}}", with: "\(publicBaseURL)/magic-link/verify/?token=\(token)")
+            .replacingOccurrences(of: "{{token}}", with: token)
+            .replacingOccurrences(of: "{{email}}", with: input.email)
+
         try await mailSender.send(
             .init(
                 from: .init("info@binarybirds.com", name: "Binary Birds"),
                 to: [.init(input.email)],
                 subject: "Application - Sign In Link",
-                body: #"""
-                    Hello,
-
-                    This is your sign-in token:
-
-                    \#(token)
-
-                    Use this token in the app on the magic link verification screen.
-
-                    Cheers,
-                    Application Team.
-                    """#
+                body: body
             )
         )
         return true

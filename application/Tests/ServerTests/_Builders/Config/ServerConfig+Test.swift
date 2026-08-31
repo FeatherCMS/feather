@@ -13,6 +13,7 @@ extension ServerConfig {
             host: "127.0.0.1",
             port: 8080,
             serverName: "test",
+            publicBaseURL: "http://localhost:3456",
             system: .init(
                 logger: .init(level: .info, label: "test"),
                 database: .test(database: database)

@@ -13,14 +13,17 @@ public struct WriteInvitation: Scope {
     public let invitation: any InvitationRepository
     public let identity: any IdentityRepository
     public let role: any RoleRepository
+    public let credential: any InvitationCredentialWriter
 
     public init(
         invitation: any InvitationRepository,
         identity: any IdentityRepository,
-        role: any RoleRepository
+        role: any RoleRepository,
+        credential: any InvitationCredentialWriter
     ) {
         self.invitation = invitation
         self.identity = identity
         self.role = role
+        self.credential = credential
     }
 }

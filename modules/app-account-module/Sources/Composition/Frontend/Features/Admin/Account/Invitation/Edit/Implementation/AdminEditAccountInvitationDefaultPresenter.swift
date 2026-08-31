@@ -60,7 +60,9 @@ struct AdminEditAccountInvitationDefaultPresenter:
     }
 
     func formState(
-        email: String = ""
+        email: String = "",
+        roleIDs: [String] = [],
+        roleOptions: [AccountInvitationForm.RoleOptionState] = []
     ) -> AccountInvitationForm.State {
         .init(
             email: .init(
@@ -69,6 +71,13 @@ struct AdminEditAccountInvitationDefaultPresenter:
                 value: email,
                 error: nil
             ),
+            roleIds: .init(
+                key: "roleIds",
+                label: "Role IDs (comma-separated)",
+                value: roleIDs.joined(separator: ", "),
+                error: nil
+            ),
+            roleOptions: roleOptions,
             error: nil,
             success: nil
         )

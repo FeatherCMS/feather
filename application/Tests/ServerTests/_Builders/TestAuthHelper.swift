@@ -36,8 +36,7 @@ extension TestRunner {
         token: String,
         userId: String,
         email: String,
-        password: String = "very-secure-password",
-        isPersistent: Bool = true
+        password: String = "very-secure-password"
     ) async throws -> String {
         let result = try await run(
             request: JSONRequest(
@@ -50,8 +49,7 @@ extension TestRunner {
                     .AuthCredentialCreateSchema(
                         userId: userId,
                         email: email,
-                        password: password,
-                        isPersistent: isPersistent
+                        password: password
                     )
             )
         ) { response in

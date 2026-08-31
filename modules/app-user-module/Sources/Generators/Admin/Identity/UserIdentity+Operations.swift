@@ -70,7 +70,11 @@ struct UserIdentitySearchOperation: UserIdentityOperation {
             sortFieldKeys: [
                 "id"
             ],
-            filters: SearchFilterSchema()
+            filters: SearchFilterSchema(
+                additionalProperties: [
+                    "role": UserRoleNameField().reference(required: false)
+                ]
+            )
         )
     }
 

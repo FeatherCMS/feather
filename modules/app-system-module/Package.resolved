@@ -1,5 +1,5 @@
 {
-  "originHash" : "fd8a9bc5cd4a30d7cf22b546d353eabca5319edd792a14eb1b9e0397b26993ef",
+  "originHash" : "f9b7dc4d76ff1684d481f7d6144b3f2da1870fe12cb53be8b546e8f3de66b611",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -119,6 +119,15 @@
       }
     },
     {
+      "identity" : "swift-bcrypt",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/binarybirds/swift-bcrypt",
+      "state" : {
+        "revision" : "9e5387a4d9bac1c7227e366296c27b7612eba0b9",
+        "version" : "2.0.1"
+      }
+    },
+    {
       "identity" : "swift-certificates",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-certificates.git",
@@ -206,6 +215,15 @@
       "state" : {
         "revision" : "087e8074afa97040c3b870c8664fe5482fb87cc4",
         "version" : "2.11.0"
+      }
+    },
+    {
+      "identity" : "swift-nanoid",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BinaryBirds/swift-nanoid",
+      "state" : {
+        "revision" : "cb73f19b3a25cc5aa14512fa43b08f2ff63002db",
+        "version" : "1.1.1"
       }
     },
     {

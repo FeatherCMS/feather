@@ -19,10 +19,6 @@ extension CredentialTable.Row {
                 column: "password_hash",
                 as: String.self
             ),
-            isPersistent: try row.decode(
-                column: "is_persistent",
-                as: Bool.self
-            ),
             createdAt: try row.decode(
                 column: "created_at",
                 as: Date.self
@@ -43,7 +39,6 @@ public struct CredentialTable {
         public let userId: String
         public let email: String
         public let passwordHash: String
-        public let isPersistent: Bool
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -52,7 +47,6 @@ public struct CredentialTable {
             userId: String,
             email: String,
             passwordHash: String,
-            isPersistent: Bool,
             createdAt: Date,
             updatedAt: Date
         ) {
@@ -60,7 +54,6 @@ public struct CredentialTable {
             self.userId = userId
             self.email = email
             self.passwordHash = passwordHash
-            self.isPersistent = isPersistent
             self.createdAt = createdAt
             self.updatedAt = updatedAt
         }
@@ -195,7 +188,6 @@ public struct CredentialTable {
                     user_id,
                     email,
                     password_hash,
-                    is_persistent,
                     created_at,
                     updated_at
                 )
@@ -204,7 +196,6 @@ public struct CredentialTable {
                     \#(row.userId),
                     \#(row.email),
                     \#(row.passwordHash),
-                    \#(row.isPersistent),
                     NOW(),
                     NOW()
                 )
@@ -230,7 +221,6 @@ public struct CredentialTable {
                     user_id=\#(row.userId),
                     email=\#(row.email),
                     password_hash=\#(row.passwordHash),
-                    is_persistent=\#(row.isPersistent),
                     updated_at=NOW()
                 WHERE id=\#(id)
                 RETURNING *;

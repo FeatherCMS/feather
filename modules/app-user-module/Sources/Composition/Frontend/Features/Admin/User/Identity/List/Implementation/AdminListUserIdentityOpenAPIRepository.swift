@@ -16,7 +16,8 @@ struct AdminListUserIdentityOpenAPIRepository:
     func list(
         page: Int,
         size: Int,
-        search: String?
+        search: String?,
+        role: String?
     ) async throws -> (
         items: [Components.Schemas.UserIdentityListItemSchema], total: Int,
         page: Int, size: Int
@@ -29,7 +30,7 @@ struct AdminListUserIdentityOpenAPIRepository:
                     body: .json(
                         .init(
                             page: .init(size: size, number: page),
-                            filters: .init(search: search)
+                            filters: .init(search: search, role: role)
                         )
                     )
                 )

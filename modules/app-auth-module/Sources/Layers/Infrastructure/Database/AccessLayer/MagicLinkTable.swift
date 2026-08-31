@@ -100,6 +100,7 @@ struct MagicLinkTable {
     }
 
     func list(
+        userId: String? = nil,
         search: String?,
         orderBy: String,
         limit: Int,
@@ -107,16 +108,22 @@ struct MagicLinkTable {
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT *
-                FROM auth_magic_link
+                SELECT magic_link.*
+                FROM auth_magic_link AS magic_link
+                INNER JOIN auth_credentials AS credential
+                    ON credential.id=magic_link.credential_id
                 WHERE (
+                    \#(userId == nil)
+                    OR credential.user_id=\#(userId ?? "")
+                )
+                AND (
                     \#(search == nil)
-                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(credential_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(token) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR CAST(expires_at AS TEXT) LIKE '%' || \#(search ?? "") || '%'
-                    OR LOWER(CAST(is_persistent AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(CAST(is_used AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(magic_link.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(magic_link.credential_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(magic_link.token) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR CAST(magic_link.expires_at AS TEXT) LIKE '%' || \#(search ?? "") || '%'
+                    OR LOWER(CAST(magic_link.is_persistent AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(CAST(magic_link.is_used AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 )
                 ORDER BY \#(unescaped: orderBy)
                 LIMIT \#(limit)
@@ -128,20 +135,27 @@ struct MagicLinkTable {
     }
 
     func count(
+        userId: String? = nil,
         search: String?
     ) async throws -> Int {
         try await connection.run(
             query: #"""
                 SELECT COUNT(*) AS count
-                FROM auth_magic_link
+                FROM auth_magic_link AS magic_link
+                INNER JOIN auth_credentials AS credential
+                    ON credential.id=magic_link.credential_id
                 WHERE (
+                    \#(userId == nil)
+                    OR credential.user_id=\#(userId ?? "")
+                )
+                AND (
                     \#(search == nil)
-                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(credential_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(token) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR CAST(expires_at AS TEXT) LIKE '%' || \#(search ?? "") || '%'
-                    OR LOWER(CAST(is_persistent AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(CAST(is_used AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(magic_link.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(magic_link.credential_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(magic_link.token) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR CAST(magic_link.expires_at AS TEXT) LIKE '%' || \#(search ?? "") || '%'
+                    OR LOWER(CAST(magic_link.is_persistent AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(CAST(magic_link.is_used AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 );
                 """#
         ) { sequence in

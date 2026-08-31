@@ -18,6 +18,7 @@ public struct MagicLink: Model {
 
         case alreadyUsed
         case expired
+        case invalidToken
     }
 
     static let lifetime: Double = 3_600

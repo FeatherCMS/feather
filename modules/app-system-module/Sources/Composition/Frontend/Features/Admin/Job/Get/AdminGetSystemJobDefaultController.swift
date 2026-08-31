@@ -4,7 +4,7 @@ import Hummingbird
 struct AdminGetSystemJobDefaultController: AdminGetSystemJobController {
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
-            repository: any AdminGetSystemJobRepository,
+            interactor: any AdminGetSystemJobInteractor,
             presenter: AdminGetSystemJobDefaultPresenter
         )
 
@@ -16,7 +16,7 @@ struct AdminGetSystemJobDefaultController: AdminGetSystemJobController {
         let id = try context.requiredID()
         do {
             return runtime.presenter.render(
-                job: try await runtime.repository.get(id: id),
+                job: try await runtime.interactor.get(id: id),
                 permissions: context.currentUserPermissions
             )
         }

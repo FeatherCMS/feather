@@ -9,16 +9,21 @@ import AuthDomain
 actor MockMagicLinkRepository: MagicLinkRepository {
     private(set) var insertCallCount = 0
     private(set) var deleteCallCount = 0
+    private(set) var consumeCallCount = 0
+    private(set) var consumedToken: String?
 
     private let result: MagicLink
     private let deleteResult: Bool
+    private let consumeError: MagicLink.Error?
 
     init(
         result: MagicLink,
-        deleteResult: Bool = false
+        deleteResult: Bool = false,
+        consumeError: MagicLink.Error? = nil
     ) {
         self.result = result
         self.deleteResult = deleteResult
+        self.consumeError = consumeError
     }
 
     func findById(
@@ -37,13 +42,18 @@ actor MockMagicLinkRepository: MagicLinkRepository {
     func update(
         _ model: MagicLink
     ) async throws -> MagicLink {
-        model
+        return model
     }
 
     func consumeByToken(
         token: String
     ) async throws -> MagicLink {
-        result
+        consumeCallCount += 1
+        consumedToken = token
+        if let consumeError {
+            throw consumeError
+        }
+        return result
     }
 
     func delete(

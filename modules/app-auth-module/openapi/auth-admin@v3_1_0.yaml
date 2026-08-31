@@ -655,16 +655,11 @@ components:
           type: string
           examples:
           - correct-horse-battery-staple
-        isPersistent:
-          type: boolean
-          examples:
-          - true
       required:
       - userId
       - email
       - password
-      - isPersistent
-      minProperties: 4
+      minProperties: 3
     AuthCredentialDetailSchema:
       type: object
       properties:
@@ -680,16 +675,11 @@ components:
           type: string
           examples:
           - john.doe@example.com
-        isPersistent:
-          type: boolean
-          examples:
-          - true
       required:
       - id
       - userId
       - email
-      - isPersistent
-      minProperties: 4
+      minProperties: 3
     AuthCredentialSearchFilterSchema:
       type: object
       properties:
@@ -804,14 +794,11 @@ components:
           $ref: '#/components/schemas/AuthCredentialUserIdField'
         email:
           $ref: '#/components/schemas/AuthCredentialEmailField'
-        isPersistent:
-          $ref: '#/components/schemas/AuthCredentialIsPersistentField'
       required:
       - id
       - userId
       - email
-      - isPersistent
-      minProperties: 4
+      minProperties: 3
     AuthCredentialIdField:
       type: string
       examples:
@@ -820,10 +807,6 @@ components:
       type: string
       examples:
       - john.doe@example.com
-    AuthCredentialIsPersistentField:
-      type: boolean
-      examples:
-      - true
     AuthCredentialPatchSchema:
       type: object
       properties:
@@ -831,8 +814,6 @@ components:
           $ref: '#/components/schemas/AuthCredentialEmailField'
         password:
           $ref: '#/components/schemas/AuthCredentialPasswordField'
-        isPersistent:
-          $ref: '#/components/schemas/AuthCredentialIsPersistentField'
       minProperties: 0
     AuthCredentialPasswordField:
       type: string
@@ -1039,11 +1020,15 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            userId:
+              $ref: '#/components/schemas/AuthMagicLinkUserIdField'
           minProperties: 0
       required:
       - page
       - filters
       minProperties: 2
+    AuthMagicLinkUserIdField:
+      type: string
     AuthMagicLinkListItemSearchSchema:
       type: object
       properties:

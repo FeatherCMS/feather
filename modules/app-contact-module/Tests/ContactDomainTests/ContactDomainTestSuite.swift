@@ -8,6 +8,27 @@ import struct Foundation.Date
 struct ContactDomainTestSuite {
 
     @Test
+    func formRejectsEmptyName() {
+        #expect(throws: Form.Error.nameTooShort) {
+            try Form.create(name: "")
+        }
+    }
+
+    @Test
+    func formCreatePreservesMessagesAndRedirect() throws {
+        let form = try Form.create(
+            name: "Contact",
+            successMessage: "Thanks",
+            failureMessage: "Try again",
+            redirectUrl: "/done"
+        )
+
+        #expect(form.successMessage == "Thanks")
+        #expect(form.failureMessage == "Try again")
+        #expect(form.redirectUrl == "/done")
+    }
+
+    @Test
     func formItemRequiresOptionsForChoiceControls() throws {
         let item = try FormField.create(
             formId: "form-1",

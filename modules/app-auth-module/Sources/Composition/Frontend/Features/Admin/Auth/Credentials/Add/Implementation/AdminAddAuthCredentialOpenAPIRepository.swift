@@ -30,8 +30,7 @@ struct AdminAddAuthCredentialOpenAPIRepository: AdminAddAuthCredentialRepository
                     .init(
                         userId: userId,
                         email: payload.email,
-                        password: password,
-                        isPersistent: payload.isPersistent ?? false
+                        password: password
                     )
                 )
             )

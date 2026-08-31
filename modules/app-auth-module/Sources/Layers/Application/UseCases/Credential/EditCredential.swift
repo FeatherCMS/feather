@@ -27,18 +27,15 @@ public struct EditCredential: UseCase {
         public let id: String
         public let email: String?
         public let password: String?
-        public let isPersistent: Bool?
 
         public init(
             id: String,
             email: String?,
             password: String?,
-            isPersistent: Bool?
         ) {
             self.id = id
             self.email = email
             self.password = password
-            self.isPersistent = isPersistent
         }
     }
 
@@ -76,8 +73,7 @@ public struct EditCredential: UseCase {
 
             try model.update(
                 email: input.email,
-                passwordHash: passwordHash,
-                isPersistent: input.isPersistent
+                passwordHash: passwordHash
             )
 
             return try await scope.credential.update(model)

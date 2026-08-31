@@ -20,13 +20,17 @@ struct AdminGetAuthProfile {
 
     init(renderingEngine: any RenderingEngine) {
         self.controller = AdminGetAuthProfileDefaultController(
-            buildRuntime: { request, _ in
+            buildRuntime: { request, context in
                 (
                     interactor: AdminGetAuthProfileDefaultInteractor(),
                     presenter: AdminGetAuthProfileDefaultPresenter(
                         request: request,
                         renderEngine: renderingEngine
-                    )
+                    ),
+                    accountProfileRepository:
+                        AdminAuthAccountProfileOpenAPIRepository(
+                            api: context.accountAppAPI()
+                        )
                 )
             }
         )

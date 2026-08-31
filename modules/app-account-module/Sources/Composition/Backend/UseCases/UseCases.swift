@@ -16,23 +16,26 @@ public struct UseCases: Sendable {
     let authorizer: any Authorizer
     let mailSender: any MailSender
     let events: any EventPublisher
+    let credentialWriter: any InvitationCredentialWriter
+    /// Public web URL used to build invitation acceptance links.
+    let publicBaseURL: String
 
     public init(
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
         authorizer: any Authorizer,
         mailSender: any MailSender,
-        events: any EventPublisher
+        events: any EventPublisher,
+        credentialWriter: any InvitationCredentialWriter,
+        publicBaseURL: String
     ) {
         self.database = database
         self.idGenerator = idGenerator
         self.authorizer = authorizer
         self.mailSender = mailSender
         self.events = events
+        self.credentialWriter = credentialWriter
+        self.publicBaseURL = publicBaseURL
     }
-
-}
-
-extension UseCases {
 
 }

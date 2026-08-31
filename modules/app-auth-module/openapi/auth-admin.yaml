@@ -613,14 +613,10 @@ components:
         password:
           type: string
           example: correct-horse-battery-staple
-        isPersistent:
-          type: boolean
-          example: true
       required:
       - userId
       - email
       - password
-      - isPersistent
     AuthCredentialDetailSchema:
       type: object
       properties:
@@ -633,14 +629,10 @@ components:
         email:
           type: string
           example: john.doe@example.com
-        isPersistent:
-          type: boolean
-          example: true
       required:
       - id
       - userId
       - email
-      - isPersistent
     AuthCredentialSearchFilterSchema:
       type: object
       properties:
@@ -737,22 +729,16 @@ components:
           $ref: '#/components/schemas/AuthCredentialUserIdField'
         email:
           $ref: '#/components/schemas/AuthCredentialEmailField'
-        isPersistent:
-          $ref: '#/components/schemas/AuthCredentialIsPersistentField'
       required:
       - id
       - userId
       - email
-      - isPersistent
     AuthCredentialIdField:
       type: string
       example: credential_7nL3xQ2v
     AuthCredentialEmailField:
       type: string
       example: john.doe@example.com
-    AuthCredentialIsPersistentField:
-      type: boolean
-      example: true
     AuthCredentialPatchSchema:
       type: object
       properties:
@@ -760,8 +746,6 @@ components:
           $ref: '#/components/schemas/AuthCredentialEmailField'
         password:
           $ref: '#/components/schemas/AuthCredentialPasswordField'
-        isPersistent:
-          $ref: '#/components/schemas/AuthCredentialIsPersistentField'
     AuthCredentialPasswordField:
       type: string
       example: correct-horse-battery-staple
@@ -932,9 +916,13 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            userId:
+              $ref: '#/components/schemas/AuthMagicLinkUserIdField'
       required:
       - page
       - filters
+    AuthMagicLinkUserIdField:
+      type: string
     AuthMagicLinkListItemSearchSchema:
       type: object
       properties:

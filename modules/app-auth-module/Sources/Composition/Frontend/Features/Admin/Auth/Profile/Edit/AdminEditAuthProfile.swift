@@ -24,8 +24,12 @@ struct AdminEditAuthProfile {
                 (
                     interactor: AdminEditAuthProfileDefaultInteractor(
                         repository: AdminEditAuthProfileOpenAPIRepository(
-                            api: context.userAdminAPI()
-                        )
+                            api: context.authAdminAPI()
+                        ),
+                        accountProfileRepository:
+                            AdminAuthAccountProfileOpenAPIRepository(
+                                api: context.accountAppAPI()
+                            )
                     ),
                     presenter: AdminEditAuthProfileDefaultPresenter(
                         request: request,

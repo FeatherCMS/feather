@@ -18,6 +18,7 @@ extension InvitationTable.Row {
             userId: userId,
             email: email,
             token: token,
+            roleIDs: roleIDs,
             expiresAt: expiresAt,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -56,6 +57,7 @@ public struct InvitationDatabaseRepository: InvitationRepository {
                 userId: model.userId,
                 email: model.email,
                 token: model.token,
+                roleIDs: model.roleIDs,
                 expiresAtInterval: model.expiresAtInterval
             )
         )
@@ -73,6 +75,7 @@ public struct InvitationDatabaseRepository: InvitationRepository {
                 userId: model.userId,
                 email: model.email,
                 token: model.token,
+                roleIDs: model.roleIDs,
                 expiresAt: model.expiresAt,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt

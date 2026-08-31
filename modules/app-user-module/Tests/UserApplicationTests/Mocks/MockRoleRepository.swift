@@ -33,6 +33,13 @@ actor MockRoleRepository: RoleRepository {
         return findResult
     }
 
+    func findBy(
+        name: String
+    ) async throws -> Role? {
+        findCallCount += 1
+        return findResult
+    }
+
     func insert(
         _ model: Role.New
     ) async throws -> Role {

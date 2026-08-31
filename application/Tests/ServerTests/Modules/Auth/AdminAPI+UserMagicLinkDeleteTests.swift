@@ -50,7 +50,7 @@ struct AdminAPIUserMagicLinkDeleteTests {
         }
 
         try await runner.run(
-            request: Request(
+            request: JSONRequest(
                 method: .delete,
                 path: "/api/v1/admin/auth/magic-links",
                 headerFields: [

@@ -146,6 +146,10 @@ struct LoginPage: Component, FlowContent {
 
                 LoginForm(state: state.form)
 
+                A("Sign in with a magic link")
+                    .href("/magic-link/")
+                    .class("login-home-link")
+
                 if let message = state.message {
                     P(message).class("login-error")
                 }

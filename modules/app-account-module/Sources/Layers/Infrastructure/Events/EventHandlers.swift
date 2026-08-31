@@ -18,7 +18,6 @@ public enum EventHandlers {
             context: EventContext.self
         ) { _, _ in
             AccountPermissions.allPermissions()
-                .union(SettingsPermissions.allPermissions())
                 .map {
                     .init(permission: $0)
                 }
@@ -28,8 +27,10 @@ public enum EventHandlers {
             event: UserIdentityDidInsert.self,
             context: DatabaseTransactionContext.self
         ) { event, context in
-            try await SettingsDatabaseRepository(context: context)
-                .create(userId: event.identityID)
+            _ = try await SettingsDatabaseRepository(context: context)
+                .getOrCreate(userId: event.identityID)
+            _ = try await AccountProfileDatabaseRepository(context: context)
+                .getOrCreate(userId: event.identityID)
         }
     }
 }

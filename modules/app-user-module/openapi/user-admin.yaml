@@ -382,6 +382,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            role:
+              $ref: '#/components/schemas/UserRoleNameField'
       required:
       - page
       - filters
@@ -407,6 +409,9 @@ components:
       - asc
       - desc
       example: asc
+    UserRoleNameField:
+      type: string
+      example: manager
     UserIdentityListItemSearchSchema:
       type: object
       properties:
@@ -435,9 +440,12 @@ components:
           $ref: '#/components/schemas/UserIdentityIDField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
+        roles:
+          $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
       required:
       - id
       - status
+      - roles
     UserIdentityUpdateSchema:
       type: object
       properties:
@@ -471,9 +479,6 @@ components:
           $ref: '#/components/schemas/UserRoleNotesField'
       required:
       - id
-    UserRoleNameField:
-      type: string
-      example: manager
     UserRoleNotesField:
       type: string
       example: Management role.

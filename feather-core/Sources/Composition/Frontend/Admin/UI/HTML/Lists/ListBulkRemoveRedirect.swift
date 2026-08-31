@@ -7,6 +7,7 @@ public enum ListBulkRemoveRedirect {
         path: String,
         page: Int?,
         search: String?,
+        queryItems extraQueryItems: [(String, String)] = [],
         title: String? = nil,
         message: String? = nil
     ) -> String {
@@ -17,6 +18,9 @@ public enum ListBulkRemoveRedirect {
         if let search, !search.isEmpty {
             queryItems.append(.init(name: "search", value: search))
         }
+        queryItems.append(contentsOf: extraQueryItems.map {
+            .init(name: $0.0, value: $0.1)
+        })
         if let title, let message {
             return AdminToastRedirect.location(
                 defaultPath: path,

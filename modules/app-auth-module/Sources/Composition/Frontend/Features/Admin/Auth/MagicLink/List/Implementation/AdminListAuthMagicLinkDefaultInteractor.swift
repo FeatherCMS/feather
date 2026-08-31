@@ -23,7 +23,8 @@ struct AdminListAuthMagicLinkDefaultInteractor: AdminListAuthMagicLinkInteractor
     func execute(
         page: Int,
         size: Int,
-        search: String?
+        search: String?,
+        userID: String?
     ) async throws -> (
         items: [AuthAdminAPI.Components.Schemas.AuthMagicLinkListItemSchema],
         total: Int,
@@ -32,7 +33,8 @@ struct AdminListAuthMagicLinkDefaultInteractor: AdminListAuthMagicLinkInteractor
         try await repository.list(
             page: page,
             size: size,
-            search: search
+            search: search,
+            userID: userID
         )
     }
 

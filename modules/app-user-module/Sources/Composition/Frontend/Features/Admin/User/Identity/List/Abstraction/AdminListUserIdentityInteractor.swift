@@ -7,7 +7,8 @@ protocol AdminListUserIdentityInteractor: Sendable {
     func execute(
         page: Int,
         size: Int,
-        search: String?
+        search: String?,
+        role: String?
     ) async throws -> (
         items: [Components.Schemas.UserIdentityListItemSchema],
         total: Int,

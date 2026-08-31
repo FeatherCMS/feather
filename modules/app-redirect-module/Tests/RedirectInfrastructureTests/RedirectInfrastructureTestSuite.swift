@@ -15,6 +15,7 @@ import Logging
 import NIOSSL
 import PostgresNIO
 import RedirectApplication
+import RedirectContracts
 import RedirectDomain
 import Testing
 

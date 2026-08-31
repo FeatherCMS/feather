@@ -47,7 +47,7 @@ struct AdminAPIUserIdentityDeleteTests {
         }
 
         try await runner.run(
-            request: Request(
+            request: JSONRequest(
                 method: .delete,
                 path: "/api/v1/admin/user/identities",
                 headerFields: [

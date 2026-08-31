@@ -37,7 +37,8 @@ struct AppModules: Sendable {
     let account: AccountBackend.UseCases
 
     init(
-        infrastructure: AppInfrastructure
+        infrastructure: AppInfrastructure,
+        publicBaseURL: String
     ) {
         self.infrastructure = infrastructure
 
@@ -92,14 +93,18 @@ struct AppModules: Sendable {
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
             mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
-            events: infrastructure.events
+            events: infrastructure.events,
+            credentialWriter: InvitationCredentialWriterAdapter(),
+            publicBaseURL: publicBaseURL
         )
         self.account = account
         let auth = AuthBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
-            user: self.user
+            user: self.user,
+            mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
+            publicBaseURL: publicBaseURL
         )
         self.auth = auth
         let media = MediaBackend.UseCases(

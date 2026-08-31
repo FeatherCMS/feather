@@ -1,5 +1,5 @@
 {
-  "originHash" : "caf9813863687b9095370a0d8947d21c0e75ae8c400a8748b65906635e3da281",
+  "originHash" : "9d511c017f9ec13848b3853c38dd71785fec961d18c7ed0da83bca9ab9e222a4",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -101,12 +101,30 @@
       }
     },
     {
+      "identity" : "swift-bcrypt",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/binarybirds/swift-bcrypt",
+      "state" : {
+        "revision" : "9e5387a4d9bac1c7227e366296c27b7612eba0b9",
+        "version" : "2.0.1"
+      }
+    },
+    {
       "identity" : "swift-certificates",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-certificates.git",
       "state" : {
         "revision" : "449dbbecd0f31e82b510ada227ca152caa8b5e98",
         "version" : "1.19.4"
+      }
+    },
+    {
+      "identity" : "swift-cmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-cmark.git",
+      "state" : {
+        "revision" : "924936d0427cb25a61169739a7660230bffa6ea6",
+        "version" : "0.8.0"
       }
     },
     {
@@ -182,12 +200,39 @@
       }
     },
     {
+      "identity" : "swift-markdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-markdown",
+      "state" : {
+        "revision" : "3c6f9523da3a1ec2fd829673e472d95b8097a3b8",
+        "version" : "0.8.0"
+      }
+    },
+    {
       "identity" : "swift-metrics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-metrics.git",
       "state" : {
         "revision" : "087e8074afa97040c3b870c8664fe5482fb87cc4",
         "version" : "2.11.0"
+      }
+    },
+    {
+      "identity" : "swift-mustache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hummingbird-project/swift-mustache",
+      "state" : {
+        "revision" : "0b91b3127baee1d97c45a7390a49779256b4295d",
+        "version" : "2.1.0"
+      }
+    },
+    {
+      "identity" : "swift-nanoid",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BinaryBirds/swift-nanoid",
+      "state" : {
+        "revision" : "cb73f19b3a25cc5aa14512fa43b08f2ff63002db",
+        "version" : "1.1.1"
       }
     },
     {

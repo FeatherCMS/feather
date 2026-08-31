@@ -18,10 +18,6 @@ struct AuthCredentialPasswordField: StringSchemaRepresentable {
     var format: String? = "password"
 }
 
-struct AuthCredentialIsPersistentField: BoolSchemaRepresentable {
-    var example: Bool? = true
-}
-
 struct AuthCredentialSearchField: StringSchemaRepresentable {
     var example: String? = "foo"
 }
@@ -42,7 +38,6 @@ struct AuthCredentialCreateSchema: ObjectSchemaRepresentable {
             "userId": AuthCredentialUserIdField(),
             "email": AuthCredentialEmailField(),
             "password": AuthCredentialPasswordField(),
-            "isPersistent": AuthCredentialIsPersistentField(),
         ]
     }
 }
@@ -52,8 +47,6 @@ struct AuthCredentialPatchSchema: ObjectSchemaRepresentable {
         [
             "email": AuthCredentialEmailField().reference(required: false),
             "password": AuthCredentialPasswordField()
-                .reference(required: false),
-            "isPersistent": AuthCredentialIsPersistentField()
                 .reference(required: false),
         ]
     }
@@ -65,7 +58,6 @@ struct AuthCredentialDetailSchema: ObjectSchemaRepresentable {
             "id": AuthCredentialIdField(),
             "userId": AuthCredentialUserIdField(),
             "email": AuthCredentialEmailField(),
-            "isPersistent": AuthCredentialIsPersistentField(),
         ]
     }
 }
@@ -76,7 +68,6 @@ struct AuthCredentialListItemSchema: ObjectSchemaRepresentable {
             "id": AuthCredentialIdField().reference(),
             "userId": AuthCredentialUserIdField().reference(),
             "email": AuthCredentialEmailField().reference(),
-            "isPersistent": AuthCredentialIsPersistentField().reference(),
         ]
     }
 }
