@@ -62,7 +62,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        let getIdentity = useCases.user.makeGetIdentity()
+        let getIdentity = useCases.makeGetIdentity()
         let getSession = useCases.makeGetSession()
         let removeSession = useCases.makeRemoveSession()
         _ = try await getIdentity.execute(
