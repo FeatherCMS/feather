@@ -3,10 +3,10 @@ import AccountDomain
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
+import Foundation
+import SystemApplication
 import UserApplication
 import UserDomain
-
-import Foundation
 
 //
 //  AddInvitation.swift
@@ -17,11 +17,14 @@ import Foundation
 public struct AddInvitation: UseCase {
     enum Error: UseCaseError {
         case roleNotFound(String)
+        case publicBaseURLNotConfigured
 
         var message: String {
             switch self {
             case .roleNotFound(let roleID):
                 "Role not found: \(roleID)"
+            case .publicBaseURLNotConfigured:
+                "The public site URL is not configured."
             }
         }
     }
@@ -31,23 +34,23 @@ public struct AddInvitation: UseCase {
     }
 
     let authorizer: any Authorizer
-    let transaction: any ContextualTransactionExecutor<WriteInvitation>
+    let transaction:
+        any ContextualTransactionExecutor<WriteInvitationWithVariable>
     let events: any EventPublisher
     let mailSender: any MailSender
-    let publicBaseURL: String
 
     public init(
         authorizer: any Authorizer,
-        transaction: any ContextualTransactionExecutor<WriteInvitation>,
+        transaction: any ContextualTransactionExecutor<
+            WriteInvitationWithVariable
+        >,
         events: any EventPublisher,
-        mailSender: any MailSender,
-        publicBaseURL: String
+        mailSender: any MailSender
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.events = events
         self.mailSender = mailSender
-        self.publicBaseURL = publicBaseURL
     }
 
     public struct Input: DTO {
@@ -98,12 +101,21 @@ public struct AddInvitation: UseCase {
                 event: UserIdentityDidInsert(identityID: identity.id),
                 using: context
             )
-            return invitation
+            guard
+                let publicBaseURL = try await scope.variable.get(
+                    "web-settings-public-base-url"
+                ),
+                !publicBaseURL.isEmpty
+            else {
+                throw Error.publicBaseURLNotConfigured
+            }
+            return (invitation: invitation, publicBaseURL: publicBaseURL)
         }
+
         try await mailSender.send(
             .init(
                 from: .init("info@binarybirds.com"),
-                to: [.init(model.email)],
+                to: [.init(model.invitation.email)],
                 subject: "Application - Invitation",
                 body: #"""
                     Hello,
@@ -111,13 +123,13 @@ public struct AddInvitation: UseCase {
                     You have been invited to create your application identity.
                     Open this invitation link to complete registration:
 
-                    \#(publicBaseURL)/account/invitation/accept/?token=\#(model.token)
+                    \#(model.publicBaseURL)/account/invitation/accept/?token=\#(model.invitation.token)
 
                     Cheers,
                     Application Team.
                     """#
             )
         )
-        return model.asDetail
+        return model.invitation.asDetail
     }
 }

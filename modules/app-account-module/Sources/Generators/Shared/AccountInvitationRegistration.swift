@@ -7,7 +7,8 @@ public struct AccountInvitationValidationSchema: ObjectSchemaRepresentable {
     public var propertyMap: SchemaMap {
         [
             "email": AccountInvitationRegistrationEmailField().reference(),
-            "expiresAt": AccountInvitationRegistrationExpiresAtField().reference(),
+            "expiresAt": AccountInvitationRegistrationExpiresAtField()
+                .reference(),
         ]
     }
 

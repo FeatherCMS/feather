@@ -23,11 +23,31 @@ struct SettingsEdit: Component {
 
             if let userID = state.userID {
                 AdminPillTabs(links: [
-                    .init(label: "Details", href: "/admin/user/identities/\(userID)/", isCurrent: false),
-                    .init(label: "Profile", href: "/admin/account/users/\(userID)/profile/", isCurrent: false),
-                    .init(label: "Settings", href: "/admin/account/users/\(userID)/settings/", isCurrent: true),
-                    .init(label: "Sessions", href: "/admin/user/identities/\(userID)/sessions/", isCurrent: false),
-                    .init(label: "Magic links", href: "/admin/auth/magic-links/?userId=\(userID)", isCurrent: false),
+                    .init(
+                        label: "Details",
+                        href: "/admin/user/identities/\(userID)/",
+                        isCurrent: false
+                    ),
+                    .init(
+                        label: "Profile",
+                        href: "/admin/account/users/\(userID)/profile/",
+                        isCurrent: false
+                    ),
+                    .init(
+                        label: "Settings",
+                        href: "/admin/account/users/\(userID)/settings/",
+                        isCurrent: true
+                    ),
+                    .init(
+                        label: "Sessions",
+                        href: "/admin/user/identities/\(userID)/sessions/",
+                        isCurrent: false
+                    ),
+                    .init(
+                        label: "Magic links",
+                        href: "/admin/auth/magic-links/?userId=\(userID)",
+                        isCurrent: false
+                    ),
                 ])
             }
 

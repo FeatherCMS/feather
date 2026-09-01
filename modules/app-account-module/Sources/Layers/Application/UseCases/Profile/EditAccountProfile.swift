@@ -11,7 +11,8 @@ public struct EditAccountProfile: UseCase {
             subjectID: String,
             userID: String
         ) {
-            key = subjectID == userID
+            key =
+                subjectID == userID
                 ? AccountPermissions.Profile.update
                 : AccountPermissions.Profile.manage
         }

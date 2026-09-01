@@ -64,14 +64,15 @@ struct AdminEditSettingsOpenAPIRepository:
         input: AdminEditSettingsFormInput
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let body: AccountAdminAPI.Components.RequestBodies
-                .AccountSettingsUpdateRequestBody = .json(
-                    .init(
-                        language: input.language,
-                        timezone: input.timezone,
-                        pageSize: input.pageSize
+            let body:
+                AccountAdminAPI.Components.RequestBodies
+                    .AccountSettingsUpdateRequestBody = .json(
+                        .init(
+                            language: input.language,
+                            timezone: input.timezone,
+                            pageSize: input.pageSize
+                        )
                     )
-                )
             if let targetUserID {
                 let response = try await client.adminAccountSettingsUpdate(
                     .init(

@@ -8,26 +8,20 @@ import AuthDomain
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
-import UserDomain
-import SystemApplication
 import Foundation
+import SystemApplication
+import UserDomain
 
 public struct RequestMagicLink: UseCase {
-    let transaction: any TransactionExecutor<WriteAuth>
+    let transaction: any TransactionExecutor<WriteRequestMagicLink>
     let mailSender: any MailSender
-    let publicBaseURL: String
-    let variable: any VariableQueries
 
     public init(
-        transaction: any TransactionExecutor<WriteAuth>,
-        mailSender: any MailSender,
-        publicBaseURL: String,
-        variable: any VariableQueries
+        transaction: any TransactionExecutor<WriteRequestMagicLink>,
+        mailSender: any MailSender
     ) {
         self.transaction = transaction
         self.mailSender = mailSender
-        self.publicBaseURL = publicBaseURL
-        self.variable = variable
     }
 
     public struct Input: DTO {
@@ -46,34 +40,56 @@ public struct RequestMagicLink: UseCase {
     public func execute(
         _ input: Input
     ) async throws -> Bool {
-        let token: String? = try await transaction.run { scope in
-            guard
-                let credential = try await scope.credential.findBy(
-                    email: input.email
+        let result: (token: String, publicBaseURL: String, template: String?)? =
+            try await transaction.run { scope in
+                guard
+                    let credential = try await scope.credential.findBy(
+                        email: input.email
+                    )
+                else {
+                    return nil
+                }
+
+                let token = generateToken()
+
+                _ = try await scope.magicLink.insert(
+                    MagicLink.create(
+                        credentialId: credential.id,
+                        token: token,
+                        isPersistent: input.isPersistent
+                    )
                 )
-            else {
-                return nil
+
+                guard
+                    let publicBaseURL = try await scope.variable.get(
+                        "web-settings-public-base-url"
+                    ),
+                    !publicBaseURL.isEmpty
+                else {
+                    throw UseCaseError(
+                        reason: .validation,
+                        logMessage: "public_site_url_not_configured",
+                        userFriendlyMessage:
+                            "The public site URL is not configured."
+                    )
+                }
+
+                return (
+                    token: token,
+                    publicBaseURL: publicBaseURL,
+                    template: try await scope.variable.get(
+                        "auth.magic_link.email.template"
+                    )
+                )
             }
 
-            let token = generateToken()
-
-            _ = try await scope.magicLink.insert(
-                MagicLink.create(
-                    credentialId: credential.id,
-                    token: token,
-                    isPersistent: input.isPersistent
-                )
-            )
-
-            return token
-        }
-
-        guard let token else {
+        guard let result else {
             return false
         }
 
-        let template = try await variable.get("auth.magic_link.email.template")
-            ?? #"""
+        let template =
+            result.template
+                ?? #"""
                 Hello,
 
                 This is your sign-in link:
@@ -83,9 +99,14 @@ public struct RequestMagicLink: UseCase {
                 Cheers,
                 Application Team.
                 """#
-        let body = template
-            .replacingOccurrences(of: "{{url}}", with: "\(publicBaseURL)/magic-link/verify/?token=\(token)")
-            .replacingOccurrences(of: "{{token}}", with: token)
+        let body =
+            template
+            .replacingOccurrences(
+                of: "{{url}}",
+                with:
+                    "\(result.publicBaseURL)/magic-link/verify/?token=\(result.token)"
+            )
+            .replacingOccurrences(of: "{{token}}", with: result.token)
             .replacingOccurrences(of: "{{email}}", with: input.email)
 
         try await mailSender.send(

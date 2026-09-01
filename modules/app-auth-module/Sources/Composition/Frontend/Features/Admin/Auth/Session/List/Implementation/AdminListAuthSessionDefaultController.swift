@@ -30,8 +30,13 @@ struct AdminListAuthSessionDefaultController:
 
         let identityID = try context.requiredID()
         do {
-            let model = try await runtime.interactor.list(identityID: identityID)
-            return runtime.presenter.render(model: model, permissions: permissions)
+            let model = try await runtime.interactor.list(
+                identityID: identityID
+            )
+            return runtime.presenter.render(
+                model: model,
+                permissions: permissions
+            )
         }
         catch let error as OpenAPIRepositoryError {
             return runtime.presenter.renderError(

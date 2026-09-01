@@ -9,10 +9,11 @@ extension AppAPIGateway {
         _ input: Operations.AccountProfileGet.Input
     ) async throws -> Operations.AccountProfileGet.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeGetAccountProfile().execute(
-            subject: subject,
-            input: .init()
-        )
+        let result = try await useCases.makeGetAccountProfile()
+            .execute(
+                subject: subject,
+                input: .init()
+            )
         return .ok(
             .init(
                 body: .json(
@@ -35,14 +36,15 @@ extension AppAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeEditAccountProfile().execute(
-            subject: subject,
-            input: .init(
-                firstName: body.firstName,
-                lastName: body.lastName,
-                imageURL: body.imageURL
+        let result = try await useCases.makeEditAccountProfile()
+            .execute(
+                subject: subject,
+                input: .init(
+                    firstName: body.firstName,
+                    lastName: body.lastName,
+                    imageURL: body.imageURL
+                )
             )
-        )
         return .ok(
             .init(
                 body: .json(

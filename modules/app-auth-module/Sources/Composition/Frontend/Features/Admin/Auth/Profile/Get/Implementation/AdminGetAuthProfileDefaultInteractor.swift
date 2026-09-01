@@ -17,6 +17,11 @@ import UserFrontend
 import WebStandards
 
 struct AdminGetAuthProfileDefaultInteractor: AdminGetAuthProfileInteractor {
+    let accountProfileRepository: any AdminAuthAccountProfileRepository
+
+    func getAccountProfile() async throws -> AdminAuthAccountProfileModel {
+        try await accountProfileRepository.get()
+    }
 
     func getProfile(
         account: AccountModel,

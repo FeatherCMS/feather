@@ -2,7 +2,9 @@ import AccountDomain
 
 @testable import AccountApplication
 
-actor MockAccountProfileRepository: AccountProfileRepository, AccountProfileQueries {
+actor MockAccountProfileRepository: AccountProfileRepository,
+    AccountProfileQueries
+{
     private(set) var getCallCount = 0
     private(set) var getOrCreateCallCount = 0
     private(set) var requestedUserIds: [String] = []

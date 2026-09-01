@@ -39,7 +39,9 @@ public struct TableSeedMigration: DatabaseMigration {
 
         let roleRepository = RoleDatabaseRepository(context: context)
         for definition in roleDefinitions
-        where try await roleRepository.findBy(name: definition.name ?? "") == nil {
+        where try await roleRepository.findBy(name: definition.name ?? "")
+            == nil
+        {
             _ = try await roleRepository.insert(
                 try Role.create(
                     id: definition.id,

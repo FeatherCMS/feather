@@ -3,7 +3,8 @@ import Hummingbird
 
 struct AdminResendAccountInvitationDefaultController: Sendable {
     let buildRepository:
-        @Sendable (DefaultRequestContext) -> any AdminResendAccountInvitationRepository
+        @Sendable (DefaultRequestContext) ->
+            any AdminResendAccountInvitationRepository
 
     func resend(
         request: Request,

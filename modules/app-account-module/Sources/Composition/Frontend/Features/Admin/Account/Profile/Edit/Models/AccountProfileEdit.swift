@@ -22,16 +22,33 @@ struct AccountProfileEdit: Component {
             )
             H1("Profile")
             AdminPillTabs(links: [
-                .init(label: "Details", href: "/admin/user/identities/\(userID)/", isCurrent: false),
+                .init(
+                    label: "Details",
+                    href: "/admin/user/identities/\(userID)/",
+                    isCurrent: false
+                ),
                 .init(label: "Profile", href: state.action, isCurrent: true),
-                .init(label: "Settings", href: "/admin/account/users/\(userID)/settings/", isCurrent: false),
-                .init(label: "Sessions", href: "/admin/user/identities/\(userID)/sessions/", isCurrent: false),
-                .init(label: "Magic links", href: "/admin/auth/magic-links/?userId=\(userID)", isCurrent: false),
+                .init(
+                    label: "Settings",
+                    href: "/admin/account/users/\(userID)/settings/",
+                    isCurrent: false
+                ),
+                .init(
+                    label: "Sessions",
+                    href: "/admin/user/identities/\(userID)/sessions/",
+                    isCurrent: false
+                ),
+                .init(
+                    label: "Magic links",
+                    href: "/admin/auth/magic-links/?userId=\(userID)",
+                    isCurrent: false
+                ),
             ])
             if isEdited {
                 P("Profile edited successfully.").class("success")
             }
             AccountProfileForm(state: state)
-        }.class("cms-section")
+        }
+        .class("cms-section")
     }
 }

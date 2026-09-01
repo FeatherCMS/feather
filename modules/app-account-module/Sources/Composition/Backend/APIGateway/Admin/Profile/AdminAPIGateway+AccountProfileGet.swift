@@ -9,10 +9,11 @@ extension AdminAPIGateway {
         _ input: Operations.AdminAccountProfileGet.Input
     ) async throws -> Operations.AdminAccountProfileGet.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeGetAccountProfile().execute(
-            subject: subject,
-            input: .init(userId: input.path.userId)
-        )
+        let result = try await useCases.makeGetAccountProfile()
+            .execute(
+                subject: subject,
+                input: .init(userId: input.path.userId)
+            )
         return .ok(
             .init(
                 body: .json(

@@ -62,26 +62,34 @@ struct AppMagicLink {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let input = try await request.decode(as: RequestInput.self, context: context)
+        let input = try await request.decode(
+            as: RequestInput.self,
+            context: context
+        )
         do {
-            let response = try await context.authAppAPI().withOpenAPIRepositoryErrorMapping { client in
-                try await client.authMagicLink(
-                    body: .json(.init(email: input.email, isPersistent: true))
-                )
-            }
+            let response = try await context.authAppAPI()
+                .withOpenAPIRepositoryErrorMapping { client in
+                    try await client.authMagicLink(
+                        body: .json(
+                            .init(email: input.email, isPersistent: true)
+                        )
+                    )
+                }
             switch response {
             case .noContent:
                 return render(
                     request: request,
                     email: input.email,
                     error: nil,
-                    message: "If the account exists, a magic link has been sent."
+                    message:
+                        "If the account exists, a magic link has been sent."
                 )
             case .undocumented(let statusCode, let response):
-                throw try await context.authAppAPI().failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
+                throw try await context.authAppAPI()
+                    .failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
             }
         }
         catch let error as OpenAPIRepositoryError {
@@ -100,12 +108,13 @@ struct AppMagicLink {
     ) async throws -> Response {
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         do {
-            let response = try await context.authAppAPI().withOpenAPIRepositoryErrorMapping { client in
-                try await client.authMagicLinkVerify(
-                    headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(.init(token: token))
-                )
-            }
+            let response = try await context.authAppAPI()
+                .withOpenAPIRepositoryErrorMapping { client in
+                    try await client.authMagicLinkVerify(
+                        headers: .init(accept: [.init(contentType: .json)]),
+                        body: .json(.init(token: token))
+                    )
+                }
             switch response {
             case .ok(let ok):
                 let result = try ok.body.json
@@ -113,7 +122,8 @@ struct AppMagicLink {
                     name: "session_token",
                     value: result.token,
                     path: "/",
-                    secure: AppEnvironmentStore.current.publicOrigins.usesSecureCookies,
+                    secure: AppEnvironmentStore.current.publicOrigins
+                        .usesSecureCookies,
                     httpOnly: true,
                     sameSite: .lax
                 )
@@ -121,21 +131,24 @@ struct AppMagicLink {
                     status: .seeOther,
                     headers: [
                         .location: "/",
-                        .setCookie: cookie.description
+                        .setCookie: cookie.description,
                     ]
                 )
             case .unauthorized:
                 return try render(
                     request: request,
                     email: "",
-                    error: "This magic link is invalid, expired, or has already been used.",
+                    error:
+                        "This magic link is invalid, expired, or has already been used.",
                     message: nil
-                ).response(from: request, context: context)
-            case .undocumented(let statusCode, let response):
-                throw try await context.authAppAPI().failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
                 )
+                .response(from: request, context: context)
+            case .undocumented(let statusCode, let response):
+                throw try await context.authAppAPI()
+                    .failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
             }
         }
         catch let error as OpenAPIRepositoryError {
@@ -144,7 +157,8 @@ struct AppMagicLink {
                 email: "",
                 error: error.errorDescription,
                 message: nil
-            ).response(from: request, context: context)
+            )
+            .response(from: request, context: context)
         }
     }
 

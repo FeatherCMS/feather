@@ -1,6 +1,7 @@
 import FeatherContracts
 import FeatherApplication
 import FeatherInfrastructure
+import FeatherDatabase
 import AuthApplication
 import AuthInfrastructure
 import UserInfrastructure
@@ -37,8 +38,7 @@ struct AppModules: Sendable {
     let account: AccountBackend.UseCases
 
     init(
-        infrastructure: AppInfrastructure,
-        publicBaseURL: String
+        infrastructure: AppInfrastructure
     ) {
         self.infrastructure = infrastructure
 
@@ -94,8 +94,7 @@ struct AppModules: Sendable {
             authorizer: authorizer,
             mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
             events: infrastructure.events,
-            credentialWriter: InvitationCredentialWriterAdapter(),
-            publicBaseURL: publicBaseURL
+            credentialWriter: InvitationCredentialWriterAdapter()
         )
         self.account = account
         let auth = AuthBackend.UseCases(
@@ -103,8 +102,7 @@ struct AppModules: Sendable {
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
             user: self.user,
-            mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
-            publicBaseURL: publicBaseURL
+            mailSender: JobQueueMailSender(queue: infrastructure.jobQueue)
         )
         self.auth = auth
         let media = MediaBackend.UseCases(

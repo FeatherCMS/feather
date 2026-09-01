@@ -21,9 +21,10 @@ struct AppAPIUserMagicLinkFlowTests {
             request: JSONRequest(
                 method: .post,
                 path: "/api/v1/auth/magic-link/verify",
-                body: AuthAppAPI.Components.Schemas.AuthMagicLinkVerifyRequestSchema(
-                    token: "invalid-magic-link-token"
-                )
+                body: AuthAppAPI.Components.Schemas
+                    .AuthMagicLinkVerifyRequestSchema(
+                        token: "invalid-magic-link-token"
+                    )
             )
         ) { response in
             #expect(response.response.status == .unauthorized)
@@ -74,16 +75,18 @@ struct AppAPIUserMagicLinkFlowTests {
                         token: adminToken
                     )
                 ],
-                body: AuthAdminAPI.Components.Schemas.AuthMagicLinkListItemSearchQuerySchema(
-                    page: .init(size: 10, number: 1),
-                    sort: [],
-                    filters: .init(search: credentialID)
-                )
+                body: AuthAdminAPI.Components.Schemas
+                    .AuthMagicLinkListItemSearchQuerySchema(
+                        page: .init(size: 10, number: 1),
+                        sort: [],
+                        filters: .init(search: credentialID)
+                    )
             )
         ) { response in
             try await response.json(
                 status: .ok,
-                AuthAdminAPI.Components.Schemas.AuthMagicLinkListItemSearchSchema.self
+                AuthAdminAPI.Components.Schemas
+                    .AuthMagicLinkListItemSearchSchema.self
             )
         }
         guard let magicLink = magicLinks.data.items.first else {
@@ -95,9 +98,10 @@ struct AppAPIUserMagicLinkFlowTests {
             request: JSONRequest(
                 method: .post,
                 path: "/api/v1/auth/magic-link/verify",
-                body: AuthAppAPI.Components.Schemas.AuthMagicLinkVerifyRequestSchema(
-                    token: magicLink.token
-                )
+                body: AuthAppAPI.Components.Schemas
+                    .AuthMagicLinkVerifyRequestSchema(
+                        token: magicLink.token
+                    )
             )
         ) { response in
             try await response.json(
@@ -112,9 +116,10 @@ struct AppAPIUserMagicLinkFlowTests {
             request: JSONRequest(
                 method: .post,
                 path: "/api/v1/auth/magic-link/verify",
-                body: AuthAppAPI.Components.Schemas.AuthMagicLinkVerifyRequestSchema(
-                    token: magicLink.token
-                )
+                body: AuthAppAPI.Components.Schemas
+                    .AuthMagicLinkVerifyRequestSchema(
+                        token: magicLink.token
+                    )
             )
         ) { response in
             #expect(response.response.status == .unauthorized)

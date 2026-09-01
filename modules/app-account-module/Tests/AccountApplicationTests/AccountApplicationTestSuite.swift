@@ -2,12 +2,13 @@ import AccountContracts
 import FeatherApplication
 import FeatherContracts
 import Foundation
+import SystemApplication
 import Testing
+import UserApplication
 
 @testable import AccountApplication
 @testable import AccountDomain
 @testable import UserDomain
-import UserApplication
 
 //
 //  AccountApplicationTestSuite.swift
@@ -28,9 +29,10 @@ struct AccountApplicationTestSuite {
             ]
         )
         #expect(
-            AccountPermissions.allPermissions().contains(
-                AccountPermissions.Profile.read
-            )
+            AccountPermissions.allPermissions()
+                .contains(
+                    AccountPermissions.Profile.read
+                )
         )
     }
 
@@ -52,7 +54,9 @@ struct AccountApplicationTestSuite {
             tokenResult: invitation
         )
         let useCase = ValidateInvitation(
-            query: MockQueryExecutor(context: ReadInvitation(invitation: queries))
+            query: MockQueryExecutor(
+                context: ReadInvitation(invitation: queries)
+            )
         )
 
         let result = try await useCase.execute(
@@ -80,7 +84,9 @@ struct AccountApplicationTestSuite {
             tokenResult: invitation
         )
         let useCase = ValidateInvitation(
-            query: MockQueryExecutor(context: ReadInvitation(invitation: queries))
+            query: MockQueryExecutor(
+                context: ReadInvitation(invitation: queries)
+            )
         )
 
         await #expect(throws: ValidateInvitation.Error.self) {
@@ -149,7 +155,7 @@ struct AccountApplicationTestSuite {
         )
         let identityRepository = MockIdentityRepository(identity: identity)
         let transaction = MockContextualTransactionExecutor(
-            context: WriteInvitation(
+            context: WriteInvitationWithVariable(
                 invitation: MockInvitationRepository(
                     result: Invitation(
                         id: "invitation-1",
@@ -164,7 +170,8 @@ struct AccountApplicationTestSuite {
                 ),
                 identity: identityRepository,
                 role: MockRoleRepository(),
-                credential: MockInvitationCredentialWriter()
+                credential: MockInvitationCredentialWriter(),
+                variable: MockVariableQueries(value: "https://example.test")
             )
         )
         let useCase = AddInvitation(
@@ -173,8 +180,7 @@ struct AccountApplicationTestSuite {
             ),
             transaction: transaction,
             events: MockEventPublisher(),
-            mailSender: MockMailSender(),
-            publicBaseURL: "http://localhost:3456"
+            mailSender: MockMailSender()
         )
 
         await #expect(throws: AddInvitation.Error.self) {
@@ -208,11 +214,12 @@ struct AccountApplicationTestSuite {
             )
         )
         let transaction = MockContextualTransactionExecutor(
-            context: WriteInvitation(
+            context: WriteInvitationWithVariable(
                 invitation: invitationRepository,
                 identity: MockIdentityRepository(identity: identity),
                 role: MockRoleRepository(),
-                credential: MockInvitationCredentialWriter()
+                credential: MockInvitationCredentialWriter(),
+                variable: MockVariableQueries(value: "https://example.test")
             )
         )
         let mailSender = MockMailSender()
@@ -222,8 +229,7 @@ struct AccountApplicationTestSuite {
             ),
             transaction: transaction,
             events: MockEventPublisher(),
-            mailSender: mailSender,
-            publicBaseURL: "https://example.test"
+            mailSender: mailSender
         )
 
         _ = try await useCase.execute(
@@ -232,9 +238,10 @@ struct AccountApplicationTestSuite {
         )
 
         #expect(
-            await mailSender.lastMessage?.body.contains(
-                "https://example.test/account/invitation/accept/?token=\(token)"
-            ) == true
+            await mailSender.lastMessage?.body
+                .contains(
+                    "https://example.test/account/invitation/accept/?token=\(token)"
+                ) == true
         )
         #expect(await mailSender.lastMessage?.body.contains("\\(") == false)
     }
@@ -253,9 +260,10 @@ struct AccountApplicationTestSuite {
         )
         let repository = MockInvitationRepository(result: invitation)
         let transaction = MockTransactionExecutor(
-            context: WriteInvitationOnly(
+            context: WriteInvitationOnlyWithVariable(
                 invitation: repository,
-                role: MockRoleRepository()
+                role: MockRoleRepository(),
+                variable: MockVariableQueries(value: "https://example.test")
             )
         )
         let mailSender = MockMailSender()
@@ -264,8 +272,7 @@ struct AccountApplicationTestSuite {
                 permissions: [AccountPermissions.Invitations.create]
             ),
             transaction: transaction,
-            mailSender: mailSender,
-            publicBaseURL: "https://example.test"
+            mailSender: mailSender
         )
 
         let result = try await useCase.execute(
@@ -278,11 +285,14 @@ struct AccountApplicationTestSuite {
         #expect(await repository.updateCallCount == 1)
         #expect(await mailSender.sendCallCount == 1)
         #expect(
-            await mailSender.lastMessage?.body.contains(
-                "This is a reminder for your application identity invitation."
-            ) == true
+            await mailSender.lastMessage?.body
+                .contains(
+                    "This is a reminder for your application identity invitation."
+                ) == true
         )
-        #expect(await mailSender.lastMessage?.body.contains(result.token) == true)
+        #expect(
+            await mailSender.lastMessage?.body.contains(result.token) == true
+        )
     }
 
     @Test
@@ -344,16 +354,16 @@ struct AccountApplicationTestSuite {
             )
         )
         let transaction = MockTransactionExecutor(
-            context: WriteInvitationOnly(
+            context: WriteInvitationOnlyWithVariable(
                 invitation: repository,
-                role: MockRoleRepository()
+                role: MockRoleRepository(),
+                variable: MockVariableQueries(value: "https://example.test")
             )
         )
         let useCase = ResendInvitation(
             authorizer: MockPermissionAuthorizer(permissions: []),
             transaction: transaction,
-            mailSender: MockMailSender(),
-            publicBaseURL: "https://example.test"
+            mailSender: MockMailSender()
         )
 
         await #expect(throws: AuthError.self) {
@@ -393,7 +403,9 @@ struct AccountApplicationTestSuite {
 
     @Test
     func getAccountProfileDoesNotReadWithoutPermission() async throws {
-        let repository = MockAccountProfileRepository(result: makeAccountProfile())
+        let repository = MockAccountProfileRepository(
+            result: makeAccountProfile()
+        )
         let query = MockQueryExecutor(
             context: ReadAccountProfile(profile: repository)
         )
@@ -434,7 +446,8 @@ struct AccountApplicationTestSuite {
     }
 
     @Test
-    func getAccountProfileDoesNotReadTargetUserWithOwnPermission() async throws {
+    func getAccountProfileDoesNotReadTargetUserWithOwnPermission() async throws
+    {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
         let query = MockQueryExecutor(
@@ -457,7 +470,8 @@ struct AccountApplicationTestSuite {
     }
 
     @Test
-    func editAccountProfilePersistsTargetUserWithManagePermission() async throws {
+    func editAccountProfilePersistsTargetUserWithManagePermission() async throws
+    {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
         let transaction = MockTransactionExecutor(
@@ -489,7 +503,9 @@ struct AccountApplicationTestSuite {
     }
 
     @Test
-    func editAccountProfileDoesNotWriteTargetUserWithOwnPermission() async throws {
+    func editAccountProfileDoesNotWriteTargetUserWithOwnPermission()
+        async throws
+    {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
         let transaction = MockTransactionExecutor(
@@ -553,7 +569,9 @@ struct AccountApplicationTestSuite {
 
     @Test
     func editAccountProfileDoesNotWriteWithoutPermission() async throws {
-        let repository = MockAccountProfileRepository(result: makeAccountProfile())
+        let repository = MockAccountProfileRepository(
+            result: makeAccountProfile()
+        )
         let transaction = MockTransactionExecutor(
             context: WriteAccountProfile(profile: repository)
         )
@@ -568,7 +586,11 @@ struct AccountApplicationTestSuite {
         await #expect(throws: AuthError.self) {
             _ = try await useCase.execute(
                 subject: Subject(id: "account-1"),
-                input: .init(firstName: "Grace", lastName: "Hopper", imageURL: nil)
+                input: .init(
+                    firstName: "Grace",
+                    lastName: "Hopper",
+                    imageURL: nil
+                )
             )
         }
 
@@ -578,7 +600,9 @@ struct AccountApplicationTestSuite {
 
     @Test
     func editAccountProfileDoesNotPersistInvalidNames() async throws {
-        let repository = MockAccountProfileRepository(result: makeAccountProfile())
+        let repository = MockAccountProfileRepository(
+            result: makeAccountProfile()
+        )
         let transaction = MockTransactionExecutor(
             context: WriteAccountProfile(profile: repository)
         )
@@ -619,7 +643,8 @@ struct AccountApplicationTestSuite {
             ]
         )
         #expect(
-            allPermissions == AccountPermissions.Profile.allPermissions()
+            allPermissions
+                == AccountPermissions.Profile.allPermissions()
                 .union(settingsPermissions)
                 .union(AccountPermissions.Invitations.allPermissions())
         )

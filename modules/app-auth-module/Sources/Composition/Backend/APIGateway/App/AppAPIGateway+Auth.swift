@@ -125,7 +125,9 @@ extension AppAPIGateway {
                         .init(
                             user: .init(
                                 id: result.user.id,
-                                status: .init(rawValue: result.user.status.rawValue)
+                                status: .init(
+                                    rawValue: result.user.status.rawValue
+                                )
                                     ?? .active
                             ),
                             roles: result.roles,
@@ -135,7 +137,8 @@ extension AppAPIGateway {
                     )
                 )
             )
-        } catch is AuthApplication.UseCaseError {
+        }
+        catch is AuthApplication.UseCaseError {
             return .unauthorized
         }
     }

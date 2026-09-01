@@ -92,10 +92,9 @@ struct AdminListAuthMagicLinkDefaultPresenter:
                         message: nil
                     ),
                     selectedIds: selectedIds,
-                    hiddenFields:
-                        [
-                            .init(name: "page", value: "\(page)"),
-                        ]
+                    hiddenFields: [
+                        .init(name: "page", value: "\(page)")
+                    ]
                         + (search.map {
                             [.init(name: "search", value: $0)]
                         } ?? [])

@@ -14,15 +14,16 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeEditAccountProfile().execute(
-            subject: subject,
-            input: .init(
-                firstName: body.firstName,
-                lastName: body.lastName,
-                imageURL: body.imageURL,
-                userId: input.path.userId
+        let result = try await useCases.makeEditAccountProfile()
+            .execute(
+                subject: subject,
+                input: .init(
+                    firstName: body.firstName,
+                    lastName: body.lastName,
+                    imageURL: body.imageURL,
+                    userId: input.path.userId
+                )
             )
-        )
         return .ok(
             .init(
                 body: .json(

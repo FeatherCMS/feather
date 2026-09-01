@@ -27,7 +27,8 @@ struct AppAPIAccountInvitationAcceptanceTests {
         try await runner.run(
             request: JSONRequest(
                 method: .get,
-                path: "/api/v1/account/invitation/exchange?token=missing-invitation-token",
+                path:
+                    "/api/v1/account/invitation/exchange?token=missing-invitation-token",
                 body: [String: String]()
             )
         ) { response in
@@ -66,28 +67,32 @@ struct AppAPIAccountInvitationAcceptanceTests {
                         token: adminToken
                     )
                 ],
-                body: AccountAdminAPI.Components.Schemas.AccountInvitationCreateSchema(
-                    email: email,
-                    roleIds: [role.id]
-                )
+                body: AccountAdminAPI.Components.Schemas
+                    .AccountInvitationCreateSchema(
+                        email: email,
+                        roleIds: [role.id]
+                    )
             )
         ) { response in
             try await response.json(
                 status: .created,
-                AccountAdminAPI.Components.Schemas.AccountInvitationDetailSchema.self
+                AccountAdminAPI.Components.Schemas.AccountInvitationDetailSchema
+                    .self
             )
         }
 
         let validation = try await runner.run(
             request: JSONRequest(
                 method: .get,
-                path: "/api/v1/account/invitation/exchange?token=\(invitation.token)",
+                path:
+                    "/api/v1/account/invitation/exchange?token=\(invitation.token)",
                 body: [String: String]()
             )
         ) { response in
             try await response.json(
                 status: .ok,
-                AccountAppAPI.Components.Schemas.AccountInvitationValidationSchema.self
+                AccountAppAPI.Components.Schemas
+                    .AccountInvitationValidationSchema.self
             )
         }
         #expect(validation.email == email)
@@ -97,10 +102,11 @@ struct AppAPIAccountInvitationAcceptanceTests {
             request: JSONRequest(
                 method: .post,
                 path: "/api/v1/account/invitation/exchange",
-                body: AccountAppAPI.Components.Schemas.AccountInvitationExchangeRequestSchema(
-                    token: invitation.token,
-                    password: "invitation-password"
-                )
+                body: AccountAppAPI.Components.Schemas
+                    .AccountInvitationExchangeRequestSchema(
+                        token: invitation.token,
+                        password: "invitation-password"
+                    )
             )
         ) { response in
             try await response.json(
@@ -121,16 +127,18 @@ struct AppAPIAccountInvitationAcceptanceTests {
                         token: adminToken
                     )
                 ],
-                body: UserAdminAPI.Components.Schemas.UserIdentityListItemSearchQuerySchema(
-                    page: .init(size: 10, number: 1),
-                    sort: [],
-                    filters: .init(role: "Invitation role")
-                )
+                body: UserAdminAPI.Components.Schemas
+                    .UserIdentityListItemSearchQuerySchema(
+                        page: .init(size: 10, number: 1),
+                        sort: [],
+                        filters: .init(role: "Invitation role")
+                    )
             )
         ) { response in
             try await response.json(
                 status: .ok,
-                UserAdminAPI.Components.Schemas.UserIdentityListItemSearchSchema.self
+                UserAdminAPI.Components.Schemas.UserIdentityListItemSearchSchema
+                    .self
             )
         }
         #expect(users.data.items.contains { $0.id == exchanged.user.id })
@@ -139,10 +147,11 @@ struct AppAPIAccountInvitationAcceptanceTests {
             request: JSONRequest(
                 method: .post,
                 path: "/api/v1/account/invitation/exchange",
-                body: AccountAppAPI.Components.Schemas.AccountInvitationExchangeRequestSchema(
-                    token: invitation.token,
-                    password: "invitation-password"
-                )
+                body: AccountAppAPI.Components.Schemas
+                    .AccountInvitationExchangeRequestSchema(
+                        token: invitation.token,
+                        password: "invitation-password"
+                    )
             )
         ) { response in
             #expect(response.response.status == .notFound)

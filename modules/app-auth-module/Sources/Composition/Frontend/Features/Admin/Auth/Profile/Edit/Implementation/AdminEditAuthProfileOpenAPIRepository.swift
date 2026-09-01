@@ -25,7 +25,8 @@ struct AdminEditAuthProfileOpenAPIRepository:
             let credentialID: String
             switch searchResponse {
             case .ok(let value):
-                guard let credential = try value.body.json.data.items.first else {
+                guard let credential = try value.body.json.data.items.first
+                else {
                     throw OpenAPIRepositoryError.notFound(
                         message: "User credential not found."
                     )

@@ -72,7 +72,8 @@ public struct TableMigration: DatabaseMigration {
                 """#
         ) { _ in }
         try await connection.run(
-            query: #"ALTER TABLE account_invitation ADD COLUMN IF NOT EXISTS role_ids TEXT NOT NULL DEFAULT '[]';"#
+            query:
+                #"ALTER TABLE account_invitation ADD COLUMN IF NOT EXISTS role_ids TEXT NOT NULL DEFAULT '[]';"#
         ) { _ in }
     }
 }

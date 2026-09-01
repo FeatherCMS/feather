@@ -35,7 +35,8 @@ public enum AuthFrontendRoutes {
 
         AppAcceptAccountInvitation(
             renderingEngine: renderingEngine
-        ).route(on: router)
+        )
+        .route(on: router)
         AppMagicLink(renderingEngine: renderingEngine).route(on: router)
     }
 

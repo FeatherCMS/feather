@@ -7,6 +7,8 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import SystemApplication
+import SystemInfrastructure
 import UserApplication
 import UserInfrastructure
 
@@ -17,11 +19,14 @@ extension UseCases {
             database: database,
             idGenerator: idGenerator,
             scope: { context in
-                WriteInvitation(
+                WriteInvitationWithVariable(
                     invitation: InvitationDatabaseRepository(context: context),
                     identity: IdentityDatabaseRepository(context: context),
                     role: RoleDatabaseRepository(context: context),
-                    credential: credentialWriter
+                    credential: credentialWriter,
+                    variable: VariableDatabaseQueries(
+                        context: .init(connection: context.connection)
+                    )
                 )
             }
         )
@@ -29,8 +34,7 @@ extension UseCases {
             authorizer: authorizer,
             transaction: transaction,
             events: events,
-            mailSender: mailSender,
-            publicBaseURL: publicBaseURL
+            mailSender: mailSender
         )
     }
 }

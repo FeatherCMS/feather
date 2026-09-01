@@ -40,8 +40,7 @@ func buildTestServer(
             events: eventPublisher,
             jobQueue: jobQueue,
             mediaStorageRootPath: config.media.storageRootPath
-        ),
-        publicBaseURL: config.publicBaseURL
+        )
     )
 
     let router = try buildRouter(

@@ -44,13 +44,15 @@ struct AccountProfileTable {
     func create(
         row: Row.Create
     ) async throws -> Row {
-        try await connection.run(query: #"""
-            INSERT INTO account_profile (
-                id, user_id, first_name, last_name, image_url, created_at, updated_at
-            ) VALUES (
-                \#(row.id), \#(row.userId), \#(row.firstName), \#(row.lastName), \#(row.imageURL), NOW(), NOW()
-            ) RETURNING *;
-            """#) { sequence in
+        try await connection.run(
+            query: #"""
+                INSERT INTO account_profile (
+                    id, user_id, first_name, last_name, image_url, created_at, updated_at
+                ) VALUES (
+                    \#(row.id), \#(row.userId), \#(row.firstName), \#(row.lastName), \#(row.imageURL), NOW(), NOW()
+                ) RETURNING *;
+                """#
+        ) { sequence in
             guard let row = try await sequence.collect().first else {
                 throw RepositoryError.notFound
             }
@@ -61,9 +63,11 @@ struct AccountProfileTable {
     func get(
         userId: String
     ) async throws -> Row {
-        try await connection.run(query: #"""
-            SELECT * FROM account_profile WHERE user_id = \#(userId) LIMIT 1;
-            """#) { sequence in
+        try await connection.run(
+            query: #"""
+                SELECT * FROM account_profile WHERE user_id = \#(userId) LIMIT 1;
+                """#
+        ) { sequence in
             guard let row = try await sequence.collect().first else {
                 throw RepositoryError.notFound
             }
@@ -75,13 +79,15 @@ struct AccountProfileTable {
         userId: String,
         row: Row.Update
     ) async throws -> Row {
-        try await connection.run(query: #"""
-            UPDATE account_profile
-            SET first_name = \#(row.firstName), last_name = \#(row.lastName),
-                image_url = \#(row.imageURL), updated_at = NOW()
-            WHERE user_id = \#(userId)
-            RETURNING *;
-            """#) { sequence in
+        try await connection.run(
+            query: #"""
+                UPDATE account_profile
+                SET first_name = \#(row.firstName), last_name = \#(row.lastName),
+                    image_url = \#(row.imageURL), updated_at = NOW()
+                WHERE user_id = \#(userId)
+                RETURNING *;
+                """#
+        ) { sequence in
             guard let row = try await sequence.collect().first else {
                 throw RepositoryError.notFound
             }
@@ -92,8 +98,10 @@ struct AccountProfileTable {
     func delete(
         userId: String
     ) async throws {
-        _ = try await connection.run(query: #"""
-            DELETE FROM account_profile WHERE user_id = \#(userId);
-            """#) { sequence in try await sequence.collect() }
+        _ = try await connection.run(
+            query: #"""
+                DELETE FROM account_profile WHERE user_id = \#(userId);
+                """#
+        ) { sequence in try await sequence.collect() }
     }
 }

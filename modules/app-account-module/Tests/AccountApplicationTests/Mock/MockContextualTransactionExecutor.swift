@@ -1,7 +1,8 @@
 import FeatherApplication
 import FeatherContracts
 
-actor MockContextualTransactionExecutor<S: Scope>: ContextualTransactionExecutor {
+actor MockContextualTransactionExecutor<S: Scope>: ContextualTransactionExecutor
+{
     private(set) var runCallCount = 0
     private let context: S
 

@@ -31,7 +31,8 @@ struct AdminEditAccountInvitationDefaultController:
                     email: invitation.email,
                     roleIDs: invitation.roleIds,
                     roleOptions: await roleOptions(
-                        context, selected: invitation.roleIds
+                        context,
+                        selected: invitation.roleIds
                     )
                 ),
                 isEdited: isEdited,
@@ -138,20 +139,24 @@ struct AdminEditAccountInvitationDefaultController:
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
             sessionToken: context.sessionToken
         )
-        guard let response = try? await userAPI
-            .withOpenAPIRepositoryErrorMapping({ client in
-                try await client.userRoleSearch(
-                    headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(
-                        .init(
-                            page: .init(size: 100, number: 1),
-                            filters: .init(search: nil)
+        guard
+            let response =
+                try? await userAPI
+                .withOpenAPIRepositoryErrorMapping({ client in
+                    try await client.userRoleSearch(
+                        headers: .init(accept: [.init(contentType: .json)]),
+                        body: .json(
+                            .init(
+                                page: .init(size: 100, number: 1),
+                                filters: .init(search: nil)
+                            )
                         )
                     )
-                )
-            }) else { return [] }
+                })
+        else { return [] }
         guard case .ok(let value) = response,
-            let body = try? value.body.json else { return [] }
+            let body = try? value.body.json
+        else { return [] }
         return body.data.items.map {
             .init(
                 value: $0.id,

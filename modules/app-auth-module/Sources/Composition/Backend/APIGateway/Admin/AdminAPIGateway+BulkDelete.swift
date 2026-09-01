@@ -62,13 +62,9 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        let getIdentity = useCases.user.makeGetIdentity()
         let getSession = useCases.makeGetSession()
         let removeSession = useCases.makeRemoveSession()
-        _ = try await getIdentity.execute(
-            subject: subject,
-            input: .init(id: input.path.userIdentityId)
-        )
+
         let results:
             [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
                 try await body.ids.asyncMap { id in

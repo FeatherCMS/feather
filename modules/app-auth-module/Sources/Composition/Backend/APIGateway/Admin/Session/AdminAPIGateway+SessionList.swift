@@ -11,13 +11,7 @@ extension AdminAPIGateway {
         _ input: Operations.UserIdentitySessionList.Input
     ) async throws -> Operations.UserIdentitySessionList.Output {
         let subject = try await CurrentSubject.require()
-        let getIdentity = useCases.user.makeGetIdentity()
-        let sessions = self.useCases.makeListIdentitySessions()
-        _ = try await getIdentity.execute(
-            subject: subject,
-            input: .init(id: input.path.userIdentityId)
-        )
-
+        let sessions = useCases.makeListIdentitySessions()
         let result = try await sessions.execute(
             subject: subject,
             input: .init(identityId: input.path.userIdentityId)

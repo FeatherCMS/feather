@@ -20,70 +20,18 @@ extension UseCases {
             database: database,
             idGenerator: idGenerator,
             scope: { context in
-                WriteAuth(
-                    identity: IdentityDatabaseRepository(context: context),
+                WriteRequestMagicLink(
                     credential: CredentialDatabaseRepository(context: context),
-                    session: SessionDatabaseRepository(context: context),
-                    magicLink: MagicLinkDatabaseRepository(context: context)
-                )
-            }
-        )
-        let variable = DatabaseQueryExecutor(
-            database: database,
-            scope: { context in
-                ReadVariable(
-                    variable: VariableDatabaseQueries(context: context)
+                    magicLink: MagicLinkDatabaseRepository(context: context),
+                    variable: VariableDatabaseQueries(
+                        context: .init(connection: context.connection)
+                    )
                 )
             }
         )
         return RequestMagicLink(
             transaction: transaction,
-            mailSender: mailSender,
-            publicBaseURL: publicBaseURL,
-            variable: VariableDatabaseQueryExecutor(executor: variable)
+            mailSender: mailSender
         )
-    }
-}
-
-private struct VariableDatabaseQueryExecutor: VariableQueries {
-
-    let query: DatabaseQueryExecutor<ReadVariable>
-
-    init(
-        executor: DatabaseQueryExecutor<ReadVariable>
-    ) {
-        self.query = executor
-    }
-
-    func get(
-        _ id: String
-    ) async throws -> String? {
-        try await query.run { scope in
-            try await scope.variable.get(id)
-        }
-    }
-
-    func find(
-        id: String
-    ) async throws -> VariableDetail {
-        try await query.run { scope in
-            try await scope.variable.find(id: id)
-        }
-    }
-
-    func list(
-        query: VariableList.Query
-    ) async throws -> VariableList {
-        try await self.query.run { scope in
-            try await scope.variable.list(query: query)
-        }
-    }
-
-    func count(
-        query: VariableList.Query
-    ) async throws -> Int {
-        try await self.query.run { scope in
-            try await scope.variable.count(query: query)
-        }
     }
 }

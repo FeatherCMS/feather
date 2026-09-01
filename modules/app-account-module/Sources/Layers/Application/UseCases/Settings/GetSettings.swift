@@ -18,7 +18,8 @@ public struct GetSettings: UseCase {
             subjectID: String,
             userID: String
         ) {
-            key = subjectID == userID
+            key =
+                subjectID == userID
                 ? AccountPermissions.Settings.read
                 : AccountPermissions.Settings.manage
         }

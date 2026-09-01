@@ -39,7 +39,8 @@ struct AccountInvitationPatchSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "email": AccountInvitationEmailField().reference(required: false),
-            "roleIds": AccountInvitationRoleIDsField().reference(required: false)
+            "roleIds": AccountInvitationRoleIDsField()
+                .reference(required: false),
         ]
     }
 }

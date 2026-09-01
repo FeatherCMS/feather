@@ -1,7 +1,7 @@
 import AccountAppAPI
 import AccountApplication
-import UserApplication
 import Foundation
+import UserApplication
 
 extension AppAPIGateway {
 
@@ -40,9 +40,10 @@ extension AppAPIGateway {
     public func accountInvitationValidation(
         _ input: Operations.AccountInvitationValidation.Input
     ) async throws -> Operations.AccountInvitationValidation.Output {
-        let invitation = try await useCases.makeValidateInvitation().execute(
-            input: .init(token: input.query.token)
-        )
+        let invitation = try await useCases.makeValidateInvitation()
+            .execute(
+                input: .init(token: input.query.token)
+            )
         return .ok(
             .init(
                 body: .json(

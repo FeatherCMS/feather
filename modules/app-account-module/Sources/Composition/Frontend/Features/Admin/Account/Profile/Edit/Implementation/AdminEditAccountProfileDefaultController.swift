@@ -42,7 +42,8 @@ struct AdminEditAccountProfileDefaultController:
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let userID = try context.requiredParameter("userId")
-        guard context.isCurrentUserAllowed(to: AccountPermissions.Profile.manage)
+        guard
+            context.isCurrentUserAllowed(to: AccountPermissions.Profile.manage)
         else {
             return Response(status: .forbidden)
         }

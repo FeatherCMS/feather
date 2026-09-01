@@ -17,6 +17,7 @@ import UserFrontend
 import WebStandards
 
 protocol AdminGetAuthProfileInteractor: Sendable {
+    func getAccountProfile() async throws -> AdminAuthAccountProfileModel
 
     func getProfile(
         account: AccountModel,

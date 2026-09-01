@@ -2,6 +2,7 @@ import AccountContracts
 import AccountDomain
 import FeatherApplication
 import FeatherContracts
+import SystemApplication
 
 import struct Foundation.Date
 
@@ -19,20 +20,17 @@ public struct ResendInvitation: UseCase {
     }
 
     let authorizer: any Authorizer
-    let transaction: any TransactionExecutor<WriteInvitationOnly>
+    let transaction: any TransactionExecutor<WriteInvitationOnlyWithVariable>
     let mailSender: any MailSender
-    let publicBaseURL: String
 
     public init(
         authorizer: any Authorizer,
-        transaction: any TransactionExecutor<WriteInvitationOnly>,
-        mailSender: any MailSender,
-        publicBaseURL: String
+        transaction: any TransactionExecutor<WriteInvitationOnlyWithVariable>,
+        mailSender: any MailSender
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.mailSender = mailSender
-        self.publicBaseURL = publicBaseURL
     }
 
     public struct Input: DTO {
@@ -52,8 +50,9 @@ public struct ResendInvitation: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let invitation = try await transaction.run { scope in
-            guard var invitation = try await scope.invitation.findBy(id: input.id)
+        let result = try await transaction.run { scope in
+            guard
+                var invitation = try await scope.invitation.findBy(id: input.id)
             else {
                 throw Error(message: "Invitation not found")
             }
@@ -61,13 +60,24 @@ public struct ResendInvitation: UseCase {
                 token: generateToken(),
                 expiresAt: Date().addingTimeInterval(Invitation.lifetime)
             )
-            return try await scope.invitation.update(invitation)
+            guard
+                let publicBaseURL = try await scope.variable.get(
+                    "web-settings-public-base-url"
+                ),
+                !publicBaseURL.isEmpty
+            else {
+                throw Error(message: "The public site URL is not configured.")
+            }
+            return (
+                invitation: try await scope.invitation.update(invitation),
+                publicBaseURL: publicBaseURL
+            )
         }
 
         try await mailSender.send(
             .init(
                 from: .init("info@binarybirds.com"),
-                to: [.init(invitation.email)],
+                to: [.init(result.invitation.email)],
                 subject: "Application - Invitation",
                 body: """
                     Hello,
@@ -75,13 +85,13 @@ public struct ResendInvitation: UseCase {
                     This is a reminder for your application identity invitation.
                     Open this invitation link to complete registration:
 
-                    \(publicBaseURL)/account/invitation/accept/?token=\(invitation.token)
+                    \(result.publicBaseURL)/account/invitation/accept/?token=\(result.invitation.token)
 
                     Cheers,
                     Application Team.
                     """
             )
         )
-        return invitation.asDetail
+        return result.invitation.asDetail
     }
 }

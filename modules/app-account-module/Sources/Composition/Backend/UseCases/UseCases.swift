@@ -17,8 +17,6 @@ public struct UseCases: Sendable {
     let mailSender: any MailSender
     let events: any EventPublisher
     let credentialWriter: any InvitationCredentialWriter
-    /// Public web URL used to build invitation acceptance links.
-    let publicBaseURL: String
 
     public init(
         database: any DatabaseClient,
@@ -26,8 +24,7 @@ public struct UseCases: Sendable {
         authorizer: any Authorizer,
         mailSender: any MailSender,
         events: any EventPublisher,
-        credentialWriter: any InvitationCredentialWriter,
-        publicBaseURL: String
+        credentialWriter: any InvitationCredentialWriter
     ) {
         self.database = database
         self.idGenerator = idGenerator
@@ -35,7 +32,6 @@ public struct UseCases: Sendable {
         self.mailSender = mailSender
         self.events = events
         self.credentialWriter = credentialWriter
-        self.publicBaseURL = publicBaseURL
     }
 
 }

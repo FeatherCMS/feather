@@ -31,7 +31,8 @@ struct AdminAPIAccountSettingsTests {
         ) { response in
             try await response.json(
                 status: .ok,
-                AccountAdminAPI.Components.Schemas.AccountSettingsDetailSchema.self
+                AccountAdminAPI.Components.Schemas.AccountSettingsDetailSchema
+                    .self
             )
         }
 
@@ -40,16 +41,18 @@ struct AdminAPIAccountSettingsTests {
                 method: .put,
                 path: "/api/v1/admin/account/settings",
                 headerFields: headers,
-                body: AccountAdminAPI.Components.Schemas.AccountSettingsUpdateSchema(
-                    language: settings.language,
-                    timezone: settings.timezone,
-                    pageSize: settings.pageSize
-                )
+                body: AccountAdminAPI.Components.Schemas
+                    .AccountSettingsUpdateSchema(
+                        language: settings.language,
+                        timezone: settings.timezone,
+                        pageSize: settings.pageSize
+                    )
             )
         ) { response in
             try await response.json(
                 status: .ok,
-                AccountAdminAPI.Components.Schemas.AccountSettingsDetailSchema.self
+                AccountAdminAPI.Components.Schemas.AccountSettingsDetailSchema
+                    .self
             )
         }
 

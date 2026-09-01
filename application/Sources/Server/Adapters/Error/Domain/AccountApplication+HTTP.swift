@@ -32,7 +32,8 @@ extension AccountInvitationHTTPError {
     }
 }
 
-extension AccountApplication.ResendInvitation.Error: AccountInvitationHTTPError {
+extension AccountApplication.ResendInvitation.Error: AccountInvitationHTTPError
+{
 }
 
 extension AccountApplication.CompleteInvitationRegistration.Error:
@@ -40,5 +41,7 @@ extension AccountApplication.CompleteInvitationRegistration.Error:
 {
 }
 
-extension AccountApplication.ValidateInvitation.Error: AccountInvitationHTTPError {
+extension AccountApplication.ValidateInvitation.Error:
+    AccountInvitationHTTPError
+{
 }
