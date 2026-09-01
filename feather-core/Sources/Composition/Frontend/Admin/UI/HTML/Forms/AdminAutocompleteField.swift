@@ -69,13 +69,13 @@ public struct AdminAutocompleteField: Component, FlowContent {
             Position(.relative)
         }
         Class("multiselect__control") {
-            MinHeight(48.px)
+            MinHeight(42.px)
             Display(.grid)
             GridTemplateColumns(
                 .tracks([.auto, .fraction(1.fr), .length(28.px)])
             )
             Gap(6.px)
-            Padding(8.px)
+            Padding(top: 0.px, right: 10.px, bottom: 0.px, left: 10.px)
             Border(1.px, .solid, .variable("cms-gray-2"))
             BorderRadius(10.px)
             Background(color: .color(.variable("cms-white")))
@@ -143,8 +143,8 @@ public struct AdminAutocompleteField: Component, FlowContent {
             UnsafeRawProperty(name: "box-shadow", value: "none")
         }
         Class("multiselect__toggle") {
-            Width(28.px)
-            Height(28.px)
+            Width(24.px)
+            Height(24.px)
             Border(0.px)
             BorderRadius(8.px)
             Background(color: .transparent)

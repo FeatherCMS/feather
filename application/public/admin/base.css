@@ -894,6 +894,7 @@ body .cms-breadcrumb li a:hover {
 .cms-form input[type='email'],
 .cms-form input[type='password'],
 .cms-form input[type='search'],
+.cms-form input[type='number'],
 .cms-form input[type='date'],
 .cms-form input[type='datetime-local'],
 .cms-form input[type='time'],
