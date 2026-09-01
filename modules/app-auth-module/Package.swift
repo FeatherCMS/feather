@@ -190,8 +190,6 @@ let package = Package(
             name: "AuthBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
-                
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
 
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
@@ -231,11 +229,11 @@ let package = Package(
         .testTarget(
             name: "AuthApplicationTests",
             dependencies: [
-                .target(name: "AuthApplication"),
-                .target(name: "AuthDomain"),
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "UserDomain", package: "app-user-module"),
+
+                .target(name: "AuthApplication"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

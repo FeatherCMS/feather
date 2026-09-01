@@ -12,7 +12,11 @@ struct AdminRemoveUserIdentity {
                     getInteractor: AdminGetUserIdentityDefaultInteractor(
                         repository: AdminGetUserIdentityOpenAPIRepository(
                             api: api
-                        )
+                        ),
+                        roleRepository:
+                            AdminEditUserIdentityRoleOpenAPIRepository(
+                                api: api
+                            )
                     ),
                     removeInteractor: AdminRemoveUserIdentityDefaultInteractor(
                         repository: AdminRemoveUserIdentityOpenAPIRepository(
