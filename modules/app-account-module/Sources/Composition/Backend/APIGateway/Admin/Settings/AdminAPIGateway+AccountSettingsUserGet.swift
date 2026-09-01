@@ -9,10 +9,11 @@ extension AdminAPIGateway {
         _ input: Operations.AdminAccountSettingsGet.Input
     ) async throws -> Operations.AdminAccountSettingsGet.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeGetSettings().execute(
-            subject: subject,
-            input: .init(userId: input.path.userId)
-        )
+        let result = try await useCases.makeGetSettings()
+            .execute(
+                subject: subject,
+                input: .init(userId: input.path.userId)
+            )
         return .ok(
             .init(
                 body: .json(

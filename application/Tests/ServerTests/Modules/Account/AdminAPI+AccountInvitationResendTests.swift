@@ -18,7 +18,7 @@ struct AdminAPIAccountInvitationResendTests {
         try await runner.grantRootPermissions([
             "account:invitations:create",
             "account:invitations:update",
-            "user:roles:create"
+            "user:roles:create",
         ])
         let token = try await runner.authenticateTestAccount()
         let role = try await runner.run(
@@ -26,7 +26,9 @@ struct AdminAPIAccountInvitationResendTests {
                 method: .post,
                 path: "/api/v1/admin/user/roles",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: UserAdminAPI.Components.Schemas.UserRoleCreateSchema(
                     id: "patch-role-\(UUID().uuidString.lowercased())",
@@ -45,7 +47,9 @@ struct AdminAPIAccountInvitationResendTests {
                 method: .post,
                 path: "/api/v1/admin/account/invitations",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: Components.Schemas.AccountInvitationCreateSchema(
                     email: "patch-\(UUID().uuidString)@example.com"
@@ -63,7 +67,9 @@ struct AdminAPIAccountInvitationResendTests {
                 method: .patch,
                 path: "/api/v1/admin/account/invitations/\(invitation.id)",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: Components.Schemas.AccountInvitationPatchSchema(
                     email: nil,
@@ -94,7 +100,9 @@ struct AdminAPIAccountInvitationResendTests {
                 method: .post,
                 path: "/api/v1/admin/account/invitations",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: Components.Schemas.AccountInvitationCreateSchema(
                     email: "resend-\(UUID().uuidString)@example.com"
@@ -110,9 +118,12 @@ struct AdminAPIAccountInvitationResendTests {
         let resent = try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/account/invitations/\(invitation.id)/resend",
+                path:
+                    "/api/v1/admin/account/invitations/\(invitation.id)/resend",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: [String: String]()
             )
@@ -129,9 +140,12 @@ struct AdminAPIAccountInvitationResendTests {
         try await runner.run(
             request: JSONRequest(
                 method: .post,
-                path: "/api/v1/admin/account/invitations/missing-invitation/resend",
+                path:
+                    "/api/v1/admin/account/invitations/missing-invitation/resend",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: [String: String]()
             )
@@ -142,7 +156,8 @@ struct AdminAPIAccountInvitationResendTests {
         try await runner.run(
             request: JSONRequest(
                 method: .get,
-                path: "/api/v1/account/invitation/exchange?token=\(invitation.token)",
+                path:
+                    "/api/v1/account/invitation/exchange?token=\(invitation.token)",
                 body: [String: String]()
             )
         ) { response in

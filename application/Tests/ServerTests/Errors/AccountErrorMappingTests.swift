@@ -28,7 +28,7 @@ struct AccountErrorMappingTests {
             ),
             AccountApplication.ValidateInvitation.Error(
                 message: "Invitation not found"
-            )
+            ),
         ]
 
         for error in errors {

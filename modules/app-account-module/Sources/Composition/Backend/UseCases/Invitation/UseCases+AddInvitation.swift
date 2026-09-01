@@ -7,10 +7,10 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
-import UserApplication
-import UserInfrastructure
 import SystemApplication
 import SystemInfrastructure
+import UserApplication
+import UserInfrastructure
 
 extension UseCases {
 

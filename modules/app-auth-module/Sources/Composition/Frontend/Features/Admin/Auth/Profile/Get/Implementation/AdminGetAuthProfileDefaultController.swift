@@ -23,8 +23,7 @@ struct AdminGetAuthProfileDefaultController:
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetAuthProfileInteractor,
-            presenter: any AdminGetAuthProfilePresenter,
-            accountProfileRepository: any AdminAuthAccountProfileRepository
+            presenter: any AdminGetAuthProfilePresenter
         )
 
     func getAuthProfile(
@@ -49,7 +48,7 @@ struct AdminGetAuthProfileDefaultController:
             )
         }
 
-        let accountProfile = try await runtime.accountProfileRepository.get()
+        let accountProfile = try await runtime.interactor.getAccountProfile()
         let profile = try await runtime.interactor.getProfile(
             account: account,
             accountProfile: accountProfile

@@ -71,34 +71,52 @@ struct AppAcceptAccountInvitation {
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         guard !token.isEmpty else {
             return render(
-                request: request, token: "", email: nil, password: "",
-                confirmation: "", error: "Invitation token is missing.", success: nil
+                request: request,
+                token: "",
+                email: nil,
+                password: "",
+                confirmation: "",
+                error: "Invitation token is missing.",
+                success: nil
             )
         }
         do {
-            let response = try await context.accountAppAPI().withOpenAPIRepositoryErrorMapping { client in
-                try await client.accountInvitationValidation(
-                    query: .init(token: token),
-                    headers: .init(accept: [.init(contentType: .json)])
-                )
-            }
+            let response = try await context.accountAppAPI()
+                .withOpenAPIRepositoryErrorMapping { client in
+                    try await client.accountInvitationValidation(
+                        query: .init(token: token),
+                        headers: .init(accept: [.init(contentType: .json)])
+                    )
+                }
             switch response {
             case .ok(let value):
                 let body = try value.body.json
                 return render(
-                    request: request, token: token, email: body.email, password: "",
-                    confirmation: "", error: nil, success: nil
+                    request: request,
+                    token: token,
+                    email: body.email,
+                    password: "",
+                    confirmation: "",
+                    error: nil,
+                    success: nil
                 )
             case .undocumented(let statusCode, let response):
-                throw try await context.accountAppAPI().failure(
-                    statusCode: statusCode, responseBody: response.body
-                )
+                throw try await context.accountAppAPI()
+                    .failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
             }
         }
         catch let error as OpenAPIRepositoryError {
             return render(
-                request: request, token: token, email: nil, password: "",
-                confirmation: "", error: error.errorDescription, success: nil
+                request: request,
+                token: token,
+                email: nil,
+                password: "",
+                confirmation: "",
+                error: error.errorDescription,
+                success: nil
             )
         }
     }
@@ -107,11 +125,15 @@ struct AppAcceptAccountInvitation {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let payload = try await request.decode(as: FormInput.self, context: context)
+        let payload = try await request.decode(
+            as: FormInput.self,
+            context: context
+        )
         guard payload.password.count >= 8 else {
             return render(
                 request: request,
-                token: request.uri.queryParameters["token"].map(String.init) ?? "",
+                token: request.uri.queryParameters["token"].map(String.init)
+                    ?? "",
                 email: nil,
                 password: payload.password,
                 confirmation: payload.confirmation,
@@ -122,7 +144,8 @@ struct AppAcceptAccountInvitation {
         guard payload.password == payload.confirmation else {
             return render(
                 request: request,
-                token: request.uri.queryParameters["token"].map(String.init) ?? "",
+                token: request.uri.queryParameters["token"].map(String.init)
+                    ?? "",
                 email: nil,
                 password: payload.password,
                 confirmation: payload.confirmation,
@@ -131,14 +154,20 @@ struct AppAcceptAccountInvitation {
             )
         }
         do {
-            let response = try await context.accountAppAPI().withOpenAPIRepositoryErrorMapping { client in
-                try await client.accountInvitationExchange(
-                    .init(
-                        headers: .init(accept: [.init(contentType: .json)]),
-                        body: .json(.init(token: payload.token, password: payload.password))
+            let response = try await context.accountAppAPI()
+                .withOpenAPIRepositoryErrorMapping { client in
+                    try await client.accountInvitationExchange(
+                        .init(
+                            headers: .init(accept: [.init(contentType: .json)]),
+                            body: .json(
+                                .init(
+                                    token: payload.token,
+                                    password: payload.password
+                                )
+                            )
+                        )
                     )
-                )
-            }
+                }
             switch response {
             case .ok:
                 return render(
@@ -148,13 +177,15 @@ struct AppAcceptAccountInvitation {
                     password: "",
                     confirmation: "",
                     error: nil,
-                    success: "Your account was created successfully. You can now sign in."
+                    success:
+                        "Your account was created successfully. You can now sign in."
                 )
             case .undocumented(let statusCode, let response):
-                throw try await context.accountAppAPI().failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
+                throw try await context.accountAppAPI()
+                    .failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
             }
         }
         catch let error as OpenAPIRepositoryError {

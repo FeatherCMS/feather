@@ -8,9 +8,9 @@ import AuthDomain
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
-import UserDomain
-import SystemApplication
 import Foundation
+import SystemApplication
+import UserDomain
 
 public struct RequestMagicLink: UseCase {
     let transaction: any TransactionExecutor<WriteRequestMagicLink>
@@ -40,48 +40,56 @@ public struct RequestMagicLink: UseCase {
     public func execute(
         _ input: Input
     ) async throws -> Bool {
-        let result: (token: String, publicBaseURL: String, template: String?)? = try await transaction.run { scope in
-            guard
-                let credential = try await scope.credential.findBy(
-                    email: input.email
+        let result: (token: String, publicBaseURL: String, template: String?)? =
+            try await transaction.run { scope in
+                guard
+                    let credential = try await scope.credential.findBy(
+                        email: input.email
+                    )
+                else {
+                    return nil
+                }
+
+                let token = generateToken()
+
+                _ = try await scope.magicLink.insert(
+                    MagicLink.create(
+                        credentialId: credential.id,
+                        token: token,
+                        isPersistent: input.isPersistent
+                    )
                 )
-            else {
-                return nil
-            }
 
-            let token = generateToken()
+                guard
+                    let publicBaseURL = try await scope.variable.get(
+                        "web-settings-public-base-url"
+                    ),
+                    !publicBaseURL.isEmpty
+                else {
+                    throw UseCaseError(
+                        reason: .validation,
+                        logMessage: "public_site_url_not_configured",
+                        userFriendlyMessage:
+                            "The public site URL is not configured."
+                    )
+                }
 
-            _ = try await scope.magicLink.insert(
-                MagicLink.create(
-                    credentialId: credential.id,
+                return (
                     token: token,
-                    isPersistent: input.isPersistent
-                )
-            )
-
-            guard let publicBaseURL = try await scope.variable.get("web-settings-public-base-url"),
-                  !publicBaseURL.isEmpty
-            else {
-                throw UseCaseError(
-                    reason: .validation,
-                    logMessage: "public_site_url_not_configured",
-                    userFriendlyMessage: "The public site URL is not configured."
+                    publicBaseURL: publicBaseURL,
+                    template: try await scope.variable.get(
+                        "auth.magic_link.email.template"
+                    )
                 )
             }
-
-            return (
-                token: token,
-                publicBaseURL: publicBaseURL,
-                template: try await scope.variable.get("auth.magic_link.email.template")
-            )
-        }
 
         guard let result else {
             return false
         }
 
-        let template = result.template
-            ?? #"""
+        let template =
+            result.template
+                ?? #"""
                 Hello,
 
                 This is your sign-in link:
@@ -91,8 +99,13 @@ public struct RequestMagicLink: UseCase {
                 Cheers,
                 Application Team.
                 """#
-        let body = template
-            .replacingOccurrences(of: "{{url}}", with: "\(result.publicBaseURL)/magic-link/verify/?token=\(result.token)")
+        let body =
+            template
+            .replacingOccurrences(
+                of: "{{url}}",
+                with:
+                    "\(result.publicBaseURL)/magic-link/verify/?token=\(result.token)"
+            )
             .replacingOccurrences(of: "{{token}}", with: result.token)
             .replacingOccurrences(of: "{{email}}", with: input.email)
 

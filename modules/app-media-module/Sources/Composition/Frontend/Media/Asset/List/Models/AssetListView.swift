@@ -100,8 +100,15 @@ struct AssetListView: Component {
             Color(.variable("cms-strong-font"))
         }
         Class("media-assets-grid") {
+            Display(.grid)
             RowGap(20.px)
             ColumnGap(20.px)
+            GridTemplateColumns(
+                .repeat(1, .fraction(Fraction(value: 1)))
+            )
+        }
+        Custom(".media-assets-grid > *") {
+            Overflow(.hidden)
         }
         Class("media-assets-card") {
             Display(.flex)
@@ -212,6 +219,23 @@ struct AssetListView: Component {
         }
         Class("media-assets-inline-form") {
             Display(.inline)
+        }
+    }
+
+    func rules() -> [any CSS.Rule] {
+        Media(.screen && .minWidth(600.px)) {
+            Custom(".media-assets-grid") {
+                GridTemplateColumns(
+                    .repeat(2, .fraction(Fraction(value: 1)))
+                )
+            }
+        }
+        Media(.screen && .minWidth(900.px)) {
+            Custom(".media-assets-grid") {
+                GridTemplateColumns(
+                    .repeat(4, .fraction(Fraction(value: 1)))
+                )
+            }
         }
     }
 

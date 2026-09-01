@@ -115,7 +115,7 @@ struct AccountInvitationResendOperation: AccountInvitationIDOperation {
     var responseMap: ResponseMap {
         [
             200: AccountInvitationDetailResponse().reference(),
-            404: CustomResponse(description: "AccountInvitation not found")
+            404: CustomResponse(description: "AccountInvitation not found"),
         ]
     }
 }

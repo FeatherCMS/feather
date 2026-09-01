@@ -18,7 +18,8 @@ actor MockAuthSessionRepository: SessionRepository {
             identityId: model.identityId,
             authenticationType: model.authenticationType,
             authenticationReference: model.authenticationReference,
-            expiresAt: Date().addingTimeInterval(model.expiresAtInterval).timeIntervalSince1970,
+            expiresAt: Date().addingTimeInterval(model.expiresAtInterval)
+                .timeIntervalSince1970,
             isPersistent: model.isPersistent,
             createdAt: Date(),
             updatedAt: Date()

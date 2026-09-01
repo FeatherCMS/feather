@@ -30,7 +30,9 @@ struct WebAppTestSuite {
         let credentials = items.flatMap { $0 }
             .first { $0.link == "/admin/auth/credentials/" }
 
-        #expect(credentials?.permission == AuthPermissions.Credential.list.rawValue)
+        #expect(
+            credentials?.permission == AuthPermissions.Credential.list.rawValue
+        )
     }
 
     @Test

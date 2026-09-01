@@ -103,41 +103,46 @@ struct AuthInfrastructureTestSuite {
                 idGenerator: idGenerator
             )
 
-            _ = try await IdentityDatabaseRepository(context: context).insert(
-                id: "user-2",
-                model: Identity.create(status: .active)
-            )
-            _ = try await CredentialTable(connection: connection).save(
-                row: .init(
-                    id: "credential-2",
-                    userId: "user-2",
-                    email: "user-2@example.com",
-                    passwordHash: "hash",
-                    createdAt: .distantPast,
-                    updatedAt: .distantPast
+            _ = try await IdentityDatabaseRepository(context: context)
+                .insert(
+                    id: "user-2",
+                    model: Identity.create(status: .active)
                 )
-            )
-            _ = try await MagicLinkTable(connection: connection).save(
-                row: .init(
-                    id: "magic-link-2",
-                    credentialId: "credential-2",
-                    token: "token-user-2",
-                    expiresAtInterval: 3600,
-                    isPersistent: false,
-                    isUsed: false
+            _ = try await CredentialTable(connection: connection)
+                .save(
+                    row: .init(
+                        id: "credential-2",
+                        userId: "user-2",
+                        email: "user-2@example.com",
+                        passwordHash: "hash",
+                        createdAt: .distantPast,
+                        updatedAt: .distantPast
+                    )
                 )
-            )
+            _ = try await MagicLinkTable(connection: connection)
+                .save(
+                    row: .init(
+                        id: "magic-link-2",
+                        credentialId: "credential-2",
+                        token: "token-user-2",
+                        expiresAtInterval: 3600,
+                        isPersistent: false,
+                        isUsed: false
+                    )
+                )
 
             let magicLinks = try await MagicLinkDatabaseQueries(
                 context: .init(connection: connection)
-            ).list(
+            )
+            .list(
                 query: .init(userId: "user-2")
             )
             #expect(magicLinks.items.map(\.id) == ["magic-link-2"])
 
             let rootIdentity = try await IdentityDatabaseRepository(
                 context: context
-            ).findRoot()
+            )
+            .findRoot()
 
             #expect(rootIdentity != nil)
             #expect(rootIdentity?.id.isEmpty == false)
@@ -145,7 +150,8 @@ struct AuthInfrastructureTestSuite {
 
             let rootCredential = try await CredentialDatabaseRepository(
                 context: context
-            ).findBy(userId: rootIdentity?.id ?? "")
+            )
+            .findBy(userId: rootIdentity?.id ?? "")
             #expect(rootCredential != nil)
         }
     }

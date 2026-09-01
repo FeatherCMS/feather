@@ -35,16 +35,18 @@ struct UserIdentityDetails: Component {
                 ),
                 .init(
                     label: "Sessions",
-                    href: "/admin/user/identities/\(state.identity.id)/sessions/",
+                    href:
+                        "/admin/user/identities/\(state.identity.id)/sessions/",
                     isCurrent: false
                 ),
                 .init(
                     label: "Magic links",
-                    href: "/admin/auth/magic-links/?userId=\(state.identity.id)",
+                    href:
+                        "/admin/auth/magic-links/?userId=\(state.identity.id)",
                     isCurrent: false
                 ),
             ])
-            
+
             AdminDetailsField(label: "Status", value: state.identity.status)
             if state.identity.roleNames.isEmpty {
                 AdminDetailsField(label: "Roles", value: "No roles assigned")

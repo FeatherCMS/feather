@@ -68,7 +68,8 @@ struct AccountProfileForm: Component, FlowContent {
             if state.canEdit {
                 Div {
                     Button("Save profile").type(.submit)
-                }.class("button-row")
+                }
+                .class("button-row")
             }
         }
         .encType(.urlencoded)

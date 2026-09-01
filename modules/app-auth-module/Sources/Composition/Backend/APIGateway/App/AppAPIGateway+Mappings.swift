@@ -53,7 +53,7 @@ extension AdminAPIGateway {
                         field: field,
                         direction: mapSortDirection(rule.direction)
                     )
-            },
+                },
             search: query.filters.search
         )
     }

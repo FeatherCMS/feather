@@ -5,6 +5,11 @@ struct AdminGetAccountInvitationDefaultInteractor:
     AdminGetAccountInvitationInteractor
 {
     let repository: any AdminGetAccountInvitationRepository
+    let roleNamesProvider: @Sendable ([String]) async -> [String]
+
+    func roleNames(for ids: [String]) async -> [String] {
+        await roleNamesProvider(ids)
+    }
 
     func execute(
         entity: AdminGetAccountInvitationModel

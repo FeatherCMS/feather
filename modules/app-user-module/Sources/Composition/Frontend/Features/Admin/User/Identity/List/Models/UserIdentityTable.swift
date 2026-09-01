@@ -152,9 +152,11 @@ struct UserIdentityTable: Component {
                                             Td(
                                                 identity.roles.isEmpty
                                                     ? "No roles assigned"
-                                                    : identity.roles.joined(separator: ", ")
+                                                    : identity.roles.joined(
+                                                        separator: ", "
+                                                    )
                                             )
-                                                .data("label", "Roles")
+                                            .data("label", "Roles")
                                             ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",

@@ -49,11 +49,31 @@ struct AuthMagicLinkTable: Component {
 
                 if let userID = state.userID {
                     AdminPillTabs(links: [
-                        .init(label: "Details", href: "/admin/user/identities/\(userID)/", isCurrent: false),
-                        .init(label: "Profile", href: "/admin/account/users/\(userID)/profile/", isCurrent: false),
-                        .init(label: "Settings", href: "/admin/account/users/\(userID)/settings/", isCurrent: false),
-                        .init(label: "Sessions", href: "/admin/user/identities/\(userID)/sessions/", isCurrent: false),
-                        .init(label: "Magic links", href: "/admin/auth/magic-links/?userId=\(userID)", isCurrent: true),
+                        .init(
+                            label: "Details",
+                            href: "/admin/user/identities/\(userID)/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Profile",
+                            href: "/admin/account/users/\(userID)/profile/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Settings",
+                            href: "/admin/account/users/\(userID)/settings/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Sessions",
+                            href: "/admin/user/identities/\(userID)/sessions/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Magic links",
+                            href: "/admin/auth/magic-links/?userId=\(userID)",
+                            isCurrent: true
+                        ),
                     ])
                 }
 
@@ -95,9 +115,10 @@ struct AuthMagicLinkTable: Component {
                         P("Page \(state.page) does not exist.")
                         P {
                             Span("Go to ")
-                            A("page 1").href(
-                                "/admin/auth/magic-links/?page=1&userId=\(state.userID ?? "")"
-                            )
+                            A("page 1")
+                                .href(
+                                    "/admin/auth/magic-links/?page=1&userId=\(state.userID ?? "")"
+                                )
                             Span(" or ")
                             A("page \(totalPages)")
                                 .href(
@@ -125,7 +146,8 @@ struct AuthMagicLinkTable: Component {
                             search: state.search,
                             canRemove: canRemove,
                             buttonTitle: "Remove selected",
-                            queryItems: state.userID.map { [("userId", $0)] } ?? []
+                            queryItems: state.userID.map { [("userId", $0)] }
+                                ?? []
                         ),
                         table: ListTableShell(
                             table: Table {
@@ -218,7 +240,8 @@ struct AuthMagicLinkTable: Component {
                             pageSize: state.pageSize,
                             total: state.total,
                             search: state.search,
-                            queryItems: state.userID.map { [("userId", $0)] } ?? []
+                            queryItems: state.userID.map { [("userId", $0)] }
+                                ?? []
                         )
                     )
                 }

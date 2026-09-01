@@ -9,7 +9,9 @@ actor MockVariableQueries: VariableQueries {
 
     func get(_ id: String) async throws -> String? { value }
 
-    func find(id: String) async throws -> VariableDetail { fatalError("not needed") }
+    func find(id: String) async throws -> VariableDetail {
+        fatalError("not needed")
+    }
 
     func list(query: VariableList.Query) async throws -> VariableList {
         .init(items: [])

@@ -30,7 +30,7 @@ public struct TableSeedMigration: DatabaseMigration {
             connection: connection,
             idGenerator: idGenerator
         )
-    
+
         let pageRepository = PageDatabaseRepository(context: context)
         let definitions = try await events.trigger(
             event: WebPageProvider(),

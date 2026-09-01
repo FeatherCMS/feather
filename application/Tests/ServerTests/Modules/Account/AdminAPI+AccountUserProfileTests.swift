@@ -31,16 +31,18 @@ struct AdminAPIAccountUserProfileTests {
                 method: .put,
                 path: "/api/v1/admin/account/users/\(userID)/profile",
                 headerFields: headers,
-                body: AccountAdminAPI.Components.Schemas.AccountProfileUpdateSchema(
-                    firstName: "Ada",
-                    lastName: "Lovelace",
-                    imageURL: nil
-                )
+                body: AccountAdminAPI.Components.Schemas
+                    .AccountProfileUpdateSchema(
+                        firstName: "Ada",
+                        lastName: "Lovelace",
+                        imageURL: nil
+                    )
             )
         ) { response in
             try await response.json(
                 status: .ok,
-                AccountAdminAPI.Components.Schemas.AccountProfileResponseSchema.self
+                AccountAdminAPI.Components.Schemas.AccountProfileResponseSchema
+                    .self
             )
         }
 

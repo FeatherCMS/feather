@@ -3,11 +3,10 @@ import AccountDomain
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
+import Foundation
+import SystemApplication
 import UserApplication
 import UserDomain
-import SystemApplication
-
-import Foundation
 
 //
 //  AddInvitation.swift
@@ -35,13 +34,16 @@ public struct AddInvitation: UseCase {
     }
 
     let authorizer: any Authorizer
-    let transaction: any ContextualTransactionExecutor<WriteInvitationWithVariable>
+    let transaction:
+        any ContextualTransactionExecutor<WriteInvitationWithVariable>
     let events: any EventPublisher
     let mailSender: any MailSender
 
     public init(
         authorizer: any Authorizer,
-        transaction: any ContextualTransactionExecutor<WriteInvitationWithVariable>,
+        transaction: any ContextualTransactionExecutor<
+            WriteInvitationWithVariable
+        >,
         events: any EventPublisher,
         mailSender: any MailSender
     ) {
@@ -99,8 +101,11 @@ public struct AddInvitation: UseCase {
                 event: UserIdentityDidInsert(identityID: identity.id),
                 using: context
             )
-            guard let publicBaseURL = try await scope.variable.get("web-settings-public-base-url"),
-                  !publicBaseURL.isEmpty
+            guard
+                let publicBaseURL = try await scope.variable.get(
+                    "web-settings-public-base-url"
+                ),
+                !publicBaseURL.isEmpty
             else {
                 throw Error.publicBaseURLNotConfigured
             }

@@ -18,8 +18,10 @@ public struct AdminEditAccountInvitationFormInput: Codable, Sendable, Equatable,
     }
 
     var normalizedRoleIDs: [String] {
-        (roleIds ?? []).map {
-            $0.trimmingCharacters(in: .whitespacesAndNewlines)
-        }.filter { !$0.isEmpty }
+        (roleIds ?? [])
+            .map {
+                $0.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
+            .filter { !$0.isEmpty }
     }
 }

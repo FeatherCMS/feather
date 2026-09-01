@@ -5,7 +5,9 @@ actor MockRoleRepository: RoleRepository {
 
     func findBy(name: String) async throws -> Role? { nil }
 
-    func insert(_ model: Role.New) async throws -> Role { fatalError("not needed") }
+    func insert(_ model: Role.New) async throws -> Role {
+        fatalError("not needed")
+    }
 
     func update(_ model: Role) async throws -> Role { model }
 

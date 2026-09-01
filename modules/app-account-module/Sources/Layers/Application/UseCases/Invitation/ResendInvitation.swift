@@ -51,7 +51,8 @@ public struct ResendInvitation: UseCase {
         }
 
         let result = try await transaction.run { scope in
-            guard var invitation = try await scope.invitation.findBy(id: input.id)
+            guard
+                var invitation = try await scope.invitation.findBy(id: input.id)
             else {
                 throw Error(message: "Invitation not found")
             }
@@ -59,12 +60,18 @@ public struct ResendInvitation: UseCase {
                 token: generateToken(),
                 expiresAt: Date().addingTimeInterval(Invitation.lifetime)
             )
-            guard let publicBaseURL = try await scope.variable.get("web-settings-public-base-url"),
-                  !publicBaseURL.isEmpty
+            guard
+                let publicBaseURL = try await scope.variable.get(
+                    "web-settings-public-base-url"
+                ),
+                !publicBaseURL.isEmpty
             else {
                 throw Error(message: "The public site URL is not configured.")
             }
-            return (invitation: try await scope.invitation.update(invitation), publicBaseURL: publicBaseURL)
+            return (
+                invitation: try await scope.invitation.update(invitation),
+                publicBaseURL: publicBaseURL
+            )
         }
 
         try await mailSender.send(

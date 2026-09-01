@@ -12,6 +12,11 @@ never write sql code outside of a Database/AccessLayer folder. SQL code is only 
 
 never write functionality on a Scope object. Always use a repository or query for managing database models, always use the table representation objects and never use direct SQL code. 
 
+never use typealias-es. never use tuples, except if user explicitly asks for this.
+
+never create helpers or simplify existing patterns. prefer copy & paste code over introducing new things, never cross boundaries. 
+
+
 ## 1) Current project structure
 
 This workspace is a multi-project Swift repository centered on a shared OpenAPI contract:

@@ -18,7 +18,8 @@ public struct EditSettings: UseCase {
             subjectID: String,
             userID: String
         ) {
-            key = subjectID == userID
+            key =
+                subjectID == userID
                 ? AccountPermissions.Settings.update
                 : AccountPermissions.Settings.manage
         }

@@ -12,14 +12,15 @@ struct AdminGetUserIdentity {
                     interactor: AdminGetUserIdentityDefaultInteractor(
                         repository: AdminGetUserIdentityOpenAPIRepository(
                             api: userAPI
-                        )
+                        ),
+                        roleRepository:
+                            AdminEditUserIdentityRoleOpenAPIRepository(
+                                api: userAPI
+                            )
                     ),
                     presenter: AdminGetUserIdentityDefaultPresenter(
                         request: request,
                         renderingEngine: renderingEngine
-                    ),
-                    roleRepository: AdminEditUserIdentityRoleOpenAPIRepository(
-                        api: userAPI
                     )
                 )
             }

@@ -39,7 +39,7 @@ public struct AuthRenewMiddleware: ServerMiddleware {
         //            else {
         //                return try await next(request, body, metadata)
         //            }
-        //            let userSessionSlideExpirationUseCase = useCases.user.auth
+        //            let userSessionSlideExpirationUseCase = useCases
         //                .slideSessionExpiration()
         //            _ = try await userSessionSlideExpirationUseCase.execute(
         //                .init(

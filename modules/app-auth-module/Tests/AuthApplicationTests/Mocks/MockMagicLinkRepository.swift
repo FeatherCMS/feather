@@ -42,7 +42,7 @@ actor MockMagicLinkRepository: MagicLinkRepository {
     func update(
         _ model: MagicLink
     ) async throws -> MagicLink {
-        return model
+        model
     }
 
     func consumeByToken(

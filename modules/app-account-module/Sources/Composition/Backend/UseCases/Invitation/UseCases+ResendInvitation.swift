@@ -4,9 +4,9 @@ import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
 import FeatherInfrastructure
-import UserInfrastructure
 import SystemApplication
 import SystemInfrastructure
+import UserInfrastructure
 
 extension UseCases {
 

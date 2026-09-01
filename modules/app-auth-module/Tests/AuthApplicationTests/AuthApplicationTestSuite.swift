@@ -66,7 +66,10 @@ struct AuthApplicationTestSuite {
 
         #expect(result.userId == credential.userId)
         #expect(await repository.insertCallCount == 1)
-        #expect(await repository.insertedModel?.passwordHash == "hashed-password-123")
+        #expect(
+            await repository.insertedModel?.passwordHash
+                == "hashed-password-123"
+        )
     }
 
     @Test
@@ -96,8 +99,14 @@ struct AuthApplicationTestSuite {
         #expect(sent)
         #expect(await magicLinkRepository.insertCallCount == 1)
         #expect(await mailSender.sendCallCount == 1)
-        #expect(await mailSender.lastMessage?.body.contains("user@example.com") == true)
-        #expect(await mailSender.lastMessage?.body.contains("https://example.test/magic-link/verify/") == true)
+        #expect(
+            await mailSender.lastMessage?.body.contains("user@example.com")
+                == true
+        )
+        #expect(
+            await mailSender.lastMessage?.body
+                .contains("https://example.test/magic-link/verify/") == true
+        )
     }
 
     @Test
@@ -122,7 +131,10 @@ struct AuthApplicationTestSuite {
 
         #expect(result.user.id == identity.id)
         #expect(result.session.identityId == identity.id)
-        #expect(result.session.authenticationType == Session.AuthenticationTypes.magicLink)
+        #expect(
+            result.session.authenticationType
+                == Session.AuthenticationTypes.magicLink
+        )
         #expect(result.session.authenticationReference == "m-sign-in")
         #expect(result.roles == ["editor"])
         #expect(result.permissions == ["account:read"])

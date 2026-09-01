@@ -11,7 +11,8 @@ public struct GetAccountProfile: UseCase {
             subjectID: String,
             userID: String
         ) {
-            key = subjectID == userID
+            key =
+                subjectID == userID
                 ? AccountPermissions.Profile.read
                 : AccountPermissions.Profile.manage
         }

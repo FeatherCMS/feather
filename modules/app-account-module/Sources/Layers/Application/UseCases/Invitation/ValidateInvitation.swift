@@ -33,7 +33,9 @@ public struct ValidateInvitation: UseCase {
         input: Input
     ) async throws -> InvitationDetail {
         try await query.run { scope in
-            let invitation = try await scope.invitation.getBy(token: input.token)
+            let invitation = try await scope.invitation.getBy(
+                token: input.token
+            )
             guard invitation.expiresAt > .init() else {
                 throw Error(message: "Invitation not found")
             }

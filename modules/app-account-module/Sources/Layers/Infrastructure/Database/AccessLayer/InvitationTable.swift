@@ -22,10 +22,11 @@ extension InvitationTable.Row {
         self.email = try row.decode(column: "email", as: String.self)
         self.token = try row.decode(column: "token", as: String.self)
         let roleIDs = try row.decode(column: "role_ids", as: String.self)
-        self.roleIDs = try JSONDecoder().decode(
-            [String].self,
-            from: Data(roleIDs.utf8)
-        )
+        self.roleIDs = try JSONDecoder()
+            .decode(
+                [String].self,
+                from: Data(roleIDs.utf8)
+            )
         self.expiresAt = try row.decode(
             column: "expires_at",
             as: Date.self
@@ -110,7 +111,7 @@ struct InvitationTable {
         limit: Int,
         offset: Int
     ) async throws -> [Row] {
-        return try await connection.run(
+        try await connection.run(
             query: #"""
                 SELECT *
                 FROM account_invitation

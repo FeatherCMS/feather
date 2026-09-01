@@ -89,7 +89,9 @@ struct AdminAPIUserIdentitySearchTests {
                 method: .post,
                 path: "/api/v1/admin/user/roles",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: Components.Schemas.UserRoleCreateSchema(
                     id: roleID,
@@ -109,9 +111,13 @@ struct AdminAPIUserIdentitySearchTests {
                 method: .post,
                 path: "/api/v1/admin/user/identities",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
-                body: Components.Schemas.UserIdentityCreateSchema(status: .invited)
+                body: Components.Schemas.UserIdentityCreateSchema(
+                    status: .invited
+                )
             )
         ) { response in
             try await response.json(
@@ -125,7 +131,9 @@ struct AdminAPIUserIdentitySearchTests {
                 method: .patch,
                 path: "/api/v1/admin/user/identities/\(identity.id)",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: Components.Schemas.UserIdentityPatchSchema(
                     roleIds: [role.id]
@@ -143,7 +151,9 @@ struct AdminAPIUserIdentitySearchTests {
                 method: .post,
                 path: "/api/v1/admin/user/identities/search",
                 headerFields: [
-                    .authorization: runner.bearerAuthorizationHeader(token: token)
+                    .authorization: runner.bearerAuthorizationHeader(
+                        token: token
+                    )
                 ],
                 body: Components.Schemas.UserIdentityListItemSearchQuerySchema(
                     page: .init(size: 10, number: 1),
