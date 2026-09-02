@@ -39,14 +39,6 @@ struct SystemPermissionListOperation: SystemPermissionOperation {
     }
 }
 
-struct SystemPermissionFiltersOperation: SystemPermissionOperation {
-    var responseMap: ResponseMap {
-        [
-            200: SystemPermissionFiltersResponse().reference()
-        ]
-    }
-}
-
 struct SystemPermissionSearchOperation: SystemPermissionOperation {
     var searchQuery: SearchQuerySchema {
         .init(
@@ -71,8 +63,8 @@ struct SystemPermissionSearchOperation: SystemPermissionOperation {
     }
 }
 
-struct SystemPermissionBulkDeleteOperation: SystemPermissionOperation,
-    BulkDeleteOperation
+struct SystemPermissionDeleteOperation: SystemPermissionOperation,
+    DeleteOperation
 {
 }
 

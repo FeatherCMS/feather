@@ -76,7 +76,7 @@ struct AdminListUserRoleDefaultController: AdminListUserRoleController {
         }
     }
 
-    func getUserRolesBulkRemoveConfirmation(
+    func getUserRolesRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -88,7 +88,7 @@ struct AdminListUserRoleDefaultController: AdminListUserRoleController {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListBulkRemoveRedirect.location(
+                    .location: ListRemoveRedirect.location(
                         path: "/admin/user/roles/",
                         page: page,
                         search: search,
@@ -99,7 +99,7 @@ struct AdminListUserRoleDefaultController: AdminListUserRoleController {
             )
         }
         return try runtime.presenter
-            .renderBulkRemoveConfirmation(
+            .renderRemoveConfirmation(
                 page: page,
                 search: search,
                 selectedIds: selectedIds,
@@ -108,24 +108,24 @@ struct AdminListUserRoleDefaultController: AdminListUserRoleController {
             .response(from: request, context: context)
     }
 
-    func postUserRolesBulkRemove(
+    func postUserRolesRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         let runtime = buildRuntime(request, context)
         if !payload.normalizedSelectedIds.isEmpty {
-            try await runtime.interactor.bulkRemove(
+            try await runtime.interactor.remove(
                 ids: payload.normalizedSelectedIds
             )
         }
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/user/roles/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

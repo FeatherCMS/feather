@@ -91,9 +91,9 @@ public struct SessionDatabaseRepository: SessionRepository {
     }
 
     public func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         let table = SessionTable(connection: context.connection)
-        return try await table.delete(id: id)
+        return try await table.delete(ids: ids)
     }
 }

@@ -11,8 +11,3 @@ struct UserRoleListResponse: JSONResponseRepresentable {
     var description: String = "UserRole list response"
     var schema = UserRoleListSchema().reference()
 }
-
-struct UserRoleFiltersResponse: JSONResponseRepresentable {
-    var description: String = "UserRole filter response"
-    var schema = SearchFilterSchema().reference()
-}

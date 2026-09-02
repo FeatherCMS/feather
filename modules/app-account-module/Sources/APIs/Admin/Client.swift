@@ -560,13 +560,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)`.
-    public func accountInvitationBulkDelete(
-        _ input: Operations.AccountInvitationBulkDelete.Input
-    ) async throws -> Operations.AccountInvitationBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
+    public func accountInvitationDelete(
+        _ input: Operations.AccountInvitationDelete.Input
+    ) async throws -> Operations.AccountInvitationDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.AccountInvitationBulkDelete.id,
+            forOperation: Operations.AccountInvitationDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/account/invitations",
@@ -598,7 +598,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -608,7 +608,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -636,17 +636,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)`.
-    public func accountInvitationFilters(
-        _ input: Operations.AccountInvitationFilters.Input
-    ) async throws -> Operations.AccountInvitationFilters.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)`.
+    public func accountInvitationList(
+        _ input: Operations.AccountInvitationList.Input
+    ) async throws -> Operations.AccountInvitationList.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.AccountInvitationFilters.id,
+            forOperation: Operations.AccountInvitationList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/account/invitations/filters",
+                    template: "/api/v1/admin/account/invitations/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -667,8 +667,7 @@ public struct Client: APIProtocol {
                         in: response.headerFields
                     )
                     let body:
-                        Components.Responses.AccountInvitationFiltersResponse
-                            .Body
+                        Components.Responses.AccountInvitationListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -678,7 +677,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.AccountInvitationListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

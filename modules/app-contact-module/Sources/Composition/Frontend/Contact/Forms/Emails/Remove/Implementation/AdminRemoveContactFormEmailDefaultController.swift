@@ -32,7 +32,7 @@ struct AdminRemoveContactFormEmailDefaultController:
                 permissions: context.currentUserPermissions
             )
         }
-        return presenter.renderBulkConfirmation(
+        return presenter.renderConfirmation(
             formId: formId,
             selectedIds: request.queryStrings("selectedIds"),
             permissions: context.currentUserPermissions
@@ -43,19 +43,19 @@ struct AdminRemoveContactFormEmailDefaultController:
         -> Response
     {
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         let (interactor, _) = buildRuntime(request, context)
         let formId = try context.requiredParameter("formId")
-        try await interactor.bulkRemove(
+        try await interactor.remove(
             id: formId,
             emailIds: payload.normalizedSelectedIds
         )
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/contact/forms/\(formId)/emails/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

@@ -8,7 +8,7 @@ protocol AdminListSystemVariableInteractor: Sendable {
         search: String?
     ) async throws -> AdminListSystemVariableModel
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws
 }

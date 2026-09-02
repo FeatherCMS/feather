@@ -19,6 +19,6 @@ public protocol IssueRepository: Repository {
     ) async throws -> Issue
 
     func delete(
-        id: String
-    ) async throws -> Bool
+        ids: [String]
+    ) async throws -> [String]
 }

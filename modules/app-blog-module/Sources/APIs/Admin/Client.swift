@@ -116,13 +116,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)`.
-    public func blogPostBulkDelete(_ input: Operations.BlogPostBulkDelete.Input)
-        async throws -> Operations.BlogPostBulkDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
+    public func blogPostDelete(_ input: Operations.BlogPostDelete.Input)
+        async throws -> Operations.BlogPostDelete.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogPostBulkDelete.id,
+            forOperation: Operations.BlogPostDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/blog/posts",
@@ -154,7 +154,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -164,7 +164,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -192,17 +192,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)`.
-    public func blogPostFilters(_ input: Operations.BlogPostFilters.Input)
-        async throws -> Operations.BlogPostFilters.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
+    public func blogPostList(_ input: Operations.BlogPostList.Input)
+        async throws -> Operations.BlogPostList.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogPostFilters.id,
+            forOperation: Operations.BlogPostList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/blog/posts/filters",
+                    template: "/api/v1/admin/blog/posts/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -222,7 +222,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BlogPostFiltersResponse.Body
+                    let body: Components.Responses.BlogPostListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -232,7 +232,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.BlogPostListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -652,13 +652,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)`.
-    public func blogAuthorBulkDelete(
-        _ input: Operations.BlogAuthorBulkDelete.Input
-    ) async throws -> Operations.BlogAuthorBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
+    public func blogAuthorDelete(_ input: Operations.BlogAuthorDelete.Input)
+        async throws -> Operations.BlogAuthorDelete.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogAuthorBulkDelete.id,
+            forOperation: Operations.BlogAuthorDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/blog/authors",
@@ -690,7 +690,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -700,7 +700,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -728,17 +728,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)`.
-    public func blogAuthorFilters(_ input: Operations.BlogAuthorFilters.Input)
-        async throws -> Operations.BlogAuthorFilters.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
+    public func blogAuthorList(_ input: Operations.BlogAuthorList.Input)
+        async throws -> Operations.BlogAuthorList.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogAuthorFilters.id,
+            forOperation: Operations.BlogAuthorList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/blog/authors/filters",
+                    template: "/api/v1/admin/blog/authors/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -758,8 +758,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body:
-                        Components.Responses.BlogAuthorFiltersResponse.Body
+                    let body: Components.Responses.BlogAuthorListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -769,7 +768,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.BlogAuthorListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1192,13 +1191,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)`.
-    public func blogAuthorLinkBulkDelete(
-        _ input: Operations.BlogAuthorLinkBulkDelete.Input
-    ) async throws -> Operations.BlogAuthorLinkBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
+    public func blogAuthorLinkDelete(
+        _ input: Operations.BlogAuthorLinkDelete.Input
+    ) async throws -> Operations.BlogAuthorLinkDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogAuthorLinkBulkDelete.id,
+            forOperation: Operations.BlogAuthorLinkDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/blog/authors/{}/links",
@@ -1232,7 +1231,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1242,7 +1241,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1270,17 +1269,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)`.
-    public func blogAuthorLinkFilters(
-        _ input: Operations.BlogAuthorLinkFilters.Input
-    ) async throws -> Operations.BlogAuthorLinkFilters.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
+    public func blogAuthorLinkList(_ input: Operations.BlogAuthorLinkList.Input)
+        async throws -> Operations.BlogAuthorLinkList.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogAuthorLinkFilters.id,
+            forOperation: Operations.BlogAuthorLinkList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/blog/authors/{}/links/filters",
+                    template: "/api/v1/admin/blog/authors/{}/links/",
                     parameters: [
                         input.path.blogAuthorId
                     ]
@@ -1303,7 +1302,7 @@ public struct Client: APIProtocol {
                         in: response.headerFields
                     )
                     let body:
-                        Components.Responses.BlogAuthorLinkFiltersResponse.Body
+                        Components.Responses.BlogAuthorLinkListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1313,7 +1312,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.BlogAuthorLinkListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1889,13 +1888,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)`.
-    public func blogTagBulkDelete(_ input: Operations.BlogTagBulkDelete.Input)
-        async throws -> Operations.BlogTagBulkDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
+    public func blogTagDelete(_ input: Operations.BlogTagDelete.Input)
+        async throws -> Operations.BlogTagDelete.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogTagBulkDelete.id,
+            forOperation: Operations.BlogTagDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/blog/tags",
@@ -1927,7 +1926,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1937,7 +1936,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1965,17 +1964,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)`.
-    public func blogTagFilters(_ input: Operations.BlogTagFilters.Input)
-        async throws -> Operations.BlogTagFilters.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
+    public func blogTagList(_ input: Operations.BlogTagList.Input) async throws
+        -> Operations.BlogTagList.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogTagFilters.id,
+            forOperation: Operations.BlogTagList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/blog/tags/filters",
+                    template: "/api/v1/admin/blog/tags/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1995,7 +1994,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BlogTagFiltersResponse.Body
+                    let body: Components.Responses.BlogTagListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2005,7 +2004,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.BlogTagListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

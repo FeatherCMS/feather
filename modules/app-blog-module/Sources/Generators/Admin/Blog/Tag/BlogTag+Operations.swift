@@ -33,10 +33,10 @@ struct BlogTagCreateOperation: BlogTagOperation {
     }
 }
 
-struct BlogTagFiltersOperation: BlogTagOperation {
+struct BlogTagListOperation: BlogTagOperation {
     var responseMap: ResponseMap {
         [
-            200: BlogTagFiltersResponse().reference()
+            200: BlogTagListResponse().reference()
         ]
     }
 }
@@ -101,7 +101,7 @@ struct BlogTagPatchOperation: BlogTagIDOperation {
     }
 }
 
-struct BlogTagBulkDeleteOperation: BlogTagOperation,
-    BulkDeleteOperation
+struct BlogTagDeleteOperation: BlogTagOperation,
+    DeleteOperation
 {
 }

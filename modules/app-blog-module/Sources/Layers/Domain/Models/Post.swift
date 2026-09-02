@@ -108,7 +108,7 @@ extension Post {
         try validate(content: content)
 
         let metadataModel = try Metadata.create(
-            reference: .future("blog.post"),
+            reference: .type("blog.post"),
             base: metadata
                 ?? .init(
                     template: "blog.post",

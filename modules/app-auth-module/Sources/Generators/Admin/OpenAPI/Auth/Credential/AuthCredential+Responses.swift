@@ -9,11 +9,6 @@ struct AuthCredentialDetailResponse: JSONResponseRepresentable {
 }
 
 struct AuthCredentialListResponse: JSONResponseRepresentable {
-    var description: String = "List user credentials response"
+    var description: String = "AuthCredential list response"
     var schema = AuthCredentialListSchema().reference()
-}
-
-struct AuthCredentialFiltersResponse: JSONResponseRepresentable {
-    var description: String = "AuthCredential filter response"
-    var schema = AuthCredentialSearchFilterSchema().reference()
 }

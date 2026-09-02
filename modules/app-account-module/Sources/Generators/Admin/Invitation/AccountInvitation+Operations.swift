@@ -40,14 +40,6 @@ struct AccountInvitationListOperation: AccountInvitationOperation {
     }
 }
 
-struct AccountInvitationFiltersOperation: AccountInvitationOperation {
-    var responseMap: ResponseMap {
-        [
-            200: AccountInvitationFiltersResponse().reference()
-        ]
-    }
-}
-
 struct AccountInvitationSearchOperation: AccountInvitationOperation {
     var searchQuery: SearchQuerySchema {
         .init(
@@ -73,8 +65,8 @@ struct AccountInvitationSearchOperation: AccountInvitationOperation {
     }
 }
 
-struct AccountInvitationBulkDeleteOperation: AccountInvitationOperation,
-    BulkDeleteOperation
+struct AccountInvitationDeleteOperation: AccountInvitationOperation,
+    DeleteOperation
 {
 }
 

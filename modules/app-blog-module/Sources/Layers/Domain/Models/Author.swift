@@ -98,7 +98,7 @@ extension Author {
         try validate(content: content)
 
         let metadataModel = try Metadata.create(
-            reference: .future("blog.author"),
+            reference: .type("blog.author"),
             base: metadata
                 ?? .init(
                     template: "blog.author",

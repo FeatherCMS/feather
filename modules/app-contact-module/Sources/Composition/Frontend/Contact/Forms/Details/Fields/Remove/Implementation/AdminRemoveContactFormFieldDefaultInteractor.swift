@@ -16,7 +16,7 @@ struct AdminRemoveContactFormFieldDefaultInteractor:
     func remove(formId: String, id: String) async throws {
         try await repository.remove(formId: formId, id: id)
     }
-    func bulkRemove(formId: String, ids: [String]) async throws {
-        try await repository.bulkRemove(formId: formId, ids: ids)
+    func remove(formId: String, ids: [String]) async throws {
+        try await repository.remove(formId: formId, ids: ids)
     }
 }

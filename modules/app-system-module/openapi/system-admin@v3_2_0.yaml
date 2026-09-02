@@ -32,26 +32,26 @@ paths:
     delete:
       tags:
       - SystemPermissions
-      operationId: systemPermissionBulkDelete
+      operationId: systemPermissionDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/system/permissions/filters:
+  /api/v1/admin/system/permissions/:
     get:
       tags:
       - SystemPermissions
-      operationId: systemPermissionFilters
+      operationId: systemPermissionList
       responses:
         200:
-          $ref: '#/components/responses/SystemPermissionFiltersResponse'
+          $ref: '#/components/responses/SystemPermissionListResponse'
         401:
           description: Unauthorized
         403:
@@ -153,26 +153,26 @@ paths:
     delete:
       tags:
       - SystemVariables
-      operationId: systemVariableBulkDelete
+      operationId: systemVariableDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/system/variables/filters:
+  /api/v1/admin/system/variables/:
     get:
       tags:
       - SystemVariables
-      operationId: systemVariableFilters
+      operationId: systemVariableList
       responses:
         200:
-          $ref: '#/components/responses/SystemVariableFiltersResponse'
+          $ref: '#/components/responses/SystemVariableListResponse'
         401:
           description: Unauthorized
         403:
@@ -325,7 +325,7 @@ components:
       required:
       - id
       minProperties: 1
-    BulkDeleteRequestSchema:
+    DeleteRequestSchema:
       type: object
       properties:
         ids:
@@ -336,79 +336,92 @@ components:
             - id1
           minItems: 0
           uniqueItems: false
+        results:
+          type: boolean
+          examples:
+          - true
         summary:
           type: boolean
           examples:
           - true
       required:
       - ids
+      - results
       - summary
-      minProperties: 2
-    BulkDeleteResponseSchema:
+      minProperties: 3
+    DeleteResponseSchema:
       type: object
       properties:
         results:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                examples:
-                - id1
-              status:
-                type: string
-                enum:
-                - deleted
-                - not_found
-                - forbidden
-                examples:
-                - deleted
-            required:
-            - id
-            - status
-            minProperties: 2
-          minItems: 0
-          uniqueItems: false
+          $ref: '#/components/schemas/DeleteResultListSchema'
         summary:
-          type: object
-          properties:
-            requested:
-              type: integer
-              examples:
-              - 1
-            deleted:
-              type: integer
-              examples:
-              - 1
-            notFound:
-              type: integer
-              examples:
-              - 1
-            forbidden:
-              type: integer
-              examples:
-              - 1
-          required:
-          - requested
-          - deleted
-          - notFound
-          - forbidden
-          minProperties: 4
-      required:
-      - results
-      - summary
-      minProperties: 2
-    SearchFilterSchema:
+          $ref: '#/components/schemas/DeleteSummarySchema'
+      minProperties: 0
+    DeleteResultListSchema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            examples:
+            - id1
+          status:
+            type: string
+            enum:
+            - deleted
+            - not_found
+            - forbidden
+            examples:
+            - deleted
+        required:
+        - id
+        - status
+        minProperties: 2
+      minItems: 0
+      uniqueItems: false
+    DeleteSummarySchema:
       type: object
       properties:
-        search:
-          $ref: '#/components/schemas/SearchStringField'
-      minProperties: 0
-    SearchStringField:
+        requested:
+          type: integer
+          examples:
+          - 1
+        deleted:
+          type: integer
+          examples:
+          - 1
+        omitted:
+          type: integer
+          examples:
+          - 1
+      required:
+      - requested
+      - deleted
+      - omitted
+      minProperties: 3
+    SystemPermissionListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/SystemPermissionListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    SystemPermissionListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/SystemPermissionIdField'
+        name:
+          $ref: '#/components/schemas/SystemPermissionNameField'
+        notes:
+          $ref: '#/components/schemas/SystemPermissionNotesField'
+      required:
+      - id
+      minProperties: 1
+    SystemPermissionIdField:
       type: string
       examples:
-      - foo
+      - system.permission:read
     SystemPermissionListItemSearchQuerySchema:
       type: object
       properties:
@@ -437,6 +450,8 @@ components:
           uniqueItems: false
         filters:
           type: object
+          examples:
+          - search: foo
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
@@ -471,6 +486,10 @@ components:
       - desc
       examples:
       - asc
+    SearchStringField:
+      type: string
+      examples:
+      - foo
     SystemPermissionListItemSearchSchema:
       type: object
       properties:
@@ -497,22 +516,6 @@ components:
       - query
       - data
       minProperties: 2
-    SystemPermissionListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/SystemPermissionIdField'
-        name:
-          $ref: '#/components/schemas/SystemPermissionNameField'
-        notes:
-          $ref: '#/components/schemas/SystemPermissionNotesField'
-      required:
-      - id
-      minProperties: 1
-    SystemPermissionIdField:
-      type: string
-      examples:
-      - system.permission:read
     SystemPermissionPatchSchema:
       type: object
       properties:
@@ -567,6 +570,35 @@ components:
       - id
       - value
       minProperties: 2
+    SystemVariableListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/SystemVariableListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    SystemVariableListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/SystemVariableIdField'
+        value:
+          $ref: '#/components/schemas/SystemVariableValueField'
+        name:
+          $ref: '#/components/schemas/SystemVariableNameField'
+        notes:
+          $ref: '#/components/schemas/SystemVariableNotesField'
+      required:
+      - id
+      - value
+      minProperties: 2
+    SystemVariableIdField:
+      type: string
+      examples:
+      - sys_variable_timezone
+    SystemVariableValueField:
+      type: string
+      examples:
+      - UTC
     SystemVariableListItemSearchQuerySchema:
       type: object
       properties:
@@ -596,6 +628,8 @@ components:
           uniqueItems: false
         filters:
           type: object
+          examples:
+          - search: foo
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
@@ -630,29 +664,6 @@ components:
       - query
       - data
       minProperties: 2
-    SystemVariableListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/SystemVariableIdField'
-        value:
-          $ref: '#/components/schemas/SystemVariableValueField'
-        name:
-          $ref: '#/components/schemas/SystemVariableNameField'
-        notes:
-          $ref: '#/components/schemas/SystemVariableNotesField'
-      required:
-      - id
-      - value
-      minProperties: 2
-    SystemVariableIdField:
-      type: string
-      examples:
-      - sys_variable_timezone
-    SystemVariableValueField:
-      type: string
-      examples:
-      - UTC
     SystemVariablePatchSchema:
       type: object
       properties:
@@ -703,18 +714,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SystemPermissionDetailSchema'
-    BulkDeleteResponse:
-      description: Bulk delete response
+    DeleteResponse:
+      description: Delete response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteResponseSchema'
-    SystemPermissionFiltersResponse:
-      description: SystemPermission filter response
+            $ref: '#/components/schemas/DeleteResponseSchema'
+    SystemPermissionListResponse:
+      description: SystemPermission list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/SystemPermissionListSchema'
     SystemPermissionListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -727,12 +738,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SystemVariableDetailSchema'
-    SystemVariableFiltersResponse:
-      description: SystemVariable filter response
+    SystemVariableListResponse:
+      description: SystemVariable list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/SystemVariableListSchema'
     SystemVariableListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -780,11 +791,11 @@ components:
           schema:
             $ref: '#/components/schemas/SystemPermissionCreateSchema'
       required: true
-    BulkDeleteRequestBody:
+    DeleteRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+            $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
     SystemPermissionUpdateRequestBody:
       content:

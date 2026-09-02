@@ -141,16 +141,25 @@ struct IssueTable {
     }
 
     func delete(
-        id: String
-    ) async throws -> Bool {
-        try await connection.run(
+        ids: [String]
+    ) async throws -> [String] {
+        guard !ids.isEmpty else { return [] }
+        let values =
+            ids.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        return try await connection.run(
             query: #"""
                 DELETE FROM newsletter_issue
-                WHERE id = \#(id)
+                WHERE id IN (\#(unescaped: values))
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().isEmpty == false
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 }

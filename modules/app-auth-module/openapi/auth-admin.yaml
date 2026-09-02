@@ -97,14 +97,14 @@ paths:
     delete:
       tags:
       - UserIdentities
-      operationId: userIdentitySessionBulkDelete
+      operationId: userIdentitySessionDelete
       parameters:
       - $ref: '#/components/parameters/UserIdentityIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
@@ -131,26 +131,26 @@ paths:
     delete:
       tags:
       - AuthCredentials
-      operationId: authCredentialBulkDelete
+      operationId: authCredentialDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/credentials/filters:
+  /api/v1/admin/auth/credentials/:
     get:
       tags:
       - AuthCredentials
-      operationId: authCredentialFilters
+      operationId: authCredentialList
       responses:
         200:
-          $ref: '#/components/responses/AuthCredentialFiltersResponse'
+          $ref: '#/components/responses/AuthCredentialListResponse'
         401:
           description: Unauthorized
         403:
@@ -252,12 +252,12 @@ paths:
     delete:
       tags:
       - AuthRolePermissions
-      operationId: authRolePermissionBulkDelete
+      operationId: authRolePermissionDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
@@ -304,26 +304,26 @@ paths:
     delete:
       tags:
       - AuthMagicLinks
-      operationId: authMagicLinkBulkDelete
+      operationId: authMagicLinkDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/magic-links/filters:
+  /api/v1/admin/auth/magic-links/:
     get:
       tags:
       - AuthMagicLinks
-      operationId: authMagicLinkFilters
+      operationId: authMagicLinkList
       responses:
         200:
-          $ref: '#/components/responses/AuthMagicLinkFiltersResponse'
+          $ref: '#/components/responses/AuthMagicLinkListResponse'
         401:
           description: Unauthorized
         403:
@@ -543,7 +543,7 @@ components:
       format: double
     UserAuthSessionPersistentField:
       type: boolean
-    BulkDeleteRequestSchema:
+    DeleteRequestSchema:
       type: object
       properties:
         ids:
@@ -551,56 +551,57 @@ components:
           items:
             type: string
             example: id1
+        results:
+          type: boolean
+          example: true
         summary:
           type: boolean
           example: true
       required:
       - ids
+      - results
       - summary
-    BulkDeleteResponseSchema:
+    DeleteResponseSchema:
       type: object
       properties:
         results:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: id1
-              status:
-                type: string
-                enum:
-                - deleted
-                - not_found
-                - forbidden
-                example: deleted
-            required:
-            - id
-            - status
+          $ref: '#/components/schemas/DeleteResultListSchema'
         summary:
-          type: object
-          properties:
-            requested:
-              type: integer
-              example: 1
-            deleted:
-              type: integer
-              example: 1
-            notFound:
-              type: integer
-              example: 1
-            forbidden:
-              type: integer
-              example: 1
-          required:
-          - requested
-          - deleted
-          - notFound
-          - forbidden
+          $ref: '#/components/schemas/DeleteSummarySchema'
+    DeleteResultListSchema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: id1
+          status:
+            type: string
+            enum:
+            - deleted
+            - not_found
+            - forbidden
+            example: deleted
+        required:
+        - id
+        - status
+    DeleteSummarySchema:
+      type: object
+      properties:
+        requested:
+          type: integer
+          example: 1
+        deleted:
+          type: integer
+          example: 1
+        omitted:
+          type: integer
+          example: 1
       required:
-      - results
-      - summary
+      - requested
+      - deleted
+      - omitted
     AuthCredentialCreateSchema:
       type: object
       properties:
@@ -633,19 +634,32 @@ components:
       - id
       - userId
       - email
-    AuthCredentialSearchFilterSchema:
+    AuthCredentialListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/AuthCredentialListItemSchema'
+    AuthCredentialListItemSchema:
       type: object
       properties:
-        search:
-          $ref: '#/components/schemas/AuthCredentialSearchField'
+        id:
+          $ref: '#/components/schemas/AuthCredentialIdField'
         userId:
           $ref: '#/components/schemas/AuthCredentialUserIdField'
-    AuthCredentialSearchField:
+        email:
+          $ref: '#/components/schemas/AuthCredentialEmailField'
+      required:
+      - id
+      - userId
+      - email
+    AuthCredentialIdField:
       type: string
-      example: foo
+      example: credential_7nL3xQ2v
     AuthCredentialUserIdField:
       type: string
       example: user_7nL3xQ2v
+    AuthCredentialEmailField:
+      type: string
+      example: john.doe@example.com
     AuthCredentialListItemSearchQuerySchema:
       type: object
       properties:
@@ -669,6 +683,9 @@ components:
             - direction
         filters:
           type: object
+          example:
+            userId: user_7nL3xQ2v
+            search: foo
           properties:
             search:
               $ref: '#/components/schemas/AuthCredentialSearchField'
@@ -699,6 +716,9 @@ components:
       - asc
       - desc
       example: asc
+    AuthCredentialSearchField:
+      type: string
+      example: foo
     AuthCredentialListItemSearchSchema:
       type: object
       properties:
@@ -720,25 +740,6 @@ components:
       required:
       - query
       - data
-    AuthCredentialListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/AuthCredentialIdField'
-        userId:
-          $ref: '#/components/schemas/AuthCredentialUserIdField'
-        email:
-          $ref: '#/components/schemas/AuthCredentialEmailField'
-      required:
-      - id
-      - userId
-      - email
-    AuthCredentialIdField:
-      type: string
-      example: credential_7nL3xQ2v
-    AuthCredentialEmailField:
-      type: string
-      example: john.doe@example.com
     AuthCredentialPatchSchema:
       type: object
       properties:
@@ -800,6 +801,8 @@ components:
             - direction
         filters:
           type: object
+          example:
+            search: foo
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
@@ -881,69 +884,10 @@ components:
       - expiresAt
       - isPersistent
       - isUsed
-    SearchFilterSchema:
-      type: object
-      properties:
-        search:
-          $ref: '#/components/schemas/SearchStringField'
-    AuthMagicLinkListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - credentialId
-                - token
-                - expiresAt
-                - isPersistent
-                - isUsed
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-            userId:
-              $ref: '#/components/schemas/AuthMagicLinkUserIdField'
-      required:
-      - page
-      - filters
-    AuthMagicLinkUserIdField:
-      type: string
-    AuthMagicLinkListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/AuthMagicLinkListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/AuthMagicLinkListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
+    AuthMagicLinkListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/AuthMagicLinkListItemSchema'
     AuthMagicLinkListItemSchema:
       type: object
       properties:
@@ -985,6 +929,66 @@ components:
     AuthMagicLinkIsUsedField:
       type: boolean
       example: false
+    AuthMagicLinkListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - credentialId
+                - token
+                - expiresAt
+                - isPersistent
+                - isUsed
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            userId:
+              $ref: '#/components/schemas/AuthMagicLinkUserIdField'
+      required:
+      - page
+      - filters
+    AuthMagicLinkUserIdField:
+      type: string
+    AuthMagicLinkListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/AuthMagicLinkListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/AuthMagicLinkListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
     AuthMagicLinkPatchSchema:
       type: object
       properties:
@@ -1011,24 +1015,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserAuthSessionListSchema'
-    BulkDeleteResponse:
-      description: Bulk delete response
+    DeleteResponse:
+      description: Delete response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteResponseSchema'
+            $ref: '#/components/schemas/DeleteResponseSchema'
     AuthCredentialDetailResponse:
       description: User credential response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthCredentialDetailSchema'
-    AuthCredentialFiltersResponse:
-      description: AuthCredential filter response
+    AuthCredentialListResponse:
+      description: AuthCredential list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthCredentialSearchFilterSchema'
+            $ref: '#/components/schemas/AuthCredentialListSchema'
     AuthCredentialListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1053,12 +1057,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthMagicLinkDetailSchema'
-    AuthMagicLinkFiltersResponse:
-      description: AuthMagicLink filter response
+    AuthMagicLinkListResponse:
+      description: AuthMagicLink list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/AuthMagicLinkListSchema'
     AuthMagicLinkListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1104,11 +1108,11 @@ components:
           schema:
             $ref: '#/components/schemas/AuthMagicLinkVerifyRequestSchema'
       required: true
-    BulkDeleteRequestBody:
+    DeleteRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+            $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
     AuthCredentialRequestBody:
       content:

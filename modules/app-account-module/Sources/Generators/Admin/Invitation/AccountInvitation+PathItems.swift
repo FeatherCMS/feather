@@ -3,7 +3,7 @@ import FeatherOpenAPI
 struct AccountInvitationPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { AccountInvitationCreateOperation() }
     var delete: OperationRepresentable? {
-        AccountInvitationBulkDeleteOperation()
+        AccountInvitationDeleteOperation()
     }
 }
 
@@ -11,8 +11,8 @@ struct AccountInvitationSearchPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { AccountInvitationSearchOperation() }
 }
 
-struct AccountInvitationFiltersPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AccountInvitationFiltersOperation() }
+struct AccountInvitationListPathItems: PathItemRepresentable {
+    var get: OperationRepresentable? { AccountInvitationListOperation() }
 }
 
 struct AccountInvitationIdPathItems: PathItemRepresentable {

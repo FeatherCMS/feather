@@ -9,11 +9,6 @@ struct AuthMagicLinkDetailResponse: JSONResponseRepresentable {
 }
 
 struct AuthMagicLinkListResponse: JSONResponseRepresentable {
-    var description: String = "List user magic links response"
+    var description: String = "AuthMagicLink list response"
     var schema = AuthMagicLinkListSchema().reference()
-}
-
-struct AuthMagicLinkFiltersResponse: JSONResponseRepresentable {
-    var description: String = "AuthMagicLink filter response"
-    var schema = SearchFilterSchema().reference()
 }

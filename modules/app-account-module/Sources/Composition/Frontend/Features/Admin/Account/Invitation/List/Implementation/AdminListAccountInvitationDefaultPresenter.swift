@@ -76,7 +76,7 @@ struct AdminListAccountInvitationDefaultPresenter:
         )
     }
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         page: Int,
         search: String?,
         selectedIds: [String],
@@ -85,20 +85,20 @@ struct AdminListAccountInvitationDefaultPresenter:
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove selected invitations",
-            description: "Confirm bulk remove",
+            description: "Confirm remove",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: breadcrumb(),
                     title: "Remove selected invitations",
                     message:
                         "Are you sure you want to remove these selected invitations? This action cannot be undone.",
-                    action: "/admin/account/invitations/bulk-remove/",
-                    cancelLink: ListBulkRemoveRedirect.location(
+                    action: "/admin/account/invitations/remove/",
+                    cancelLink: ListRemoveRedirect.location(
                         path: "/admin/account/invitations/",
                         page: page,
                         search: search,

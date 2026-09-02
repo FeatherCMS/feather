@@ -43,5 +43,4 @@ struct ContactFormUpdateOperation: ContactFormIDOperation {
         ]
     }
 }
-struct ContactFormBulkDeleteOperation: ContactFormOperation, BulkDeleteOperation
-{}
+struct ContactFormDeleteOperation: ContactFormOperation, DeleteOperation {}

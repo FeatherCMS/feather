@@ -9,7 +9,7 @@ protocol AdminListWebPageInteractor: Sendable {
         search: String?
     ) async throws -> AdminListWebPageModel
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws
 }

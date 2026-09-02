@@ -82,7 +82,7 @@ struct AdminListWebMenuItemDefaultPresenter:
         )
     }
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         menuId: String,
         page: Int,
         search: String?,
@@ -92,20 +92,20 @@ struct AdminListWebMenuItemDefaultPresenter:
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove selected items",
-            description: "Confirm bulk remove",
+            description: "Confirm remove",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: webMenuItemBreadcrumbState(menuId: menuId),
                     title: "Remove selected items",
                     message:
                         "Are you sure you want to remove these selected items? This action cannot be undone.",
-                    action: "/admin/web/menus/\(menuId)/items/bulk-remove/",
-                    cancelLink: ListBulkRemoveRedirect.location(
+                    action: "/admin/web/menus/\(menuId)/items/remove/",
+                    cancelLink: ListRemoveRedirect.location(
                         path: "/admin/web/menus/\(menuId)/",
                         page: page,
                         search: search,

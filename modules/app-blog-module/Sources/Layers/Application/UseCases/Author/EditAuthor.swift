@@ -74,9 +74,8 @@ public struct EditAuthor: UseCase {
             }
             guard
                 var metadata = try await scope.metadata.find(
-                    reference: .existing(
-                        .init(type: "blog.author", id: input.id)
-                    )
+                    referenceType: "blog.author",
+                    referenceId: input.id
                 )
             else {
                 throw Error(message: "Author metadata not found")

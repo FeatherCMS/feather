@@ -182,8 +182,8 @@ struct AdminMediaProcessorOpenAPIRepository {
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.mediaProcessorBulkDelete(
-                body: .json(.init(ids: [id], summary: true))
+            _ = try await client.mediaProcessorDelete(
+                body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
     }

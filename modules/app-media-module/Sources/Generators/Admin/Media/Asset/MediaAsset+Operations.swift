@@ -79,8 +79,8 @@ struct MediaAssetUpdateOperation: MediaAssetIDOperation {
     }
 }
 
-struct MediaAssetBulkDeleteOperation: MediaAssetOperation,
-    BulkDeleteOperation
+struct MediaAssetDeleteOperation: MediaAssetOperation,
+    DeleteOperation
 {
 }
 

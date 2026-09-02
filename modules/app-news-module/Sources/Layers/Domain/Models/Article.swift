@@ -104,7 +104,7 @@ extension Article {
         try validate(content: content)
 
         let metadataModel = try Metadata.create(
-            reference: .future("news.article"),
+            reference: .type("news.article"),
             base: metadata
                 ?? .init(
                     template: "news.article",

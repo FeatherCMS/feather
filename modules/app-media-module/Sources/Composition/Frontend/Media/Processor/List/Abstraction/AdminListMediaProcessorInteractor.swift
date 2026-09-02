@@ -14,7 +14,7 @@ protocol AdminListMediaProcessorInteractor: Sendable {
         page: Int
     ) async throws -> AdminListMediaProcessorModel
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws
 }

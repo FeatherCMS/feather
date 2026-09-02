@@ -95,9 +95,9 @@ struct UserRoleTable: Component {
                     let canRemove = state.permissions.contains(
                         "user:roles:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
-                            action: "/admin/user/roles/bulk-remove/",
+                            action: "/admin/user/roles/remove/",
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
@@ -165,7 +165,7 @@ struct UserRoleTable: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                     ListTablePagination(

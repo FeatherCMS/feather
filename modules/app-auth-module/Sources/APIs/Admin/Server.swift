@@ -111,7 +111,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentitySessionBulkDelete(
+                try await server.userIdentitySessionDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authCredentialBulkDelete(
+                try await server.authCredentialDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -150,7 +150,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authCredentialFilters(
+                try await server.authCredentialList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -158,7 +158,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/auth/credentials/filters"
+                "/api/v1/admin/auth/credentials/"
             )
         )
         try transport.register(
@@ -228,7 +228,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authRolePermissionBulkDelete(
+                try await server.authRolePermissionDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -267,7 +267,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authMagicLinkBulkDelete(
+                try await server.authMagicLinkDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -280,7 +280,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authMagicLinkFilters(
+                try await server.authMagicLinkList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -288,7 +288,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/auth/magic-links/filters"
+                "/api/v1/admin/auth/magic-links/"
             )
         )
         try transport.register(
@@ -733,8 +733,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
-    fileprivate func userIdentitySessionBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)`.
+    fileprivate func userIdentitySessionDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -743,12 +743,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserIdentitySessionBulkDelete.id,
+            forOperation: Operations.UserIdentitySessionDelete.id,
             using: {
-                APIHandler.userIdentitySessionBulkDelete($0)
+                APIHandler.userIdentitySessionDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.UserIdentitySessionBulkDelete.Input.Path =
+                let path: Operations.UserIdentitySessionDelete.Input.Path =
                     .init(
                         userIdentityId: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
@@ -758,16 +758,15 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     )
                 let headers:
-                    Operations.UserIdentitySessionBulkDelete.Input.Headers =
-                        .init(
-                            accept: try converter.extractAcceptHeaderIfPresent(
-                                in: request.headerFields
-                            )
+                    Operations.UserIdentitySessionDelete.Input.Headers = .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
                         )
+                    )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -777,7 +776,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -788,7 +787,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.UserIdentitySessionBulkDelete.Input(
+                return Operations.UserIdentitySessionDelete.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -918,8 +917,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)`.
-    fileprivate func authCredentialBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)`.
+    fileprivate func authCredentialDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -928,12 +927,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthCredentialBulkDelete.id,
+            forOperation: Operations.AuthCredentialDelete.id,
             using: {
-                APIHandler.authCredentialBulkDelete($0)
+                APIHandler.authCredentialDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthCredentialBulkDelete.Input.Headers =
+                let headers: Operations.AuthCredentialDelete.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -942,7 +941,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -952,7 +951,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -963,7 +962,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.AuthCredentialBulkDelete.Input(
+                return Operations.AuthCredentialDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1004,9 +1003,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)`.
-    fileprivate func authCredentialFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)`.
+    fileprivate func authCredentialList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1015,18 +1014,18 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthCredentialFilters.id,
+            forOperation: Operations.AuthCredentialList.id,
             using: {
-                APIHandler.authCredentialFilters($0)
+                APIHandler.authCredentialList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthCredentialFilters.Input.Headers =
+                let headers: Operations.AuthCredentialList.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
                         )
                     )
-                return Operations.AuthCredentialFilters.Input(headers: headers)
+                return Operations.AuthCredentialList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -1516,8 +1515,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
-    fileprivate func authRolePermissionBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)`.
+    fileprivate func authRolePermissionDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1526,22 +1525,21 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthRolePermissionBulkDelete.id,
+            forOperation: Operations.AuthRolePermissionDelete.id,
             using: {
-                APIHandler.authRolePermissionBulkDelete($0)
+                APIHandler.authRolePermissionDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers:
-                    Operations.AuthRolePermissionBulkDelete.Input.Headers =
-                        .init(
-                            accept: try converter.extractAcceptHeaderIfPresent(
-                                in: request.headerFields
-                            )
+                let headers: Operations.AuthRolePermissionDelete.Input.Headers =
+                    .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
                         )
+                    )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1551,7 +1549,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1562,7 +1560,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.AuthRolePermissionBulkDelete.Input(
+                return Operations.AuthRolePermissionDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1780,8 +1778,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)`.
-    fileprivate func authMagicLinkBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)`.
+    fileprivate func authMagicLinkDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1790,12 +1788,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthMagicLinkBulkDelete.id,
+            forOperation: Operations.AuthMagicLinkDelete.id,
             using: {
-                APIHandler.authMagicLinkBulkDelete($0)
+                APIHandler.authMagicLinkDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthMagicLinkBulkDelete.Input.Headers =
+                let headers: Operations.AuthMagicLinkDelete.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1804,7 +1802,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1814,7 +1812,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1825,7 +1823,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.AuthMagicLinkBulkDelete.Input(
+                return Operations.AuthMagicLinkDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1866,9 +1864,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)`.
-    fileprivate func authMagicLinkFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)`.
+    fileprivate func authMagicLinkList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1877,18 +1875,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthMagicLinkFilters.id,
+            forOperation: Operations.AuthMagicLinkList.id,
             using: {
-                APIHandler.authMagicLinkFilters($0)
+                APIHandler.authMagicLinkList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthMagicLinkFilters.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.AuthMagicLinkList.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
-                return Operations.AuthMagicLinkFilters.Input(headers: headers)
+                )
+                return Operations.AuthMagicLinkList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {

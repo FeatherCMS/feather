@@ -19,7 +19,7 @@ struct AdminListWebMenuItemDefaultInteractor:
         )
     }
 
-    func bulkRemove(
+    func remove(
         menuId: String,
         ids: [String]
     ) async throws {

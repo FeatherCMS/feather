@@ -27,33 +27,29 @@ public struct RemovePage: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(
-            id: String
-        ) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let id = input.id
-
         return try await transaction.run { scope in
-            let removedPage = try await scope.page.delete(id: id)
+            let removedPage = try await scope.page.delete(ids: input.ids)
             _ = try await scope.metadata.delete(
-                reference: .existing(.init(type: "web.page", id: id))
+                referenceType: "web.page",
+                referenceIds: input.ids
             )
-            if removedPage {
+            let id = input.ids.first
+            if let id, removedPage.contains(id) {
                 var settings = try await scope.settings.get()
                 if settings.homePageId == id {
                     try settings.update(

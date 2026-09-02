@@ -17,14 +17,13 @@ public protocol APIProtocol: Sendable {
     func redirectRuleCreate(_ input: Operations.RedirectRuleCreate.Input)
         async throws -> Operations.RedirectRuleCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)`.
-    func redirectRuleBulkDelete(
-        _ input: Operations.RedirectRuleBulkDelete.Input
-    ) async throws -> Operations.RedirectRuleBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)`.
-    func redirectRuleFilters(_ input: Operations.RedirectRuleFilters.Input)
-        async throws -> Operations.RedirectRuleFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
+    func redirectRuleDelete(_ input: Operations.RedirectRuleDelete.Input)
+        async throws -> Operations.RedirectRuleDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)`.
+    func redirectRuleList(_ input: Operations.RedirectRuleList.Input)
+        async throws -> Operations.RedirectRuleList.Output
     /// - Remark: HTTP `POST /api/v1/admin/redirect/rules/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/search/post(redirectRuleSearch)`.
     func redirectRuleSearch(_ input: Operations.RedirectRuleSearch.Input)
@@ -59,25 +58,25 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)`.
-    public func redirectRuleBulkDelete(
-        headers: Operations.RedirectRuleBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.RedirectRuleBulkDelete.Output {
-        try await redirectRuleBulkDelete(
-            Operations.RedirectRuleBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
+    public func redirectRuleDelete(
+        headers: Operations.RedirectRuleDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.RedirectRuleDelete.Output {
+        try await redirectRuleDelete(
+            Operations.RedirectRuleDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)`.
-    public func redirectRuleFilters(
-        headers: Operations.RedirectRuleFilters.Input.Headers = .init()
-    ) async throws -> Operations.RedirectRuleFilters.Output {
-        try await redirectRuleFilters(
-            Operations.RedirectRuleFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)`.
+    public func redirectRuleList(
+        headers: Operations.RedirectRuleList.Input.Headers = .init()
+    ) async throws -> Operations.RedirectRuleList.Output {
+        try await redirectRuleList(
+            Operations.RedirectRuleList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/redirect/rules/search`.
@@ -239,120 +238,49 @@ public enum Components {
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema`.
-        public struct BulkDeleteRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/ids`.
+        /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
+        public struct DeleteRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/summary`.
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/results`.
+            public var results: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/summary`.
             public var summary: Swift.Bool
-            /// Creates a new `BulkDeleteRequestSchema`.
+            /// Creates a new `DeleteRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
+            ///   - results:
             ///   - summary:
             public init(
                 ids: [Swift.String],
+                results: Swift.Bool,
                 summary: Swift.Bool
             ) {
                 self.ids = ids
+                self.results = results
                 self.summary = summary
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
+                case results
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema`.
-        public struct BulkDeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload`.
-            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/id`.
-                public var id: Swift.String
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                @frozen
-                public enum StatusPayload: String, Codable, Hashable, Sendable,
-                    CaseIterable
-                {
-                    case deleted = "deleted"
-                    case notFound = "not_found"
-                    case forbidden = "forbidden"
-                }
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                public var status:
-                    Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                /// Creates a new `ResultsPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - id:
-                ///   - status:
-                public init(
-                    id: Swift.String,
-                    status: Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                ) {
-                    self.id = id
-                    self.status = status
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case status
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public typealias ResultsPayload = [Components.Schemas
-                .BulkDeleteResponseSchema.ResultsPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public var results:
-                Components.Schemas.BulkDeleteResponseSchema.ResultsPayload
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public struct SummaryPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/requested`.
-                public var requested: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/deleted`.
-                public var deleted: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/notFound`.
-                public var notFound: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/forbidden`.
-                public var forbidden: Swift.Int
-                /// Creates a new `SummaryPayload`.
-                ///
-                /// - Parameters:
-                ///   - requested:
-                ///   - deleted:
-                ///   - notFound:
-                ///   - forbidden:
-                public init(
-                    requested: Swift.Int,
-                    deleted: Swift.Int,
-                    notFound: Swift.Int,
-                    forbidden: Swift.Int
-                ) {
-                    self.requested = requested
-                    self.deleted = deleted
-                    self.notFound = notFound
-                    self.forbidden = forbidden
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case requested
-                    case deleted
-                    case notFound
-                    case forbidden
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public var summary:
-                Components.Schemas.BulkDeleteResponseSchema.SummaryPayload
-            /// Creates a new `BulkDeleteResponseSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
+        public struct DeleteResponseSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
+            public var results: Components.Schemas.DeleteResultListSchema?
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
+            public var summary: Components.Schemas.DeleteSummarySchema?
+            /// Creates a new `DeleteResponseSchema`.
             ///
             /// - Parameters:
             ///   - results:
             ///   - summary:
             public init(
-                results: Components.Schemas.BulkDeleteResponseSchema
-                    .ResultsPayload,
-                summary: Components.Schemas.BulkDeleteResponseSchema
-                    .SummaryPayload
+                results: Components.Schemas.DeleteResultListSchema? = nil,
+                summary: Components.Schemas.DeleteSummarySchema? = nil
             ) {
                 self.results = results
                 self.summary = summary
@@ -362,23 +290,121 @@ public enum Components {
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchFilterSchema`.
-        public struct SearchFilterSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/SearchFilterSchema/search`.
-            public var search: Components.Schemas.SearchStringField?
-            /// Creates a new `SearchFilterSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            @frozen
+            public enum StatusPayload: String, Codable, Hashable, Sendable,
+                CaseIterable
+            {
+                case deleted = "deleted"
+                case notFound = "not_found"
+                case forbidden = "forbidden"
+            }
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            public var status:
+                Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
+            /// Creates a new `DeleteResultListSchemaPayload`.
             ///
             /// - Parameters:
-            ///   - search:
-            public init(search: Components.Schemas.SearchStringField? = nil) {
-                self.search = search
+            ///   - id:
+            ///   - status:
+            public init(
+                id: Swift.String,
+                status: Components.Schemas.DeleteResultListSchemaPayload
+                    .StatusPayload
+            ) {
+                self.id = id
+                self.status = status
             }
             public enum CodingKeys: String, CodingKey {
-                case search
+                case id
+                case status
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
-        public typealias SearchStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public typealias DeleteResultListSchema = [Components.Schemas
+            .DeleteResultListSchemaPayload]
+        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
+        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
+            public var requested: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
+            public var deleted: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
+            public var omitted: Swift.Int
+            /// Creates a new `DeleteSummarySchema`.
+            ///
+            /// - Parameters:
+            ///   - requested:
+            ///   - deleted:
+            ///   - omitted:
+            public init(
+                requested: Swift.Int,
+                deleted: Swift.Int,
+                omitted: Swift.Int
+            ) {
+                self.requested = requested
+                self.deleted = deleted
+                self.omitted = omitted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case requested
+                case deleted
+                case omitted
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/RedirectRuleListSchema`.
+        public typealias RedirectRuleListSchema = [Components.Schemas
+            .RedirectRuleListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema`.
+        public struct RedirectRuleListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema/id`.
+            public var id: Components.Schemas.RedirectRuleIdField
+            /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema/source`.
+            public var source: Components.Schemas.RedirectRuleSourceField
+            /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema/destination`.
+            public var destination:
+                Components.Schemas.RedirectRuleDestinationField
+            /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema/statusCode`.
+            public var statusCode:
+                Components.Schemas.RedirectRuleStatusCodeField
+            /// Creates a new `RedirectRuleListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - source:
+            ///   - destination:
+            ///   - statusCode:
+            public init(
+                id: Components.Schemas.RedirectRuleIdField,
+                source: Components.Schemas.RedirectRuleSourceField,
+                destination: Components.Schemas.RedirectRuleDestinationField,
+                statusCode: Components.Schemas.RedirectRuleStatusCodeField
+            ) {
+                self.id = id
+                self.source = source
+                self.destination = destination
+                self.statusCode = statusCode
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case source
+                case destination
+                case statusCode
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/RedirectRuleIdField`.
+        public typealias RedirectRuleIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/RedirectRuleSourceField`.
+        public typealias RedirectRuleSourceField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/RedirectRuleDestinationField`.
+        public typealias RedirectRuleDestinationField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/RedirectRuleStatusCodeField`.
+        public typealias RedirectRuleStatusCodeField = Swift.Int
         /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSearchQuerySchema`.
         public struct RedirectRuleListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -519,8 +545,6 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/RedirectRuleSearchField`.
         public typealias RedirectRuleSearchField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/RedirectRuleStatusCodeField`.
-        public typealias RedirectRuleStatusCodeField = Swift.Int
         /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSearchSchema`.
         public struct RedirectRuleListItemSearchSchema: Codable, Hashable,
             Sendable
@@ -573,49 +597,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema`.
-        public struct RedirectRuleListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema/id`.
-            public var id: Components.Schemas.RedirectRuleIdField
-            /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema/source`.
-            public var source: Components.Schemas.RedirectRuleSourceField
-            /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema/destination`.
-            public var destination:
-                Components.Schemas.RedirectRuleDestinationField
-            /// - Remark: Generated from `#/components/schemas/RedirectRuleListItemSchema/statusCode`.
-            public var statusCode:
-                Components.Schemas.RedirectRuleStatusCodeField
-            /// Creates a new `RedirectRuleListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - source:
-            ///   - destination:
-            ///   - statusCode:
-            public init(
-                id: Components.Schemas.RedirectRuleIdField,
-                source: Components.Schemas.RedirectRuleSourceField,
-                destination: Components.Schemas.RedirectRuleDestinationField,
-                statusCode: Components.Schemas.RedirectRuleStatusCodeField
-            ) {
-                self.id = id
-                self.source = source
-                self.destination = destination
-                self.statusCode = statusCode
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case source
-                case destination
-                case statusCode
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/RedirectRuleIdField`.
-        public typealias RedirectRuleIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/RedirectRuleSourceField`.
-        public typealias RedirectRuleSourceField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/RedirectRuleDestinationField`.
-        public typealias RedirectRuleDestinationField = Swift.String
         /// - Remark: Generated from `#/components/schemas/RedirectRulePatchSchema`.
         public struct RedirectRulePatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/RedirectRulePatchSchema/source`.
@@ -671,10 +652,10 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/RedirectRuleRequestBody/content/application\/json`.
             case json(Components.Schemas.RedirectRuleCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody`.
-        @frozen public enum BulkDeleteRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody/content/application\/json`.
-            case json(Components.Schemas.BulkDeleteRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody`.
+        @frozen public enum DeleteRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
+            case json(Components.Schemas.DeleteRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/RedirectRuleUpdateRequestBody`.
         @frozen public enum RedirectRuleUpdateRequestBody: Sendable, Hashable {
@@ -720,16 +701,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BulkDeleteResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
+        public struct DeleteResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/DeleteResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
-                case json(Components.Schemas.BulkDeleteResponseSchema)
+                /// - Remark: Generated from `#/components/responses/DeleteResponse/content/application\/json`.
+                case json(Components.Schemas.DeleteResponseSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.BulkDeleteResponseSchema {
+                public var json: Components.Schemas.DeleteResponseSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -739,25 +720,25 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BulkDeleteResponse.Body
-            /// Creates a new `BulkDeleteResponse`.
+            public var body: Components.Responses.DeleteResponse.Body
+            /// Creates a new `DeleteResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BulkDeleteResponse.Body) {
+            public init(body: Components.Responses.DeleteResponse.Body) {
                 self.body = body
             }
         }
-        public struct RedirectRuleFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/RedirectRuleFiltersResponse/content`.
+        public struct RedirectRuleListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/RedirectRuleListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/RedirectRuleFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/RedirectRuleListResponse/content/application\/json`.
+                case json(Components.Schemas.RedirectRuleListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.RedirectRuleListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -767,14 +748,13 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body:
-                Components.Responses.RedirectRuleFiltersResponse.Body
-            /// Creates a new `RedirectRuleFiltersResponse`.
+            public var body: Components.Responses.RedirectRuleListResponse.Body
+            /// Creates a new `RedirectRuleListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.RedirectRuleFiltersResponse.Body
+                body: Components.Responses.RedirectRuleListResponse.Body
             ) {
                 self.body = body
             }
@@ -994,15 +974,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)`.
-    public enum RedirectRuleBulkDelete {
-        public static let id: Swift.String = "redirectRuleBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
+    public enum RedirectRuleDelete {
+        public static let id: Swift.String = "redirectRuleDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/redirect/rules/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.RedirectRuleBulkDelete.AcceptableContentType
+                        Operations.RedirectRuleDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1010,40 +990,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.RedirectRuleBulkDelete.AcceptableContentType
+                        Operations.RedirectRuleDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.RedirectRuleBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.RedirectRuleDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.RedirectRuleBulkDelete.Input.Headers =
-                    .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.RedirectRuleDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -1062,15 +1041,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.RedirectRuleBulkDelete.Output.Unauthorized
-            )
+            case unauthorized(Operations.RedirectRuleDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1081,7 +1058,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.RedirectRuleBulkDelete.Output.Unauthorized
+                Operations.RedirectRuleDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1101,13 +1078,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.RedirectRuleBulkDelete.Output.Forbidden)
+            case forbidden(Operations.RedirectRuleDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1117,8 +1094,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.RedirectRuleBulkDelete.Output.Forbidden
+            public var forbidden: Operations.RedirectRuleDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -1166,16 +1142,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)`.
-    public enum RedirectRuleFilters {
-        public static let id: Swift.String = "redirectRuleFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)`.
+    public enum RedirectRuleList {
+        public static let id: Swift.String = "redirectRuleList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/redirect/rules/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/redirect/rules/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.RedirectRuleFilters.AcceptableContentType
+                        Operations.RedirectRuleList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1183,35 +1159,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.RedirectRuleFilters.AcceptableContentType
+                        Operations.RedirectRuleList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.RedirectRuleFilters.Input.Headers
+            public var headers: Operations.RedirectRuleList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.RedirectRuleFilters.Input.Headers = .init()
+                headers: Operations.RedirectRuleList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// RedirectRule filter response
+            /// RedirectRule list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.RedirectRuleFiltersResponse)
+            case ok(Components.Responses.RedirectRuleListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.RedirectRuleFiltersResponse {
+            public var ok: Components.Responses.RedirectRuleListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -1230,15 +1206,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.RedirectRuleFilters.Output.Unauthorized
-            )
+            case unauthorized(Operations.RedirectRuleList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1249,7 +1223,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.RedirectRuleFilters.Output.Unauthorized
+                Operations.RedirectRuleList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1269,13 +1243,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.RedirectRuleFilters.Output.Forbidden)
+            case forbidden(Operations.RedirectRuleList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1285,9 +1259,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.RedirectRuleFilters.Output.Forbidden
-            {
+            public var forbidden: Operations.RedirectRuleList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):

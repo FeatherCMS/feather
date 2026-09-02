@@ -33,17 +33,15 @@ public struct DeleteMediaFolder: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(id: String) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -51,7 +49,8 @@ public struct DeleteMediaFolder: UseCase {
 
         let snapshot: FolderDeleteSnapshot? = try await transaction.run {
             scope in
-            guard let folder = try await scope.folders.find(id: input.id)
+            guard let id = input.ids.first,
+                let folder = try await scope.folders.find(id: id)
             else {
                 return nil
             }
@@ -72,7 +71,7 @@ public struct DeleteMediaFolder: UseCase {
             )
         }
 
-        guard let snapshot else { return false }
+        guard let snapshot else { return [] }
 
         for asset in snapshot.assets {
             for candidate in originalStorageKeys(for: asset) {
@@ -86,13 +85,15 @@ public struct DeleteMediaFolder: UseCase {
         return try await transaction.run { scope in
             for asset in snapshot.assets {
                 try await scope.processorAssets.deleteAll(assetId: asset.id)
-                _ = try await scope.assets.delete(id: asset.id)
             }
+            let deletedAssetIds = try await scope.assets.delete(
+                ids: snapshot.assets.map(\.id)
+            )
 
-            for folder in snapshot.folders.sorted(by: deeperPathFirst) {
-                _ = try await scope.folders.delete(id: folder.id)
-            }
-            return true
+            let deletedFolderIds = try await scope.folders.delete(
+                ids: snapshot.folders.map(\.id)
+            )
+            return deletedFolderIds + deletedAssetIds
         }
     }
 }
@@ -101,13 +102,6 @@ private struct FolderDeleteSnapshot: Sendable {
     let folders: [MediaFolder]
     let assets: [MediaAsset]
     let variantsByAssetId: [String: [MediaProcessorAsset]]
-}
-
-private func deeperPathFirst(
-    _ lhs: MediaFolder,
-    _ rhs: MediaFolder
-) -> Bool {
-    lhs.path.count > rhs.path.count
 }
 
 private func originalStorageKeys(

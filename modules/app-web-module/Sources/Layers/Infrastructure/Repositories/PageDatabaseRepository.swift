@@ -51,7 +51,7 @@ public struct PageDatabaseRepository: PageRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(reference: .existing(.init(type: "web.page", id: id)))
+            .find(referenceType: "web.page", referenceId: id)
         else {
             return nil
         }
@@ -80,10 +80,10 @@ public struct PageDatabaseRepository: PageRepository {
     }
 
     public func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         let table = PageTable(connection: context.connection)
-        return try await table.delete(id: id)
+        return try await table.delete(ids: ids)
     }
 }
 

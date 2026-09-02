@@ -47,31 +47,31 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func bulkConfirm(request: Request, context: DefaultRequestContext)
+    func confirmSelected(request: Request, context: DefaultRequestContext)
         async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderBulkConfirmation(
+        return presenter.renderConfirmation(
             selectedIds: request.queryStrings("selectedIds"),
             permissions: context.currentUserPermissions
         )
     }
 
-    func bulkRemove(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: DefaultRequestContext)
         async throws
         -> Response
     {
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         let (interactor, _) = buildRuntime(request, context)
-        try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+        try await interactor.remove(ids: payload.normalizedSelectedIds)
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/contact/fields/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

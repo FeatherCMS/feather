@@ -17,7 +17,8 @@ public protocol MetadataRepository: Repository {
     ) async throws -> Metadata?
 
     func find(
-        reference: Metadata.Reference
+        referenceType: String,
+        referenceId: String
     ) async throws -> Metadata?
 
     func insert(
@@ -29,10 +30,11 @@ public protocol MetadataRepository: Repository {
     ) async throws -> Metadata
 
     func delete(
-        id: String
-    ) async throws -> Bool
+        ids: [String]
+    ) async throws -> [String]
 
     func delete(
-        reference: Metadata.Reference
-    ) async throws -> Bool
+        referenceType: String,
+        referenceIds: [String]
+    ) async throws -> [String]
 }

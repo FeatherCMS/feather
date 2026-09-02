@@ -96,9 +96,9 @@ struct SystemPermissionTable: Component {
                     let canRemove = state.permissions.contains(
                         "system:permissions:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
-                            action: "/admin/system/permissions/bulk-remove/",
+                            action: "/admin/system/permissions/remove/",
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
@@ -168,7 +168,7 @@ struct SystemPermissionTable: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                     ListTablePagination(

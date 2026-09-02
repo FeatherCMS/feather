@@ -18,7 +18,7 @@ protocol AdminListMediaAssetInteractor: Sendable {
         picker: AdminListMediaAssetModel.PickerState
     ) async throws -> AdminListMediaAssetModel
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws
 

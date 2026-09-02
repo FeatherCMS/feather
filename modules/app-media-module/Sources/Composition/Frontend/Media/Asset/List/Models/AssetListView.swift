@@ -647,9 +647,9 @@ extension AssetListView {
                 MediaPermissions.Assets.delete.rawValue
             )
             && !state.picker.isEnabled
-        return ListTableBulkRemoveForm(
+        return ListTableRemoveForm(
             state: .init(
-                action: "/admin/media/assets/bulk-remove/",
+                action: "/admin/media/assets/remove/",
                 page: state.page,
                 search: state.search,
                 canRemove: canRemove,
@@ -686,7 +686,7 @@ extension AssetListView {
                     }
                 }
                 .class("cms-table", "action-table")
-                .if(canRemove) { $0.class("bulk-select-table") }
+                .if(canRemove) { $0.class("select-table") }
             )
         )
     }

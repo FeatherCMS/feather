@@ -39,14 +39,6 @@ struct SystemVariableListOperation: SystemVariableOperation {
     }
 }
 
-struct SystemVariableFiltersOperation: SystemVariableOperation {
-    var responseMap: ResponseMap {
-        [
-            200: SystemVariableFiltersResponse().reference()
-        ]
-    }
-}
-
 struct SystemVariableSearchOperation: SystemVariableOperation {
     var searchQuery: SearchQuerySchema {
         .init(
@@ -72,8 +64,8 @@ struct SystemVariableSearchOperation: SystemVariableOperation {
     }
 }
 
-struct SystemVariableBulkDeleteOperation: SystemVariableOperation,
-    BulkDeleteOperation
+struct SystemVariableDeleteOperation: SystemVariableOperation,
+    DeleteOperation
 {
 }
 

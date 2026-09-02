@@ -44,7 +44,7 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
         )
     }
 
-    func renderBulkConfirmation(
+    func renderConfirmation(
         formId: String,
         selectedIds: [String],
         permissions: Set<String>
@@ -58,7 +58,7 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: breadcrumb(formId: formId, label: "Remove"),
                     title: "Remove contact form submissions",

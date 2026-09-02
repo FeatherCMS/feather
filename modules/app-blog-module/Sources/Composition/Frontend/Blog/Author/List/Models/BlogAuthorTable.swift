@@ -151,9 +151,9 @@ struct BlogAuthorTable: Component {
                     let canRemove = state.permissions.contains(
                         "blog:authors:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
-                            action: "/admin/blog/authors/bulk-remove/",
+                            action: "/admin/blog/authors/remove/",
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
@@ -243,7 +243,7 @@ struct BlogAuthorTable: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                     ListTablePagination(

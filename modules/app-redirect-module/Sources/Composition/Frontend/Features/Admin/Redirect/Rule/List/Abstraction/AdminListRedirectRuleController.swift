@@ -9,12 +9,12 @@ protocol AdminListRedirectRuleController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getRedirectRulesBulkRemoveConfirmation(
+    func getRedirectRulesRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postRedirectRulesBulkRemove(
+    func postRedirectRulesRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -30,12 +30,12 @@ extension AdminListRedirectRuleController {
             use: getRedirectRules
         )
         router.get(
-            "/admin/redirect/rules/bulk-remove/",
-            use: getRedirectRulesBulkRemoveConfirmation
+            "/admin/redirect/rules/remove/",
+            use: getRedirectRulesRemoveConfirmation
         )
         router.post(
-            "/admin/redirect/rules/bulk-remove/",
-            use: postRedirectRulesBulkRemove
+            "/admin/redirect/rules/remove/",
+            use: postRedirectRulesRemove
         )
     }
 }

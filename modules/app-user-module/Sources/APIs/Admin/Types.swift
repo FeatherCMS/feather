@@ -21,14 +21,13 @@ public protocol APIProtocol: Sendable {
     func userIdentityCreate(_ input: Operations.UserIdentityCreate.Input)
         async throws -> Operations.UserIdentityCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityBulkDelete)`.
-    func userIdentityBulkDelete(
-        _ input: Operations.UserIdentityBulkDelete.Input
-    ) async throws -> Operations.UserIdentityBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/user/identities/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/filters/get(userIdentityFilters)`.
-    func userIdentityFilters(_ input: Operations.UserIdentityFilters.Input)
-        async throws -> Operations.UserIdentityFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
+    func userIdentityDelete(_ input: Operations.UserIdentityDelete.Input)
+        async throws -> Operations.UserIdentityDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/user/identities/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)`.
+    func userIdentityList(_ input: Operations.UserIdentityList.Input)
+        async throws -> Operations.UserIdentityList.Output
     /// - Remark: HTTP `POST /api/v1/admin/user/identities/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/search/post(userIdentitySearch)`.
     func userIdentitySearch(_ input: Operations.UserIdentitySearch.Input)
@@ -50,13 +49,13 @@ public protocol APIProtocol: Sendable {
     func userRoleCreate(_ input: Operations.UserRoleCreate.Input) async throws
         -> Operations.UserRoleCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleBulkDelete)`.
-    func userRoleBulkDelete(_ input: Operations.UserRoleBulkDelete.Input)
-        async throws -> Operations.UserRoleBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/user/roles/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/filters/get(userRoleFilters)`.
-    func userRoleFilters(_ input: Operations.UserRoleFilters.Input) async throws
-        -> Operations.UserRoleFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
+    func userRoleDelete(_ input: Operations.UserRoleDelete.Input) async throws
+        -> Operations.UserRoleDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/user/roles/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)`.
+    func userRoleList(_ input: Operations.UserRoleList.Input) async throws
+        -> Operations.UserRoleList.Output
     /// - Remark: HTTP `POST /api/v1/admin/user/roles/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/search/post(userRoleSearch)`.
     func userRoleSearch(_ input: Operations.UserRoleSearch.Input) async throws
@@ -95,25 +94,25 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityBulkDelete)`.
-    public func userIdentityBulkDelete(
-        headers: Operations.UserIdentityBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.UserIdentityBulkDelete.Output {
-        try await userIdentityBulkDelete(
-            Operations.UserIdentityBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
+    public func userIdentityDelete(
+        headers: Operations.UserIdentityDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.UserIdentityDelete.Output {
+        try await userIdentityDelete(
+            Operations.UserIdentityDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/user/identities/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/filters/get(userIdentityFilters)`.
-    public func userIdentityFilters(
-        headers: Operations.UserIdentityFilters.Input.Headers = .init()
-    ) async throws -> Operations.UserIdentityFilters.Output {
-        try await userIdentityFilters(
-            Operations.UserIdentityFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/user/identities/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)`.
+    public func userIdentityList(
+        headers: Operations.UserIdentityList.Input.Headers = .init()
+    ) async throws -> Operations.UserIdentityList.Output {
+        try await userIdentityList(
+            Operations.UserIdentityList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/user/identities/search`.
@@ -186,26 +185,24 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleBulkDelete)`.
-    public func userRoleBulkDelete(
-        headers: Operations.UserRoleBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.UserRoleBulkDelete.Output {
-        try await userRoleBulkDelete(
-            Operations.UserRoleBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
+    public func userRoleDelete(
+        headers: Operations.UserRoleDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.UserRoleDelete.Output {
+        try await userRoleDelete(
+            Operations.UserRoleDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/user/roles/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/filters/get(userRoleFilters)`.
-    public func userRoleFilters(
-        headers: Operations.UserRoleFilters.Input.Headers = .init()
-    ) async throws -> Operations.UserRoleFilters.Output {
-        try await userRoleFilters(
-            Operations.UserRoleFilters.Input(headers: headers)
-        )
+    /// - Remark: HTTP `GET /api/v1/admin/user/roles/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)`.
+    public func userRoleList(
+        headers: Operations.UserRoleList.Input.Headers = .init()
+    ) async throws -> Operations.UserRoleList.Output {
+        try await userRoleList(Operations.UserRoleList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/search/post(userRoleSearch)`.
@@ -349,120 +346,49 @@ public enum Components {
         public typealias UserIdentityIDField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityRoleIDListSchema`.
         public typealias UserIdentityRoleIDListSchema = [Swift.String]
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema`.
-        public struct BulkDeleteRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/ids`.
+        /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
+        public struct DeleteRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/summary`.
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/results`.
+            public var results: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/summary`.
             public var summary: Swift.Bool
-            /// Creates a new `BulkDeleteRequestSchema`.
+            /// Creates a new `DeleteRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
+            ///   - results:
             ///   - summary:
             public init(
                 ids: [Swift.String],
+                results: Swift.Bool,
                 summary: Swift.Bool
             ) {
                 self.ids = ids
+                self.results = results
                 self.summary = summary
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
+                case results
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema`.
-        public struct BulkDeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload`.
-            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/id`.
-                public var id: Swift.String
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                @frozen
-                public enum StatusPayload: String, Codable, Hashable, Sendable,
-                    CaseIterable
-                {
-                    case deleted = "deleted"
-                    case notFound = "not_found"
-                    case forbidden = "forbidden"
-                }
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                public var status:
-                    Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                /// Creates a new `ResultsPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - id:
-                ///   - status:
-                public init(
-                    id: Swift.String,
-                    status: Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                ) {
-                    self.id = id
-                    self.status = status
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case status
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public typealias ResultsPayload = [Components.Schemas
-                .BulkDeleteResponseSchema.ResultsPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public var results:
-                Components.Schemas.BulkDeleteResponseSchema.ResultsPayload
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public struct SummaryPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/requested`.
-                public var requested: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/deleted`.
-                public var deleted: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/notFound`.
-                public var notFound: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/forbidden`.
-                public var forbidden: Swift.Int
-                /// Creates a new `SummaryPayload`.
-                ///
-                /// - Parameters:
-                ///   - requested:
-                ///   - deleted:
-                ///   - notFound:
-                ///   - forbidden:
-                public init(
-                    requested: Swift.Int,
-                    deleted: Swift.Int,
-                    notFound: Swift.Int,
-                    forbidden: Swift.Int
-                ) {
-                    self.requested = requested
-                    self.deleted = deleted
-                    self.notFound = notFound
-                    self.forbidden = forbidden
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case requested
-                    case deleted
-                    case notFound
-                    case forbidden
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public var summary:
-                Components.Schemas.BulkDeleteResponseSchema.SummaryPayload
-            /// Creates a new `BulkDeleteResponseSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
+        public struct DeleteResponseSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
+            public var results: Components.Schemas.DeleteResultListSchema?
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
+            public var summary: Components.Schemas.DeleteSummarySchema?
+            /// Creates a new `DeleteResponseSchema`.
             ///
             /// - Parameters:
             ///   - results:
             ///   - summary:
             public init(
-                results: Components.Schemas.BulkDeleteResponseSchema
-                    .ResultsPayload,
-                summary: Components.Schemas.BulkDeleteResponseSchema
-                    .SummaryPayload
+                results: Components.Schemas.DeleteResultListSchema? = nil,
+                summary: Components.Schemas.DeleteSummarySchema? = nil
             ) {
                 self.results = results
                 self.summary = summary
@@ -472,23 +398,105 @@ public enum Components {
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchFilterSchema`.
-        public struct SearchFilterSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/SearchFilterSchema/search`.
-            public var search: Components.Schemas.SearchStringField?
-            /// Creates a new `SearchFilterSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            @frozen
+            public enum StatusPayload: String, Codable, Hashable, Sendable,
+                CaseIterable
+            {
+                case deleted = "deleted"
+                case notFound = "not_found"
+                case forbidden = "forbidden"
+            }
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            public var status:
+                Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
+            /// Creates a new `DeleteResultListSchemaPayload`.
             ///
             /// - Parameters:
-            ///   - search:
-            public init(search: Components.Schemas.SearchStringField? = nil) {
-                self.search = search
+            ///   - id:
+            ///   - status:
+            public init(
+                id: Swift.String,
+                status: Components.Schemas.DeleteResultListSchemaPayload
+                    .StatusPayload
+            ) {
+                self.id = id
+                self.status = status
             }
             public enum CodingKeys: String, CodingKey {
-                case search
+                case id
+                case status
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
-        public typealias SearchStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public typealias DeleteResultListSchema = [Components.Schemas
+            .DeleteResultListSchemaPayload]
+        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
+        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
+            public var requested: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
+            public var deleted: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
+            public var omitted: Swift.Int
+            /// Creates a new `DeleteSummarySchema`.
+            ///
+            /// - Parameters:
+            ///   - requested:
+            ///   - deleted:
+            ///   - omitted:
+            public init(
+                requested: Swift.Int,
+                deleted: Swift.Int,
+                omitted: Swift.Int
+            ) {
+                self.requested = requested
+                self.deleted = deleted
+                self.omitted = omitted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case requested
+                case deleted
+                case omitted
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserIdentityListSchema`.
+        public typealias UserIdentityListSchema = [Components.Schemas
+            .UserIdentityListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema`.
+        public struct UserIdentityListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/id`.
+            public var id: Components.Schemas.UserIdentityIDField
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/status`.
+            public var status: Components.Schemas.UserIdentityStatusField
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/roles`.
+            public var roles: Components.Schemas.UserIdentityRoleIDListSchema
+            /// Creates a new `UserIdentityListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - status:
+            ///   - roles:
+            public init(
+                id: Components.Schemas.UserIdentityIDField,
+                status: Components.Schemas.UserIdentityStatusField,
+                roles: Components.Schemas.UserIdentityRoleIDListSchema
+            ) {
+                self.id = id
+                self.status = status
+                self.roles = roles
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case status
+                case roles
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema`.
         public struct UserIdentityListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -621,6 +629,8 @@ public enum Components {
             case asc = "asc"
             case desc = "desc"
         }
+        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
+        public typealias SearchStringField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserRoleNameField`.
         public typealias UserRoleNameField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchSchema`.
@@ -673,35 +683,6 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema`.
-        public struct UserIdentityListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/id`.
-            public var id: Components.Schemas.UserIdentityIDField
-            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/status`.
-            public var status: Components.Schemas.UserIdentityStatusField
-            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/roles`.
-            public var roles: Components.Schemas.UserIdentityRoleIDListSchema
-            /// Creates a new `UserIdentityListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - status:
-            ///   - roles:
-            public init(
-                id: Components.Schemas.UserIdentityIDField,
-                status: Components.Schemas.UserIdentityStatusField,
-                roles: Components.Schemas.UserIdentityRoleIDListSchema
-            ) {
-                self.id = id
-                self.status = status
-                self.roles = roles
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case status
-                case roles
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema`.
@@ -813,6 +794,32 @@ public enum Components {
                 case id
                 case name
                 case notes
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserRoleListSchema`.
+        public typealias UserRoleListSchema = [Components.Schemas
+            .UserRoleListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/UserRoleListItemSchema`.
+        public struct UserRoleListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSchema/id`.
+            public var id: Components.Schemas.UserRoleIdField
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSchema/name`.
+            public var name: Components.Schemas.UserRoleNameField?
+            /// Creates a new `UserRoleListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            public init(
+                id: Components.Schemas.UserRoleIdField,
+                name: Components.Schemas.UserRoleNameField? = nil
+            ) {
+                self.id = id
+                self.name = name
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema`.
@@ -956,29 +963,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/UserRoleListItemSchema`.
-        public struct UserRoleListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSchema/id`.
-            public var id: Components.Schemas.UserRoleIdField
-            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSchema/name`.
-            public var name: Components.Schemas.UserRoleNameField?
-            /// Creates a new `UserRoleListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - name:
-            public init(
-                id: Components.Schemas.UserRoleIdField,
-                name: Components.Schemas.UserRoleNameField? = nil
-            ) {
-                self.id = id
-                self.name = name
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case name
-            }
-        }
         /// - Remark: Generated from `#/components/schemas/UserRolePatchSchema`.
         public struct UserRolePatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserRolePatchSchema/name`.
@@ -1023,10 +1007,10 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/UserIdentityCreateRequestBody/content/application\/json`.
             case json(Components.Schemas.UserIdentityCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody`.
-        @frozen public enum BulkDeleteRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody/content/application\/json`.
-            case json(Components.Schemas.BulkDeleteRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody`.
+        @frozen public enum DeleteRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
+            case json(Components.Schemas.DeleteRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/UserIdentityUpdateRequestBody`.
         @frozen public enum UserIdentityUpdateRequestBody: Sendable, Hashable {
@@ -1087,16 +1071,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BulkDeleteResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
+        public struct DeleteResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/DeleteResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
-                case json(Components.Schemas.BulkDeleteResponseSchema)
+                /// - Remark: Generated from `#/components/responses/DeleteResponse/content/application\/json`.
+                case json(Components.Schemas.DeleteResponseSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.BulkDeleteResponseSchema {
+                public var json: Components.Schemas.DeleteResponseSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1106,25 +1090,25 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BulkDeleteResponse.Body
-            /// Creates a new `BulkDeleteResponse`.
+            public var body: Components.Responses.DeleteResponse.Body
+            /// Creates a new `DeleteResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BulkDeleteResponse.Body) {
+            public init(body: Components.Responses.DeleteResponse.Body) {
                 self.body = body
             }
         }
-        public struct UserIdentityFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/UserIdentityFiltersResponse/content`.
+        public struct UserIdentityListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserIdentityListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/UserIdentityFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/UserIdentityListResponse/content/application\/json`.
+                case json(Components.Schemas.UserIdentityListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.UserIdentityListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1134,14 +1118,13 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body:
-                Components.Responses.UserIdentityFiltersResponse.Body
-            /// Creates a new `UserIdentityFiltersResponse`.
+            public var body: Components.Responses.UserIdentityListResponse.Body
+            /// Creates a new `UserIdentityListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.UserIdentityFiltersResponse.Body
+                body: Components.Responses.UserIdentityListResponse.Body
             ) {
                 self.body = body
             }
@@ -1212,16 +1195,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct UserRoleFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/UserRoleFiltersResponse/content`.
+        public struct UserRoleListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserRoleListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/UserRoleFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/UserRoleListResponse/content/application\/json`.
+                case json(Components.Schemas.UserRoleListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.UserRoleListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1231,13 +1214,12 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.UserRoleFiltersResponse.Body
-            /// Creates a new `UserRoleFiltersResponse`.
+            public var body: Components.Responses.UserRoleListResponse.Body
+            /// Creates a new `UserRoleListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.UserRoleFiltersResponse.Body)
-            {
+            public init(body: Components.Responses.UserRoleListResponse.Body) {
                 self.body = body
             }
         }
@@ -1460,15 +1442,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityBulkDelete)`.
-    public enum UserIdentityBulkDelete {
-        public static let id: Swift.String = "userIdentityBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
+    public enum UserIdentityDelete {
+        public static let id: Swift.String = "userIdentityDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserIdentityBulkDelete.AcceptableContentType
+                        Operations.UserIdentityDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1476,40 +1458,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserIdentityBulkDelete.AcceptableContentType
+                        Operations.UserIdentityDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserIdentityBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.UserIdentityDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.UserIdentityBulkDelete.Input.Headers =
-                    .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.UserIdentityDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -1528,15 +1509,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.UserIdentityBulkDelete.Output.Unauthorized
-            )
+            case unauthorized(Operations.UserIdentityDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1547,7 +1526,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.UserIdentityBulkDelete.Output.Unauthorized
+                Operations.UserIdentityDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1567,13 +1546,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserIdentityBulkDelete.Output.Forbidden)
+            case forbidden(Operations.UserIdentityDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1583,8 +1562,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.UserIdentityBulkDelete.Output.Forbidden
+            public var forbidden: Operations.UserIdentityDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -1632,16 +1610,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/user/identities/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/filters/get(userIdentityFilters)`.
-    public enum UserIdentityFilters {
-        public static let id: Swift.String = "userIdentityFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/user/identities/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)`.
+    public enum UserIdentityList {
+        public static let id: Swift.String = "userIdentityList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserIdentityFilters.AcceptableContentType
+                        Operations.UserIdentityList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1649,35 +1627,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserIdentityFilters.AcceptableContentType
+                        Operations.UserIdentityList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserIdentityFilters.Input.Headers
+            public var headers: Operations.UserIdentityList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.UserIdentityFilters.Input.Headers = .init()
+                headers: Operations.UserIdentityList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// UserIdentity filter response
+            /// UserIdentity list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/filters/get(userIdentityFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.UserIdentityFiltersResponse)
+            case ok(Components.Responses.UserIdentityListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.UserIdentityFiltersResponse {
+            public var ok: Components.Responses.UserIdentityListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -1696,15 +1674,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/filters/get(userIdentityFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.UserIdentityFilters.Output.Unauthorized
-            )
+            case unauthorized(Operations.UserIdentityList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/filters/get(userIdentityFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1715,7 +1691,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.UserIdentityFilters.Output.Unauthorized
+                Operations.UserIdentityList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1735,13 +1711,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/filters/get(userIdentityFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserIdentityFilters.Output.Forbidden)
+            case forbidden(Operations.UserIdentityList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/filters/get(userIdentityFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1751,9 +1727,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.UserIdentityFilters.Output.Forbidden
-            {
+            public var forbidden: Operations.UserIdentityList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -2826,15 +2800,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleBulkDelete)`.
-    public enum UserRoleBulkDelete {
-        public static let id: Swift.String = "userRoleBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
+    public enum UserRoleDelete {
+        public static let id: Swift.String = "userRoleDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserRoleBulkDelete.AcceptableContentType
+                        Operations.UserRoleDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2842,39 +2816,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserRoleBulkDelete.AcceptableContentType
+                        Operations.UserRoleDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserRoleBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.UserRoleDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.UserRoleBulkDelete.Input.Headers = .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.UserRoleDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -2893,13 +2867,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserRoleBulkDelete.Output.Unauthorized)
+            case unauthorized(Operations.UserRoleDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2910,7 +2884,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.UserRoleBulkDelete.Output.Unauthorized
+                Operations.UserRoleDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2930,13 +2904,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserRoleBulkDelete.Output.Forbidden)
+            case forbidden(Operations.UserRoleDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2946,8 +2920,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserRoleBulkDelete.Output.Forbidden
-            {
+            public var forbidden: Operations.UserRoleDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -2994,16 +2967,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/user/roles/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/filters/get(userRoleFilters)`.
-    public enum UserRoleFilters {
-        public static let id: Swift.String = "userRoleFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/user/roles/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)`.
+    public enum UserRoleList {
+        public static let id: Swift.String = "userRoleList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserRoleFilters.AcceptableContentType
+                        Operations.UserRoleList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3011,35 +2984,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserRoleFilters.AcceptableContentType
+                        Operations.UserRoleList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserRoleFilters.Input.Headers
+            public var headers: Operations.UserRoleList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.UserRoleFilters.Input.Headers = .init()
+                headers: Operations.UserRoleList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// UserRole filter response
+            /// UserRole list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/filters/get(userRoleFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.UserRoleFiltersResponse)
+            case ok(Components.Responses.UserRoleListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.UserRoleFiltersResponse {
+            public var ok: Components.Responses.UserRoleListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3058,13 +3031,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/filters/get(userRoleFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserRoleFilters.Output.Unauthorized)
+            case unauthorized(Operations.UserRoleList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/filters/get(userRoleFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3074,8 +3047,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.UserRoleFilters.Output.Unauthorized
+            public var unauthorized: Operations.UserRoleList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3095,13 +3067,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/filters/get(userRoleFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserRoleFilters.Output.Forbidden)
+            case forbidden(Operations.UserRoleList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/filters/get(userRoleFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3111,7 +3083,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserRoleFilters.Output.Forbidden {
+            public var forbidden: Operations.UserRoleList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):

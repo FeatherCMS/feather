@@ -143,10 +143,10 @@ struct WebMenuItemTable: Component {
                     let canRemove = state.permissions.contains(
                         "web:menu-items:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
                             action:
-                                "/admin/web/menus/\(state.menuId)/items/bulk-remove/",
+                                "/admin/web/menus/\(state.menuId)/items/remove/",
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
@@ -285,7 +285,7 @@ struct WebMenuItemTable: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                     if state.canReorder {

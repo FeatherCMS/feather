@@ -37,26 +37,26 @@ paths:
     delete:
       tags:
       - BlogPosts
-      operationId: blogPostBulkDelete
+      operationId: blogPostDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/blog/posts/filters:
+  /api/v1/admin/blog/posts/:
     get:
       tags:
       - BlogPosts
-      operationId: blogPostFilters
+      operationId: blogPostList
       responses:
         200:
-          $ref: '#/components/responses/BlogPostFiltersResponse'
+          $ref: '#/components/responses/BlogPostListResponse'
         401:
           description: Unauthorized
         403:
@@ -158,26 +158,26 @@ paths:
     delete:
       tags:
       - BlogAuthors
-      operationId: blogAuthorBulkDelete
+      operationId: blogAuthorDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/blog/authors/filters:
+  /api/v1/admin/blog/authors/:
     get:
       tags:
       - BlogAuthors
-      operationId: blogAuthorFilters
+      operationId: blogAuthorList
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorFiltersResponse'
+          $ref: '#/components/responses/BlogAuthorListResponse'
         401:
           description: Unauthorized
         403:
@@ -281,30 +281,30 @@ paths:
     delete:
       tags:
       - BlogAuthorLinks
-      operationId: blogAuthorLinkBulkDelete
+      operationId: blogAuthorLinkDelete
       parameters:
       - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/blog/authors/{blogAuthorId}/links/filters:
+  /api/v1/admin/blog/authors/{blogAuthorId}/links/:
     get:
       tags:
       - BlogAuthorLinks
-      operationId: blogAuthorLinkFilters
+      operationId: blogAuthorLinkList
       parameters:
       - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorLinkFiltersResponse'
+          $ref: '#/components/responses/BlogAuthorLinkListResponse'
         401:
           description: Unauthorized
         403:
@@ -440,26 +440,26 @@ paths:
     delete:
       tags:
       - BlogTags
-      operationId: blogTagBulkDelete
+      operationId: blogTagDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/blog/tags/filters:
+  /api/v1/admin/blog/tags/:
     get:
       tags:
       - BlogTags
-      operationId: blogTagFilters
+      operationId: blogTagList
       responses:
         200:
-          $ref: '#/components/responses/BlogTagFiltersResponse'
+          $ref: '#/components/responses/BlogTagListResponse'
         401:
           description: Unauthorized
         403:
@@ -699,7 +699,7 @@ components:
     AdminWebMetadataReferenceIDField:
       type: string
       example: wp_home
-    BulkDeleteRequestSchema:
+    DeleteRequestSchema:
       type: object
       properties:
         ids:
@@ -707,138 +707,61 @@ components:
           items:
             type: string
             example: id1
+        results:
+          type: boolean
+          example: true
         summary:
           type: boolean
           example: true
       required:
       - ids
+      - results
       - summary
-    BulkDeleteResponseSchema:
+    DeleteResponseSchema:
       type: object
       properties:
         results:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: id1
-              status:
-                type: string
-                enum:
-                - deleted
-                - not_found
-                - forbidden
-                example: deleted
-            required:
-            - id
-            - status
+          $ref: '#/components/schemas/DeleteResultListSchema'
         summary:
-          type: object
-          properties:
-            requested:
-              type: integer
-              example: 1
-            deleted:
-              type: integer
-              example: 1
-            notFound:
-              type: integer
-              example: 1
-            forbidden:
-              type: integer
-              example: 1
-          required:
-          - requested
-          - deleted
-          - notFound
-          - forbidden
-      required:
-      - results
-      - summary
-    SearchFilterSchema:
+          $ref: '#/components/schemas/DeleteSummarySchema'
+    DeleteResultListSchema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: id1
+          status:
+            type: string
+            enum:
+            - deleted
+            - not_found
+            - forbidden
+            example: deleted
+        required:
+        - id
+        - status
+    DeleteSummarySchema:
       type: object
       properties:
-        search:
-          $ref: '#/components/schemas/SearchStringField'
-    SearchStringField:
-      type: string
-      example: foo
-    BlogPostListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - title
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
+        requested:
+          type: integer
+          example: 1
+        deleted:
+          type: integer
+          example: 1
+        omitted:
+          type: integer
+          example: 1
       required:
-      - page
-      - filters
-    SearchPageSchema:
-      type: object
-      properties:
-        size:
-          $ref: '#/components/schemas/SearchPageSizeField'
-        number:
-          $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
-    SearchPageSizeField:
-      type: integer
-      example: 20
-    SearchPageNumberField:
-      type: integer
-      example: 1
-    SortDirection:
-      type: string
-      enum:
-      - asc
-      - desc
-      example: asc
-    BlogPostListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/BlogPostListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/BlogPostListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
+      - requested
+      - deleted
+      - omitted
+    BlogPostListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogPostListItemSchema'
     BlogPostListItemSchema:
       type: object
       properties:
@@ -877,6 +800,85 @@ components:
       type: number
       format: double
       example: 1.76e+9
+    BlogPostListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+    SearchPageSizeField:
+      type: integer
+      example: 20
+    SearchPageNumberField:
+      type: integer
+      example: 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      example: asc
+    SearchStringField:
+      type: string
+      example: foo
+    BlogPostListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/BlogPostListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/BlogPostListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
     BlogPostPatchSchema:
       type: object
       properties:
@@ -953,59 +955,10 @@ components:
       - metadata
       - createdAt
       - updatedAt
-    BlogAuthorListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - key
-                - name
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - page
-      - filters
-    BlogAuthorListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/BlogAuthorListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/BlogAuthorListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
+    BlogAuthorListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogAuthorListItemSchema'
     BlogAuthorListItemSchema:
       type: object
       properties:
@@ -1038,6 +991,61 @@ components:
       type: number
       format: double
       example: 1.76e+9
+    BlogAuthorListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - key
+                - name
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    BlogAuthorListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/BlogAuthorListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/BlogAuthorListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
     BlogAuthorPatchSchema:
       type: object
       properties:
@@ -1124,61 +1132,10 @@ components:
       - notes
       - createdAt
       - updatedAt
-    BlogAuthorLinkListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - label
-                - url
-                - priority
-                - permission
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - page
-      - filters
-    BlogAuthorLinkListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/BlogAuthorLinkListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/BlogAuthorLinkListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
+    BlogAuthorLinkListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogAuthorLinkListItemSchema'
     BlogAuthorLinkListItemSchema:
       type: object
       properties:
@@ -1236,6 +1193,63 @@ components:
       type: number
       format: double
       example: 1.76e+9
+    BlogAuthorLinkListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - label
+                - url
+                - priority
+                - permission
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    BlogAuthorLinkListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/BlogAuthorLinkListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/BlogAuthorLinkListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
     BlogAuthorLinkPatchSchema:
       type: object
       properties:
@@ -1363,58 +1377,10 @@ components:
       - metadata
       - createdAt
       - updatedAt
-    BlogTagListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - title
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - page
-      - filters
-    BlogTagListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/BlogTagListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/BlogTagListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
+    BlogTagListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogTagListItemSchema'
     BlogTagListItemSchema:
       type: object
       properties:
@@ -1450,6 +1416,60 @@ components:
       type: number
       format: double
       example: 1.76e+9
+    BlogTagListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    BlogTagListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/BlogTagListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/BlogTagListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
     BlogTagPatchSchema:
       type: object
       properties:
@@ -1471,18 +1491,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogPostDetailSchema'
-    BulkDeleteResponse:
-      description: Bulk delete response
+    DeleteResponse:
+      description: Delete response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteResponseSchema'
-    BlogPostFiltersResponse:
-      description: BlogPost filter response
+            $ref: '#/components/schemas/DeleteResponseSchema'
+    BlogPostListResponse:
+      description: BlogPost list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/BlogPostListSchema'
     BlogPostListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1495,12 +1515,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogAuthorDetailSchema'
-    BlogAuthorFiltersResponse:
-      description: BlogAuthor filter response
+    BlogAuthorListResponse:
+      description: BlogAuthor list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/BlogAuthorListSchema'
     BlogAuthorListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1513,12 +1533,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogAuthorLinkDetailSchema'
-    BlogAuthorLinkFiltersResponse:
-      description: BlogAuthorLink filter response
+    BlogAuthorLinkListResponse:
+      description: BlogAuthorLink list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/BlogAuthorLinkListSchema'
     BlogAuthorLinkListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1537,12 +1557,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogTagDetailSchema'
-    BlogTagFiltersResponse:
-      description: BlogTag filter response
+    BlogTagListResponse:
+      description: BlogTag list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/BlogTagListSchema'
     BlogTagListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1592,11 +1612,11 @@ components:
           schema:
             $ref: '#/components/schemas/BlogPostCreateSchema'
       required: true
-    BulkDeleteRequestBody:
+    DeleteRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+            $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
     BlogPostUpdateRequestBody:
       content:

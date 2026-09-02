@@ -54,8 +54,9 @@ struct AdminAPIUserCredentialDeleteTests {
                         token: authentication
                     )
                 ],
-                body: Components.Schemas.BulkDeleteRequestSchema(
+                body: Components.Schemas.DeleteRequestSchema(
                     ids: [created.id],
+                    results: false,
                     summary: true
                 )
             )

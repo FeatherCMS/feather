@@ -100,9 +100,9 @@ public struct MediaFolderDatabaseRepository: MediaFolderRepository {
     }
 
     public func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         try await MediaFolderTable(connection: context.connection)
-            .delete(id: id)
+            .delete(ids: ids)
     }
 }

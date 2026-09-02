@@ -50,8 +50,8 @@ struct NewsletterIssueUpdateOperation: NewsletterIssueIDOperation {
         ]
     }
 }
-struct NewsletterIssueBulkDeleteOperation: NewsletterIssueOperation,
-    BulkDeleteOperation
+struct NewsletterIssueDeleteOperation: NewsletterIssueOperation,
+    DeleteOperation
 {
 }
 struct NewsletterIssueTestEmailOperation: NewsletterIssueIDOperation {

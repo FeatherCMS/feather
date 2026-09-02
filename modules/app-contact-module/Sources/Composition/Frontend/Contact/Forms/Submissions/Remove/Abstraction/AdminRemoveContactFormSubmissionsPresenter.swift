@@ -12,7 +12,7 @@ protocol AdminRemoveContactFormSubmissionsPresenter: Sendable {
         item: AdminContactFormSubmissionItem,
         permissions: Set<String>
     ) -> HTMLResponse
-    func renderBulkConfirmation(
+    func renderConfirmation(
         formId: String,
         selectedIds: [String],
         permissions: Set<String>

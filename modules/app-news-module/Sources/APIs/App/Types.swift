@@ -258,18 +258,18 @@ public enum Components {
             public var imageURL: Components.Schemas.WebMetadataImageURLField
             /// - Remark: Generated from `#/components/schemas/WebMetadataContentSchema/canonicalURL`.
             public var canonicalURL:
-                Components.Schemas.WebMetadataCanonicalURLField?
+                Components.Schemas.WebMetadataCanonicalURLField
             /// - Remark: Generated from `#/components/schemas/WebMetadataContentSchema/noIndex`.
             public var noIndex: Components.Schemas.WebMetadataNoIndexField
             /// - Remark: Generated from `#/components/schemas/WebMetadataContentSchema/cssCodeInjection`.
             public var cssCodeInjection:
-                Components.Schemas.WebMetadataCodeInjectionField?
+                Components.Schemas.WebMetadataCodeInjectionField
             /// - Remark: Generated from `#/components/schemas/WebMetadataContentSchema/javascriptCodeInjection`.
             public var javascriptCodeInjection:
-                Components.Schemas.WebMetadataCodeInjectionField?
+                Components.Schemas.WebMetadataCodeInjectionField
             /// - Remark: Generated from `#/components/schemas/WebMetadataContentSchema/structuredDataCodeInjection`.
             public var structuredDataCodeInjection:
-                Components.Schemas.WebMetadataCodeInjectionField?
+                Components.Schemas.WebMetadataCodeInjectionField
             /// Creates a new `WebMetadataContentSchema`.
             ///
             /// - Parameters:
@@ -297,15 +297,14 @@ public enum Components {
                 title: Components.Schemas.WebMetadataTitleField,
                 excerpt: Components.Schemas.WebMetadataExcerptField,
                 imageURL: Components.Schemas.WebMetadataImageURLField,
-                canonicalURL: Components.Schemas.WebMetadataCanonicalURLField? =
-                    nil,
+                canonicalURL: Components.Schemas.WebMetadataCanonicalURLField,
                 noIndex: Components.Schemas.WebMetadataNoIndexField,
                 cssCodeInjection: Components.Schemas
-                    .WebMetadataCodeInjectionField? = nil,
+                    .WebMetadataCodeInjectionField,
                 javascriptCodeInjection: Components.Schemas
-                    .WebMetadataCodeInjectionField? = nil,
+                    .WebMetadataCodeInjectionField,
                 structuredDataCodeInjection: Components.Schemas
-                    .WebMetadataCodeInjectionField? = nil
+                    .WebMetadataCodeInjectionField
             ) {
                 self.slug = slug
                 self.template = template

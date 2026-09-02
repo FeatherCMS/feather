@@ -64,9 +64,7 @@ public struct TagDatabaseRepository: TagRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(
-                reference: .existing(.init(type: "blog.tag", id: id))
-            )
+            .find(referenceType: "blog.tag", referenceId: id)
         else { return nil }
         return tag.asDomain(metadata: metadata)
     }
@@ -91,9 +89,9 @@ public struct TagDatabaseRepository: TagRepository {
     }
 
     public func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         let table = TagTable(connection: context.connection)
-        return try await table.delete(id: id)
+        return try await table.delete(ids: ids)
     }
 }

@@ -17,17 +17,17 @@ struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
     }
     func remove(formId: String, id: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.contactFormSubmissionBulkDelete(
+            _ = try await client.contactFormSubmissionDelete(
                 path: .init(contactFormId: formId),
-                body: .json(.init(ids: [id], summary: true))
+                body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
     }
-    func bulkRemove(formId: String, ids: [String]) async throws {
+    func remove(formId: String, ids: [String]) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.contactFormSubmissionBulkDelete(
+            _ = try await client.contactFormSubmissionDelete(
                 path: .init(contactFormId: formId),
-                body: .json(.init(ids: ids, summary: true))
+                body: .json(.init(ids: ids, results: false, summary: true))
             )
         }
     }

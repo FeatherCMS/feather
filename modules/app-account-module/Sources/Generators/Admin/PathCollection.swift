@@ -11,8 +11,8 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/admin/account/users/{userId}/settings":
                 AdminAccountSettingsPathItems(),
             "api/v1/admin/account/invitations": AccountInvitationPathItems(),
-            "api/v1/admin/account/invitations/filters":
-                AccountInvitationFiltersPathItems(),
+            "api/v1/admin/account/invitations/":
+                AccountInvitationListPathItems(),
             "api/v1/admin/account/invitations/search":
                 AccountInvitationSearchPathItems(),
             "api/v1/admin/account/invitations/{accountInvitationId}":

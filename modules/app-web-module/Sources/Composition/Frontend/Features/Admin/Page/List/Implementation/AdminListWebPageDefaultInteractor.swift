@@ -14,7 +14,7 @@ struct AdminListWebPageDefaultInteractor:
         try await repository.listWebPages(page: page, search: search)
     }
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws {
         for id in ids {

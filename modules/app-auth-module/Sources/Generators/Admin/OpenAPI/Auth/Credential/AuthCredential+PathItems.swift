@@ -2,15 +2,15 @@ import FeatherOpenAPI
 
 struct AuthCredentialPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { AuthCredentialCreateOperation() }
-    var delete: OperationRepresentable? { AuthCredentialBulkDeleteOperation() }
+    var delete: OperationRepresentable? { AuthCredentialDeleteOperation() }
 }
 
 struct AuthCredentialSearchPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { AuthCredentialSearchOperation() }
 }
 
-struct AuthCredentialFiltersPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AuthCredentialFiltersOperation() }
+struct AuthCredentialListPathItems: PathItemRepresentable {
+    var get: OperationRepresentable? { AuthCredentialListOperation() }
 }
 
 struct AuthCredentialIdPathItems: PathItemRepresentable {

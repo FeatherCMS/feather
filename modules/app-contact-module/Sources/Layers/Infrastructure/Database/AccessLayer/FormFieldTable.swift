@@ -177,37 +177,45 @@ struct FormFieldTable {
     }
 
     func delete(
-        id: String,
+        ids: [String],
         formId: String?
-    ) async throws -> Bool {
-        if formId == nil {
-            return try await deleteCatalog(id: id)
+    ) async throws -> [String] {
+        guard !ids.isEmpty else { return [] }
+        let values =
+            ids.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        if let formId {
+            return try await connection.run(
+                query: #"""
+                    DELETE FROM contact_form_field
+                    WHERE id IN (\#(unescaped: values))
+                      AND EXISTS (
+                          SELECT 1
+                          FROM contact_form_form_field
+                          WHERE form_id = \#(formId) AND field_id = contact_form_field.id
+                      )
+                    RETURNING id;
+                    """#
+            ) { sequence in
+                try await sequence.collect()
+                    .map {
+                        try $0.decode(column: "id", as: String.self)
+                    }
+            }
         }
         return try await connection.run(
             query: #"""
                 DELETE FROM contact_form_field
-                WHERE id = \#(id)
-                  AND EXISTS (
-                      SELECT 1
-                      FROM contact_form_form_field
-                      WHERE form_id = \#(formId) AND field_id = \#(id)
-                  )
+                WHERE id IN (\#(unescaped: values))
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().first != nil
-        }
-    }
-
-    private func deleteCatalog(id: String) async throws -> Bool {
-        try await connection.run(
-            query: #"""
-                DELETE FROM contact_form_field
-                WHERE id = \#(id)
-                RETURNING id;
-                """#
-        ) { sequence in
-            try await sequence.collect().first != nil
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 }

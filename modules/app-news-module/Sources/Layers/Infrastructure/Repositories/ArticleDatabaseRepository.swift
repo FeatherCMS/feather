@@ -80,9 +80,7 @@ public struct ArticleDatabaseRepository: ArticleRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(
-                reference: .existing(.init(type: "news.article", id: id))
-            )
+            .find(referenceType: "news.article", referenceId: id)
         else { return nil }
         return article.asDomain(
             metadata: metadata,
@@ -127,11 +125,9 @@ public struct ArticleDatabaseRepository: ArticleRepository {
     }
 
     public func delete(
-        id: String
-    ) async throws -> Bool {
-        try await ArticleCategoryTable(connection: context.connection)
-            .removeArticle(id: id)
+        ids: [String]
+    ) async throws -> [String] {
         let table = ArticleTable(connection: context.connection)
-        return try await table.delete(id: id)
+        return try await table.delete(ids: ids)
     }
 }

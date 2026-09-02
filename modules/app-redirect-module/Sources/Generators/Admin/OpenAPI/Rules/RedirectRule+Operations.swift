@@ -39,14 +39,6 @@ struct RedirectRuleListOperation: RedirectRuleOperation {
     }
 }
 
-struct RedirectRuleFiltersOperation: RedirectRuleOperation {
-    var responseMap: ResponseMap {
-        [
-            200: RedirectRuleFiltersResponse().reference()
-        ]
-    }
-}
-
 struct RedirectRuleSearchOperation: RedirectRuleOperation {
     var searchQuery: SearchQuerySchema {
         .init(
@@ -73,8 +65,8 @@ struct RedirectRuleSearchOperation: RedirectRuleOperation {
     }
 }
 
-struct RedirectRuleBulkDeleteOperation: RedirectRuleOperation,
-    BulkDeleteOperation
+struct RedirectRuleDeleteOperation: RedirectRuleOperation,
+    DeleteOperation
 {
 }
 

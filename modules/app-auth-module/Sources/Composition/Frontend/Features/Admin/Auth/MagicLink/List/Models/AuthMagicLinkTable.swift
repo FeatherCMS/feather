@@ -139,9 +139,9 @@ struct AuthMagicLinkTable: Component {
                     let canRemove = state.permissions.contains(
                         "auth:magic-links:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
-                            action: "/admin/auth/magic-links/bulk-remove/",
+                            action: "/admin/auth/magic-links/remove/",
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
@@ -230,7 +230,7 @@ struct AuthMagicLinkTable: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                     ListTablePagination(

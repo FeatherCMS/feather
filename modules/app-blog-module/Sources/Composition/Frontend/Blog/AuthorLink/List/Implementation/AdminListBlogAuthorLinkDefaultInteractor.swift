@@ -27,7 +27,7 @@ struct AdminListBlogAuthorLinkDefaultInteractor:
         )
     }
 
-    func bulkRemove(
+    func remove(
         menuId: String,
         ids: [String]
     ) async throws {

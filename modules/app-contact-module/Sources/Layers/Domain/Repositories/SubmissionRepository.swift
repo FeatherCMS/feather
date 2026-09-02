@@ -19,6 +19,6 @@ public protocol SubmissionRepository: Repository {
     ) async throws -> Submission
 
     func delete(
-        id: String
-    ) async throws -> Bool
+        ids: [String]
+    ) async throws -> [String]
 }

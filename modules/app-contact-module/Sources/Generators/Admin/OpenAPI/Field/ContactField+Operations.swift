@@ -58,8 +58,8 @@ struct ContactFieldUpdateOperation: ContactFieldIDOperation {
         ]
     }
 }
-struct ContactFieldBulkDeleteOperation: ContactFieldOperation,
-    BulkDeleteOperation
+struct ContactFieldDeleteOperation: ContactFieldOperation,
+    DeleteOperation
 {}
 
 struct FormFieldListOperation: FormFieldOperation {
@@ -94,6 +94,6 @@ struct FormFieldUpdateOperation: FormFieldIDOperation {
         ]
     }
 }
-struct FormFieldBulkDeleteOperation: FormFieldOperation,
-    BulkDeleteOperation
+struct FormFieldDeleteOperation: FormFieldOperation,
+    DeleteOperation
 {}

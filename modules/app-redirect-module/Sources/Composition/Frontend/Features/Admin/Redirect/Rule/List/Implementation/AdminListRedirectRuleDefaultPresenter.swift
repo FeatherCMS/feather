@@ -79,7 +79,7 @@ struct AdminListRedirectRuleDefaultPresenter:
         )
     }
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         page: Int,
         search: String?,
         selectedIds: [String],
@@ -88,20 +88,20 @@ struct AdminListRedirectRuleDefaultPresenter:
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove selected rules",
-            description: "Confirm bulk remove",
+            description: "Confirm remove",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: redirectRuleBreadcrumbState(),
                     title: "Remove selected rules",
                     message:
                         "Are you sure you want to remove these selected rules? This action cannot be undone.",
-                    action: "/admin/redirect/rules/bulk-remove/",
-                    cancelLink: ListBulkRemoveRedirect.location(
+                    action: "/admin/redirect/rules/remove/",
+                    cancelLink: ListRemoveRedirect.location(
                         path: "/admin/redirect/rules/",
                         page: page,
                         search: search,

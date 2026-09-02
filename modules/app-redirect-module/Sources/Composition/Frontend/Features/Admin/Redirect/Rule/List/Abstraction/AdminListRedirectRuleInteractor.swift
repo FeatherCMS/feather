@@ -11,7 +11,7 @@ protocol AdminListRedirectRuleInteractor: Sendable {
         statusCode: StatusCode?
     ) async throws -> AdminListRedirectRuleModel
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws
 }

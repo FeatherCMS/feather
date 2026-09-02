@@ -22,7 +22,7 @@ protocol AdminListMediaProcessorPresenter: Sendable {
         error: String?
     ) -> HTMLResponse
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         page: Int,
         search: String?,
         selectedIds: [String],

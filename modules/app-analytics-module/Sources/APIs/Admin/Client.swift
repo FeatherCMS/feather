@@ -38,17 +38,17 @@ public struct Client: APIProtocol {
     private var converter: Converter {
         client.converter
     }
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)`.
-    public func analyticsLogFilters(
-        _ input: Operations.AnalyticsLogFilters.Input
-    ) async throws -> Operations.AnalyticsLogFilters.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    public func analyticsLogList(_ input: Operations.AnalyticsLogList.Input)
+        async throws -> Operations.AnalyticsLogList.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.AnalyticsLogFilters.id,
+            forOperation: Operations.AnalyticsLogList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/analytics/logs/filters",
+                    template: "/api/v1/admin/analytics/logs/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -68,8 +68,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body:
-                        Components.Responses.AnalyticsLogFiltersResponse.Body
+                    let body: Components.Responses.AnalyticsLogListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -79,7 +78,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.AnalyticsLogFiltersSchema.self,
+                            Components.Schemas.AnalyticsLogListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

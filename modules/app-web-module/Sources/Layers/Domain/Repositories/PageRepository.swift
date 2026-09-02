@@ -20,7 +20,5 @@ public protocol PageRepository: Repository {
         _ model: Page
     ) async throws -> Page
 
-    func delete(
-        id: String
-    ) async throws -> Bool
+    func delete(ids: [String]) async throws -> [String]
 }

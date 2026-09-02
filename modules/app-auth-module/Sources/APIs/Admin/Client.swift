@@ -412,13 +412,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
-    public func userIdentitySessionBulkDelete(
-        _ input: Operations.UserIdentitySessionBulkDelete.Input
-    ) async throws -> Operations.UserIdentitySessionBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)`.
+    public func userIdentitySessionDelete(
+        _ input: Operations.UserIdentitySessionDelete.Input
+    ) async throws -> Operations.UserIdentitySessionDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.UserIdentitySessionBulkDelete.id,
+            forOperation: Operations.UserIdentitySessionDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/identities/{}/sessions",
@@ -452,7 +452,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -462,7 +462,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -569,13 +569,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)`.
-    public func authCredentialBulkDelete(
-        _ input: Operations.AuthCredentialBulkDelete.Input
-    ) async throws -> Operations.AuthCredentialBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)`.
+    public func authCredentialDelete(
+        _ input: Operations.AuthCredentialDelete.Input
+    ) async throws -> Operations.AuthCredentialDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.AuthCredentialBulkDelete.id,
+            forOperation: Operations.AuthCredentialDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/auth/credentials",
@@ -607,7 +607,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -617,7 +617,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -645,17 +645,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)`.
-    public func authCredentialFilters(
-        _ input: Operations.AuthCredentialFilters.Input
-    ) async throws -> Operations.AuthCredentialFilters.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)`.
+    public func authCredentialList(_ input: Operations.AuthCredentialList.Input)
+        async throws -> Operations.AuthCredentialList.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.AuthCredentialFilters.id,
+            forOperation: Operations.AuthCredentialList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/auth/credentials/filters",
+                    template: "/api/v1/admin/auth/credentials/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -676,7 +676,7 @@ public struct Client: APIProtocol {
                         in: response.headerFields
                     )
                     let body:
-                        Components.Responses.AuthCredentialFiltersResponse.Body
+                        Components.Responses.AuthCredentialListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -686,8 +686,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.AuthCredentialSearchFilterSchema
-                                .self,
+                            Components.Schemas.AuthCredentialListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1114,13 +1113,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
-    public func authRolePermissionBulkDelete(
-        _ input: Operations.AuthRolePermissionBulkDelete.Input
-    ) async throws -> Operations.AuthRolePermissionBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)`.
+    public func authRolePermissionDelete(
+        _ input: Operations.AuthRolePermissionDelete.Input
+    ) async throws -> Operations.AuthRolePermissionDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.AuthRolePermissionBulkDelete.id,
+            forOperation: Operations.AuthRolePermissionDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/auth/role-permissions",
@@ -1152,7 +1151,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1162,7 +1161,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1350,13 +1349,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)`.
-    public func authMagicLinkBulkDelete(
-        _ input: Operations.AuthMagicLinkBulkDelete.Input
-    ) async throws -> Operations.AuthMagicLinkBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)`.
+    public func authMagicLinkDelete(
+        _ input: Operations.AuthMagicLinkDelete.Input
+    ) async throws -> Operations.AuthMagicLinkDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.AuthMagicLinkBulkDelete.id,
+            forOperation: Operations.AuthMagicLinkDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/auth/magic-links",
@@ -1388,7 +1387,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1398,7 +1397,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1426,17 +1425,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)`.
-    public func authMagicLinkFilters(
-        _ input: Operations.AuthMagicLinkFilters.Input
-    ) async throws -> Operations.AuthMagicLinkFilters.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)`.
+    public func authMagicLinkList(_ input: Operations.AuthMagicLinkList.Input)
+        async throws -> Operations.AuthMagicLinkList.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.AuthMagicLinkFilters.id,
+            forOperation: Operations.AuthMagicLinkList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/auth/magic-links/filters",
+                    template: "/api/v1/admin/auth/magic-links/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1457,7 +1456,7 @@ public struct Client: APIProtocol {
                         in: response.headerFields
                     )
                     let body:
-                        Components.Responses.AuthMagicLinkFiltersResponse.Body
+                        Components.Responses.AuthMagicLinkListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1467,7 +1466,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.AuthMagicLinkListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

@@ -189,17 +189,26 @@ struct SubscriberTable {
 
     func delete(
         newsletterId: String,
-        email: String
-    ) async throws -> Bool {
-        try await connection.run(
+        emails: [String]
+    ) async throws -> [String] {
+        guard !emails.isEmpty else { return [] }
+        let values =
+            emails.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        return try await connection.run(
             query: #"""
                 DELETE FROM newsletter_subscriber
                 WHERE newsletter_id = \#(newsletterId)
-                  AND email = \#(email)
-                RETURNING newsletter_id;
+                  AND email IN (\#(unescaped: values))
+                RETURNING email;
                 """#
         ) { sequence in
-            try await sequence.collect().first != nil
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "email", as: String.self)
+                }
         }
     }
 }

@@ -111,13 +111,12 @@ public struct SubscriberDatabaseRepository:
 
     public func delete(
         newsletterId: String,
-        email: String
-    ) async throws -> Bool {
+        emails: [String]
+    ) async throws -> [String] {
         let table = SubscriberTable(connection: context.connection)
-        let deleted = try await table.delete(
+        return try await table.delete(
             newsletterId: newsletterId,
-            email: email
+            emails: emails
         )
-        return deleted
     }
 }

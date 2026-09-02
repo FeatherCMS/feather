@@ -58,7 +58,7 @@ struct AuthRolePermissionSearchOperation: AuthRolePermissionOperation {
     }
 }
 
-struct AuthRolePermissionBulkDeleteOperation: AuthRolePermissionOperation,
-    BulkDeleteOperation
+struct AuthRolePermissionDeleteOperation: AuthRolePermissionOperation,
+    DeleteOperation
 {
 }

@@ -27,16 +27,14 @@ public struct RemovePermission: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(
-            id: String
-        ) {
-            self.id = id
+        public init(ids: [String]) {
+            self.ids = ids
         }
     }
 
-    public typealias Output = Bool
+    public typealias Output = [String]
 
     public func execute(
         subject: Subject,
@@ -48,10 +46,8 @@ public struct RemovePermission: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let id = input.id
-
         return try await transaction.run { scope in
-            try await scope.permission.delete(id: id)
+            try await scope.permission.delete(ids: input.ids)
         }
     }
 }

@@ -2,15 +2,15 @@ import FeatherOpenAPI
 
 struct WebMetadataPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { WebMetadataCreateOperation() }
-    var delete: OperationRepresentable? { WebMetadataBulkDeleteOperation() }
+    var delete: OperationRepresentable? { WebMetadataDeleteOperation() }
 }
 
 struct WebMetadataSearchPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { WebMetadataSearchOperation() }
 }
 
-struct WebMetadataFiltersPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { WebMetadataFiltersOperation() }
+struct WebMetadataListPathItems: PathItemRepresentable {
+    var get: OperationRepresentable? { WebMetadataListOperation() }
 }
 
 struct WebMetadataIdPathItems: PathItemRepresentable {

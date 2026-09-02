@@ -17,7 +17,7 @@ protocol AdminListBlogTagInteractor: Sendable {
         search: String?
     ) async throws -> AdminListBlogTagModel
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws
 }

@@ -55,7 +55,7 @@ struct AdminNewsletterSubscribersListView: Component {
                 )
             }
             else {
-                ListTableBulkRemoveForm(
+                ListTableRemoveForm(
                     state: .init(
                         action: "/admin/newsletters/subscribers/remove/",
                         page: 1,
@@ -144,7 +144,7 @@ struct AdminNewsletterSubscribersListView: Component {
                             }
                         }
                         .class("cms-table", "action-table")
-                        .if(canRemove) { $0.class("bulk-select-table") }
+                        .if(canRemove) { $0.class("select-table") }
                     )
                 )
             }

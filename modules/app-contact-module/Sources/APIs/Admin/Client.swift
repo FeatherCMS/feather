@@ -184,13 +184,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormBulkDelete)`.
-    public func contactFormBulkDelete(
-        _ input: Operations.ContactFormBulkDelete.Input
-    ) async throws -> Operations.ContactFormBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)`.
+    public func contactFormDelete(_ input: Operations.ContactFormDelete.Input)
+        async throws -> Operations.ContactFormDelete.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.ContactFormBulkDelete.id,
+            forOperation: Operations.ContactFormDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form",
@@ -222,7 +222,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -232,7 +232,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -563,13 +563,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldBulkDelete)`.
-    public func formFieldBulkDelete(
-        _ input: Operations.FormFieldBulkDelete.Input
-    ) async throws -> Operations.FormFieldBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)`.
+    public func formFieldDelete(_ input: Operations.FormFieldDelete.Input)
+        async throws -> Operations.FormFieldDelete.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.FormFieldBulkDelete.id,
+            forOperation: Operations.FormFieldDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}/field",
@@ -603,7 +603,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -613,7 +613,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -942,13 +942,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldBulkDelete)`.
-    public func contactFieldBulkDelete(
-        _ input: Operations.ContactFieldBulkDelete.Input
-    ) async throws -> Operations.ContactFieldBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)`.
+    public func contactFieldDelete(_ input: Operations.ContactFieldDelete.Input)
+        async throws -> Operations.ContactFieldDelete.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.ContactFieldBulkDelete.id,
+            forOperation: Operations.ContactFieldDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/field",
@@ -980,7 +980,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -990,7 +990,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1245,13 +1245,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionBulkDelete)`.
-    public func contactFormSubmissionBulkDelete(
-        _ input: Operations.ContactFormSubmissionBulkDelete.Input
-    ) async throws -> Operations.ContactFormSubmissionBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)`.
+    public func contactFormSubmissionDelete(
+        _ input: Operations.ContactFormSubmissionDelete.Input
+    ) async throws -> Operations.ContactFormSubmissionDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.ContactFormSubmissionBulkDelete.id,
+            forOperation: Operations.ContactFormSubmissionDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}/submission",
@@ -1285,7 +1285,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1295,7 +1295,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

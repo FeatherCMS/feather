@@ -3,7 +3,7 @@ import FeatherOpenAPI
 struct AuthRolePermissionPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { AuthRolePermissionCreateOperation() }
     var delete: OperationRepresentable? {
-        AuthRolePermissionBulkDeleteOperation()
+        AuthRolePermissionDeleteOperation()
     }
 }
 

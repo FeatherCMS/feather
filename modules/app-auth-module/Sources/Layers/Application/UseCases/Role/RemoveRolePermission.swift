@@ -26,22 +26,17 @@ public struct RemoveRolePermission: UseCase {
     }
 
     public struct Input: DTO {
-        public let roleId: String
-        public let permissionId: String
+        public let ids: [String]
 
-        public init(
-            roleId: String,
-            permissionId: String
-        ) {
-            self.roleId = roleId
-            self.permissionId = permissionId
+        public init(ids: [String]) {
+            self.ids = ids
         }
     }
 
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {
@@ -49,10 +44,7 @@ public struct RemoveRolePermission: UseCase {
         }
 
         return try await transaction.run { scope in
-            try await scope.rolePermissions.delete(
-                roleId: input.roleId,
-                permissionId: input.permissionId
-            )
+            try await scope.rolePermissions.delete(ids: input.ids)
         }
     }
 }

@@ -25,7 +25,7 @@ protocol AdminListAuthMagicLinkPresenter: Sendable {
         error: OpenAPIRepositoryError
     ) -> HTMLResponse
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         selectedIds: [String],
         page: Int,
         search: String?,

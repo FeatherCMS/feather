@@ -41,14 +41,6 @@ struct AuthMagicLinkListOperation: AuthMagicLinkOperation {
     }
 }
 
-struct AuthMagicLinkFiltersOperation: AuthMagicLinkOperation {
-    var responseMap: ResponseMap {
-        [
-            200: AuthMagicLinkFiltersResponse().reference()
-        ]
-    }
-}
-
 struct AuthMagicLinkSearchOperation: AuthMagicLinkOperation {
     var searchQuery: SearchQuerySchema {
         .init(
@@ -81,8 +73,8 @@ struct AuthMagicLinkSearchOperation: AuthMagicLinkOperation {
     }
 }
 
-struct AuthMagicLinkBulkDeleteOperation: AuthMagicLinkOperation,
-    BulkDeleteOperation
+struct AuthMagicLinkDeleteOperation: AuthMagicLinkOperation,
+    DeleteOperation
 {
 }
 

@@ -91,9 +91,9 @@ public struct IssueDatabaseRepository:
     }
 
     public func delete(
-        id: String
-    ) async throws -> Bool {
-        try await IssueTable(connection: context.connection)
-            .delete(id: id)
+        ids: [String]
+    ) async throws -> [String] {
+        let table = IssueTable(connection: context.connection)
+        return try await table.delete(ids: ids)
     }
 }

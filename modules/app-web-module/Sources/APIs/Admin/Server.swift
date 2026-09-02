@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataBulkDelete(
+                try await server.webMetadataDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataFilters(
+                try await server.webMetadataList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -67,7 +67,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/web/metadata/filters"
+                "/api/v1/admin/web/metadata/"
             )
         )
         try transport.register(
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webPageBulkDelete(
+                try await server.webPageDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -150,7 +150,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webPageFilters(
+                try await server.webPageList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -158,7 +158,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/web/pages/filters"
+                "/api/v1/admin/web/pages/"
             )
         )
         try transport.register(
@@ -228,7 +228,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuBulkDelete(
+                try await server.webMenuDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -241,7 +241,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuFilters(
+                try await server.webMenuList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -249,7 +249,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/web/menus/filters"
+                "/api/v1/admin/web/menus/"
             )
         )
         try transport.register(
@@ -319,7 +319,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuItemBulkDelete(
+                try await server.webMenuItemDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -332,7 +332,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuItemFilters(
+                try await server.webMenuItemList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -340,7 +340,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/web/menus/{webMenuId}/items/filters"
+                "/api/v1/admin/web/menus/{webMenuId}/items/"
             )
         )
         try transport.register(
@@ -525,8 +525,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)`.
-    fileprivate func webMetadataBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)`.
+    fileprivate func webMetadataDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -535,21 +535,20 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataBulkDelete.id,
+            forOperation: Operations.WebMetadataDelete.id,
             using: {
-                APIHandler.webMetadataBulkDelete($0)
+                APIHandler.webMetadataDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMetadataBulkDelete.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.WebMetadataDelete.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -559,7 +558,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -570,7 +569,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.WebMetadataBulkDelete.Input(
+                return Operations.WebMetadataDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -611,9 +610,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)`.
-    fileprivate func webMetadataFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)`.
+    fileprivate func webMetadataList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -622,18 +621,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataFilters.id,
+            forOperation: Operations.WebMetadataList.id,
             using: {
-                APIHandler.webMetadataFilters($0)
+                APIHandler.webMetadataList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMetadataFilters.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.WebMetadataList.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
-                return Operations.WebMetadataFilters.Input(headers: headers)
+                )
+                return Operations.WebMetadataList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -1117,8 +1115,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)`.
-    fileprivate func webPageBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)`.
+    fileprivate func webPageDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1127,12 +1125,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPageBulkDelete.id,
+            forOperation: Operations.WebPageDelete.id,
             using: {
-                APIHandler.webPageBulkDelete($0)
+                APIHandler.webPageDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebPageBulkDelete.Input.Headers = .init(
+                let headers: Operations.WebPageDelete.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -1140,7 +1138,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1150,7 +1148,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1161,7 +1159,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.WebPageBulkDelete.Input(
+                return Operations.WebPageDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1202,9 +1200,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)`.
-    fileprivate func webPageFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)`.
+    fileprivate func webPageList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1213,17 +1211,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPageFilters.id,
+            forOperation: Operations.WebPageList.id,
             using: {
-                APIHandler.webPageFilters($0)
+                APIHandler.webPageList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebPageFilters.Input.Headers = .init(
+                let headers: Operations.WebPageList.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
                 )
-                return Operations.WebPageFilters.Input(headers: headers)
+                return Operations.WebPageList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -1707,8 +1705,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)`.
-    fileprivate func webMenuBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)`.
+    fileprivate func webMenuDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1717,12 +1715,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuBulkDelete.id,
+            forOperation: Operations.WebMenuDelete.id,
             using: {
-                APIHandler.webMenuBulkDelete($0)
+                APIHandler.webMenuDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMenuBulkDelete.Input.Headers = .init(
+                let headers: Operations.WebMenuDelete.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -1730,7 +1728,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1740,7 +1738,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1751,7 +1749,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.WebMenuBulkDelete.Input(
+                return Operations.WebMenuDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1792,9 +1790,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)`.
-    fileprivate func webMenuFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)`.
+    fileprivate func webMenuList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1803,17 +1801,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuFilters.id,
+            forOperation: Operations.WebMenuList.id,
             using: {
-                APIHandler.webMenuFilters($0)
+                APIHandler.webMenuList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMenuFilters.Input.Headers = .init(
+                let headers: Operations.WebMenuList.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
                 )
-                return Operations.WebMenuFilters.Input(headers: headers)
+                return Operations.WebMenuList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -2306,8 +2304,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)`.
-    fileprivate func webMenuItemBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)`.
+    fileprivate func webMenuItemDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2316,12 +2314,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemBulkDelete.id,
+            forOperation: Operations.WebMenuItemDelete.id,
             using: {
-                APIHandler.webMenuItemBulkDelete($0)
+                APIHandler.webMenuItemDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemBulkDelete.Input.Path = .init(
+                let path: Operations.WebMenuItemDelete.Input.Path = .init(
                     webMenuId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "webMenuId",
@@ -2329,16 +2327,15 @@ extension UniversalServer where APIHandler: APIProtocol {
                             .self
                     )
                 )
-                let headers: Operations.WebMenuItemBulkDelete.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.WebMenuItemDelete.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2348,7 +2345,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2359,7 +2356,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.WebMenuItemBulkDelete.Input(
+                return Operations.WebMenuItemDelete.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -2401,9 +2398,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)`.
-    fileprivate func webMenuItemFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)`.
+    fileprivate func webMenuItemList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2412,12 +2409,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemFilters.id,
+            forOperation: Operations.WebMenuItemList.id,
             using: {
-                APIHandler.webMenuItemFilters($0)
+                APIHandler.webMenuItemList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemFilters.Input.Path = .init(
+                let path: Operations.WebMenuItemList.Input.Path = .init(
                     webMenuId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "webMenuId",
@@ -2425,13 +2422,12 @@ extension UniversalServer where APIHandler: APIProtocol {
                             .self
                     )
                 )
-                let headers: Operations.WebMenuItemFilters.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.WebMenuItemList.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
-                return Operations.WebMenuItemFilters.Input(
+                )
+                return Operations.WebMenuItemList.Input(
                     path: path,
                     headers: headers
                 )

@@ -9,7 +9,7 @@ import WebStandards
 
 struct AdminRemoveContactSubmissionsOpenAPIRepository {
     let api: ContactAdminAPIClient
-    func bulkRemove(ids: [String]) async throws {
+    func remove(ids: [String]) async throws {
         let grouped = Dictionary(grouping: ids) { token in
             token.split(separator: ":", maxSplits: 1).first.map(String.init)
                 ?? ""
@@ -21,9 +21,11 @@ struct AdminRemoveContactSubmissionsOpenAPIRepository {
                     return parts.count == 2 ? String(parts[1]) : nil
                 }
                 guard !submissionIds.isEmpty else { continue }
-                _ = try await client.contactFormSubmissionBulkDelete(
+                _ = try await client.contactFormSubmissionDelete(
                     path: .init(contactFormId: formId),
-                    body: .json(.init(ids: submissionIds, summary: true))
+                    body: .json(
+                        .init(ids: submissionIds, results: false, summary: true)
+                    )
                 )
             }
         }

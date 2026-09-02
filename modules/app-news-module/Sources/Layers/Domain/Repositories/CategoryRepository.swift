@@ -21,6 +21,6 @@ public protocol CategoryRepository: Repository {
     ) async throws -> Category
 
     func delete(
-        id: String
-    ) async throws -> Bool
+        ids: [String]
+    ) async throws -> [String]
 }

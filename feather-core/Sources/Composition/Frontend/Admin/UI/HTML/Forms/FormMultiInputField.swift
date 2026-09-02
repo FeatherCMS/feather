@@ -75,7 +75,7 @@ public struct FormMultiInputField: Component, FlowContent {
         )
     }
 
-    public func selectors() -> [any Selector] {
+    public func selectors() -> [any CSS.Selector] {
         Class("field-label__optional") {
             Color(.variable("cms-tertiary-font"))
         }
@@ -88,14 +88,17 @@ public struct FormMultiInputField: Component, FlowContent {
             FlexWrap(.wrap)
             AlignItems(.center)
             Gap(6.px)
-            Padding(8.px)
+            Padding(top: 0.px, right: 8.px, bottom: 0.px, left: 8.px)
             Border(1.px, .solid, .variable("cms-gray-2"))
             BorderRadius(10.px)
             Background(color: .variable("cms-white"))
         }
         Custom(".form-multi-input-field__control:focus-within") {
             BorderColor(.variable("cms-gray-3"))
-            UnsafeRawProperty(name: "outline", value: "2px solid var(--cms-gray-5)")
+            UnsafeRawProperty(
+                name: "outline",
+                value: "2px solid var(--cms-gray-5)"
+            )
             UnsafeRawProperty(name: "outline-offset", value: "1px")
         }
         Class("form-multi-input-field__chip") {
@@ -118,7 +121,9 @@ public struct FormMultiInputField: Component, FlowContent {
             Color(.variable("cms-light-font"))
             Cursor(.pointer)
         }
-        Custom(".form-multi-input-field__remove:hover, .form-multi-input-field__remove:focus-visible") {
+        Custom(
+            ".form-multi-input-field__remove:hover, .form-multi-input-field__remove:focus-visible"
+        ) {
             Background(color: .variable("cms-gray-3"))
             UnsafeRawProperty(name: "outline", value: "none")
         }
@@ -152,7 +157,9 @@ public struct FormMultiInputField: Component, FlowContent {
                         .ariaDescribedBy(describedBy)
                         .ariaInvalid(state.error == nil ? .false : .true)
                         .if(state.error != nil) { $0.ariaErrorMessage(errorID) }
-                        .if(state.isRequired && normalizedValues.isEmpty) { $0.required() }
+                        .if(state.isRequired && normalizedValues.isEmpty) {
+                            $0.required()
+                        }
                         .if(state.isDisabled) { $0.disabled() }
                 }
                 .class("form-multi-input-field__control")
@@ -193,7 +200,8 @@ public struct FormMultiInputField: Component, FlowContent {
             if !state.isRequired {
                 Span(" (Optional)").class("field-label__optional")
             }
-        }.class("field-label")
+        }
+        .class("field-label")
     }
 
     private func chip(
@@ -303,6 +311,13 @@ public struct FormMultiInputField: Component, FlowContent {
                         input.value = parts[parts.length - 1];
                     }
                 });
+
+                var form = root.closest("form");
+                if (form) {
+                    form.addEventListener("submit", function () {
+                        add(input.value);
+                    });
+                }
 
                 control.addEventListener("click", function (event) {
                     var remove = event.target.closest(".form-multi-input-field__remove");

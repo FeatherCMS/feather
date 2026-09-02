@@ -29,26 +29,26 @@ paths:
     delete:
       tags:
       - RedirectRules
-      operationId: redirectRuleBulkDelete
+      operationId: redirectRuleDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/redirect/rules/filters:
+  /api/v1/admin/redirect/rules/:
     get:
       tags:
       - RedirectRules
-      operationId: redirectRuleFilters
+      operationId: redirectRuleList
       responses:
         200:
-          $ref: '#/components/responses/RedirectRuleFiltersResponse'
+          $ref: '#/components/responses/RedirectRuleListResponse'
         401:
           description: Unauthorized
         403:
@@ -176,7 +176,7 @@ components:
       - source
       - destination
       - statusCode
-    BulkDeleteRequestSchema:
+    DeleteRequestSchema:
       type: object
       properties:
         ids:
@@ -184,64 +184,89 @@ components:
           items:
             type: string
             example: id1
+        results:
+          type: boolean
+          example: true
         summary:
           type: boolean
           example: true
       required:
       - ids
+      - results
       - summary
-    BulkDeleteResponseSchema:
+    DeleteResponseSchema:
       type: object
       properties:
         results:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: id1
-              status:
-                type: string
-                enum:
-                - deleted
-                - not_found
-                - forbidden
-                example: deleted
-            required:
-            - id
-            - status
+          $ref: '#/components/schemas/DeleteResultListSchema'
         summary:
-          type: object
-          properties:
-            requested:
-              type: integer
-              example: 1
-            deleted:
-              type: integer
-              example: 1
-            notFound:
-              type: integer
-              example: 1
-            forbidden:
-              type: integer
-              example: 1
-          required:
-          - requested
-          - deleted
-          - notFound
-          - forbidden
-      required:
-      - results
-      - summary
-    SearchFilterSchema:
+          $ref: '#/components/schemas/DeleteSummarySchema'
+    DeleteResultListSchema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: id1
+          status:
+            type: string
+            enum:
+            - deleted
+            - not_found
+            - forbidden
+            example: deleted
+        required:
+        - id
+        - status
+    DeleteSummarySchema:
       type: object
       properties:
-        search:
-          $ref: '#/components/schemas/SearchStringField'
-    SearchStringField:
+        requested:
+          type: integer
+          example: 1
+        deleted:
+          type: integer
+          example: 1
+        omitted:
+          type: integer
+          example: 1
+      required:
+      - requested
+      - deleted
+      - omitted
+    RedirectRuleListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/RedirectRuleListItemSchema'
+    RedirectRuleListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/RedirectRuleIdField'
+        source:
+          $ref: '#/components/schemas/RedirectRuleSourceField'
+        destination:
+          $ref: '#/components/schemas/RedirectRuleDestinationField'
+        statusCode:
+          $ref: '#/components/schemas/RedirectRuleStatusCodeField'
+      required:
+      - id
+      - source
+      - destination
+      - statusCode
+    RedirectRuleIdField:
       type: string
-      example: foo
+      example: rr_home_old
+    RedirectRuleSourceField:
+      type: string
+      example: /old-home
+    RedirectRuleDestinationField:
+      type: string
+      example: /new-home
+    RedirectRuleStatusCodeField:
+      type: integer
+      example: 301
     RedirectRuleListItemSearchQuerySchema:
       type: object
       properties:
@@ -301,9 +326,6 @@ components:
     RedirectRuleSearchField:
       type: string
       example: /old-home
-    RedirectRuleStatusCodeField:
-      type: integer
-      example: 301
     RedirectRuleListItemSearchSchema:
       type: object
       properties:
@@ -325,31 +347,6 @@ components:
       required:
       - query
       - data
-    RedirectRuleListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/RedirectRuleIdField'
-        source:
-          $ref: '#/components/schemas/RedirectRuleSourceField'
-        destination:
-          $ref: '#/components/schemas/RedirectRuleDestinationField'
-        statusCode:
-          $ref: '#/components/schemas/RedirectRuleStatusCodeField'
-      required:
-      - id
-      - source
-      - destination
-      - statusCode
-    RedirectRuleIdField:
-      type: string
-      example: rr_home_old
-    RedirectRuleSourceField:
-      type: string
-      example: /old-home
-    RedirectRuleDestinationField:
-      type: string
-      example: /new-home
     RedirectRulePatchSchema:
       type: object
       properties:
@@ -368,18 +365,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/RedirectRuleDetailSchema'
-    BulkDeleteResponse:
-      description: Bulk delete response
+    DeleteResponse:
+      description: Delete response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteResponseSchema'
-    RedirectRuleFiltersResponse:
-      description: RedirectRule filter response
+            $ref: '#/components/schemas/DeleteResponseSchema'
+    RedirectRuleListResponse:
+      description: RedirectRule list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/RedirectRuleListSchema'
     RedirectRuleListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -401,11 +398,11 @@ components:
           schema:
             $ref: '#/components/schemas/RedirectRuleCreateSchema'
       required: true
-    BulkDeleteRequestBody:
+    DeleteRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+            $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
     RedirectRuleUpdateRequestBody:
       content:

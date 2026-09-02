@@ -64,9 +64,7 @@ public struct AuthorDatabaseRepository: AuthorRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(
-                reference: .existing(.init(type: "blog.author", id: id))
-            )
+            .find(referenceType: "blog.author", referenceId: id)
         else { return nil }
         return author.asDomain(metadata: metadata)
     }
@@ -92,9 +90,9 @@ public struct AuthorDatabaseRepository: AuthorRepository {
     }
 
     public func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         let table = AuthorTable(connection: context.connection)
-        return try await table.delete(id: id)
+        return try await table.delete(ids: ids)
     }
 }

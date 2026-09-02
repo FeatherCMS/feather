@@ -130,6 +130,10 @@ public struct SearchFilterSchema: ObjectSchemaRepresentable {
         properties.merge(additionalProperties) { _, new in new }
         return properties
     }
+
+    public var example: AnyCodable? {
+        AnyCodable(["search": "foo"])
+    }
 }
 
 struct SearchPageSchema: ObjectSchemaRepresentable {

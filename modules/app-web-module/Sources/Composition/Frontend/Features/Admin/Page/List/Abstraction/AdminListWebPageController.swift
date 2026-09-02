@@ -9,12 +9,12 @@ protocol AdminListWebPageController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getWebPagesBulkRemoveConfirmation(
+    func getWebPagesRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postWebPagesBulkRemove(
+    func postWebPagesRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -35,12 +35,12 @@ extension AdminListWebPageController {
             use: getWebPages
         )
         router.get(
-            "/admin/web/pages/bulk-remove/",
-            use: getWebPagesBulkRemoveConfirmation
+            "/admin/web/pages/remove/",
+            use: getWebPagesRemoveConfirmation
         )
         router.post(
-            "/admin/web/pages/bulk-remove/",
-            use: postWebPagesBulkRemove
+            "/admin/web/pages/remove/",
+            use: postWebPagesRemove
         )
         router.post(
             "/admin/web/pages/{id}/status/",

@@ -79,9 +79,9 @@ struct AdminListBlogAuthorLinkOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.blogAuthorLinkBulkDelete(
+            _ = try await client.blogAuthorLinkDelete(
                 path: .init(blogAuthorId: menuId),
-                body: .json(.init(ids: [id], summary: true))
+                body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
     }

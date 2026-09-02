@@ -8,5 +8,5 @@ import WebStandards
 
 protocol AdminRemoveContactFormInteractor: Sendable {
     func get(id: String) async throws -> AdminContactFormDetailsItem
-    func bulkRemove(ids: [String]) async throws
+    func remove(ids: [String]) async throws
 }

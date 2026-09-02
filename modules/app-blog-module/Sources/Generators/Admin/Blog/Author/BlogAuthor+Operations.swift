@@ -33,10 +33,10 @@ struct BlogAuthorCreateOperation: BlogAuthorOperation {
     }
 }
 
-struct BlogAuthorFiltersOperation: BlogAuthorOperation {
+struct BlogAuthorListOperation: BlogAuthorOperation {
     var responseMap: ResponseMap {
         [
-            200: BlogAuthorFiltersResponse().reference()
+            200: BlogAuthorListResponse().reference()
         ]
     }
 }
@@ -102,7 +102,7 @@ struct BlogAuthorPatchOperation: BlogAuthorIDOperation {
     }
 }
 
-struct BlogAuthorBulkDeleteOperation: BlogAuthorOperation,
-    BulkDeleteOperation
+struct BlogAuthorDeleteOperation: BlogAuthorOperation,
+    DeleteOperation
 {
 }

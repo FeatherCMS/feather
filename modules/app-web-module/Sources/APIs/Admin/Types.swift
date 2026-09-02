@@ -17,13 +17,13 @@ public protocol APIProtocol: Sendable {
     func webMetadataCreate(_ input: Operations.WebMetadataCreate.Input)
         async throws -> Operations.WebMetadataCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)`.
-    func webMetadataBulkDelete(_ input: Operations.WebMetadataBulkDelete.Input)
-        async throws -> Operations.WebMetadataBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)`.
-    func webMetadataFilters(_ input: Operations.WebMetadataFilters.Input)
-        async throws -> Operations.WebMetadataFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)`.
+    func webMetadataDelete(_ input: Operations.WebMetadataDelete.Input)
+        async throws -> Operations.WebMetadataDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)`.
+    func webMetadataList(_ input: Operations.WebMetadataList.Input) async throws
+        -> Operations.WebMetadataList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/search/post(webMetadataSearch)`.
     func webMetadataSearch(_ input: Operations.WebMetadataSearch.Input)
@@ -45,13 +45,13 @@ public protocol APIProtocol: Sendable {
     func webPageCreate(_ input: Operations.WebPageCreate.Input) async throws
         -> Operations.WebPageCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)`.
-    func webPageBulkDelete(_ input: Operations.WebPageBulkDelete.Input)
-        async throws -> Operations.WebPageBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)`.
-    func webPageFilters(_ input: Operations.WebPageFilters.Input) async throws
-        -> Operations.WebPageFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)`.
+    func webPageDelete(_ input: Operations.WebPageDelete.Input) async throws
+        -> Operations.WebPageDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)`.
+    func webPageList(_ input: Operations.WebPageList.Input) async throws
+        -> Operations.WebPageList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/pages/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/search/post(webPageSearch)`.
     func webPageSearch(_ input: Operations.WebPageSearch.Input) async throws
@@ -73,13 +73,13 @@ public protocol APIProtocol: Sendable {
     func webMenuCreate(_ input: Operations.WebMenuCreate.Input) async throws
         -> Operations.WebMenuCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)`.
-    func webMenuBulkDelete(_ input: Operations.WebMenuBulkDelete.Input)
-        async throws -> Operations.WebMenuBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)`.
-    func webMenuFilters(_ input: Operations.WebMenuFilters.Input) async throws
-        -> Operations.WebMenuFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)`.
+    func webMenuDelete(_ input: Operations.WebMenuDelete.Input) async throws
+        -> Operations.WebMenuDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)`.
+    func webMenuList(_ input: Operations.WebMenuList.Input) async throws
+        -> Operations.WebMenuList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/search/post(webMenuSearch)`.
     func webMenuSearch(_ input: Operations.WebMenuSearch.Input) async throws
@@ -101,13 +101,13 @@ public protocol APIProtocol: Sendable {
     func webMenuItemCreate(_ input: Operations.WebMenuItemCreate.Input)
         async throws -> Operations.WebMenuItemCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)`.
-    func webMenuItemBulkDelete(_ input: Operations.WebMenuItemBulkDelete.Input)
-        async throws -> Operations.WebMenuItemBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)`.
-    func webMenuItemFilters(_ input: Operations.WebMenuItemFilters.Input)
-        async throws -> Operations.WebMenuItemFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)`.
+    func webMenuItemDelete(_ input: Operations.WebMenuItemDelete.Input)
+        async throws -> Operations.WebMenuItemDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)`.
+    func webMenuItemList(_ input: Operations.WebMenuItemList.Input) async throws
+        -> Operations.WebMenuItemList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/search/post(webMenuItemSearch)`.
     func webMenuItemSearch(_ input: Operations.WebMenuItemSearch.Input)
@@ -154,25 +154,25 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)`.
-    public func webMetadataBulkDelete(
-        headers: Operations.WebMetadataBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.WebMetadataBulkDelete.Output {
-        try await webMetadataBulkDelete(
-            Operations.WebMetadataBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)`.
+    public func webMetadataDelete(
+        headers: Operations.WebMetadataDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.WebMetadataDelete.Output {
+        try await webMetadataDelete(
+            Operations.WebMetadataDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)`.
-    public func webMetadataFilters(
-        headers: Operations.WebMetadataFilters.Input.Headers = .init()
-    ) async throws -> Operations.WebMetadataFilters.Output {
-        try await webMetadataFilters(
-            Operations.WebMetadataFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)`.
+    public func webMetadataList(
+        headers: Operations.WebMetadataList.Input.Headers = .init()
+    ) async throws -> Operations.WebMetadataList.Output {
+        try await webMetadataList(
+            Operations.WebMetadataList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/search`.
@@ -245,26 +245,24 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)`.
-    public func webPageBulkDelete(
-        headers: Operations.WebPageBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.WebPageBulkDelete.Output {
-        try await webPageBulkDelete(
-            Operations.WebPageBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)`.
+    public func webPageDelete(
+        headers: Operations.WebPageDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.WebPageDelete.Output {
+        try await webPageDelete(
+            Operations.WebPageDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)`.
-    public func webPageFilters(
-        headers: Operations.WebPageFilters.Input.Headers = .init()
-    ) async throws -> Operations.WebPageFilters.Output {
-        try await webPageFilters(
-            Operations.WebPageFilters.Input(headers: headers)
-        )
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)`.
+    public func webPageList(
+        headers: Operations.WebPageList.Input.Headers = .init()
+    ) async throws -> Operations.WebPageList.Output {
+        try await webPageList(Operations.WebPageList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/search/post(webPageSearch)`.
@@ -336,26 +334,24 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)`.
-    public func webMenuBulkDelete(
-        headers: Operations.WebMenuBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.WebMenuBulkDelete.Output {
-        try await webMenuBulkDelete(
-            Operations.WebMenuBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)`.
+    public func webMenuDelete(
+        headers: Operations.WebMenuDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.WebMenuDelete.Output {
+        try await webMenuDelete(
+            Operations.WebMenuDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)`.
-    public func webMenuFilters(
-        headers: Operations.WebMenuFilters.Input.Headers = .init()
-    ) async throws -> Operations.WebMenuFilters.Output {
-        try await webMenuFilters(
-            Operations.WebMenuFilters.Input(headers: headers)
-        )
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)`.
+    public func webMenuList(
+        headers: Operations.WebMenuList.Input.Headers = .init()
+    ) async throws -> Operations.WebMenuList.Output {
+        try await webMenuList(Operations.WebMenuList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/search/post(webMenuSearch)`.
@@ -429,28 +425,28 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)`.
-    public func webMenuItemBulkDelete(
-        path: Operations.WebMenuItemBulkDelete.Input.Path,
-        headers: Operations.WebMenuItemBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.WebMenuItemBulkDelete.Output {
-        try await webMenuItemBulkDelete(
-            Operations.WebMenuItemBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)`.
+    public func webMenuItemDelete(
+        path: Operations.WebMenuItemDelete.Input.Path,
+        headers: Operations.WebMenuItemDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.WebMenuItemDelete.Output {
+        try await webMenuItemDelete(
+            Operations.WebMenuItemDelete.Input(
                 path: path,
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)`.
-    public func webMenuItemFilters(
-        path: Operations.WebMenuItemFilters.Input.Path,
-        headers: Operations.WebMenuItemFilters.Input.Headers = .init()
-    ) async throws -> Operations.WebMenuItemFilters.Output {
-        try await webMenuItemFilters(
-            Operations.WebMenuItemFilters.Input(
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)`.
+    public func webMenuItemList(
+        path: Operations.WebMenuItemList.Input.Path,
+        headers: Operations.WebMenuItemList.Input.Headers = .init()
+    ) async throws -> Operations.WebMenuItemList.Output {
+        try await webMenuItemList(
+            Operations.WebMenuItemList.Input(
                 path: path,
                 headers: headers
             )
@@ -822,120 +818,49 @@ public enum Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema`.
-        public struct BulkDeleteRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/ids`.
+        /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
+        public struct DeleteRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/summary`.
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/results`.
+            public var results: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/summary`.
             public var summary: Swift.Bool
-            /// Creates a new `BulkDeleteRequestSchema`.
+            /// Creates a new `DeleteRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
+            ///   - results:
             ///   - summary:
             public init(
                 ids: [Swift.String],
+                results: Swift.Bool,
                 summary: Swift.Bool
             ) {
                 self.ids = ids
+                self.results = results
                 self.summary = summary
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
+                case results
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema`.
-        public struct BulkDeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload`.
-            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/id`.
-                public var id: Swift.String
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                @frozen
-                public enum StatusPayload: String, Codable, Hashable, Sendable,
-                    CaseIterable
-                {
-                    case deleted = "deleted"
-                    case notFound = "not_found"
-                    case forbidden = "forbidden"
-                }
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                public var status:
-                    Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                /// Creates a new `ResultsPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - id:
-                ///   - status:
-                public init(
-                    id: Swift.String,
-                    status: Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                ) {
-                    self.id = id
-                    self.status = status
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case status
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public typealias ResultsPayload = [Components.Schemas
-                .BulkDeleteResponseSchema.ResultsPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public var results:
-                Components.Schemas.BulkDeleteResponseSchema.ResultsPayload
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public struct SummaryPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/requested`.
-                public var requested: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/deleted`.
-                public var deleted: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/notFound`.
-                public var notFound: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/forbidden`.
-                public var forbidden: Swift.Int
-                /// Creates a new `SummaryPayload`.
-                ///
-                /// - Parameters:
-                ///   - requested:
-                ///   - deleted:
-                ///   - notFound:
-                ///   - forbidden:
-                public init(
-                    requested: Swift.Int,
-                    deleted: Swift.Int,
-                    notFound: Swift.Int,
-                    forbidden: Swift.Int
-                ) {
-                    self.requested = requested
-                    self.deleted = deleted
-                    self.notFound = notFound
-                    self.forbidden = forbidden
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case requested
-                    case deleted
-                    case notFound
-                    case forbidden
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public var summary:
-                Components.Schemas.BulkDeleteResponseSchema.SummaryPayload
-            /// Creates a new `BulkDeleteResponseSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
+        public struct DeleteResponseSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
+            public var results: Components.Schemas.DeleteResultListSchema?
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
+            public var summary: Components.Schemas.DeleteSummarySchema?
+            /// Creates a new `DeleteResponseSchema`.
             ///
             /// - Parameters:
             ///   - results:
             ///   - summary:
             public init(
-                results: Components.Schemas.BulkDeleteResponseSchema
-                    .ResultsPayload,
-                summary: Components.Schemas.BulkDeleteResponseSchema
-                    .SummaryPayload
+                results: Components.Schemas.DeleteResultListSchema? = nil,
+                summary: Components.Schemas.DeleteSummarySchema? = nil
             ) {
                 self.results = results
                 self.summary = summary
@@ -945,23 +870,161 @@ public enum Components {
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchFilterSchema`.
-        public struct SearchFilterSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/SearchFilterSchema/search`.
-            public var search: Components.Schemas.SearchStringField?
-            /// Creates a new `SearchFilterSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            @frozen
+            public enum StatusPayload: String, Codable, Hashable, Sendable,
+                CaseIterable
+            {
+                case deleted = "deleted"
+                case notFound = "not_found"
+                case forbidden = "forbidden"
+            }
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            public var status:
+                Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
+            /// Creates a new `DeleteResultListSchemaPayload`.
             ///
             /// - Parameters:
-            ///   - search:
-            public init(search: Components.Schemas.SearchStringField? = nil) {
-                self.search = search
+            ///   - id:
+            ///   - status:
+            public init(
+                id: Swift.String,
+                status: Components.Schemas.DeleteResultListSchemaPayload
+                    .StatusPayload
+            ) {
+                self.id = id
+                self.status = status
             }
             public enum CodingKeys: String, CodingKey {
-                case search
+                case id
+                case status
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
-        public typealias SearchStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public typealias DeleteResultListSchema = [Components.Schemas
+            .DeleteResultListSchemaPayload]
+        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
+        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
+            public var requested: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
+            public var deleted: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
+            public var omitted: Swift.Int
+            /// Creates a new `DeleteSummarySchema`.
+            ///
+            /// - Parameters:
+            ///   - requested:
+            ///   - deleted:
+            ///   - omitted:
+            public init(
+                requested: Swift.Int,
+                deleted: Swift.Int,
+                omitted: Swift.Int
+            ) {
+                self.requested = requested
+                self.deleted = deleted
+                self.omitted = omitted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case requested
+                case deleted
+                case omitted
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/WebMetadataListSchema`.
+        public typealias WebMetadataListSchema = [Components.Schemas
+            .WebMetadataListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema`.
+        public struct WebMetadataListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/id`.
+            public var id: Components.Schemas.WebMetadataIdField
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/referenceType`.
+            public var referenceType:
+                Components.Schemas.WebMetadataReferenceTypeField?
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/referenceId`.
+            public var referenceId:
+                Components.Schemas.WebMetadataReferenceIDField?
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/slug`.
+            public var slug: Components.Schemas.WebMetadataSlugField
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/publicationDate`.
+            public var publicationDate: Swift.Double?
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/expirationDate`.
+            public var expirationDate: Swift.Double?
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/status`.
+            public var status: Components.Schemas.WebMetadataStatusField
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/title`.
+            public var title: Components.Schemas.WebMetadataTitleField
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.WebMetadataTimestampField
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.WebMetadataTimestampField
+            /// Creates a new `WebMetadataListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - referenceType:
+            ///   - referenceId:
+            ///   - slug:
+            ///   - publicationDate:
+            ///   - expirationDate:
+            ///   - status:
+            ///   - title:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.WebMetadataIdField,
+                referenceType: Components.Schemas
+                    .WebMetadataReferenceTypeField? = nil,
+                referenceId: Components.Schemas.WebMetadataReferenceIDField? =
+                    nil,
+                slug: Components.Schemas.WebMetadataSlugField,
+                publicationDate: Swift.Double? = nil,
+                expirationDate: Swift.Double? = nil,
+                status: Components.Schemas.WebMetadataStatusField,
+                title: Components.Schemas.WebMetadataTitleField,
+                createdAt: Components.Schemas.WebMetadataTimestampField,
+                updatedAt: Components.Schemas.WebMetadataTimestampField
+            ) {
+                self.id = id
+                self.referenceType = referenceType
+                self.referenceId = referenceId
+                self.slug = slug
+                self.publicationDate = publicationDate
+                self.expirationDate = expirationDate
+                self.status = status
+                self.title = title
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case referenceType
+                case referenceId
+                case slug
+                case publicationDate
+                case expirationDate
+                case status
+                case title
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/WebMetadataIdField`.
+        public typealias WebMetadataIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMetadataSlugField`.
+        public typealias WebMetadataSlugField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMetadataStatusField`.
+        public typealias WebMetadataStatusField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMetadataTitleField`.
+        public typealias WebMetadataTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMetadataTimestampField`.
+        public typealias WebMetadataTimestampField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSearchQuerySchema`.
         public struct WebMetadataListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -1103,6 +1166,8 @@ public enum Components {
             case asc = "asc"
             case desc = "desc"
         }
+        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
+        public typealias SearchStringField = Swift.String
         /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSearchSchema`.
         public struct WebMetadataListItemSearchSchema: Codable, Hashable,
             Sendable
@@ -1154,91 +1219,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema`.
-        public struct WebMetadataListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/id`.
-            public var id: Components.Schemas.WebMetadataIdField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/referenceType`.
-            public var referenceType:
-                Components.Schemas.WebMetadataReferenceTypeField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/referenceId`.
-            public var referenceId:
-                Components.Schemas.WebMetadataReferenceIDField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/slug`.
-            public var slug: Components.Schemas.WebMetadataSlugField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/publicationDate`.
-            public var publicationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/expirationDate`.
-            public var expirationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/status`.
-            public var status: Components.Schemas.WebMetadataStatusField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/title`.
-            public var title: Components.Schemas.WebMetadataTitleField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebMetadataTimestampField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebMetadataTimestampField
-            /// Creates a new `WebMetadataListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - referenceType:
-            ///   - referenceId:
-            ///   - slug:
-            ///   - publicationDate:
-            ///   - expirationDate:
-            ///   - status:
-            ///   - title:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.WebMetadataIdField,
-                referenceType: Components.Schemas
-                    .WebMetadataReferenceTypeField? = nil,
-                referenceId: Components.Schemas.WebMetadataReferenceIDField? =
-                    nil,
-                slug: Components.Schemas.WebMetadataSlugField,
-                publicationDate: Swift.Double? = nil,
-                expirationDate: Swift.Double? = nil,
-                status: Components.Schemas.WebMetadataStatusField,
-                title: Components.Schemas.WebMetadataTitleField,
-                createdAt: Components.Schemas.WebMetadataTimestampField,
-                updatedAt: Components.Schemas.WebMetadataTimestampField
-            ) {
-                self.id = id
-                self.referenceType = referenceType
-                self.referenceId = referenceId
-                self.slug = slug
-                self.publicationDate = publicationDate
-                self.expirationDate = expirationDate
-                self.status = status
-                self.title = title
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case referenceType
-                case referenceId
-                case slug
-                case publicationDate
-                case expirationDate
-                case status
-                case title
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataIdField`.
-        public typealias WebMetadataIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataSlugField`.
-        public typealias WebMetadataSlugField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataStatusField`.
-        public typealias WebMetadataStatusField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataTitleField`.
-        public typealias WebMetadataTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataTimestampField`.
-        public typealias WebMetadataTimestampField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema`.
         public struct WebMetadataPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/slug`.
@@ -1449,6 +1429,68 @@ public enum Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/WebPageListSchema`.
+        public typealias WebPageListSchema = [Components.Schemas
+            .WebPageListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema`.
+        public struct WebPageListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/id`.
+            public var id: Components.Schemas.WebPageIdField
+            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/title`.
+            public var title: Components.Schemas.WebPageTitleField
+            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.WebPageExcerptField
+            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/imageAssetId`.
+            public var imageAssetId:
+                Components.Schemas.WebPageImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.WebPageCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.WebPageUpdatedAtField
+            /// Creates a new `WebPageListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - title:
+            ///   - excerpt:
+            ///   - imageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.WebPageIdField,
+                title: Components.Schemas.WebPageTitleField,
+                excerpt: Components.Schemas.WebPageExcerptField,
+                imageAssetId: Components.Schemas.WebPageImageAssetIdField? =
+                    nil,
+                createdAt: Components.Schemas.WebPageCreatedAtField,
+                updatedAt: Components.Schemas.WebPageUpdatedAtField
+            ) {
+                self.id = id
+                self.title = title
+                self.excerpt = excerpt
+                self.imageAssetId = imageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case title
+                case excerpt
+                case imageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/WebPageIdField`.
+        public typealias WebPageIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebPageTitleField`.
+        public typealias WebPageTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebPageExcerptField`.
+        public typealias WebPageExcerptField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebPageCreatedAtField`.
+        public typealias WebPageCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/WebPageUpdatedAtField`.
+        public typealias WebPageUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/WebPageListItemSearchQuerySchema`.
         public struct WebPageListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -1588,65 +1630,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema`.
-        public struct WebPageListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/id`.
-            public var id: Components.Schemas.WebPageIdField
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/title`.
-            public var title: Components.Schemas.WebPageTitleField
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.WebPageExcerptField
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/imageAssetId`.
-            public var imageAssetId:
-                Components.Schemas.WebPageImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebPageCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebPageUpdatedAtField
-            /// Creates a new `WebPageListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - title:
-            ///   - excerpt:
-            ///   - imageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.WebPageIdField,
-                title: Components.Schemas.WebPageTitleField,
-                excerpt: Components.Schemas.WebPageExcerptField,
-                imageAssetId: Components.Schemas.WebPageImageAssetIdField? =
-                    nil,
-                createdAt: Components.Schemas.WebPageCreatedAtField,
-                updatedAt: Components.Schemas.WebPageUpdatedAtField
-            ) {
-                self.id = id
-                self.title = title
-                self.excerpt = excerpt
-                self.imageAssetId = imageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case title
-                case excerpt
-                case imageAssetId
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/WebPageIdField`.
-        public typealias WebPageIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebPageTitleField`.
-        public typealias WebPageTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebPageExcerptField`.
-        public typealias WebPageExcerptField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebPageCreatedAtField`.
-        public typealias WebPageCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebPageUpdatedAtField`.
-        public typealias WebPageUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/WebPagePatchSchema`.
         public struct WebPagePatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/WebPagePatchSchema/title`.
@@ -1763,6 +1746,60 @@ public enum Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/WebMenuListSchema`.
+        public typealias WebMenuListSchema = [Components.Schemas
+            .WebMenuListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema`.
+        public struct WebMenuListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/id`.
+            public var id: Components.Schemas.WebMenuIdField
+            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/key`.
+            public var key: Components.Schemas.WebMenuKeyField
+            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/name`.
+            public var name: Components.Schemas.WebMenuNameField
+            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.WebMenuCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.WebMenuUpdatedAtField
+            /// Creates a new `WebMenuListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - key:
+            ///   - name:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.WebMenuIdField,
+                key: Components.Schemas.WebMenuKeyField,
+                name: Components.Schemas.WebMenuNameField,
+                createdAt: Components.Schemas.WebMenuCreatedAtField,
+                updatedAt: Components.Schemas.WebMenuUpdatedAtField
+            ) {
+                self.id = id
+                self.key = key
+                self.name = name
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case key
+                case name
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/WebMenuIdField`.
+        public typealias WebMenuIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMenuKeyField`.
+        public typealias WebMenuKeyField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMenuNameField`.
+        public typealias WebMenuNameField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMenuCreatedAtField`.
+        public typealias WebMenuCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/WebMenuUpdatedAtField`.
+        public typealias WebMenuUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/WebMenuListItemSearchQuerySchema`.
         public struct WebMenuListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -1903,57 +1940,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema`.
-        public struct WebMenuListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/id`.
-            public var id: Components.Schemas.WebMenuIdField
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/key`.
-            public var key: Components.Schemas.WebMenuKeyField
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/name`.
-            public var name: Components.Schemas.WebMenuNameField
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebMenuCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebMenuUpdatedAtField
-            /// Creates a new `WebMenuListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - key:
-            ///   - name:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.WebMenuIdField,
-                key: Components.Schemas.WebMenuKeyField,
-                name: Components.Schemas.WebMenuNameField,
-                createdAt: Components.Schemas.WebMenuCreatedAtField,
-                updatedAt: Components.Schemas.WebMenuUpdatedAtField
-            ) {
-                self.id = id
-                self.key = key
-                self.name = name
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case key
-                case name
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/WebMenuIdField`.
-        public typealias WebMenuIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuKeyField`.
-        public typealias WebMenuKeyField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuNameField`.
-        public typealias WebMenuNameField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuCreatedAtField`.
-        public typealias WebMenuCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebMenuUpdatedAtField`.
-        public typealias WebMenuUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/WebMenuPatchSchema`.
         public struct WebMenuPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/WebMenuPatchSchema/key`.
@@ -2119,6 +2105,98 @@ public enum Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemListSchema`.
+        public typealias WebMenuItemListSchema = [Components.Schemas
+            .WebMenuItemListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema`.
+        public struct WebMenuItemListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/id`.
+            public var id: Components.Schemas.WebMenuItemIdField
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/menuId`.
+            public var menuId: Components.Schemas.WebMenuIdField
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/label`.
+            public var label: Components.Schemas.WebMenuItemLabelField
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/url`.
+            public var url: Components.Schemas.WebMenuItemURLField
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/priority`.
+            public var priority: Components.Schemas.WebMenuItemPriorityField
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/isBlank`.
+            public var isBlank: Components.Schemas.WebMenuItemIsBlankField
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/permission`.
+            public var permission: Components.Schemas.WebMenuItemPermissionField
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/authentication`.
+            public var authentication:
+                Components.Schemas.WebMenuItemAuthenticationField
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.WebMenuItemCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.WebMenuItemUpdatedAtField
+            /// Creates a new `WebMenuItemListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - menuId:
+            ///   - label:
+            ///   - url:
+            ///   - priority:
+            ///   - isBlank:
+            ///   - permission:
+            ///   - authentication:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.WebMenuItemIdField,
+                menuId: Components.Schemas.WebMenuIdField,
+                label: Components.Schemas.WebMenuItemLabelField,
+                url: Components.Schemas.WebMenuItemURLField,
+                priority: Components.Schemas.WebMenuItemPriorityField,
+                isBlank: Components.Schemas.WebMenuItemIsBlankField,
+                permission: Components.Schemas.WebMenuItemPermissionField,
+                authentication: Components.Schemas
+                    .WebMenuItemAuthenticationField,
+                createdAt: Components.Schemas.WebMenuItemCreatedAtField,
+                updatedAt: Components.Schemas.WebMenuItemUpdatedAtField
+            ) {
+                self.id = id
+                self.menuId = menuId
+                self.label = label
+                self.url = url
+                self.priority = priority
+                self.isBlank = isBlank
+                self.permission = permission
+                self.authentication = authentication
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case menuId
+                case label
+                case url
+                case priority
+                case isBlank
+                case permission
+                case authentication
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemIdField`.
+        public typealias WebMenuItemIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemLabelField`.
+        public typealias WebMenuItemLabelField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemURLField`.
+        public typealias WebMenuItemURLField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemPriorityField`.
+        public typealias WebMenuItemPriorityField = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemIsBlankField`.
+        public typealias WebMenuItemIsBlankField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemPermissionField`.
+        public typealias WebMenuItemPermissionField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemCreatedAtField`.
+        public typealias WebMenuItemCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemUpdatedAtField`.
+        public typealias WebMenuItemUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSearchQuerySchema`.
         public struct WebMenuItemListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -2266,95 +2344,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema`.
-        public struct WebMenuItemListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/id`.
-            public var id: Components.Schemas.WebMenuItemIdField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/menuId`.
-            public var menuId: Components.Schemas.WebMenuIdField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/label`.
-            public var label: Components.Schemas.WebMenuItemLabelField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/url`.
-            public var url: Components.Schemas.WebMenuItemURLField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/priority`.
-            public var priority: Components.Schemas.WebMenuItemPriorityField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/isBlank`.
-            public var isBlank: Components.Schemas.WebMenuItemIsBlankField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/permission`.
-            public var permission: Components.Schemas.WebMenuItemPermissionField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/authentication`.
-            public var authentication:
-                Components.Schemas.WebMenuItemAuthenticationField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebMenuItemCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebMenuItemUpdatedAtField
-            /// Creates a new `WebMenuItemListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - menuId:
-            ///   - label:
-            ///   - url:
-            ///   - priority:
-            ///   - isBlank:
-            ///   - permission:
-            ///   - authentication:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.WebMenuItemIdField,
-                menuId: Components.Schemas.WebMenuIdField,
-                label: Components.Schemas.WebMenuItemLabelField,
-                url: Components.Schemas.WebMenuItemURLField,
-                priority: Components.Schemas.WebMenuItemPriorityField,
-                isBlank: Components.Schemas.WebMenuItemIsBlankField,
-                permission: Components.Schemas.WebMenuItemPermissionField,
-                authentication: Components.Schemas
-                    .WebMenuItemAuthenticationField,
-                createdAt: Components.Schemas.WebMenuItemCreatedAtField,
-                updatedAt: Components.Schemas.WebMenuItemUpdatedAtField
-            ) {
-                self.id = id
-                self.menuId = menuId
-                self.label = label
-                self.url = url
-                self.priority = priority
-                self.isBlank = isBlank
-                self.permission = permission
-                self.authentication = authentication
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case menuId
-                case label
-                case url
-                case priority
-                case isBlank
-                case permission
-                case authentication
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemIdField`.
-        public typealias WebMenuItemIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemLabelField`.
-        public typealias WebMenuItemLabelField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemURLField`.
-        public typealias WebMenuItemURLField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemPriorityField`.
-        public typealias WebMenuItemPriorityField = Swift.Int
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemIsBlankField`.
-        public typealias WebMenuItemIsBlankField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemPermissionField`.
-        public typealias WebMenuItemPermissionField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemCreatedAtField`.
-        public typealias WebMenuItemCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemUpdatedAtField`.
-        public typealias WebMenuItemUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema`.
         public struct WebMenuItemPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema/label`.
@@ -2687,10 +2676,10 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/WebMetadataRequestBody/content/application\/json`.
             case json(Components.Schemas.WebMetadataCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody`.
-        @frozen public enum BulkDeleteRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody/content/application\/json`.
-            case json(Components.Schemas.BulkDeleteRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody`.
+        @frozen public enum DeleteRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
+            case json(Components.Schemas.DeleteRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/WebMetadataUpdateRequestBody`.
         @frozen public enum WebMetadataUpdateRequestBody: Sendable, Hashable {
@@ -2790,16 +2779,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BulkDeleteResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
+        public struct DeleteResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/DeleteResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
-                case json(Components.Schemas.BulkDeleteResponseSchema)
+                /// - Remark: Generated from `#/components/responses/DeleteResponse/content/application\/json`.
+                case json(Components.Schemas.DeleteResponseSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.BulkDeleteResponseSchema {
+                public var json: Components.Schemas.DeleteResponseSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -2809,25 +2798,25 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BulkDeleteResponse.Body
-            /// Creates a new `BulkDeleteResponse`.
+            public var body: Components.Responses.DeleteResponse.Body
+            /// Creates a new `DeleteResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BulkDeleteResponse.Body) {
+            public init(body: Components.Responses.DeleteResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebMetadataFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMetadataFiltersResponse/content`.
+        public struct WebMetadataListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/WebMetadataListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMetadataFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/WebMetadataListResponse/content/application\/json`.
+                case json(Components.Schemas.WebMetadataListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.WebMetadataListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -2837,15 +2826,13 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body:
-                Components.Responses.WebMetadataFiltersResponse.Body
-            /// Creates a new `WebMetadataFiltersResponse`.
+            public var body: Components.Responses.WebMetadataListResponse.Body
+            /// Creates a new `WebMetadataListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(
-                body: Components.Responses.WebMetadataFiltersResponse.Body
-            ) {
+            public init(body: Components.Responses.WebMetadataListResponse.Body)
+            {
                 self.body = body
             }
         }
@@ -2914,16 +2901,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct WebPageFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebPageFiltersResponse/content`.
+        public struct WebPageListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/WebPageListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebPageFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/WebPageListResponse/content/application\/json`.
+                case json(Components.Schemas.WebPageListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.WebPageListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -2933,13 +2920,12 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebPageFiltersResponse.Body
-            /// Creates a new `WebPageFiltersResponse`.
+            public var body: Components.Responses.WebPageListResponse.Body
+            /// Creates a new `WebPageListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebPageFiltersResponse.Body)
-            {
+            public init(body: Components.Responses.WebPageListResponse.Body) {
                 self.body = body
             }
         }
@@ -3007,16 +2993,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct WebMenuFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMenuFiltersResponse/content`.
+        public struct WebMenuListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/WebMenuListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMenuFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/WebMenuListResponse/content/application\/json`.
+                case json(Components.Schemas.WebMenuListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.WebMenuListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -3026,13 +3012,12 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMenuFiltersResponse.Body
-            /// Creates a new `WebMenuFiltersResponse`.
+            public var body: Components.Responses.WebMenuListResponse.Body
+            /// Creates a new `WebMenuListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMenuFiltersResponse.Body)
-            {
+            public init(body: Components.Responses.WebMenuListResponse.Body) {
                 self.body = body
             }
         }
@@ -3102,16 +3087,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct WebMenuItemFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMenuItemFiltersResponse/content`.
+        public struct WebMenuItemListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/WebMenuItemListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMenuItemFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/WebMenuItemListResponse/content/application\/json`.
+                case json(Components.Schemas.WebMenuItemListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.WebMenuItemListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -3121,15 +3106,13 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body:
-                Components.Responses.WebMenuItemFiltersResponse.Body
-            /// Creates a new `WebMenuItemFiltersResponse`.
+            public var body: Components.Responses.WebMenuItemListResponse.Body
+            /// Creates a new `WebMenuItemListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(
-                body: Components.Responses.WebMenuItemFiltersResponse.Body
-            ) {
+            public init(body: Components.Responses.WebMenuItemListResponse.Body)
+            {
                 self.body = body
             }
         }
@@ -3377,15 +3360,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)`.
-    public enum WebMetadataBulkDelete {
-        public static let id: Swift.String = "webMetadataBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)`.
+    public enum WebMetadataDelete {
+        public static let id: Swift.String = "webMetadataDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMetadataBulkDelete.AcceptableContentType
+                        Operations.WebMetadataDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3393,40 +3376,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMetadataBulkDelete.AcceptableContentType
+                        Operations.WebMetadataDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.WebMetadataDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMetadataBulkDelete.Input.Headers =
-                    .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.WebMetadataDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3445,15 +3427,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.WebMetadataBulkDelete.Output.Unauthorized
-            )
+            case unauthorized(Operations.WebMetadataDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3464,7 +3444,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.WebMetadataBulkDelete.Output.Unauthorized
+                Operations.WebMetadataDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3484,13 +3464,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataBulkDelete.Output.Forbidden)
+            case forbidden(Operations.WebMetadataDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3500,8 +3480,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.WebMetadataBulkDelete.Output.Forbidden
+            public var forbidden: Operations.WebMetadataDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -3549,16 +3528,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)`.
-    public enum WebMetadataFilters {
-        public static let id: Swift.String = "webMetadataFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)`.
+    public enum WebMetadataList {
+        public static let id: Swift.String = "webMetadataList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMetadataFilters.AcceptableContentType
+                        Operations.WebMetadataList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3566,35 +3545,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMetadataFilters.AcceptableContentType
+                        Operations.WebMetadataList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataFilters.Input.Headers
+            public var headers: Operations.WebMetadataList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.WebMetadataFilters.Input.Headers = .init()
+                headers: Operations.WebMetadataList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMetadata filter response
+            /// WebMetadata list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMetadataFiltersResponse)
+            case ok(Components.Responses.WebMetadataListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMetadataFiltersResponse {
+            public var ok: Components.Responses.WebMetadataListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3613,13 +3592,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataFilters.Output.Unauthorized)
+            case unauthorized(Operations.WebMetadataList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3630,7 +3609,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.WebMetadataFilters.Output.Unauthorized
+                Operations.WebMetadataList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3650,13 +3629,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataFilters.Output.Forbidden)
+            case forbidden(Operations.WebMetadataList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3666,8 +3645,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataFilters.Output.Forbidden
-            {
+            public var forbidden: Operations.WebMetadataList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -4736,15 +4714,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)`.
-    public enum WebPageBulkDelete {
-        public static let id: Swift.String = "webPageBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)`.
+    public enum WebPageDelete {
+        public static let id: Swift.String = "webPageDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebPageBulkDelete.AcceptableContentType
+                        Operations.WebPageDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4752,39 +4730,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebPageBulkDelete.AcceptableContentType
+                        Operations.WebPageDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebPageBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.WebPageDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebPageBulkDelete.Input.Headers = .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.WebPageDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -4803,13 +4781,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPageBulkDelete.Output.Unauthorized)
+            case unauthorized(Operations.WebPageDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4820,7 +4798,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.WebPageBulkDelete.Output.Unauthorized
+                Operations.WebPageDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4840,13 +4818,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPageBulkDelete.Output.Forbidden)
+            case forbidden(Operations.WebPageDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4856,8 +4834,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPageBulkDelete.Output.Forbidden
-            {
+            public var forbidden: Operations.WebPageDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -4904,16 +4881,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)`.
-    public enum WebPageFilters {
-        public static let id: Swift.String = "webPageFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)`.
+    public enum WebPageList {
+        public static let id: Swift.String = "webPageList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebPageFilters.AcceptableContentType
+                        Operations.WebPageList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4921,35 +4898,34 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebPageFilters.AcceptableContentType
+                        Operations.WebPageList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebPageFilters.Input.Headers
+            public var headers: Operations.WebPageList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
-            public init(
-                headers: Operations.WebPageFilters.Input.Headers = .init()
-            ) {
+            public init(headers: Operations.WebPageList.Input.Headers = .init())
+            {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebPage filter response
+            /// WebPage list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebPageFiltersResponse)
+            case ok(Components.Responses.WebPageListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebPageFiltersResponse {
+            public var ok: Components.Responses.WebPageListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -4968,13 +4944,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPageFilters.Output.Unauthorized)
+            case unauthorized(Operations.WebPageList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4984,8 +4960,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.WebPageFilters.Output.Unauthorized
+            public var unauthorized: Operations.WebPageList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -5005,13 +4980,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPageFilters.Output.Forbidden)
+            case forbidden(Operations.WebPageList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -5021,7 +4996,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPageFilters.Output.Forbidden {
+            public var forbidden: Operations.WebPageList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -6073,15 +6048,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)`.
-    public enum WebMenuBulkDelete {
-        public static let id: Swift.String = "webMenuBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)`.
+    public enum WebMenuDelete {
+        public static let id: Swift.String = "webMenuDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMenuBulkDelete.AcceptableContentType
+                        Operations.WebMenuDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -6089,39 +6064,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMenuBulkDelete.AcceptableContentType
+                        Operations.WebMenuDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.WebMenuDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMenuBulkDelete.Input.Headers = .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.WebMenuDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -6140,13 +6115,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuBulkDelete.Output.Unauthorized)
+            case unauthorized(Operations.WebMenuDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -6157,7 +6132,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.WebMenuBulkDelete.Output.Unauthorized
+                Operations.WebMenuDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -6177,13 +6152,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuBulkDelete.Output.Forbidden)
+            case forbidden(Operations.WebMenuDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -6193,8 +6168,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuBulkDelete.Output.Forbidden
-            {
+            public var forbidden: Operations.WebMenuDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -6241,16 +6215,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)`.
-    public enum WebMenuFilters {
-        public static let id: Swift.String = "webMenuFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)`.
+    public enum WebMenuList {
+        public static let id: Swift.String = "webMenuList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMenuFilters.AcceptableContentType
+                        Operations.WebMenuList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -6258,35 +6232,34 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMenuFilters.AcceptableContentType
+                        Operations.WebMenuList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuFilters.Input.Headers
+            public var headers: Operations.WebMenuList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
-            public init(
-                headers: Operations.WebMenuFilters.Input.Headers = .init()
-            ) {
+            public init(headers: Operations.WebMenuList.Input.Headers = .init())
+            {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenu filter response
+            /// WebMenu list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuFiltersResponse)
+            case ok(Components.Responses.WebMenuListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuFiltersResponse {
+            public var ok: Components.Responses.WebMenuListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -6305,13 +6278,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuFilters.Output.Unauthorized)
+            case unauthorized(Operations.WebMenuList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -6321,8 +6294,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.WebMenuFilters.Output.Unauthorized
+            public var unauthorized: Operations.WebMenuList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -6342,13 +6314,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuFilters.Output.Forbidden)
+            case forbidden(Operations.WebMenuList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -6358,7 +6330,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuFilters.Output.Forbidden {
+            public var forbidden: Operations.WebMenuList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -7432,9 +7404,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)`.
-    public enum WebMenuItemBulkDelete {
-        public static let id: Swift.String = "webMenuItemBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)`.
+    public enum WebMenuItemDelete {
+        public static let id: Swift.String = "webMenuItemDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/path`.
             public struct Path: Sendable, Hashable {
@@ -7453,12 +7425,12 @@ public enum Operations {
                     self.webMenuId = webMenuId
                 }
             }
-            public var path: Operations.WebMenuItemBulkDelete.Input.Path
+            public var path: Operations.WebMenuItemDelete.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMenuItemBulkDelete.AcceptableContentType
+                        Operations.WebMenuItemDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -7466,14 +7438,14 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMenuItemBulkDelete.AcceptableContentType
+                        Operations.WebMenuItemDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuItemBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.WebMenuItemDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -7481,10 +7453,9 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebMenuItemBulkDelete.Input.Path,
-                headers: Operations.WebMenuItemBulkDelete.Input.Headers =
-                    .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                path: Operations.WebMenuItemDelete.Input.Path,
+                headers: Operations.WebMenuItemDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -7492,17 +7463,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -7521,15 +7492,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.WebMenuItemBulkDelete.Output.Unauthorized
-            )
+            case unauthorized(Operations.WebMenuItemDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -7540,7 +7509,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.WebMenuItemBulkDelete.Output.Unauthorized
+                Operations.WebMenuItemDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -7560,13 +7529,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemBulkDelete.Output.Forbidden)
+            case forbidden(Operations.WebMenuItemDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -7576,8 +7545,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.WebMenuItemBulkDelete.Output.Forbidden
+            public var forbidden: Operations.WebMenuItemDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -7625,16 +7593,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)`.
-    public enum WebMenuItemFilters {
-        public static let id: Swift.String = "webMenuItemFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)`.
+    public enum WebMenuItemList {
+        public static let id: Swift.String = "webMenuItemList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/filters/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/path`.
             public struct Path: Sendable, Hashable {
                 /// WebMenu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/filters/GET/path/webMenuId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/path/webMenuId`.
                 public var webMenuId:
                     Components.Parameters.WebMenuItemMenuIdParameter
                 /// Creates a new `Path`.
@@ -7647,12 +7615,12 @@ public enum Operations {
                     self.webMenuId = webMenuId
                 }
             }
-            public var path: Operations.WebMenuItemFilters.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/filters/GET/header`.
+            public var path: Operations.WebMenuItemList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMenuItemFilters.AcceptableContentType
+                        Operations.WebMenuItemList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -7660,38 +7628,38 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMenuItemFilters.AcceptableContentType
+                        Operations.WebMenuItemList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuItemFilters.Input.Headers
+            public var headers: Operations.WebMenuItemList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
             ///   - headers:
             public init(
-                path: Operations.WebMenuItemFilters.Input.Path,
-                headers: Operations.WebMenuItemFilters.Input.Headers = .init()
+                path: Operations.WebMenuItemList.Input.Path,
+                headers: Operations.WebMenuItemList.Input.Headers = .init()
             ) {
                 self.path = path
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenuItem filter response
+            /// WebMenuItem list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuItemFiltersResponse)
+            case ok(Components.Responses.WebMenuItemListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuItemFiltersResponse {
+            public var ok: Components.Responses.WebMenuItemListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -7710,13 +7678,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemFilters.Output.Unauthorized)
+            case unauthorized(Operations.WebMenuItemList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -7727,7 +7695,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.WebMenuItemFilters.Output.Unauthorized
+                Operations.WebMenuItemList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -7747,13 +7715,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemFilters.Output.Forbidden)
+            case forbidden(Operations.WebMenuItemList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -7763,8 +7731,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemFilters.Output.Forbidden
-            {
+            public var forbidden: Operations.WebMenuItemList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):

@@ -47,36 +47,36 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         )
     }
 
-    func bulkConfirm(request: Request, context: DefaultRequestContext)
+    func confirmSelected(request: Request, context: DefaultRequestContext)
         async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderBulkConfirmation(
+        return presenter.renderConfirmation(
             formId: try context.requiredParameter("formId"),
             selectedIds: request.queryStrings("selectedIds"),
             permissions: context.currentUserPermissions
         )
     }
 
-    func bulkRemove(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: DefaultRequestContext)
         async throws
         -> Response
     {
         let formId = try context.requiredParameter("formId")
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         let (interactor, _) = buildRuntime(request, context)
-        try await interactor.bulkRemove(
+        try await interactor.remove(
             formId: formId,
             ids: payload.normalizedSelectedIds
         )
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/contact/forms/\(formId)/submissions/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

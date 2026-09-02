@@ -18,15 +18,14 @@ public protocol APIProtocol: Sendable {
         _ input: Operations.SystemPermissionCreate.Input
     ) async throws -> Operations.SystemPermissionCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)`.
-    func systemPermissionBulkDelete(
-        _ input: Operations.SystemPermissionBulkDelete.Input
-    ) async throws -> Operations.SystemPermissionBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)`.
-    func systemPermissionFilters(
-        _ input: Operations.SystemPermissionFilters.Input
-    ) async throws -> Operations.SystemPermissionFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
+    func systemPermissionDelete(
+        _ input: Operations.SystemPermissionDelete.Input
+    ) async throws -> Operations.SystemPermissionDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)`.
+    func systemPermissionList(_ input: Operations.SystemPermissionList.Input)
+        async throws -> Operations.SystemPermissionList.Output
     /// - Remark: HTTP `POST /api/v1/admin/system/permissions/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/search/post(systemPermissionSearch)`.
     func systemPermissionSearch(
@@ -50,14 +49,13 @@ public protocol APIProtocol: Sendable {
     func systemVariableCreate(_ input: Operations.SystemVariableCreate.Input)
         async throws -> Operations.SystemVariableCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)`.
-    func systemVariableBulkDelete(
-        _ input: Operations.SystemVariableBulkDelete.Input
-    ) async throws -> Operations.SystemVariableBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/system/variables/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)`.
-    func systemVariableFilters(_ input: Operations.SystemVariableFilters.Input)
-        async throws -> Operations.SystemVariableFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
+    func systemVariableDelete(_ input: Operations.SystemVariableDelete.Input)
+        async throws -> Operations.SystemVariableDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/system/variables/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)`.
+    func systemVariableList(_ input: Operations.SystemVariableList.Input)
+        async throws -> Operations.SystemVariableList.Output
     /// - Remark: HTTP `POST /api/v1/admin/system/variables/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/search/post(systemVariableSearch)`.
     func systemVariableSearch(_ input: Operations.SystemVariableSearch.Input)
@@ -100,25 +98,25 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)`.
-    public func systemPermissionBulkDelete(
-        headers: Operations.SystemPermissionBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.SystemPermissionBulkDelete.Output {
-        try await systemPermissionBulkDelete(
-            Operations.SystemPermissionBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
+    public func systemPermissionDelete(
+        headers: Operations.SystemPermissionDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.SystemPermissionDelete.Output {
+        try await systemPermissionDelete(
+            Operations.SystemPermissionDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)`.
-    public func systemPermissionFilters(
-        headers: Operations.SystemPermissionFilters.Input.Headers = .init()
-    ) async throws -> Operations.SystemPermissionFilters.Output {
-        try await systemPermissionFilters(
-            Operations.SystemPermissionFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)`.
+    public func systemPermissionList(
+        headers: Operations.SystemPermissionList.Input.Headers = .init()
+    ) async throws -> Operations.SystemPermissionList.Output {
+        try await systemPermissionList(
+            Operations.SystemPermissionList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/system/permissions/search`.
@@ -191,25 +189,25 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)`.
-    public func systemVariableBulkDelete(
-        headers: Operations.SystemVariableBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.SystemVariableBulkDelete.Output {
-        try await systemVariableBulkDelete(
-            Operations.SystemVariableBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
+    public func systemVariableDelete(
+        headers: Operations.SystemVariableDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.SystemVariableDelete.Output {
+        try await systemVariableDelete(
+            Operations.SystemVariableDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/variables/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)`.
-    public func systemVariableFilters(
-        headers: Operations.SystemVariableFilters.Input.Headers = .init()
-    ) async throws -> Operations.SystemVariableFilters.Output {
-        try await systemVariableFilters(
-            Operations.SystemVariableFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/system/variables/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)`.
+    public func systemVariableList(
+        headers: Operations.SystemVariableList.Input.Headers = .init()
+    ) async throws -> Operations.SystemVariableList.Output {
+        try await systemVariableList(
+            Operations.SystemVariableList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/system/variables/search`.
@@ -379,120 +377,49 @@ public enum Components {
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema`.
-        public struct BulkDeleteRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/ids`.
+        /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
+        public struct DeleteRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/summary`.
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/results`.
+            public var results: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/summary`.
             public var summary: Swift.Bool
-            /// Creates a new `BulkDeleteRequestSchema`.
+            /// Creates a new `DeleteRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
+            ///   - results:
             ///   - summary:
             public init(
                 ids: [Swift.String],
+                results: Swift.Bool,
                 summary: Swift.Bool
             ) {
                 self.ids = ids
+                self.results = results
                 self.summary = summary
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
+                case results
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema`.
-        public struct BulkDeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload`.
-            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/id`.
-                public var id: Swift.String
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                @frozen
-                public enum StatusPayload: String, Codable, Hashable, Sendable,
-                    CaseIterable
-                {
-                    case deleted = "deleted"
-                    case notFound = "not_found"
-                    case forbidden = "forbidden"
-                }
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                public var status:
-                    Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                /// Creates a new `ResultsPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - id:
-                ///   - status:
-                public init(
-                    id: Swift.String,
-                    status: Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                ) {
-                    self.id = id
-                    self.status = status
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case status
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public typealias ResultsPayload = [Components.Schemas
-                .BulkDeleteResponseSchema.ResultsPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public var results:
-                Components.Schemas.BulkDeleteResponseSchema.ResultsPayload
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public struct SummaryPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/requested`.
-                public var requested: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/deleted`.
-                public var deleted: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/notFound`.
-                public var notFound: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/forbidden`.
-                public var forbidden: Swift.Int
-                /// Creates a new `SummaryPayload`.
-                ///
-                /// - Parameters:
-                ///   - requested:
-                ///   - deleted:
-                ///   - notFound:
-                ///   - forbidden:
-                public init(
-                    requested: Swift.Int,
-                    deleted: Swift.Int,
-                    notFound: Swift.Int,
-                    forbidden: Swift.Int
-                ) {
-                    self.requested = requested
-                    self.deleted = deleted
-                    self.notFound = notFound
-                    self.forbidden = forbidden
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case requested
-                    case deleted
-                    case notFound
-                    case forbidden
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public var summary:
-                Components.Schemas.BulkDeleteResponseSchema.SummaryPayload
-            /// Creates a new `BulkDeleteResponseSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
+        public struct DeleteResponseSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
+            public var results: Components.Schemas.DeleteResultListSchema?
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
+            public var summary: Components.Schemas.DeleteSummarySchema?
+            /// Creates a new `DeleteResponseSchema`.
             ///
             /// - Parameters:
             ///   - results:
             ///   - summary:
             public init(
-                results: Components.Schemas.BulkDeleteResponseSchema
-                    .ResultsPayload,
-                summary: Components.Schemas.BulkDeleteResponseSchema
-                    .SummaryPayload
+                results: Components.Schemas.DeleteResultListSchema? = nil,
+                summary: Components.Schemas.DeleteSummarySchema? = nil
             ) {
                 self.results = results
                 self.summary = summary
@@ -502,23 +429,109 @@ public enum Components {
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchFilterSchema`.
-        public struct SearchFilterSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/SearchFilterSchema/search`.
-            public var search: Components.Schemas.SearchStringField?
-            /// Creates a new `SearchFilterSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            @frozen
+            public enum StatusPayload: String, Codable, Hashable, Sendable,
+                CaseIterable
+            {
+                case deleted = "deleted"
+                case notFound = "not_found"
+                case forbidden = "forbidden"
+            }
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            public var status:
+                Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
+            /// Creates a new `DeleteResultListSchemaPayload`.
             ///
             /// - Parameters:
-            ///   - search:
-            public init(search: Components.Schemas.SearchStringField? = nil) {
-                self.search = search
+            ///   - id:
+            ///   - status:
+            public init(
+                id: Swift.String,
+                status: Components.Schemas.DeleteResultListSchemaPayload
+                    .StatusPayload
+            ) {
+                self.id = id
+                self.status = status
             }
             public enum CodingKeys: String, CodingKey {
-                case search
+                case id
+                case status
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
-        public typealias SearchStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public typealias DeleteResultListSchema = [Components.Schemas
+            .DeleteResultListSchemaPayload]
+        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
+        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
+            public var requested: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
+            public var deleted: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
+            public var omitted: Swift.Int
+            /// Creates a new `DeleteSummarySchema`.
+            ///
+            /// - Parameters:
+            ///   - requested:
+            ///   - deleted:
+            ///   - omitted:
+            public init(
+                requested: Swift.Int,
+                deleted: Swift.Int,
+                omitted: Swift.Int
+            ) {
+                self.requested = requested
+                self.deleted = deleted
+                self.omitted = omitted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case requested
+                case deleted
+                case omitted
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SystemPermissionListSchema`.
+        public typealias SystemPermissionListSchema = [Components.Schemas
+            .SystemPermissionListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema`.
+        public struct SystemPermissionListItemSchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/id`.
+            public var id: Components.Schemas.SystemPermissionIdField
+            /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/name`.
+            public var name: Components.Schemas.SystemPermissionNameField?
+            /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/notes`.
+            public var notes: Components.Schemas.SystemPermissionNotesField?
+            /// Creates a new `SystemPermissionListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            ///   - notes:
+            public init(
+                id: Components.Schemas.SystemPermissionIdField,
+                name: Components.Schemas.SystemPermissionNameField? = nil,
+                notes: Components.Schemas.SystemPermissionNotesField? = nil
+            ) {
+                self.id = id
+                self.name = name
+                self.notes = notes
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
+                case notes
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SystemPermissionIdField`.
+        public typealias SystemPermissionIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSearchQuerySchema`.
         public struct SystemPermissionListItemSearchQuerySchema: Codable,
             Hashable, Sendable
@@ -647,6 +660,8 @@ public enum Components {
             case asc = "asc"
             case desc = "desc"
         }
+        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
+        public typealias SearchStringField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSearchSchema`.
         public struct SystemPermissionListItemSearchSchema: Codable, Hashable,
             Sendable
@@ -701,39 +716,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema`.
-        public struct SystemPermissionListItemSchema: Codable, Hashable,
-            Sendable
-        {
-            /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/id`.
-            public var id: Components.Schemas.SystemPermissionIdField
-            /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/name`.
-            public var name: Components.Schemas.SystemPermissionNameField?
-            /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/notes`.
-            public var notes: Components.Schemas.SystemPermissionNotesField?
-            /// Creates a new `SystemPermissionListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - name:
-            ///   - notes:
-            public init(
-                id: Components.Schemas.SystemPermissionIdField,
-                name: Components.Schemas.SystemPermissionNameField? = nil,
-                notes: Components.Schemas.SystemPermissionNotesField? = nil
-            ) {
-                self.id = id
-                self.name = name
-                self.notes = notes
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case name
-                case notes
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/SystemPermissionIdField`.
-        public typealias SystemPermissionIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemPermissionPatchSchema`.
         public struct SystemPermissionPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SystemPermissionPatchSchema/name`.
@@ -831,6 +813,49 @@ public enum Components {
                 case notes
             }
         }
+        /// - Remark: Generated from `#/components/schemas/SystemVariableListSchema`.
+        public typealias SystemVariableListSchema = [Components.Schemas
+            .SystemVariableListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema`.
+        public struct SystemVariableListItemSchema: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/id`.
+            public var id: Components.Schemas.SystemVariableIdField
+            /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/value`.
+            public var value: Components.Schemas.SystemVariableValueField
+            /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/name`.
+            public var name: Components.Schemas.SystemVariableNameField?
+            /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/notes`.
+            public var notes: Components.Schemas.SystemVariableNotesField?
+            /// Creates a new `SystemVariableListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - value:
+            ///   - name:
+            ///   - notes:
+            public init(
+                id: Components.Schemas.SystemVariableIdField,
+                value: Components.Schemas.SystemVariableValueField,
+                name: Components.Schemas.SystemVariableNameField? = nil,
+                notes: Components.Schemas.SystemVariableNotesField? = nil
+            ) {
+                self.id = id
+                self.value = value
+                self.name = name
+                self.notes = notes
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case value
+                case name
+                case notes
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SystemVariableIdField`.
+        public typealias SystemVariableIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SystemVariableValueField`.
+        public typealias SystemVariableValueField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSearchQuerySchema`.
         public struct SystemVariableListItemSearchQuerySchema: Codable,
             Hashable, Sendable
@@ -978,46 +1003,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema`.
-        public struct SystemVariableListItemSchema: Codable, Hashable, Sendable
-        {
-            /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/id`.
-            public var id: Components.Schemas.SystemVariableIdField
-            /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/value`.
-            public var value: Components.Schemas.SystemVariableValueField
-            /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/name`.
-            public var name: Components.Schemas.SystemVariableNameField?
-            /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/notes`.
-            public var notes: Components.Schemas.SystemVariableNotesField?
-            /// Creates a new `SystemVariableListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - value:
-            ///   - name:
-            ///   - notes:
-            public init(
-                id: Components.Schemas.SystemVariableIdField,
-                value: Components.Schemas.SystemVariableValueField,
-                name: Components.Schemas.SystemVariableNameField? = nil,
-                notes: Components.Schemas.SystemVariableNotesField? = nil
-            ) {
-                self.id = id
-                self.value = value
-                self.name = name
-                self.notes = notes
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case value
-                case name
-                case notes
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/SystemVariableIdField`.
-        public typealias SystemVariableIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/SystemVariableValueField`.
-        public typealias SystemVariableValueField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemVariablePatchSchema`.
         public struct SystemVariablePatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SystemVariablePatchSchema/value`.
@@ -1127,10 +1112,10 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/SystemPermissionRequestBody/content/application\/json`.
             case json(Components.Schemas.SystemPermissionCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody`.
-        @frozen public enum BulkDeleteRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody/content/application\/json`.
-            case json(Components.Schemas.BulkDeleteRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody`.
+        @frozen public enum DeleteRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
+            case json(Components.Schemas.DeleteRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/SystemPermissionUpdateRequestBody`.
         @frozen
@@ -1195,16 +1180,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BulkDeleteResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
+        public struct DeleteResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/DeleteResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
-                case json(Components.Schemas.BulkDeleteResponseSchema)
+                /// - Remark: Generated from `#/components/responses/DeleteResponse/content/application\/json`.
+                case json(Components.Schemas.DeleteResponseSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.BulkDeleteResponseSchema {
+                public var json: Components.Schemas.DeleteResponseSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1214,25 +1199,25 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BulkDeleteResponse.Body
-            /// Creates a new `BulkDeleteResponse`.
+            public var body: Components.Responses.DeleteResponse.Body
+            /// Creates a new `DeleteResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BulkDeleteResponse.Body) {
+            public init(body: Components.Responses.DeleteResponse.Body) {
                 self.body = body
             }
         }
-        public struct SystemPermissionFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/SystemPermissionFiltersResponse/content`.
+        public struct SystemPermissionListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/SystemPermissionListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/SystemPermissionFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/SystemPermissionListResponse/content/application\/json`.
+                case json(Components.Schemas.SystemPermissionListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.SystemPermissionListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1243,13 +1228,13 @@ public enum Components {
             }
             /// Received HTTP response body
             public var body:
-                Components.Responses.SystemPermissionFiltersResponse.Body
-            /// Creates a new `SystemPermissionFiltersResponse`.
+                Components.Responses.SystemPermissionListResponse.Body
+            /// Creates a new `SystemPermissionListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.SystemPermissionFiltersResponse.Body
+                body: Components.Responses.SystemPermissionListResponse.Body
             ) {
                 self.body = body
             }
@@ -1324,16 +1309,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct SystemVariableFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/SystemVariableFiltersResponse/content`.
+        public struct SystemVariableListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/SystemVariableListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/SystemVariableFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/SystemVariableListResponse/content/application\/json`.
+                case json(Components.Schemas.SystemVariableListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.SystemVariableListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1344,13 +1329,13 @@ public enum Components {
             }
             /// Received HTTP response body
             public var body:
-                Components.Responses.SystemVariableFiltersResponse.Body
-            /// Creates a new `SystemVariableFiltersResponse`.
+                Components.Responses.SystemVariableListResponse.Body
+            /// Creates a new `SystemVariableListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.SystemVariableFiltersResponse.Body
+                body: Components.Responses.SystemVariableListResponse.Body
             ) {
                 self.body = body
             }
@@ -1632,16 +1617,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)`.
-    public enum SystemPermissionBulkDelete {
-        public static let id: Swift.String = "systemPermissionBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
+    public enum SystemPermissionDelete {
+        public static let id: Swift.String = "systemPermissionDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/system/permissions/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemPermissionBulkDelete
-                            .AcceptableContentType
+                        Operations.SystemPermissionDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1649,42 +1633,40 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemPermissionBulkDelete
-                            .AcceptableContentType
+                        Operations.SystemPermissionDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers:
-                Operations.SystemPermissionBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.SystemPermissionDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.SystemPermissionBulkDelete.Input.Headers =
+                headers: Operations.SystemPermissionDelete.Input.Headers =
                     .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -1703,15 +1685,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.SystemPermissionBulkDelete.Output.Unauthorized
+                Operations.SystemPermissionDelete.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1722,7 +1704,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.SystemPermissionBulkDelete.Output.Unauthorized
+                Operations.SystemPermissionDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1742,15 +1724,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(
-                Operations.SystemPermissionBulkDelete.Output.Forbidden
-            )
+            case forbidden(Operations.SystemPermissionDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1761,7 +1741,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.SystemPermissionBulkDelete.Output.Forbidden
+                Operations.SystemPermissionDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -1809,16 +1789,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)`.
-    public enum SystemPermissionFilters {
-        public static let id: Swift.String = "systemPermissionFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)`.
+    public enum SystemPermissionList {
+        public static let id: Swift.String = "systemPermissionList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/system/permissions/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/system/permissions/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemPermissionFilters.AcceptableContentType
+                        Operations.SystemPermissionList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1826,37 +1806,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemPermissionFilters.AcceptableContentType
+                        Operations.SystemPermissionList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.SystemPermissionFilters.Input.Headers
+            public var headers: Operations.SystemPermissionList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.SystemPermissionFilters.Input.Headers =
-                    .init()
+                headers: Operations.SystemPermissionList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// SystemPermission filter response
+            /// SystemPermission list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.SystemPermissionFiltersResponse)
+            case ok(Components.Responses.SystemPermissionListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.SystemPermissionFiltersResponse
-            {
+            public var ok: Components.Responses.SystemPermissionListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -1875,15 +1853,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.SystemPermissionFilters.Output.Unauthorized
+                Operations.SystemPermissionList.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1894,7 +1872,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.SystemPermissionFilters.Output.Unauthorized
+                Operations.SystemPermissionList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1914,13 +1892,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.SystemPermissionFilters.Output.Forbidden)
+            case forbidden(Operations.SystemPermissionList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1931,7 +1909,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.SystemPermissionFilters.Output.Forbidden
+                Operations.SystemPermissionList.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -3033,16 +3011,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)`.
-    public enum SystemVariableBulkDelete {
-        public static let id: Swift.String = "systemVariableBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
+    public enum SystemVariableDelete {
+        public static let id: Swift.String = "systemVariableDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/system/variables/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemVariableBulkDelete
-                            .AcceptableContentType
+                        Operations.SystemVariableDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3050,42 +3027,40 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemVariableBulkDelete
-                            .AcceptableContentType
+                        Operations.SystemVariableDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers:
-                Operations.SystemVariableBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.SystemVariableDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.SystemVariableBulkDelete.Input.Headers =
+                headers: Operations.SystemVariableDelete.Input.Headers =
                     .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3104,15 +3079,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.SystemVariableBulkDelete.Output.Unauthorized
+                Operations.SystemVariableDelete.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3123,7 +3098,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.SystemVariableBulkDelete.Output.Unauthorized
+                Operations.SystemVariableDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3143,13 +3118,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.SystemVariableBulkDelete.Output.Forbidden)
+            case forbidden(Operations.SystemVariableDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3160,7 +3135,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.SystemVariableBulkDelete.Output.Forbidden
+                Operations.SystemVariableDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -3208,16 +3183,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/variables/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)`.
-    public enum SystemVariableFilters {
-        public static let id: Swift.String = "systemVariableFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/system/variables/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)`.
+    public enum SystemVariableList {
+        public static let id: Swift.String = "systemVariableList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/system/variables/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/system/variables/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemVariableFilters.AcceptableContentType
+                        Operations.SystemVariableList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3225,36 +3200,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemVariableFilters.AcceptableContentType
+                        Operations.SystemVariableList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.SystemVariableFilters.Input.Headers
+            public var headers: Operations.SystemVariableList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.SystemVariableFilters.Input.Headers =
-                    .init()
+                headers: Operations.SystemVariableList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// SystemVariable filter response
+            /// SystemVariable list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.SystemVariableFiltersResponse)
+            case ok(Components.Responses.SystemVariableListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.SystemVariableFiltersResponse {
+            public var ok: Components.Responses.SystemVariableListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3273,15 +3247,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.SystemVariableFilters.Output.Unauthorized
-            )
+            case unauthorized(Operations.SystemVariableList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3292,7 +3264,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.SystemVariableFilters.Output.Unauthorized
+                Operations.SystemVariableList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3312,13 +3284,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.SystemVariableFilters.Output.Forbidden)
+            case forbidden(Operations.SystemVariableList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3328,8 +3300,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.SystemVariableFilters.Output.Forbidden
+            public var forbidden: Operations.SystemVariableList.Output.Forbidden
             {
                 get throws {
                     switch self {

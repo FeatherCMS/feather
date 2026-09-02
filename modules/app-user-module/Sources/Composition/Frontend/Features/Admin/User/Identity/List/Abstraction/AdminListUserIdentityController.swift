@@ -8,12 +8,12 @@ protocol AdminListUserIdentityController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getUserIdentitiesBulkRemoveConfirmation(
+    func getUserIdentitiesRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postUserIdentitiesBulkRemove(
+    func postUserIdentitiesRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -29,12 +29,12 @@ extension AdminListUserIdentityController {
             use: getUserIdentities
         )
         router.get(
-            "/admin/user/identities/bulk-remove/",
-            use: getUserIdentitiesBulkRemoveConfirmation
+            "/admin/user/identities/remove/",
+            use: getUserIdentitiesRemoveConfirmation
         )
         router.post(
-            "/admin/user/identities/bulk-remove/",
-            use: postUserIdentitiesBulkRemove
+            "/admin/user/identities/remove/",
+            use: postUserIdentitiesRemove
         )
     }
 }

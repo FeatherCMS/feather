@@ -62,7 +62,7 @@ struct AdminListWebMenuItemDefaultController:
         )
     }
 
-    func getWebMenuItemsBulkRemoveConfirmation(
+    func getWebMenuItemsRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -75,7 +75,7 @@ struct AdminListWebMenuItemDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListBulkRemoveRedirect.location(
+                    .location: ListRemoveRedirect.location(
                         path: "/admin/web/menus/\(menuId)/",
                         page: page,
                         search: search,
@@ -86,7 +86,7 @@ struct AdminListWebMenuItemDefaultController:
             )
         }
         return
-            try presenter.renderBulkRemoveConfirmation(
+            try presenter.renderRemoveConfirmation(
                 menuId: menuId,
                 page: page,
                 search: search,
@@ -96,18 +96,18 @@ struct AdminListWebMenuItemDefaultController:
             .response(from: request, context: context)
     }
 
-    func postWebMenuItemsBulkRemove(
+    func postWebMenuItemsRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(
+            try await interactor.remove(
                 menuId: menuId,
                 ids: payload.normalizedSelectedIds
             )
@@ -115,7 +115,7 @@ struct AdminListWebMenuItemDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/web/menus/\(menuId)/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

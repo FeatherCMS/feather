@@ -69,13 +69,13 @@ public struct AdminAutocompleteField: Component, FlowContent {
             Position(.relative)
         }
         Class("multiselect__control") {
-            MinHeight(48.px)
+            MinHeight(42.px)
             Display(.grid)
             GridTemplateColumns(
                 .tracks([.auto, .fraction(1.fr), .length(28.px)])
             )
             Gap(6.px)
-            Padding(8.px)
+            Padding(top: 0.px, right: 10.px, bottom: 0.px, left: 10.px)
             Border(1.px, .solid, .variable("cms-gray-2"))
             BorderRadius(10.px)
             Background(color: .color(.variable("cms-white")))
@@ -142,9 +142,14 @@ public struct AdminAutocompleteField: Component, FlowContent {
             UnsafeRawProperty(name: "outline", value: "none")
             UnsafeRawProperty(name: "box-shadow", value: "none")
         }
+        Custom(
+            ".multiselect__control--has-selection input.multiselect__input::placeholder"
+        ) {
+            UnsafeRawProperty(name: "color", value: "transparent")
+        }
         Class("multiselect__toggle") {
-            Width(28.px)
-            Height(28.px)
+            Width(24.px)
+            Height(24.px)
             Border(0.px)
             BorderRadius(8.px)
             Background(color: .transparent)
@@ -581,6 +586,10 @@ public struct AdminAutocompleteField: Component, FlowContent {
                 function render() {
                     renderChips();
                     renderHiddenInputs();
+                    control.classList.toggle(
+                        "multiselect__control--has-selection",
+                        state.selected.length > 0
+                    );
                     renderDropdown();
                 }
 
@@ -682,10 +691,26 @@ public struct AdminAutocompleteField: Component, FlowContent {
                         return;
                     }
                     activateRoot();
-                    openDropdown();
-                    renderDropdown();
-                    input.focus();
+                    if (state.open) {
+                        closeDropdown();
+                        renderDropdown();
+                    } else {
+                        openDropdown();
+                        renderDropdown();
+                        input.focus();
+                    }
                 });
+
+                if (label) {
+                    label.addEventListener("click", function (event) {
+                        if (!state.open) {
+                            return;
+                        }
+                        event.preventDefault();
+                        closeDropdown();
+                        renderDropdown();
+                    });
+                }
 
                 input.addEventListener("input", function () {
                     state.query = input.value;

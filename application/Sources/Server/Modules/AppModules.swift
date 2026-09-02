@@ -101,7 +101,6 @@ struct AppModules: Sendable {
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
-            user: self.user,
             mailSender: JobQueueMailSender(queue: infrastructure.jobQueue)
         )
         self.auth = auth

@@ -40,7 +40,7 @@ public protocol IdentityRepository: Repository {
     ) async throws
 
     func delete(
-        id: String
-    ) async throws -> Bool
+        ids: [String]
+    ) async throws -> [String]
 
 }

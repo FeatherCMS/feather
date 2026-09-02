@@ -17,13 +17,13 @@ public protocol APIProtocol: Sendable {
     func blogPostCreate(_ input: Operations.BlogPostCreate.Input) async throws
         -> Operations.BlogPostCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)`.
-    func blogPostBulkDelete(_ input: Operations.BlogPostBulkDelete.Input)
-        async throws -> Operations.BlogPostBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)`.
-    func blogPostFilters(_ input: Operations.BlogPostFilters.Input) async throws
-        -> Operations.BlogPostFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
+    func blogPostDelete(_ input: Operations.BlogPostDelete.Input) async throws
+        -> Operations.BlogPostDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
+    func blogPostList(_ input: Operations.BlogPostList.Input) async throws
+        -> Operations.BlogPostList.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/posts/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/search/post(blogPostSearch)`.
     func blogPostSearch(_ input: Operations.BlogPostSearch.Input) async throws
@@ -45,13 +45,13 @@ public protocol APIProtocol: Sendable {
     func blogAuthorCreate(_ input: Operations.BlogAuthorCreate.Input)
         async throws -> Operations.BlogAuthorCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)`.
-    func blogAuthorBulkDelete(_ input: Operations.BlogAuthorBulkDelete.Input)
-        async throws -> Operations.BlogAuthorBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)`.
-    func blogAuthorFilters(_ input: Operations.BlogAuthorFilters.Input)
-        async throws -> Operations.BlogAuthorFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
+    func blogAuthorDelete(_ input: Operations.BlogAuthorDelete.Input)
+        async throws -> Operations.BlogAuthorDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
+    func blogAuthorList(_ input: Operations.BlogAuthorList.Input) async throws
+        -> Operations.BlogAuthorList.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/search/post(blogAuthorSearch)`.
     func blogAuthorSearch(_ input: Operations.BlogAuthorSearch.Input)
@@ -73,14 +73,13 @@ public protocol APIProtocol: Sendable {
     func blogAuthorLinkCreate(_ input: Operations.BlogAuthorLinkCreate.Input)
         async throws -> Operations.BlogAuthorLinkCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)`.
-    func blogAuthorLinkBulkDelete(
-        _ input: Operations.BlogAuthorLinkBulkDelete.Input
-    ) async throws -> Operations.BlogAuthorLinkBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)`.
-    func blogAuthorLinkFilters(_ input: Operations.BlogAuthorLinkFilters.Input)
-        async throws -> Operations.BlogAuthorLinkFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
+    func blogAuthorLinkDelete(_ input: Operations.BlogAuthorLinkDelete.Input)
+        async throws -> Operations.BlogAuthorLinkDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
+    func blogAuthorLinkList(_ input: Operations.BlogAuthorLinkList.Input)
+        async throws -> Operations.BlogAuthorLinkList.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/search/post(blogAuthorLinkSearch)`.
     func blogAuthorLinkSearch(_ input: Operations.BlogAuthorLinkSearch.Input)
@@ -110,13 +109,13 @@ public protocol APIProtocol: Sendable {
     func blogTagCreate(_ input: Operations.BlogTagCreate.Input) async throws
         -> Operations.BlogTagCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)`.
-    func blogTagBulkDelete(_ input: Operations.BlogTagBulkDelete.Input)
-        async throws -> Operations.BlogTagBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)`.
-    func blogTagFilters(_ input: Operations.BlogTagFilters.Input) async throws
-        -> Operations.BlogTagFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
+    func blogTagDelete(_ input: Operations.BlogTagDelete.Input) async throws
+        -> Operations.BlogTagDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
+    func blogTagList(_ input: Operations.BlogTagList.Input) async throws
+        -> Operations.BlogTagList.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/tags/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/search/post(blogTagSearch)`.
     func blogTagSearch(_ input: Operations.BlogTagSearch.Input) async throws
@@ -151,26 +150,24 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)`.
-    public func blogPostBulkDelete(
-        headers: Operations.BlogPostBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.BlogPostBulkDelete.Output {
-        try await blogPostBulkDelete(
-            Operations.BlogPostBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
+    public func blogPostDelete(
+        headers: Operations.BlogPostDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.BlogPostDelete.Output {
+        try await blogPostDelete(
+            Operations.BlogPostDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)`.
-    public func blogPostFilters(
-        headers: Operations.BlogPostFilters.Input.Headers = .init()
-    ) async throws -> Operations.BlogPostFilters.Output {
-        try await blogPostFilters(
-            Operations.BlogPostFilters.Input(headers: headers)
-        )
+    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
+    public func blogPostList(
+        headers: Operations.BlogPostList.Input.Headers = .init()
+    ) async throws -> Operations.BlogPostList.Output {
+        try await blogPostList(Operations.BlogPostList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/blog/posts/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/search/post(blogPostSearch)`.
@@ -242,25 +239,25 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)`.
-    public func blogAuthorBulkDelete(
-        headers: Operations.BlogAuthorBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.BlogAuthorBulkDelete.Output {
-        try await blogAuthorBulkDelete(
-            Operations.BlogAuthorBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
+    public func blogAuthorDelete(
+        headers: Operations.BlogAuthorDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.BlogAuthorDelete.Output {
+        try await blogAuthorDelete(
+            Operations.BlogAuthorDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)`.
-    public func blogAuthorFilters(
-        headers: Operations.BlogAuthorFilters.Input.Headers = .init()
-    ) async throws -> Operations.BlogAuthorFilters.Output {
-        try await blogAuthorFilters(
-            Operations.BlogAuthorFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
+    public func blogAuthorList(
+        headers: Operations.BlogAuthorList.Input.Headers = .init()
+    ) async throws -> Operations.BlogAuthorList.Output {
+        try await blogAuthorList(
+            Operations.BlogAuthorList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/search`.
@@ -335,28 +332,28 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)`.
-    public func blogAuthorLinkBulkDelete(
-        path: Operations.BlogAuthorLinkBulkDelete.Input.Path,
-        headers: Operations.BlogAuthorLinkBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.BlogAuthorLinkBulkDelete.Output {
-        try await blogAuthorLinkBulkDelete(
-            Operations.BlogAuthorLinkBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
+    public func blogAuthorLinkDelete(
+        path: Operations.BlogAuthorLinkDelete.Input.Path,
+        headers: Operations.BlogAuthorLinkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.BlogAuthorLinkDelete.Output {
+        try await blogAuthorLinkDelete(
+            Operations.BlogAuthorLinkDelete.Input(
                 path: path,
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)`.
-    public func blogAuthorLinkFilters(
-        path: Operations.BlogAuthorLinkFilters.Input.Path,
-        headers: Operations.BlogAuthorLinkFilters.Input.Headers = .init()
-    ) async throws -> Operations.BlogAuthorLinkFilters.Output {
-        try await blogAuthorLinkFilters(
-            Operations.BlogAuthorLinkFilters.Input(
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
+    public func blogAuthorLinkList(
+        path: Operations.BlogAuthorLinkList.Input.Path,
+        headers: Operations.BlogAuthorLinkList.Input.Headers = .init()
+    ) async throws -> Operations.BlogAuthorLinkList.Output {
+        try await blogAuthorLinkList(
+            Operations.BlogAuthorLinkList.Input(
                 path: path,
                 headers: headers
             )
@@ -456,26 +453,24 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)`.
-    public func blogTagBulkDelete(
-        headers: Operations.BlogTagBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.BlogTagBulkDelete.Output {
-        try await blogTagBulkDelete(
-            Operations.BlogTagBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
+    public func blogTagDelete(
+        headers: Operations.BlogTagDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.BlogTagDelete.Output {
+        try await blogTagDelete(
+            Operations.BlogTagDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)`.
-    public func blogTagFilters(
-        headers: Operations.BlogTagFilters.Input.Headers = .init()
-    ) async throws -> Operations.BlogTagFilters.Output {
-        try await blogTagFilters(
-            Operations.BlogTagFilters.Input(headers: headers)
-        )
+    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
+    public func blogTagList(
+        headers: Operations.BlogTagList.Input.Headers = .init()
+    ) async throws -> Operations.BlogTagList.Output {
+        try await blogTagList(Operations.BlogTagList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/blog/tags/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/search/post(blogTagSearch)`.
@@ -825,120 +820,49 @@ public enum Components {
         public typealias AdminWebMetadataReferenceTypeField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AdminWebMetadataReferenceIDField`.
         public typealias AdminWebMetadataReferenceIDField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema`.
-        public struct BulkDeleteRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/ids`.
+        /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
+        public struct DeleteRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/summary`.
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/results`.
+            public var results: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/summary`.
             public var summary: Swift.Bool
-            /// Creates a new `BulkDeleteRequestSchema`.
+            /// Creates a new `DeleteRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
+            ///   - results:
             ///   - summary:
             public init(
                 ids: [Swift.String],
+                results: Swift.Bool,
                 summary: Swift.Bool
             ) {
                 self.ids = ids
+                self.results = results
                 self.summary = summary
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
+                case results
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema`.
-        public struct BulkDeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload`.
-            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/id`.
-                public var id: Swift.String
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                @frozen
-                public enum StatusPayload: String, Codable, Hashable, Sendable,
-                    CaseIterable
-                {
-                    case deleted = "deleted"
-                    case notFound = "not_found"
-                    case forbidden = "forbidden"
-                }
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                public var status:
-                    Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                /// Creates a new `ResultsPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - id:
-                ///   - status:
-                public init(
-                    id: Swift.String,
-                    status: Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                ) {
-                    self.id = id
-                    self.status = status
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case status
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public typealias ResultsPayload = [Components.Schemas
-                .BulkDeleteResponseSchema.ResultsPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public var results:
-                Components.Schemas.BulkDeleteResponseSchema.ResultsPayload
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public struct SummaryPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/requested`.
-                public var requested: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/deleted`.
-                public var deleted: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/notFound`.
-                public var notFound: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/forbidden`.
-                public var forbidden: Swift.Int
-                /// Creates a new `SummaryPayload`.
-                ///
-                /// - Parameters:
-                ///   - requested:
-                ///   - deleted:
-                ///   - notFound:
-                ///   - forbidden:
-                public init(
-                    requested: Swift.Int,
-                    deleted: Swift.Int,
-                    notFound: Swift.Int,
-                    forbidden: Swift.Int
-                ) {
-                    self.requested = requested
-                    self.deleted = deleted
-                    self.notFound = notFound
-                    self.forbidden = forbidden
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case requested
-                    case deleted
-                    case notFound
-                    case forbidden
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public var summary:
-                Components.Schemas.BulkDeleteResponseSchema.SummaryPayload
-            /// Creates a new `BulkDeleteResponseSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
+        public struct DeleteResponseSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
+            public var results: Components.Schemas.DeleteResultListSchema?
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
+            public var summary: Components.Schemas.DeleteSummarySchema?
+            /// Creates a new `DeleteResponseSchema`.
             ///
             /// - Parameters:
             ///   - results:
             ///   - summary:
             public init(
-                results: Components.Schemas.BulkDeleteResponseSchema
-                    .ResultsPayload,
-                summary: Components.Schemas.BulkDeleteResponseSchema
-                    .SummaryPayload
+                results: Components.Schemas.DeleteResultListSchema? = nil,
+                summary: Components.Schemas.DeleteSummarySchema? = nil
             ) {
                 self.results = results
                 self.summary = summary
@@ -948,23 +872,135 @@ public enum Components {
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchFilterSchema`.
-        public struct SearchFilterSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/SearchFilterSchema/search`.
-            public var search: Components.Schemas.SearchStringField?
-            /// Creates a new `SearchFilterSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            @frozen
+            public enum StatusPayload: String, Codable, Hashable, Sendable,
+                CaseIterable
+            {
+                case deleted = "deleted"
+                case notFound = "not_found"
+                case forbidden = "forbidden"
+            }
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            public var status:
+                Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
+            /// Creates a new `DeleteResultListSchemaPayload`.
             ///
             /// - Parameters:
-            ///   - search:
-            public init(search: Components.Schemas.SearchStringField? = nil) {
-                self.search = search
+            ///   - id:
+            ///   - status:
+            public init(
+                id: Swift.String,
+                status: Components.Schemas.DeleteResultListSchemaPayload
+                    .StatusPayload
+            ) {
+                self.id = id
+                self.status = status
             }
             public enum CodingKeys: String, CodingKey {
-                case search
+                case id
+                case status
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
-        public typealias SearchStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public typealias DeleteResultListSchema = [Components.Schemas
+            .DeleteResultListSchemaPayload]
+        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
+        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
+            public var requested: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
+            public var deleted: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
+            public var omitted: Swift.Int
+            /// Creates a new `DeleteSummarySchema`.
+            ///
+            /// - Parameters:
+            ///   - requested:
+            ///   - deleted:
+            ///   - omitted:
+            public init(
+                requested: Swift.Int,
+                deleted: Swift.Int,
+                omitted: Swift.Int
+            ) {
+                self.requested = requested
+                self.deleted = deleted
+                self.omitted = omitted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case requested
+                case deleted
+                case omitted
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlogPostListSchema`.
+        public typealias BlogPostListSchema = [Components.Schemas
+            .BlogPostListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema`.
+        public struct BlogPostListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/id`.
+            public var id: Components.Schemas.BlogPostIdField
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/title`.
+            public var title: Components.Schemas.BlogPostTitleField
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.BlogPostExcerptField
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/imageAssetId`.
+            public var imageAssetId:
+                Components.Schemas.BlogPostImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.BlogPostCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.BlogPostUpdatedAtField
+            /// Creates a new `BlogPostListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - title:
+            ///   - excerpt:
+            ///   - imageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.BlogPostIdField,
+                title: Components.Schemas.BlogPostTitleField,
+                excerpt: Components.Schemas.BlogPostExcerptField,
+                imageAssetId: Components.Schemas.BlogPostImageAssetIdField? =
+                    nil,
+                createdAt: Components.Schemas.BlogPostCreatedAtField,
+                updatedAt: Components.Schemas.BlogPostUpdatedAtField
+            ) {
+                self.id = id
+                self.title = title
+                self.excerpt = excerpt
+                self.imageAssetId = imageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case title
+                case excerpt
+                case imageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlogPostIdField`.
+        public typealias BlogPostIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogPostTitleField`.
+        public typealias BlogPostTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogPostExcerptField`.
+        public typealias BlogPostExcerptField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogPostCreatedAtField`.
+        public typealias BlogPostCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/BlogPostUpdatedAtField`.
+        public typealias BlogPostUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogPostListItemSearchQuerySchema`.
         public struct BlogPostListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -1092,6 +1128,8 @@ public enum Components {
             case asc = "asc"
             case desc = "desc"
         }
+        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
+        public typealias SearchStringField = Swift.String
         /// - Remark: Generated from `#/components/schemas/BlogPostListItemSearchSchema`.
         public struct BlogPostListItemSearchSchema: Codable, Hashable, Sendable
         {
@@ -1142,65 +1180,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema`.
-        public struct BlogPostListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/id`.
-            public var id: Components.Schemas.BlogPostIdField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/title`.
-            public var title: Components.Schemas.BlogPostTitleField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.BlogPostExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/imageAssetId`.
-            public var imageAssetId:
-                Components.Schemas.BlogPostImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.BlogPostCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.BlogPostUpdatedAtField
-            /// Creates a new `BlogPostListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - title:
-            ///   - excerpt:
-            ///   - imageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.BlogPostIdField,
-                title: Components.Schemas.BlogPostTitleField,
-                excerpt: Components.Schemas.BlogPostExcerptField,
-                imageAssetId: Components.Schemas.BlogPostImageAssetIdField? =
-                    nil,
-                createdAt: Components.Schemas.BlogPostCreatedAtField,
-                updatedAt: Components.Schemas.BlogPostUpdatedAtField
-            ) {
-                self.id = id
-                self.title = title
-                self.excerpt = excerpt
-                self.imageAssetId = imageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case title
-                case excerpt
-                case imageAssetId
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/BlogPostIdField`.
-        public typealias BlogPostIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogPostTitleField`.
-        public typealias BlogPostTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogPostExcerptField`.
-        public typealias BlogPostExcerptField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogPostCreatedAtField`.
-        public typealias BlogPostCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogPostUpdatedAtField`.
-        public typealias BlogPostUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogPostPatchSchema`.
         public struct BlogPostPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogPostPatchSchema/title`.
@@ -1356,6 +1335,64 @@ public enum Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorListSchema`.
+        public typealias BlogAuthorListSchema = [Components.Schemas
+            .BlogAuthorListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema`.
+        public struct BlogAuthorListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/id`.
+            public var id: Components.Schemas.BlogAuthorIdField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/name`.
+            public var name: Components.Schemas.BlogAuthorNameField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.BlogAuthorExcerptField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/profileImageAssetId`.
+            public var profileImageAssetId:
+                Components.Schemas.BlogAuthorProfileImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.BlogAuthorCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
+            /// Creates a new `BlogAuthorListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            ///   - excerpt:
+            ///   - profileImageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.BlogAuthorIdField,
+                name: Components.Schemas.BlogAuthorNameField,
+                excerpt: Components.Schemas.BlogAuthorExcerptField,
+                profileImageAssetId: Components.Schemas
+                    .BlogAuthorProfileImageAssetIdField? = nil,
+                createdAt: Components.Schemas.BlogAuthorCreatedAtField,
+                updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
+            ) {
+                self.id = id
+                self.name = name
+                self.excerpt = excerpt
+                self.profileImageAssetId = profileImageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
+                case excerpt
+                case profileImageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorNameField`.
+        public typealias BlogAuthorNameField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorCreatedAtField`.
+        public typealias BlogAuthorCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorUpdatedAtField`.
+        public typealias BlogAuthorUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSearchQuerySchema`.
         public struct BlogAuthorListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -1501,61 +1538,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema`.
-        public struct BlogAuthorListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/id`.
-            public var id: Components.Schemas.BlogAuthorIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/name`.
-            public var name: Components.Schemas.BlogAuthorNameField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.BlogAuthorExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/profileImageAssetId`.
-            public var profileImageAssetId:
-                Components.Schemas.BlogAuthorProfileImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.BlogAuthorCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
-            /// Creates a new `BlogAuthorListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - name:
-            ///   - excerpt:
-            ///   - profileImageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.BlogAuthorIdField,
-                name: Components.Schemas.BlogAuthorNameField,
-                excerpt: Components.Schemas.BlogAuthorExcerptField,
-                profileImageAssetId: Components.Schemas
-                    .BlogAuthorProfileImageAssetIdField? = nil,
-                createdAt: Components.Schemas.BlogAuthorCreatedAtField,
-                updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
-            ) {
-                self.id = id
-                self.name = name
-                self.excerpt = excerpt
-                self.profileImageAssetId = profileImageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case name
-                case excerpt
-                case profileImageAssetId
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorNameField`.
-        public typealias BlogAuthorNameField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorCreatedAtField`.
-        public typealias BlogAuthorCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorUpdatedAtField`.
-        public typealias BlogAuthorUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogAuthorPatchSchema`.
         public struct BlogAuthorPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogAuthorPatchSchema/name`.
@@ -1713,6 +1695,94 @@ public enum Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListSchema`.
+        public typealias BlogAuthorLinkListSchema = [Components.Schemas
+            .BlogAuthorLinkListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema`.
+        public struct BlogAuthorLinkListItemSchema: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/id`.
+            public var id: Components.Schemas.BlogAuthorLinkIdField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/menuId`.
+            public var menuId: Components.Schemas.BlogAuthorIdField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/label`.
+            public var label: Components.Schemas.BlogAuthorLinkLabelField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/url`.
+            public var url: Components.Schemas.BlogAuthorLinkURLField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/priority`.
+            public var priority: Components.Schemas.BlogAuthorLinkPriorityField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/isBlank`.
+            public var isBlank: Components.Schemas.BlogAuthorLinkIsBlankField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/permission`.
+            public var permission:
+                Components.Schemas.BlogAuthorLinkPermissionField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/createdAt`.
+            public var createdAt:
+                Components.Schemas.BlogAuthorLinkCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/updatedAt`.
+            public var updatedAt:
+                Components.Schemas.BlogAuthorLinkUpdatedAtField
+            /// Creates a new `BlogAuthorLinkListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - menuId:
+            ///   - label:
+            ///   - url:
+            ///   - priority:
+            ///   - isBlank:
+            ///   - permission:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.BlogAuthorLinkIdField,
+                menuId: Components.Schemas.BlogAuthorIdField,
+                label: Components.Schemas.BlogAuthorLinkLabelField,
+                url: Components.Schemas.BlogAuthorLinkURLField,
+                priority: Components.Schemas.BlogAuthorLinkPriorityField,
+                isBlank: Components.Schemas.BlogAuthorLinkIsBlankField,
+                permission: Components.Schemas.BlogAuthorLinkPermissionField,
+                createdAt: Components.Schemas.BlogAuthorLinkCreatedAtField,
+                updatedAt: Components.Schemas.BlogAuthorLinkUpdatedAtField
+            ) {
+                self.id = id
+                self.menuId = menuId
+                self.label = label
+                self.url = url
+                self.priority = priority
+                self.isBlank = isBlank
+                self.permission = permission
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case menuId
+                case label
+                case url
+                case priority
+                case isBlank
+                case permission
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkIdField`.
+        public typealias BlogAuthorLinkIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkLabelField`.
+        public typealias BlogAuthorLinkLabelField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkURLField`.
+        public typealias BlogAuthorLinkURLField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPriorityField`.
+        public typealias BlogAuthorLinkPriorityField = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkIsBlankField`.
+        public typealias BlogAuthorLinkIsBlankField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPermissionField`.
+        public typealias BlogAuthorLinkPermissionField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreatedAtField`.
+        public typealias BlogAuthorLinkCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkUpdatedAtField`.
+        public typealias BlogAuthorLinkUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSearchQuerySchema`.
         public struct BlogAuthorLinkListItemSearchQuerySchema: Codable,
             Hashable, Sendable
@@ -1863,91 +1933,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema`.
-        public struct BlogAuthorLinkListItemSchema: Codable, Hashable, Sendable
-        {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/id`.
-            public var id: Components.Schemas.BlogAuthorLinkIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/menuId`.
-            public var menuId: Components.Schemas.BlogAuthorIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/label`.
-            public var label: Components.Schemas.BlogAuthorLinkLabelField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/url`.
-            public var url: Components.Schemas.BlogAuthorLinkURLField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/priority`.
-            public var priority: Components.Schemas.BlogAuthorLinkPriorityField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/isBlank`.
-            public var isBlank: Components.Schemas.BlogAuthorLinkIsBlankField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/permission`.
-            public var permission:
-                Components.Schemas.BlogAuthorLinkPermissionField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/createdAt`.
-            public var createdAt:
-                Components.Schemas.BlogAuthorLinkCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/updatedAt`.
-            public var updatedAt:
-                Components.Schemas.BlogAuthorLinkUpdatedAtField
-            /// Creates a new `BlogAuthorLinkListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - menuId:
-            ///   - label:
-            ///   - url:
-            ///   - priority:
-            ///   - isBlank:
-            ///   - permission:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.BlogAuthorLinkIdField,
-                menuId: Components.Schemas.BlogAuthorIdField,
-                label: Components.Schemas.BlogAuthorLinkLabelField,
-                url: Components.Schemas.BlogAuthorLinkURLField,
-                priority: Components.Schemas.BlogAuthorLinkPriorityField,
-                isBlank: Components.Schemas.BlogAuthorLinkIsBlankField,
-                permission: Components.Schemas.BlogAuthorLinkPermissionField,
-                createdAt: Components.Schemas.BlogAuthorLinkCreatedAtField,
-                updatedAt: Components.Schemas.BlogAuthorLinkUpdatedAtField
-            ) {
-                self.id = id
-                self.menuId = menuId
-                self.label = label
-                self.url = url
-                self.priority = priority
-                self.isBlank = isBlank
-                self.permission = permission
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case menuId
-                case label
-                case url
-                case priority
-                case isBlank
-                case permission
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkIdField`.
-        public typealias BlogAuthorLinkIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkLabelField`.
-        public typealias BlogAuthorLinkLabelField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkURLField`.
-        public typealias BlogAuthorLinkURLField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPriorityField`.
-        public typealias BlogAuthorLinkPriorityField = Swift.Int
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkIsBlankField`.
-        public typealias BlogAuthorLinkIsBlankField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPermissionField`.
-        public typealias BlogAuthorLinkPermissionField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreatedAtField`.
-        public typealias BlogAuthorLinkCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkUpdatedAtField`.
-        public typealias BlogAuthorLinkUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPatchSchema`.
         public struct BlogAuthorLinkPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPatchSchema/label`.
@@ -2190,6 +2175,66 @@ public enum Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/BlogTagListSchema`.
+        public typealias BlogTagListSchema = [Components.Schemas
+            .BlogTagListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema`.
+        public struct BlogTagListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/id`.
+            public var id: Components.Schemas.BlogTagIdField
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/title`.
+            public var title: Components.Schemas.BlogTagTitleField
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.BlogTagExcerptField
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/imageAssetId`.
+            public var imageAssetId:
+                Components.Schemas.BlogTagImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.BlogTagCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.BlogTagUpdatedAtField
+            /// Creates a new `BlogTagListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - title:
+            ///   - excerpt:
+            ///   - imageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.BlogTagIdField,
+                title: Components.Schemas.BlogTagTitleField,
+                excerpt: Components.Schemas.BlogTagExcerptField,
+                imageAssetId: Components.Schemas.BlogTagImageAssetIdField? =
+                    nil,
+                createdAt: Components.Schemas.BlogTagCreatedAtField,
+                updatedAt: Components.Schemas.BlogTagUpdatedAtField
+            ) {
+                self.id = id
+                self.title = title
+                self.excerpt = excerpt
+                self.imageAssetId = imageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case title
+                case excerpt
+                case imageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlogTagTitleField`.
+        public typealias BlogTagTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogTagExcerptField`.
+        public typealias BlogTagExcerptField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogTagCreatedAtField`.
+        public typealias BlogTagCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/BlogTagUpdatedAtField`.
+        public typealias BlogTagUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogTagListItemSearchQuerySchema`.
         public struct BlogTagListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -2329,63 +2374,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema`.
-        public struct BlogTagListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/id`.
-            public var id: Components.Schemas.BlogTagIdField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/title`.
-            public var title: Components.Schemas.BlogTagTitleField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.BlogTagExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/imageAssetId`.
-            public var imageAssetId:
-                Components.Schemas.BlogTagImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.BlogTagCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.BlogTagUpdatedAtField
-            /// Creates a new `BlogTagListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - title:
-            ///   - excerpt:
-            ///   - imageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.BlogTagIdField,
-                title: Components.Schemas.BlogTagTitleField,
-                excerpt: Components.Schemas.BlogTagExcerptField,
-                imageAssetId: Components.Schemas.BlogTagImageAssetIdField? =
-                    nil,
-                createdAt: Components.Schemas.BlogTagCreatedAtField,
-                updatedAt: Components.Schemas.BlogTagUpdatedAtField
-            ) {
-                self.id = id
-                self.title = title
-                self.excerpt = excerpt
-                self.imageAssetId = imageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case title
-                case excerpt
-                case imageAssetId
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/BlogTagTitleField`.
-        public typealias BlogTagTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogTagExcerptField`.
-        public typealias BlogTagExcerptField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogTagCreatedAtField`.
-        public typealias BlogTagCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogTagUpdatedAtField`.
-        public typealias BlogTagUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogTagPatchSchema`.
         public struct BlogTagPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogTagPatchSchema/title`.
@@ -2459,10 +2447,10 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/BlogPostRequestBody/content/application\/json`.
             case json(Components.Schemas.BlogPostCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody`.
-        @frozen public enum BulkDeleteRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody/content/application\/json`.
-            case json(Components.Schemas.BulkDeleteRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody`.
+        @frozen public enum DeleteRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
+            case json(Components.Schemas.DeleteRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/BlogPostUpdateRequestBody`.
         @frozen public enum BlogPostUpdateRequestBody: Sendable, Hashable {
@@ -2557,16 +2545,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BulkDeleteResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
+        public struct DeleteResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/DeleteResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
-                case json(Components.Schemas.BulkDeleteResponseSchema)
+                /// - Remark: Generated from `#/components/responses/DeleteResponse/content/application\/json`.
+                case json(Components.Schemas.DeleteResponseSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.BulkDeleteResponseSchema {
+                public var json: Components.Schemas.DeleteResponseSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -2576,25 +2564,25 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BulkDeleteResponse.Body
-            /// Creates a new `BulkDeleteResponse`.
+            public var body: Components.Responses.DeleteResponse.Body
+            /// Creates a new `DeleteResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BulkDeleteResponse.Body) {
+            public init(body: Components.Responses.DeleteResponse.Body) {
                 self.body = body
             }
         }
-        public struct BlogPostFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogPostFiltersResponse/content`.
+        public struct BlogPostListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/BlogPostListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogPostFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/BlogPostListResponse/content/application\/json`.
+                case json(Components.Schemas.BlogPostListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.BlogPostListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -2604,13 +2592,12 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogPostFiltersResponse.Body
-            /// Creates a new `BlogPostFiltersResponse`.
+            public var body: Components.Responses.BlogPostListResponse.Body
+            /// Creates a new `BlogPostListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BlogPostFiltersResponse.Body)
-            {
+            public init(body: Components.Responses.BlogPostListResponse.Body) {
                 self.body = body
             }
         }
@@ -2680,16 +2667,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BlogAuthorFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogAuthorFiltersResponse/content`.
+        public struct BlogAuthorListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/BlogAuthorListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogAuthorFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/BlogAuthorListResponse/content/application\/json`.
+                case json(Components.Schemas.BlogAuthorListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.BlogAuthorListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -2699,14 +2686,13 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogAuthorFiltersResponse.Body
-            /// Creates a new `BlogAuthorFiltersResponse`.
+            public var body: Components.Responses.BlogAuthorListResponse.Body
+            /// Creates a new `BlogAuthorListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(
-                body: Components.Responses.BlogAuthorFiltersResponse.Body
-            ) {
+            public init(body: Components.Responses.BlogAuthorListResponse.Body)
+            {
                 self.body = body
             }
         }
@@ -2778,16 +2764,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BlogAuthorLinkFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogAuthorLinkFiltersResponse/content`.
+        public struct BlogAuthorLinkListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/BlogAuthorLinkListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogAuthorLinkFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/BlogAuthorLinkListResponse/content/application\/json`.
+                case json(Components.Schemas.BlogAuthorLinkListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.BlogAuthorLinkListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -2798,13 +2784,13 @@ public enum Components {
             }
             /// Received HTTP response body
             public var body:
-                Components.Responses.BlogAuthorLinkFiltersResponse.Body
-            /// Creates a new `BlogAuthorLinkFiltersResponse`.
+                Components.Responses.BlogAuthorLinkListResponse.Body
+            /// Creates a new `BlogAuthorLinkListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.BlogAuthorLinkFiltersResponse.Body
+                body: Components.Responses.BlogAuthorLinkListResponse.Body
             ) {
                 self.body = body
             }
@@ -2905,16 +2891,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BlogTagFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogTagFiltersResponse/content`.
+        public struct BlogTagListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/BlogTagListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogTagFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/BlogTagListResponse/content/application\/json`.
+                case json(Components.Schemas.BlogTagListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.BlogTagListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -2924,13 +2910,12 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogTagFiltersResponse.Body
-            /// Creates a new `BlogTagFiltersResponse`.
+            public var body: Components.Responses.BlogTagListResponse.Body
+            /// Creates a new `BlogTagListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BlogTagFiltersResponse.Body)
-            {
+            public init(body: Components.Responses.BlogTagListResponse.Body) {
                 self.body = body
             }
         }
@@ -3146,15 +3131,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)`.
-    public enum BlogPostBulkDelete {
-        public static let id: Swift.String = "blogPostBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
+    public enum BlogPostDelete {
+        public static let id: Swift.String = "blogPostDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogPostBulkDelete.AcceptableContentType
+                        Operations.BlogPostDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3162,39 +3147,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogPostBulkDelete.AcceptableContentType
+                        Operations.BlogPostDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogPostBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.BlogPostDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.BlogPostBulkDelete.Input.Headers = .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.BlogPostDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3213,13 +3198,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogPostBulkDelete.Output.Unauthorized)
+            case unauthorized(Operations.BlogPostDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3230,7 +3215,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogPostBulkDelete.Output.Unauthorized
+                Operations.BlogPostDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3250,13 +3235,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogPostBulkDelete.Output.Forbidden)
+            case forbidden(Operations.BlogPostDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3266,8 +3251,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogPostBulkDelete.Output.Forbidden
-            {
+            public var forbidden: Operations.BlogPostDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -3314,16 +3298,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)`.
-    public enum BlogPostFilters {
-        public static let id: Swift.String = "blogPostFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
+    public enum BlogPostList {
+        public static let id: Swift.String = "blogPostList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogPostFilters.AcceptableContentType
+                        Operations.BlogPostList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3331,35 +3315,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogPostFilters.AcceptableContentType
+                        Operations.BlogPostList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogPostFilters.Input.Headers
+            public var headers: Operations.BlogPostList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.BlogPostFilters.Input.Headers = .init()
+                headers: Operations.BlogPostList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogPost filter response
+            /// BlogPost list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogPostFiltersResponse)
+            case ok(Components.Responses.BlogPostListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogPostFiltersResponse {
+            public var ok: Components.Responses.BlogPostListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3378,13 +3362,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogPostFilters.Output.Unauthorized)
+            case unauthorized(Operations.BlogPostList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3394,8 +3378,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.BlogPostFilters.Output.Unauthorized
+            public var unauthorized: Operations.BlogPostList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3415,13 +3398,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogPostFilters.Output.Forbidden)
+            case forbidden(Operations.BlogPostList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3431,7 +3414,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogPostFilters.Output.Forbidden {
+            public var forbidden: Operations.BlogPostList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -4488,15 +4471,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)`.
-    public enum BlogAuthorBulkDelete {
-        public static let id: Swift.String = "blogAuthorBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
+    public enum BlogAuthorDelete {
+        public static let id: Swift.String = "blogAuthorDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorBulkDelete.AcceptableContentType
+                        Operations.BlogAuthorDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4504,40 +4487,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorBulkDelete.AcceptableContentType
+                        Operations.BlogAuthorDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogAuthorBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.BlogAuthorDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.BlogAuthorBulkDelete.Input.Headers =
-                    .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.BlogAuthorDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -4556,15 +4538,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.BlogAuthorBulkDelete.Output.Unauthorized
-            )
+            case unauthorized(Operations.BlogAuthorDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4575,7 +4555,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogAuthorBulkDelete.Output.Unauthorized
+                Operations.BlogAuthorDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4595,13 +4575,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorBulkDelete.Output.Forbidden)
+            case forbidden(Operations.BlogAuthorDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4611,9 +4591,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.BlogAuthorBulkDelete.Output.Forbidden
-            {
+            public var forbidden: Operations.BlogAuthorDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -4660,16 +4638,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)`.
-    public enum BlogAuthorFilters {
-        public static let id: Swift.String = "blogAuthorFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
+    public enum BlogAuthorList {
+        public static let id: Swift.String = "blogAuthorList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorFilters.AcceptableContentType
+                        Operations.BlogAuthorList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4677,35 +4655,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorFilters.AcceptableContentType
+                        Operations.BlogAuthorList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogAuthorFilters.Input.Headers
+            public var headers: Operations.BlogAuthorList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.BlogAuthorFilters.Input.Headers = .init()
+                headers: Operations.BlogAuthorList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthor filter response
+            /// BlogAuthor list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorFiltersResponse)
+            case ok(Components.Responses.BlogAuthorListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorFiltersResponse {
+            public var ok: Components.Responses.BlogAuthorListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -4724,13 +4702,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogAuthorFilters.Output.Unauthorized)
+            case unauthorized(Operations.BlogAuthorList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4741,7 +4719,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogAuthorFilters.Output.Unauthorized
+                Operations.BlogAuthorList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4761,13 +4739,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorFilters.Output.Forbidden)
+            case forbidden(Operations.BlogAuthorList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4777,8 +4755,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogAuthorFilters.Output.Forbidden
-            {
+            public var forbidden: Operations.BlogAuthorList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -5873,9 +5850,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)`.
-    public enum BlogAuthorLinkBulkDelete {
-        public static let id: Swift.String = "blogAuthorLinkBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
+    public enum BlogAuthorLinkDelete {
+        public static let id: Swift.String = "blogAuthorLinkDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/DELETE/path`.
             public struct Path: Sendable, Hashable {
@@ -5895,13 +5872,12 @@ public enum Operations {
                     self.blogAuthorId = blogAuthorId
                 }
             }
-            public var path: Operations.BlogAuthorLinkBulkDelete.Input.Path
+            public var path: Operations.BlogAuthorLinkDelete.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorLinkBulkDelete
-                            .AcceptableContentType
+                        Operations.BlogAuthorLinkDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -5909,16 +5885,14 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorLinkBulkDelete
-                            .AcceptableContentType
+                        Operations.BlogAuthorLinkDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers:
-                Operations.BlogAuthorLinkBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.BlogAuthorLinkDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -5926,10 +5900,10 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.BlogAuthorLinkBulkDelete.Input.Path,
-                headers: Operations.BlogAuthorLinkBulkDelete.Input.Headers =
+                path: Operations.BlogAuthorLinkDelete.Input.Path,
+                headers: Operations.BlogAuthorLinkDelete.Input.Headers =
                     .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -5937,17 +5911,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -5966,15 +5940,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.BlogAuthorLinkBulkDelete.Output.Unauthorized
+                Operations.BlogAuthorLinkDelete.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -5985,7 +5959,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogAuthorLinkBulkDelete.Output.Unauthorized
+                Operations.BlogAuthorLinkDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -6005,13 +5979,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorLinkBulkDelete.Output.Forbidden)
+            case forbidden(Operations.BlogAuthorLinkDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -6022,7 +5996,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.BlogAuthorLinkBulkDelete.Output.Forbidden
+                Operations.BlogAuthorLinkDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -6070,16 +6044,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)`.
-    public enum BlogAuthorLinkFilters {
-        public static let id: Swift.String = "blogAuthorLinkFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
+    public enum BlogAuthorLinkList {
+        public static let id: Swift.String = "blogAuthorLinkList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/filters/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/path`.
             public struct Path: Sendable, Hashable {
                 /// BlogAuthor id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/filters/GET/path/blogAuthorId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/path/blogAuthorId`.
                 public var blogAuthorId:
                     Components.Parameters.BlogAuthorLinkMenuIdParameter
                 /// Creates a new `Path`.
@@ -6093,12 +6067,12 @@ public enum Operations {
                     self.blogAuthorId = blogAuthorId
                 }
             }
-            public var path: Operations.BlogAuthorLinkFilters.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/filters/GET/header`.
+            public var path: Operations.BlogAuthorLinkList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorLinkFilters.AcceptableContentType
+                        Operations.BlogAuthorLinkList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -6106,39 +6080,38 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorLinkFilters.AcceptableContentType
+                        Operations.BlogAuthorLinkList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogAuthorLinkFilters.Input.Headers
+            public var headers: Operations.BlogAuthorLinkList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
             ///   - headers:
             public init(
-                path: Operations.BlogAuthorLinkFilters.Input.Path,
-                headers: Operations.BlogAuthorLinkFilters.Input.Headers =
-                    .init()
+                path: Operations.BlogAuthorLinkList.Input.Path,
+                headers: Operations.BlogAuthorLinkList.Input.Headers = .init()
             ) {
                 self.path = path
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthorLink filter response
+            /// BlogAuthorLink list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorLinkFiltersResponse)
+            case ok(Components.Responses.BlogAuthorLinkListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorLinkFiltersResponse {
+            public var ok: Components.Responses.BlogAuthorLinkListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -6157,15 +6130,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.BlogAuthorLinkFilters.Output.Unauthorized
-            )
+            case unauthorized(Operations.BlogAuthorLinkList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -6176,7 +6147,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogAuthorLinkFilters.Output.Unauthorized
+                Operations.BlogAuthorLinkList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -6196,13 +6167,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorLinkFilters.Output.Forbidden)
+            case forbidden(Operations.BlogAuthorLinkList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -6212,8 +6183,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.BlogAuthorLinkFilters.Output.Forbidden
+            public var forbidden: Operations.BlogAuthorLinkList.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -7684,15 +7654,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)`.
-    public enum BlogTagBulkDelete {
-        public static let id: Swift.String = "blogTagBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
+    public enum BlogTagDelete {
+        public static let id: Swift.String = "blogTagDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogTagBulkDelete.AcceptableContentType
+                        Operations.BlogTagDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -7700,39 +7670,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogTagBulkDelete.AcceptableContentType
+                        Operations.BlogTagDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogTagBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.BlogTagDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.BlogTagBulkDelete.Input.Headers = .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.BlogTagDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -7751,13 +7721,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogTagBulkDelete.Output.Unauthorized)
+            case unauthorized(Operations.BlogTagDelete.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -7768,7 +7738,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogTagBulkDelete.Output.Unauthorized
+                Operations.BlogTagDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -7788,13 +7758,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogTagBulkDelete.Output.Forbidden)
+            case forbidden(Operations.BlogTagDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -7804,8 +7774,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogTagBulkDelete.Output.Forbidden
-            {
+            public var forbidden: Operations.BlogTagDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -7852,16 +7821,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)`.
-    public enum BlogTagFilters {
-        public static let id: Swift.String = "blogTagFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
+    public enum BlogTagList {
+        public static let id: Swift.String = "blogTagList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogTagFilters.AcceptableContentType
+                        Operations.BlogTagList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -7869,35 +7838,34 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogTagFilters.AcceptableContentType
+                        Operations.BlogTagList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogTagFilters.Input.Headers
+            public var headers: Operations.BlogTagList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
-            public init(
-                headers: Operations.BlogTagFilters.Input.Headers = .init()
-            ) {
+            public init(headers: Operations.BlogTagList.Input.Headers = .init())
+            {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogTag filter response
+            /// BlogTag list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogTagFiltersResponse)
+            case ok(Components.Responses.BlogTagListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogTagFiltersResponse {
+            public var ok: Components.Responses.BlogTagListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -7916,13 +7884,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogTagFilters.Output.Unauthorized)
+            case unauthorized(Operations.BlogTagList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -7932,8 +7900,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.BlogTagFilters.Output.Unauthorized
+            public var unauthorized: Operations.BlogTagList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -7953,13 +7920,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogTagFilters.Output.Forbidden)
+            case forbidden(Operations.BlogTagList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -7969,7 +7936,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogTagFilters.Output.Forbidden {
+            public var forbidden: Operations.BlogTagList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):

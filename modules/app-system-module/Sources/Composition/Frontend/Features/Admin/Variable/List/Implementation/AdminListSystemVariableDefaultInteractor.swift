@@ -13,7 +13,7 @@ struct AdminListSystemVariableDefaultInteractor:
         try await repository.listSystemVariables(page: page, search: search)
     }
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws {
         for id in ids {

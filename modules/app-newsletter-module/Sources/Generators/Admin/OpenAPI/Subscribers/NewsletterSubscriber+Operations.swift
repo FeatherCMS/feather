@@ -50,7 +50,7 @@ struct NewsletterSubscriberUpdateOperation: NewsletterSubscriberIDOperation {
         ]
     }
 }
-struct NewsletterSubscriberBulkDeleteOperation: NewsletterSubscriberOperation,
-    BulkDeleteOperation
+struct NewsletterSubscriberDeleteOperation: NewsletterSubscriberOperation,
+    DeleteOperation
 {
 }

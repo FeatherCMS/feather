@@ -32,7 +32,7 @@ struct ContactFormEmails: Component {
                 P("No emails configured yet.")
             }
             else {
-                ListTableBulkRemoveForm(
+                ListTableRemoveForm(
                     state: .init(
                         action: "/admin/contact/forms/\(id)/emails/remove/",
                         page: 1,
@@ -96,7 +96,7 @@ struct ContactFormEmails: Component {
                             }
                         }
                         .class("cms-table", "action-table")
-                        .if(canRemove) { $0.class("bulk-select-table") }
+                        .if(canRemove) { $0.class("select-table") }
                     )
                 )
             }

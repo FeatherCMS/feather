@@ -22,7 +22,7 @@ struct AdminListBlogTagDefaultInteractor:
         try await repository.listBlogTags(page: page, search: search)
     }
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws {
         for id in ids {

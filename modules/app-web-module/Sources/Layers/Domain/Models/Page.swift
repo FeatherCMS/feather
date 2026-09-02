@@ -98,7 +98,7 @@ extension Page {
         try validate(content: content)
 
         let metadataModel = try Metadata.create(
-            reference: .future("web.page"),
+            reference: .type("web.page"),
             base: metadata
                 ?? .init(
                     template: "default",

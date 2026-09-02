@@ -178,19 +178,30 @@ struct RolePermissionTable {
         }
     }
 
-    func delete(
-        roleId: String,
-        permissionId: String
-    ) async throws -> Bool {
-        try await connection.run(
+    func delete(ids: [String]) async throws -> [String] {
+        let values =
+            ids.compactMap { id -> String? in
+                let parts = id.split(separator: ":", maxSplits: 1)
+                    .map(String.init)
+                guard parts.count == 2 else { return nil }
+                let roleId = parts[0].replacingOccurrences(of: "'", with: "''")
+                let permissionId = parts[1]
+                    .replacingOccurrences(of: "'", with: "''")
+                return "('\(roleId)', '\(permissionId)')"
+            }
+            .joined(separator: ", ")
+        guard !values.isEmpty else { return [] }
+        return try await connection.run(
             query: #"""
                 DELETE FROM auth_role_permission
-                WHERE role_id=\#(roleId)
-                AND permission_id=\#(permissionId)
-                RETURNING role_id;
+                WHERE (role_id, permission_id) IN (\#(unescaped: values))
+                RETURNING role_id || ':' || permission_id AS id;
                 """#
         ) { sequence in
-            try await sequence.collect().first != nil
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 }

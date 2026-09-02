@@ -7,6 +7,6 @@ import SGML
 import WebStandards
 
 protocol AdminRemoveContactSubmissionsPresenter: Sendable {
-    func renderBulkConfirmation(selectedIds: [String], permissions: Set<String>)
+    func renderConfirmation(selectedIds: [String], permissions: Set<String>)
         -> HTMLResponse
 }

@@ -18,10 +18,10 @@ public struct DeleteSubscriber: UseCase {
     }
     public struct Input: DTO {
         public let newsletterId: String
-        public let email: String
-        public init(newsletterId: String, email: String) {
+        public let emails: [String]
+        public init(newsletterId: String, emails: [String]) {
             self.newsletterId = newsletterId
-            self.email = email
+            self.emails = emails
         }
     }
 
@@ -31,12 +31,13 @@ public struct DeleteSubscriber: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         try await transaction.run { scope in
-            guard
-                try await scope.subscriber.delete(
-                    newsletterId: input.newsletterId,
-                    email: input.email
-                )
-            else { throw Error(message: "Newsletter subscriber not found") }
+            let deleted = try await scope.subscriber.delete(
+                newsletterId: input.newsletterId,
+                emails: input.emails
+            )
+            guard !deleted.isEmpty else {
+                throw Error(message: "Newsletter subscriber not found")
+            }
         }
     }
 }

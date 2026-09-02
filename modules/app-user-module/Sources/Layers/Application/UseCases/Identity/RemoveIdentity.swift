@@ -26,17 +26,17 @@ public struct RemoveIdentity: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(id: String) {
-            self.id = id
+        public init(ids: [String]) {
+            self.ids = ids
         }
     }
 
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {
@@ -44,7 +44,7 @@ public struct RemoveIdentity: UseCase {
         }
 
         return try await transaction.run { scope in
-            try await scope.identity.delete(id: input.id)
+            try await scope.identity.delete(ids: input.ids)
         }
     }
 }

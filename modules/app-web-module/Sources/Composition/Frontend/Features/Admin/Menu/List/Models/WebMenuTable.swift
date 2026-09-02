@@ -96,9 +96,9 @@ struct WebMenuTable: Component {
                     let canRemove = state.permissions.contains(
                         "web:menus:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
-                            action: "/admin/web/menus/bulk-remove/",
+                            action: "/admin/web/menus/remove/",
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
@@ -174,7 +174,7 @@ struct WebMenuTable: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                     ListTablePagination(

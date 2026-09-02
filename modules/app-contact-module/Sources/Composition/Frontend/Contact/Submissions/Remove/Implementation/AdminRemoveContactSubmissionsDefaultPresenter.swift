@@ -11,7 +11,7 @@ struct AdminRemoveContactSubmissionsDefaultPresenter:
 {
     let request: Request
     let renderEngine: any RenderingEngine
-    func renderBulkConfirmation(selectedIds: [String], permissions: Set<String>)
+    func renderConfirmation(selectedIds: [String], permissions: Set<String>)
         -> HTMLResponse
     {
         renderEngine.renderAdminPage(
@@ -23,7 +23,7 @@ struct AdminRemoveContactSubmissionsDefaultPresenter:
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: .init(links: [
                         .init(label: "Admin", link: "/admin/"),

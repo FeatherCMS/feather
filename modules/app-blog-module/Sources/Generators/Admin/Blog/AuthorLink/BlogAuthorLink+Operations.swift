@@ -45,10 +45,10 @@ struct BlogAuthorLinkCreateOperation: BlogAuthorLinkMenuOperation {
     }
 }
 
-struct BlogAuthorLinkFiltersOperation: BlogAuthorLinkMenuOperation {
+struct BlogAuthorLinkListOperation: BlogAuthorLinkMenuOperation {
     var responseMap: ResponseMap {
         [
-            200: BlogAuthorLinkFiltersResponse().reference()
+            200: BlogAuthorLinkListResponse().reference()
         ]
     }
 }
@@ -116,7 +116,7 @@ struct BlogAuthorLinkPatchOperation: BlogAuthorLinkIDOperation {
     }
 }
 
-struct BlogAuthorLinkBulkDeleteOperation: BlogAuthorLinkMenuOperation,
-    BulkDeleteOperation
+struct BlogAuthorLinkDeleteOperation: BlogAuthorLinkMenuOperation,
+    DeleteOperation
 {
 }

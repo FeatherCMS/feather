@@ -10,14 +10,14 @@ servers:
 security:
 - bearerAuth: []
 paths:
-  /api/v1/admin/analytics/logs/filters:
+  /api/v1/admin/analytics/logs/:
     get:
       tags:
       - AnalyticsLogs
-      operationId: analyticsLogFilters
+      operationId: analyticsLogList
       responses:
         200:
-          $ref: '#/components/responses/AnalyticsLogFiltersResponse'
+          $ref: '#/components/responses/AnalyticsLogListResponse'
         401:
           description: Unauthorized
         403:
@@ -80,34 +80,65 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    AnalyticsLogFiltersSchema:
+    AnalyticsLogListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/AnalyticsLogListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    AnalyticsLogListItemSchema:
       type: object
       properties:
-        search:
-          $ref: '#/components/schemas/AnalyticsLogPathField'
+        id:
+          $ref: '#/components/schemas/AnalyticsLogIdField'
+        accountId:
+          type: string
+          examples:
+          - account-01
         source:
-          $ref: '#/components/schemas/AnalyticsLogSourceField'
+          type: string
+          examples:
+          - web_app
         method:
-          $ref: '#/components/schemas/AnalyticsLogMethodField'
+          type: string
+          examples:
+          - GET
+        path:
+          type: string
+          examples:
+          - /articles/hello-world/
         responseCode:
-          $ref: '#/components/schemas/AnalyticsLogResponseCodeField'
-      minProperties: 0
-    AnalyticsLogPathField:
+          type: integer
+          examples:
+          - 200
+        ip:
+          type: string
+          examples:
+          - 203.0.113.10
+        browserName:
+          type: string
+          examples:
+          - Safari
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+      required:
+      - id
+      - accountId
+      - source
+      - method
+      - path
+      - responseCode
+      - ip
+      - browserName
+      - createdAt
+      minProperties: 9
+    AnalyticsLogIdField:
       type: string
       examples:
-      - /articles/hello-world/
-    AnalyticsLogSourceField:
-      type: string
-      examples:
-      - web_app
-    AnalyticsLogMethodField:
-      type: string
-      examples:
-      - GET
-    AnalyticsLogResponseCodeField:
-      type: integer
-      examples:
-      - 200
+      - analytics-log-01
     AnalyticsLogOverviewQuerySchema:
       type: object
       properties:
@@ -311,6 +342,10 @@ components:
           uniqueItems: false
         filters:
           type: object
+          examples:
+          - method: GET
+            source: web_app
+            search: /articles/hello-world/
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'
@@ -351,6 +386,22 @@ components:
       - desc
       examples:
       - asc
+    AnalyticsLogPathField:
+      type: string
+      examples:
+      - /articles/hello-world/
+    AnalyticsLogSourceField:
+      type: string
+      examples:
+      - web_app
+    AnalyticsLogMethodField:
+      type: string
+      examples:
+      - GET
+    AnalyticsLogResponseCodeField:
+      type: integer
+      examples:
+      - 200
     AnalyticsLogListItemSearchSchema:
       type: object
       properties:
@@ -377,59 +428,6 @@ components:
       - query
       - data
       minProperties: 2
-    AnalyticsLogListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/AnalyticsLogIdField'
-        accountId:
-          type: string
-          examples:
-          - account-01
-        source:
-          type: string
-          examples:
-          - web_app
-        method:
-          type: string
-          examples:
-          - GET
-        path:
-          type: string
-          examples:
-          - /articles/hello-world/
-        responseCode:
-          type: integer
-          examples:
-          - 200
-        ip:
-          type: string
-          examples:
-          - 203.0.113.10
-        browserName:
-          type: string
-          examples:
-          - Safari
-        createdAt:
-          type: number
-          format: double
-          examples:
-          - 1.717171717e+9
-      required:
-      - id
-      - accountId
-      - source
-      - method
-      - path
-      - responseCode
-      - ip
-      - browserName
-      - createdAt
-      minProperties: 9
-    AnalyticsLogIdField:
-      type: string
-      examples:
-      - analytics-log-01
     AnalyticsLogDetailSchema:
       type: object
       properties:
@@ -571,12 +569,12 @@ components:
       - updatedAt
       minProperties: 27
   responses:
-    AnalyticsLogFiltersResponse:
-      description: AnalyticsLog filter response
+    AnalyticsLogListResponse:
+      description: AnalyticsLog list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AnalyticsLogFiltersSchema'
+            $ref: '#/components/schemas/AnalyticsLogListSchema'
     AnalyticsLogOverviewResponse:
       description: Analytics overview response
       content:

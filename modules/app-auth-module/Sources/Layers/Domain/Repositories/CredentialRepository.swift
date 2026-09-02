@@ -23,6 +23,6 @@ public protocol CredentialRepository: Repository {
     ) async throws -> Credential
 
     func delete(
-        id: String
-    ) async throws -> Bool
+        ids: [String]
+    ) async throws -> [String]
 }

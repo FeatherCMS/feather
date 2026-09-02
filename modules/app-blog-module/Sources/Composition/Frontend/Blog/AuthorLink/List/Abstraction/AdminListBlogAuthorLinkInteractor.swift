@@ -18,7 +18,7 @@ protocol AdminListBlogAuthorLinkInteractor: Sendable {
         search: String?
     ) async throws -> AdminListBlogAuthorLinkModel
 
-    func bulkRemove(
+    func remove(
         menuId: String,
         ids: [String]
     ) async throws

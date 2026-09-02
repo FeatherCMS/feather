@@ -11,11 +11,11 @@ public struct ListTableSelectAllCheckbox: Component {
             Input()
                 .type(.checkbox)
                 .ariaLabel("Select all rows")
-                .class("bulk-select-all")
+                .class("select-all")
                 .onChange(
-                    "this.closest('form').querySelectorAll('input.bulk-select-row').forEach(function(input) { input.checked = this.checked; }, this)"
+                    "this.closest('form').querySelectorAll('input.select-row').forEach(function(input) { input.checked = this.checked; }, this)"
                 )
         }
-        .class("bulk-select-cell")
+        .class("select-cell")
     }
 }

@@ -221,8 +221,8 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.mediaFolderBulkDelete(
-                body: .json(.init(ids: [id], summary: true))
+            _ = try await client.mediaFolderDelete(
+                body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
     }
@@ -345,8 +345,8 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.mediaAssetBulkDelete(
-                body: .json(.init(ids: [id], summary: true))
+            _ = try await client.mediaAssetDelete(
+                body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
     }

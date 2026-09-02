@@ -74,9 +74,8 @@ public struct EditTag: UseCase {
             }
             guard
                 var metadata = try await scope.metadata.find(
-                    reference: .existing(
-                        .init(type: "blog.tag", id: input.id)
-                    )
+                    referenceType: "blog.tag",
+                    referenceId: input.id
                 )
             else {
                 throw Error(message: "Tag metadata not found")

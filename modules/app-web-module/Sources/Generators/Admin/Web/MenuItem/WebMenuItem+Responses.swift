@@ -11,8 +11,3 @@ struct WebMenuItemListResponse: JSONResponseRepresentable {
     var description: String = "WebMenuItem list response"
     var schema = WebMenuItemListSchema().reference()
 }
-
-struct WebMenuItemFiltersResponse: JSONResponseRepresentable {
-    var description: String = "WebMenuItem filter response"
-    var schema = SearchFilterSchema().reference()
-}

@@ -33,10 +33,10 @@ struct WebMenuCreateOperation: WebMenuOperation {
     }
 }
 
-struct WebMenuFiltersOperation: WebMenuOperation {
+struct WebMenuListOperation: WebMenuOperation {
     var responseMap: ResponseMap {
         [
-            200: WebMenuFiltersResponse().reference()
+            200: WebMenuListResponse().reference()
         ]
     }
 }
@@ -102,7 +102,7 @@ struct WebMenuPatchOperation: WebMenuIDOperation {
     }
 }
 
-struct WebMenuBulkDeleteOperation: WebMenuOperation,
-    BulkDeleteOperation
+struct WebMenuDeleteOperation: WebMenuOperation,
+    DeleteOperation
 {
 }

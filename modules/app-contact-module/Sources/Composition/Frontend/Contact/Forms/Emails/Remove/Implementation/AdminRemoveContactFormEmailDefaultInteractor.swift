@@ -15,7 +15,7 @@ struct AdminRemoveContactFormEmailDefaultInteractor:
         try await repository.get(id: id)
     }
 
-    func bulkRemove(id: String, emailIds: [String]) async throws {
+    func remove(id: String, emailIds: [String]) async throws {
         let current = try await repository.get(id: id)
         let selected = Set(emailIds)
         let remaining = current.mails.filter { !selected.contains($0.id) }

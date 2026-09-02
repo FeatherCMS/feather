@@ -11,8 +11,3 @@ struct WebPageListResponse: JSONResponseRepresentable {
     var description: String = "WebPage list response"
     var schema = WebPageListSchema().reference()
 }
-
-struct WebPageFiltersResponse: JSONResponseRepresentable {
-    var description: String = "WebPage filter response"
-    var schema = SearchFilterSchema().reference()
-}

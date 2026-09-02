@@ -108,9 +108,9 @@ struct WebPageTable: Component {
                     let canRemove = state.permissions.contains(
                         "web:pages:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
-                            action: "/admin/web/pages/bulk-remove/",
+                            action: "/admin/web/pages/remove/",
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
@@ -167,7 +167,7 @@ struct WebPageTable: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                     ListTablePagination(

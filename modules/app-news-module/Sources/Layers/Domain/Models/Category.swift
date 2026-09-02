@@ -99,7 +99,7 @@ extension Category {
         try validate(content: content)
 
         let metadataModel = try Metadata.create(
-            reference: .future("news.category"),
+            reference: .type("news.category"),
             base: metadata
                 ?? .init(
                     template: "news.category",

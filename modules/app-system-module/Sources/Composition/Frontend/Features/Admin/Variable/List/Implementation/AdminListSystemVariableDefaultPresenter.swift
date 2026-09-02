@@ -76,7 +76,7 @@ struct AdminListSystemVariableDefaultPresenter:
         )
     }
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         page: Int,
         search: String?,
         selectedIds: [String],
@@ -85,20 +85,20 @@ struct AdminListSystemVariableDefaultPresenter:
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove selected variables",
-            description: "Confirm bulk remove",
+            description: "Confirm remove",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: systemVariableBreadcrumbState(),
                     title: "Remove selected variables",
                     message:
                         "Are you sure you want to remove these selected variables? This action cannot be undone.",
-                    action: "/admin/system/variables/bulk-remove/",
-                    cancelLink: ListBulkRemoveRedirect.location(
+                    action: "/admin/system/variables/remove/",
+                    cancelLink: ListRemoveRedirect.location(
                         path: "/admin/system/variables/",
                         page: page,
                         search: search,

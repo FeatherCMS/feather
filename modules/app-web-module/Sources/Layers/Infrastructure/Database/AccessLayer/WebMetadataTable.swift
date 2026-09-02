@@ -354,30 +354,50 @@ struct WebMetadataTable {
     }
 
     func delete(
-        id: String
-    ) async throws -> Bool {
-        try await connection.run(
+        ids: [String]
+    ) async throws -> [String] {
+        guard !ids.isEmpty else { return [] }
+        let values =
+            ids.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        return try await connection.run(
             query: #"""
-                DELETE FROM web_metadata WHERE id=\#(id) RETURNING id;
+                DELETE FROM web_metadata
+                WHERE id IN (\#(unescaped: values))
+                RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().first != nil
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 
     func delete(
         referenceType: String,
-        referenceID: String
-    ) async throws -> Bool {
-        try await connection.run(
+        referenceIDs: [String]
+    ) async throws -> [String] {
+        guard !referenceIDs.isEmpty else { return [] }
+        let values =
+            referenceIDs.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        return try await connection.run(
             query: #"""
                 DELETE FROM web_metadata
                 WHERE reference_type=\#(referenceType)
-                    AND reference_id=\#(referenceID)
+                    AND reference_id IN (\#(unescaped: values))
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().first != nil
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 }

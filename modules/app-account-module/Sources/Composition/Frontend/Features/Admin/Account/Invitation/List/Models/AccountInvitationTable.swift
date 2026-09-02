@@ -96,9 +96,9 @@ struct AccountInvitationTable: Component {
                     let canRemove = state.permissions.contains(
                         "account:invitations:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
-                            action: "/admin/account/invitations/bulk-remove/",
+                            action: "/admin/account/invitations/remove/",
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
@@ -183,7 +183,7 @@ struct AccountInvitationTable: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                     ListTablePagination(

@@ -33,10 +33,10 @@ struct WebPageCreateOperation: WebPageOperation {
     }
 }
 
-struct WebPageFiltersOperation: WebPageOperation {
+struct WebPageListOperation: WebPageOperation {
     var responseMap: ResponseMap {
         [
-            200: WebPageFiltersResponse().reference()
+            200: WebPageListResponse().reference()
         ]
     }
 }
@@ -101,7 +101,7 @@ struct WebPagePatchOperation: WebPageIDOperation {
     }
 }
 
-struct WebPageBulkDeleteOperation: WebPageOperation,
-    BulkDeleteOperation
+struct WebPageDeleteOperation: WebPageOperation,
+    DeleteOperation
 {
 }

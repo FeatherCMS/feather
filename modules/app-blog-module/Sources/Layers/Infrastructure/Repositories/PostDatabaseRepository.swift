@@ -68,9 +68,7 @@ public struct PostDatabaseRepository: PostRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(
-                reference: .existing(.init(type: "blog.post", id: id))
-            )
+            .find(referenceType: "blog.post", referenceId: id)
         else { return nil }
         return post.asDomain(metadata: metadata)
     }
@@ -111,9 +109,9 @@ public struct PostDatabaseRepository: PostRepository {
     }
 
     public func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         let table = PostTable(connection: context.connection)
-        return try await table.delete(id: id)
+        return try await table.delete(ids: ids)
     }
 }

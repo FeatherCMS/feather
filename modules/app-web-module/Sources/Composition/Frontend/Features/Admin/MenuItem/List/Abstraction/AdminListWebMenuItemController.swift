@@ -9,12 +9,12 @@ protocol AdminListWebMenuItemController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getWebMenuItemsBulkRemoveConfirmation(
+    func getWebMenuItemsRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postWebMenuItemsBulkRemove(
+    func postWebMenuItemsRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -35,12 +35,12 @@ extension AdminListWebMenuItemController {
             use: getWebMenuItems
         )
         router.get(
-            "/admin/web/menus/{id}/items/bulk-remove/",
-            use: getWebMenuItemsBulkRemoveConfirmation
+            "/admin/web/menus/{id}/items/remove/",
+            use: getWebMenuItemsRemoveConfirmation
         )
         router.post(
-            "/admin/web/menus/{id}/items/bulk-remove/",
-            use: postWebMenuItemsBulkRemove
+            "/admin/web/menus/{id}/items/remove/",
+            use: postWebMenuItemsRemove
         )
         router.post(
             "/admin/web/menus/{id}/items/{itemId}/move/",

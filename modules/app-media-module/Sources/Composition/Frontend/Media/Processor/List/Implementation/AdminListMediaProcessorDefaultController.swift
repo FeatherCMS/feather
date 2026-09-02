@@ -63,7 +63,7 @@ struct AdminListMediaProcessorDefaultController:
         )
     }
 
-    func bulkRemoveConfirmation(
+    func removeConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -75,7 +75,7 @@ struct AdminListMediaProcessorDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListBulkRemoveRedirect.location(
+                    .location: ListRemoveRedirect.location(
                         path: "/admin/media/processors/",
                         page: page,
                         search: search,
@@ -86,7 +86,7 @@ struct AdminListMediaProcessorDefaultController:
             )
         }
         return
-            try presenter.renderBulkRemoveConfirmation(
+            try presenter.renderRemoveConfirmation(
                 page: page,
                 search: search,
                 selectedIds: selectedIds,
@@ -95,22 +95,22 @@ struct AdminListMediaProcessorDefaultController:
             .response(from: request, context: context)
     }
 
-    func bulkRemove(
+    func remove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+            try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/media/processors/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

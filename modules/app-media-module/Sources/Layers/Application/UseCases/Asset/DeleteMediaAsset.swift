@@ -26,34 +26,36 @@ public struct DeleteMediaAsset: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(id: String) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
         return try await transaction.run { scope in
-            guard let asset = try await scope.assets.find(id: input.id) else {
-                return false
+            var deletedIds: [String] = []
+            for id in input.ids {
+                guard let asset = try await scope.assets.find(id: id) else {
+                    continue
+                }
+                try await adjustFolderAggregates(
+                    folders: scope.folders,
+                    folderId: asset.folderId,
+                    sizeDelta: -asset.sizeBytes,
+                    assetCountDelta: -1
+                )
+                try await scope.processorAssets.deleteAll(assetId: asset.id)
+                deletedIds.append(asset.id)
             }
-            try await adjustFolderAggregates(
-                folders: scope.folders,
-                folderId: asset.folderId,
-                sizeDelta: -asset.sizeBytes,
-                assetCountDelta: -1
-            )
-            try await scope.processorAssets.deleteAll(assetId: asset.id)
-            return try await scope.assets.delete(id: input.id)
+            return try await scope.assets.delete(ids: deletedIds)
         }
     }
 }

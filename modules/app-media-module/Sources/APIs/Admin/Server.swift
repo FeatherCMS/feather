@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaAssetBulkDelete(
+                try await server.mediaAssetDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -124,7 +124,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaFolderBulkDelete(
+                try await server.mediaFolderDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -189,7 +189,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaProcessorBulkDelete(
+                try await server.mediaProcessorDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -330,8 +330,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetBulkDelete)`.
-    fileprivate func mediaAssetBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)`.
+    fileprivate func mediaAssetDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -340,21 +340,20 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaAssetBulkDelete.id,
+            forOperation: Operations.MediaAssetDelete.id,
             using: {
-                APIHandler.mediaAssetBulkDelete($0)
+                APIHandler.mediaAssetDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaAssetBulkDelete.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.MediaAssetDelete.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -364,7 +363,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -375,7 +374,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaAssetBulkDelete.Input(
+                return Operations.MediaAssetDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -838,8 +837,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/folders`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderBulkDelete)`.
-    fileprivate func mediaFolderBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)`.
+    fileprivate func mediaFolderDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -848,21 +847,20 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaFolderBulkDelete.id,
+            forOperation: Operations.MediaFolderDelete.id,
             using: {
-                APIHandler.mediaFolderBulkDelete($0)
+                APIHandler.mediaFolderDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaFolderBulkDelete.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.MediaFolderDelete.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -872,7 +870,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -883,7 +881,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaFolderBulkDelete.Input(
+                return Operations.MediaFolderDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1273,8 +1271,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorBulkDelete)`.
-    fileprivate func mediaProcessorBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
+    fileprivate func mediaProcessorDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1283,12 +1281,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaProcessorBulkDelete.id,
+            forOperation: Operations.MediaProcessorDelete.id,
             using: {
-                APIHandler.mediaProcessorBulkDelete($0)
+                APIHandler.mediaProcessorDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaProcessorBulkDelete.Input.Headers =
+                let headers: Operations.MediaProcessorDelete.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1297,7 +1295,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1307,7 +1305,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1318,7 +1316,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaProcessorBulkDelete.Input(
+                return Operations.MediaProcessorDelete.Input(
                     headers: headers,
                     body: body
                 )

@@ -118,13 +118,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)`.
-    public func systemPermissionBulkDelete(
-        _ input: Operations.SystemPermissionBulkDelete.Input
-    ) async throws -> Operations.SystemPermissionBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
+    public func systemPermissionDelete(
+        _ input: Operations.SystemPermissionDelete.Input
+    ) async throws -> Operations.SystemPermissionDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.SystemPermissionBulkDelete.id,
+            forOperation: Operations.SystemPermissionDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/system/permissions",
@@ -156,7 +156,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -166,7 +166,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -194,17 +194,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)`.
-    public func systemPermissionFilters(
-        _ input: Operations.SystemPermissionFilters.Input
-    ) async throws -> Operations.SystemPermissionFilters.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)`.
+    public func systemPermissionList(
+        _ input: Operations.SystemPermissionList.Input
+    ) async throws -> Operations.SystemPermissionList.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.SystemPermissionFilters.id,
+            forOperation: Operations.SystemPermissionList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/system/permissions/filters",
+                    template: "/api/v1/admin/system/permissions/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -225,8 +225,7 @@ public struct Client: APIProtocol {
                         in: response.headerFields
                     )
                     let body:
-                        Components.Responses.SystemPermissionFiltersResponse
-                            .Body
+                        Components.Responses.SystemPermissionListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -236,7 +235,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.SystemPermissionListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -664,13 +663,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)`.
-    public func systemVariableBulkDelete(
-        _ input: Operations.SystemVariableBulkDelete.Input
-    ) async throws -> Operations.SystemVariableBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
+    public func systemVariableDelete(
+        _ input: Operations.SystemVariableDelete.Input
+    ) async throws -> Operations.SystemVariableDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.SystemVariableBulkDelete.id,
+            forOperation: Operations.SystemVariableDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/system/variables",
@@ -702,7 +701,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -712,7 +711,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -740,17 +739,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/variables/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)`.
-    public func systemVariableFilters(
-        _ input: Operations.SystemVariableFilters.Input
-    ) async throws -> Operations.SystemVariableFilters.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/system/variables/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)`.
+    public func systemVariableList(_ input: Operations.SystemVariableList.Input)
+        async throws -> Operations.SystemVariableList.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.SystemVariableFilters.id,
+            forOperation: Operations.SystemVariableList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/system/variables/filters",
+                    template: "/api/v1/admin/system/variables/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -771,7 +770,7 @@ public struct Client: APIProtocol {
                         in: response.headerFields
                     )
                     let body:
-                        Components.Responses.SystemVariableFiltersResponse.Body
+                        Components.Responses.SystemVariableListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -781,7 +780,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.SystemVariableListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
