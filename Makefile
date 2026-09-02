@@ -142,6 +142,7 @@ application-artifacts:
 		--file ./docker/application/Dockerfile \
 		--target application-artifacts \
 		--tag $(APPLICATION_ARTIFACT_IMAGE) \
+		--network host \
 		--load \
 		--cache-from type=local,src=$(APPLICATION_CACHE) \
 		--cache-to type=local,dest=$(APPLICATION_CACHE),mode=max \

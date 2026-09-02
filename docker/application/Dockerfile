@@ -25,6 +25,7 @@ WORKDIR /build/application
 RUN --mount=type=cache,id=application-swiftpm,target=/root/.swiftpm,sharing=locked \
     --mount=type=cache,id=application-swift-cache,target=/root/.cache,sharing=locked \
     --mount=type=cache,id=application-swift-build,target=/build/application/.build,sharing=locked \
+    git config --global http.version HTTP/1.1 && \
     swift package resolve
 
 COPY ./application /build/application
