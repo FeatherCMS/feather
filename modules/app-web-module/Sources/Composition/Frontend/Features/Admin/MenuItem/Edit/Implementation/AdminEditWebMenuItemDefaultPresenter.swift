@@ -18,7 +18,7 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit item - Feather CMS",
+            title: "Edit item",
             description: "Edit a management item",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -46,7 +46,7 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit item - Feather CMS",
+            title: "Edit item",
             description: "Edit a management item",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

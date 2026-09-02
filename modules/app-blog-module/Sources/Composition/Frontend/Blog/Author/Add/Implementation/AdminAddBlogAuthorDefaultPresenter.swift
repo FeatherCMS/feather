@@ -20,7 +20,7 @@ struct AdminAddBlogAuthorDefaultPresenter: AdminAddBlogAuthorPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Add author - Feather CMS",
+            title: "Add author",
             description: "Add an author in management",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

@@ -18,7 +18,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Edit campaign - Feather CMS",
+            title: "Edit campaign",
             description: "Edit campaign",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

@@ -19,8 +19,8 @@ struct AdminEditMediaProcessorDefaultPresenter: AdminEditMediaProcessorPresenter
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Edit media processor - Feather CMS",
-            description: "Edit media processor - Feather CMS",
+            title: "Edit media processor",
+            description: "Edit media processor",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

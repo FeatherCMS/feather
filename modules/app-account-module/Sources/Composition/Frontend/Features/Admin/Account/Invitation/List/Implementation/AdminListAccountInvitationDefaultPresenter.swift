@@ -27,7 +27,7 @@ struct AdminListAccountInvitationDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage user invitations - Feather CMS",
+                title: "Manage user invitations",
                 description: "Management user invitation list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -45,7 +45,7 @@ struct AdminListAccountInvitationDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage user invitations - Feather CMS",
+            title: "Manage user invitations",
             description: "Management user invitation list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

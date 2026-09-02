@@ -28,7 +28,7 @@ struct AdminListWebMetadataDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage metadata entries - Feather CMS",
+                title: "Manage metadata entries",
                 description: "Management web metadata list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -46,7 +46,7 @@ struct AdminListWebMetadataDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage metadata entries - Feather CMS",
+            title: "Manage metadata entries",
             description: "Management web metadata list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

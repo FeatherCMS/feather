@@ -16,7 +16,7 @@ struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Add item - Feather CMS",
+            title: "Add item",
             description: "Add an item in management",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

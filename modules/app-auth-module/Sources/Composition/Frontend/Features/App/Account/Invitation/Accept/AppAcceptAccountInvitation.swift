@@ -212,7 +212,7 @@ struct AppAcceptAccountInvitation {
     ) -> HTMLResponse {
         renderingEngine.renderPage(
             request: request,
-            title: "Create account - Feather CMS",
+            title: "Create account",
             description: "Complete your invited account registration.",
             imagePath: "images/puppy.png",
             content: Page(

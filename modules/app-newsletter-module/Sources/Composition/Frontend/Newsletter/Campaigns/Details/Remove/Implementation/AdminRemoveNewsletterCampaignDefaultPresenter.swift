@@ -14,7 +14,7 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
     func render(id: String, permissions: Set<String>) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove campaign - Feather CMS",
+            title: "Remove campaign",
             description: "Remove campaign",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

@@ -21,7 +21,7 @@ struct AdminGetBlogAuthorLinkDefaultPresenter: AdminGetBlogAuthorLinkPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Blog author link details - Feather CMS",
+            title: "Blog author link details",
             description: "Management blog author link details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -45,7 +45,7 @@ struct AdminGetBlogAuthorLinkDefaultPresenter: AdminGetBlogAuthorLinkPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Blog author link details - Feather CMS",
+            title: "Blog author link details",
             description: "Management blog author link details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

@@ -15,7 +15,7 @@ struct AdminAddRedirectRuleDefaultPresenter: AdminAddRedirectRulePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Add redirect rule - Feather CMS",
+            title: "Add redirect rule",
             description: "Add a redirect rule in management",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

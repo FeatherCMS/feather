@@ -26,7 +26,7 @@ struct AdminAddAuthMagicLinkDefaultPresenter: AdminAddAuthMagicLinkPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Add user magic link - Feather CMS",
+            title: "Add user magic link",
             description: "Add a user magic link in management",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

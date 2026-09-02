@@ -12,7 +12,7 @@ struct AdminAddUserRoleDefaultPresenter: AdminAddUserRolePresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Add user role - Feather CMS",
+            title: "Add user role",
             description: "Add a user role in management",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

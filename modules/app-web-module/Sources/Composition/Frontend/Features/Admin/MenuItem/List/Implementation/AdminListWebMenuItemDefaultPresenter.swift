@@ -29,7 +29,7 @@ struct AdminListWebMenuItemDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage items - Feather CMS",
+                title: "Manage items",
                 description: "Management item list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -47,7 +47,7 @@ struct AdminListWebMenuItemDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage items - Feather CMS",
+            title: "Manage items",
             description: "Management item list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

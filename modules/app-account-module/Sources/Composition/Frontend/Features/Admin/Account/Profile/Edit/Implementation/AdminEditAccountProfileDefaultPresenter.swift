@@ -18,7 +18,7 @@ struct AdminEditAccountProfileDefaultPresenter:
         let path = "/admin/account/users/\(userID)/profile/"
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Profile - Feather CMS",
+            title: "Profile",
             description: "Edit user profile",
             imagePath: "images/puppy.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -45,7 +45,7 @@ struct AdminEditAccountProfileDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "No permission - Feather CMS",
+            title: "No permission",
             description: "No permission",
             imagePath: "images/puppy.png",
             sidebarState: renderEngine.adminSidebarState(

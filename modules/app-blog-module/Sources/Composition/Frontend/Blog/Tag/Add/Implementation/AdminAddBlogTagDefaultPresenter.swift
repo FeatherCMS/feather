@@ -20,7 +20,7 @@ struct AdminAddBlogTagDefaultPresenter: AdminAddBlogTagPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Add tag - Feather CMS",
+            title: "Add tag",
             description: "Add a tag in management",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

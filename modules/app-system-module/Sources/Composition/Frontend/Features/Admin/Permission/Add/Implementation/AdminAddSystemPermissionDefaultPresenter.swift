@@ -16,7 +16,7 @@ struct AdminAddSystemPermissionDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Add system permission - Feather CMS",
+            title: "Add system permission",
             description: "Add a system permission in management",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

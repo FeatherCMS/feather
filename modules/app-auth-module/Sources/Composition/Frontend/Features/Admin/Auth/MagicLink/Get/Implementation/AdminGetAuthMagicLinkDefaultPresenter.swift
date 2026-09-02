@@ -37,7 +37,7 @@ struct AdminGetAuthMagicLinkDefaultPresenter: AdminGetAuthMagicLinkPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "User magic link details - Feather CMS",
+            title: "User magic link details",
             description: "Management user magic link details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -60,7 +60,7 @@ struct AdminGetAuthMagicLinkDefaultPresenter: AdminGetAuthMagicLinkPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "User magic link details - Feather CMS",
+            title: "User magic link details",
             description: "Management user magic link details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

@@ -43,7 +43,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Manage user magic links - Feather CMS",
+            title: "Manage user magic links",
             description: "Management user magic link list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -67,7 +67,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove user magic link - Feather CMS",
+            title: "Remove user magic link",
             description:
                 "Remove confirmation for a management user magic link",
             imagePath: "images/logos/logo.png",

@@ -16,7 +16,7 @@ struct AdminRemoveContactSubmissionsDefaultPresenter:
     {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove contact submissions - Feather CMS",
+            title: "Remove contact submissions",
             description: "Remove contact submissions",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

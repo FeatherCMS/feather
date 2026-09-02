@@ -32,8 +32,8 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
         if error != nil {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Media processors - Feather CMS",
-                description: "Media processors - Feather CMS",
+                title: "Media processors",
+                description: "Media processors",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
@@ -47,8 +47,8 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Media processors - Feather CMS",
-            description: "Media processors - Feather CMS",
+            title: "Media processors",
+            description: "Media processors",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

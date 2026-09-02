@@ -20,7 +20,7 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove subscribers - Feather CMS",
+            title: "Remove subscribers",
             description: "Confirm subscriber removal",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

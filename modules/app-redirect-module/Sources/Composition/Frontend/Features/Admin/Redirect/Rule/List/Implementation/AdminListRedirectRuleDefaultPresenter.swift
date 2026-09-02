@@ -29,7 +29,7 @@ struct AdminListRedirectRuleDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage redirect rules - Feather CMS",
+                title: "Manage redirect rules",
                 description: "Management redirect rule list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -47,7 +47,7 @@ struct AdminListRedirectRuleDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage redirect rules - Feather CMS",
+            title: "Manage redirect rules",
             description: "Management redirect rule list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

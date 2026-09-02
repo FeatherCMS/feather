@@ -170,7 +170,7 @@ struct AppMagicLink {
     ) -> HTMLResponse {
         renderingEngine.renderPage(
             request: request,
-            title: "Magic link - Feather CMS",
+            title: "Magic link",
             description: "Sign in without a password using a magic link.",
             imagePath: "images/puppy.png",
             content: Page(

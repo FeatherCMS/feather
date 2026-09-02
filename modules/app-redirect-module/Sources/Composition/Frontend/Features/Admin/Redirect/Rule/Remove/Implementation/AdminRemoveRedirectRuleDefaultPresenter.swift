@@ -18,7 +18,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove redirect rule - Feather CMS",
+            title: "Remove redirect rule",
             description: "Remove confirmation for a management redirect rule",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -43,7 +43,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove redirect rule - Feather CMS",
+            title: "Remove redirect rule",
             description: "Remove confirmation for a management redirect rule",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

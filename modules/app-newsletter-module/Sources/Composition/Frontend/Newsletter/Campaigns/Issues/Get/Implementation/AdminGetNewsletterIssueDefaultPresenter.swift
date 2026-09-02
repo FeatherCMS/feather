@@ -17,7 +17,7 @@ struct AdminGetNewsletterIssueDefaultPresenter: AdminGetNewsletterIssuePresenter
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Campaign issue - Feather CMS",
+            title: "Campaign issue",
             description: "View campaign issue",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

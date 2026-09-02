@@ -15,7 +15,7 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Manage user invitations - Feather CMS",
+            title: "Manage user invitations",
             description: "Management user invitation list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -40,7 +40,7 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove user invitation - Feather CMS",
+            title: "Remove user invitation",
             description: "Remove confirmation for a management user invitation",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

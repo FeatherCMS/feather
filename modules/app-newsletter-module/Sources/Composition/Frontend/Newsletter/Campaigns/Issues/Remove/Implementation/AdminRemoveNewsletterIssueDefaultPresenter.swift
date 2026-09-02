@@ -16,7 +16,7 @@ struct AdminRemoveNewsletterIssueDefaultPresenter:
     {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove campaign issue - Feather CMS",
+            title: "Remove campaign issue",
             description: "Remove campaign issue",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

@@ -20,7 +20,7 @@ struct AdminListContactFormFieldsDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Contact form fields - Feather CMS",
+            title: "Contact form fields",
             description: "Manage contact form fields",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

@@ -23,7 +23,7 @@ struct AdminRemoveBlogTagDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove tag - Feather CMS",
+            title: "Remove tag",
             description: "Remove confirmation for a management tag",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -48,7 +48,7 @@ struct AdminRemoveBlogTagDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove tag - Feather CMS",
+            title: "Remove tag",
             description: "Remove confirmation for a management tag",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

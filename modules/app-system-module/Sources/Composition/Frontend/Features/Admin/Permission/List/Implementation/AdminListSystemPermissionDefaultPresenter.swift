@@ -27,7 +27,7 @@ struct AdminListSystemPermissionDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage system permissions - Feather CMS",
+                title: "Manage system permissions",
                 description: "Management system permission list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -45,7 +45,7 @@ struct AdminListSystemPermissionDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage system permissions - Feather CMS",
+            title: "Manage system permissions",
             description: "Management system permission list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

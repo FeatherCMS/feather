@@ -15,7 +15,7 @@ struct AdminGetSystemJobDefaultPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Worker job details - Feather CMS",
+            title: "Worker job details",
             description: "Inspect a worker job",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -32,7 +32,7 @@ struct AdminGetSystemJobDefaultPresenter {
     func renderError(error: String, permissions: Set<String>) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Worker job details - Feather CMS",
+            title: "Worker job details",
             description: "Inspect a worker job",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

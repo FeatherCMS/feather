@@ -29,8 +29,8 @@ struct AdminGetMediaProcessorDefaultPresenter: AdminGetMediaProcessorPresenter {
         if let model {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Media processor details - Feather CMS",
-                description: "Media processor details - Feather CMS",
+                title: "Media processor details",
+                description: "Media processor details",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
@@ -44,8 +44,8 @@ struct AdminGetMediaProcessorDefaultPresenter: AdminGetMediaProcessorPresenter {
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Media processor details - Feather CMS",
-            description: "Media processor details - Feather CMS",
+            title: "Media processor details",
+            description: "Media processor details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

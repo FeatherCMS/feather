@@ -17,7 +17,7 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Edit contact form - Feather CMS",
+            title: "Edit contact form",
             description: "Edit contact form",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

@@ -28,7 +28,7 @@ struct AdminGetSystemPermissionDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "System permission details - Feather CMS",
+            title: "System permission details",
             description: "Management system permission details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -52,7 +52,7 @@ struct AdminGetSystemPermissionDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "System permission details - Feather CMS",
+            title: "System permission details",
             description: "Management system permission details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

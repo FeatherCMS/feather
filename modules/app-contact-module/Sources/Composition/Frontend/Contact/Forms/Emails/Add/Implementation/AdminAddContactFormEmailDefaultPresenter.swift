@@ -20,7 +20,7 @@ struct AdminAddContactFormEmailDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Add contact form email - Feather CMS",
+            title: "Add contact form email",
             description: "Add contact form email",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

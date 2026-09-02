@@ -26,7 +26,7 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
     ) -> HTMLResponse {
         renderEngine.renderPage(
             request: request,
-            title: "Login - Feather CMS",
+            title: "Login",
             description: "This is the login page for the Feather CMS app",
             imagePath: "images/logos/logo.png",
             content: LoginPage(

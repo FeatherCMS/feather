@@ -14,7 +14,7 @@ struct AdminEditUserRoleDefaultPresenter: AdminEditUserRolePresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Edit user role - Feather CMS",
+            title: "Edit user role",
             description: "Edit a management user role",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -40,7 +40,7 @@ struct AdminEditUserRoleDefaultPresenter: AdminEditUserRolePresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Edit user role - Feather CMS",
+            title: "Edit user role",
             description: "Edit a management user role",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

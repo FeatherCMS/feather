@@ -34,7 +34,7 @@ struct AdminListBlogTagDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage blog tags - Feather CMS",
+                title: "Manage blog tags",
                 description: "Management blog tag list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -52,7 +52,7 @@ struct AdminListBlogTagDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage blog tags - Feather CMS",
+            title: "Manage blog tags",
             description: "Management blog tag list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

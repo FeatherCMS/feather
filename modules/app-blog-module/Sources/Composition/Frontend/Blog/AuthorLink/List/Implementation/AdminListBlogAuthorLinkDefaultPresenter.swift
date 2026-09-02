@@ -34,7 +34,7 @@ struct AdminListBlogAuthorLinkDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage blog author links - Feather CMS",
+                title: "Manage blog author links",
                 description: "Management blog author link list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -54,7 +54,7 @@ struct AdminListBlogAuthorLinkDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage blog author links - Feather CMS",
+            title: "Manage blog author links",
             description: "Management blog author link list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

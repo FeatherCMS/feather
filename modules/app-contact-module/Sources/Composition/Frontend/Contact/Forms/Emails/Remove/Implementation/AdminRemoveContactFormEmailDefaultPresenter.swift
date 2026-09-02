@@ -19,7 +19,7 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove contact form email - Feather CMS",
+            title: "Remove contact form email",
             description: "Remove contact form email",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -54,7 +54,7 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove contact form emails - Feather CMS",
+            title: "Remove contact form emails",
             description: "Remove contact form emails",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

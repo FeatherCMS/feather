@@ -29,7 +29,7 @@ struct AdminListWebPageDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage web pages - Feather CMS",
+                title: "Manage web pages",
                 description: "Management web page list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -47,7 +47,7 @@ struct AdminListWebPageDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage web pages - Feather CMS",
+            title: "Manage web pages",
             description: "Management web page list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

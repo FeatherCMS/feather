@@ -19,7 +19,7 @@ struct AdminListContactFormEmailsDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Contact form emails - Feather CMS",
+            title: "Contact form emails",
             description: "Manage contact form emails",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

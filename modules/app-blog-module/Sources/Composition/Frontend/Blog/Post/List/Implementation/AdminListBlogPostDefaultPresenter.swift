@@ -38,7 +38,7 @@ struct AdminListBlogPostDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage blog posts - Feather CMS",
+                title: "Manage blog posts",
                 description: "Management blog post list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -56,7 +56,7 @@ struct AdminListBlogPostDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage blog posts - Feather CMS",
+            title: "Manage blog posts",
             description: "Management blog post list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

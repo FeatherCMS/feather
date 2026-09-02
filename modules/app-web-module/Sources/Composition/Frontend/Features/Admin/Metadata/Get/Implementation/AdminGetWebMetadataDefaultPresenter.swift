@@ -16,7 +16,7 @@ struct AdminGetWebMetadataDefaultPresenter: AdminGetWebMetadataPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Web metadata details - Feather CMS",
+            title: "Web metadata details",
             description: "Management web metadata details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -40,7 +40,7 @@ struct AdminGetWebMetadataDefaultPresenter: AdminGetWebMetadataPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Web metadata details - Feather CMS",
+            title: "Web metadata details",
             description: "Management web metadata details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

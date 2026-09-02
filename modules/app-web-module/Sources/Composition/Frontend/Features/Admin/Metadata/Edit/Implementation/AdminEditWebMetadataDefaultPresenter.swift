@@ -21,7 +21,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         let title = configuration?.title ?? "Edit web metadata"
         return renderingEngine.renderAdminPage(
             request: request,
-            title: "\(title) - Feather CMS",
+            title: "\(title)",
             description: "Edit a management web metadata",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -52,7 +52,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         let title = configuration?.title ?? "Edit web metadata"
         return renderingEngine.renderAdminPage(
             request: request,
-            title: "\(title) - Feather CMS",
+            title: "\(title)",
             description: "Edit a management web metadata",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

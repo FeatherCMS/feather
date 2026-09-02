@@ -28,7 +28,7 @@ struct AdminEditAuthAccessControlDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "No permission - Feather CMS",
+            title: "No permission",
             description: "No permission",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -53,7 +53,7 @@ struct AdminEditAuthAccessControlDefaultPresenter:
         let normalizedSearch = normalizedSearch(search)
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Access Control - Feather CMS",
+            title: "Access Control",
             description: "Manage access control assignments",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
