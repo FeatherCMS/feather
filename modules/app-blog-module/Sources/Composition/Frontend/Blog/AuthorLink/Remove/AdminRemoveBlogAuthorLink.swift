@@ -19,7 +19,7 @@ struct AdminRemoveBlogAuthorLink {
                 (
                     interactor: AdminRemoveBlogAuthorLinkDefaultInteractor(
                         repository: AdminRemoveBlogAuthorLinkOpenAPIRepository(
-                            api: context.blogManagementAPI()
+                            api: context.blogAdminAPI()
                         )
                     ),
                     presenter: AdminRemoveBlogAuthorLinkDefaultPresenter(

@@ -14,7 +14,7 @@ struct AdminAddContactFormField {
                 (
                     interactor: AdminAddContactFormFieldDefaultInteractor(
                         repository: AdminAddContactFormFieldOpenAPIRepository(
-                            api: context.contactManagementAPI()
+                            api: context.contactAdminAPI()
                         )
                     ),
                     presenter: AdminAddContactFormFieldDefaultPresenter(

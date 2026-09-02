@@ -14,7 +14,7 @@ struct AdminRemoveContactFormEmail {
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveContactFormEmailDefaultInteractor(
-                        repository: .init(api: context.contactManagementAPI())
+                        repository: .init(api: context.contactAdminAPI())
                     ),
                     presenter: AdminRemoveContactFormEmailDefaultPresenter(
                         request: request,

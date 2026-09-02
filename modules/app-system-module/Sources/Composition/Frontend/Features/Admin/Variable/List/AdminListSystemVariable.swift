@@ -10,7 +10,7 @@ struct AdminListSystemVariable {
                 (
                     interactor: AdminListSystemVariableDefaultInteractor(
                         repository: AdminListSystemVariableOpenAPIRepository(
-                            api: context.systemManagementAPI()
+                            api: context.systemAdminAPI()
                         )
                     ),
                     presenter: AdminListSystemVariableDefaultPresenter(

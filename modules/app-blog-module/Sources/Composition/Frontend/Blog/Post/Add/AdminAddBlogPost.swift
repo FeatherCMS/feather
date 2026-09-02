@@ -19,11 +19,11 @@ struct AdminAddBlogPost {
                 (
                     interactor: AdminAddBlogPostDefaultInteractor(
                         repository: AdminAddBlogPostOpenAPIRepository(
-                            api: context.blogManagementAPI()
+                            api: context.blogAdminAPI()
                         ),
                         optionRepository:
                             AdminAddBlogPostOptionOpenAPIRepository(
-                                api: context.blogManagementAPI()
+                                api: context.blogAdminAPI()
                             )
                     ),
                     presenter: AdminAddBlogPostDefaultPresenter(

@@ -11,7 +11,7 @@ struct AdminRemoveSystemPermission {
                     interactor: AdminRemoveSystemPermissionDefaultInteractor(
                         repository:
                             AdminRemoveSystemPermissionOpenAPIRepository(
-                                api: context.systemManagementAPI()
+                                api: context.systemAdminAPI()
                             )
                     ),
                     presenter: AdminRemoveSystemPermissionDefaultPresenter(

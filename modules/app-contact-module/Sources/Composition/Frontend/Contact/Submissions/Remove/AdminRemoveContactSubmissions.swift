@@ -15,7 +15,7 @@ struct AdminRemoveContactSubmissions {
                     interactor: AdminRemoveContactSubmissionsDefaultInteractor(
                         repository:
                             AdminRemoveContactSubmissionsOpenAPIRepository(
-                                api: context.contactManagementAPI()
+                                api: context.contactAdminAPI()
                             )
                     ),
                     presenter: AdminRemoveContactSubmissionsDefaultPresenter(

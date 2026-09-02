@@ -19,7 +19,7 @@ struct AdminListBlogPost {
                 (
                     interactor: AdminListBlogPostDefaultInteractor(
                         repository: AdminListBlogPostOpenAPIRepository(
-                            api: context.blogManagementAPI()
+                            api: context.blogAdminAPI()
                         )
                     ),
                     presenter: AdminListBlogPostDefaultPresenter(

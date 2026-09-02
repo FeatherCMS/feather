@@ -10,7 +10,7 @@ struct AdminListSystemPermission {
                 (
                     interactor: AdminListSystemPermissionDefaultInteractor(
                         repository: AdminListSystemPermissionOpenAPIRepository(
-                            api: context.systemManagementAPI()
+                            api: context.systemAdminAPI()
                         )
                     ),
                     presenter: AdminListSystemPermissionDefaultPresenter(

@@ -19,7 +19,7 @@ struct AdminRemoveBlogTag {
                 (
                     interactor: AdminRemoveBlogTagDefaultInteractor(
                         repository: AdminRemoveBlogTagOpenAPIRepository(
-                            api: context.blogManagementAPI()
+                            api: context.blogAdminAPI()
                         )
                     ),
                     presenter: AdminRemoveBlogTagDefaultPresenter(

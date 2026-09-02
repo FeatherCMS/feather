@@ -15,7 +15,7 @@ struct AdminAddNewsletterIssueComponent {
                     interactor: AdminAddNewsletterIssueDefaultInteractor(
                         repository:
                             AdminAddNewsletterIssueOpenAPIRepository(
-                                api: context.newsletterManagementAPI()
+                                api: context.newsletterAdminAPI()
                             )
                     ),
                     presenter: AdminAddNewsletterIssueDefaultPresenter(

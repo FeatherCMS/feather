@@ -11,7 +11,7 @@ struct AdminListWebPage {
                 (
                     interactor: AdminListWebPageDefaultInteractor(
                         repository: AdminListWebPageOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminListWebPageDefaultPresenter(

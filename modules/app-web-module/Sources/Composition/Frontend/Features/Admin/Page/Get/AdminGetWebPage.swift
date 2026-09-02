@@ -11,7 +11,7 @@ struct AdminGetWebPage {
                 (
                     interactor: AdminGetWebPageDefaultInteractor(
                         repository: AdminGetWebPageOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminGetWebPageDefaultPresenter(

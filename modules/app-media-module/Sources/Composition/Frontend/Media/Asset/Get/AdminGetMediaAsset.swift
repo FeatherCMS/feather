@@ -17,7 +17,7 @@ struct AdminGetMediaAsset {
                 (
                     interactor: AdminGetMediaAssetDefaultInteractor(
                         repository: AdminMediaAssetOpenAPIRepository(
-                            api: context.mediaManagementAPI()
+                            api: context.mediaAdminAPI()
                         )
                     ),
                     presenter: AdminGetMediaAssetDefaultPresenter(

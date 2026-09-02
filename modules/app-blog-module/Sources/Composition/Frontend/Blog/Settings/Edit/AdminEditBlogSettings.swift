@@ -19,7 +19,7 @@ struct AdminEditBlogSettings {
                 (
                     interactor: AdminEditBlogSettingsDefaultInteractor(
                         repository: AdminEditBlogSettingsOpenAPIRepository(
-                            api: context.blogManagementAPI()
+                            api: context.blogAdminAPI()
                         )
                     ),
                     presenter: AdminEditBlogSettingsDefaultPresenter(

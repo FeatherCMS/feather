@@ -14,7 +14,7 @@ struct AdminGetNewsletterIssue {
             context in
             (
                 AdminGetNewsletterIssueDefaultInteractor(
-                    repository: .init(api: context.newsletterManagementAPI())
+                    repository: .init(api: context.newsletterAdminAPI())
                 ),
                 AdminGetNewsletterIssueDefaultPresenter(
                     request: request,

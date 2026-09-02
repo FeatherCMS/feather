@@ -10,7 +10,7 @@ struct AdminGetSystemJob {
                 (
                     interactor: AdminGetSystemJobDefaultInteractor(
                         repository: AdminGetSystemJobOpenAPIRepository(
-                            api: context.systemManagementAPI()
+                            api: context.systemAdminAPI()
                         )
                     ),
                     presenter: AdminGetSystemJobDefaultPresenter(

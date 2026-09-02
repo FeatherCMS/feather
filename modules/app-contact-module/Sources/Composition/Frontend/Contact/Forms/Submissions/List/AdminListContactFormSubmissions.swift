@@ -16,7 +16,7 @@ struct AdminListContactFormSubmissions {
                     interactor:
                         AdminListContactFormSubmissionsDefaultInteractor(
                             repository: .init(
-                                api: context.contactManagementAPI()
+                                api: context.contactAdminAPI()
                             )
                         ),
                     presenter: AdminListContactFormSubmissionsDefaultPresenter(

@@ -11,7 +11,7 @@ struct AdminRemoveWebMenuItem {
                 (
                     interactor: AdminRemoveWebMenuItemDefaultInteractor(
                         repository: AdminRemoveWebMenuItemOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminRemoveWebMenuItemDefaultPresenter(

@@ -28,7 +28,7 @@ struct AdminTestNewsletterIssueEmailDefaultController:
                 )
             )
         if let issueId {
-            _ = try await context.newsletterManagementAPI()
+            _ = try await context.newsletterAdminAPI()
                 .newsletterIssueTestEmail(
                     path: .init(
                         newsletterCampaignId: newsletterId,
@@ -38,7 +38,7 @@ struct AdminTestNewsletterIssueEmailDefaultController:
                 )
         }
         else {
-            _ = try await context.newsletterManagementAPI()
+            _ = try await context.newsletterAdminAPI()
                 .newsletterCampaignTestEmail(
                     path: .init(newsletterCampaignId: newsletterId),
                     body: body

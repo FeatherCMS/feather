@@ -11,7 +11,7 @@ struct AdminRemoveWebPage {
                 (
                     interactor: AdminRemoveWebPageDefaultInteractor(
                         repository: AdminRemoveWebPageOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminRemoveWebPageDefaultPresenter(

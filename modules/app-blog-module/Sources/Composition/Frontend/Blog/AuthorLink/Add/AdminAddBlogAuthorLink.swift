@@ -19,7 +19,7 @@ struct AdminAddBlogAuthorLink {
                 (
                     interactor: AdminAddBlogAuthorLinkDefaultInteractor(
                         repository: AdminAddBlogAuthorLinkOpenAPIRepository(
-                            api: context.blogManagementAPI()
+                            api: context.blogAdminAPI()
                         )
                     ),
                     presenter: AdminAddBlogAuthorLinkDefaultPresenter(
