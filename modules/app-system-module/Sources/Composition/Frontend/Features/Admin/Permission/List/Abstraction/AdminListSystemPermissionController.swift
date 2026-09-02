@@ -9,12 +9,12 @@ protocol AdminListSystemPermissionController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getSystemPermissionsBulkRemoveConfirmation(
+    func getSystemPermissionsRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postSystemPermissionsBulkRemove(
+    func postSystemPermissionsRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -30,12 +30,12 @@ extension AdminListSystemPermissionController {
             use: getSystemPermissions
         )
         router.get(
-            "/admin/system/permissions/bulk-remove/",
-            use: getSystemPermissionsBulkRemoveConfirmation
+            "/admin/system/permissions/remove/",
+            use: getSystemPermissionsRemoveConfirmation
         )
         router.post(
-            "/admin/system/permissions/bulk-remove/",
-            use: postSystemPermissionsBulkRemove
+            "/admin/system/permissions/remove/",
+            use: postSystemPermissionsRemove
         )
     }
 }

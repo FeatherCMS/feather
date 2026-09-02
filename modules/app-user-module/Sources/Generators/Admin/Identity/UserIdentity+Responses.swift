@@ -13,8 +13,3 @@ struct UserIdentityListResponse: JSONResponseRepresentable {
     var description: String = "UserIdentity list response"
     var schema = UserIdentityListSchema().reference()
 }
-
-struct UserIdentityFiltersResponse: JSONResponseRepresentable {
-    var description: String = "UserIdentity filter response"
-    var schema = SearchFilterSchema().reference()
-}

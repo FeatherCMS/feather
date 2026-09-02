@@ -71,7 +71,7 @@ struct AdminListAccountInvitationDefaultController:
         }
     }
 
-    func getAccountInvitationsBulkRemoveConfirmation(
+    func getAccountInvitationsRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -83,7 +83,7 @@ struct AdminListAccountInvitationDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListBulkRemoveRedirect.location(
+                    .location: ListRemoveRedirect.location(
                         path: "/admin/account/invitations/",
                         page: page,
                         search: search,
@@ -94,7 +94,7 @@ struct AdminListAccountInvitationDefaultController:
             )
         }
         return try runtime.presenter
-            .renderBulkRemoveConfirmation(
+            .renderRemoveConfirmation(
                 page: page,
                 search: search,
                 selectedIds: selectedIds,
@@ -103,24 +103,24 @@ struct AdminListAccountInvitationDefaultController:
             .response(from: request, context: context)
     }
 
-    func postAccountInvitationsBulkRemove(
+    func postAccountInvitationsRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         let runtime = buildRuntime(request, context)
         if !payload.normalizedSelectedIds.isEmpty {
-            try await runtime.interactor.bulkRemove(
+            try await runtime.interactor.remove(
                 ids: payload.normalizedSelectedIds
             )
         }
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/account/invitations/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

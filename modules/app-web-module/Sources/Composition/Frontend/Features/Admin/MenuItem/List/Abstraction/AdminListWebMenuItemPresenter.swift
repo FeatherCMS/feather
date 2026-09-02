@@ -15,7 +15,7 @@ protocol AdminListWebMenuItemPresenter: Sendable {
         error: String?
     ) -> HTMLResponse
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         menuId: String,
         page: Int,
         search: String?,

@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogPostBulkDelete(
+                try await server.blogPostDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogPostFilters(
+                try await server.blogPostList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -67,7 +67,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/blog/posts/filters"
+                "/api/v1/admin/blog/posts/"
             )
         )
         try transport.register(
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogAuthorBulkDelete(
+                try await server.blogAuthorDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -150,7 +150,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogAuthorFilters(
+                try await server.blogAuthorList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -158,7 +158,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/blog/authors/filters"
+                "/api/v1/admin/blog/authors/"
             )
         )
         try transport.register(
@@ -228,7 +228,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogAuthorLinkBulkDelete(
+                try await server.blogAuthorLinkDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -241,7 +241,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogAuthorLinkFilters(
+                try await server.blogAuthorLinkList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -249,7 +249,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/blog/authors/{blogAuthorId}/links/filters"
+                "/api/v1/admin/blog/authors/{blogAuthorId}/links/"
             )
         )
         try transport.register(
@@ -345,7 +345,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogTagBulkDelete(
+                try await server.blogTagDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -358,7 +358,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogTagFilters(
+                try await server.blogTagList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -366,7 +366,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/blog/tags/filters"
+                "/api/v1/admin/blog/tags/"
             )
         )
         try transport.register(
@@ -512,8 +512,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostBulkDelete)`.
-    fileprivate func blogPostBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
+    fileprivate func blogPostDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -522,21 +522,20 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogPostBulkDelete.id,
+            forOperation: Operations.BlogPostDelete.id,
             using: {
-                APIHandler.blogPostBulkDelete($0)
+                APIHandler.blogPostDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogPostBulkDelete.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.BlogPostDelete.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -546,7 +545,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -557,7 +556,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.BlogPostBulkDelete.Input(
+                return Operations.BlogPostDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -598,9 +597,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/filters/get(blogPostFilters)`.
-    fileprivate func blogPostFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
+    fileprivate func blogPostList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -609,17 +608,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogPostFilters.id,
+            forOperation: Operations.BlogPostList.id,
             using: {
-                APIHandler.blogPostFilters($0)
+                APIHandler.blogPostList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogPostFilters.Input.Headers = .init(
+                let headers: Operations.BlogPostList.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
                 )
-                return Operations.BlogPostFilters.Input(headers: headers)
+                return Operations.BlogPostList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -1103,8 +1102,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorBulkDelete)`.
-    fileprivate func blogAuthorBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
+    fileprivate func blogAuthorDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1113,21 +1112,20 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogAuthorBulkDelete.id,
+            forOperation: Operations.BlogAuthorDelete.id,
             using: {
-                APIHandler.blogAuthorBulkDelete($0)
+                APIHandler.blogAuthorDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogAuthorBulkDelete.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.BlogAuthorDelete.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1137,7 +1135,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1148,7 +1146,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.BlogAuthorBulkDelete.Input(
+                return Operations.BlogAuthorDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1189,9 +1187,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/filters/get(blogAuthorFilters)`.
-    fileprivate func blogAuthorFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
+    fileprivate func blogAuthorList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1200,17 +1198,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogAuthorFilters.id,
+            forOperation: Operations.BlogAuthorList.id,
             using: {
-                APIHandler.blogAuthorFilters($0)
+                APIHandler.blogAuthorList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogAuthorFilters.Input.Headers = .init(
+                let headers: Operations.BlogAuthorList.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
                 )
-                return Operations.BlogAuthorFilters.Input(headers: headers)
+                return Operations.BlogAuthorList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -1704,8 +1702,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkBulkDelete)`.
-    fileprivate func blogAuthorLinkBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
+    fileprivate func blogAuthorLinkDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1714,21 +1712,20 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogAuthorLinkBulkDelete.id,
+            forOperation: Operations.BlogAuthorLinkDelete.id,
             using: {
-                APIHandler.blogAuthorLinkBulkDelete($0)
+                APIHandler.blogAuthorLinkDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.BlogAuthorLinkBulkDelete.Input.Path =
-                    .init(
-                        blogAuthorId: try converter.getPathParameterAsURI(
-                            in: metadata.pathParameters,
-                            name: "blogAuthorId",
-                            as: Components.Parameters
-                                .BlogAuthorLinkMenuIdParameter.self
-                        )
+                let path: Operations.BlogAuthorLinkDelete.Input.Path = .init(
+                    blogAuthorId: try converter.getPathParameterAsURI(
+                        in: metadata.pathParameters,
+                        name: "blogAuthorId",
+                        as: Components.Parameters.BlogAuthorLinkMenuIdParameter
+                            .self
                     )
-                let headers: Operations.BlogAuthorLinkBulkDelete.Input.Headers =
+                )
+                let headers: Operations.BlogAuthorLinkDelete.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1737,7 +1734,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1747,7 +1744,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1758,7 +1755,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.BlogAuthorLinkBulkDelete.Input(
+                return Operations.BlogAuthorLinkDelete.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1800,9 +1797,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/filters/get(blogAuthorLinkFilters)`.
-    fileprivate func blogAuthorLinkFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
+    fileprivate func blogAuthorLinkList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1811,12 +1808,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogAuthorLinkFilters.id,
+            forOperation: Operations.BlogAuthorLinkList.id,
             using: {
-                APIHandler.blogAuthorLinkFilters($0)
+                APIHandler.blogAuthorLinkList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.BlogAuthorLinkFilters.Input.Path = .init(
+                let path: Operations.BlogAuthorLinkList.Input.Path = .init(
                     blogAuthorId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "blogAuthorId",
@@ -1824,13 +1821,13 @@ extension UniversalServer where APIHandler: APIProtocol {
                             .self
                     )
                 )
-                let headers: Operations.BlogAuthorLinkFilters.Input.Headers =
+                let headers: Operations.BlogAuthorLinkList.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
                         )
                     )
-                return Operations.BlogAuthorLinkFilters.Input(
+                return Operations.BlogAuthorLinkList.Input(
                     path: path,
                     headers: headers
                 )
@@ -2495,8 +2492,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagBulkDelete)`.
-    fileprivate func blogTagBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
+    fileprivate func blogTagDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2505,12 +2502,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogTagBulkDelete.id,
+            forOperation: Operations.BlogTagDelete.id,
             using: {
-                APIHandler.blogTagBulkDelete($0)
+                APIHandler.blogTagDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogTagBulkDelete.Input.Headers = .init(
+                let headers: Operations.BlogTagDelete.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -2518,7 +2515,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2528,7 +2525,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2539,7 +2536,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.BlogTagBulkDelete.Input(
+                return Operations.BlogTagDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -2580,9 +2577,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/filters/get(blogTagFilters)`.
-    fileprivate func blogTagFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
+    fileprivate func blogTagList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2591,17 +2588,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogTagFilters.id,
+            forOperation: Operations.BlogTagList.id,
             using: {
-                APIHandler.blogTagFilters($0)
+                APIHandler.blogTagList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogTagFilters.Input.Headers = .init(
+                let headers: Operations.BlogTagList.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
                 )
-                return Operations.BlogTagFilters.Input(headers: headers)
+                return Operations.BlogTagList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {

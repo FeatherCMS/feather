@@ -40,14 +40,6 @@ struct UserRoleListOperation: UserRoleOperation {
     }
 }
 
-struct UserRoleFiltersOperation: UserRoleOperation {
-    var responseMap: ResponseMap {
-        [
-            200: UserRoleFiltersResponse().reference()
-        ]
-    }
-}
-
 struct UserRoleSearchOperation: UserRoleOperation {
     var searchQuery: SearchQuerySchema {
         .init(
@@ -72,7 +64,7 @@ struct UserRoleSearchOperation: UserRoleOperation {
     }
 }
 
-struct UserRoleBulkDeleteOperation: UserRoleOperation, BulkDeleteOperation {
+struct UserRoleDeleteOperation: UserRoleOperation, DeleteOperation {
 }
 
 struct UserRoleGetOperation: UserRoleIDOperation {

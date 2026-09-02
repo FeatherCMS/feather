@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactFormBulkDelete(
+                try await server.contactFormDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -124,7 +124,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.formFieldBulkDelete(
+                try await server.formFieldDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -189,7 +189,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactFieldBulkDelete(
+                try await server.contactFieldDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -241,7 +241,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactFormSubmissionBulkDelete(
+                try await server.contactFormSubmissionDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -428,8 +428,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormBulkDelete)`.
-    fileprivate func contactFormBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)`.
+    fileprivate func contactFormDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -438,21 +438,20 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.ContactFormBulkDelete.id,
+            forOperation: Operations.ContactFormDelete.id,
             using: {
-                APIHandler.contactFormBulkDelete($0)
+                APIHandler.contactFormDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.ContactFormBulkDelete.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.ContactFormDelete.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -462,7 +461,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -473,7 +472,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.ContactFormBulkDelete.Input(
+                return Operations.ContactFormDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -851,8 +850,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldBulkDelete)`.
-    fileprivate func formFieldBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)`.
+    fileprivate func formFieldDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -861,28 +860,27 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.FormFieldBulkDelete.id,
+            forOperation: Operations.FormFieldDelete.id,
             using: {
-                APIHandler.formFieldBulkDelete($0)
+                APIHandler.formFieldDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.FormFieldBulkDelete.Input.Path = .init(
+                let path: Operations.FormFieldDelete.Input.Path = .init(
                     contactFormId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "contactFormId",
                         as: Components.Parameters.ContactFormIdParameter.self
                     )
                 )
-                let headers: Operations.FormFieldBulkDelete.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.FormFieldDelete.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -892,7 +890,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -903,7 +901,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.FormFieldBulkDelete.Input(
+                return Operations.FormFieldDelete.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1275,8 +1273,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldBulkDelete)`.
-    fileprivate func contactFieldBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)`.
+    fileprivate func contactFieldDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1285,12 +1283,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.ContactFieldBulkDelete.id,
+            forOperation: Operations.ContactFieldDelete.id,
             using: {
-                APIHandler.contactFieldBulkDelete($0)
+                APIHandler.contactFieldDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.ContactFieldBulkDelete.Input.Headers =
+                let headers: Operations.ContactFieldDelete.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1299,7 +1297,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1309,7 +1307,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1320,7 +1318,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.ContactFieldBulkDelete.Input(
+                return Operations.ContactFieldDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1608,8 +1606,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionBulkDelete)`.
-    fileprivate func contactFormSubmissionBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)`.
+    fileprivate func contactFormSubmissionDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1618,23 +1616,22 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.ContactFormSubmissionBulkDelete.id,
+            forOperation: Operations.ContactFormSubmissionDelete.id,
             using: {
-                APIHandler.contactFormSubmissionBulkDelete($0)
+                APIHandler.contactFormSubmissionDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path:
-                    Operations.ContactFormSubmissionBulkDelete.Input.Path =
-                        .init(
-                            contactFormId: try converter.getPathParameterAsURI(
-                                in: metadata.pathParameters,
-                                name: "contactFormId",
-                                as: Components.Parameters.ContactFormIdParameter
-                                    .self
-                            )
+                let path: Operations.ContactFormSubmissionDelete.Input.Path =
+                    .init(
+                        contactFormId: try converter.getPathParameterAsURI(
+                            in: metadata.pathParameters,
+                            name: "contactFormId",
+                            as: Components.Parameters.ContactFormIdParameter
+                                .self
                         )
+                    )
                 let headers:
-                    Operations.ContactFormSubmissionBulkDelete.Input.Headers =
+                    Operations.ContactFormSubmissionDelete.Input.Headers =
                         .init(
                             accept: try converter.extractAcceptHeaderIfPresent(
                                 in: request.headerFields
@@ -1643,7 +1640,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1653,7 +1650,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1664,7 +1661,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.ContactFormSubmissionBulkDelete.Input(
+                return Operations.ContactFormSubmissionDelete.Input(
                     path: path,
                     headers: headers,
                     body: body

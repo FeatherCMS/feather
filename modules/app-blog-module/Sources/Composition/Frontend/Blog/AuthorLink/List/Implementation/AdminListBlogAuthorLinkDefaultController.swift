@@ -70,7 +70,7 @@ struct AdminListBlogAuthorLinkDefaultController:
         )
     }
 
-    func getBlogAuthorLinksBulkRemoveConfirmation(
+    func getBlogAuthorLinksRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -88,7 +88,7 @@ struct AdminListBlogAuthorLinkDefaultController:
             )
         }
         return
-            try presenter.renderBulkRemoveConfirmation(
+            try presenter.renderRemoveConfirmation(
                 menuId: menuId,
                 page: page,
                 search: search,
@@ -98,18 +98,18 @@ struct AdminListBlogAuthorLinkDefaultController:
             .response(from: request, context: context)
     }
 
-    func postBlogAuthorLinksBulkRemove(
+    func postBlogAuthorLinksRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(
+            try await interactor.remove(
                 menuId: menuId,
                 ids: payload.normalizedSelectedIds
             )

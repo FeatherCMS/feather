@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.systemPermissionBulkDelete(
+                try await server.systemPermissionDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.systemPermissionFilters(
+                try await server.systemPermissionList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -67,7 +67,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/system/permissions/filters"
+                "/api/v1/admin/system/permissions/"
             )
         )
         try transport.register(
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.systemVariableBulkDelete(
+                try await server.systemVariableDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -150,7 +150,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.systemVariableFilters(
+                try await server.systemVariableList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -158,7 +158,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/system/variables/filters"
+                "/api/v1/admin/system/variables/"
             )
         )
         try transport.register(
@@ -331,8 +331,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionBulkDelete)`.
-    fileprivate func systemPermissionBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
+    fileprivate func systemPermissionDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -341,13 +341,13 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.SystemPermissionBulkDelete.id,
+            forOperation: Operations.SystemPermissionDelete.id,
             using: {
-                APIHandler.systemPermissionBulkDelete($0)
+                APIHandler.systemPermissionDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers:
-                    Operations.SystemPermissionBulkDelete.Input.Headers = .init(
+                let headers: Operations.SystemPermissionDelete.Input.Headers =
+                    .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
                         )
@@ -355,7 +355,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -365,7 +365,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -376,7 +376,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.SystemPermissionBulkDelete.Input(
+                return Operations.SystemPermissionDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -417,9 +417,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/filters/get(systemPermissionFilters)`.
-    fileprivate func systemPermissionFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/system/permissions/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)`.
+    fileprivate func systemPermissionList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -428,20 +428,18 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.SystemPermissionFilters.id,
+            forOperation: Operations.SystemPermissionList.id,
             using: {
-                APIHandler.systemPermissionFilters($0)
+                APIHandler.systemPermissionList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.SystemPermissionFilters.Input.Headers =
+                let headers: Operations.SystemPermissionList.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
                         )
                     )
-                return Operations.SystemPermissionFilters.Input(
-                    headers: headers
-                )
+                return Operations.SystemPermissionList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -935,8 +933,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableBulkDelete)`.
-    fileprivate func systemVariableBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
+    fileprivate func systemVariableDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -945,12 +943,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.SystemVariableBulkDelete.id,
+            forOperation: Operations.SystemVariableDelete.id,
             using: {
-                APIHandler.systemVariableBulkDelete($0)
+                APIHandler.systemVariableDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.SystemVariableBulkDelete.Input.Headers =
+                let headers: Operations.SystemVariableDelete.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -959,7 +957,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -969,7 +967,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -980,7 +978,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.SystemVariableBulkDelete.Input(
+                return Operations.SystemVariableDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1021,9 +1019,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/variables/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/filters/get(systemVariableFilters)`.
-    fileprivate func systemVariableFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/system/variables/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)`.
+    fileprivate func systemVariableList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1032,18 +1030,18 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.SystemVariableFilters.id,
+            forOperation: Operations.SystemVariableList.id,
             using: {
-                APIHandler.systemVariableFilters($0)
+                APIHandler.systemVariableList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.SystemVariableFilters.Input.Headers =
+                let headers: Operations.SystemVariableList.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
                         )
                     )
-                return Operations.SystemVariableFilters.Input(headers: headers)
+                return Operations.SystemVariableList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {

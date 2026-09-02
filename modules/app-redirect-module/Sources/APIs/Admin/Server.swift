@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.redirectRuleBulkDelete(
+                try await server.redirectRuleDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.redirectRuleFilters(
+                try await server.redirectRuleList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -67,7 +67,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/redirect/rules/filters"
+                "/api/v1/admin/redirect/rules/"
             )
         )
         try transport.register(
@@ -214,8 +214,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)`.
-    fileprivate func redirectRuleBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
+    fileprivate func redirectRuleDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -224,12 +224,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.RedirectRuleBulkDelete.id,
+            forOperation: Operations.RedirectRuleDelete.id,
             using: {
-                APIHandler.redirectRuleBulkDelete($0)
+                APIHandler.redirectRuleDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.RedirectRuleBulkDelete.Input.Headers =
+                let headers: Operations.RedirectRuleDelete.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -238,7 +238,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -248,7 +248,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -259,7 +259,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.RedirectRuleBulkDelete.Input(
+                return Operations.RedirectRuleDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -300,9 +300,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)`.
-    fileprivate func redirectRuleFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)`.
+    fileprivate func redirectRuleList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -311,18 +311,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.RedirectRuleFilters.id,
+            forOperation: Operations.RedirectRuleList.id,
             using: {
-                APIHandler.redirectRuleFilters($0)
+                APIHandler.redirectRuleList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.RedirectRuleFilters.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.RedirectRuleList.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
-                return Operations.RedirectRuleFilters.Input(headers: headers)
+                )
+                return Operations.RedirectRuleList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {

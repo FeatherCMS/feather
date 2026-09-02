@@ -22,12 +22,12 @@ protocol AdminListAuthMagicLinkController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getAuthMagicLinksBulkRemoveConfirmation(
+    func getAuthMagicLinksRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postAuthMagicLinksBulkRemove(
+    func postAuthMagicLinksRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -43,12 +43,12 @@ extension AdminListAuthMagicLinkController {
             use: getAuthMagicLinks
         )
         router.get(
-            "/admin/auth/magic-links/bulk-remove/",
-            use: getAuthMagicLinksBulkRemoveConfirmation
+            "/admin/auth/magic-links/remove/",
+            use: getAuthMagicLinksRemoveConfirmation
         )
         router.post(
-            "/admin/auth/magic-links/bulk-remove/",
-            use: postAuthMagicLinksBulkRemove
+            "/admin/auth/magic-links/remove/",
+            use: postAuthMagicLinksRemove
         )
     }
 }

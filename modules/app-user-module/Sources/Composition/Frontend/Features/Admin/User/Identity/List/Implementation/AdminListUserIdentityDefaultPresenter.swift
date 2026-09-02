@@ -46,7 +46,7 @@ struct AdminListUserIdentityDefaultPresenter:
         )
     }
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         selectedIds: [String],
         page: Int,
         search: String?,
@@ -55,20 +55,20 @@ struct AdminListUserIdentityDefaultPresenter:
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove selected identities",
-            description: "Confirm bulk remove",
+            description: "Confirm remove",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: breadcrumb(),
                     title: "Remove selected identities",
                     message:
                         "Are you sure you want to remove these selected identities? This action cannot be undone.",
-                    action: "/admin/user/identities/bulk-remove/",
-                    cancelLink: ListBulkRemoveRedirect.location(
+                    action: "/admin/user/identities/remove/",
+                    cancelLink: ListRemoveRedirect.location(
                         path: "/admin/user/identities/",
                         page: page,
                         search: search,

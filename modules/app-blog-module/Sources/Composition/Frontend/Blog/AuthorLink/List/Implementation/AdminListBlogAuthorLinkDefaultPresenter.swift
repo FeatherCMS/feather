@@ -86,7 +86,7 @@ struct AdminListBlogAuthorLinkDefaultPresenter:
         )
     }
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         menuId: String,
         page: Int,
         search: String?,
@@ -96,19 +96,19 @@ struct AdminListBlogAuthorLinkDefaultPresenter:
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove selected links",
-            description: "Confirm bulk remove",
+            description: "Confirm remove",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: blogAuthorLinkBreadcrumbState(menuId: menuId),
                     title: "Remove selected links",
                     message:
                         "Are you sure you want to remove these selected links? This action cannot be undone.",
-                    action: "/admin/blog/authors/\(menuId)/links/bulk-remove/",
+                    action: "/admin/blog/authors/\(menuId)/links/remove/",
                     cancelLink: "/admin/blog/authors/\(menuId)/",
                     selectedIds: selectedIds
                 )

@@ -46,7 +46,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
     {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         try await interactor.remove(ids: payload.normalizedSelectedIds)

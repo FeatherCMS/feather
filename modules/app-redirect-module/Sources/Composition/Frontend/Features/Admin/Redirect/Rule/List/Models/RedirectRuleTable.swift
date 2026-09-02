@@ -128,9 +128,9 @@ struct RedirectRuleTable: Component {
                     let canRemove = state.permissions.contains(
                         "redirect:rules:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
-                            action: "/admin/redirect/rules/bulk-remove/",
+                            action: "/admin/redirect/rules/remove/",
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
@@ -212,7 +212,7 @@ struct RedirectRuleTable: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                     ListTablePagination(

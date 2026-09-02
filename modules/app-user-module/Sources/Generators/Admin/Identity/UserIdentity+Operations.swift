@@ -53,15 +53,6 @@ struct UserIdentityListOperation: UserIdentityOperation {
     }
 }
 
-struct UserIdentityFiltersOperation: UserIdentityOperation {
-
-    var responseMap: ResponseMap {
-        [
-            200: UserIdentityFiltersResponse().reference()
-        ]
-    }
-}
-
 struct UserIdentitySearchOperation: UserIdentityOperation {
 
     var searchQuery: SearchQuerySchema {
@@ -89,8 +80,8 @@ struct UserIdentitySearchOperation: UserIdentityOperation {
     }
 }
 
-struct UserIdentityBulkDeleteOperation: UserIdentityOperation,
-    BulkDeleteOperation
+struct UserIdentityDeleteOperation: UserIdentityOperation,
+    DeleteOperation
 {
 
 }

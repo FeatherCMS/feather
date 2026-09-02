@@ -90,7 +90,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
         }
     }
 
-    func getAuthMagicLinksBulkRemoveConfirmation(
+    func getAuthMagicLinksRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -103,7 +103,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListBulkRemoveRedirect.location(
+                    .location: ListRemoveRedirect.location(
                         path: "/admin/auth/magic-links/",
                         page: page,
                         search: search,
@@ -115,7 +115,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
             )
         }
         return
-            try presenter.renderBulkRemoveConfirmation(
+            try presenter.renderRemoveConfirmation(
                 selectedIds: selectedIds,
                 page: page,
                 search: search,
@@ -125,22 +125,22 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
             .response(from: request, context: context)
     }
 
-    func postAuthMagicLinksBulkRemove(
+    func postAuthMagicLinksRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: AdminListAuthMagicLinkBulkRemoveInput.self,
+            as: AdminListAuthMagicLinkRemoveInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+            try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/auth/magic-links/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

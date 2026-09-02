@@ -116,13 +116,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetBulkDelete)`.
-    public func mediaAssetBulkDelete(
-        _ input: Operations.MediaAssetBulkDelete.Input
-    ) async throws -> Operations.MediaAssetBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)`.
+    public func mediaAssetDelete(_ input: Operations.MediaAssetDelete.Input)
+        async throws -> Operations.MediaAssetDelete.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.MediaAssetBulkDelete.id,
+            forOperation: Operations.MediaAssetDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/media/assets",
@@ -154,7 +154,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -164,7 +164,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -577,13 +577,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/folders`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderBulkDelete)`.
-    public func mediaFolderBulkDelete(
-        _ input: Operations.MediaFolderBulkDelete.Input
-    ) async throws -> Operations.MediaFolderBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)`.
+    public func mediaFolderDelete(_ input: Operations.MediaFolderDelete.Input)
+        async throws -> Operations.MediaFolderDelete.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.MediaFolderBulkDelete.id,
+            forOperation: Operations.MediaFolderDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/media/folders",
@@ -615,7 +615,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -625,7 +625,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -967,13 +967,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorBulkDelete)`.
-    public func mediaProcessorBulkDelete(
-        _ input: Operations.MediaProcessorBulkDelete.Input
-    ) async throws -> Operations.MediaProcessorBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
+    public func mediaProcessorDelete(
+        _ input: Operations.MediaProcessorDelete.Input
+    ) async throws -> Operations.MediaProcessorDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.MediaProcessorBulkDelete.id,
+            forOperation: Operations.MediaProcessorDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/media/processors",
@@ -1005,7 +1005,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1015,7 +1015,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

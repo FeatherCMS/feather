@@ -16,7 +16,7 @@ protocol AdminListUserIdentityInteractor: Sendable {
         size: Int
     )
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws
 }

@@ -10,8 +10,3 @@ struct SystemPermissionListResponse: JSONResponseRepresentable {
     var description: String = "SystemPermission list response"
     var schema = SystemPermissionListSchema().reference()
 }
-
-struct SystemPermissionFiltersResponse: JSONResponseRepresentable {
-    var description: String = "SystemPermission filter response"
-    var schema = SearchFilterSchema().reference()
-}

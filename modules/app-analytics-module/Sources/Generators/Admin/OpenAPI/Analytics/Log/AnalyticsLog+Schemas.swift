@@ -127,6 +127,12 @@ struct AnalyticsLogListItemSchema: ObjectSchemaRepresentable {
     }
 }
 
+struct AnalyticsLogListSchema: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? {
+        AnalyticsLogListItemSchema().reference()
+    }
+}
+
 struct AnalyticsLogDetailSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
@@ -161,7 +167,7 @@ struct AnalyticsLogDetailSchema: ObjectSchemaRepresentable {
     }
 }
 
-struct AnalyticsLogFiltersSchema: ObjectSchemaRepresentable {
+struct AnalyticsLogFilterSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "search": AnalyticsLogPathField().reference(required: false),
@@ -170,5 +176,13 @@ struct AnalyticsLogFiltersSchema: ObjectSchemaRepresentable {
             "responseCode":
                 AnalyticsLogResponseCodeField().reference(required: false),
         ]
+    }
+
+    var example: AnyCodable? {
+        AnyCodable([
+            "search": "/articles/hello-world/",
+            "source": "web_app",
+            "method": "GET",
+        ])
     }
 }

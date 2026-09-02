@@ -117,13 +117,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleBulkDelete)`.
-    public func redirectRuleBulkDelete(
-        _ input: Operations.RedirectRuleBulkDelete.Input
-    ) async throws -> Operations.RedirectRuleBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
+    public func redirectRuleDelete(_ input: Operations.RedirectRuleDelete.Input)
+        async throws -> Operations.RedirectRuleDelete.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.RedirectRuleBulkDelete.id,
+            forOperation: Operations.RedirectRuleDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/redirect/rules",
@@ -155,7 +155,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -165,7 +165,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -193,17 +193,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/filters/get(redirectRuleFilters)`.
-    public func redirectRuleFilters(
-        _ input: Operations.RedirectRuleFilters.Input
-    ) async throws -> Operations.RedirectRuleFilters.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)`.
+    public func redirectRuleList(_ input: Operations.RedirectRuleList.Input)
+        async throws -> Operations.RedirectRuleList.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.RedirectRuleFilters.id,
+            forOperation: Operations.RedirectRuleList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/redirect/rules/filters",
+                    template: "/api/v1/admin/redirect/rules/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -223,8 +223,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body:
-                        Components.Responses.RedirectRuleFiltersResponse.Body
+                    let body: Components.Responses.RedirectRuleListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -234,7 +233,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.RedirectRuleListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

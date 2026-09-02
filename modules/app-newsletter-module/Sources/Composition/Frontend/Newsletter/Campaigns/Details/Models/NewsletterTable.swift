@@ -54,7 +54,7 @@ struct NewsletterTable: Component {
                 let canRemove = state.permissions.contains(
                     "newsletter:campaigns:delete"
                 )
-                ListTableBulkRemoveForm(
+                ListTableRemoveForm(
                     state: .init(
                         action: "/admin/newsletters/remove/",
                         page: 1,
@@ -140,7 +140,7 @@ struct NewsletterTable: Component {
                             }
                         }
                         .class("cms-table", "action-table")
-                        .if(canRemove) { $0.class("bulk-select-table") }
+                        .if(canRemove) { $0.class("select-table") }
                     )
                 )
             }

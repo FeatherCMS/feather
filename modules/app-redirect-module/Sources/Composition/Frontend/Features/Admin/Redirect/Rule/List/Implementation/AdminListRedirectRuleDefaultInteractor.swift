@@ -20,7 +20,7 @@ struct AdminListRedirectRuleDefaultInteractor:
         )
     }
 
-    func bulkRemove(
+    func remove(
         ids: [String]
     ) async throws {
         for id in ids {

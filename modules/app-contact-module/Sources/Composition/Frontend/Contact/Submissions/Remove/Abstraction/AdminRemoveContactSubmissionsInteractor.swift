@@ -7,5 +7,5 @@ import SGML
 import WebStandards
 
 protocol AdminRemoveContactSubmissionsInteractor: Sendable {
-    func bulkRemove(ids: [String]) async throws
+    func remove(ids: [String]) async throws
 }

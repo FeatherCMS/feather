@@ -11,10 +11,10 @@ protocol AdminRemoveContactFieldController: Sendable {
         -> HTMLResponse
     func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
-    func bulkConfirm(request: Request, context: DefaultRequestContext)
+    func confirmSelected(request: Request, context: DefaultRequestContext)
         async throws
         -> HTMLResponse
-    func bulkRemove(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: DefaultRequestContext)
         async throws
         -> Response
 }
@@ -23,7 +23,7 @@ extension AdminRemoveContactFieldController {
     func route(on router: Router<DefaultRequestContext>) {
         router.get("/admin/contact/fields/:fieldId/remove/", use: confirm)
         router.post("/admin/contact/fields/:fieldId/remove/", use: remove)
-        router.get("/admin/contact/fields/remove/", use: bulkConfirm)
-        router.post("/admin/contact/fields/remove/", use: bulkRemove)
+        router.get("/admin/contact/fields/remove/", use: confirmSelected)
+        router.post("/admin/contact/fields/remove/", use: removeSelected)
     }
 }

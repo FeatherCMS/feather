@@ -7,8 +7,8 @@ struct PathCollection: PathCollectionRepresentable {
     var pathMap: PathMap {
         [
             "api/v1/admin/redirect/rules": RedirectRulePathItems(),
-            "api/v1/admin/redirect/rules/filters":
-                RedirectRuleFiltersPathItems(),
+            "api/v1/admin/redirect/rules/":
+                RedirectRuleListPathItems(),
             "api/v1/admin/redirect/rules/search": RedirectRuleSearchPathItems(),
             "api/v1/admin/redirect/rules/{redirectRuleId}":
                 RedirectRuleIdPathItems(),

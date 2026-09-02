@@ -37,26 +37,26 @@ paths:
     delete:
       tags:
       - MetadataEntries
-      operationId: webMetadataBulkDelete
+      operationId: webMetadataDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/web/metadata/filters:
+  /api/v1/admin/web/metadata/:
     get:
       tags:
       - MetadataEntries
-      operationId: webMetadataFilters
+      operationId: webMetadataList
       responses:
         200:
-          $ref: '#/components/responses/WebMetadataFiltersResponse'
+          $ref: '#/components/responses/WebMetadataListResponse'
         401:
           description: Unauthorized
         403:
@@ -158,26 +158,26 @@ paths:
     delete:
       tags:
       - WebPages
-      operationId: webPageBulkDelete
+      operationId: webPageDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/web/pages/filters:
+  /api/v1/admin/web/pages/:
     get:
       tags:
       - WebPages
-      operationId: webPageFilters
+      operationId: webPageList
       responses:
         200:
-          $ref: '#/components/responses/WebPageFiltersResponse'
+          $ref: '#/components/responses/WebPageListResponse'
         401:
           description: Unauthorized
         403:
@@ -279,26 +279,26 @@ paths:
     delete:
       tags:
       - WebMenus
-      operationId: webMenuBulkDelete
+      operationId: webMenuDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/filters:
+  /api/v1/admin/web/menus/:
     get:
       tags:
       - WebMenus
-      operationId: webMenuFilters
+      operationId: webMenuList
       responses:
         200:
-          $ref: '#/components/responses/WebMenuFiltersResponse'
+          $ref: '#/components/responses/WebMenuListResponse'
         401:
           description: Unauthorized
         403:
@@ -402,30 +402,30 @@ paths:
     delete:
       tags:
       - WebMenuItems
-      operationId: webMenuItemBulkDelete
+      operationId: webMenuItemDelete
       parameters:
       - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items/filters:
+  /api/v1/admin/web/menus/{webMenuId}/items/:
     get:
       tags:
       - WebMenuItems
-      operationId: webMenuItemFilters
+      operationId: webMenuItemList
       parameters:
       - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemFiltersResponse'
+          $ref: '#/components/responses/WebMenuItemListResponse'
         401:
           description: Unauthorized
         403:
@@ -696,7 +696,7 @@ components:
       - primaryKeyword
       - createdAt
       - updatedAt
-    BulkDeleteRequestSchema:
+    DeleteRequestSchema:
       type: object
       properties:
         ids:
@@ -704,144 +704,61 @@ components:
           items:
             type: string
             example: id1
+        results:
+          type: boolean
+          example: true
         summary:
           type: boolean
           example: true
       required:
       - ids
+      - results
       - summary
-    BulkDeleteResponseSchema:
+    DeleteResponseSchema:
       type: object
       properties:
         results:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: id1
-              status:
-                type: string
-                enum:
-                - deleted
-                - not_found
-                - forbidden
-                example: deleted
-            required:
-            - id
-            - status
+          $ref: '#/components/schemas/DeleteResultListSchema'
         summary:
-          type: object
-          properties:
-            requested:
-              type: integer
-              example: 1
-            deleted:
-              type: integer
-              example: 1
-            notFound:
-              type: integer
-              example: 1
-            forbidden:
-              type: integer
-              example: 1
-          required:
-          - requested
-          - deleted
-          - notFound
-          - forbidden
-      required:
-      - results
-      - summary
-    SearchFilterSchema:
+          $ref: '#/components/schemas/DeleteSummarySchema'
+    DeleteResultListSchema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: id1
+          status:
+            type: string
+            enum:
+            - deleted
+            - not_found
+            - forbidden
+            example: deleted
+        required:
+        - id
+        - status
+    DeleteSummarySchema:
       type: object
       properties:
-        search:
-          $ref: '#/components/schemas/SearchStringField'
-    SearchStringField:
-      type: string
-      example: foo
-    WebMetadataListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - slug
-                - publicationDate
-                - expirationDate
-                - status
-                - title
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-            referenceType:
-              $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+        requested:
+          type: integer
+          example: 1
+        deleted:
+          type: integer
+          example: 1
+        omitted:
+          type: integer
+          example: 1
       required:
-      - page
-      - filters
-    SearchPageSchema:
-      type: object
-      properties:
-        size:
-          $ref: '#/components/schemas/SearchPageSizeField'
-        number:
-          $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
-    SearchPageSizeField:
-      type: integer
-      example: 20
-    SearchPageNumberField:
-      type: integer
-      example: 1
-    SortDirection:
-      type: string
-      enum:
-      - asc
-      - desc
-      example: asc
-    WebMetadataListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/WebMetadataListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/WebMetadataListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
+      - requested
+      - deleted
+      - omitted
+    WebMetadataListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebMetadataListItemSchema'
     WebMetadataListItemSchema:
       type: object
       properties:
@@ -890,6 +807,91 @@ components:
       type: number
       format: double
       example: 1.76e+9
+    WebMetadataListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - slug
+                - publicationDate
+                - expirationDate
+                - status
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            referenceType:
+              $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+      required:
+      - page
+      - filters
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+    SearchPageSizeField:
+      type: integer
+      example: 20
+    SearchPageNumberField:
+      type: integer
+      example: 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      example: asc
+    SearchStringField:
+      type: string
+      example: foo
+    WebMetadataListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/WebMetadataListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebMetadataListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
     WebMetadataPatchSchema:
       type: object
       properties:
@@ -991,58 +993,10 @@ components:
       - metadata
       - createdAt
       - updatedAt
-    WebPageListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - title
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - page
-      - filters
-    WebPageListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/WebPageListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/WebPageListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
+    WebPageListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebPageListItemSchema'
     WebPageListItemSchema:
       type: object
       properties:
@@ -1081,6 +1035,60 @@ components:
       type: number
       format: double
       example: 1.76e+9
+    WebPageListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    WebPageListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/WebPageListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebPageListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
     WebPagePatchSchema:
       type: object
       properties:
@@ -1140,59 +1148,10 @@ components:
       - name
       - createdAt
       - updatedAt
-    WebMenuListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - key
-                - name
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - page
-      - filters
-    WebMenuListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/WebMenuListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/WebMenuListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
+    WebMenuListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebMenuListItemSchema'
     WebMenuListItemSchema:
       type: object
       properties:
@@ -1229,6 +1188,61 @@ components:
       type: number
       format: double
       example: 1.76e+9
+    WebMenuListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - key
+                - name
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    WebMenuListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/WebMenuListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebMenuListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
     WebMenuPatchSchema:
       type: object
       properties:
@@ -1320,61 +1334,10 @@ components:
       - authentication
       - createdAt
       - updatedAt
-    WebMenuItemListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - label
-                - url
-                - priority
-                - permission
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - page
-      - filters
-    WebMenuItemListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/WebMenuItemListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/WebMenuItemListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
+    WebMenuItemListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebMenuItemListItemSchema'
     WebMenuItemListItemSchema:
       type: object
       properties:
@@ -1435,6 +1398,63 @@ components:
       type: number
       format: double
       example: 1.76e+9
+    WebMenuItemListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - label
+                - url
+                - priority
+                - permission
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    WebMenuItemListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/WebMenuItemListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebMenuItemListItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
     WebMenuItemPatchSchema:
       type: object
       properties:
@@ -1606,18 +1626,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMetadataDetailSchema'
-    BulkDeleteResponse:
-      description: Bulk delete response
+    DeleteResponse:
+      description: Delete response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteResponseSchema'
-    WebMetadataFiltersResponse:
-      description: WebMetadata filter response
+            $ref: '#/components/schemas/DeleteResponseSchema'
+    WebMetadataListResponse:
+      description: WebMetadata list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/WebMetadataListSchema'
     WebMetadataListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1630,12 +1650,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebPageDetailSchema'
-    WebPageFiltersResponse:
-      description: WebPage filter response
+    WebPageListResponse:
+      description: WebPage list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/WebPageListSchema'
     WebPageListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1648,12 +1668,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMenuDetailSchema'
-    WebMenuFiltersResponse:
-      description: WebMenu filter response
+    WebMenuListResponse:
+      description: WebMenu list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/WebMenuListSchema'
     WebMenuListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1666,12 +1686,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMenuItemDetailSchema'
-    WebMenuItemFiltersResponse:
-      description: WebMenuItem filter response
+    WebMenuItemListResponse:
+      description: WebMenuItem list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/WebMenuItemListSchema'
     WebMenuItemListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -1727,11 +1747,11 @@ components:
           schema:
             $ref: '#/components/schemas/WebMetadataCreateSchema'
       required: true
-    BulkDeleteRequestBody:
+    DeleteRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+            $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
     WebMetadataUpdateRequestBody:
       content:

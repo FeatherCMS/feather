@@ -12,6 +12,6 @@ struct AdminRemoveNewsletterSubscribersOpenAPIRepository {
 
     func remove(ids: [String], campaignId: String?) async throws {
         try await AdminNewsletterSubscribersAPIClient(api: api)
-            .bulkRemove(subscriberIds: ids, campaignId: campaignId)
+            .remove(subscriberIds: ids, campaignId: campaignId)
     }
 }

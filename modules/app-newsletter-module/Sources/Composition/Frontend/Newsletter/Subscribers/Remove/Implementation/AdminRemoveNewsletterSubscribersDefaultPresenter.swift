@@ -27,7 +27,7 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: .init(links: [
                         .init(label: "Admin", link: "/admin/"),

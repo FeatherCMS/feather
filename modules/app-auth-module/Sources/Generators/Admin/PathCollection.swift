@@ -16,8 +16,8 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}":
                 UserIdentitySessionIdPathItems(),
             "api/v1/admin/auth/credentials": AuthCredentialPathItems(),
-            "api/v1/admin/auth/credentials/filters":
-                AuthCredentialFiltersPathItems(),
+            "api/v1/admin/auth/credentials/":
+                AuthCredentialListPathItems(),
             "api/v1/admin/auth/credentials/search":
                 AuthCredentialSearchPathItems(),
             "api/v1/admin/auth/credentials/{authCredentialId}":
@@ -28,8 +28,8 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}":
                 AuthRolePermissionIdPathItems(),
             "api/v1/admin/auth/magic-links": AuthMagicLinkManagementPathItems(),
-            "api/v1/admin/auth/magic-links/filters":
-                AuthMagicLinkFiltersPathItems(),
+            "api/v1/admin/auth/magic-links/":
+                AuthMagicLinkListPathItems(),
             "api/v1/admin/auth/magic-links/search":
                 AuthMagicLinkSearchPathItems(),
             "api/v1/admin/auth/magic-links/{authMagicLinkId}":

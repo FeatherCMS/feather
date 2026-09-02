@@ -42,14 +42,6 @@ struct AuthCredentialListOperation: AuthCredentialOperation {
     }
 }
 
-struct AuthCredentialFiltersOperation: AuthCredentialOperation {
-    var responseMap: ResponseMap {
-        [
-            200: AuthCredentialFiltersResponse().reference()
-        ]
-    }
-}
-
 struct AuthCredentialSearchOperation: AuthCredentialOperation {
     var searchQuery: SearchQuerySchema {
         .init(
@@ -73,8 +65,8 @@ struct AuthCredentialSearchOperation: AuthCredentialOperation {
     }
 }
 
-struct AuthCredentialBulkDeleteOperation: AuthCredentialOperation,
-    BulkDeleteOperation
+struct AuthCredentialDeleteOperation: AuthCredentialOperation,
+    DeleteOperation
 {
 }
 

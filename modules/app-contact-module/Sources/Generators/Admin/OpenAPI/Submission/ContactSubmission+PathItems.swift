@@ -3,7 +3,7 @@ import FeatherOpenAPI
 struct ContactFormSubmissionPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { ContactFormSubmissionListOperation() }
     var delete: OperationRepresentable? {
-        ContactFormSubmissionBulkDeleteOperation()
+        ContactFormSubmissionDeleteOperation()
     }
 }
 struct ContactFormSubmissionIDPathItems: PathItemRepresentable {

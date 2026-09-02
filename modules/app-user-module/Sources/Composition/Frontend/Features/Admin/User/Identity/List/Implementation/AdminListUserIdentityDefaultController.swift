@@ -78,7 +78,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
         }
     }
 
-    func getUserIdentitiesBulkRemoveConfirmation(
+    func getUserIdentitiesRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -90,7 +90,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListBulkRemoveRedirect.location(
+                    .location: ListRemoveRedirect.location(
                         path: "/admin/user/identities/",
                         page: page,
                         search: search,
@@ -101,7 +101,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
             )
         }
         return
-            try presenter.renderBulkRemoveConfirmation(
+            try presenter.renderRemoveConfirmation(
                 selectedIds: selectedIds,
                 page: page,
                 search: search,
@@ -110,22 +110,22 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
             .response(from: request, context: context)
     }
 
-    func postUserIdentitiesBulkRemove(
+    func postUserIdentitiesRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+            try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/user/identities/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

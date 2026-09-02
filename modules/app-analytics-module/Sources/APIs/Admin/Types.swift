@@ -12,10 +12,10 @@ import struct Foundation.Date
 #endif
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)`.
-    func analyticsLogFilters(_ input: Operations.AnalyticsLogFilters.Input)
-        async throws -> Operations.AnalyticsLogFilters.Output
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    func analyticsLogList(_ input: Operations.AnalyticsLogList.Input)
+        async throws -> Operations.AnalyticsLogList.Output
     /// - Remark: HTTP `POST /api/v1/admin/analytics/logs/overview`.
     /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/overview/post(analyticsLogOverview)`.
     func analyticsLogOverview(_ input: Operations.AnalyticsLogOverview.Input)
@@ -32,13 +32,13 @@ public protocol APIProtocol: Sendable {
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)`.
-    public func analyticsLogFilters(
-        headers: Operations.AnalyticsLogFilters.Input.Headers = .init()
-    ) async throws -> Operations.AnalyticsLogFilters.Output {
-        try await analyticsLogFilters(
-            Operations.AnalyticsLogFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    public func analyticsLogList(
+        headers: Operations.AnalyticsLogList.Input.Headers = .init()
+    ) async throws -> Operations.AnalyticsLogList.Output {
+        try await analyticsLogList(
+            Operations.AnalyticsLogList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/analytics/logs/overview`.
@@ -105,51 +105,76 @@ public enum Servers {
 public enum Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogFiltersSchema`.
-        public struct AnalyticsLogFiltersSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogFiltersSchema/search`.
-            public var search: Components.Schemas.AnalyticsLogPathField?
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogFiltersSchema/source`.
-            public var source: Components.Schemas.AnalyticsLogSourceField?
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogFiltersSchema/method`.
-            public var method: Components.Schemas.AnalyticsLogMethodField?
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogFiltersSchema/responseCode`.
-            public var responseCode:
-                Components.Schemas.AnalyticsLogResponseCodeField?
-            /// Creates a new `AnalyticsLogFiltersSchema`.
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogListSchema`.
+        public typealias AnalyticsLogListSchema = [Components.Schemas
+            .AnalyticsLogListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema`.
+        public struct AnalyticsLogListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/id`.
+            public var id: Components.Schemas.AnalyticsLogIdField
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/accountId`.
+            public var accountId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/source`.
+            public var source: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/method`.
+            public var method: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/path`.
+            public var path: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/responseCode`.
+            public var responseCode: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/ip`.
+            public var ip: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/browserName`.
+            public var browserName: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// Creates a new `AnalyticsLogListItemSchema`.
             ///
             /// - Parameters:
-            ///   - search:
+            ///   - id:
+            ///   - accountId:
             ///   - source:
             ///   - method:
+            ///   - path:
             ///   - responseCode:
+            ///   - ip:
+            ///   - browserName:
+            ///   - createdAt:
             public init(
-                search: Components.Schemas.AnalyticsLogPathField? = nil,
-                source: Components.Schemas.AnalyticsLogSourceField? = nil,
-                method: Components.Schemas.AnalyticsLogMethodField? = nil,
-                responseCode: Components.Schemas
-                    .AnalyticsLogResponseCodeField? = nil
+                id: Components.Schemas.AnalyticsLogIdField,
+                accountId: Swift.String,
+                source: Swift.String,
+                method: Swift.String,
+                path: Swift.String,
+                responseCode: Swift.Int,
+                ip: Swift.String,
+                browserName: Swift.String,
+                createdAt: Swift.Double
             ) {
-                self.search = search
+                self.id = id
+                self.accountId = accountId
                 self.source = source
                 self.method = method
+                self.path = path
                 self.responseCode = responseCode
+                self.ip = ip
+                self.browserName = browserName
+                self.createdAt = createdAt
             }
             public enum CodingKeys: String, CodingKey {
-                case search
+                case id
+                case accountId
                 case source
                 case method
+                case path
                 case responseCode
+                case ip
+                case browserName
+                case createdAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogPathField`.
-        public typealias AnalyticsLogPathField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogSourceField`.
-        public typealias AnalyticsLogSourceField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogMethodField`.
-        public typealias AnalyticsLogMethodField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogResponseCodeField`.
-        public typealias AnalyticsLogResponseCodeField = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogIdField`.
+        public typealias AnalyticsLogIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewQuerySchema`.
         public struct AnalyticsLogOverviewQuerySchema: Codable, Hashable,
             Sendable
@@ -581,6 +606,14 @@ public enum Components {
             case asc = "asc"
             case desc = "desc"
         }
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogPathField`.
+        public typealias AnalyticsLogPathField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogSourceField`.
+        public typealias AnalyticsLogSourceField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogMethodField`.
+        public typealias AnalyticsLogMethodField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogResponseCodeField`.
+        public typealias AnalyticsLogResponseCodeField = Swift.Int
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchSchema`.
         public struct AnalyticsLogListItemSearchSchema: Codable, Hashable,
             Sendable
@@ -633,73 +666,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema`.
-        public struct AnalyticsLogListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/id`.
-            public var id: Components.Schemas.AnalyticsLogIdField
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/accountId`.
-            public var accountId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/source`.
-            public var source: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/method`.
-            public var method: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/path`.
-            public var path: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/responseCode`.
-            public var responseCode: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/ip`.
-            public var ip: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/browserName`.
-            public var browserName: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/createdAt`.
-            public var createdAt: Swift.Double
-            /// Creates a new `AnalyticsLogListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - accountId:
-            ///   - source:
-            ///   - method:
-            ///   - path:
-            ///   - responseCode:
-            ///   - ip:
-            ///   - browserName:
-            ///   - createdAt:
-            public init(
-                id: Components.Schemas.AnalyticsLogIdField,
-                accountId: Swift.String,
-                source: Swift.String,
-                method: Swift.String,
-                path: Swift.String,
-                responseCode: Swift.Int,
-                ip: Swift.String,
-                browserName: Swift.String,
-                createdAt: Swift.Double
-            ) {
-                self.id = id
-                self.accountId = accountId
-                self.source = source
-                self.method = method
-                self.path = path
-                self.responseCode = responseCode
-                self.ip = ip
-                self.browserName = browserName
-                self.createdAt = createdAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case accountId
-                case source
-                case method
-                case path
-                case responseCode
-                case ip
-                case browserName
-                case createdAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogIdField`.
-        public typealias AnalyticsLogIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogDetailSchema`.
         public struct AnalyticsLogDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogDetailSchema/id`.
@@ -893,16 +859,16 @@ public enum Components {
     }
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
     public enum Responses {
-        public struct AnalyticsLogFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/AnalyticsLogFiltersResponse/content`.
+        public struct AnalyticsLogListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AnalyticsLogListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/AnalyticsLogFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.AnalyticsLogFiltersSchema)
+                /// - Remark: Generated from `#/components/responses/AnalyticsLogListResponse/content/application\/json`.
+                case json(Components.Schemas.AnalyticsLogListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AnalyticsLogFiltersSchema {
+                public var json: Components.Schemas.AnalyticsLogListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -912,14 +878,13 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body:
-                Components.Responses.AnalyticsLogFiltersResponse.Body
-            /// Creates a new `AnalyticsLogFiltersResponse`.
+            public var body: Components.Responses.AnalyticsLogListResponse.Body
+            /// Creates a new `AnalyticsLogListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.AnalyticsLogFiltersResponse.Body
+                body: Components.Responses.AnalyticsLogListResponse.Body
             ) {
                 self.body = body
             }
@@ -1030,16 +995,16 @@ public enum Components {
 
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)`.
-    public enum AnalyticsLogFilters {
-        public static let id: Swift.String = "analyticsLogFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    public enum AnalyticsLogList {
+        public static let id: Swift.String = "analyticsLogList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/analytics/logs/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/analytics/logs/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AnalyticsLogFilters.AcceptableContentType
+                        Operations.AnalyticsLogList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1047,35 +1012,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AnalyticsLogFilters.AcceptableContentType
+                        Operations.AnalyticsLogList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.AnalyticsLogFilters.Input.Headers
+            public var headers: Operations.AnalyticsLogList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.AnalyticsLogFilters.Input.Headers = .init()
+                headers: Operations.AnalyticsLogList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// AnalyticsLog filter response
+            /// AnalyticsLog list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.AnalyticsLogFiltersResponse)
+            case ok(Components.Responses.AnalyticsLogListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.AnalyticsLogFiltersResponse {
+            public var ok: Components.Responses.AnalyticsLogListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -1094,15 +1059,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.AnalyticsLogFilters.Output.Unauthorized
-            )
+            case unauthorized(Operations.AnalyticsLogList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1113,7 +1076,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.AnalyticsLogFilters.Output.Unauthorized
+                Operations.AnalyticsLogList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1133,13 +1096,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AnalyticsLogFilters.Output.Forbidden)
+            case forbidden(Operations.AnalyticsLogList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1149,9 +1112,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.AnalyticsLogFilters.Output.Forbidden
-            {
+            public var forbidden: Operations.AnalyticsLogList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):

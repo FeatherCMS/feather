@@ -2,9 +2,9 @@ import AnalyticsSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
-struct AnalyticsLogFiltersResponse: JSONResponseRepresentable {
-    var description: String = "AnalyticsLog filter response"
-    var schema = AnalyticsLogFiltersSchema().reference()
+struct AnalyticsLogListResponse: JSONResponseRepresentable {
+    var description: String = "AnalyticsLog list response"
+    var schema = AnalyticsLogListSchema().reference()
 }
 
 struct AnalyticsLogDetailResponse: JSONResponseRepresentable {

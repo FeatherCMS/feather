@@ -15,12 +15,12 @@ protocol AdminListMediaAssetController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func bulkRemoveConfirmation(
+    func removeConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func bulkRemove(
+    func remove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -41,12 +41,12 @@ extension AdminListMediaAssetController {
             use: getListMediaAssets
         )
         router.get(
-            "/admin/media/assets/bulk-remove/",
-            use: bulkRemoveConfirmation
+            "/admin/media/assets/remove/",
+            use: removeConfirmation
         )
         router.post(
-            "/admin/media/assets/bulk-remove/",
-            use: bulkRemove
+            "/admin/media/assets/remove/",
+            use: remove
         )
         router.post(
             "/admin/media/assets/folders/{id}/remove/",

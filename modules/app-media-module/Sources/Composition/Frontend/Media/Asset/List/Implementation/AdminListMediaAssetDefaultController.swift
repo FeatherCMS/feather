@@ -95,7 +95,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         )
     }
 
-    func bulkRemoveConfirmation(
+    func removeConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -126,7 +126,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             )
         }
         return
-            try presenter.renderBulkRemoveConfirmation(
+            try presenter.renderRemoveConfirmation(
                 page: page,
                 search: search,
                 parentId: parentId,
@@ -137,13 +137,13 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             .response(from: request, context: context)
     }
 
-    func bulkRemove(
+    func remove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         let parentId = request.queryString("parent_id")?
@@ -154,7 +154,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
                 rawValue: request.queryString("view") ?? ""
             ) ?? .grid
         if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+            try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
         return Response(
             status: .seeOther,

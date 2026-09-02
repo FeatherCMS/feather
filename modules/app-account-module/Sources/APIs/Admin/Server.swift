@@ -124,7 +124,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.accountInvitationBulkDelete(
+                try await server.accountInvitationDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.accountInvitationFilters(
+                try await server.accountInvitationList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -145,7 +145,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/account/invitations/filters"
+                "/api/v1/admin/account/invitations/"
             )
         )
         try transport.register(
@@ -771,8 +771,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)`.
-    fileprivate func accountInvitationBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
+    fileprivate func accountInvitationDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -781,22 +781,21 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AccountInvitationBulkDelete.id,
+            forOperation: Operations.AccountInvitationDelete.id,
             using: {
-                APIHandler.accountInvitationBulkDelete($0)
+                APIHandler.accountInvitationDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers:
-                    Operations.AccountInvitationBulkDelete.Input.Headers =
-                        .init(
-                            accept: try converter.extractAcceptHeaderIfPresent(
-                                in: request.headerFields
-                            )
+                let headers: Operations.AccountInvitationDelete.Input.Headers =
+                    .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
                         )
+                    )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -806,7 +805,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -817,7 +816,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.AccountInvitationBulkDelete.Input(
+                return Operations.AccountInvitationDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -858,9 +857,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)`.
-    fileprivate func accountInvitationFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)`.
+    fileprivate func accountInvitationList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -869,20 +868,18 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AccountInvitationFilters.id,
+            forOperation: Operations.AccountInvitationList.id,
             using: {
-                APIHandler.accountInvitationFilters($0)
+                APIHandler.accountInvitationList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AccountInvitationFilters.Input.Headers =
+                let headers: Operations.AccountInvitationList.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
                         )
                     )
-                return Operations.AccountInvitationFilters.Input(
-                    headers: headers
-                )
+                return Operations.AccountInvitationList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {

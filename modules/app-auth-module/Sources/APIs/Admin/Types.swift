@@ -38,23 +38,22 @@ public protocol APIProtocol: Sendable {
         _ input: Operations.UserIdentitySessionList.Input
     ) async throws -> Operations.UserIdentitySessionList.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
-    func userIdentitySessionBulkDelete(
-        _ input: Operations.UserIdentitySessionBulkDelete.Input
-    ) async throws -> Operations.UserIdentitySessionBulkDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)`.
+    func userIdentitySessionDelete(
+        _ input: Operations.UserIdentitySessionDelete.Input
+    ) async throws -> Operations.UserIdentitySessionDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/credentials`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/post(authCredentialCreate)`.
     func authCredentialCreate(_ input: Operations.AuthCredentialCreate.Input)
         async throws -> Operations.AuthCredentialCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)`.
-    func authCredentialBulkDelete(
-        _ input: Operations.AuthCredentialBulkDelete.Input
-    ) async throws -> Operations.AuthCredentialBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)`.
-    func authCredentialFilters(_ input: Operations.AuthCredentialFilters.Input)
-        async throws -> Operations.AuthCredentialFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)`.
+    func authCredentialDelete(_ input: Operations.AuthCredentialDelete.Input)
+        async throws -> Operations.AuthCredentialDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)`.
+    func authCredentialList(_ input: Operations.AuthCredentialList.Input)
+        async throws -> Operations.AuthCredentialList.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/credentials/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/search/post(authCredentialSearch)`.
     func authCredentialSearch(_ input: Operations.AuthCredentialSearch.Input)
@@ -77,10 +76,10 @@ public protocol APIProtocol: Sendable {
         _ input: Operations.AuthRolePermissionCreate.Input
     ) async throws -> Operations.AuthRolePermissionCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
-    func authRolePermissionBulkDelete(
-        _ input: Operations.AuthRolePermissionBulkDelete.Input
-    ) async throws -> Operations.AuthRolePermissionBulkDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)`.
+    func authRolePermissionDelete(
+        _ input: Operations.AuthRolePermissionDelete.Input
+    ) async throws -> Operations.AuthRolePermissionDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/search/post(authRolePermissionSearch)`.
     func authRolePermissionSearch(
@@ -91,14 +90,13 @@ public protocol APIProtocol: Sendable {
     func authMagicLinkCreate(_ input: Operations.AuthMagicLinkCreate.Input)
         async throws -> Operations.AuthMagicLinkCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)`.
-    func authMagicLinkBulkDelete(
-        _ input: Operations.AuthMagicLinkBulkDelete.Input
-    ) async throws -> Operations.AuthMagicLinkBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)`.
-    func authMagicLinkFilters(_ input: Operations.AuthMagicLinkFilters.Input)
-        async throws -> Operations.AuthMagicLinkFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)`.
+    func authMagicLinkDelete(_ input: Operations.AuthMagicLinkDelete.Input)
+        async throws -> Operations.AuthMagicLinkDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)`.
+    func authMagicLinkList(_ input: Operations.AuthMagicLinkList.Input)
+        async throws -> Operations.AuthMagicLinkList.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/magic-links/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/search/post(authMagicLinkSearch)`.
     func authMagicLinkSearch(_ input: Operations.AuthMagicLinkSearch.Input)
@@ -178,15 +176,14 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
-    public func userIdentitySessionBulkDelete(
-        path: Operations.UserIdentitySessionBulkDelete.Input.Path,
-        headers: Operations.UserIdentitySessionBulkDelete.Input.Headers =
-            .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.UserIdentitySessionBulkDelete.Output {
-        try await userIdentitySessionBulkDelete(
-            Operations.UserIdentitySessionBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)`.
+    public func userIdentitySessionDelete(
+        path: Operations.UserIdentitySessionDelete.Input.Path,
+        headers: Operations.UserIdentitySessionDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.UserIdentitySessionDelete.Output {
+        try await userIdentitySessionDelete(
+            Operations.UserIdentitySessionDelete.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -207,25 +204,25 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)`.
-    public func authCredentialBulkDelete(
-        headers: Operations.AuthCredentialBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.AuthCredentialBulkDelete.Output {
-        try await authCredentialBulkDelete(
-            Operations.AuthCredentialBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)`.
+    public func authCredentialDelete(
+        headers: Operations.AuthCredentialDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.AuthCredentialDelete.Output {
+        try await authCredentialDelete(
+            Operations.AuthCredentialDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)`.
-    public func authCredentialFilters(
-        headers: Operations.AuthCredentialFilters.Input.Headers = .init()
-    ) async throws -> Operations.AuthCredentialFilters.Output {
-        try await authCredentialFilters(
-            Operations.AuthCredentialFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)`.
+    public func authCredentialList(
+        headers: Operations.AuthCredentialList.Input.Headers = .init()
+    ) async throws -> Operations.AuthCredentialList.Output {
+        try await authCredentialList(
+            Operations.AuthCredentialList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/auth/credentials/search`.
@@ -298,14 +295,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
-    public func authRolePermissionBulkDelete(
-        headers: Operations.AuthRolePermissionBulkDelete.Input.Headers =
-            .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.AuthRolePermissionBulkDelete.Output {
-        try await authRolePermissionBulkDelete(
-            Operations.AuthRolePermissionBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)`.
+    public func authRolePermissionDelete(
+        headers: Operations.AuthRolePermissionDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.AuthRolePermissionDelete.Output {
+        try await authRolePermissionDelete(
+            Operations.AuthRolePermissionDelete.Input(
                 headers: headers,
                 body: body
             )
@@ -338,25 +334,25 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)`.
-    public func authMagicLinkBulkDelete(
-        headers: Operations.AuthMagicLinkBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.AuthMagicLinkBulkDelete.Output {
-        try await authMagicLinkBulkDelete(
-            Operations.AuthMagicLinkBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)`.
+    public func authMagicLinkDelete(
+        headers: Operations.AuthMagicLinkDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.AuthMagicLinkDelete.Output {
+        try await authMagicLinkDelete(
+            Operations.AuthMagicLinkDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)`.
-    public func authMagicLinkFilters(
-        headers: Operations.AuthMagicLinkFilters.Input.Headers = .init()
-    ) async throws -> Operations.AuthMagicLinkFilters.Output {
-        try await authMagicLinkFilters(
-            Operations.AuthMagicLinkFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)`.
+    public func authMagicLinkList(
+        headers: Operations.AuthMagicLinkList.Input.Headers = .init()
+    ) async throws -> Operations.AuthMagicLinkList.Output {
+        try await authMagicLinkList(
+            Operations.AuthMagicLinkList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/auth/magic-links/search`.
@@ -682,120 +678,49 @@ public enum Components {
         public typealias UserAuthSessionTimestampField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/UserAuthSessionPersistentField`.
         public typealias UserAuthSessionPersistentField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema`.
-        public struct BulkDeleteRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/ids`.
+        /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
+        public struct DeleteRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/summary`.
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/results`.
+            public var results: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/summary`.
             public var summary: Swift.Bool
-            /// Creates a new `BulkDeleteRequestSchema`.
+            /// Creates a new `DeleteRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
+            ///   - results:
             ///   - summary:
             public init(
                 ids: [Swift.String],
+                results: Swift.Bool,
                 summary: Swift.Bool
             ) {
                 self.ids = ids
+                self.results = results
                 self.summary = summary
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
+                case results
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema`.
-        public struct BulkDeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload`.
-            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/id`.
-                public var id: Swift.String
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                @frozen
-                public enum StatusPayload: String, Codable, Hashable, Sendable,
-                    CaseIterable
-                {
-                    case deleted = "deleted"
-                    case notFound = "not_found"
-                    case forbidden = "forbidden"
-                }
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                public var status:
-                    Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                /// Creates a new `ResultsPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - id:
-                ///   - status:
-                public init(
-                    id: Swift.String,
-                    status: Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                ) {
-                    self.id = id
-                    self.status = status
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case status
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public typealias ResultsPayload = [Components.Schemas
-                .BulkDeleteResponseSchema.ResultsPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public var results:
-                Components.Schemas.BulkDeleteResponseSchema.ResultsPayload
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public struct SummaryPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/requested`.
-                public var requested: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/deleted`.
-                public var deleted: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/notFound`.
-                public var notFound: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/forbidden`.
-                public var forbidden: Swift.Int
-                /// Creates a new `SummaryPayload`.
-                ///
-                /// - Parameters:
-                ///   - requested:
-                ///   - deleted:
-                ///   - notFound:
-                ///   - forbidden:
-                public init(
-                    requested: Swift.Int,
-                    deleted: Swift.Int,
-                    notFound: Swift.Int,
-                    forbidden: Swift.Int
-                ) {
-                    self.requested = requested
-                    self.deleted = deleted
-                    self.notFound = notFound
-                    self.forbidden = forbidden
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case requested
-                    case deleted
-                    case notFound
-                    case forbidden
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public var summary:
-                Components.Schemas.BulkDeleteResponseSchema.SummaryPayload
-            /// Creates a new `BulkDeleteResponseSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
+        public struct DeleteResponseSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
+            public var results: Components.Schemas.DeleteResultListSchema?
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
+            public var summary: Components.Schemas.DeleteSummarySchema?
+            /// Creates a new `DeleteResponseSchema`.
             ///
             /// - Parameters:
             ///   - results:
             ///   - summary:
             public init(
-                results: Components.Schemas.BulkDeleteResponseSchema
-                    .ResultsPayload,
-                summary: Components.Schemas.BulkDeleteResponseSchema
-                    .SummaryPayload
+                results: Components.Schemas.DeleteResultListSchema? = nil,
+                summary: Components.Schemas.DeleteSummarySchema? = nil
             ) {
                 self.results = results
                 self.summary = summary
@@ -803,6 +728,73 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case results
                 case summary
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            @frozen
+            public enum StatusPayload: String, Codable, Hashable, Sendable,
+                CaseIterable
+            {
+                case deleted = "deleted"
+                case notFound = "not_found"
+                case forbidden = "forbidden"
+            }
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            public var status:
+                Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
+            /// Creates a new `DeleteResultListSchemaPayload`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - status:
+            public init(
+                id: Swift.String,
+                status: Components.Schemas.DeleteResultListSchemaPayload
+                    .StatusPayload
+            ) {
+                self.id = id
+                self.status = status
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case status
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public typealias DeleteResultListSchema = [Components.Schemas
+            .DeleteResultListSchemaPayload]
+        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
+        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
+            public var requested: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
+            public var deleted: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
+            public var omitted: Swift.Int
+            /// Creates a new `DeleteSummarySchema`.
+            ///
+            /// - Parameters:
+            ///   - requested:
+            ///   - deleted:
+            ///   - omitted:
+            public init(
+                requested: Swift.Int,
+                deleted: Swift.Int,
+                omitted: Swift.Int
+            ) {
+                self.requested = requested
+                self.deleted = deleted
+                self.omitted = omitted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case requested
+                case deleted
+                case omitted
             }
         }
         /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema`.
@@ -863,35 +855,45 @@ public enum Components {
                 case email
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialSearchFilterSchema`.
-        public struct AuthCredentialSearchFilterSchema: Codable, Hashable,
-            Sendable
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialListSchema`.
+        public typealias AuthCredentialListSchema = [Components.Schemas
+            .AuthCredentialListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema`.
+        public struct AuthCredentialListItemSchema: Codable, Hashable, Sendable
         {
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialSearchFilterSchema/search`.
-            public var search: Components.Schemas.AuthCredentialSearchField?
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialSearchFilterSchema/userId`.
-            public var userId: Components.Schemas.AuthCredentialUserIdField?
-            /// Creates a new `AuthCredentialSearchFilterSchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/id`.
+            public var id: Components.Schemas.AuthCredentialIdField
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/userId`.
+            public var userId: Components.Schemas.AuthCredentialUserIdField
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/email`.
+            public var email: Components.Schemas.AuthCredentialEmailField
+            /// Creates a new `AuthCredentialListItemSchema`.
             ///
             /// - Parameters:
-            ///   - search:
+            ///   - id:
             ///   - userId:
+            ///   - email:
             public init(
-                search: Components.Schemas.AuthCredentialSearchField? = nil,
-                userId: Components.Schemas.AuthCredentialUserIdField? = nil
+                id: Components.Schemas.AuthCredentialIdField,
+                userId: Components.Schemas.AuthCredentialUserIdField,
+                email: Components.Schemas.AuthCredentialEmailField
             ) {
-                self.search = search
+                self.id = id
                 self.userId = userId
+                self.email = email
             }
             public enum CodingKeys: String, CodingKey {
-                case search
+                case id
                 case userId
+                case email
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialSearchField`.
-        public typealias AuthCredentialSearchField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialIdField`.
+        public typealias AuthCredentialIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialUserIdField`.
         public typealias AuthCredentialUserIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialEmailField`.
+        public typealias AuthCredentialEmailField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchQuerySchema`.
         public struct AuthCredentialListItemSearchQuerySchema: Codable,
             Hashable, Sendable
@@ -1025,6 +1027,8 @@ public enum Components {
             case asc = "asc"
             case desc = "desc"
         }
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialSearchField`.
+        public typealias AuthCredentialSearchField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchSchema`.
         public struct AuthCredentialListItemSearchSchema: Codable, Hashable,
             Sendable
@@ -1079,40 +1083,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema`.
-        public struct AuthCredentialListItemSchema: Codable, Hashable, Sendable
-        {
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/id`.
-            public var id: Components.Schemas.AuthCredentialIdField
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/userId`.
-            public var userId: Components.Schemas.AuthCredentialUserIdField
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/email`.
-            public var email: Components.Schemas.AuthCredentialEmailField
-            /// Creates a new `AuthCredentialListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - userId:
-            ///   - email:
-            public init(
-                id: Components.Schemas.AuthCredentialIdField,
-                userId: Components.Schemas.AuthCredentialUserIdField,
-                email: Components.Schemas.AuthCredentialEmailField
-            ) {
-                self.id = id
-                self.userId = userId
-                self.email = email
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case userId
-                case email
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialIdField`.
-        public typealias AuthCredentialIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialEmailField`.
-        public typealias AuthCredentialEmailField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialPatchSchema`.
         public struct AuthCredentialPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthCredentialPatchSchema/email`.
@@ -1441,21 +1411,70 @@ public enum Components {
                 case isUsed
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchFilterSchema`.
-        public struct SearchFilterSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/SearchFilterSchema/search`.
-            public var search: Components.Schemas.SearchStringField?
-            /// Creates a new `SearchFilterSchema`.
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListSchema`.
+        public typealias AuthMagicLinkListSchema = [Components.Schemas
+            .AuthMagicLinkListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema`.
+        public struct AuthMagicLinkListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/id`.
+            public var id: Components.Schemas.AuthMagicLinkIdField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/credentialId`.
+            public var credentialId:
+                Components.Schemas.AuthMagicLinkCredentialIdField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/token`.
+            public var token: Components.Schemas.AuthMagicLinkTokenField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/expiresAt`.
+            public var expiresAt: Components.Schemas.AuthMagicLinkExpiresAtField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/isPersistent`.
+            public var isPersistent:
+                Components.Schemas.AuthMagicLinkIsPersistentField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/isUsed`.
+            public var isUsed: Components.Schemas.AuthMagicLinkIsUsedField
+            /// Creates a new `AuthMagicLinkListItemSchema`.
             ///
             /// - Parameters:
-            ///   - search:
-            public init(search: Components.Schemas.SearchStringField? = nil) {
-                self.search = search
+            ///   - id:
+            ///   - credentialId:
+            ///   - token:
+            ///   - expiresAt:
+            ///   - isPersistent:
+            ///   - isUsed:
+            public init(
+                id: Components.Schemas.AuthMagicLinkIdField,
+                credentialId: Components.Schemas.AuthMagicLinkCredentialIdField,
+                token: Components.Schemas.AuthMagicLinkTokenField,
+                expiresAt: Components.Schemas.AuthMagicLinkExpiresAtField,
+                isPersistent: Components.Schemas.AuthMagicLinkIsPersistentField,
+                isUsed: Components.Schemas.AuthMagicLinkIsUsedField
+            ) {
+                self.id = id
+                self.credentialId = credentialId
+                self.token = token
+                self.expiresAt = expiresAt
+                self.isPersistent = isPersistent
+                self.isUsed = isUsed
             }
             public enum CodingKeys: String, CodingKey {
-                case search
+                case id
+                case credentialId
+                case token
+                case expiresAt
+                case isPersistent
+                case isUsed
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIdField`.
+        public typealias AuthMagicLinkIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkCredentialIdField`.
+        public typealias AuthMagicLinkCredentialIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkTokenField`.
+        public typealias AuthMagicLinkTokenField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkExpiresAtField`.
+        public typealias AuthMagicLinkExpiresAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIsPersistentField`.
+        public typealias AuthMagicLinkIsPersistentField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIsUsedField`.
+        public typealias AuthMagicLinkIsUsedField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchQuerySchema`.
         public struct AuthMagicLinkListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -1613,67 +1632,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema`.
-        public struct AuthMagicLinkListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/id`.
-            public var id: Components.Schemas.AuthMagicLinkIdField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/credentialId`.
-            public var credentialId:
-                Components.Schemas.AuthMagicLinkCredentialIdField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/token`.
-            public var token: Components.Schemas.AuthMagicLinkTokenField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/expiresAt`.
-            public var expiresAt: Components.Schemas.AuthMagicLinkExpiresAtField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/isPersistent`.
-            public var isPersistent:
-                Components.Schemas.AuthMagicLinkIsPersistentField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/isUsed`.
-            public var isUsed: Components.Schemas.AuthMagicLinkIsUsedField
-            /// Creates a new `AuthMagicLinkListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - credentialId:
-            ///   - token:
-            ///   - expiresAt:
-            ///   - isPersistent:
-            ///   - isUsed:
-            public init(
-                id: Components.Schemas.AuthMagicLinkIdField,
-                credentialId: Components.Schemas.AuthMagicLinkCredentialIdField,
-                token: Components.Schemas.AuthMagicLinkTokenField,
-                expiresAt: Components.Schemas.AuthMagicLinkExpiresAtField,
-                isPersistent: Components.Schemas.AuthMagicLinkIsPersistentField,
-                isUsed: Components.Schemas.AuthMagicLinkIsUsedField
-            ) {
-                self.id = id
-                self.credentialId = credentialId
-                self.token = token
-                self.expiresAt = expiresAt
-                self.isPersistent = isPersistent
-                self.isUsed = isUsed
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case credentialId
-                case token
-                case expiresAt
-                case isPersistent
-                case isUsed
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIdField`.
-        public typealias AuthMagicLinkIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkCredentialIdField`.
-        public typealias AuthMagicLinkCredentialIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkTokenField`.
-        public typealias AuthMagicLinkTokenField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkExpiresAtField`.
-        public typealias AuthMagicLinkExpiresAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIsPersistentField`.
-        public typealias AuthMagicLinkIsPersistentField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIsUsedField`.
-        public typealias AuthMagicLinkIsUsedField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/AuthMagicLinkPatchSchema`.
         public struct AuthMagicLinkPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthMagicLinkPatchSchema/credentialId`.
@@ -1733,10 +1691,10 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/AuthMagicLinkVerifyRequestBody/content/application\/json`.
             case json(Components.Schemas.AuthMagicLinkVerifyRequestSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody`.
-        @frozen public enum BulkDeleteRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody/content/application\/json`.
-            case json(Components.Schemas.BulkDeleteRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody`.
+        @frozen public enum DeleteRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
+            case json(Components.Schemas.DeleteRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/AuthCredentialRequestBody`.
         @frozen public enum AuthCredentialRequestBody: Sendable, Hashable {
@@ -1865,16 +1823,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BulkDeleteResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
+        public struct DeleteResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/DeleteResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
-                case json(Components.Schemas.BulkDeleteResponseSchema)
+                /// - Remark: Generated from `#/components/responses/DeleteResponse/content/application\/json`.
+                case json(Components.Schemas.DeleteResponseSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.BulkDeleteResponseSchema {
+                public var json: Components.Schemas.DeleteResponseSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1884,12 +1842,12 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BulkDeleteResponse.Body
-            /// Creates a new `BulkDeleteResponse`.
+            public var body: Components.Responses.DeleteResponse.Body
+            /// Creates a new `DeleteResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BulkDeleteResponse.Body) {
+            public init(body: Components.Responses.DeleteResponse.Body) {
                 self.body = body
             }
         }
@@ -1924,18 +1882,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct AuthCredentialFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/AuthCredentialFiltersResponse/content`.
+        public struct AuthCredentialListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AuthCredentialListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/AuthCredentialFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.AuthCredentialSearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/AuthCredentialListResponse/content/application\/json`.
+                case json(Components.Schemas.AuthCredentialListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json:
-                    Components.Schemas.AuthCredentialSearchFilterSchema
-                {
+                public var json: Components.Schemas.AuthCredentialListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1946,13 +1902,13 @@ public enum Components {
             }
             /// Received HTTP response body
             public var body:
-                Components.Responses.AuthCredentialFiltersResponse.Body
-            /// Creates a new `AuthCredentialFiltersResponse`.
+                Components.Responses.AuthCredentialListResponse.Body
+            /// Creates a new `AuthCredentialListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.AuthCredentialFiltersResponse.Body
+                body: Components.Responses.AuthCredentialListResponse.Body
             ) {
                 self.body = body
             }
@@ -2097,16 +2053,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct AuthMagicLinkFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/AuthMagicLinkFiltersResponse/content`.
+        public struct AuthMagicLinkListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AuthMagicLinkListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/AuthMagicLinkFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/AuthMagicLinkListResponse/content/application\/json`.
+                case json(Components.Schemas.AuthMagicLinkListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.AuthMagicLinkListSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -2116,14 +2072,13 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body:
-                Components.Responses.AuthMagicLinkFiltersResponse.Body
-            /// Creates a new `AuthMagicLinkFiltersResponse`.
+            public var body: Components.Responses.AuthMagicLinkListResponse.Body
+            /// Creates a new `AuthMagicLinkListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.AuthMagicLinkFiltersResponse.Body
+                body: Components.Responses.AuthMagicLinkListResponse.Body
             ) {
                 self.body = body
             }
@@ -2938,9 +2893,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)`.
-    public enum UserIdentitySessionBulkDelete {
-        public static let id: Swift.String = "userIdentitySessionBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)`.
+    public enum UserIdentitySessionDelete {
+        public static let id: Swift.String = "userIdentitySessionDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/sessions/DELETE/path`.
             public struct Path: Sendable, Hashable {
@@ -2960,12 +2915,12 @@ public enum Operations {
                     self.userIdentityId = userIdentityId
                 }
             }
-            public var path: Operations.UserIdentitySessionBulkDelete.Input.Path
+            public var path: Operations.UserIdentitySessionDelete.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/sessions/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserIdentitySessionBulkDelete
+                        Operations.UserIdentitySessionDelete
                             .AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
@@ -2974,7 +2929,7 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserIdentitySessionBulkDelete
+                        Operations.UserIdentitySessionDelete
                             .AcceptableContentType
                     >] = .defaultValues()
                 ) {
@@ -2982,8 +2937,8 @@ public enum Operations {
                 }
             }
             public var headers:
-                Operations.UserIdentitySessionBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+                Operations.UserIdentitySessionDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -2991,10 +2946,10 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.UserIdentitySessionBulkDelete.Input.Path,
-                headers: Operations.UserIdentitySessionBulkDelete.Input
-                    .Headers = .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                path: Operations.UserIdentitySessionDelete.Input.Path,
+                headers: Operations.UserIdentitySessionDelete.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -3002,17 +2957,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3031,15 +2986,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.UserIdentitySessionBulkDelete.Output.Unauthorized
+                Operations.UserIdentitySessionDelete.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3050,7 +3005,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.UserIdentitySessionBulkDelete.Output.Unauthorized
+                Operations.UserIdentitySessionDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3070,15 +3025,15 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(
-                Operations.UserIdentitySessionBulkDelete.Output.Forbidden
+                Operations.UserIdentitySessionDelete.Output.Forbidden
             )
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3089,7 +3044,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.UserIdentitySessionBulkDelete.Output.Forbidden
+                Operations.UserIdentitySessionDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -3313,16 +3268,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)`.
-    public enum AuthCredentialBulkDelete {
-        public static let id: Swift.String = "authCredentialBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)`.
+    public enum AuthCredentialDelete {
+        public static let id: Swift.String = "authCredentialDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/auth/credentials/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthCredentialBulkDelete
-                            .AcceptableContentType
+                        Operations.AuthCredentialDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3330,42 +3284,40 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthCredentialBulkDelete
-                            .AcceptableContentType
+                        Operations.AuthCredentialDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers:
-                Operations.AuthCredentialBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.AuthCredentialDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.AuthCredentialBulkDelete.Input.Headers =
+                headers: Operations.AuthCredentialDelete.Input.Headers =
                     .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3384,15 +3336,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.AuthCredentialBulkDelete.Output.Unauthorized
+                Operations.AuthCredentialDelete.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3403,7 +3355,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.AuthCredentialBulkDelete.Output.Unauthorized
+                Operations.AuthCredentialDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3423,13 +3375,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AuthCredentialBulkDelete.Output.Forbidden)
+            case forbidden(Operations.AuthCredentialDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3440,7 +3392,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.AuthCredentialBulkDelete.Output.Forbidden
+                Operations.AuthCredentialDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -3488,16 +3440,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)`.
-    public enum AuthCredentialFilters {
-        public static let id: Swift.String = "authCredentialFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)`.
+    public enum AuthCredentialList {
+        public static let id: Swift.String = "authCredentialList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/auth/credentials/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/credentials/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthCredentialFilters.AcceptableContentType
+                        Operations.AuthCredentialList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3505,36 +3457,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthCredentialFilters.AcceptableContentType
+                        Operations.AuthCredentialList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.AuthCredentialFilters.Input.Headers
+            public var headers: Operations.AuthCredentialList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.AuthCredentialFilters.Input.Headers =
-                    .init()
+                headers: Operations.AuthCredentialList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// AuthCredential filter response
+            /// AuthCredential list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.AuthCredentialFiltersResponse)
+            case ok(Components.Responses.AuthCredentialListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.AuthCredentialFiltersResponse {
+            public var ok: Components.Responses.AuthCredentialListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -3553,15 +3504,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.AuthCredentialFilters.Output.Unauthorized
-            )
+            case unauthorized(Operations.AuthCredentialList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3572,7 +3521,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.AuthCredentialFilters.Output.Unauthorized
+                Operations.AuthCredentialList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3592,13 +3541,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AuthCredentialFilters.Output.Forbidden)
+            case forbidden(Operations.AuthCredentialList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/filters/get(authCredentialFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3608,8 +3557,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.AuthCredentialFilters.Output.Forbidden
+            public var forbidden: Operations.AuthCredentialList.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -4702,15 +4650,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)`.
-    public enum AuthRolePermissionBulkDelete {
-        public static let id: Swift.String = "authRolePermissionBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)`.
+    public enum AuthRolePermissionDelete {
+        public static let id: Swift.String = "authRolePermissionDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/auth/role-permissions/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthRolePermissionBulkDelete
+                        Operations.AuthRolePermissionDelete
                             .AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
@@ -4719,7 +4667,7 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthRolePermissionBulkDelete
+                        Operations.AuthRolePermissionDelete
                             .AcceptableContentType
                     >] = .defaultValues()
                 ) {
@@ -4727,34 +4675,34 @@ public enum Operations {
                 }
             }
             public var headers:
-                Operations.AuthRolePermissionBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+                Operations.AuthRolePermissionDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.AuthRolePermissionBulkDelete.Input.Headers =
+                headers: Operations.AuthRolePermissionDelete.Input.Headers =
                     .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -4773,15 +4721,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.AuthRolePermissionBulkDelete.Output.Unauthorized
+                Operations.AuthRolePermissionDelete.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4792,7 +4740,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.AuthRolePermissionBulkDelete.Output.Unauthorized
+                Operations.AuthRolePermissionDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4812,15 +4760,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(
-                Operations.AuthRolePermissionBulkDelete.Output.Forbidden
-            )
+            case forbidden(Operations.AuthRolePermissionDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4831,7 +4777,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.AuthRolePermissionBulkDelete.Output.Forbidden
+                Operations.AuthRolePermissionDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -5245,15 +5191,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)`.
-    public enum AuthMagicLinkBulkDelete {
-        public static let id: Swift.String = "authMagicLinkBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)`.
+    public enum AuthMagicLinkDelete {
+        public static let id: Swift.String = "authMagicLinkDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/auth/magic-links/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthMagicLinkBulkDelete.AcceptableContentType
+                        Operations.AuthMagicLinkDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -5261,40 +5207,39 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthMagicLinkBulkDelete.AcceptableContentType
+                        Operations.AuthMagicLinkDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.AuthMagicLinkBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.AuthMagicLinkDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.AuthMagicLinkBulkDelete.Input.Headers =
-                    .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                headers: Operations.AuthMagicLinkDelete.Input.Headers = .init(),
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -5313,15 +5258,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.AuthMagicLinkBulkDelete.Output.Unauthorized
+                Operations.AuthMagicLinkDelete.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -5332,7 +5277,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.AuthMagicLinkBulkDelete.Output.Unauthorized
+                Operations.AuthMagicLinkDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -5352,13 +5297,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AuthMagicLinkBulkDelete.Output.Forbidden)
+            case forbidden(Operations.AuthMagicLinkDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -5369,7 +5314,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.AuthMagicLinkBulkDelete.Output.Forbidden
+                Operations.AuthMagicLinkDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -5417,16 +5362,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)`.
-    public enum AuthMagicLinkFilters {
-        public static let id: Swift.String = "authMagicLinkFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)`.
+    public enum AuthMagicLinkList {
+        public static let id: Swift.String = "authMagicLinkList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/auth/magic-links/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/magic-links/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthMagicLinkFilters.AcceptableContentType
+                        Operations.AuthMagicLinkList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -5434,35 +5379,35 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AuthMagicLinkFilters.AcceptableContentType
+                        Operations.AuthMagicLinkList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.AuthMagicLinkFilters.Input.Headers
+            public var headers: Operations.AuthMagicLinkList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.AuthMagicLinkFilters.Input.Headers = .init()
+                headers: Operations.AuthMagicLinkList.Input.Headers = .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// AuthMagicLink filter response
+            /// AuthMagicLink list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.AuthMagicLinkFiltersResponse)
+            case ok(Components.Responses.AuthMagicLinkListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.AuthMagicLinkFiltersResponse {
+            public var ok: Components.Responses.AuthMagicLinkListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -5481,15 +5426,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.AuthMagicLinkFilters.Output.Unauthorized
-            )
+            case unauthorized(Operations.AuthMagicLinkList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -5500,7 +5443,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.AuthMagicLinkFilters.Output.Unauthorized
+                Operations.AuthMagicLinkList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -5520,13 +5463,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AuthMagicLinkFilters.Output.Forbidden)
+            case forbidden(Operations.AuthMagicLinkList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/filters/get(authMagicLinkFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -5536,8 +5479,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.AuthMagicLinkFilters.Output.Forbidden
+            public var forbidden: Operations.AuthMagicLinkList.Output.Forbidden
             {
                 get throws {
                     switch self {

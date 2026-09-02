@@ -30,6 +30,10 @@ struct AuthCredentialSearchFilterSchema: ObjectSchemaRepresentable {
                 .reference(required: false),
         ]
     }
+
+    var example: AnyCodable? {
+        AnyCodable(["search": "foo", "userId": "user_7nL3xQ2v"])
+    }
 }
 
 struct AuthCredentialCreateSchema: ObjectSchemaRepresentable {

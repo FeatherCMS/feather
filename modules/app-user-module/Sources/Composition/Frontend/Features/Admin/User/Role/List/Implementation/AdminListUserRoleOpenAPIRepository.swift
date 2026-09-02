@@ -63,8 +63,8 @@ struct AdminListUserRoleOpenAPIRepository: AdminListUserRoleRepository {
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.userRoleBulkDelete(
-                body: .json(.init(ids: [id], summary: true))
+            _ = try await client.userRoleDelete(
+                body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
     }

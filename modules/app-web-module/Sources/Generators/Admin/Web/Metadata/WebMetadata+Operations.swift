@@ -40,14 +40,6 @@ struct WebMetadataListOperation: WebMetadataOperation {
     }
 }
 
-struct WebMetadataFiltersOperation: WebMetadataOperation {
-    var responseMap: ResponseMap {
-        [
-            200: WebMetadataFiltersResponse().reference()
-        ]
-    }
-}
-
 struct WebMetadataSearchOperation: WebMetadataOperation {
     var searchQuery: SearchQuerySchema {
         .init(
@@ -82,8 +74,7 @@ struct WebMetadataSearchOperation: WebMetadataOperation {
     }
 }
 
-struct WebMetadataBulkDeleteOperation: WebMetadataOperation, BulkDeleteOperation
-{
+struct WebMetadataDeleteOperation: WebMetadataOperation, DeleteOperation {
 }
 
 struct WebMetadataGetOperation: WebMetadataIDOperation {

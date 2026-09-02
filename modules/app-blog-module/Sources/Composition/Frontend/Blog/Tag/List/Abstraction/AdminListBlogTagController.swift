@@ -17,12 +17,12 @@ protocol AdminListBlogTagController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getBlogTagsBulkRemoveConfirmation(
+    func getBlogTagsRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postBlogTagsBulkRemove(
+    func postBlogTagsRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -43,12 +43,12 @@ extension AdminListBlogTagController {
             use: getBlogTags
         )
         router.get(
-            "/admin/blog/tags/bulk-remove/",
-            use: getBlogTagsBulkRemoveConfirmation
+            "/admin/blog/tags/remove/",
+            use: getBlogTagsRemoveConfirmation
         )
         router.post(
-            "/admin/blog/tags/bulk-remove/",
-            use: postBlogTagsBulkRemove
+            "/admin/blog/tags/remove/",
+            use: postBlogTagsRemove
         )
         router.post(
             "/admin/blog/tags/{id}/status/",

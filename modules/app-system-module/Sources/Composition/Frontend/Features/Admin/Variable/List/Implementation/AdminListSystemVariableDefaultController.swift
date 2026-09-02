@@ -58,7 +58,7 @@ struct AdminListSystemVariableDefaultController:
         )
     }
 
-    func getSystemVariablesBulkRemoveConfirmation(
+    func getSystemVariablesRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -70,7 +70,7 @@ struct AdminListSystemVariableDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListBulkRemoveRedirect.location(
+                    .location: ListRemoveRedirect.location(
                         path: "/admin/system/variables/",
                         page: page,
                         search: search,
@@ -81,7 +81,7 @@ struct AdminListSystemVariableDefaultController:
             )
         }
         return
-            try presenter.renderBulkRemoveConfirmation(
+            try presenter.renderRemoveConfirmation(
                 page: page,
                 search: search,
                 selectedIds: selectedIds,
@@ -90,22 +90,22 @@ struct AdminListSystemVariableDefaultController:
             .response(from: request, context: context)
     }
 
-    func postSystemVariablesBulkRemove(
+    func postSystemVariablesRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+            try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/system/variables/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

@@ -11,8 +11,3 @@ struct BlogPostListResponse: JSONResponseRepresentable {
     var description: String = "BlogPost list response"
     var schema = BlogPostListSchema().reference()
 }
-
-struct BlogPostFiltersResponse: JSONResponseRepresentable {
-    var description: String = "BlogPost filter response"
-    var schema = SearchFilterSchema().reference()
-}

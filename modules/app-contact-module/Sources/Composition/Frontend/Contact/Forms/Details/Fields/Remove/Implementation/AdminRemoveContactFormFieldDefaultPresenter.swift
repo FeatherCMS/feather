@@ -39,7 +39,7 @@ struct AdminRemoveContactFormFieldDefaultPresenter:
             )
         )
     }
-    func renderBulkConfirmation(
+    func renderConfirmation(
         formId: String,
         selectedIds: [String],
         permissions: Set<String>
@@ -53,7 +53,7 @@ struct AdminRemoveContactFormFieldDefaultPresenter:
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: .init(links: [
                         .init(label: "Admin", link: "/admin/"),

@@ -17,12 +17,12 @@ protocol AdminListBlogAuthorController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getBlogAuthorsBulkRemoveConfirmation(
+    func getBlogAuthorsRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postBlogAuthorsBulkRemove(
+    func postBlogAuthorsRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -43,12 +43,12 @@ extension AdminListBlogAuthorController {
             use: getBlogAuthors
         )
         router.get(
-            "/admin/blog/authors/bulk-remove/",
-            use: getBlogAuthorsBulkRemoveConfirmation
+            "/admin/blog/authors/remove/",
+            use: getBlogAuthorsRemoveConfirmation
         )
         router.post(
-            "/admin/blog/authors/bulk-remove/",
-            use: postBlogAuthorsBulkRemove
+            "/admin/blog/authors/remove/",
+            use: postBlogAuthorsRemove
         )
         router.post(
             "/admin/blog/authors/{id}/status/",

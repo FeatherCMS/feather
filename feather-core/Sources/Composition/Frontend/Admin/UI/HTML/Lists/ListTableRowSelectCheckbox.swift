@@ -25,9 +25,9 @@ public struct ListTableRowSelectCheckbox: Component {
                 .name("selectedIds")
                 .value(state.id)
                 .ariaLabel("Select row")
-                .class("bulk-select-row")
+                .class("select-row")
         }
         .data("label", "Select")
-        .class("bulk-select-cell")
+        .class("select-cell")
     }
 }

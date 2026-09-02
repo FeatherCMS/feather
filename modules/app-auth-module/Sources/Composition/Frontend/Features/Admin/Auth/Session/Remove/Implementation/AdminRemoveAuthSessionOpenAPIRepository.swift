@@ -117,9 +117,11 @@ struct AdminRemoveAuthSessionOpenAPIRepository:
         sessionId: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.userIdentitySessionBulkDelete(
+            _ = try await client.userIdentitySessionDelete(
                 path: .init(userIdentityId: identityId),
-                body: .json(.init(ids: [sessionId], summary: true))
+                body: .json(
+                    .init(ids: [sessionId], results: false, summary: true)
+                )
             )
         }
     }

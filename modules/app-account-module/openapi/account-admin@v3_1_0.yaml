@@ -116,26 +116,26 @@ paths:
     delete:
       tags:
       - AccountInvitations
-      operationId: accountInvitationBulkDelete
+      operationId: accountInvitationDelete
       requestBody:
-        $ref: '#/components/requestBodies/BulkDeleteRequestBody'
+        $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BulkDeleteResponse'
+          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/account/invitations/filters:
+  /api/v1/admin/account/invitations/:
     get:
       tags:
       - AccountInvitations
-      operationId: accountInvitationFilters
+      operationId: accountInvitationList
       responses:
         200:
-          $ref: '#/components/responses/AccountInvitationFiltersResponse'
+          $ref: '#/components/responses/AccountInvitationListResponse'
         401:
           description: Unauthorized
         403:
@@ -353,7 +353,7 @@ components:
       - roleIds
       - expiresAt
       minProperties: 5
-    BulkDeleteRequestSchema:
+    DeleteRequestSchema:
       type: object
       properties:
         ids:
@@ -364,168 +364,76 @@ components:
             - id1
           minItems: 0
           uniqueItems: false
+        results:
+          type: boolean
+          examples:
+          - true
         summary:
           type: boolean
           examples:
           - true
       required:
       - ids
+      - results
       - summary
-      minProperties: 2
-    BulkDeleteResponseSchema:
+      minProperties: 3
+    DeleteResponseSchema:
       type: object
       properties:
         results:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                examples:
-                - id1
-              status:
-                type: string
-                enum:
-                - deleted
-                - not_found
-                - forbidden
-                examples:
-                - deleted
-            required:
-            - id
-            - status
-            minProperties: 2
-          minItems: 0
-          uniqueItems: false
+          $ref: '#/components/schemas/DeleteResultListSchema'
         summary:
-          type: object
-          properties:
-            requested:
-              type: integer
-              examples:
-              - 1
-            deleted:
-              type: integer
-              examples:
-              - 1
-            notFound:
-              type: integer
-              examples:
-              - 1
-            forbidden:
-              type: integer
-              examples:
-              - 1
-          required:
-          - requested
-          - deleted
-          - notFound
-          - forbidden
-          minProperties: 4
-      required:
-      - results
-      - summary
-      minProperties: 2
-    SearchFilterSchema:
-      type: object
-      properties:
-        search:
-          $ref: '#/components/schemas/SearchStringField'
+          $ref: '#/components/schemas/DeleteSummarySchema'
       minProperties: 0
-    SearchStringField:
-      type: string
-      examples:
-      - foo
-    AccountInvitationListItemSearchQuerySchema:
+    DeleteResultListSchema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            examples:
+            - id1
+          status:
+            type: string
+            enum:
+            - deleted
+            - not_found
+            - forbidden
+            examples:
+            - deleted
+        required:
+        - id
+        - status
+        minProperties: 2
+      minItems: 0
+      uniqueItems: false
+    DeleteSummarySchema:
       type: object
       properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - email
-                - token
-                - expiresAt
-                examples:
-                - id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-            minProperties: 2
-          minItems: 0
-          uniqueItems: false
-        filters:
-          type: object
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-          minProperties: 0
+        requested:
+          type: integer
+          examples:
+          - 1
+        deleted:
+          type: integer
+          examples:
+          - 1
+        omitted:
+          type: integer
+          examples:
+          - 1
       required:
-      - page
-      - filters
-      minProperties: 2
-    SearchPageSchema:
-      type: object
-      properties:
-        size:
-          $ref: '#/components/schemas/SearchPageSizeField'
-        number:
-          $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
-      minProperties: 2
-    SearchPageSizeField:
-      type: integer
-      examples:
-      - 20
-    SearchPageNumberField:
-      type: integer
-      examples:
-      - 1
-    SortDirection:
-      type: string
-      enum:
-      - asc
-      - desc
-      examples:
-      - asc
-    AccountInvitationListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/AccountInvitationListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/AccountInvitationListItemSchema'
-              minItems: 0
-              uniqueItems: false
-            total:
-              type: integer
-              examples:
-              - 123
-          required:
-          - items
-          - total
-          minProperties: 2
-      required:
-      - query
-      - data
-      minProperties: 2
+      - requested
+      - deleted
+      - omitted
+      minProperties: 3
+    AccountInvitationListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/AccountInvitationListItemSchema'
+      minItems: 0
+      uniqueItems: false
     AccountInvitationListItemSchema:
       type: object
       properties:
@@ -563,6 +471,101 @@ components:
       format: double
       examples:
       - 1.76e+9
+    AccountInvitationListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - email
+                - token
+                - expiresAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+      minProperties: 2
+    SearchPageSizeField:
+      type: integer
+      examples:
+      - 20
+    SearchPageNumberField:
+      type: integer
+      examples:
+      - 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      examples:
+      - asc
+    SearchStringField:
+      type: string
+      examples:
+      - foo
+    AccountInvitationListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/AccountInvitationListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/AccountInvitationListItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
     AccountInvitationPatchSchema:
       type: object
       properties:
@@ -590,18 +593,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountInvitationDetailSchema'
-    BulkDeleteResponse:
-      description: Bulk delete response
+    DeleteResponse:
+      description: Delete response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteResponseSchema'
-    AccountInvitationFiltersResponse:
-      description: AccountInvitation filter response
+            $ref: '#/components/schemas/DeleteResponseSchema'
+    AccountInvitationListResponse:
+      description: AccountInvitation list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SearchFilterSchema'
+            $ref: '#/components/schemas/AccountInvitationListSchema'
     AccountInvitationListItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -647,11 +650,11 @@ components:
           schema:
             $ref: '#/components/schemas/AccountInvitationCreateSchema'
       required: true
-    BulkDeleteRequestBody:
+    DeleteRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BulkDeleteRequestSchema'
+            $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
     AccountInvitationUpdateRequestBody:
       content:

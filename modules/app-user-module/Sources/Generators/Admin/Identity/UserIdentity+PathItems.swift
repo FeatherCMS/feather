@@ -10,15 +10,15 @@ import FeatherOpenAPI
 struct UserIdentityPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { UserIdentityCreateOperation() }
     //    var get: OperationRepresentable? { UserIdentityListOperation() }
-    var delete: OperationRepresentable? { UserIdentityBulkDeleteOperation() }
+    var delete: OperationRepresentable? { UserIdentityDeleteOperation() }
 }
 
 struct UserIdentitySearchPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { UserIdentitySearchOperation() }
 }
 
-struct UserIdentityFiltersPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { UserIdentityFiltersOperation() }
+struct UserIdentityListPathItems: PathItemRepresentable {
+    var get: OperationRepresentable? { UserIdentityListOperation() }
 }
 
 struct UserIdentityIdPathItems: PathItemRepresentable {

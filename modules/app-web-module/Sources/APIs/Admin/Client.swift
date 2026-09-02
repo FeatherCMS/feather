@@ -117,13 +117,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataBulkDelete)`.
-    public func webMetadataBulkDelete(
-        _ input: Operations.WebMetadataBulkDelete.Input
-    ) async throws -> Operations.WebMetadataBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)`.
+    public func webMetadataDelete(_ input: Operations.WebMetadataDelete.Input)
+        async throws -> Operations.WebMetadataDelete.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataBulkDelete.id,
+            forOperation: Operations.WebMetadataDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata",
@@ -155,7 +155,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -165,7 +165,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -193,17 +193,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/filters/get(webMetadataFilters)`.
-    public func webMetadataFilters(_ input: Operations.WebMetadataFilters.Input)
-        async throws -> Operations.WebMetadataFilters.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)`.
+    public func webMetadataList(_ input: Operations.WebMetadataList.Input)
+        async throws -> Operations.WebMetadataList.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataFilters.id,
+            forOperation: Operations.WebMetadataList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/web/metadata/filters",
+                    template: "/api/v1/admin/web/metadata/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -223,8 +223,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body:
-                        Components.Responses.WebMetadataFiltersResponse.Body
+                    let body: Components.Responses.WebMetadataListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -234,7 +233,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.WebMetadataListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -657,13 +656,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageBulkDelete)`.
-    public func webPageBulkDelete(_ input: Operations.WebPageBulkDelete.Input)
-        async throws -> Operations.WebPageBulkDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)`.
+    public func webPageDelete(_ input: Operations.WebPageDelete.Input)
+        async throws -> Operations.WebPageDelete.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageBulkDelete.id,
+            forOperation: Operations.WebPageDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/pages",
@@ -695,7 +694,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -705,7 +704,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -733,17 +732,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/filters/get(webPageFilters)`.
-    public func webPageFilters(_ input: Operations.WebPageFilters.Input)
-        async throws -> Operations.WebPageFilters.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)`.
+    public func webPageList(_ input: Operations.WebPageList.Input) async throws
+        -> Operations.WebPageList.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageFilters.id,
+            forOperation: Operations.WebPageList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/web/pages/filters",
+                    template: "/api/v1/admin/web/pages/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -763,7 +762,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.WebPageFiltersResponse.Body
+                    let body: Components.Responses.WebPageListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -773,7 +772,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.WebPageListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1192,13 +1191,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuBulkDelete)`.
-    public func webMenuBulkDelete(_ input: Operations.WebMenuBulkDelete.Input)
-        async throws -> Operations.WebMenuBulkDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)`.
+    public func webMenuDelete(_ input: Operations.WebMenuDelete.Input)
+        async throws -> Operations.WebMenuDelete.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuBulkDelete.id,
+            forOperation: Operations.WebMenuDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus",
@@ -1230,7 +1229,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1240,7 +1239,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1268,17 +1267,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/filters/get(webMenuFilters)`.
-    public func webMenuFilters(_ input: Operations.WebMenuFilters.Input)
-        async throws -> Operations.WebMenuFilters.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)`.
+    public func webMenuList(_ input: Operations.WebMenuList.Input) async throws
+        -> Operations.WebMenuList.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuFilters.id,
+            forOperation: Operations.WebMenuList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/web/menus/filters",
+                    template: "/api/v1/admin/web/menus/",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1298,7 +1297,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.WebMenuFiltersResponse.Body
+                    let body: Components.Responses.WebMenuListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1308,7 +1307,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.WebMenuListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1730,13 +1729,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemBulkDelete)`.
-    public func webMenuItemBulkDelete(
-        _ input: Operations.WebMenuItemBulkDelete.Input
-    ) async throws -> Operations.WebMenuItemBulkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)`.
+    public func webMenuItemDelete(_ input: Operations.WebMenuItemDelete.Input)
+        async throws -> Operations.WebMenuItemDelete.Output
+    {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemBulkDelete.id,
+            forOperation: Operations.WebMenuItemDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items",
@@ -1770,7 +1769,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.BulkDeleteResponse.Body
+                    let body: Components.Responses.DeleteResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1780,7 +1779,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BulkDeleteResponseSchema.self,
+                            Components.Schemas.DeleteResponseSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1808,17 +1807,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/filters/get(webMenuItemFilters)`.
-    public func webMenuItemFilters(_ input: Operations.WebMenuItemFilters.Input)
-        async throws -> Operations.WebMenuItemFilters.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)`.
+    public func webMenuItemList(_ input: Operations.WebMenuItemList.Input)
+        async throws -> Operations.WebMenuItemList.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemFilters.id,
+            forOperation: Operations.WebMenuItemList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/web/menus/{}/items/filters",
+                    template: "/api/v1/admin/web/menus/{}/items/",
                     parameters: [
                         input.path.webMenuId
                     ]
@@ -1840,8 +1839,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body:
-                        Components.Responses.WebMenuItemFiltersResponse.Body
+                    let body: Components.Responses.WebMenuItemListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1851,7 +1849,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SearchFilterSchema.self,
+                            Components.Schemas.WebMenuItemListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

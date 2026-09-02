@@ -11,10 +11,10 @@ protocol AdminRemoveContactFormSubmissionsController: Sendable {
         -> HTMLResponse
     func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
-    func bulkConfirm(request: Request, context: DefaultRequestContext)
+    func confirmSelected(request: Request, context: DefaultRequestContext)
         async throws
         -> HTMLResponse
-    func bulkRemove(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: DefaultRequestContext)
         async throws
         -> Response
 }
@@ -31,11 +31,11 @@ extension AdminRemoveContactFormSubmissionsController {
         )
         router.get(
             "/admin/contact/forms/:formId/submissions/remove/",
-            use: bulkConfirm
+            use: confirmSelected
         )
         router.post(
             "/admin/contact/forms/:formId/submissions/remove/",
-            use: bulkRemove
+            use: removeSelected
         )
     }
 }

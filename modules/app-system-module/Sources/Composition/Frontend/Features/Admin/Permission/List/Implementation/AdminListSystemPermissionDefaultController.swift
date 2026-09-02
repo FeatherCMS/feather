@@ -58,7 +58,7 @@ struct AdminListSystemPermissionDefaultController:
         )
     }
 
-    func getSystemPermissionsBulkRemoveConfirmation(
+    func getSystemPermissionsRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
@@ -70,7 +70,7 @@ struct AdminListSystemPermissionDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListBulkRemoveRedirect.location(
+                    .location: ListRemoveRedirect.location(
                         path: "/admin/system/permissions/",
                         page: page,
                         search: search,
@@ -81,7 +81,7 @@ struct AdminListSystemPermissionDefaultController:
             )
         }
         return
-            try presenter.renderBulkRemoveConfirmation(
+            try presenter.renderRemoveConfirmation(
                 page: page,
                 search: search,
                 selectedIds: selectedIds,
@@ -90,22 +90,22 @@ struct AdminListSystemPermissionDefaultController:
             .response(from: request, context: context)
     }
 
-    func postSystemPermissionsBulkRemove(
+    func postSystemPermissionsRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+            try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/system/permissions/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

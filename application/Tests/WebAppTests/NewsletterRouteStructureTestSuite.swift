@@ -4,7 +4,7 @@ import Testing
 @Suite
 struct NewsletterRouteStructureTestSuite {
     @Test
-    func newsletterRoutesHaveNoDuplicateSignaturesOrBulkRemovePaths() throws {
+    func newsletterRoutesHaveNoDuplicateSignaturesOrRemovePaths() throws {
         let root = URL(filePath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -33,7 +33,7 @@ struct NewsletterRouteStructureTestSuite {
                 let path = String(
                     source[Range(match.range(at: 2), in: source)!]
                 )
-                #expect(path.contains("bulk-remove") == false)
+                #expect(path.contains("remove") == false)
                 signatures.append("\(method.uppercased()) \(path)")
             }
         }

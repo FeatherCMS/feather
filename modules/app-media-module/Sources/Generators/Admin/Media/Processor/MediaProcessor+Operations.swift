@@ -79,7 +79,7 @@ struct MediaProcessorUpdateOperation: MediaProcessorIDOperation {
     }
 }
 
-struct MediaProcessorBulkDeleteOperation: MediaProcessorOperation,
-    BulkDeleteOperation
+struct MediaProcessorDeleteOperation: MediaProcessorOperation,
+    DeleteOperation
 {
 }

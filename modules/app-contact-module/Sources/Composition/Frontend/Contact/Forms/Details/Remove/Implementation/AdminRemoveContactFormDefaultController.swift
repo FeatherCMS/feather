@@ -20,7 +20,7 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
         let (interactor, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
         guard selectedIds.count == 1, let formId = selectedIds.first else {
-            return presenter.renderBulkConfirmation(
+            return presenter.renderConfirmation(
                 selectedIds: selectedIds,
                 permissions: context.currentUserPermissions
             )
@@ -37,15 +37,15 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
         -> Response
     {
         let payload = try await request.decode(
-            as: ListBulkRemoveFormInput.self,
+            as: ListRemoveFormInput.self,
             context: context
         )
         let (interactor, _) = buildRuntime(request, context)
-        try await interactor.bulkRemove(ids: payload.normalizedSelectedIds)
+        try await interactor.remove(ids: payload.normalizedSelectedIds)
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListBulkRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: "/admin/contact/forms/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

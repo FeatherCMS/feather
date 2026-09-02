@@ -41,7 +41,7 @@ struct ContactFormFieldsTable: Component {
                 P("No fields yet.")
             }
             else {
-                ListTableBulkRemoveForm(
+                ListTableRemoveForm(
                     state: .init(
                         action: "\(basePath)/remove/",
                         page: 1,
@@ -108,7 +108,7 @@ struct ContactFormFieldsTable: Component {
                             }
                         }
                         .class("cms-table", "action-table")
-                        .if(state.canRemove) { $0.class("bulk-select-table") }
+                        .if(state.canRemove) { $0.class("select-table") }
                     )
                 )
             }

@@ -2,15 +2,15 @@ import FeatherOpenAPI
 
 struct WebPagePathItems: PathItemRepresentable {
     var post: OperationRepresentable? { WebPageCreateOperation() }
-    var delete: OperationRepresentable? { WebPageBulkDeleteOperation() }
+    var delete: OperationRepresentable? { WebPageDeleteOperation() }
 }
 
 struct WebPageSearchPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { WebPageSearchOperation() }
 }
 
-struct WebPageFiltersPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { WebPageFiltersOperation() }
+struct WebPageListPathItems: PathItemRepresentable {
+    var get: OperationRepresentable? { WebPageListOperation() }
 }
 
 struct WebPageIdPathItems: PathItemRepresentable {

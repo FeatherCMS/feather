@@ -155,11 +155,12 @@ extension AppAPIGateway {
             title: metadata.title ?? title,
             excerpt: metadata.excerpt ?? excerpt,
             imageURL: metadata.imageURL ?? imageURL,
-            canonicalURL: metadata.canonicalURL,
+            canonicalURL: metadata.canonicalURL ?? "",
             noIndex: metadata.noIndex,
-            cssCodeInjection: metadata.cssCodeInjection,
-            javascriptCodeInjection: metadata.javascriptCodeInjection,
+            cssCodeInjection: metadata.cssCodeInjection ?? "",
+            javascriptCodeInjection: metadata.javascriptCodeInjection ?? "",
             structuredDataCodeInjection: metadata.structuredDataCodeInjection
+                ?? ""
         )
     }
 }

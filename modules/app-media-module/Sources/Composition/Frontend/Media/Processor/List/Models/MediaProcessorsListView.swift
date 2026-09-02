@@ -70,9 +70,9 @@ struct MediaProcessorsListView: Component {
                     let canRemove = permissions.contains(
                         "media:processors:delete"
                     )
-                    ListTableBulkRemoveForm(
+                    ListTableRemoveForm(
                         state: .init(
-                            action: "/admin/media/processors/bulk-remove/",
+                            action: "/admin/media/processors/remove/",
                             page: page,
                             search: "",
                             canRemove: canRemove,
@@ -149,7 +149,7 @@ struct MediaProcessorsListView: Component {
                                 }
                             }
                             .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("bulk-select-table") }
+                            .if(canRemove) { $0.class("select-table") }
                         )
                     )
                 }

@@ -8,12 +8,12 @@ protocol AdminListAccountInvitationController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getAccountInvitationsBulkRemoveConfirmation(
+    func getAccountInvitationsRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postAccountInvitationsBulkRemove(
+    func postAccountInvitationsRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -29,12 +29,12 @@ extension AdminListAccountInvitationController {
             use: getAccountInvitations
         )
         router.get(
-            "/admin/account/invitations/bulk-remove/",
-            use: getAccountInvitationsBulkRemoveConfirmation
+            "/admin/account/invitations/remove/",
+            use: getAccountInvitationsRemoveConfirmation
         )
         router.post(
-            "/admin/account/invitations/bulk-remove/",
-            use: postAccountInvitationsBulkRemove
+            "/admin/account/invitations/remove/",
+            use: postAccountInvitationsRemove
         )
     }
 }

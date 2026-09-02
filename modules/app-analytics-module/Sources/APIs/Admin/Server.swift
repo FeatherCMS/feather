@@ -33,7 +33,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.analyticsLogFilters(
+                try await server.analyticsLogList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -41,7 +41,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/analytics/logs/filters"
+                "/api/v1/admin/analytics/logs/"
             )
         )
         try transport.register(
@@ -87,9 +87,9 @@ extension APIProtocol {
 }
 
 extension UniversalServer where APIHandler: APIProtocol {
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/filters/get(analyticsLogFilters)`.
-    fileprivate func analyticsLogFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    fileprivate func analyticsLogList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -98,18 +98,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AnalyticsLogFilters.id,
+            forOperation: Operations.AnalyticsLogList.id,
             using: {
-                APIHandler.analyticsLogFilters($0)
+                APIHandler.analyticsLogList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AnalyticsLogFilters.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.AnalyticsLogList.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
-                return Operations.AnalyticsLogFilters.Input(headers: headers)
+                )
+                return Operations.AnalyticsLogList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {

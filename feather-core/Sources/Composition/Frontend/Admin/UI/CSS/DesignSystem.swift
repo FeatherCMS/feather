@@ -25,14 +25,14 @@ extension FeatherCSS {
                     TextAlign(.left).important()
                 }
                 Custom(
-                    ".bulk-select-table th:first-child,.bulk-select-table td:first-child"
+                    ".select-table th:first-child,.select-table td:first-child"
                 ) {
                     TextAlign(.center).important()
                     Width(48.px)
                     MinWidth(48.px)
                 }
                 Custom(
-                    ".bulk-select-table th:first-child input[type=\"checkbox\"],.bulk-select-table td:first-child input[type=\"checkbox\"]"
+                    ".select-table th:first-child input[type=\"checkbox\"],.select-table td:first-child input[type=\"checkbox\"]"
                 ) {
                     Display(.block)
                     Margin(vertical: .length(0), horizontal: .auto)

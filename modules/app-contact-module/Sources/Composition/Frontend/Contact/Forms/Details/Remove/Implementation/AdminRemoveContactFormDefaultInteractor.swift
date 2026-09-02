@@ -13,7 +13,7 @@ struct AdminRemoveContactFormDefaultInteractor: AdminRemoveContactFormInteractor
     func get(id: String) async throws -> AdminContactFormDetailsItem {
         try await repository.get(id: id)
     }
-    func bulkRemove(ids: [String]) async throws {
-        try await repository.bulkRemove(ids: ids)
+    func remove(ids: [String]) async throws {
+        try await repository.remove(ids: ids)
     }
 }

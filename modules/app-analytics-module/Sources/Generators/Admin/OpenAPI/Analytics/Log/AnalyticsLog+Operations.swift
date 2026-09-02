@@ -19,10 +19,10 @@ extension AnalyticsLogIDOperation {
     }
 }
 
-struct AnalyticsLogFiltersOperation: AnalyticsLogOperation {
+struct AnalyticsLogListOperation: AnalyticsLogOperation {
     var responseMap: ResponseMap {
         [
-            200: AnalyticsLogFiltersResponse().reference()
+            200: AnalyticsLogListResponse().reference()
         ]
     }
 }
@@ -42,7 +42,7 @@ struct AnalyticsLogSearchOperation: AnalyticsLogOperation {
                 "browserName",
                 "createdAt",
             ],
-            filters: AnalyticsLogFiltersSchema()
+            filters: AnalyticsLogFilterSchema()
         )
     }
 

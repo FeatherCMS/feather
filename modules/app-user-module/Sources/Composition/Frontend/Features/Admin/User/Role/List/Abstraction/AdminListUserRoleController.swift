@@ -8,12 +8,12 @@ protocol AdminListUserRoleController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getUserRolesBulkRemoveConfirmation(
+    func getUserRolesRemoveConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func postUserRolesBulkRemove(
+    func postUserRolesRemove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -29,12 +29,12 @@ extension AdminListUserRoleController {
             use: getUserRoles
         )
         router.get(
-            "/admin/user/roles/bulk-remove/",
-            use: getUserRolesBulkRemoveConfirmation
+            "/admin/user/roles/remove/",
+            use: getUserRolesRemoveConfirmation
         )
         router.post(
-            "/admin/user/roles/bulk-remove/",
-            use: postUserRolesBulkRemove
+            "/admin/user/roles/remove/",
+            use: postUserRolesRemove
         )
     }
 }

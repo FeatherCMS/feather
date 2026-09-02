@@ -84,7 +84,7 @@ struct AdminNewsletterSubscribersAPIClient {
         }
     }
 
-    func bulkRemove(subscriberIds: [String], campaignId: String?) async throws {
+    func remove(subscriberIds: [String], campaignId: String?) async throws {
         let items = try await list()
         for item in items where subscriberIds.contains(item.id) {
             let newsletters =
@@ -93,9 +93,15 @@ struct AdminNewsletterSubscribersAPIClient {
                 : item.newsletters
             for newsletter in newsletters {
                 try await api.withOpenAPIRepositoryErrorMapping { client in
-                    _ = try await client.newsletterSubscriberBulkDelete(
+                    _ = try await client.newsletterSubscriberDelete(
                         path: .init(newsletterCampaignId: newsletter.id),
-                        body: .json(.init(ids: [item.email], summary: true))
+                        body: .json(
+                            .init(
+                                ids: [item.email],
+                                results: false,
+                                summary: true
+                            )
+                        )
                     )
                 }
             }

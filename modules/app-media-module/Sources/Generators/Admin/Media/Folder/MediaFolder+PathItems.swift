@@ -2,7 +2,7 @@ import FeatherOpenAPI
 
 struct MediaFolderPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { MediaFolderCreateOperation() }
-    var delete: OperationRepresentable? { MediaFolderBulkDeleteOperation() }
+    var delete: OperationRepresentable? { MediaFolderDeleteOperation() }
 }
 
 struct MediaFolderSearchPathItems: PathItemRepresentable {

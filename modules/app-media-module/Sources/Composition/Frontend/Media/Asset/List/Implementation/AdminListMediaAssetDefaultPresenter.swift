@@ -110,7 +110,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         )
     }
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         page: Int,
         search: String?,
         parentId: String?,
@@ -121,19 +121,19 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove selected assets",
-            description: "Confirm bulk remove",
+            description: "Confirm remove",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: mediaAssetsBreadcrumb(),
                     title: "Remove selected assets",
                     message:
                         "Are you sure you want to remove these selected assets? This action cannot be undone.",
-                    action: "/admin/media/assets/bulk-remove/",
+                    action: "/admin/media/assets/remove/",
                     cancelLink: mediaAssetsPath(
                         page: page,
                         search: search,

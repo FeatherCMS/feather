@@ -13,7 +13,7 @@ protocol AdminRemoveContactFormFieldPresenter: Sendable {
         label: String,
         permissions: Set<String>
     ) -> HTMLResponse
-    func renderBulkConfirmation(
+    func renderConfirmation(
         formId: String,
         selectedIds: [String],
         permissions: Set<String>

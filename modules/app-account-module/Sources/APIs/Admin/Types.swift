@@ -46,15 +46,14 @@ public protocol APIProtocol: Sendable {
         _ input: Operations.AccountInvitationCreate.Input
     ) async throws -> Operations.AccountInvitationCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)`.
-    func accountInvitationBulkDelete(
-        _ input: Operations.AccountInvitationBulkDelete.Input
-    ) async throws -> Operations.AccountInvitationBulkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)`.
-    func accountInvitationFilters(
-        _ input: Operations.AccountInvitationFilters.Input
-    ) async throws -> Operations.AccountInvitationFilters.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
+    func accountInvitationDelete(
+        _ input: Operations.AccountInvitationDelete.Input
+    ) async throws -> Operations.AccountInvitationDelete.Output
+    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)`.
+    func accountInvitationList(_ input: Operations.AccountInvitationList.Input)
+        async throws -> Operations.AccountInvitationList.Output
     /// - Remark: HTTP `POST /api/v1/admin/account/invitations/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/search/post(accountInvitationSearch)`.
     func accountInvitationSearch(
@@ -175,25 +174,25 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)`.
-    public func accountInvitationBulkDelete(
-        headers: Operations.AccountInvitationBulkDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.BulkDeleteRequestBody
-    ) async throws -> Operations.AccountInvitationBulkDelete.Output {
-        try await accountInvitationBulkDelete(
-            Operations.AccountInvitationBulkDelete.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
+    public func accountInvitationDelete(
+        headers: Operations.AccountInvitationDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.AccountInvitationDelete.Output {
+        try await accountInvitationDelete(
+            Operations.AccountInvitationDelete.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)`.
-    public func accountInvitationFilters(
-        headers: Operations.AccountInvitationFilters.Input.Headers = .init()
-    ) async throws -> Operations.AccountInvitationFilters.Output {
-        try await accountInvitationFilters(
-            Operations.AccountInvitationFilters.Input(headers: headers)
+    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)`.
+    public func accountInvitationList(
+        headers: Operations.AccountInvitationList.Input.Headers = .init()
+    ) async throws -> Operations.AccountInvitationList.Output {
+        try await accountInvitationList(
+            Operations.AccountInvitationList.Input(headers: headers)
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/account/invitations/search`.
@@ -480,120 +479,49 @@ public enum Components {
                 case expiresAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema`.
-        public struct BulkDeleteRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/ids`.
+        /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
+        public struct DeleteRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteRequestSchema/summary`.
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/results`.
+            public var results: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/summary`.
             public var summary: Swift.Bool
-            /// Creates a new `BulkDeleteRequestSchema`.
+            /// Creates a new `DeleteRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
+            ///   - results:
             ///   - summary:
             public init(
                 ids: [Swift.String],
+                results: Swift.Bool,
                 summary: Swift.Bool
             ) {
                 self.ids = ids
+                self.results = results
                 self.summary = summary
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
+                case results
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema`.
-        public struct BulkDeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload`.
-            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/id`.
-                public var id: Swift.String
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                @frozen
-                public enum StatusPayload: String, Codable, Hashable, Sendable,
-                    CaseIterable
-                {
-                    case deleted = "deleted"
-                    case notFound = "not_found"
-                    case forbidden = "forbidden"
-                }
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/ResultsPayload/status`.
-                public var status:
-                    Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                /// Creates a new `ResultsPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - id:
-                ///   - status:
-                public init(
-                    id: Swift.String,
-                    status: Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                ) {
-                    self.id = id
-                    self.status = status
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case status
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public typealias ResultsPayload = [Components.Schemas
-                .BulkDeleteResponseSchema.ResultsPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/results`.
-            public var results:
-                Components.Schemas.BulkDeleteResponseSchema.ResultsPayload
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public struct SummaryPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/requested`.
-                public var requested: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/deleted`.
-                public var deleted: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/notFound`.
-                public var notFound: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary/forbidden`.
-                public var forbidden: Swift.Int
-                /// Creates a new `SummaryPayload`.
-                ///
-                /// - Parameters:
-                ///   - requested:
-                ///   - deleted:
-                ///   - notFound:
-                ///   - forbidden:
-                public init(
-                    requested: Swift.Int,
-                    deleted: Swift.Int,
-                    notFound: Swift.Int,
-                    forbidden: Swift.Int
-                ) {
-                    self.requested = requested
-                    self.deleted = deleted
-                    self.notFound = notFound
-                    self.forbidden = forbidden
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case requested
-                    case deleted
-                    case notFound
-                    case forbidden
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/BulkDeleteResponseSchema/summary`.
-            public var summary:
-                Components.Schemas.BulkDeleteResponseSchema.SummaryPayload
-            /// Creates a new `BulkDeleteResponseSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
+        public struct DeleteResponseSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
+            public var results: Components.Schemas.DeleteResultListSchema?
+            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
+            public var summary: Components.Schemas.DeleteSummarySchema?
+            /// Creates a new `DeleteResponseSchema`.
             ///
             /// - Parameters:
             ///   - results:
             ///   - summary:
             public init(
-                results: Components.Schemas.BulkDeleteResponseSchema
-                    .ResultsPayload,
-                summary: Components.Schemas.BulkDeleteResponseSchema
-                    .SummaryPayload
+                results: Components.Schemas.DeleteResultListSchema? = nil,
+                summary: Components.Schemas.DeleteSummarySchema? = nil
             ) {
                 self.results = results
                 self.summary = summary
@@ -603,23 +531,128 @@ public enum Components {
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchFilterSchema`.
-        public struct SearchFilterSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/SearchFilterSchema/search`.
-            public var search: Components.Schemas.SearchStringField?
-            /// Creates a new `SearchFilterSchema`.
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            @frozen
+            public enum StatusPayload: String, Codable, Hashable, Sendable,
+                CaseIterable
+            {
+                case deleted = "deleted"
+                case notFound = "not_found"
+                case forbidden = "forbidden"
+            }
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            public var status:
+                Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
+            /// Creates a new `DeleteResultListSchemaPayload`.
             ///
             /// - Parameters:
-            ///   - search:
-            public init(search: Components.Schemas.SearchStringField? = nil) {
-                self.search = search
+            ///   - id:
+            ///   - status:
+            public init(
+                id: Swift.String,
+                status: Components.Schemas.DeleteResultListSchemaPayload
+                    .StatusPayload
+            ) {
+                self.id = id
+                self.status = status
             }
             public enum CodingKeys: String, CodingKey {
-                case search
+                case id
+                case status
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
-        public typealias SearchStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public typealias DeleteResultListSchema = [Components.Schemas
+            .DeleteResultListSchemaPayload]
+        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
+        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
+            public var requested: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
+            public var deleted: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
+            public var omitted: Swift.Int
+            /// Creates a new `DeleteSummarySchema`.
+            ///
+            /// - Parameters:
+            ///   - requested:
+            ///   - deleted:
+            ///   - omitted:
+            public init(
+                requested: Swift.Int,
+                deleted: Swift.Int,
+                omitted: Swift.Int
+            ) {
+                self.requested = requested
+                self.deleted = deleted
+                self.omitted = omitted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case requested
+                case deleted
+                case omitted
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AccountInvitationListSchema`.
+        public typealias AccountInvitationListSchema = [Components.Schemas
+            .AccountInvitationListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema`.
+        public struct AccountInvitationListItemSchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/id`.
+            public var id: Components.Schemas.AccountInvitationIdField
+            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/email`.
+            public var email: Components.Schemas.AccountInvitationEmailField
+            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/token`.
+            public var token: Components.Schemas.AccountInvitationTokenField
+            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/roleIds`.
+            public var roleIds: Components.Schemas.AccountInvitationRoleIDsField
+            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/expiresAt`.
+            public var expiresAt:
+                Components.Schemas.AccountInvitationExpiresAtField
+            /// Creates a new `AccountInvitationListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - email:
+            ///   - token:
+            ///   - roleIds:
+            ///   - expiresAt:
+            public init(
+                id: Components.Schemas.AccountInvitationIdField,
+                email: Components.Schemas.AccountInvitationEmailField,
+                token: Components.Schemas.AccountInvitationTokenField,
+                roleIds: Components.Schemas.AccountInvitationRoleIDsField,
+                expiresAt: Components.Schemas.AccountInvitationExpiresAtField
+            ) {
+                self.id = id
+                self.email = email
+                self.token = token
+                self.roleIds = roleIds
+                self.expiresAt = expiresAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case email
+                case token
+                case roleIds
+                case expiresAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AccountInvitationIdField`.
+        public typealias AccountInvitationIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AccountInvitationEmailField`.
+        public typealias AccountInvitationEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AccountInvitationTokenField`.
+        public typealias AccountInvitationTokenField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AccountInvitationExpiresAtField`.
+        public typealias AccountInvitationExpiresAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSearchQuerySchema`.
         public struct AccountInvitationListItemSearchQuerySchema: Codable,
             Hashable, Sendable
@@ -750,6 +783,8 @@ public enum Components {
             case asc = "asc"
             case desc = "desc"
         }
+        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
+        public typealias SearchStringField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSearchSchema`.
         public struct AccountInvitationListItemSearchSchema: Codable, Hashable,
             Sendable
@@ -804,58 +839,6 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema`.
-        public struct AccountInvitationListItemSchema: Codable, Hashable,
-            Sendable
-        {
-            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/id`.
-            public var id: Components.Schemas.AccountInvitationIdField
-            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/email`.
-            public var email: Components.Schemas.AccountInvitationEmailField
-            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/token`.
-            public var token: Components.Schemas.AccountInvitationTokenField
-            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/roleIds`.
-            public var roleIds: Components.Schemas.AccountInvitationRoleIDsField
-            /// - Remark: Generated from `#/components/schemas/AccountInvitationListItemSchema/expiresAt`.
-            public var expiresAt:
-                Components.Schemas.AccountInvitationExpiresAtField
-            /// Creates a new `AccountInvitationListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - email:
-            ///   - token:
-            ///   - roleIds:
-            ///   - expiresAt:
-            public init(
-                id: Components.Schemas.AccountInvitationIdField,
-                email: Components.Schemas.AccountInvitationEmailField,
-                token: Components.Schemas.AccountInvitationTokenField,
-                roleIds: Components.Schemas.AccountInvitationRoleIDsField,
-                expiresAt: Components.Schemas.AccountInvitationExpiresAtField
-            ) {
-                self.id = id
-                self.email = email
-                self.token = token
-                self.roleIds = roleIds
-                self.expiresAt = expiresAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case email
-                case token
-                case roleIds
-                case expiresAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AccountInvitationIdField`.
-        public typealias AccountInvitationIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AccountInvitationEmailField`.
-        public typealias AccountInvitationEmailField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AccountInvitationTokenField`.
-        public typealias AccountInvitationTokenField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AccountInvitationExpiresAtField`.
-        public typealias AccountInvitationExpiresAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/AccountInvitationPatchSchema`.
         public struct AccountInvitationPatchSchema: Codable, Hashable, Sendable
         {
@@ -915,10 +898,10 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/AccountInvitationRequestBody/content/application\/json`.
             case json(Components.Schemas.AccountInvitationCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody`.
-        @frozen public enum BulkDeleteRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/BulkDeleteRequestBody/content/application\/json`.
-            case json(Components.Schemas.BulkDeleteRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody`.
+        @frozen public enum DeleteRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
+            case json(Components.Schemas.DeleteRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/AccountInvitationUpdateRequestBody`.
         @frozen
@@ -1030,16 +1013,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct BulkDeleteResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content`.
+        public struct DeleteResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/DeleteResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BulkDeleteResponse/content/application\/json`.
-                case json(Components.Schemas.BulkDeleteResponseSchema)
+                /// - Remark: Generated from `#/components/responses/DeleteResponse/content/application\/json`.
+                case json(Components.Schemas.DeleteResponseSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.BulkDeleteResponseSchema {
+                public var json: Components.Schemas.DeleteResponseSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1049,25 +1032,26 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BulkDeleteResponse.Body
-            /// Creates a new `BulkDeleteResponse`.
+            public var body: Components.Responses.DeleteResponse.Body
+            /// Creates a new `DeleteResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BulkDeleteResponse.Body) {
+            public init(body: Components.Responses.DeleteResponse.Body) {
                 self.body = body
             }
         }
-        public struct AccountInvitationFiltersResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/AccountInvitationFiltersResponse/content`.
+        public struct AccountInvitationListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AccountInvitationListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/AccountInvitationFiltersResponse/content/application\/json`.
-                case json(Components.Schemas.SearchFilterSchema)
+                /// - Remark: Generated from `#/components/responses/AccountInvitationListResponse/content/application\/json`.
+                case json(Components.Schemas.AccountInvitationListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SearchFilterSchema {
+                public var json: Components.Schemas.AccountInvitationListSchema
+                {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1078,13 +1062,13 @@ public enum Components {
             }
             /// Received HTTP response body
             public var body:
-                Components.Responses.AccountInvitationFiltersResponse.Body
-            /// Creates a new `AccountInvitationFiltersResponse`.
+                Components.Responses.AccountInvitationListResponse.Body
+            /// Creates a new `AccountInvitationListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.AccountInvitationFiltersResponse.Body
+                body: Components.Responses.AccountInvitationListResponse.Body
             ) {
                 self.body = body
             }
@@ -2269,16 +2253,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)`.
-    public enum AccountInvitationBulkDelete {
-        public static let id: Swift.String = "accountInvitationBulkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
+    public enum AccountInvitationDelete {
+        public static let id: Swift.String = "accountInvitationDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AccountInvitationBulkDelete
-                            .AcceptableContentType
+                        Operations.AccountInvitationDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2286,42 +2269,40 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AccountInvitationBulkDelete
-                            .AcceptableContentType
+                        Operations.AccountInvitationDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers:
-                Operations.AccountInvitationBulkDelete.Input.Headers
-            public var body: Components.RequestBodies.BulkDeleteRequestBody
+            public var headers: Operations.AccountInvitationDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.AccountInvitationBulkDelete.Input.Headers =
+                headers: Operations.AccountInvitationDelete.Input.Headers =
                     .init(),
-                body: Components.RequestBodies.BulkDeleteRequestBody
+                body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Bulk delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BulkDeleteResponse)
+            case ok(Components.Responses.DeleteResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BulkDeleteResponse {
+            public var ok: Components.Responses.DeleteResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -2340,15 +2321,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.AccountInvitationBulkDelete.Output.Unauthorized
+                Operations.AccountInvitationDelete.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2359,7 +2340,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.AccountInvitationBulkDelete.Output.Unauthorized
+                Operations.AccountInvitationDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2379,15 +2360,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(
-                Operations.AccountInvitationBulkDelete.Output.Forbidden
-            )
+            case forbidden(Operations.AccountInvitationDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationBulkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2398,7 +2377,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.AccountInvitationBulkDelete.Output.Forbidden
+                Operations.AccountInvitationDelete.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -2446,17 +2425,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)`.
-    public enum AccountInvitationFilters {
-        public static let id: Swift.String = "accountInvitationFilters"
+    /// - Remark: HTTP `GET /api/v1/admin/account/invitations/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)`.
+    public enum AccountInvitationList {
+        public static let id: Swift.String = "accountInvitationList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/filters/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AccountInvitationFilters
-                            .AcceptableContentType
+                        Operations.AccountInvitationList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2464,39 +2442,36 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AccountInvitationFilters
-                            .AcceptableContentType
+                        Operations.AccountInvitationList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers:
-                Operations.AccountInvitationFilters.Input.Headers
+            public var headers: Operations.AccountInvitationList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             public init(
-                headers: Operations.AccountInvitationFilters.Input.Headers =
+                headers: Operations.AccountInvitationList.Input.Headers =
                     .init()
             ) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// AccountInvitation filter response
+            /// AccountInvitation list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.AccountInvitationFiltersResponse)
+            case ok(Components.Responses.AccountInvitationListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.AccountInvitationFiltersResponse
-            {
+            public var ok: Components.Responses.AccountInvitationListResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -2515,15 +2490,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.AccountInvitationFilters.Output.Unauthorized
+                Operations.AccountInvitationList.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2534,7 +2509,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.AccountInvitationFilters.Output.Unauthorized
+                Operations.AccountInvitationList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2554,13 +2529,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AccountInvitationFilters.Output.Forbidden)
+            case forbidden(Operations.AccountInvitationList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/filters/get(accountInvitationFilters)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2571,7 +2546,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.AccountInvitationFilters.Output.Forbidden
+                Operations.AccountInvitationList.Output.Forbidden
             {
                 get throws {
                     switch self {

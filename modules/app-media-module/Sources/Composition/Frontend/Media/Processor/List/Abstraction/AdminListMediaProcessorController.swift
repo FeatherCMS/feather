@@ -15,12 +15,12 @@ protocol AdminListMediaProcessorController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func bulkRemoveConfirmation(
+    func removeConfirmation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func bulkRemove(
+    func remove(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -36,12 +36,12 @@ extension AdminListMediaProcessorController {
             use: getListMediaProcessors
         )
         router.get(
-            "/admin/media/processors/bulk-remove/",
-            use: bulkRemoveConfirmation
+            "/admin/media/processors/remove/",
+            use: removeConfirmation
         )
         router.post(
-            "/admin/media/processors/bulk-remove/",
-            use: bulkRemove
+            "/admin/media/processors/remove/",
+            use: remove
         )
     }
 }

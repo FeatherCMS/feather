@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentityBulkDelete(
+                try await server.userIdentityDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentityFilters(
+                try await server.userIdentityList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -67,7 +67,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/user/identities/filters"
+                "/api/v1/admin/user/identities/"
             )
         )
         try transport.register(
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userRoleBulkDelete(
+                try await server.userRoleDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -150,7 +150,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userRoleFilters(
+                try await server.userRoleList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -158,7 +158,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/user/roles/filters"
+                "/api/v1/admin/user/roles/"
             )
         )
         try transport.register(
@@ -309,8 +309,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityBulkDelete)`.
-    fileprivate func userIdentityBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
+    fileprivate func userIdentityDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -319,12 +319,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserIdentityBulkDelete.id,
+            forOperation: Operations.UserIdentityDelete.id,
             using: {
-                APIHandler.userIdentityBulkDelete($0)
+                APIHandler.userIdentityDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserIdentityBulkDelete.Input.Headers =
+                let headers: Operations.UserIdentityDelete.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -333,7 +333,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -343,7 +343,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -354,7 +354,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.UserIdentityBulkDelete.Input(
+                return Operations.UserIdentityDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -395,9 +395,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/user/identities/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/filters/get(userIdentityFilters)`.
-    fileprivate func userIdentityFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/user/identities/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)`.
+    fileprivate func userIdentityList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -406,18 +406,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserIdentityFilters.id,
+            forOperation: Operations.UserIdentityList.id,
             using: {
-                APIHandler.userIdentityFilters($0)
+                APIHandler.userIdentityList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserIdentityFilters.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.UserIdentityList.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
-                return Operations.UserIdentityFilters.Input(headers: headers)
+                )
+                return Operations.UserIdentityList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -903,8 +902,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleBulkDelete)`.
-    fileprivate func userRoleBulkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
+    fileprivate func userRoleDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -913,21 +912,20 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserRoleBulkDelete.id,
+            forOperation: Operations.UserRoleDelete.id,
             using: {
-                APIHandler.userRoleBulkDelete($0)
+                APIHandler.userRoleDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserRoleBulkDelete.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.UserRoleDelete.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.BulkDeleteRequestBody
+                let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -937,7 +935,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BulkDeleteRequestSchema.self,
+                        Components.Schemas.DeleteRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -948,7 +946,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.UserRoleBulkDelete.Input(
+                return Operations.UserRoleDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -989,9 +987,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/user/roles/filters`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/filters/get(userRoleFilters)`.
-    fileprivate func userRoleFilters(
+    /// - Remark: HTTP `GET /api/v1/admin/user/roles/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)`.
+    fileprivate func userRoleList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1000,17 +998,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserRoleFilters.id,
+            forOperation: Operations.UserRoleList.id,
             using: {
-                APIHandler.userRoleFilters($0)
+                APIHandler.userRoleList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserRoleFilters.Input.Headers = .init(
+                let headers: Operations.UserRoleList.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
                 )
-                return Operations.UserRoleFilters.Input(headers: headers)
+                return Operations.UserRoleList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {

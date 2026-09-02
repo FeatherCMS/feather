@@ -34,7 +34,7 @@ struct AdminContactSubmissionsDirectoryView: Component {
                 )
             }
             else {
-                ListTableBulkRemoveForm(
+                ListTableRemoveForm(
                     state: .init(
                         action: "/admin/contact/submissions/remove/",
                         page: 1,
@@ -107,7 +107,7 @@ struct AdminContactSubmissionsDirectoryView: Component {
                             }
                         }
                         .class("cms-table", "action-table")
-                        .if(canRemove) { $0.class("bulk-select-table") }
+                        .if(canRemove) { $0.class("select-table") }
                     )
                 )
             }

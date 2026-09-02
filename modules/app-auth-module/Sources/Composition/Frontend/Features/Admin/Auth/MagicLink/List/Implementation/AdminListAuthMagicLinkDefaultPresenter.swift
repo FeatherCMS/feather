@@ -60,7 +60,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
         )
     }
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         selectedIds: [String],
         page: Int,
         search: String?,
@@ -70,20 +70,20 @@ struct AdminListAuthMagicLinkDefaultPresenter:
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove selected magic links",
-            description: "Confirm bulk remove",
+            description: "Confirm remove",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: breadcrumb(),
                     title: "Remove selected magic links",
                     message:
                         "Are you sure you want to remove these selected magic links? This action cannot be undone.",
-                    action: "/admin/auth/magic-links/bulk-remove/",
-                    cancelLink: ListBulkRemoveRedirect.location(
+                    action: "/admin/auth/magic-links/remove/",
+                    cancelLink: ListRemoveRedirect.location(
                         path: "/admin/auth/magic-links/",
                         page: page,
                         search: search,

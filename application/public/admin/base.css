@@ -1226,26 +1226,26 @@ p.success,
   gap: 8px;
 }
 
-.table-bulk-actions {
+.table-actions {
   gap: 8px;
 }
 
-.table-bulk-delete-form {
+.table-delete-form {
   width: 100%;
 }
 
-.table-bulk-delete-form .table-bulk-actions {
+.table-delete-form .table-actions {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
 }
 
-.table-bulk-actions .row-btn {
+.table-actions .row-btn {
   font-weight: 700;
 }
 
-.table-bulk-actions .row-btn:disabled {
+.table-actions .row-btn:disabled {
   background: var(--cms-gray-4);
   border-color: var(--cms-gray-4);
   color: var(--cms-light-font);
@@ -2020,11 +2020,11 @@ p.success,
   padding-right: 34px;
 }
 
-.table-pagination[aria-label='Bulk table pagination'] {
+.table-pagination[aria-label='table pagination'] {
   justify-content: flex-start;
 }
 
-.table-pagination[aria-label='Bulk table pagination'] .page-controls {
+.table-pagination[aria-label='table pagination'] .page-controls {
   margin-left: auto;
 }
 
@@ -2070,7 +2070,7 @@ p.success,
   cursor: default;
 }
 
-.table-bulk-actions {
+.table-actions {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -2079,7 +2079,7 @@ p.success,
   margin-top: 10px;
 }
 
-.table-bulk-actions
+.table-actions
   :is(
     button,
     a,
@@ -2151,7 +2151,7 @@ p.success,
   color: var(--cms-static-white);
 }
 
-.table-bulk-actions .row-btn:disabled:hover {
+.table-actions .row-btn:disabled:hover {
   background: var(--cms-gray-4);
   border-color: var(--cms-gray-4);
   color: var(--cms-light-font);
@@ -2415,7 +2415,7 @@ p.success,
   }
 
   .table-pagination > .table-pagination-summary,
-  .table-pagination > .table-bulk-actions,
+  .table-pagination > .table-actions,
   .table-pagination > p,
   .table-pagination > .pagination-page-form,
   .table-pagination > .page-controls {
@@ -2443,7 +2443,7 @@ p.success,
     height: 34px;
   }
 
-  .table-pagination > .table-bulk-actions {
+  .table-pagination > .table-actions {
     flex-wrap: nowrap;
     justify-content: center;
   }
@@ -2499,12 +2499,12 @@ p.success,
     min-width: 0;
   }
 
-  .table-bulk-actions {
+  .table-actions {
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
 
-  .table-bulk-delete-form .table-bulk-actions {
+  .table-delete-form .table-actions {
     justify-content: flex-start;
   }
 

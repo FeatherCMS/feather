@@ -33,10 +33,10 @@ struct BlogPostCreateOperation: BlogPostOperation {
     }
 }
 
-struct BlogPostFiltersOperation: BlogPostOperation {
+struct BlogPostListOperation: BlogPostOperation {
     var responseMap: ResponseMap {
         [
-            200: BlogPostFiltersResponse().reference()
+            200: BlogPostListResponse().reference()
         ]
     }
 }
@@ -101,7 +101,7 @@ struct BlogPostPatchOperation: BlogPostIDOperation {
     }
 }
 
-struct BlogPostBulkDeleteOperation: BlogPostOperation,
-    BulkDeleteOperation
+struct BlogPostDeleteOperation: BlogPostOperation,
+    DeleteOperation
 {
 }

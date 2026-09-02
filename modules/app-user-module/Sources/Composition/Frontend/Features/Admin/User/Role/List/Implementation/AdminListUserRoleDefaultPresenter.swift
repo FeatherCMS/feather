@@ -80,7 +80,7 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
         )
     }
 
-    func renderBulkRemoveConfirmation(
+    func renderRemoveConfirmation(
         page: Int,
         search: String?,
         selectedIds: [String],
@@ -89,20 +89,20 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
         renderEngine.renderAdminPage(
             request: request,
             title: "Remove selected roles",
-            description: "Confirm bulk remove",
+            description: "Confirm remove",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
                 permissions: permissions
             ),
-            content: ListBulkRemoveConfirmation(
+            content: ListRemoveConfirmation(
                 state: .init(
                     breadcrumb: breadcrumb(),
                     title: "Remove selected roles",
                     message:
                         "Are you sure you want to remove these selected roles? This action cannot be undone.",
-                    action: "/admin/user/roles/bulk-remove/",
-                    cancelLink: ListBulkRemoveRedirect.location(
+                    action: "/admin/user/roles/remove/",
+                    cancelLink: ListRemoveRedirect.location(
                         path: "/admin/user/roles/",
                         page: page,
                         search: search,

@@ -78,7 +78,7 @@ struct MediaFolderUpdateOperation: MediaFolderIDOperation {
     }
 }
 
-struct MediaFolderBulkDeleteOperation: MediaFolderOperation,
-    BulkDeleteOperation
+struct MediaFolderDeleteOperation: MediaFolderOperation,
+    DeleteOperation
 {
 }
