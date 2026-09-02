@@ -18,5 +18,5 @@ public protocol MediaProcessorRepository: Repository {
     ) async throws -> MediaProcessor?
     func list() async throws -> [MediaProcessor]
     func listActive() async throws -> [MediaProcessor]
-    func delete(ids: [String]) async throws -> Bool
+    func delete(ids: [String]) async throws -> [String]
 }

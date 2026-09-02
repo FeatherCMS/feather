@@ -30,7 +30,7 @@ public struct RemoveCredential: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {

@@ -22,5 +22,5 @@ public protocol SubscriberRepository: Repository {
     func delete(
         newsletterId: String,
         emails: [String]
-    ) async throws -> Bool
+    ) async throws -> [String]
 }

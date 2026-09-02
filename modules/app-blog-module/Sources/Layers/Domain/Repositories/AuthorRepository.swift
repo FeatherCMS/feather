@@ -22,5 +22,5 @@ public protocol AuthorRepository: Repository {
 
     func delete(
         ids: [String]
-    ) async throws -> Bool
+    ) async throws -> [String]
 }

@@ -16,14 +16,14 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemoveRolePermission()
-        let deleted = try await useCase.execute(
+        let deletedIds = try await useCase.execute(
             subject: subject,
             input: .init(ids: body.ids)
         )
         let results = body.ids.map {
             Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
                 id: $0,
-                status: deleted ? .deleted : .notFound
+                status: deletedIds.contains($0) ? .deleted : .notFound
             )
         }
         return .ok(
@@ -54,14 +54,14 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let removeSession = useCases.makeRemoveSession()
-        let deleted = try await removeSession.execute(
+        let deletedIds = try await removeSession.execute(
             subject: subject,
             input: .init(ids: body.ids)
         )
         let results = body.ids.map {
             Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
                 id: $0,
-                status: deleted ? .deleted : .notFound
+                status: deletedIds.contains($0) ? .deleted : .notFound
             )
         }
         return .ok(

@@ -31,7 +31,8 @@ public struct DeleteIssue: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         try await transaction.run { scope in
-            guard try await scope.issue.delete(ids: input.ids) else {
+            let deleted = try await scope.issue.delete(ids: input.ids)
+            guard !deleted.isEmpty else {
                 throw Error.notFound
             }
         }

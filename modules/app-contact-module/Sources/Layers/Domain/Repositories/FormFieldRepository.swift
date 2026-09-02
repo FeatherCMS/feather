@@ -33,5 +33,5 @@ public protocol FormFieldRepository: Repository {
     func delete(
         ids: [String],
         formId: String?
-    ) async throws -> Bool
+    ) async throws -> [String]
 }

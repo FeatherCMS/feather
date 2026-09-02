@@ -35,7 +35,7 @@ public struct RemovePage: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {
@@ -50,7 +50,7 @@ public struct RemovePage: UseCase {
                 )
             }
             let id = input.ids.first
-            if removedPage {
+            if let id, removedPage.contains(id) {
                 var settings = try await scope.settings.get()
                 if settings.homePageId == id {
                     try settings.update(

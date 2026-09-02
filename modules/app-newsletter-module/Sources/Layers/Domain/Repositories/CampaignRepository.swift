@@ -18,5 +18,5 @@ public protocol CampaignRepository: Repository {
 
     func delete(
         ids: [String]
-    ) async throws -> Bool
+    ) async throws -> [String]
 }

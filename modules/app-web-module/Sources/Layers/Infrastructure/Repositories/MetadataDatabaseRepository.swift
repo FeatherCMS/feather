@@ -152,21 +152,17 @@ public struct MetadataDatabaseRepository: MetadataRepository {
 
     public func delete(
         ids: [String]
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let table = WebMetadataTable(connection: context.connection)
-        var removed = true
-        for id in ids {
-            removed = try await table.delete(id: id) && removed
-        }
-        return removed
+        return try await table.delete(ids: ids)
     }
 
     public func delete(
         reference: Metadata.Reference
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let table = WebMetadataTable(connection: context.connection)
         guard let referenceID = reference.id else {
-            return false
+            return []
         }
         return try await table.delete(
             referenceType: reference.type,

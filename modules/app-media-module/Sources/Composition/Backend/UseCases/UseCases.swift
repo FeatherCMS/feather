@@ -192,7 +192,7 @@ extension UseCases {
     public func deleteAssetAndFiles(
         subject: Subject,
         assetIds: [String]
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         for assetId in assetIds {
             let detail = try? await makeGetAssetDetails()
                 .execute(

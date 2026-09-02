@@ -34,7 +34,7 @@ public struct RemovePermission: UseCase {
         }
     }
 
-    public typealias Output = Bool
+    public typealias Output = [String]
 
     public func execute(
         subject: Subject,

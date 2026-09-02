@@ -22,5 +22,5 @@ public protocol MediaAssetRepository: Repository {
     func list(
         folderIds: [String]
     ) async throws -> [MediaAsset]
-    func delete(ids: [String]) async throws -> Bool
+    func delete(ids: [String]) async throws -> [String]
 }

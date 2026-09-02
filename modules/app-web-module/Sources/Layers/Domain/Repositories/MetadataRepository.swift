@@ -30,9 +30,9 @@ public protocol MetadataRepository: Repository {
 
     func delete(
         ids: [String]
-    ) async throws -> Bool
+    ) async throws -> [String]
 
     func delete(
         reference: Metadata.Reference
-    ) async throws -> Bool
+    ) async throws -> [String]
 }

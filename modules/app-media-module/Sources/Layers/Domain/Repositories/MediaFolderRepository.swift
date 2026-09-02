@@ -25,5 +25,5 @@ public protocol MediaFolderRepository: Repository {
     func listDescendants(
         path: String
     ) async throws -> [MediaFolder]
-    func delete(ids: [String]) async throws -> Bool
+    func delete(ids: [String]) async throws -> [String]
 }

@@ -34,17 +34,16 @@ public struct DeleteMediaAsset: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
         return try await transaction.run { scope in
-            var removed = true
+            var deletedIds = [String]()
             for id in input.ids {
                 guard let asset = try await scope.assets.find(id: id) else {
-                    removed = false
                     continue
                 }
             try await adjustFolderAggregates(
@@ -54,9 +53,9 @@ public struct DeleteMediaAsset: UseCase {
                 assetCountDelta: -1
             )
             try await scope.processorAssets.deleteAll(assetId: asset.id)
-                removed = try await scope.assets.delete(ids: [id]) && removed
+                deletedIds.append(asset.id)
             }
-            return removed
+            return try await scope.assets.delete(ids: deletedIds)
         }
     }
 }

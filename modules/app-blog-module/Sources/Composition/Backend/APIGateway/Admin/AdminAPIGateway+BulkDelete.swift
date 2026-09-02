@@ -15,14 +15,14 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemoveAuthor()
-        let deleted = try await useCase.execute(
+        let deletedIds = try await useCase.execute(
             subject: subject,
             input: .init(ids: body.ids)
         )
         let results = body.ids.map {
             Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
                 id: $0,
-                status: deleted ? .deleted : .notFound
+                status: deletedIds.contains($0) ? .deleted : .notFound
             )
         }
         return .ok(
@@ -53,14 +53,14 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemoveAuthorLink()
-        let deleted = try await useCase.execute(
+        let deletedIds = try await useCase.execute(
             subject: subject,
             input: .init(ids: body.ids, authorId: input.path.blogAuthorId)
         )
         let results = body.ids.map {
             Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
                 id: $0,
-                status: deleted ? .deleted : .notFound
+                status: deletedIds.contains($0) ? .deleted : .notFound
             )
         }
         return .ok(
@@ -91,14 +91,14 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemovePost()
-        let deleted = try await useCase.execute(
+        let deletedIds = try await useCase.execute(
             subject: subject,
             input: .init(ids: body.ids)
         )
         let results = body.ids.map {
             Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
                 id: $0,
-                status: deleted ? .deleted : .notFound
+                status: deletedIds.contains($0) ? .deleted : .notFound
             )
         }
         return .ok(
@@ -129,14 +129,14 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemoveTag()
-        let deleted = try await useCase.execute(
+        let deletedIds = try await useCase.execute(
             subject: subject,
             input: .init(ids: body.ids)
         )
         let results = body.ids.map {
             Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
                 id: $0,
-                status: deleted ? .deleted : .notFound
+                status: deletedIds.contains($0) ? .deleted : .notFound
             )
         }
         return .ok(

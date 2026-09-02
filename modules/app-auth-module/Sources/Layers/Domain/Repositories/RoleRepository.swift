@@ -23,5 +23,5 @@ public protocol RolePermissionRepository: Repository {
         _ model: RolePermission.New
     ) async throws -> RolePermission
 
-    func delete(ids: [String]) async throws -> Bool
+    func delete(ids: [String]) async throws -> [String]
 }

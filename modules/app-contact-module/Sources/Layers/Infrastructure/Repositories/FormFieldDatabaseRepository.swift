@@ -120,12 +120,8 @@ public struct FormFieldDatabaseRepository: FormFieldRepository {
     public func delete(
         ids: [String],
         formId: String?
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let table = FormFieldTable(connection: context.connection)
-        var removed = true
-        for id in ids {
-            removed = try await table.delete(id: id, formId: formId) && removed
-        }
-        return removed
+        return try await table.delete(ids: ids, formId: formId)
     }
 }

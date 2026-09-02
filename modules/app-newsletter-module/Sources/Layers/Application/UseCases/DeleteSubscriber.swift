@@ -31,12 +31,13 @@ public struct DeleteSubscriber: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         try await transaction.run { scope in
-            guard
-                try await scope.subscriber.delete(
-                    newsletterId: input.newsletterId,
-                    emails: input.emails
-                )
-            else { throw Error(message: "Newsletter subscriber not found") }
+            let deleted = try await scope.subscriber.delete(
+                newsletterId: input.newsletterId,
+                emails: input.emails
+            )
+            guard !deleted.isEmpty else {
+                throw Error(message: "Newsletter subscriber not found")
+            }
         }
     }
 }

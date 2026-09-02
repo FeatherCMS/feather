@@ -91,12 +91,7 @@ public struct MediaProcessorDatabaseRepository: MediaProcessorRepository {
 
     public func delete(
         ids: [String]
-    ) async throws -> Bool {
-        var removed = true
-        for id in ids {
-            removed = try await MediaProcessorTable(connection: context.connection)
-                .delete(id: id) && removed
-        }
-        return removed
+    ) async throws -> [String] {
+        return try await MediaProcessorTable(connection: context.connection).delete(ids: ids)
     }
 }

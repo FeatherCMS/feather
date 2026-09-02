@@ -18,14 +18,14 @@ extension AdminAPIGateway {
         let useCase = useCases.makeRemoveMetadata()
         let subject = try await CurrentSubject.require()
 
-        let deleted = try await useCase.execute(
+        let deletedIds = try await useCase.execute(
             subject: subject,
             input: .init(ids: body.ids)
         )
         let results = body.ids.map {
             Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
                 id: $0,
-                status: deleted ? .deleted : .notFound
+                status: deletedIds.contains($0) ? .deleted : .notFound
             )
         }
 
@@ -36,8 +36,8 @@ extension AdminAPIGateway {
                         results: results,
                         summary: .init(
                             requested: body.ids.count,
-                            deleted: deleted ? body.ids.count : 0,
-                            notFound: deleted ? 0 : body.ids.count,
+                            deleted: deletedIds.count,
+                            notFound: body.ids.count - deletedIds.count,
                             forbidden: 0
                         )
                     )

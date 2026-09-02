@@ -42,7 +42,7 @@ public struct RemoveAuthorLink: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {
@@ -57,7 +57,7 @@ public struct RemoveAuthorLink: UseCase {
                 else { continue }
                 ids.append(model.id)
             }
-            guard !ids.isEmpty else { return false }
+            guard !ids.isEmpty else { return [] }
             return try await scope.authorLink.delete(ids: ids)
         }
     }

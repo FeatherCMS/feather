@@ -93,12 +93,8 @@ public struct CategoryDatabaseRepository: CategoryRepository {
 
     public func delete(
         ids: [String]
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let table = CategoryTable(connection: context.connection)
-        var removed = true
-        for id in ids {
-            removed = try await table.delete(id: id) && removed
-        }
-        return removed
+        return try await table.delete(ids: ids)
     }
 }

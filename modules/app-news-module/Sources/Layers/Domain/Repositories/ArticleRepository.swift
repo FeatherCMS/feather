@@ -26,5 +26,5 @@ public protocol ArticleRepository: Repository {
 
     func delete(
         ids: [String]
-    ) async throws -> Bool
+    ) async throws -> [String]
 }

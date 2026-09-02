@@ -101,12 +101,8 @@ public struct MediaAssetDatabaseRepository: MediaAssetRepository {
 
     public func delete(
         ids: [String]
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let table = MediaAssetTable(connection: context.connection)
-        var removed = true
-        for id in ids {
-            removed = try await table.hardDelete(id: id) && removed
-        }
-        return removed
+        return try await table.delete(ids: ids)
     }
 }

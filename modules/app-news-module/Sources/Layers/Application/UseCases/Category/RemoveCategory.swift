@@ -36,7 +36,7 @@ public struct RemoveCategory: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Bool {
+    ) async throws -> [String] {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {
@@ -44,15 +44,15 @@ public struct RemoveCategory: UseCase {
         }
 
         return try await transaction.run { scope in
-            var removed = true
+            var deletedIds = [String]()
             for id in input.ids {
                 try await scope.article.removeCategory(id: id)
-                removed = try await scope.category.delete(ids: [id]) && removed
                 _ = try await scope.metadata.delete(
                     reference: .existing(.init(type: "news.category", id: id))
                 )
             }
-            return removed
+            deletedIds = try await scope.category.delete(ids: input.ids)
+            return deletedIds
         }
     }
 }
