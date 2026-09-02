@@ -192,6 +192,7 @@ let package = Package(
                 
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
+                .product(name: "SystemInfrastructure", package: "app-system-module"),
 
                 .target(name: "AccountInfrastructure"),
                 .target(name: "AccountAdminAPI"),
