@@ -21,7 +21,7 @@ public protocol VariableRepository: Repository {
     ) async throws -> Variable?
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 
 }

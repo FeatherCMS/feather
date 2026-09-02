@@ -26,11 +26,9 @@ public struct DeleteMediaAsset: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(id: String) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
@@ -43,9 +41,12 @@ public struct DeleteMediaAsset: UseCase {
         }
 
         return try await transaction.run { scope in
-            guard let asset = try await scope.assets.find(id: input.id) else {
-                return false
-            }
+            var removed = true
+            for id in input.ids {
+                guard let asset = try await scope.assets.find(id: id) else {
+                    removed = false
+                    continue
+                }
             try await adjustFolderAggregates(
                 folders: scope.folders,
                 folderId: asset.folderId,
@@ -53,7 +54,9 @@ public struct DeleteMediaAsset: UseCase {
                 assetCountDelta: -1
             )
             try await scope.processorAssets.deleteAll(assetId: asset.id)
-            return try await scope.assets.delete(id: input.id)
+                removed = try await scope.assets.delete(ids: [id]) && removed
+            }
+            return removed
         }
     }
 }

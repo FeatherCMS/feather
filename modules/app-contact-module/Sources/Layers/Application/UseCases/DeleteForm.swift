@@ -18,8 +18,8 @@ public struct DeleteForm: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let id: String
-        public init(id: String) { self.id = id }
+        public let ids: [String]
+        public init(ids: [String]) { self.ids = ids }
     }
     public func execute(
         subject: Subject,
@@ -30,7 +30,7 @@ public struct DeleteForm: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.form.delete(id: input.id)
+            try await scope.form.delete(ids: input.ids)
         }
     }
 }

@@ -14,19 +14,16 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemoveMenu()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    let deleted = try await useCase.execute(
-                        subject: subject,
-                        input: .init(id: id)
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(
-                            id: id,
-                            status: deleted ? .deleted : .notFound
-                        )
-                }
+        let deleted = try await useCase.execute(
+            subject: subject,
+            input: .init(ids: body.ids)
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
+                id: $0,
+                status: deleted ? .deleted : .notFound
+            )
+        }
         return .ok(
             .init(
                 body: .json(
@@ -55,19 +52,16 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemoveMenuItem()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    let deleted = try await useCase.execute(
-                        subject: subject,
-                        input: .init(id: id, menuId: input.path.webMenuId)
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(
-                            id: id,
-                            status: deleted ? .deleted : .notFound
-                        )
-                }
+        let deleted = try await useCase.execute(
+            subject: subject,
+            input: .init(ids: body.ids, menuId: input.path.webMenuId)
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
+                id: $0,
+                status: deleted ? .deleted : .notFound
+            )
+        }
         return .ok(
             .init(
                 body: .json(
@@ -96,19 +90,16 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemovePage()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    let deleted = try await useCase.execute(
-                        subject: subject,
-                        input: .init(id: id)
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(
-                            id: id,
-                            status: deleted ? .deleted : .notFound
-                        )
-                }
+        let deleted = try await useCase.execute(
+            subject: subject,
+            input: .init(ids: body.ids)
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
+                id: $0,
+                status: deleted ? .deleted : .notFound
+            )
+        }
         return .ok(
             .init(
                 body: .json(

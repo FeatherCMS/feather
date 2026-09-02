@@ -81,7 +81,7 @@ public struct TokenAuth: Sendable {
             ),
                 session.expiresAt <= now.timeIntervalSince1970
             {
-                _ = try await scope.session.delete(id: session.id)
+                _ = try await scope.session.delete(ids: [session.id])
             }
         }
 

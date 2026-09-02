@@ -14,16 +14,11 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeDeleteNewsletterCampaign()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    try await useCase.execute(
-                        subject: subject,
-                        input: .init(id: id)
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(id: id, status: .deleted)
-                }
+        _ = try await useCase.execute(subject: subject, input: .init(ids: body.ids))
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema
+                .ResultsPayloadPayload(id: $0, status: .deleted)
+        }
         return .ok(
             .init(
                 body: .json(
@@ -50,16 +45,11 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeDeleteNewsletterIssue()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    try await useCase.execute(
-                        subject: subject,
-                        input: .init(id: id)
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(id: id, status: .deleted)
-                }
+        _ = try await useCase.execute(subject: subject, input: .init(ids: body.ids))
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema
+                .ResultsPayloadPayload(id: $0, status: .deleted)
+        }
         return .ok(
             .init(
                 body: .json(
@@ -86,19 +76,17 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeDeleteNewsletterSubscriber()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { email in
-                    try await useCase.execute(
-                        subject: subject,
-                        input: .init(
-                            newsletterId: input.path.newsletterCampaignId,
-                            email: email
-                        )
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(id: email, status: .deleted)
-                }
+        try await useCase.execute(
+            subject: subject,
+            input: .init(
+                newsletterId: input.path.newsletterCampaignId,
+                emails: body.ids
+            )
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema
+                .ResultsPayloadPayload(id: $0, status: .deleted)
+        }
         return .ok(
             .init(
                 body: .json(

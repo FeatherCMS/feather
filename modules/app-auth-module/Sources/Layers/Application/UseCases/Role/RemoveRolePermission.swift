@@ -26,15 +26,10 @@ public struct RemoveRolePermission: UseCase {
     }
 
     public struct Input: DTO {
-        public let roleId: String
-        public let permissionId: String
+        public let ids: [String]
 
-        public init(
-            roleId: String,
-            permissionId: String
-        ) {
-            self.roleId = roleId
-            self.permissionId = permissionId
+        public init(ids: [String]) {
+            self.ids = ids
         }
     }
 
@@ -49,10 +44,7 @@ public struct RemoveRolePermission: UseCase {
         }
 
         return try await transaction.run { scope in
-            try await scope.rolePermissions.delete(
-                roleId: input.roleId,
-                permissionId: input.permissionId
-            )
+            try await scope.rolePermissions.delete(ids: input.ids)
         }
     }
 }

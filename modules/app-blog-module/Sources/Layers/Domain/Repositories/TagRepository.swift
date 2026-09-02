@@ -21,6 +21,6 @@ public protocol TagRepository: Repository {
     ) async throws -> Tag
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 }

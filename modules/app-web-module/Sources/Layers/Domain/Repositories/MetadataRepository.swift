@@ -29,7 +29,7 @@ public protocol MetadataRepository: Repository {
     ) async throws -> Metadata
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 
     func delete(

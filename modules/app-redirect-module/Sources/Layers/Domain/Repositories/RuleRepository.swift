@@ -25,6 +25,6 @@ public protocol RuleRepository: Repository {
     ) async throws -> Rule
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 }

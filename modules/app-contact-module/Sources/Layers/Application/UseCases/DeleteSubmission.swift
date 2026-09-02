@@ -20,11 +20,9 @@ public struct DeleteSubmission: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(id: String) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
@@ -36,7 +34,7 @@ public struct DeleteSubmission: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.submission.delete(id: input.id)
+            try await scope.submission.delete(ids: input.ids)
         }
     }
 }

@@ -17,6 +17,6 @@ public protocol FormRepository: Repository {
     ) async throws -> Form
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 }

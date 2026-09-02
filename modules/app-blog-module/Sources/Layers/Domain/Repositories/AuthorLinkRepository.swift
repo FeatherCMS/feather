@@ -20,7 +20,5 @@ public protocol AuthorLinkRepository: Repository {
         _ model: AuthorLink
     ) async throws -> AuthorLink
 
-    func delete(
-        id: String
-    ) async throws -> Bool
+    func delete(ids: [String]) async throws -> Bool
 }

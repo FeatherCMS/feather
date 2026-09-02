@@ -18,10 +18,10 @@ public struct DeleteSubscriber: UseCase {
     }
     public struct Input: DTO {
         public let newsletterId: String
-        public let email: String
-        public init(newsletterId: String, email: String) {
+        public let emails: [String]
+        public init(newsletterId: String, emails: [String]) {
             self.newsletterId = newsletterId
-            self.email = email
+            self.emails = emails
         }
     }
 
@@ -34,7 +34,7 @@ public struct DeleteSubscriber: UseCase {
             guard
                 try await scope.subscriber.delete(
                     newsletterId: input.newsletterId,
-                    email: input.email
+                    emails: input.emails
                 )
             else { throw Error(message: "Newsletter subscriber not found") }
         }

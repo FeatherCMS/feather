@@ -13,19 +13,16 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    let deleted = try await useCases.deleteAssetAndFiles(
-                        subject: subject,
-                        assetId: id
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(
-                            id: id,
-                            status: deleted ? .deleted : .notFound
-                        )
-                }
+        let deleted = try await useCases.deleteAssetAndFiles(
+            subject: subject,
+            assetIds: body.ids
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
+                id: $0,
+                status: deleted ? .deleted : .notFound
+            )
+        }
         return .ok(
             .init(
                 body: .json(
@@ -54,19 +51,16 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeDeleteFolder()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    let deleted = try await useCase.execute(
-                        subject: subject,
-                        input: .init(id: id)
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(
-                            id: id,
-                            status: deleted ? .deleted : .notFound
-                        )
-                }
+        let deleted = try await useCase.execute(
+            subject: subject,
+            input: .init(ids: body.ids)
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
+                id: $0,
+                status: deleted ? .deleted : .notFound
+            )
+        }
         return .ok(
             .init(
                 body: .json(
@@ -95,19 +89,16 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeDeleteProcessor()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    let deleted = try await useCase.execute(
-                        subject: subject,
-                        input: .init(id: id)
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(
-                            id: id,
-                            status: deleted ? .deleted : .notFound
-                        )
-                }
+        let deleted = try await useCase.execute(
+            subject: subject,
+            input: .init(ids: body.ids)
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
+                id: $0,
+                status: deleted ? .deleted : .notFound
+            )
+        }
         return .ok(
             .init(
                 body: .json(

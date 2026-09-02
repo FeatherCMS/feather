@@ -65,7 +65,7 @@ public struct CompleteInvitationRegistration: UseCase {
             try invitation.consume()
             identity.update(status: .active)
             let updated = try await scope.identity.update(identity)
-            guard try await scope.invitation.delete(id: invitation.id) else {
+            guard try await scope.invitation.delete(ids: [invitation.id]) else {
                 throw Error(message: "Invitation already used")
             }
             return .init(

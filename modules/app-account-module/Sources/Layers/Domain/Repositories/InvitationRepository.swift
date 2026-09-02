@@ -25,6 +25,6 @@ public protocol InvitationRepository: Repository {
     ) async throws -> Invitation
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 }

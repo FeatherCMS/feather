@@ -27,14 +27,14 @@ public struct RemoveAuthorLink: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
         public let authorId: String
 
         public init(
-            id: String,
+            ids: [String],
             authorId: String
         ) {
-            self.id = id
+            self.ids = ids
             self.authorId = authorId
         }
     }
@@ -50,12 +50,15 @@ public struct RemoveAuthorLink: UseCase {
         }
 
         return try await transaction.run { scope in
-            guard let model = try await scope.authorLink.find(id: input.id),
-                model.authorId == input.authorId
-            else {
-                return false
+            var ids = [String]()
+            for id in input.ids {
+                guard let model = try await scope.authorLink.find(id: id),
+                    model.authorId == input.authorId
+                else { continue }
+                ids.append(model.id)
             }
-            return try await scope.authorLink.delete(id: model.id)
+            guard !ids.isEmpty else { return false }
+            return try await scope.authorLink.delete(ids: ids)
         }
     }
 }

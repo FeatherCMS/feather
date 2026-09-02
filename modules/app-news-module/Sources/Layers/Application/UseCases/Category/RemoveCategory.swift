@@ -28,13 +28,9 @@ public struct RemoveCategory: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(
-            id: String
-        ) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
@@ -47,15 +43,16 @@ public struct RemoveCategory: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let id = input.id
-
         return try await transaction.run { scope in
-            try await scope.article.removeCategory(id: id)
-            let removedCategory = try await scope.category.delete(id: id)
-            _ = try await scope.metadata.delete(
-                reference: .existing(.init(type: "news.category", id: id))
-            )
-            return removedCategory
+            var removed = true
+            for id in input.ids {
+                try await scope.article.removeCategory(id: id)
+                removed = try await scope.category.delete(ids: [id]) && removed
+                _ = try await scope.metadata.delete(
+                    reference: .existing(.init(type: "news.category", id: id))
+                )
+            }
+            return removed
         }
     }
 }

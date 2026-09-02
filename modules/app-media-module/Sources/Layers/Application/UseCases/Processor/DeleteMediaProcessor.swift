@@ -26,8 +26,8 @@ public struct DeleteMediaProcessor: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
-        public init(id: String) { self.id = id }
+        public let ids: [String]
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
@@ -40,7 +40,7 @@ public struct DeleteMediaProcessor: UseCase {
         }
 
         return try await transaction.run { scope in
-            try await scope.processors.delete(id: input.id)
+            try await scope.processors.delete(ids: input.ids)
         }
     }
 }

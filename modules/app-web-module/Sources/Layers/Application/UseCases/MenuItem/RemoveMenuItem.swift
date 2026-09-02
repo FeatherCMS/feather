@@ -27,14 +27,14 @@ public struct RemoveMenuItem: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
         public let menuId: String
 
         public init(
-            id: String,
+            ids: [String],
             menuId: String
         ) {
-            self.id = id
+            self.ids = ids
             self.menuId = menuId
         }
     }
@@ -50,12 +50,7 @@ public struct RemoveMenuItem: UseCase {
         }
 
         return try await transaction.run { scope in
-            guard let model = try await scope.menuItem.find(id: input.id),
-                model.menuId == input.menuId
-            else {
-                return false
-            }
-            return try await scope.menuItem.delete(id: model.id)
+            try await scope.menuItem.delete(ids: input.ids)
         }
     }
 }

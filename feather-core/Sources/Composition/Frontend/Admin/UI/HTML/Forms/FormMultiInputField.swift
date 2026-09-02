@@ -75,7 +75,7 @@ public struct FormMultiInputField: Component, FlowContent {
         )
     }
 
-    public func selectors() -> [any Selector] {
+    public func selectors() -> [any CSS.Selector] {
         Class("field-label__optional") {
             Color(.variable("cms-tertiary-font"))
         }
@@ -88,7 +88,7 @@ public struct FormMultiInputField: Component, FlowContent {
             FlexWrap(.wrap)
             AlignItems(.center)
             Gap(6.px)
-            Padding(8.px)
+            Padding(top: 0.px, right: 8.px, bottom: 0.px, left: 8.px)
             Border(1.px, .solid, .variable("cms-gray-2"))
             BorderRadius(10.px)
             Background(color: .variable("cms-white"))
@@ -303,6 +303,13 @@ public struct FormMultiInputField: Component, FlowContent {
                         input.value = parts[parts.length - 1];
                     }
                 });
+
+                var form = root.closest("form");
+                if (form) {
+                    form.addEventListener("submit", function () {
+                        add(input.value);
+                    });
+                }
 
                 control.addEventListener("click", function (event) {
                     var remove = event.target.closest(".form-multi-input-field__remove");

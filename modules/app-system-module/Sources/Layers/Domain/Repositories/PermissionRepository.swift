@@ -21,6 +21,6 @@ public protocol PermissionRepository: Repository {
     ) async throws -> Permission?
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 }

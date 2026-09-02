@@ -127,11 +127,15 @@ public struct ArticleDatabaseRepository: ArticleRepository {
     }
 
     public func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool {
-        try await ArticleCategoryTable(connection: context.connection)
-            .removeArticle(id: id)
         let table = ArticleTable(connection: context.connection)
-        return try await table.delete(id: id)
+        var removed = true
+        for id in ids {
+            try await ArticleCategoryTable(connection: context.connection)
+                .removeArticle(id: id)
+            removed = try await table.delete(id: id) && removed
+        }
+        return removed
     }
 }

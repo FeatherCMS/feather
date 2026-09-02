@@ -28,13 +28,9 @@ public struct RemovePost: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(
-            id: String
-        ) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
@@ -47,14 +43,15 @@ public struct RemovePost: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let id = input.id
-
         return try await transaction.run { scope in
-            let removedPost = try await scope.post.delete(id: id)
-            _ = try await scope.metadata.delete(
-                reference: .existing(.init(type: "blog.post", id: id))
-            )
-            return removedPost
+            var removed = true
+            for id in input.ids {
+                removed = try await scope.post.delete(ids: [id]) && removed
+                _ = try await scope.metadata.delete(
+                    reference: .existing(.init(type: "blog.post", id: id))
+                )
+            }
+            return removed
         }
     }
 }

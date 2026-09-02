@@ -33,11 +33,9 @@ public struct DeleteMediaFolder: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(id: String) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
@@ -51,7 +49,8 @@ public struct DeleteMediaFolder: UseCase {
 
         let snapshot: FolderDeleteSnapshot? = try await transaction.run {
             scope in
-            guard let folder = try await scope.folders.find(id: input.id)
+            guard let id = input.ids.first,
+                let folder = try await scope.folders.find(id: id)
             else {
                 return nil
             }
@@ -86,11 +85,11 @@ public struct DeleteMediaFolder: UseCase {
         return try await transaction.run { scope in
             for asset in snapshot.assets {
                 try await scope.processorAssets.deleteAll(assetId: asset.id)
-                _ = try await scope.assets.delete(id: asset.id)
+                _ = try await scope.assets.delete(ids: [asset.id])
             }
 
             for folder in snapshot.folders.sorted(by: deeperPathFirst) {
-                _ = try await scope.folders.delete(id: folder.id)
+                _ = try await scope.folders.delete(ids: [folder.id])
             }
             return true
         }

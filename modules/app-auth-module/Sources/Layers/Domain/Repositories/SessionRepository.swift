@@ -25,6 +25,6 @@ public protocol SessionRepository: Repository {
     ) async throws -> Session
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 }

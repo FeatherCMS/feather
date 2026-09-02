@@ -80,13 +80,21 @@ public struct RolePermissionDatabaseRepository: RolePermissionRepository {
     }
 
     public func delete(
-        roleId: String,
-        permissionId: String
+        ids: [String]
     ) async throws -> Bool {
         let table = RolePermissionTable(connection: context.connection)
-        return try await table.delete(
-            roleId: roleId,
-            permissionId: permissionId
-        )
+        var removed = true
+        for id in ids {
+            let parts = id.split(separator: ":", maxSplits: 1).map(String.init)
+            guard parts.count == 2 else {
+                removed = false
+                continue
+            }
+            removed = try await table.delete(
+                roleId: parts[0],
+                permissionId: parts[1]
+            ) && removed
+        }
+        return removed
     }
 }

@@ -25,6 +25,6 @@ public protocol RoleRepository: Repository {
     ) async throws -> Role
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 }

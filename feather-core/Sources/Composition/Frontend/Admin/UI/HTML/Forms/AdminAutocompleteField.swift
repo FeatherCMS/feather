@@ -142,6 +142,9 @@ public struct AdminAutocompleteField: Component, FlowContent {
             UnsafeRawProperty(name: "outline", value: "none")
             UnsafeRawProperty(name: "box-shadow", value: "none")
         }
+        Custom(".multiselect__control--has-selection input.multiselect__input::placeholder") {
+            UnsafeRawProperty(name: "color", value: "transparent")
+        }
         Class("multiselect__toggle") {
             Width(24.px)
             Height(24.px)
@@ -581,6 +584,10 @@ public struct AdminAutocompleteField: Component, FlowContent {
                 function render() {
                     renderChips();
                     renderHiddenInputs();
+                    control.classList.toggle(
+                        "multiselect__control--has-selection",
+                        state.selected.length > 0
+                    );
                     renderDropdown();
                 }
 
@@ -682,10 +689,26 @@ public struct AdminAutocompleteField: Component, FlowContent {
                         return;
                     }
                     activateRoot();
-                    openDropdown();
-                    renderDropdown();
-                    input.focus();
+                    if (state.open) {
+                        closeDropdown();
+                        renderDropdown();
+                    } else {
+                        openDropdown();
+                        renderDropdown();
+                        input.focus();
+                    }
                 });
+
+                if (label) {
+                    label.addEventListener("click", function (event) {
+                        if (!state.open) {
+                            return;
+                        }
+                        event.preventDefault();
+                        closeDropdown();
+                        renderDropdown();
+                    });
+                }
 
                 input.addEventListener("input", function () {
                     state.query = input.value;

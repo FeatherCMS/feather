@@ -16,25 +16,16 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemoveRolePermission()
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    let parts = id.split(separator: ":", maxSplits: 1)
-                        .map(String.init)
-                    guard parts.count == 2 else {
-                        return Components.Schemas.BulkDeleteResponseSchema
-                            .ResultsPayloadPayload(id: id, status: .notFound)
-                    }
-                    let deleted = try await useCase.execute(
-                        subject: subject,
-                        input: .init(roleId: parts[0], permissionId: parts[1])
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(
-                            id: id,
-                            status: deleted ? .deleted : .notFound
-                        )
-                }
+        let deleted = try await useCase.execute(
+            subject: subject,
+            input: .init(ids: body.ids)
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
+                id: $0,
+                status: deleted ? .deleted : .notFound
+            )
+        }
         return .ok(
             .init(
                 body: .json(
@@ -62,30 +53,17 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        let getSession = useCases.makeGetSession()
         let removeSession = useCases.makeRemoveSession()
-
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    let session = try await getSession.execute(
-                        subject: subject,
-                        input: .init(id: id)
-                    )
-                    guard session.identityId == input.path.userIdentityId else {
-                        return Components.Schemas.BulkDeleteResponseSchema
-                            .ResultsPayloadPayload(id: id, status: .notFound)
-                    }
-                    let deleted = try await removeSession.execute(
-                        subject: subject,
-                        input: .init(id: id)
-                    )
-                    return Components.Schemas.BulkDeleteResponseSchema
-                        .ResultsPayloadPayload(
-                            id: id,
-                            status: deleted ? .deleted : .notFound
-                        )
-                }
+        let deleted = try await removeSession.execute(
+            subject: subject,
+            input: .init(ids: body.ids)
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
+                id: $0,
+                status: deleted ? .deleted : .notFound
+            )
+        }
         return .ok(
             .init(
                 body: .json(

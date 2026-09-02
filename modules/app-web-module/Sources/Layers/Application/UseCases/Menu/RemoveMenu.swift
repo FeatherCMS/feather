@@ -27,12 +27,10 @@ public struct RemoveMenu: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(
-            id: String
-        ) {
-            self.id = id
+        public init(ids: [String]) {
+            self.ids = ids
         }
     }
 
@@ -46,10 +44,8 @@ public struct RemoveMenu: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let id = input.id
-
         return try await transaction.run { scope in
-            try await scope.menu.delete(id: id)
+            try await scope.menu.delete(ids: input.ids)
         }
     }
 }

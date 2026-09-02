@@ -18,22 +18,16 @@ extension AdminAPIGateway {
         let subject = try await CurrentSubject.require()
         let useCase = self.useCases.makeRemoveCredential()
 
-        var deletedCount = 0
-        var notFoundCount = 0
-        let results:
-            [Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload] =
-                try await body.ids.asyncMap { id in
-                    let deleted = try await useCase.execute(
-                        subject: subject,
-                        input: .init(id: id)
-                    )
-                    if deleted {
-                        deletedCount += 1
-                        return .init(id: id, status: .deleted)
-                    }
-                    notFoundCount += 1
-                    return .init(id: id, status: .notFound)
-                }
+        let deleted = try await useCase.execute(
+            subject: subject,
+            input: .init(ids: body.ids)
+        )
+        let results = body.ids.map {
+            Components.Schemas.BulkDeleteResponseSchema.ResultsPayloadPayload(
+                id: $0,
+                status: deleted ? .deleted : .notFound
+            )
+        }
 
         return .ok(
             .init(
@@ -42,8 +36,8 @@ extension AdminAPIGateway {
                         results: results,
                         summary: .init(
                             requested: body.ids.count,
-                            deleted: deletedCount,
-                            notFound: notFoundCount,
+                            deleted: deleted ? body.ids.count : 0,
+                            notFound: deleted ? 0 : body.ids.count,
                             forbidden: 0
                         )
                     )

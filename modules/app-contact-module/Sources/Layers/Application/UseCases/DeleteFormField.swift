@@ -19,30 +19,23 @@ public struct DeleteFormField: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
         public let formId: String?
-        public init(id: String, formId: String?) {
-            self.id = id
+        public init(ids: [String], formId: String?) {
+            self.ids = ids
             self.formId = formId
         }
     }
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws {
+    ) async throws -> Bool {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            guard
-                try await scope.field.delete(
-                    id: input.id,
-                    formId: input.formId
-                )
-            else {
-                throw Error(message: "Contact form field not found")
-            }
+            try await scope.field.delete(ids: input.ids, formId: input.formId)
         }
     }
 }

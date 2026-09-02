@@ -27,13 +27,9 @@ public struct RemovePage: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(
-            id: String
-        ) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
@@ -46,13 +42,14 @@ public struct RemovePage: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let id = input.id
-
         return try await transaction.run { scope in
-            let removedPage = try await scope.page.delete(id: id)
-            _ = try await scope.metadata.delete(
-                reference: .existing(.init(type: "web.page", id: id))
-            )
+            let removedPage = try await scope.page.delete(ids: input.ids)
+            for id in input.ids {
+                _ = try await scope.metadata.delete(
+                    reference: .existing(.init(type: "web.page", id: id))
+                )
+            }
+            let id = input.ids.first
             if removedPage {
                 var settings = try await scope.settings.get()
                 if settings.homePageId == id {

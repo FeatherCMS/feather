@@ -25,6 +25,6 @@ public protocol MenuRepository: Repository {
     ) async throws -> Menu
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws -> Bool
 }

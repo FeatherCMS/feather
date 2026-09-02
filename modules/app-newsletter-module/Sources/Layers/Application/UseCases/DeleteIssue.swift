@@ -17,11 +17,9 @@ public struct DeleteIssue: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let ids: [String]
 
-        public init(id: String) {
-            self.id = id
-        }
+        public init(ids: [String]) { self.ids = ids }
     }
 
     public func execute(
@@ -33,7 +31,7 @@ public struct DeleteIssue: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         try await transaction.run { scope in
-            guard try await scope.issue.delete(id: input.id) else {
+            guard try await scope.issue.delete(ids: input.ids) else {
                 throw Error.notFound
             }
         }
