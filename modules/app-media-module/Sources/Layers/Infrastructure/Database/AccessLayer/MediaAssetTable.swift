@@ -136,9 +136,11 @@ struct MediaAssetTable {
 
     func delete(ids: [String]) async throws -> [String] {
         guard !ids.isEmpty else { return [] }
-        let values = ids.map {
-            "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-        }.joined(separator: ", ")
+        let values =
+            ids.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
         return try await connection.run(
             query: #"""
                 DELETE FROM media_asset
@@ -146,9 +148,10 @@ struct MediaAssetTable {
                 RETURNING id;
                 """#
         ) { seq in
-            try await seq.collect().map {
-                try $0.decode(column: "id", as: String.self)
-            }
+            try await seq.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 

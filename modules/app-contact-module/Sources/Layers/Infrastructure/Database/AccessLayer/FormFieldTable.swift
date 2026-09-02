@@ -181,9 +181,11 @@ struct FormFieldTable {
         formId: String?
     ) async throws -> [String] {
         guard !ids.isEmpty else { return [] }
-        let values = ids.map {
-            "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-        }.joined(separator: ", ")
+        let values =
+            ids.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
         if let formId {
             return try await connection.run(
                 query: #"""
@@ -197,9 +199,10 @@ struct FormFieldTable {
                     RETURNING id;
                     """#
             ) { sequence in
-                try await sequence.collect().map {
-                    try $0.decode(column: "id", as: String.self)
-                }
+                try await sequence.collect()
+                    .map {
+                        try $0.decode(column: "id", as: String.self)
+                    }
             }
         }
         return try await connection.run(
@@ -209,9 +212,10 @@ struct FormFieldTable {
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().map {
-                try $0.decode(column: "id", as: String.self)
-            }
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 }

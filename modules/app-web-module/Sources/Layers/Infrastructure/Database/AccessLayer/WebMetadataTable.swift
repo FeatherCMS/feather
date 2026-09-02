@@ -357,9 +357,11 @@ struct WebMetadataTable {
         ids: [String]
     ) async throws -> [String] {
         guard !ids.isEmpty else { return [] }
-        let values = ids.map {
-            "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-        }.joined(separator: ", ")
+        let values =
+            ids.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
         return try await connection.run(
             query: #"""
                 DELETE FROM web_metadata
@@ -367,9 +369,10 @@ struct WebMetadataTable {
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().map {
-                try $0.decode(column: "id", as: String.self)
-            }
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 
@@ -377,7 +380,7 @@ struct WebMetadataTable {
         referenceType: String,
         referenceID: String
     ) async throws -> [String] {
-        return try await connection.run(
+        try await connection.run(
             query: #"""
                 DELETE FROM web_metadata
                 WHERE reference_type=\#(referenceType)
@@ -385,9 +388,10 @@ struct WebMetadataTable {
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().map {
-                try $0.decode(column: "id", as: String.self)
-            }
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 }

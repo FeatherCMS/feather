@@ -76,6 +76,7 @@ public struct SubmissionDatabaseRepository:
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        try await SubmissionTable(connection: context.connection).delete(ids: ids)
+        try await SubmissionTable(connection: context.connection)
+            .delete(ids: ids)
     }
 }

@@ -50,7 +50,7 @@ public struct RemoveAuthorLink: UseCase {
         }
 
         return try await transaction.run { scope in
-            var ids = [String]()
+            var ids: [String] = []
             for id in input.ids {
                 guard let model = try await scope.authorLink.find(id: id),
                     model.authorId == input.authorId

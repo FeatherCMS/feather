@@ -92,6 +92,7 @@ public struct MediaProcessorDatabaseRepository: MediaProcessorRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        return try await MediaProcessorTable(connection: context.connection).delete(ids: ids)
+        try await MediaProcessorTable(connection: context.connection)
+            .delete(ids: ids)
     }
 }

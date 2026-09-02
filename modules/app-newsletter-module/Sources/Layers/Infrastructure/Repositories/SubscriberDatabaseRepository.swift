@@ -114,6 +114,9 @@ public struct SubscriberDatabaseRepository:
         emails: [String]
     ) async throws -> [String] {
         let table = SubscriberTable(connection: context.connection)
-        return try await table.delete(newsletterId: newsletterId, emails: emails)
+        return try await table.delete(
+            newsletterId: newsletterId,
+            emails: emails
+        )
     }
 }

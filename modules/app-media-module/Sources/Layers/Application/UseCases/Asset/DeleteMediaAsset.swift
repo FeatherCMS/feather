@@ -41,18 +41,18 @@ public struct DeleteMediaAsset: UseCase {
         }
 
         return try await transaction.run { scope in
-            var deletedIds = [String]()
+            var deletedIds: [String] = []
             for id in input.ids {
                 guard let asset = try await scope.assets.find(id: id) else {
                     continue
                 }
-            try await adjustFolderAggregates(
-                folders: scope.folders,
-                folderId: asset.folderId,
-                sizeDelta: -asset.sizeBytes,
-                assetCountDelta: -1
-            )
-            try await scope.processorAssets.deleteAll(assetId: asset.id)
+                try await adjustFolderAggregates(
+                    folders: scope.folders,
+                    folderId: asset.folderId,
+                    sizeDelta: -asset.sizeBytes,
+                    assetCountDelta: -1
+                )
+                try await scope.processorAssets.deleteAll(assetId: asset.id)
                 deletedIds.append(asset.id)
             }
             return try await scope.assets.delete(ids: deletedIds)

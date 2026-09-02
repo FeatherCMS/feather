@@ -44,7 +44,7 @@ public struct RemoveSession: UseCase {
         }
 
         return try await transaction.run { scope in
-            return try await scope.session.delete(ids: input.ids)
+            try await scope.session.delete(ids: input.ids)
         }
     }
 }

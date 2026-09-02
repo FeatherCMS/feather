@@ -192,9 +192,11 @@ struct SubscriberTable {
         emails: [String]
     ) async throws -> [String] {
         guard !emails.isEmpty else { return [] }
-        let values = emails.map {
-            "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-        }.joined(separator: ", ")
+        let values =
+            emails.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
         return try await connection.run(
             query: #"""
                 DELETE FROM newsletter_subscriber
@@ -203,9 +205,10 @@ struct SubscriberTable {
                 RETURNING email;
                 """#
         ) { sequence in
-            try await sequence.collect().map {
-                try $0.decode(column: "email", as: String.self)
-            }
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "email", as: String.self)
+                }
         }
     }
 }

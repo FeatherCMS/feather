@@ -176,9 +176,11 @@ struct PageTable {
         ids: [String]
     ) async throws -> [String] {
         guard !ids.isEmpty else { return [] }
-        let values = ids.map {
-            "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-        }.joined(separator: ", ")
+        let values =
+            ids.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
         return try await connection.run(
             query: #"""
                 DELETE FROM web_page
@@ -186,9 +188,10 @@ struct PageTable {
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().map {
-                try $0.decode(column: "id", as: String.self)
-            }
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 }

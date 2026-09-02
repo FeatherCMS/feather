@@ -14,7 +14,10 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeDeleteNewsletterCampaign()
-        _ = try await useCase.execute(subject: subject, input: .init(ids: body.ids))
+        _ = try await useCase.execute(
+            subject: subject,
+            input: .init(ids: body.ids)
+        )
         let results = body.ids.map {
             Components.Schemas.BulkDeleteResponseSchema
                 .ResultsPayloadPayload(id: $0, status: .deleted)
@@ -45,7 +48,10 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeDeleteNewsletterIssue()
-        _ = try await useCase.execute(subject: subject, input: .init(ids: body.ids))
+        _ = try await useCase.execute(
+            subject: subject,
+            input: .init(ids: body.ids)
+        )
         let results = body.ids.map {
             Components.Schemas.BulkDeleteResponseSchema
                 .ResultsPayloadPayload(id: $0, status: .deleted)

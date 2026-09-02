@@ -48,7 +48,7 @@ struct PermissionTable {
     func create(
         row: Row.Create
     ) async throws -> Row {
-        return try await connection.run(
+        try await connection.run(
             query: #"""
                 INSERT INTO system_permission (
                     id,
@@ -80,7 +80,7 @@ struct PermissionTable {
         limit: Int,
         offset: Int
     ) async throws -> [Row] {
-        return try await connection.run(
+        try await connection.run(
             query: #"""
                 SELECT *
                 FROM system_permission
@@ -166,9 +166,11 @@ struct PermissionTable {
         ids: [String]
     ) async throws -> [String] {
         guard !ids.isEmpty else { return [] }
-        let values = ids.map {
-            "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-        }.joined(separator: ", ")
+        let values =
+            ids.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
         return try await connection.run(
             query: #"""
                 DELETE FROM system_permission
@@ -176,9 +178,10 @@ struct PermissionTable {
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().map {
-                try $0.decode(column: "id", as: String.self)
-            }
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 }

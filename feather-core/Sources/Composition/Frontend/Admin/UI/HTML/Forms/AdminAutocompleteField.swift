@@ -142,7 +142,9 @@ public struct AdminAutocompleteField: Component, FlowContent {
             UnsafeRawProperty(name: "outline", value: "none")
             UnsafeRawProperty(name: "box-shadow", value: "none")
         }
-        Custom(".multiselect__control--has-selection input.multiselect__input::placeholder") {
+        Custom(
+            ".multiselect__control--has-selection input.multiselect__input::placeholder"
+        ) {
             UnsafeRawProperty(name: "color", value: "transparent")
         }
         Class("multiselect__toggle") {

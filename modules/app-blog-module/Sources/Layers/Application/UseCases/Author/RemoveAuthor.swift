@@ -44,7 +44,7 @@ public struct RemoveAuthor: UseCase {
         }
 
         return try await transaction.run { scope in
-            var deletedIds = [String]()
+            var deletedIds: [String] = []
             for id in input.ids {
                 try await scope.post.removeAuthor(id: id)
                 _ = try await scope.metadata.delete(
