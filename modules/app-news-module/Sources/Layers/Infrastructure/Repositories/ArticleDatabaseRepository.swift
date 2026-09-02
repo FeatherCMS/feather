@@ -80,9 +80,7 @@ public struct ArticleDatabaseRepository: ArticleRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(
-                reference: .existing(.init(type: "news.article", id: id))
-            )
+            .find(referenceType: "news.article", referenceId: id)
         else { return nil }
         return article.asDomain(
             metadata: metadata,

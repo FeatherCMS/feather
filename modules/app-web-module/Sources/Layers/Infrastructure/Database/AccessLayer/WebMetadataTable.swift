@@ -378,13 +378,19 @@ struct WebMetadataTable {
 
     func delete(
         referenceType: String,
-        referenceID: String
+        referenceIDs: [String]
     ) async throws -> [String] {
-        try await connection.run(
+        guard !referenceIDs.isEmpty else { return [] }
+        let values =
+            referenceIDs.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        return try await connection.run(
             query: #"""
                 DELETE FROM web_metadata
                 WHERE reference_type=\#(referenceType)
-                    AND reference_id=\#(referenceID)
+                    AND reference_id IN (\#(unescaped: values))
                 RETURNING id;
                 """#
         ) { sequence in

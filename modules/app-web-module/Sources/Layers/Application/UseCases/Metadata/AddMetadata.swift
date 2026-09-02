@@ -94,7 +94,7 @@ public struct AddMetadata: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let reference: Metadata.Reference = .existing(
+        let reference: Metadata.Reference = .identified(
             .init(type: input.referenceType, id: input.referenceID)
         )
 

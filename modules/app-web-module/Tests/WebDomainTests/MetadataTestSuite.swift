@@ -16,7 +16,7 @@ struct MetadataTestSuite {
     @Test
     func createSucceedsWithValidInput() throws {
         let result = try Metadata.create(
-            reference: .future("page"),
+            reference: .type("page"),
             template: "default",
             slug: "home",
             publicationDate: .distantPast,
@@ -41,7 +41,7 @@ struct MetadataTestSuite {
     func createRejectsEmptySlug() {
         #expect(throws: Metadata.Error.slugTooShort) {
             try Metadata.create(
-                reference: .future("page"),
+                reference: .type("page"),
                 template: "default",
                 slug: "",
                 publicationDate: .distantPast,
@@ -64,7 +64,7 @@ struct MetadataTestSuite {
     func updateChangesProvidedValues() throws {
         var metadata = Metadata(
             id: "metadata-1",
-            reference: .existing(.init(type: "page", id: "page-1")),
+            reference: .identified(.init(type: "page", id: "page-1")),
             template: "default",
             slug: "home",
             publicationDate: .distantPast,

@@ -98,7 +98,7 @@ extension Tag {
         try validate(content: content)
 
         let metadataModel = try Metadata.create(
-            reference: .future("blog.tag"),
+            reference: .type("blog.tag"),
             base: metadata
                 ?? .init(
                     template: "blog.tag",

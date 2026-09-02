@@ -63,9 +63,7 @@ public struct CategoryDatabaseRepository: CategoryRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(
-                reference: .existing(.init(type: "news.category", id: id))
-            )
+            .find(referenceType: "news.category", referenceId: id)
         else { return nil }
         return category.asDomain(metadata: metadata)
     }

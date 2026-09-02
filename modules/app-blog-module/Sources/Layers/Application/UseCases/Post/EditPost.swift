@@ -80,9 +80,8 @@ public struct EditPost: UseCase {
             }
             guard
                 var metadata = try await scope.metadata.find(
-                    reference: .existing(
-                        .init(type: "blog.post", id: input.id)
-                    )
+                    referenceType: "blog.post",
+                    referenceId: input.id
                 )
             else {
                 throw Error(message: "Post metadata not found")

@@ -47,10 +47,11 @@ public struct RemoveTag: UseCase {
             var deletedIds: [String] = []
             for id in input.ids {
                 try await scope.post.removeTag(id: id)
-                _ = try await scope.metadata.delete(
-                    reference: .existing(.init(type: "blog.tag", id: id))
-                )
             }
+            _ = try await scope.metadata.delete(
+                referenceType: "blog.tag",
+                referenceIds: input.ids
+            )
             deletedIds = try await scope.tag.delete(ids: input.ids)
             return deletedIds
         }

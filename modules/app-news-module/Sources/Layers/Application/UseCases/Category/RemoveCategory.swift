@@ -47,10 +47,11 @@ public struct RemoveCategory: UseCase {
             var deletedIds: [String] = []
             for id in input.ids {
                 try await scope.article.removeCategory(id: id)
-                _ = try await scope.metadata.delete(
-                    reference: .existing(.init(type: "news.category", id: id))
-                )
             }
+            _ = try await scope.metadata.delete(
+                referenceType: "news.category",
+                referenceIds: input.ids
+            )
             deletedIds = try await scope.category.delete(ids: input.ids)
             return deletedIds
         }

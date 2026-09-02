@@ -68,9 +68,7 @@ public struct PostDatabaseRepository: PostRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(
-                reference: .existing(.init(type: "blog.post", id: id))
-            )
+            .find(referenceType: "blog.post", referenceId: id)
         else { return nil }
         return post.asDomain(metadata: metadata)
     }

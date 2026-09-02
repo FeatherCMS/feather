@@ -16,7 +16,7 @@ extension WebMetadataTable.Row {
     var asDomain: Metadata {
         .init(
             id: id,
-            reference: .existing(.init(type: referenceType, id: referenceID)),
+            reference: .identified(.init(type: referenceType, id: referenceID)),
             template: template,
             slug: slug,
             publicationDate: publicationDate,
@@ -98,15 +98,13 @@ public struct MetadataDatabaseRepository: MetadataRepository {
     }
 
     public func find(
-        reference: Metadata.Reference
+        referenceType: String,
+        referenceId: String
     ) async throws -> Metadata? {
         let table = WebMetadataTable(connection: context.connection)
-        guard let referenceID = reference.id else {
-            return nil
-        }
         return try await table.find(
-            referenceType: reference.type,
-            referenceID: referenceID
+            referenceType: referenceType,
+            referenceID: referenceId
         )?
         .asDomain
     }
@@ -158,15 +156,16 @@ public struct MetadataDatabaseRepository: MetadataRepository {
     }
 
     public func delete(
-        reference: Metadata.Reference
+        referenceType: String,
+        referenceIds: [String]
     ) async throws -> [String] {
-        let table = WebMetadataTable(connection: context.connection)
-        guard let referenceID = reference.id else {
+        guard !referenceIds.isEmpty else {
             return []
         }
+        let table = WebMetadataTable(connection: context.connection)
         return try await table.delete(
-            referenceType: reference.type,
-            referenceID: referenceID
+            referenceType: referenceType,
+            referenceIDs: referenceIds
         )
     }
 }

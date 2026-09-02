@@ -44,11 +44,10 @@ public struct RemovePage: UseCase {
 
         return try await transaction.run { scope in
             let removedPage = try await scope.page.delete(ids: input.ids)
-            for id in input.ids {
-                _ = try await scope.metadata.delete(
-                    reference: .existing(.init(type: "web.page", id: id))
-                )
-            }
+            _ = try await scope.metadata.delete(
+                referenceType: "web.page",
+                referenceIds: input.ids
+            )
             let id = input.ids.first
             if let id, removedPage.contains(id) {
                 var settings = try await scope.settings.get()

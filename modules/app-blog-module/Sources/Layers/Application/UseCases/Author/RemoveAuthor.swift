@@ -47,10 +47,11 @@ public struct RemoveAuthor: UseCase {
             var deletedIds: [String] = []
             for id in input.ids {
                 try await scope.post.removeAuthor(id: id)
-                _ = try await scope.metadata.delete(
-                    reference: .existing(.init(type: "blog.author", id: id))
-                )
             }
+            _ = try await scope.metadata.delete(
+                referenceType: "blog.author",
+                referenceIds: input.ids
+            )
             deletedIds = try await scope.author.delete(ids: input.ids)
             return deletedIds
         }

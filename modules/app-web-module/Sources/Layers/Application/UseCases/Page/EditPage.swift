@@ -72,7 +72,8 @@ public struct EditPage: UseCase {
             }
             guard
                 var metadata = try await scope.metadata.find(
-                    reference: .existing(.init(type: "web.page", id: input.id))
+                    referenceType: "web.page",
+                    referenceId: input.id
                 )
             else {
                 throw Error(message: "Page metadata not found")

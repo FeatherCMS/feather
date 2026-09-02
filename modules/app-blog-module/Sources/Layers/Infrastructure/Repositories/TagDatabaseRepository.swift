@@ -64,9 +64,7 @@ public struct TagDatabaseRepository: TagRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(
-                reference: .existing(.init(type: "blog.tag", id: id))
-            )
+            .find(referenceType: "blog.tag", referenceId: id)
         else { return nil }
         return tag.asDomain(metadata: metadata)
     }

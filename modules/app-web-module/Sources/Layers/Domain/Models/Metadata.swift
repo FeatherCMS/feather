@@ -26,23 +26,23 @@ public struct Metadata: Model {
             }
         }
 
-        case future(String)
-        case existing(Target)
+        case type(String)
+        case identified(Target)
 
         public var type: String {
             switch self {
-            case .future(let type):
+            case .type(let type):
                 return type
-            case .existing(let target):
+            case .identified(let target):
                 return target.type
             }
         }
 
         public var id: String? {
             switch self {
-            case .future(_):
+            case .type(_):
                 return nil
-            case .existing(let target):
+            case .identified(let target):
                 return target.id
             }
         }
@@ -104,7 +104,7 @@ public struct Metadata: Model {
     }
 
     public enum Error: DomainError {
-        case referenceIsNotFuture
+        case referenceIsNotType
         case referenceTypeIsEmpty
         case referenceIdentifierIsEmpty
         case slugTooShort
@@ -140,10 +140,10 @@ public struct Metadata: Model {
         public mutating func set(
             referenceID id: String
         ) throws(Metadata.Error) {
-            guard case .future(let type) = reference else {
-                throw .referenceIsNotFuture
+            guard case .type(let type) = reference else {
+                throw .referenceIsNotType
             }
-            self.reference = .existing(.init(type: type, id: id))
+            self.reference = .identified(.init(type: type, id: id))
         }
     }
 
@@ -226,7 +226,7 @@ extension Metadata {
         guard !reference.type.isEmpty else {
             throw .referenceTypeIsEmpty
         }
-        guard case .existing(let target) = reference else {
+        guard case .identified(let target) = reference else {
             return
         }
         guard !target.id.isEmpty else {

@@ -51,7 +51,7 @@ public struct PageDatabaseRepository: PageRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(reference: .existing(.init(type: "web.page", id: id)))
+            .find(referenceType: "web.page", referenceId: id)
         else {
             return nil
         }

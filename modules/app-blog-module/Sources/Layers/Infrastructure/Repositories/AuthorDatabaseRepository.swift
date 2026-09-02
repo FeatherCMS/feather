@@ -64,9 +64,7 @@ public struct AuthorDatabaseRepository: AuthorRepository {
             let metadata = try await MetadataDatabaseRepository(
                 context: context
             )
-            .find(
-                reference: .existing(.init(type: "blog.author", id: id))
-            )
+            .find(referenceType: "blog.author", referenceId: id)
         else { return nil }
         return author.asDomain(metadata: metadata)
     }

@@ -44,14 +44,11 @@ public struct RemoveArticle: UseCase {
         }
 
         return try await transaction.run { scope in
-            var deletedIds: [String] = []
-            for id in input.ids {
-                _ = try await scope.metadata.delete(
-                    reference: .existing(.init(type: "news.article", id: id))
-                )
-            }
-            deletedIds = try await scope.article.delete(ids: input.ids)
-            return deletedIds
+            _ = try await scope.metadata.delete(
+                referenceType: "news.article",
+                referenceIds: input.ids
+            )
+            return try await scope.article.delete(ids: input.ids)
         }
     }
 }
