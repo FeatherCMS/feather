@@ -3,6 +3,7 @@
 .swiftpm
 .cache
 .docker-cache
+.docker
 .env
 .env.*
 *.code-workspace
