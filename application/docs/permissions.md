@@ -126,11 +126,11 @@ This file documents the backend permission keys and what they allow a user to do
 - `web:pages:list`: List and search pages.
 - `web:pages:delete`: Delete a page.
 
-- `web:metadata:create`: Create a web metadata entry.
-- `web:metadata:read`: View a single web metadata entry.
-- `web:metadata:update`: Edit a web metadata entry.
-- `web:metadata:list`: List and search web metadata entries.
-- `web:metadata:delete`: Delete a web metadata entry.
+- `web:metadata:create`: Create a web metadata.
+- `web:metadata:read`: View a single web metadata.
+- `web:metadata:update`: Edit a web metadata.
+- `web:metadata:list`: List and search web metadata.
+- `web:metadata:delete`: Delete a web metadata.
 
 - `web:menus:create`: Create a menu.
 - `web:menus:read`: View a single menu.

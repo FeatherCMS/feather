@@ -12,11 +12,11 @@ struct AdminListWebMetadataOpenAPIRepository:
     private let listForbiddenMessage =
         "Your account cannot access web metadata."
     private let deleteUnauthorizedMessage =
-        "Please sign in again to delete this web metadata entry."
+        "Please sign in again to delete this web metadata."
     private let deleteForbiddenMessage =
-        "Your account cannot delete this web metadata entry."
+        "Your account cannot delete this web metadata."
     private let deleteNotFoundMessage =
-        "This web metadata entry could not be found."
+        "This web metadata could not be found."
 
     init(api: WebAdminAPIClient) {
         self.api = api

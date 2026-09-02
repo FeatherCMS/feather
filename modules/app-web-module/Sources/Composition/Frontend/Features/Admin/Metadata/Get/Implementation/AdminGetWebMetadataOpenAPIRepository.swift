@@ -50,12 +50,12 @@ struct AdminGetWebMetadataOpenAPIRepository: AdminGetWebMetadataRepository {
                 )
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this metadata entry."
+                    message: "Please sign in again to load this web metadata."
                 )
             case .forbidden:
                 throw OpenAPIRepositoryError.forbidden(
                     message:
-                        "Your account cannot access metadata entries."
+                        "Your account cannot access web metadata."
                 )
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(

@@ -28,7 +28,7 @@ struct AdminListWebMetadataDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage metadata entries",
+                title: "Manage web metadata",
                 description: "Management web metadata list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -37,7 +37,7 @@ struct AdminListWebMetadataDefaultPresenter:
                 ),
                 content: WebMetadataError(
                     state: .init(
-                        info: "Unable to load metadata entries.",
+                        info: "Unable to load web metadata.",
                         message: error,
                         breadcrumb: webMetadataBreadcrumbState()
                     )
@@ -46,7 +46,7 @@ struct AdminListWebMetadataDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage metadata entries",
+            title: "Manage web metadata",
             description: "Management web metadata list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -67,7 +67,7 @@ struct AdminListWebMetadataDefaultPresenter:
                     referenceType: referenceType ?? "",
                     deniedInfo: "Forbidden",
                     deniedMessage:
-                        "Your account cannot access metadata entries.",
+                        "Your account cannot access web metadata.",
                     breadcrumb: webMetadataBreadcrumbState()
                 )
             )

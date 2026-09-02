@@ -43,11 +43,11 @@ public struct AdminWebMetadataStatusUpdater: Sendable {
                 metadataID = entry.id
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to update this metadata."
+                    message: "Please sign in again to update this web metadata."
                 )
             case .forbidden:
                 throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit metadata entries."
+                    message: "Your account cannot edit web metadata."
                 )
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
@@ -70,11 +70,11 @@ public struct AdminWebMetadataStatusUpdater: Sendable {
                 )
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to update this metadata."
+                    message: "Please sign in again to update this web metadata."
                 )
             case .forbidden:
                 throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit metadata entries."
+                    message: "Your account cannot edit web metadata."
                 )
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(

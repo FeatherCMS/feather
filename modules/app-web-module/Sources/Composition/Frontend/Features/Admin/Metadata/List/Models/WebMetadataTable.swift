@@ -37,7 +37,7 @@ struct WebMetadataTable: Component {
             }
             else {
                 AdminBreadcrumb(state: state.breadcrumb)
-                H1("Metadata entries")
+                H1("Metadata")
 
                 if state.isEdited { P("Web metadata edited successfully.") }
                 Form {
@@ -45,7 +45,7 @@ struct WebMetadataTable: Component {
                         Input()
                             .type(.search)
                             .name("search")
-                            .placeholder("Quick search metadata entries")
+                            .placeholder("Quick search metadata")
                             .value(state.search)
                         Select {
                             Option("All reference types")
@@ -74,8 +74,8 @@ struct WebMetadataTable: Component {
                 if state.rules.isEmpty {
                     P(
                         state.search.isEmpty && state.referenceType.isEmpty
-                            ? "No metadata entries yet."
-                            : "No metadata entries match your search."
+                            ? "No metadata yet."
+                            : "No metadata match your search."
                     )
                 }
                 else {
