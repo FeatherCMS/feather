@@ -19,7 +19,7 @@ extension AdminAPIGateway {
         let result = try await useCase.execute(
             subject: subject,
             input: .init(
-                identityEmailId: body.credentialId,
+                authEmailId: body.credentialId,
                 isPersistent: body.isPersistent
             )
         )

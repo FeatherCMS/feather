@@ -19,5 +19,5 @@ import WebStandards
 struct AuthEmailDetailsModel: Sendable {
     let id: String
     let identityId: String
-    let isPrimary: Bool
+    let email: String
 }

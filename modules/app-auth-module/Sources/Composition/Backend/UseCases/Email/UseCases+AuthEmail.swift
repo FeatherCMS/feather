@@ -9,7 +9,7 @@ import UserBackend
 import UserInfrastructure
 
 extension UseCases {
-    private func identityEmailTransaction() -> any TransactionExecutor<
+    private func authEmailTransaction() -> any TransactionExecutor<
         WriteAuth
     > {
         DatabaseTransactionExecutor(
@@ -19,7 +19,7 @@ extension UseCases {
             WriteAuth(
                 identity: IdentityDatabaseRepository(context: context),
                 credential: CredentialDatabaseRepository(context: context),
-                identityEmail: IdentityEmailDatabaseRepository(
+                authEmail: AuthEmailDatabaseRepository(
                     context: context
                 ),
                 session: SessionDatabaseRepository(context: context),
@@ -28,16 +28,16 @@ extension UseCases {
         }
     }
 
-    func makeListIdentityEmails() -> ListIdentityEmails {
-        .init(authorizer: authorizer, transaction: identityEmailTransaction())
+    func makeListAuthEmails() -> ListAuthEmails {
+        .init(authorizer: authorizer, transaction: authEmailTransaction())
     }
-    func makeAddIdentityEmail() -> AddIdentityEmail {
-        .init(authorizer: authorizer, transaction: identityEmailTransaction())
+    func makeAddAuthEmail() -> AddAuthEmail {
+        .init(authorizer: authorizer, transaction: authEmailTransaction())
     }
-    func makeEditIdentityEmail() -> EditIdentityEmail {
-        .init(authorizer: authorizer, transaction: identityEmailTransaction())
+    func makeEditAuthEmail() -> EditAuthEmail {
+        .init(authorizer: authorizer, transaction: authEmailTransaction())
     }
-    func makeRemoveIdentityEmails() -> RemoveIdentityEmails {
-        .init(authorizer: authorizer, transaction: identityEmailTransaction())
+    func makeRemoveAuthEmails() -> RemoveAuthEmails {
+        .init(authorizer: authorizer, transaction: authEmailTransaction())
     }
 }

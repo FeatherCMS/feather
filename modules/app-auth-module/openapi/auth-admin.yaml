@@ -9,7 +9,7 @@ tags:
   description: User identities related endpoints.
 - name: AuthCredentials
   description: Manage user credentials.
-- name: AuthIdentityEmails
+- name: AuthEmails
 - name: AuthRolePermissions
   description: Manage role-permission assignments.
 - name: AuthMagicLinks
@@ -234,48 +234,48 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/identity-emails:
+  /api/v1/admin/auth/emails:
     post:
       tags:
-      - AuthIdentityEmails
-      operationId: authIdentityEmailCreate
+      - AuthEmails
+      operationId: authEmailCreate
       requestBody:
-        $ref: '#/components/requestBodies/AuthIdentityEmailRequestBody'
+        $ref: '#/components/requestBodies/AuthEmailRequestBody'
       responses:
         201:
-          $ref: '#/components/responses/AuthIdentityEmailDetailResponse'
+          $ref: '#/components/responses/AuthEmailDetailResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/identity-emails/:
+  /api/v1/admin/auth/emails/:
     get:
       tags:
-      - AuthIdentityEmails
-      operationId: authIdentityEmailList
+      - AuthEmails
+      operationId: authEmailList
       responses:
         200:
-          $ref: '#/components/responses/AuthIdentityEmailListResponse'
+          $ref: '#/components/responses/AuthEmailListResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/identity-emails/{authIdentityEmailId}:
+  /api/v1/admin/auth/emails/{authEmailId}:
     get:
       tags:
-      - AuthIdentityEmails
-      operationId: authIdentityEmailGet
+      - AuthEmails
+      operationId: authEmailGet
       parameters:
-      - $ref: '#/components/parameters/AuthIdentityEmailIdParameter'
+      - $ref: '#/components/parameters/AuthEmailIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/AuthIdentityEmailDetailResponse'
+          $ref: '#/components/responses/AuthEmailDetailResponse'
         404:
-          description: Auth identity email not found
+          description: Auth auth email not found
         401:
           description: Unauthorized
         403:
@@ -284,10 +284,10 @@ paths:
       - bearerAuth: []
     delete:
       tags:
-      - AuthIdentityEmails
-      operationId: authIdentityEmailDelete
+      - AuthEmails
+      operationId: authEmailDelete
       parameters:
-      - $ref: '#/components/parameters/AuthIdentityEmailIdParameter'
+      - $ref: '#/components/parameters/AuthEmailIdParameter'
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -301,17 +301,17 @@ paths:
       - bearerAuth: []
     patch:
       tags:
-      - AuthIdentityEmails
-      operationId: authIdentityEmailPatch
+      - AuthEmails
+      operationId: authEmailPatch
       parameters:
-      - $ref: '#/components/parameters/AuthIdentityEmailIdParameter'
+      - $ref: '#/components/parameters/AuthEmailIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/AuthIdentityEmailPatchRequestBody'
+        $ref: '#/components/requestBodies/AuthEmailPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/AuthIdentityEmailDetailResponse'
+          $ref: '#/components/responses/AuthEmailDetailResponse'
         404:
-          description: Auth identity email not found
+          description: Auth auth email not found
         401:
           description: Unauthorized
         403:
@@ -843,7 +843,7 @@ components:
     AuthCredentialPasswordField:
       type: string
       example: correct-horse-battery-staple
-    AuthIdentityEmailCreateSchema:
+    AuthEmailCreateSchema:
       type: object
       properties:
         identityId:
@@ -852,16 +852,10 @@ components:
         email:
           type: string
           example: john.doe@example.com
-        isPrimary:
-          $ref: '#/components/schemas/AuthIdentityEmailBooleanField'
-        isVerified:
-          $ref: '#/components/schemas/AuthIdentityEmailBooleanField'
       required:
       - identityId
       - email
-    AuthIdentityEmailBooleanField:
-      type: boolean
-    AuthIdentityEmailDetailSchema:
+    AuthEmailDetailSchema:
       type: object
       properties:
         id:
@@ -873,38 +867,28 @@ components:
         email:
           type: string
           example: john.doe@example.com
-        isPrimary:
-          type: boolean
-        isVerified:
-          type: boolean
       required:
       - id
       - identityId
       - email
-      - isPrimary
-      - isVerified
-    AuthIdentityEmailListSchema:
+    AuthEmailListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/AuthIdentityEmailDetailSchema'
-    AuthIdentityEmailIdField:
+        $ref: '#/components/schemas/AuthEmailDetailSchema'
+    AuthEmailIdField:
       type: string
       example: email_7nL3xQ2v
-    AuthIdentityEmailPatchSchema:
+    AuthEmailPatchSchema:
       type: object
       properties:
         identityId:
-          $ref: '#/components/schemas/AuthIdentityEmailIdentityIdField'
+          $ref: '#/components/schemas/AuthEmailIdentityIdField'
         email:
-          $ref: '#/components/schemas/AuthIdentityEmailEmailField'
-        isPrimary:
-          $ref: '#/components/schemas/AuthIdentityEmailBooleanField'
-        isVerified:
-          $ref: '#/components/schemas/AuthIdentityEmailBooleanField'
-    AuthIdentityEmailIdentityIdField:
+          $ref: '#/components/schemas/AuthEmailEmailField'
+    AuthEmailIdentityIdField:
       type: string
       example: user_7nL3xQ2v
-    AuthIdentityEmailEmailField:
+    AuthEmailEmailField:
       type: string
       example: john.doe@example.com
     AuthRolePermissionCreateSchema:
@@ -1196,18 +1180,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthCredentialListItemSearchSchema'
-    AuthIdentityEmailDetailResponse:
-      description: Auth identity email response
+    AuthEmailDetailResponse:
+      description: Auth auth email response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthIdentityEmailDetailSchema'
-    AuthIdentityEmailListResponse:
-      description: Auth identity email list response
+            $ref: '#/components/schemas/AuthEmailDetailSchema'
+    AuthEmailListResponse:
+      description: Auth auth email list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthIdentityEmailListSchema'
+            $ref: '#/components/schemas/AuthEmailListSchema'
     AuthRolePermissionDetailResponse:
       description: AuthRolePermission response
       content:
@@ -1252,12 +1236,12 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/AuthCredentialIdField'
-    AuthIdentityEmailIdParameter:
-      name: authIdentityEmailId
+    AuthEmailIdParameter:
+      name: authEmailId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/AuthIdentityEmailIdField'
+        $ref: '#/components/schemas/AuthEmailIdField'
     AuthMagicLinkIdParameter:
       name: authMagicLinkId
       in: path
@@ -1307,17 +1291,17 @@ components:
           schema:
             $ref: '#/components/schemas/AuthCredentialPatchSchema'
       required: true
-    AuthIdentityEmailRequestBody:
+    AuthEmailRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthIdentityEmailCreateSchema'
+            $ref: '#/components/schemas/AuthEmailCreateSchema'
       required: true
-    AuthIdentityEmailPatchRequestBody:
+    AuthEmailPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthIdentityEmailPatchSchema'
+            $ref: '#/components/schemas/AuthEmailPatchSchema'
       required: true
     AuthRolePermissionRequestBody:
       content:

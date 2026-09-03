@@ -20,6 +20,7 @@ protocol AdminEditAuthMagicLinkPresenter: Sendable {
 
     func formState(
         credentialId: String,
+        emails: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema],
         isPersistent: Bool
     ) -> AuthMagicLinkForm.State
 
@@ -43,4 +44,17 @@ protocol AdminEditAuthMagicLinkPresenter: Sendable {
     func format(
         error: OpenAPIRepositoryError
     ) -> String
+}
+
+extension AdminEditAuthMagicLinkPresenter {
+    func formState(
+        credentialId: String,
+        isPersistent: Bool
+    ) -> AuthMagicLinkForm.State {
+        formState(
+            credentialId: credentialId,
+            emails: [],
+            isPersistent: isPersistent
+        )
+    }
 }

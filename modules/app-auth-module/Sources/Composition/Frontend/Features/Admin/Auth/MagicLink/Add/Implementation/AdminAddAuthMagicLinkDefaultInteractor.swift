@@ -19,6 +19,12 @@ import WebStandards
 struct AdminAddAuthMagicLinkDefaultInteractor: AdminAddAuthMagicLinkInteractor {
     let repository: any AdminAddAuthMagicLinkRepository
 
+    func listEmails() async throws
+        -> [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema]
+    {
+        try await repository.listEmails()
+    }
+
     func execute(
         entity: AdminAddAuthMagicLinkModel
     ) async throws {

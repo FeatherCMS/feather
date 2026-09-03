@@ -32,10 +32,6 @@ struct AuthEmailDetails: Component {
                 label: "Identity ID",
                 value: state.link.identityId
             )
-            AdminDetailsField(
-                label: "Persistent",
-                value: state.link.isPrimary ? "Yes" : "No"
-            )
             Div {
                 AdminNavigationButton(
                     "Edit email",

@@ -23,12 +23,10 @@ public struct AdminAddAuthEmailFormInput: Codable, Sendable, Equatable,
     enum CodingKeys: String, CodingKey {
         case identityId = "identity_id"
         case email
-        case isPrimary = "is_primary"
     }
 
     public let identityId: String
     public let email: String
-    public let isPrimary: CheckboxFormInput
 
     public var normalizedIdentityId: String {
         identityId.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -40,12 +38,10 @@ public struct AdminAddAuthEmailFormInput: Codable, Sendable, Equatable,
 
     public init(
         identityId: String,
-        email: String = "",
-        isPrimary: CheckboxFormInput
+        email: String = ""
     ) {
         self.identityId = identityId
         self.email = email
-        self.isPrimary = isPrimary
     }
 
     public init(from decoder: any Decoder) throws {
@@ -56,10 +52,5 @@ public struct AdminAddAuthEmailFormInput: Codable, Sendable, Equatable,
         )
         self.email =
             try container.decodeIfPresent(String.self, forKey: .email) ?? ""
-        self.isPrimary =
-            try container.decodeIfPresent(
-                CheckboxFormInput.self,
-                forKey: .isPrimary
-            ) ?? .init(value: false)
     }
 }

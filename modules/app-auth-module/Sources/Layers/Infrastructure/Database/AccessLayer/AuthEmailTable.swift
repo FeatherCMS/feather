@@ -3,14 +3,12 @@ import FeatherInfrastructure
 
 import struct Foundation.Date
 
-struct IdentityEmailTable {
+struct AuthEmailTable {
 
     struct Row {
         let id: String
         let identityId: String
         let email: String
-        let isPrimary: Bool
-        let isVerified: Bool
         let createdAt: Date
         let updatedAt: Date
     }
@@ -21,7 +19,7 @@ struct IdentityEmailTable {
         try await connection.run(
             query: #"""
                 SELECT *
-                FROM auth_identity_email
+                FROM auth_email
                 ORDER BY email ASC;
                 """#
         ) { sequence in
@@ -34,7 +32,7 @@ struct IdentityEmailTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT * FROM auth_identity_email
+                SELECT * FROM auth_email
                 WHERE id=\#(id)
                 LIMIT 1;
                 """#
@@ -52,7 +50,7 @@ struct IdentityEmailTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT * FROM auth_identity_email
+                SELECT * FROM auth_email
                 WHERE identity_id=\#(identityId) AND email=\#(email)
                 LIMIT 1;
                 """#
@@ -67,7 +65,7 @@ struct IdentityEmailTable {
     func findBy(email: String) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT * FROM auth_identity_email
+                SELECT * FROM auth_email
                 WHERE email=\#(email)
                 LIMIT 1;
                 """#
@@ -86,11 +84,10 @@ struct IdentityEmailTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO auth_identity_email (
-                    id, identity_id, email, is_primary, is_verified,
-                    created_at, updated_at
+                INSERT INTO auth_email (
+                    id, identity_id, email, created_at, updated_at
                 ) VALUES (
-                    \#(id), \#(identityId), \#(email), TRUE, FALSE,
+                    \#(id), \#(identityId), \#(email),
                     NOW(), NOW()
                 )
                 RETURNING *;
@@ -106,15 +103,12 @@ struct IdentityEmailTable {
     func update(
         id: String,
         identityId: String,
-        email: String,
-        isPrimary: Bool,
-        isVerified: Bool
+        email: String
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                UPDATE auth_identity_email
-                SET identity_id=\#(identityId), email=\#(email),
-                    is_primary=\#(isPrimary), is_verified=\#(isVerified), updated_at=NOW()
+                UPDATE auth_email
+                SET identity_id=\#(identityId), email=\#(email), updated_at=NOW()
                 WHERE id=\#(id)
                 RETURNING *;
                 """#
@@ -133,7 +127,7 @@ struct IdentityEmailTable {
             .joined(separator: ", ")
         return try await connection.run(
             query: #"""
-                DELETE FROM auth_identity_email WHERE id IN (\#(unescaped: values)) RETURNING id;
+                DELETE FROM auth_email WHERE id IN (\#(unescaped: values)) RETURNING id;
                 """#
         ) { sequence in
             try await sequence.collect()
@@ -146,8 +140,6 @@ struct IdentityEmailTable {
             id: try row.decode(column: "id", as: String.self),
             identityId: try row.decode(column: "identity_id", as: String.self),
             email: try row.decode(column: "email", as: String.self),
-            isPrimary: try row.decode(column: "is_primary", as: Bool.self),
-            isVerified: try row.decode(column: "is_verified", as: Bool.self),
             createdAt: try row.decode(column: "created_at", as: Date.self),
             updatedAt: try row.decode(column: "updated_at", as: Date.self)
         )

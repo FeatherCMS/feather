@@ -19,18 +19,12 @@ import WebStandards
 struct AuthEmailFormPayloadModel: Sendable {
     let identityId: String
     let email: String
-    let isPrimary: Bool
-    let isVerified: Bool
 
     init(
         identityId: String,
-        email: String = "",
-        isPrimary: Bool,
-        isVerified: Bool = false
+        email: String = ""
     ) {
         self.identityId = identityId
         self.email = email
-        self.isPrimary = isPrimary
-        self.isVerified = isVerified
     }
 }

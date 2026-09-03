@@ -25,7 +25,7 @@ protocol AdminAddAuthEmailPresenter: Sendable {
 
     func formState(
         identityId: String,
-        isPrimary: Bool
+        identities: [AuthCredentialIdentityOption]
     ) -> AuthEmailForm.State
 
     func breadcrumb() -> AdminBreadcrumb.State
@@ -33,4 +33,12 @@ protocol AdminAddAuthEmailPresenter: Sendable {
     func format(
         error: OpenAPIRepositoryError
     ) -> String
+}
+
+extension AdminAddAuthEmailPresenter {
+    func formState(
+        identityId: String
+    ) -> AuthEmailForm.State {
+        formState(identityId: identityId, identities: [])
+    }
 }

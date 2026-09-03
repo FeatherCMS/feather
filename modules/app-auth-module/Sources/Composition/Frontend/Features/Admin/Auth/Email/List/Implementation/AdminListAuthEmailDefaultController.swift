@@ -50,6 +50,7 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
                 )
                 : (
                     items: [],
+                    identityNames: [:],
                     total: 0,
                     page: page,
                     size: pageSize
@@ -65,6 +66,7 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
                     AuthPermissions.Emails.create.rawValue
                 ),
                 links: result.items,
+                identityNames: result.identityNames,
                 page: result.page,
                 pageSize: result.size,
                 total: result.total,

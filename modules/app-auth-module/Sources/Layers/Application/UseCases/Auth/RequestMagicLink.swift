@@ -43,7 +43,7 @@ public struct RequestMagicLink: UseCase {
         let result: (token: String, publicBaseURL: String, template: String?)? =
             try await transaction.run { scope in
                 guard
-                    let identityEmail = try await scope.identityEmail.findBy(
+                    let authEmail = try await scope.authEmail.findBy(
                         email: input.email
                     )
                 else {
@@ -54,7 +54,7 @@ public struct RequestMagicLink: UseCase {
 
                 _ = try await scope.magicLink.insert(
                     MagicLink.create(
-                        identityEmailId: identityEmail.id,
+                        authEmailId: authEmail.id,
                         token: token,
                         isPersistent: input.isPersistent
                     )

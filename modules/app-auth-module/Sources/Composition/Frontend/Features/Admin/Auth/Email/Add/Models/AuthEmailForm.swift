@@ -24,43 +24,28 @@ struct AuthEmailForm: Component, FlowContent {
         var error: String?
     }
 
-    struct CheckboxState: FeatherAdmin.Object {
-        var key: String
-        var label: String
-        var value: Bool
-        var error: String?
-    }
-
     struct State: FeatherAdmin.Object {
         var identityId: FieldState
+        var identityOptions: [AdminAutocompleteField.OptionState]
         var email: FieldState
-        var isPrimary: CheckboxState
-        var isVerified: CheckboxState
         var error: String?
         var success: String?
 
         init(
             identityId: FieldState,
+            identityOptions: [AdminAutocompleteField.OptionState] = [],
             email: FieldState = .init(
                 key: "email",
                 label: "Email address",
                 value: "",
                 error: nil
             ),
-            isPrimary: CheckboxState,
-            isVerified: CheckboxState = .init(
-                key: "is_verified",
-                label: "Verified",
-                value: false,
-                error: nil
-            ),
             error: String? = nil,
             success: String? = nil
         ) {
             self.identityId = identityId
+            self.identityOptions = identityOptions
             self.email = email
-            self.isPrimary = isPrimary
-            self.isVerified = isVerified
             self.error = error
             self.success = success
         }
@@ -88,12 +73,16 @@ struct AuthEmailForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            FormInputField(
-                name: state.identityId.key,
-                label: state.identityId.label,
-                value: state.identityId.value,
-                error: state.identityId.error,
-                isRequired: true
+            AdminAutocompleteField(
+                state: .init(
+                    key: state.identityId.key,
+                    label: state.identityId.label,
+                    placeholder: "Select a user identity",
+                    options: state.identityOptions,
+                    error: state.identityId.error,
+                    selectionMode: .single,
+                    isEnabled: true
+                )
             )
 
             FormInputField(
@@ -103,27 +92,6 @@ struct AuthEmailForm: Component, FlowContent {
                 error: state.email.error,
                 type: .email,
                 isRequired: true
-            )
-
-            CheckboxField(
-                state: .init(
-                    key: state.isPrimary.key,
-                    label: state.isPrimary.label,
-                    value: state.isPrimary.value,
-                    error: state.isPrimary.error,
-                    labelPosition: .before,
-
-                )
-            )
-
-            CheckboxField(
-                state: .init(
-                    key: state.isVerified.key,
-                    label: state.isVerified.label,
-                    value: state.isVerified.value,
-                    error: state.isVerified.error,
-                    labelPosition: .before
-                )
             )
 
             Section {

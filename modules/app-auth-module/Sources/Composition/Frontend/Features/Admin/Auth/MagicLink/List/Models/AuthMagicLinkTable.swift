@@ -25,6 +25,7 @@ struct AuthMagicLinkTable: Component {
         let permissions: Set<String>
         let canAdd: Bool
         let links: [AuthAdminAPI.Components.Schemas.AuthMagicLinkListItemSchema]
+        let emailByAuthEmailId: [String: String]
         let page: Int
         let pageSize: Int
         let total: Int
@@ -156,7 +157,7 @@ struct AuthMagicLinkTable: Component {
                                         if canRemove {
                                             ListTableSelectAllCheckbox()
                                         }
-                                        Th("Credential ID")
+                                        Th("Email")
                                             .columnWidth(percent: 50)
                                         Th("Expires At")
                                             .columnWidth(percent: 24)
@@ -175,8 +176,12 @@ struct AuthMagicLinkTable: Component {
                                                     state: .init(id: link.id)
                                                 )
                                             }
-                                            Td(link.credentialId)
-                                                .data("label", "Credential ID")
+                                            Td(
+                                                state.emailByAuthEmailId[
+                                                    String(link.credentialId)
+                                                ] ?? "Unknown email"
+                                            )
+                                                .data("label", "Email")
                                                 .columnWidth(percent: 50)
                                             Td(
                                                 DateFormatting

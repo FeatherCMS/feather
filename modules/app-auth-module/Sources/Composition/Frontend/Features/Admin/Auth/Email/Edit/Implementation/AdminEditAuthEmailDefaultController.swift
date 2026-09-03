@@ -35,12 +35,14 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
         let permissions = context.currentUserPermissions
         do {
             let link = try await interactor.get(id: id)
+            let identities = (try? await interactor.listIdentities()) ?? []
             return presenter.renderPage(
                 id: id,
                 isEdited: isEdited,
                 form: presenter.formState(
                     identityId: link.identityId,
-                    isPrimary: link.isPrimary
+                    identities: identities,
+                    email: link.email
                 ),
                 permissions: permissions
             )
@@ -75,7 +77,7 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
                 entity: .init(
                     id: id,
                     identityId: payload.normalizedIdentityId,
-                    isPrimary: payload.isPrimary.value
+                    email: payload.normalizedEmail
                 )
             )
             return Response(
@@ -94,7 +96,7 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
             for f in error.failures { errs[f.key] = f.message }
             var state = presenter.formState(
                 identityId: lastPayload?.normalizedIdentityId ?? "",
-                isPrimary: lastPayload?.isPrimary.value ?? false
+                email: lastPayload?.normalizedEmail ?? ""
             )
             state.apply(errors: errs)
             return try updateResponse(
@@ -108,7 +110,7 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
         catch let error as OpenAPIRepositoryError {
             var state = presenter.formState(
                 identityId: lastPayload?.normalizedIdentityId ?? "",
-                isPrimary: lastPayload?.isPrimary.value ?? false
+                email: lastPayload?.normalizedEmail ?? ""
             )
             state.error = presenter.format(error: error)
             return try updateResponse(
@@ -122,7 +124,7 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
         catch {
             var state = presenter.formState(
                 identityId: lastPayload?.normalizedIdentityId ?? "",
-                isPrimary: lastPayload?.isPrimary.value ?? false
+                email: lastPayload?.normalizedEmail ?? ""
             )
             state.error = error.displayMessage
             return try updateResponse(

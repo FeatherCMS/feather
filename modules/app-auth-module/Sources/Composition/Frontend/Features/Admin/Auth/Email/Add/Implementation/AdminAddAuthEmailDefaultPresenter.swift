@@ -44,21 +44,22 @@ struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
 
     func formState(
         identityId: String = "",
-        isPrimary: Bool = false
+        identities: [AuthCredentialIdentityOption] = []
     ) -> AuthEmailForm.State {
         .init(
             identityId: .init(
                 key: "identity_id",
-                label: "Identity email ID",
+                label: "User identity",
                 value: identityId,
                 error: nil
             ),
-            isPrimary: .init(
-                key: "is_primary",
-                label: "Persistent link",
-                value: isPrimary,
-                error: nil
-            ),
+            identityOptions: identities.map {
+                .init(
+                    label: $0.label,
+                    value: $0.id,
+                    isSelected: $0.id == identityId
+                )
+            },
             error: nil,
             success: nil
         )

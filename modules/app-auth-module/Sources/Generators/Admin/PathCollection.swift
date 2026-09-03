@@ -22,11 +22,11 @@ struct PathCollection: PathCollectionRepresentable {
                 AuthCredentialSearchPathItems(),
             "api/v1/admin/auth/credentials/{authCredentialId}":
                 AuthCredentialIdPathItems(),
-            "api/v1/admin/auth/identity-emails": AuthIdentityEmailPathItems(),
-            "api/v1/admin/auth/identity-emails/":
-                AuthIdentityEmailListPathItems(),
-            "api/v1/admin/auth/identity-emails/{authIdentityEmailId}":
-                AuthIdentityEmailIdPathItems(),
+            "api/v1/admin/auth/emails": AuthEmailPathItems(),
+            "api/v1/admin/auth/emails/":
+                AuthEmailListPathItems(),
+            "api/v1/admin/auth/emails/{authEmailId}":
+                AuthEmailIdPathItems(),
             "api/v1/admin/auth/role-permissions": AuthRolePermissionPathItems(),
             "api/v1/admin/auth/role-permissions/search":
                 AuthRolePermissionSearchPathItems(),

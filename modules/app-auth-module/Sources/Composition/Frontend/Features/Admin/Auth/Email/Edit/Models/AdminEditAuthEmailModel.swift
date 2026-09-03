@@ -19,9 +19,9 @@ import WebStandards
 struct AdminEditAuthEmailModel: Sendable {
     let id: String
     let identityId: String
-    let isPrimary: Bool
+    let email: String
 
     var payload: AuthEmailFormPayloadModel {
-        .init(identityId: identityId, isPrimary: isPrimary)
+        .init(identityId: identityId, email: email)
     }
 }

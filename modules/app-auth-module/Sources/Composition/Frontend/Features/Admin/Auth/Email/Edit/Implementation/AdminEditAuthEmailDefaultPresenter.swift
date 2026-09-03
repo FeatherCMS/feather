@@ -22,19 +22,27 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
 
     func formState(
         identityId: String = "",
-        isPrimary: Bool = false
+        identities: [AuthCredentialIdentityOption] = [],
+        email: String = ""
     ) -> AuthEmailForm.State {
         .init(
             identityId: .init(
                 key: "identity_id",
-                label: "Identity email ID",
+                label: "Auth email ID",
                 value: identityId,
                 error: nil
             ),
-            isPrimary: .init(
-                key: "is_primary",
-                label: "Persistent link",
-                value: isPrimary,
+            identityOptions: identities.map {
+                .init(
+                    label: $0.label,
+                    value: $0.id,
+                    isSelected: $0.id == identityId
+                )
+            },
+            email: .init(
+                key: "email",
+                label: "Email address",
+                value: email,
                 error: nil
             ),
             error: nil,

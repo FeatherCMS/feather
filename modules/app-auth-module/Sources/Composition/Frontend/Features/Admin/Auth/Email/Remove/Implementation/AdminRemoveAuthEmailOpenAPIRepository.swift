@@ -27,8 +27,8 @@ struct AdminRemoveAuthEmailOpenAPIRepository:
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .authIdentityEmailGet(
-                    path: .init(authIdentityEmailId: id),
+                .authEmailGet(
+                    path: .init(authEmailId: id),
                     headers: .init(accept: [.init(contentType: .json)])
                 )
             switch response {
@@ -37,7 +37,7 @@ struct AdminRemoveAuthEmailOpenAPIRepository:
                 return .init(
                     id: item.id,
                     identityId: item.identityId,
-                    isPrimary: item.isPrimary
+                    email: item.email
                 )
             case .notFound:
                 throw OpenAPIRepositoryError.notFound(
@@ -66,8 +66,8 @@ struct AdminRemoveAuthEmailOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.authIdentityEmailDelete(
-                path: .init(authIdentityEmailId: id),
+            _ = try await client.authEmailDelete(
+                path: .init(authEmailId: id),
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

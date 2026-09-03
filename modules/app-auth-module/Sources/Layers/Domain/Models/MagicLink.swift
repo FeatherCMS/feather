@@ -11,8 +11,8 @@ import struct Foundation.Date
 public struct MagicLink: Model {
 
     public enum Error: DomainError {
-        case identityEmailIdTooShort
-        case identityEmailIdTooLong
+        case authEmailIdTooShort
+        case authEmailIdTooLong
         case tokenTooShort
         case tokenTooLong
 
@@ -26,14 +26,14 @@ public struct MagicLink: Model {
     // MARK: -
 
     public struct New: Sendable {
-        public let identityEmailId: String
+        public let authEmailId: String
         public let token: String
         public let expiresAtInterval: Double
         public let isPersistent: Bool
     }
 
     public let id: String
-    public let identityEmailId: String
+    public let authEmailId: String
     public let token: String
     public let expiresAt: Date
     public let isPersistent: Bool
@@ -43,7 +43,7 @@ public struct MagicLink: Model {
 
     package init(
         id: String,
-        identityEmailId: String,
+        authEmailId: String,
         token: String,
         expiresAt: Date,
         isPersistent: Bool,
@@ -52,7 +52,7 @@ public struct MagicLink: Model {
         updatedAt: Date,
     ) {
         self.id = id
-        self.identityEmailId = identityEmailId
+        self.authEmailId = authEmailId
         self.token = token
         self.expiresAt = expiresAt
         self.isPersistent = isPersistent
@@ -65,13 +65,13 @@ public struct MagicLink: Model {
 extension MagicLink {
 
     private static func validate(
-        identityEmailId: String
+        authEmailId: String
     ) throws(Self.Error) {
-        guard identityEmailId.count > 3 else {
-            throw .identityEmailIdTooShort
+        guard authEmailId.count > 3 else {
+            throw .authEmailIdTooShort
         }
-        guard identityEmailId.count < 255 else {
-            throw .identityEmailIdTooLong
+        guard authEmailId.count < 255 else {
+            throw .authEmailIdTooLong
         }
     }
 
@@ -87,15 +87,15 @@ extension MagicLink {
     }
 
     public static func create(
-        identityEmailId: String,
+        authEmailId: String,
         token: String,
         isPersistent: Bool
     ) throws(Self.Error) -> Self.New {
-        try validate(identityEmailId: identityEmailId)
+        try validate(authEmailId: authEmailId)
         try validate(token: token)
 
         return .init(
-            identityEmailId: identityEmailId,
+            authEmailId: authEmailId,
             token: token,
             expiresAtInterval: lifetime,
             isPersistent: isPersistent

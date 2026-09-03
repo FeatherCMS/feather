@@ -22,7 +22,7 @@ extension UseCases {
                 WriteAuth(
                     identity: IdentityDatabaseRepository(context: context),
                     credential: CredentialDatabaseRepository(context: context),
-                    identityEmail: IdentityEmailDatabaseRepository(
+                    authEmail: AuthEmailDatabaseRepository(
                         context: context
                     ),
                     session: SessionDatabaseRepository(context: context),

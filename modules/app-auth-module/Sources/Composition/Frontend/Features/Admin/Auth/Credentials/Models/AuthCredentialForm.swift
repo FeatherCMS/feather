@@ -48,31 +48,21 @@ struct AuthCredentialForm: Component, FlowContent {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
+            Input()
+                .type(.hidden)
+                .name("userId")
+                .value(state.identity.value)
             AdminAutocompleteField(
                 state: .init(
-                    key: state.identity.key,
-                    label: state.identity.label,
-                    placeholder: "Select a user identity",
+                    key: state.email.key,
+                label: "Auth email",
+                    placeholder: "Select an email",
                     options: state.identityOptions,
-                    error: state.identity.error,
+                    error: state.email.error,
                     selectionMode: .single,
                     isEnabled: true
                 )
             )
-            Section {
-                Label {
-                    AdminFieldLabel(label: state.email.label, required: true)
-                    Input()
-                        .type(.email)
-                        .id(state.email.key)
-                        .name(state.email.key)
-                        .value(state.email.value)
-                }
-                if let error = state.email.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.email.error != nil) { $0.class("has-error") }
             Section {
                 Label {
                     AdminFieldLabel(

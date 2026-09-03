@@ -15,7 +15,7 @@ extension MagicLinkTable.Row {
     var asDomain: MagicLink {
         .init(
             id: id,
-            identityEmailId: identityEmailId,
+            authEmailId: authEmailId,
             token: token,
             expiresAt: expiresAt,
             isPersistent: isPersistent,
@@ -47,7 +47,7 @@ public struct MagicLinkDatabaseRepository: MagicLinkRepository {
         let saved = try await table.save(
             row: .init(
                 id: context.idGenerator.generate(),
-                identityEmailId: model.identityEmailId,
+                authEmailId: model.authEmailId,
                 token: model.token,
                 expiresAtInterval: model.expiresAtInterval,
                 isPersistent: model.isPersistent,
@@ -65,7 +65,7 @@ public struct MagicLinkDatabaseRepository: MagicLinkRepository {
             id: model.id,
             row: .init(
                 id: model.id,
-                identityEmailId: model.identityEmailId,
+                authEmailId: model.authEmailId,
                 token: model.token,
                 expiresAt: model.expiresAt,
                 isPersistent: model.isPersistent,

@@ -54,9 +54,14 @@ enum AdminAuthCredentialFormValidation {
 }
 
 extension AdminAuthCredentialFormInput {
-    func validate(requiredPassword: Bool) async throws(ValidationError) {
+    func validate(
+        requiredPassword: Bool,
+        validateUserId: Bool = true
+    ) async throws(ValidationError) {
         try await GroupValidator {
-            AdminAuthCredentialFormValidation.userId(userId)
+            if validateUserId {
+                AdminAuthCredentialFormValidation.userId(userId)
+            }
             AdminAuthCredentialFormValidation.email(email)
             AdminAuthCredentialFormValidation.password(
                 requiredPassword

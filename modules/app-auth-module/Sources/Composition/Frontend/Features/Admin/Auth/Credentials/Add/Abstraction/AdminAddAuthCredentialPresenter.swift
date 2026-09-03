@@ -23,7 +23,7 @@ protocol AdminAddAuthCredentialPresenter: Sendable {
     func format(error: OpenAPIRepositoryError) -> String
     func formState(
         userId: String,
-        identities: [AuthCredentialIdentityOption],
+        emails: [AuthCredentialIdentityOption],
         email: String,
         password: String
     ) -> AuthCredentialForm.State

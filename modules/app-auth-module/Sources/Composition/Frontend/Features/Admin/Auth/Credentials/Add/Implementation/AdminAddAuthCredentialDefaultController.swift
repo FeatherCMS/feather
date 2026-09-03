@@ -27,11 +27,11 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let identities = try await interactor.listIdentities()
+        let emails = try await interactor.listEmails()
         return presenter.renderPage(
             form: presenter.formState(
                 userId: "",
-                identities: identities,
+                emails: emails,
                 email: "",
                 password: ""
             ),
@@ -49,7 +49,10 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
                 as: AdminAuthCredentialFormInput.self,
                 context: context
             )
-            try await payload!.validate(requiredPassword: true)
+            try await payload!.validate(
+                requiredPassword: true,
+                validateUserId: false
+            )
             try await interactor.execute(
                 payload: .init(
                     userId: payload!.normalizedUserId,
@@ -71,7 +74,7 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         catch let error as ValidationError {
             var state = presenter.formState(
                 userId: payload?.normalizedUserId ?? "",
-                identities: (try? await interactor.listIdentities()) ?? [],
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )
@@ -92,7 +95,7 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         catch let error as OpenAPIRepositoryError {
             var state = presenter.formState(
                 userId: payload?.normalizedUserId ?? "",
-                identities: (try? await interactor.listIdentities()) ?? [],
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )
@@ -107,7 +110,7 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         catch {
             var state = presenter.formState(
                 userId: payload?.normalizedUserId ?? "",
-                identities: (try? await interactor.listIdentities()) ?? [],
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )

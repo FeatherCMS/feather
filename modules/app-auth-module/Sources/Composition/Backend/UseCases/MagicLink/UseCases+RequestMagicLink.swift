@@ -22,7 +22,7 @@ extension UseCases {
             scope: { context in
                 WriteRequestMagicLink(
                     credential: CredentialDatabaseRepository(context: context),
-                    identityEmail: IdentityEmailDatabaseRepository(
+                    authEmail: AuthEmailDatabaseRepository(
                         context: context
                     ),
                     magicLink: MagicLinkDatabaseRepository(context: context),

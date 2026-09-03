@@ -34,7 +34,7 @@ struct AuthEmailConfirmation: Component {
                     "Are you sure you want to remove this user email? This action cannot be undone.",
                 details: [
                     .init(
-                        prefix: "Identity email ID: ",
+                        prefix: "Auth email ID: ",
                         value: state.identityId
                     )
                 ],

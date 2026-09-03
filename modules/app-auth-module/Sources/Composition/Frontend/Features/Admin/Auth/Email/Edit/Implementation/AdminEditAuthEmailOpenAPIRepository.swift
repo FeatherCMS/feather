@@ -20,6 +20,14 @@ struct AdminEditAuthEmailOpenAPIRepository:
     AdminEditAuthEmailRepository
 {
     let api: AuthAdminAPIClient
+    let userAPI: UserAdminAPIClient
+
+    func listIdentities() async throws -> [AuthCredentialIdentityOption] {
+        try await AdminAddAuthEmailOpenAPIRepository(
+            api: api,
+            userAPI: userAPI
+        ).listIdentities()
+    }
 
     func get(
         id: String
@@ -27,8 +35,8 @@ struct AdminEditAuthEmailOpenAPIRepository:
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .authIdentityEmailGet(
-                    path: .init(authIdentityEmailId: id),
+                .authEmailGet(
+                    path: .init(authEmailId: id),
                     headers: .init(accept: [.init(contentType: .json)])
                 )
             switch response {
@@ -37,7 +45,7 @@ struct AdminEditAuthEmailOpenAPIRepository:
                 return .init(
                     id: item.id,
                     identityId: item.identityId,
-                    isPrimary: item.isPrimary
+                    email: item.email
                 )
             case .notFound:
                 throw OpenAPIRepositoryError.notFound(
@@ -69,13 +77,13 @@ struct AdminEditAuthEmailOpenAPIRepository:
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .authIdentityEmailPatch(
-                    path: .init(authIdentityEmailId: id),
+                .authEmailPatch(
+                    path: .init(authEmailId: id),
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
                             identityId: payload.identityId,
-                            isPrimary: payload.isPrimary
+                            email: payload.email
                         )
                     )
                 )

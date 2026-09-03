@@ -24,7 +24,8 @@ struct AdminEditAuthEmail {
                 (
                     interactor: AdminEditAuthEmailDefaultInteractor(
                         repository: AdminEditAuthEmailOpenAPIRepository(
-                            api: context.authAdminAPI()
+                            api: context.authAdminAPI(),
+                            userAPI: context.userAdminAPI()
                         )
                     ),
                     presenter: AdminEditAuthEmailDefaultPresenter(

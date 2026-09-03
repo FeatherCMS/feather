@@ -31,12 +31,12 @@ struct AdminEditAuthCredentialDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         do {
             let credential = try await interactor.get(id: id)
-            let identities = try await interactor.listIdentities()
+            let emails = try await interactor.listEmails()
             return presenter.renderPage(
                 id: id,
                 form: presenter.formState(
                     userId: credential.userId,
-                    identities: identities,
+                    emails: emails,
                     email: credential.email,
                     password: ""
                 ),
@@ -86,7 +86,7 @@ struct AdminEditAuthCredentialDefaultController:
         catch let error as ValidationError {
             var state = presenter.formState(
                 userId: payload?.normalizedUserId ?? "",
-                identities: (try? await interactor.listIdentities()) ?? [],
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )
@@ -108,7 +108,7 @@ struct AdminEditAuthCredentialDefaultController:
         catch let error as OpenAPIRepositoryError {
             var state = presenter.formState(
                 userId: payload?.normalizedUserId ?? "",
-                identities: (try? await interactor.listIdentities()) ?? [],
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )
@@ -124,7 +124,7 @@ struct AdminEditAuthCredentialDefaultController:
         catch {
             var state = presenter.formState(
                 userId: payload?.normalizedUserId ?? "",
-                identities: (try? await interactor.listIdentities()) ?? [],
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )

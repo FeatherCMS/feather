@@ -21,6 +21,32 @@ struct AdminAddAuthMagicLinkOpenAPIRepository:
 {
     let api: AuthAdminAPIClient
 
+    func listEmails() async throws
+        -> [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema]
+    {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.authEmailList(
+                headers: .init(accept: [.init(contentType: .json)])
+            )
+            switch response {
+            case .ok(let ok): return try ok.body.json
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to view auth emails."
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your identity cannot access auth emails."
+                )
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
     func create(
         payload: AuthMagicLinkFormPayloadModel
     ) async throws {

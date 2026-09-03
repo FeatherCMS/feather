@@ -27,8 +27,8 @@ struct AdminGetAuthEmailOpenAPIRepository:
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .authIdentityEmailGet(
-                    path: .init(authIdentityEmailId: id),
+                .authEmailGet(
+                    path: .init(authEmailId: id),
                     headers: .init(accept: [.init(contentType: .json)])
                 )
             switch response {
@@ -37,7 +37,7 @@ struct AdminGetAuthEmailOpenAPIRepository:
                 return .init(
                     id: item.id,
                     identityId: item.identityId,
-                    isPrimary: item.isPrimary
+                    email: item.email
                 )
             case .notFound:
                 throw OpenAPIRepositoryError.notFound(

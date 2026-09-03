@@ -24,7 +24,8 @@ struct AdminListAuthEmail {
                 (
                     interactor: AdminListAuthEmailDefaultInteractor(
                         repository: AdminListAuthEmailOpenAPIRepository(
-                            api: context.authAdminAPI()
+                            api: context.authAdminAPI(),
+                            userAPI: context.userAdminAPI()
                         )
                     ),
                     presenter: AdminListAuthEmailDefaultPresenter(

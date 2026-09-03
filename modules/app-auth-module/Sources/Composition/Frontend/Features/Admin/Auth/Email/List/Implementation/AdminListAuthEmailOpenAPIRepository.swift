@@ -20,6 +20,7 @@ struct AdminListAuthEmailOpenAPIRepository:
     AdminListAuthEmailRepository
 {
     let api: AuthAdminAPIClient
+    let userAPI: UserAdminAPIClient
     private let listUnauthorizedMessage =
         "Please sign in again to view user emails."
     private let deleteUnauthorizedMessage =
@@ -31,21 +32,36 @@ struct AdminListAuthEmailOpenAPIRepository:
         search: String?,
         userID: String?
     ) async throws -> (
-        items: [AuthAdminAPI.Components.Schemas.AuthIdentityEmailDetailSchema],
+        items: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema],
+        identityNames: [String: String],
         total: Int,
         page: Int, size: Int
     ) {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .authIdentityEmailList(
+                .authEmailList(
                     headers: .init(accept: [.init(contentType: .json)])
                 )
             switch response {
             case .ok(let ok):
                 let body = try ok.body.json
+                var identityNames: [String: String] = [:]
+                for identityID in Set(body.map(\.identityId)) {
+                    let identityResponse = try await userAPI
+                        .withOpenAPIRepositoryErrorMapping { client in
+                            try await client.userIdentityGet(
+                                path: .init(userIdentityId: identityID),
+                                headers: .init(accept: [.init(contentType: .json)])
+                            )
+                        }
+                    if case .ok(let identityOK) = identityResponse {
+                        identityNames[identityID] = try identityOK.body.json.name
+                    }
+                }
                 return (
                     items: body,
+                    identityNames: identityNames,
                     total: body.count,
                     page: page,
                     size: size
@@ -71,8 +87,8 @@ struct AdminListAuthEmailOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.authIdentityEmailDelete(
-                path: .init(authIdentityEmailId: id),
+            _ = try await client.authEmailDelete(
+                path: .init(authEmailId: id),
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

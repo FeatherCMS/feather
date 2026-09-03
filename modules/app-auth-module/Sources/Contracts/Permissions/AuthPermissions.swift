@@ -48,11 +48,11 @@ public enum AuthPermissions: PermissionProvider {
     }
 
     public enum Emails: PermissionProvider {
-        public static let create = PermissionKey("auth:identity-email:create")
-        public static let read = PermissionKey("auth:identity-email:read")
-        public static let update = PermissionKey("auth:identity-email:update")
-        public static let delete = PermissionKey("auth:identity-email:delete")
-        public static let list = PermissionKey("auth:identity-email:list")
+        public static let create = PermissionKey("auth:auth-email:create")
+        public static let read = PermissionKey("auth:auth-email:read")
+        public static let update = PermissionKey("auth:auth-email:update")
+        public static let delete = PermissionKey("auth:auth-email:delete")
+        public static let list = PermissionKey("auth:auth-email:list")
 
         public static func allPermissions() -> Set<PermissionKey> {
             [create, read, update, delete, list]

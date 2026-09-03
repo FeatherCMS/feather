@@ -19,6 +19,10 @@ import WebStandards
 struct AdminAddAuthEmailDefaultInteractor: AdminAddAuthEmailInteractor {
     let repository: any AdminAddAuthEmailRepository
 
+    func listIdentities() async throws -> [AuthCredentialIdentityOption] {
+        try await repository.listIdentities()
+    }
+
     func execute(
         entity: AdminAddAuthEmailModel
     ) async throws {

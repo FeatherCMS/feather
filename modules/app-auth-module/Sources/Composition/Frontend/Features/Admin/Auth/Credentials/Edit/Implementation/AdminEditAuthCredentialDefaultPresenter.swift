@@ -66,7 +66,7 @@ struct AdminEditAuthCredentialDefaultPresenter: AdminEditAuthCredentialPresenter
 
     func formState(
         userId: String,
-        identities: [AuthCredentialIdentityOption],
+        emails: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema],
         email: String,
         password: String = ""
     )
@@ -79,11 +79,11 @@ struct AdminEditAuthCredentialDefaultPresenter: AdminEditAuthCredentialPresenter
                 value: userId,
                 error: nil
             ),
-            identityOptions: identities.map {
+            identityOptions: emails.map {
                 .init(
-                    label: $0.label,
-                    value: $0.id,
-                    isSelected: $0.id == userId
+                    label: $0.email,
+                    value: $0.email,
+                    isSelected: $0.email == email
                 )
             },
             email: .init(

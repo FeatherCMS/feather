@@ -33,9 +33,24 @@ struct AuthMagicLinkForm: Component, FlowContent {
 
     struct State: FeatherAdmin.Object {
         var credentialId: FieldState
+        var emailOptions: [AdminAutocompleteField.OptionState]
         var isPersistent: CheckboxState
         var error: String?
         var success: String?
+
+        init(
+            credentialId: FieldState,
+            emailOptions: [AdminAutocompleteField.OptionState] = [],
+            isPersistent: CheckboxState,
+            error: String? = nil,
+            success: String? = nil
+        ) {
+            self.credentialId = credentialId
+            self.emailOptions = emailOptions
+            self.isPersistent = isPersistent
+            self.error = error
+            self.success = success
+        }
 
         mutating func apply(
             errors: [String: String]
@@ -59,12 +74,16 @@ struct AuthMagicLinkForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            FormInputField(
-                name: state.credentialId.key,
-                label: state.credentialId.label,
-                value: state.credentialId.value,
-                error: state.credentialId.error,
-                isRequired: true
+            AdminAutocompleteField(
+                state: .init(
+                    key: state.credentialId.key,
+                    label: "Email",
+                    placeholder: "Select an email",
+                    options: state.emailOptions,
+                    error: state.credentialId.error,
+                    selectionMode: .single,
+                    isEnabled: true
+                )
             )
 
             CheckboxField(

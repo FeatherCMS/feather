@@ -18,6 +18,8 @@ import WebStandards
 
 protocol AdminAddAuthEmailInteractor: Sendable {
 
+    func listIdentities() async throws -> [AuthCredentialIdentityOption]
+
     func execute(
         entity: AdminAddAuthEmailModel
     ) async throws

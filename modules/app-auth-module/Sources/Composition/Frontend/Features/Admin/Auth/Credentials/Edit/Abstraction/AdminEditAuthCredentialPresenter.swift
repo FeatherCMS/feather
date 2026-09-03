@@ -28,7 +28,7 @@ protocol AdminEditAuthCredentialPresenter: Sendable {
     ) -> HTMLResponse
     func formState(
         userId: String,
-        identities: [AuthCredentialIdentityOption],
+        emails: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema],
         email: String,
         password: String
     ) -> AuthCredentialForm.State

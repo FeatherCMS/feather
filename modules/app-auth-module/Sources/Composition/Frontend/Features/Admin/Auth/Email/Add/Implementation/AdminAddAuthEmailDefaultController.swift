@@ -27,11 +27,12 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime(request, context)
+        let identities = (try? await interactor.listIdentities()) ?? []
         return presenter.renderPage(
             form: presenter.formState(
                 identityId: "",
-                isPrimary: false
+                identities: identities
             ),
             permissions: context.currentUserPermissions
         )
@@ -53,8 +54,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
             try await interactor.execute(
                 entity: .init(
                     identityId: payload.normalizedIdentityId,
-                    email: payload.normalizedEmail,
-                    isPrimary: payload.isPrimary.value
+                    email: payload.normalizedEmail
                 )
             )
             return Response(
@@ -73,7 +73,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
             for f in error.failures { errs[f.key] = f.message }
             var state = presenter.formState(
                 identityId: lastPayload?.normalizedIdentityId ?? "",
-                isPrimary: lastPayload?.isPrimary.value ?? false
+                identities: (try? await interactor.listIdentities()) ?? []
             )
             state.apply(errors: errs)
             return try createResponse(
@@ -85,8 +85,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
         }
         catch let error as OpenAPIRepositoryError {
             var state = presenter.formState(
-                identityId: lastPayload?.normalizedIdentityId ?? "",
-                isPrimary: lastPayload?.isPrimary.value ?? false
+                identityId: lastPayload?.normalizedIdentityId ?? ""
             )
             state.error = presenter.format(error: error)
             return try createResponse(
@@ -98,8 +97,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
         }
         catch {
             var state = presenter.formState(
-                identityId: lastPayload?.normalizedIdentityId ?? "",
-                isPrimary: lastPayload?.isPrimary.value ?? false
+                identityId: lastPayload?.normalizedIdentityId ?? ""
             )
             state.error = error.displayMessage
             return try createResponse(

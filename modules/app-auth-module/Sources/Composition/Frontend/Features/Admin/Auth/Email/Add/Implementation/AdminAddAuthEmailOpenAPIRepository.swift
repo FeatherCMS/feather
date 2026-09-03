@@ -20,6 +20,38 @@ struct AdminAddAuthEmailOpenAPIRepository:
     AdminAddAuthEmailRepository
 {
     let api: AuthAdminAPIClient
+    let userAPI: UserAdminAPIClient
+
+    func listIdentities() async throws -> [AuthCredentialIdentityOption] {
+        try await userAPI.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.userIdentitySearch(
+                headers: .init(accept: [.init(contentType: .json)]),
+                body: .json(.init(
+                    page: .init(size: 100, number: 1),
+                    filters: .init(search: nil)
+                ))
+            )
+            switch response {
+            case .ok(let value):
+                return try value.body.json.data.items.map {
+                    .init(id: String($0.id), label: $0.name)
+                }
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to view user identities."
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your identity cannot access user identities."
+                )
+            case .undocumented(let status, let body):
+                throw try await userAPI.failure(
+                    statusCode: status,
+                    responseBody: body.body
+                )
+            }
+        }
+    }
 
     func create(
         payload: AuthEmailFormPayloadModel
@@ -27,13 +59,12 @@ struct AdminAddAuthEmailOpenAPIRepository:
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .authIdentityEmailCreate(
+                .authEmailCreate(
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
                             identityId: payload.identityId,
-                            email: payload.email,
-                            isPrimary: payload.isPrimary
+                            email: payload.email
                         )
                     )
                 )

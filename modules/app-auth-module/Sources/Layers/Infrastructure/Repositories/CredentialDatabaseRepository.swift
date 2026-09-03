@@ -10,7 +10,7 @@ extension CredentialTable.Row {
     var asDomain: Credential {
         .init(
             id: id,
-            identityEmailId: identityEmailId,
+            authEmailId: authEmailId,
             userId: userId,
             email: email,
             passwordHash: passwordHash,
@@ -52,16 +52,16 @@ public struct CredentialDatabaseRepository: CredentialRepository {
         _ model: Credential.New
     ) async throws -> Credential {
         let table = CredentialTable(connection: context.connection)
-        let emailTable = IdentityEmailTable(connection: context.connection)
-        let identityEmail: IdentityEmailTable.Row
+        let emailTable = AuthEmailTable(connection: context.connection)
+        let authEmail: AuthEmailTable.Row
         if let existing = try await emailTable.findBy(
             identityId: model.userId,
             email: model.email
         ) {
-            identityEmail = existing
+            authEmail = existing
         }
         else {
-            identityEmail = try await emailTable.save(
+            authEmail = try await emailTable.save(
                 id: context.idGenerator.generate(),
                 identityId: model.userId,
                 email: model.email
@@ -70,7 +70,7 @@ public struct CredentialDatabaseRepository: CredentialRepository {
         let saved = try await table.save(
             row: .init(
                 id: context.idGenerator.generate(),
-                identityEmailId: identityEmail.id,
+                authEmailId: authEmail.id,
                 userId: model.userId,
                 email: model.email,
                 passwordHash: model.passwordHash,
@@ -85,16 +85,16 @@ public struct CredentialDatabaseRepository: CredentialRepository {
         _ model: Credential
     ) async throws -> Credential {
         let table = CredentialTable(connection: context.connection)
-        let emailTable = IdentityEmailTable(connection: context.connection)
-        let identityEmail: IdentityEmailTable.Row
+        let emailTable = AuthEmailTable(connection: context.connection)
+        let authEmail: AuthEmailTable.Row
         if let existing = try await emailTable.findBy(
             identityId: model.userId,
             email: model.email
         ) {
-            identityEmail = existing
+            authEmail = existing
         }
         else {
-            identityEmail = try await emailTable.save(
+            authEmail = try await emailTable.save(
                 id: context.idGenerator.generate(),
                 identityId: model.userId,
                 email: model.email
@@ -104,7 +104,7 @@ public struct CredentialDatabaseRepository: CredentialRepository {
             id: model.id,
             row: .init(
                 id: model.id,
-                identityEmailId: identityEmail.id,
+                authEmailId: authEmail.id,
                 userId: model.userId,
                 email: model.email,
                 passwordHash: model.passwordHash,

@@ -24,7 +24,8 @@ protocol AdminListAuthEmailRepository: Sendable {
         search: String?,
         userID: String?
     ) async throws -> (
-        items: [AuthAdminAPI.Components.Schemas.AuthIdentityEmailDetailSchema],
+        items: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema],
+        identityNames: [String: String],
         total: Int,
         page: Int,
         size: Int

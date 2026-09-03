@@ -1,7 +1,9 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
@@ -25,7 +27,8 @@ struct AuthEmailTable: Component {
         let permissions: Set<String>
         let canAdd: Bool
         let links:
-            [AuthAdminAPI.Components.Schemas.AuthIdentityEmailDetailSchema]
+            [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema]
+        let identityNames: [String: String]
         let page: Int
         let pageSize: Int
         let total: Int
@@ -138,7 +141,7 @@ struct AuthEmailTable: Component {
                 }
                 else {
                     let canRemove = state.permissions.contains(
-                        "auth:emails:delete"
+                        AuthPermissions.Emails.delete.rawValue
                     )
                     ListTableRemoveForm(
                         state: .init(
@@ -157,14 +160,10 @@ struct AuthEmailTable: Component {
                                         if canRemove {
                                             ListTableSelectAllCheckbox()
                                         }
-                                        Th("Identity ID")
-                                            .columnWidth(percent: 50)
-                                        Th("Expires At")
-                                            .columnWidth(percent: 24)
-                                        Th("Persistent")
-                                            .columnWidth(percent: 10)
-                                        Th("Used")
-                                            .columnWidth(percent: 10)
+                                        Th("User name")
+                                            .columnWidth(percent: 30)
+                                        Th("Email")
+                                            .columnWidth(percent: 30)
                                         Th("Actions")
                                     }
                                 }
@@ -176,14 +175,15 @@ struct AuthEmailTable: Component {
                                                     state: .init(id: link.id)
                                                 )
                                             }
-                                            Td(link.identityId)
-                                                .data("label", "Identity ID")
-                                                .columnWidth(percent: 50)
-                                            .data("label", "Expires At")
-                                            .columnWidth(percent: 24)
-                                            Td(link.isPrimary ? "Yes" : "No")
-                                                .data("label", "Persistent")
-                                                .columnWidth(percent: 10)
+                                            Td(
+                                                state.identityNames[link.identityId]
+                                                    ?? "Unknown user"
+                                            )
+                                                .data("label", "User name")
+                                                .columnWidth(percent: 30)
+                                            Td(link.email)
+                                                .data("label", "Email")
+                                                .columnWidth(percent: 30)
                                             ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
@@ -194,7 +194,8 @@ struct AuthEmailTable: Component {
                                                                 "/admin/auth/emails/\(link.id)/",
                                                             className: nil,
                                                             permission:
-                                                                "auth:emails:read"
+                                                                AuthPermissions
+                                                                .Emails.read.rawValue
                                                         ),
                                                         .init(
                                                             title: "Edit",
@@ -202,7 +203,8 @@ struct AuthEmailTable: Component {
                                                                 "/admin/auth/emails/\(link.id)/edit/",
                                                             className: "edit",
                                                             permission:
-                                                                "auth:emails:update"
+                                                                AuthPermissions
+                                                                .Emails.update.rawValue
                                                         ),
                                                         .init(
                                                             title: "Remove",
@@ -210,7 +212,8 @@ struct AuthEmailTable: Component {
                                                                 "/admin/auth/emails/\(link.id)/remove/",
                                                             className: "delete",
                                                             permission:
-                                                                "auth:emails:delete"
+                                                                AuthPermissions
+                                                                .Emails.delete.rawValue
                                                         ),
                                                     ],
                                                     permissions: state
