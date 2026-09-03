@@ -15,7 +15,7 @@ struct AdminListNewsletterSubscribers {
             context in
             (
                 AdminListNewsletterSubscribersDefaultInteractor(
-                    repository: .init(api: context.newsletterManagementAPI())
+                    repository: .init(api: context.newsletterAdminAPI())
                 ),
                 AdminListNewsletterSubscribersDefaultPresenter(
                     request: request,

@@ -11,7 +11,7 @@ struct AdminEditWebMenu {
                 (
                     interactor: AdminEditWebMenuDefaultInteractor(
                         repository: AdminEditWebMenuOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminEditWebMenuDefaultPresenter(

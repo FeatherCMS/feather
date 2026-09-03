@@ -10,7 +10,7 @@ struct AdminRemoveSystemVariable {
                 (
                     interactor: AdminRemoveSystemVariableDefaultInteractor(
                         repository: AdminRemoveSystemVariableOpenAPIRepository(
-                            api: context.systemManagementAPI()
+                            api: context.systemAdminAPI()
                         )
                     ),
                     presenter: AdminRemoveSystemVariableDefaultPresenter(

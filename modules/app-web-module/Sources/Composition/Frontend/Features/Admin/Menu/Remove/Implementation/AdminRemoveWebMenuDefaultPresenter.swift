@@ -18,7 +18,7 @@ struct AdminRemoveWebMenuDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove menu - Feather CMS",
+            title: "Remove menu",
             description: "Remove confirmation for a management menu",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -43,7 +43,7 @@ struct AdminRemoveWebMenuDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove menu - Feather CMS",
+            title: "Remove menu",
             description: "Remove confirmation for a management menu",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

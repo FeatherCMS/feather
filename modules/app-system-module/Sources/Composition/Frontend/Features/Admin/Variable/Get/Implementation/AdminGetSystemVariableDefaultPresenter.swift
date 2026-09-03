@@ -15,7 +15,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "System variable details - Feather CMS",
+            title: "System variable details",
             description: "Management system variable details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -39,7 +39,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "System variable details - Feather CMS",
+            title: "System variable details",
             description: "Management system variable details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

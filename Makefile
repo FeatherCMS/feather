@@ -16,7 +16,7 @@ ALL_SERVICES := certificates postgres migrator server worker web-static openapi-
 POSTGRES_VOLUME := feather-cms-postgres-data
 MEDIA_VOLUME := feather-cms-file-storage
 
-.PHONY: up up-build down stop logs ps restart pull config clean reset deps all application application-artifacts application-images application-logs test test-all format fix-headers docker-up docker-down docker-clean yaml $(APPLICATION_RUNTIME_SERVICES) $(NON_APPLICATION_SERVICES) $(SERVICE_TARGETS)
+.PHONY: up up-build down stop logs ps restart pull config clean reset deps all application application-artifacts application-images application-logs local local-app local-backend test test-all format fix-headers docker-up docker-down docker-clean yaml $(APPLICATION_RUNTIME_SERVICES) $(NON_APPLICATION_SERVICES) $(SERVICE_TARGETS)
 
 define detect_lan_host
 iface="$$(route -n get default 2>/dev/null | awk '/interface: / { print $$2; exit }')"; \
@@ -136,6 +136,15 @@ all:
 application:
 	$(MAKE) application-images
 	$(COMPOSE) up $(APPLICATION_SERVICES)
+
+local:
+	./scripts/run-local.sh
+
+local-app:
+	swift run --package-path application WebApp
+
+local-backend:
+	./scripts/run-local.sh backend
 
 application-artifacts:
 	docker buildx build \

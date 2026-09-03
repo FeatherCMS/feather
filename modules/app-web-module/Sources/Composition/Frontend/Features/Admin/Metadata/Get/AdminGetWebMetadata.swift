@@ -11,7 +11,7 @@ struct AdminGetWebMetadata {
                 (
                     interactor: AdminGetWebMetadataDefaultInteractor(
                         repository: AdminGetWebMetadataOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminGetWebMetadataDefaultPresenter(

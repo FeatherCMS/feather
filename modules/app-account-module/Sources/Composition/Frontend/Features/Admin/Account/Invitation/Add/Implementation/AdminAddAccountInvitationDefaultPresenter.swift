@@ -14,7 +14,7 @@ struct AdminAddAccountInvitationDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Add user invitation - Feather CMS",
+            title: "Add user invitation",
             description: "Add a user invitation in management",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

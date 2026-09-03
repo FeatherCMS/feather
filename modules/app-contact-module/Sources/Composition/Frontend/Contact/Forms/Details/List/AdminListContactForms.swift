@@ -14,7 +14,7 @@ struct AdminListContactForms {
             buildRuntime: { request, context in
                 (
                     interactor: AdminListContactFormsDefaultInteractor(
-                        repository: .init(api: context.contactManagementAPI())
+                        repository: .init(api: context.contactAdminAPI())
                     ),
                     presenter: AdminListContactFormsDefaultPresenter(
                         request: request,

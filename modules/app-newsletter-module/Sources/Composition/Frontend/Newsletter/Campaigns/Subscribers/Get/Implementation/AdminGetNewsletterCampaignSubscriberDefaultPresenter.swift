@@ -36,7 +36,7 @@ struct AdminGetNewsletterCampaignSubscriberDefaultPresenter:
         )
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Campaign subscriber - Feather CMS",
+            title: "Campaign subscriber",
             description: "View campaign subscriber",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

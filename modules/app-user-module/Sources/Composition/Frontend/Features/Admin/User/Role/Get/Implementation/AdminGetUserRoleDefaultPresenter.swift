@@ -26,7 +26,7 @@ struct AdminGetUserRoleDefaultPresenter: AdminGetUserRolePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "User role details - Feather CMS",
+            title: "User role details",
             description: "Management user role details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -50,7 +50,7 @@ struct AdminGetUserRoleDefaultPresenter: AdminGetUserRolePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "User role details - Feather CMS",
+            title: "User role details",
             description: "Management user role details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

@@ -21,8 +21,8 @@ struct AdminEditMediaAssetDefaultPresenter: AdminEditMediaAssetPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Edit media asset - Feather CMS",
-            description: "Edit media asset - Feather CMS",
+            title: "Edit media asset",
+            description: "Edit media asset",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
@@ -49,8 +49,8 @@ struct AdminEditMediaAssetDefaultPresenter: AdminEditMediaAssetPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Edit media asset - Feather CMS",
-            description: "Edit media asset - Feather CMS",
+            title: "Edit media asset",
+            description: "Edit media asset",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

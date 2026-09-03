@@ -1386,7 +1386,13 @@ p.success,
   border: 1px solid var(--cms-primary);
   background: var(--cms-primary-hover);
   color: var(--cms-static-white);
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
   font-weight: 700;
+  line-height: 1.2;
   border-radius: 999px;
   padding: 8px 14px;
   cursor: pointer;

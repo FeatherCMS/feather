@@ -17,7 +17,7 @@ struct AdminRemoveMediaProcessor {
                 (
                     interactor: AdminRemoveMediaProcessorDefaultInteractor(
                         repository: AdminMediaProcessorOpenAPIRepository(
-                            api: context.mediaManagementAPI()
+                            api: context.mediaAdminAPI()
                         )
                     ),
                     presenter: AdminRemoveMediaProcessorDefaultPresenter(

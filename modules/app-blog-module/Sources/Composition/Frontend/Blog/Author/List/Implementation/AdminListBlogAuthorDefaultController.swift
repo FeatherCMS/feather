@@ -139,7 +139,7 @@ struct AdminListBlogAuthorDefaultController:
             context: context
         )
         let repository = AdminListBlogAuthorFormOpenAPIRepository(
-            api: context.blogManagementAPI()
+            api: context.blogAdminAPI()
         )
         let details = try await repository.load(id: id)
         let targetStatus = resolvedStatus(
@@ -147,7 +147,7 @@ struct AdminListBlogAuthorDefaultController:
             current: details.metadata
         )
         try await AdminWebMetadataStatusUpdater(
-            api: context.webManagementAPI()
+            api: context.webAdminAPI()
         )
         .update(
             referenceType: "blog.author",

@@ -87,7 +87,7 @@ public struct BlogAppAPIClient: Sendable {
 }
 
 extension DefaultRequestContext {
-    public func blogManagementAPI() -> BlogAdminAPIClient {
+    public func blogAdminAPI() -> BlogAdminAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken

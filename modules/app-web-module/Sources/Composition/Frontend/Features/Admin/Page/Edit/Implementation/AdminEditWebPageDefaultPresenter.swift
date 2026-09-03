@@ -17,7 +17,7 @@ struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit page - Feather CMS",
+            title: "Edit page",
             description: "Edit a management page",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -43,7 +43,7 @@ struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit page - Feather CMS",
+            title: "Edit page",
             description: "Edit a management page",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

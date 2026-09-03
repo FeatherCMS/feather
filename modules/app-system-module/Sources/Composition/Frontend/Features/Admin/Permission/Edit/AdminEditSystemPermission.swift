@@ -10,7 +10,7 @@ struct AdminEditSystemPermission {
                 (
                     interactor: AdminEditSystemPermissionDefaultInteractor(
                         repository: AdminEditSystemPermissionOpenAPIRepository(
-                            api: context.systemManagementAPI()
+                            api: context.systemAdminAPI()
                         )
                     ),
                     presenter: AdminEditSystemPermissionDefaultPresenter(

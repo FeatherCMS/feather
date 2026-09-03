@@ -22,7 +22,7 @@ struct AdminEditBlogTagDefaultPresenter: AdminEditBlogTagPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit tag - Feather CMS",
+            title: "Edit tag",
             description: "Edit a management tag",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -48,7 +48,7 @@ struct AdminEditBlogTagDefaultPresenter: AdminEditBlogTagPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit tag - Feather CMS",
+            title: "Edit tag",
             description: "Edit a management tag",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

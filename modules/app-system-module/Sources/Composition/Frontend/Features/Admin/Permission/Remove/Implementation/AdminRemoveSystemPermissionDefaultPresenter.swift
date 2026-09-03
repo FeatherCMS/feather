@@ -17,7 +17,7 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove system permission - Feather CMS",
+            title: "Remove system permission",
             description:
                 "Remove confirmation for a management system permission",
             imagePath: "images/logos/logo.png",
@@ -43,7 +43,7 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove system permission - Feather CMS",
+            title: "Remove system permission",
             description:
                 "Remove confirmation for a management system permission",
             imagePath: "images/logos/logo.png",

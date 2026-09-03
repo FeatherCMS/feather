@@ -29,7 +29,7 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage user roles - Feather CMS",
+                title: "Manage user roles",
                 description: "Management user role list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -47,7 +47,7 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage user roles - Feather CMS",
+            title: "Manage user roles",
             description: "Management user role list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

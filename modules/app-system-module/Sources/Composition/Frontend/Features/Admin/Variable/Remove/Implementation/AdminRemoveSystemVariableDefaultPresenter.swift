@@ -17,7 +17,7 @@ struct AdminRemoveSystemVariableDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove system variable - Feather CMS",
+            title: "Remove system variable",
             description: "Remove confirmation for a management system variable",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -42,7 +42,7 @@ struct AdminRemoveSystemVariableDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove system variable - Feather CMS",
+            title: "Remove system variable",
             description: "Remove confirmation for a management system variable",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

@@ -31,8 +31,8 @@ struct AdminGetMediaAssetDefaultPresenter: AdminGetMediaAssetPresenter {
         if let model {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Media asset details - Feather CMS",
-                description: "Media asset details - Feather CMS",
+                title: "Media asset details",
+                description: "Media asset details",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
@@ -53,8 +53,8 @@ struct AdminGetMediaAssetDefaultPresenter: AdminGetMediaAssetPresenter {
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Media asset details - Feather CMS",
-            description: "Media asset details - Feather CMS",
+            title: "Media asset details",
+            description: "Media asset details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

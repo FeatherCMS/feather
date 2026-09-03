@@ -17,7 +17,7 @@ struct AdminEditMediaFolder {
                 (
                     interactor: AdminEditMediaFolderDefaultInteractor(
                         repository: AdminEditMediaFolderOpenAPIRepository(
-                            api: context.mediaManagementAPI()
+                            api: context.mediaAdminAPI()
                         )
                     ),
                     presenter: AdminEditMediaFolderDefaultPresenter(

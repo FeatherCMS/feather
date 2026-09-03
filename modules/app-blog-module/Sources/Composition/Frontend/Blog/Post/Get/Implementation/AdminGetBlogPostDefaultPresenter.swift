@@ -23,7 +23,7 @@ struct AdminGetBlogPostDefaultPresenter: AdminGetBlogPostPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Blog post details - Feather CMS",
+            title: "Blog post details",
             description: "Management blog post details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -50,7 +50,7 @@ struct AdminGetBlogPostDefaultPresenter: AdminGetBlogPostPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Blog post details - Feather CMS",
+            title: "Blog post details",
             description: "Management blog post details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

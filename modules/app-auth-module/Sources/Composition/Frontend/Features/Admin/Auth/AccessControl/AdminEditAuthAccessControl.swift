@@ -29,7 +29,7 @@ struct AdminEditAuthAccessControl {
                         repository: AdminEditAuthAccessControlOpenAPIRepository(
                             api: context.authAdminAPI(),
                             userAPI: context.userAdminAPI(),
-                            systemAPI: context.systemManagementAPI()
+                            systemAPI: context.systemAdminAPI()
                         )
                     ),
                     presenter: AdminEditAuthAccessControlDefaultPresenter(

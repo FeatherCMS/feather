@@ -10,7 +10,7 @@ struct AdminEditWebSettings {
                 (
                     interactor: AdminEditWebSettingsDefaultInteractor(
                         repository: AdminEditWebSettingsOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminEditWebSettingsDefaultPresenter(

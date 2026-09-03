@@ -19,7 +19,7 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove contact form submission - Feather CMS",
+            title: "Remove contact form submission",
             description: "Remove contact form submission",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -51,7 +51,7 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove contact form submissions - Feather CMS",
+            title: "Remove contact form submissions",
             description: "Remove contact form submissions",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

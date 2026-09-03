@@ -15,7 +15,7 @@ struct AdminListWebMetadata {
                 (
                     interactor: AdminListWebMetadataDefaultInteractor(
                         repository: AdminListWebMetadataOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminListWebMetadataDefaultPresenter(

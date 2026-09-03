@@ -16,7 +16,7 @@ struct AdminRemoveContactFormSubmissions {
                     interactor:
                         AdminRemoveContactFormSubmissionsDefaultInteractor(
                             repository: .init(
-                                api: context.contactManagementAPI()
+                                api: context.contactAdminAPI()
                             )
                         ),
                     presenter:

@@ -131,7 +131,7 @@ struct AdminListWebPageDefaultController:
             context: context
         )
         let repository = AdminListWebPageFormOpenAPIRepository(
-            api: context.webManagementAPI()
+            api: context.webAdminAPI()
         )
         let details = try await repository.load(id: id)
         let targetStatus = resolvedStatus(
@@ -139,7 +139,7 @@ struct AdminListWebPageDefaultController:
             current: details.metadata
         )
         try await AdminWebMetadataStatusUpdater(
-            api: context.webManagementAPI()
+            api: context.webAdminAPI()
         )
         .update(
             referenceType: "web.page",

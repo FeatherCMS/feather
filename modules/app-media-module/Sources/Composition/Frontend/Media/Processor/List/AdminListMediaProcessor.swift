@@ -17,7 +17,7 @@ struct AdminListMediaProcessors {
                 (
                     interactor: AdminListMediaProcessorDefaultInteractor(
                         repository: AdminMediaProcessorOpenAPIRepository(
-                            api: context.mediaManagementAPI()
+                            api: context.mediaAdminAPI()
                         )
                     ),
                     presenter: AdminListMediaProcessorDefaultPresenter(

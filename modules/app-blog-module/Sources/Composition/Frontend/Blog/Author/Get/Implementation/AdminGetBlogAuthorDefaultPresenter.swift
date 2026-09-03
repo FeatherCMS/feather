@@ -25,7 +25,7 @@ struct AdminGetBlogAuthorDefaultPresenter: AdminGetBlogAuthorPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Blog author details - Feather CMS",
+            title: "Blog author details",
             description: "Management blog author details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -54,7 +54,7 @@ struct AdminGetBlogAuthorDefaultPresenter: AdminGetBlogAuthorPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Blog author details - Feather CMS",
+            title: "Blog author details",
             description: "Management blog author details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

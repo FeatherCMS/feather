@@ -81,12 +81,6 @@ struct WebMetadataForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            if let referenceType = state.referenceType {
-                readonlyField(referenceType)
-            }
-            if let referenceId = state.referenceId {
-                readonlyField(referenceId)
-            }
             FormInputField(
                 name: state.slug.key,
                 label: state.slug.label,

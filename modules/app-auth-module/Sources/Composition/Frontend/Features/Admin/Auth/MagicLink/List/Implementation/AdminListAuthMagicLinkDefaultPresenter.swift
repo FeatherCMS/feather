@@ -27,7 +27,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Manage user magic links - Feather CMS",
+            title: "Manage user magic links",
             description: "Management user magic link list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -43,7 +43,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Manage user magic links - Feather CMS",
+            title: "Manage user magic links",
             description: "Management user magic link list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

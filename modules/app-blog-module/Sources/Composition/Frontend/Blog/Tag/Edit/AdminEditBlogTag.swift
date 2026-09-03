@@ -19,7 +19,7 @@ struct AdminEditBlogTag {
                 (
                     interactor: AdminEditBlogTagDefaultInteractor(
                         repository: AdminEditBlogTagOpenAPIRepository(
-                            api: context.blogManagementAPI()
+                            api: context.blogAdminAPI()
                         )
                     ),
                     presenter: AdminEditBlogTagDefaultPresenter(

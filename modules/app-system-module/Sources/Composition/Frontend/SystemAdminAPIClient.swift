@@ -95,7 +95,7 @@ extension SystemAdminAPI.Client {
 }
 
 extension DefaultRequestContext {
-    public func systemManagementAPI() -> SystemAdminAPIClient {
+    public func systemAdminAPI() -> SystemAdminAPIClient {
         .init(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken

@@ -8,7 +8,7 @@ struct AdminGetSystemPermission {
         self.controller = AdminGetSystemPermissionDefaultController(
             buildRuntime: { request, context in
                 let repository = AdminGetSystemPermissionOpenAPIRepository(
-                    api: context.systemManagementAPI()
+                    api: context.systemAdminAPI()
                 )
                 let interactor = AdminGetSystemPermissionDefaultInteractor(
                     repository: repository

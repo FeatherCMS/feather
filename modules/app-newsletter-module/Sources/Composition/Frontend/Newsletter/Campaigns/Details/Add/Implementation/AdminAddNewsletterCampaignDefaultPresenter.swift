@@ -24,8 +24,8 @@ struct AdminAddNewsletterCampaignDefaultPresenter:
         ])
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Add campaign - Feather CMS",
-            description: "Add campaign - Feather CMS",
+            title: "Add campaign",
+            description: "Add campaign",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

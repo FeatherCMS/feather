@@ -16,7 +16,7 @@ struct AdminGetRedirectRuleDefaultPresenter: AdminGetRedirectRulePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Redirect rule details - Feather CMS",
+            title: "Redirect rule details",
             description: "Management redirect rule details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -40,7 +40,7 @@ struct AdminGetRedirectRuleDefaultPresenter: AdminGetRedirectRulePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Redirect rule details - Feather CMS",
+            title: "Redirect rule details",
             description: "Management redirect rule details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

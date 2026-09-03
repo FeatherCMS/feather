@@ -21,8 +21,8 @@ struct AdminEditMediaFolderDefaultPresenter: AdminEditMediaFolderPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Edit media folder - Feather CMS",
-            description: "Edit media folder - Feather CMS",
+            title: "Edit media folder",
+            description: "Edit media folder",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
@@ -49,8 +49,8 @@ struct AdminEditMediaFolderDefaultPresenter: AdminEditMediaFolderPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Edit media folder - Feather CMS",
-            description: "Edit media folder - Feather CMS",
+            title: "Edit media folder",
+            description: "Edit media folder",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

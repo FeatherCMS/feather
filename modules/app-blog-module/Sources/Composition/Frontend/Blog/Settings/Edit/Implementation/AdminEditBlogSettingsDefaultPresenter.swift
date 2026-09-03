@@ -22,7 +22,7 @@ struct AdminEditBlogSettingsDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Settings - Feather CMS",
+            title: "Settings",
             description: "Edit blog settings",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
@@ -40,7 +40,7 @@ struct AdminEditBlogSettingsDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "No permission - Feather CMS",
+            title: "No permission",
             description: "No permission",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

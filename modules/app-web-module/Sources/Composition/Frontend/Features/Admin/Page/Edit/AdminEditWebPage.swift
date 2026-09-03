@@ -11,7 +11,7 @@ struct AdminEditWebPage {
                 (
                     interactor: AdminEditWebPageDefaultInteractor(
                         repository: AdminEditWebPageOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminEditWebPageDefaultPresenter(

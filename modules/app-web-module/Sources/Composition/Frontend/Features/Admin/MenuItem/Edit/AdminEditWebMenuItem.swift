@@ -12,11 +12,11 @@ struct AdminEditWebMenuItem {
                 (
                     interactor: AdminEditWebMenuItemDefaultInteractor(
                         repository: AdminEditWebMenuItemOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         ),
                         permissionRepository:
                             AdminSystemPermissionOpenAPIRepository(
-                                api: context.systemManagementAPI()
+                                api: context.systemAdminAPI()
                             )
                     ),
                     presenter: AdminEditWebMenuItemDefaultPresenter(

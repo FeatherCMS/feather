@@ -10,7 +10,7 @@ struct AdminEditSystemVariable {
                 (
                     interactor: AdminEditSystemVariableDefaultInteractor(
                         repository: AdminEditSystemVariableOpenAPIRepository(
-                            api: context.systemManagementAPI()
+                            api: context.systemAdminAPI()
                         )
                     ),
                     presenter: AdminEditSystemVariableDefaultPresenter(

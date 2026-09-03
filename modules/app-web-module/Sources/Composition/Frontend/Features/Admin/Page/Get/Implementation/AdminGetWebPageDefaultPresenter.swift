@@ -18,7 +18,7 @@ struct AdminGetWebPageDefaultPresenter: AdminGetWebPagePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Web page details - Feather CMS",
+            title: "Web page details",
             description: "Management web page details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -45,7 +45,7 @@ struct AdminGetWebPageDefaultPresenter: AdminGetWebPagePresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Web page details - Feather CMS",
+            title: "Web page details",
             description: "Management web page details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

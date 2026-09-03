@@ -20,8 +20,8 @@ struct AdminAddMediaProcessorDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Add media processor - Feather CMS",
-            description: "Add media processor - Feather CMS",
+            title: "Add media processor",
+            description: "Add media processor",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

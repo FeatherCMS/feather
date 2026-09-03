@@ -18,7 +18,7 @@ struct AdminEditSystemPermissionDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit system permission - Feather CMS",
+            title: "Edit system permission",
             description: "Edit a management system permission",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -44,7 +44,7 @@ struct AdminEditSystemPermissionDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit system permission - Feather CMS",
+            title: "Edit system permission",
             description: "Edit a management system permission",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

@@ -15,7 +15,7 @@ struct AdminAddNewsletterCampaign {
                 (
                     interactor: AdminAddNewsletterCampaignDefaultInteractor(
                         repository: AdminAddNewsletterCampaignOpenAPIRepository(
-                            api: context.newsletterManagementAPI()
+                            api: context.newsletterAdminAPI()
                         )
                     ),
                     presenter: AdminAddNewsletterCampaignDefaultPresenter(

@@ -25,8 +25,8 @@ struct AdminAddContactFieldDefaultPresenter:
         ])
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Add contact form field - Feather CMS",
-            description: "Add contact form field - Feather CMS",
+            title: "Add contact form field",
+            description: "Add contact form field",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

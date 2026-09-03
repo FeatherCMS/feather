@@ -14,7 +14,7 @@ struct AdminAddContactFormEmail {
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddContactFormEmailDefaultInteractor(
-                        repository: .init(api: context.contactManagementAPI())
+                        repository: .init(api: context.contactAdminAPI())
                     ),
                     presenter: AdminAddContactFormEmailDefaultPresenter(
                         request: request,

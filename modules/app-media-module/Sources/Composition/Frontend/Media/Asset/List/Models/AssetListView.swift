@@ -223,6 +223,7 @@ struct AssetListView: Component {
     }
 
     func rules() -> [any CSS.Rule] {
+        Media(selectors: selectors())
         Media(.screen && .minWidth(600.px)) {
             Custom(".media-assets-grid") {
                 GridTemplateColumns(

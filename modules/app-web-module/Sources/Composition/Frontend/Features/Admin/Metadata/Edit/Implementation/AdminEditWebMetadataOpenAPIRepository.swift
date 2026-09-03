@@ -27,12 +27,12 @@ struct AdminEditWebMetadataOpenAPIRepository: AdminEditWebMetadataRepository {
                 )
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this metadata entry."
+                    message: "Please sign in again to load this web metadata."
                 )
             case .forbidden:
                 throw OpenAPIRepositoryError.forbidden(
                     message:
-                        "Your account cannot access metadata entries."
+                        "Your account cannot access web metadata."
                 )
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
@@ -75,11 +75,11 @@ struct AdminEditWebMetadataOpenAPIRepository: AdminEditWebMetadataRepository {
                 return try await load(id: entry.id)
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this metadata."
+                    message: "Please sign in again to load this web metadata."
                 )
             case .forbidden:
                 throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access metadata entries."
+                    message: "Your account cannot access web metadata."
                 )
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
@@ -136,12 +136,12 @@ struct AdminEditWebMetadataOpenAPIRepository: AdminEditWebMetadataRepository {
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
                     message:
-                        "Please sign in again to update this metadata entry."
+                        "Please sign in again to update this web metadata."
                 )
             case .forbidden:
                 throw OpenAPIRepositoryError.forbidden(
                     message:
-                        "Your account cannot edit metadata entries."
+                        "Your account cannot edit web metadata."
                 )
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(

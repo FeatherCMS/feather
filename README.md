@@ -22,6 +22,15 @@ Run these from the repository root:
   Builds the shared application artifact image once, builds the runtime images
   from it, and runs the application stack: dependencies, migrations, backend
   workers, web app, static server, and OpenAPI services.
+- `make local`
+  Runs PostgreSQL in Docker and runs the migrator, backend server, worker, web
+  app, and static server as local Swift processes. Local media is stored in
+  `.docker/media`.
+- `make local-app`
+  Builds and runs only the local `WebApp` executable.
+- `make local-backend`
+  Runs PostgreSQL in Docker and runs the migrator, backend server, and worker
+  locally, without starting the web app or static server.
 - `make application-artifacts`
   Compiles all application executables once and creates the local artifact
   image used by the runtime images.

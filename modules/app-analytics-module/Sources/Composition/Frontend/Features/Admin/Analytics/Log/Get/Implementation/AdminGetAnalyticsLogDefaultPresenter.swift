@@ -15,7 +15,7 @@ struct AdminGetAnalyticsLogDefaultPresenter: AdminGetAnalyticsLogPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Analytics log details - Feather CMS",
+            title: "Analytics log details",
             description: "Analytics log details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -38,7 +38,7 @@ struct AdminGetAnalyticsLogDefaultPresenter: AdminGetAnalyticsLogPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Analytics log details - Feather CMS",
+            title: "Analytics log details",
             description: "Analytics log details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

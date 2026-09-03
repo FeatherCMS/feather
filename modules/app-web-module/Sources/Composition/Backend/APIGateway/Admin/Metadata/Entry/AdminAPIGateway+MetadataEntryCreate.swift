@@ -7,7 +7,7 @@ import WebDomain
 
 extension AdminAPIGateway {
 
-    /// Create metadata entry
+    /// Create web metadata
     /*
      curl -i -X 'POST' \
         'http://127.0.0.1:8080/api/v1/admin/web/metadata' \

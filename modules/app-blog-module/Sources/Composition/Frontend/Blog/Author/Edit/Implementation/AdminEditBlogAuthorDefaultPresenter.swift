@@ -22,7 +22,7 @@ struct AdminEditBlogAuthorDefaultPresenter: AdminEditBlogAuthorPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit author - Feather CMS",
+            title: "Edit author",
             description: "Edit a management author",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -48,7 +48,7 @@ struct AdminEditBlogAuthorDefaultPresenter: AdminEditBlogAuthorPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit author - Feather CMS",
+            title: "Edit author",
             description: "Edit a management author",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

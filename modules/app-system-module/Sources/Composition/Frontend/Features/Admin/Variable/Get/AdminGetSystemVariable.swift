@@ -10,7 +10,7 @@ struct AdminGetSystemVariable {
                 (
                     interactor: AdminGetSystemVariableDefaultInteractor(
                         repository: AdminGetSystemVariableOpenAPIRepository(
-                            api: context.systemManagementAPI()
+                            api: context.systemAdminAPI()
                         )
                     ),
                     presenter: AdminGetSystemVariableDefaultPresenter(

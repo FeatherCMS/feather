@@ -17,7 +17,7 @@ struct AdminGetAccountInvitationDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "User invitation details - Feather CMS",
+            title: "User invitation details",
             description: "Management user invitation details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -41,7 +41,7 @@ struct AdminGetAccountInvitationDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "User invitation details - Feather CMS",
+            title: "User invitation details",
             description: "Management user invitation details",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

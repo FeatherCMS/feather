@@ -27,7 +27,7 @@ struct AdminListAnalyticsLogDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Analytics logs - Feather CMS",
+                title: "Analytics logs",
                 description: "Analytics log list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -45,7 +45,7 @@ struct AdminListAnalyticsLogDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Analytics logs - Feather CMS",
+            title: "Analytics logs",
             description: "Analytics log list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

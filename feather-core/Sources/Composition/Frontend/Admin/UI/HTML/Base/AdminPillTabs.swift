@@ -34,9 +34,17 @@ public struct AdminPillTabs: Component, FlowContent {
                     padding: 4px;
                     gap: 4px;
                     width: 100%;
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    scrollbar-width: none;
+                    -ms-overflow-style: none;
+                    -webkit-overflow-scrolling: touch;
+                }
+                .admin-pill-tabs::-webkit-scrollbar {
+                    display: none;
                 }
                 .admin-pill-tabs a {
-                    flex: 1;
+                    flex: 1 0 auto;
                     border: 0;
                     border-radius: 999px;
                     background: transparent;
@@ -46,6 +54,7 @@ public struct AdminPillTabs: Component, FlowContent {
                     text-align: center;
                     cursor: pointer;
                     text-decoration: none;
+                    white-space: nowrap;
                 }
                 .admin-pill-tabs a:hover:not(.is-current) {
                     color: var(--cms-link-hover);

@@ -27,7 +27,7 @@ struct AdminListSystemVariableDefaultPresenter:
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Manage system variables - Feather CMS",
+                title: "Manage system variables",
                 description: "Management system variable list",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
@@ -45,7 +45,7 @@ struct AdminListSystemVariableDefaultPresenter:
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Manage system variables - Feather CMS",
+            title: "Manage system variables",
             description: "Management system variable list",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(

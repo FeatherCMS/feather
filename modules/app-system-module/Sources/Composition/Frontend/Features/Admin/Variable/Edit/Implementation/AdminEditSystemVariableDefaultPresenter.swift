@@ -17,7 +17,7 @@ struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit system variable - Feather CMS",
+            title: "Edit system variable",
             description: "Edit a management system variable",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -43,7 +43,7 @@ struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Edit system variable - Feather CMS",
+            title: "Edit system variable",
             description: "Edit a management system variable",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

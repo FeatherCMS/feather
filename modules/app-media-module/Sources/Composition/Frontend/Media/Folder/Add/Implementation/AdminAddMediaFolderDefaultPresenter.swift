@@ -18,8 +18,8 @@ struct AdminAddMediaFolderDefaultPresenter: AdminAddMediaFolderPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Add media folder - Feather CMS",
-            description: "Add media folder - Feather CMS",
+            title: "Add media folder",
+            description: "Add media folder",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

@@ -24,7 +24,7 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove blog author link - Feather CMS",
+            title: "Remove blog author link",
             description:
                 "Remove confirmation for a management blog author link",
             imagePath: "images/logos/logo.png",
@@ -52,7 +52,7 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove blog author link - Feather CMS",
+            title: "Remove blog author link",
             description:
                 "Remove confirmation for a management blog author link",
             imagePath: "images/logos/logo.png",

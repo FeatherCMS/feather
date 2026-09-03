@@ -15,7 +15,7 @@ struct AdminAddWebMenuDefaultPresenter: AdminAddWebMenuPresenter {
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Add menu - Feather CMS",
+            title: "Add menu",
             description: "Add a menu in management",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

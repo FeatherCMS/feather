@@ -23,7 +23,7 @@ struct AdminRemoveBlogPostDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove post - Feather CMS",
+            title: "Remove post",
             description: "Remove confirmation for a management post",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(
@@ -48,7 +48,7 @@ struct AdminRemoveBlogPostDefaultPresenter:
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
             request: request,
-            title: "Remove post - Feather CMS",
+            title: "Remove post",
             description: "Remove confirmation for a management post",
             imagePath: "images/logos/logo.png",
             sidebarState: renderingEngine.adminSidebarState(

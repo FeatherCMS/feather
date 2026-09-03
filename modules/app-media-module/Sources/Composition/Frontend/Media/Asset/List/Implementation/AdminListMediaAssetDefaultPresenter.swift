@@ -72,8 +72,8 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             }
             return renderEngine.renderAdminPage(
                 request: request,
-                title: "Media assets - Feather CMS",
-                description: "Media assets - Feather CMS",
+                title: "Media assets",
+                description: "Media assets",
                 imagePath: "images/logos/logo.png",
                 sidebarState: renderEngine.adminSidebarState(
                     request: request,
@@ -99,8 +99,8 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Media assets - Feather CMS",
-            description: "Media assets - Feather CMS",
+            title: "Media assets",
+            description: "Media assets",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

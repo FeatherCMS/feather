@@ -47,8 +47,8 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
         }
         return renderEngine.renderAdminPage(
             request: request,
-            title: "Add media asset - Feather CMS",
-            description: "Add media asset - Feather CMS",
+            title: "Add media asset",
+            description: "Add media asset",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

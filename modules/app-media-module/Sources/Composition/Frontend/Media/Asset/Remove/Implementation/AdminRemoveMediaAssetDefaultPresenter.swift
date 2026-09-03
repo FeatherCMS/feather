@@ -18,8 +18,8 @@ struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove media asset - Feather CMS",
-            description: "Remove media asset - Feather CMS",
+            title: "Remove media asset",
+            description: "Remove media asset",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,

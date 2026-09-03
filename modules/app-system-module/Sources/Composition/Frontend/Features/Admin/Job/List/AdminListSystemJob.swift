@@ -10,7 +10,7 @@ struct AdminListSystemJob {
                 (
                     interactor: AdminListSystemJobDefaultInteractor(
                         repository: AdminListSystemJobOpenAPIRepository(
-                            api: context.systemManagementAPI()
+                            api: context.systemAdminAPI()
                         )
                     ),
                     presenter: AdminListSystemJobDefaultPresenter(

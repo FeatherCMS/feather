@@ -16,7 +16,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
                 (
                     interactor: AdminEditWebMetadataDefaultInteractor(
                         repository: AdminEditWebMetadataOpenAPIRepository(
-                            api: context.webManagementAPI()
+                            api: context.webAdminAPI()
                         )
                     ),
                     presenter: AdminEditWebMetadataDefaultPresenter(

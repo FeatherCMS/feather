@@ -20,8 +20,8 @@ struct AdminRemoveMediaProcessorDefaultPresenter:
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
-            title: "Remove media processor - Feather CMS",
-            description: "Remove media processor - Feather CMS",
+            title: "Remove media processor",
+            description: "Remove media processor",
             imagePath: "images/logos/logo.png",
             sidebarState: renderEngine.adminSidebarState(
                 request: request,
