@@ -1,10 +1,8 @@
-// NOTE: this unchecked sendable is fine.
-// WARN: never put anything into the payload apart from immutable data!
-public struct WebPublicContentResult: @unchecked Sendable {
-    public let payload: [String: Any]
+public struct WebPublicContentResult: Sendable {
+    public let payload: [String: any Sendable]
 
     public init(
-        payload: [String: Any]
+        payload: [String: any Sendable]
     ) {
         self.payload = payload
     }

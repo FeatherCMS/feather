@@ -18,7 +18,7 @@ public struct DefaultThemeRenderer: PublicThemeRenderer {
 
     public func render(
         templateIdentifier: String?,
-        context: [String: Any]
+        context: [String: any Sendable]
     ) -> HTMLResponse {
         let template =
             templatePath(templateIdentifier ?? "") ?? "pages/default"

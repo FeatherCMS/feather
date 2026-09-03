@@ -63,7 +63,7 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
         templateIdentifier: String?,
         referenceType: String,
         referenceID: String
-    ) async throws -> [String: Any] {
+    ) async throws -> [String: any Sendable] {
         let request = WebPublicContentEventContext(
             path: path,
             templateIdentifier: templateIdentifier,
@@ -75,7 +75,7 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
             event: WebPublicContentProvider(request: request),
             using: request
         )
-        var context: [String: Any] = [:]
+        var context: [String: any Sendable] = [:]
         for result in results.compactMap({ $0 }) {
             for (key, value) in result.payload {
                 context[key] = value
@@ -85,12 +85,14 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
     }
 
     private func renderContent(
-        in payload: [String: Any],
+        in payload: [String: any Sendable],
         requestPath: String
-    ) async -> [String: Any] {
+    ) async -> [String: any Sendable] {
         var result = payload
         for (key, value) in payload {
-            guard key == "page", let page = value as? [String: Any]
+            guard
+                key == "page",
+                let page = value as? [String: any Sendable]
             else { continue }
             result[key] = await renderPage(
                 page,
@@ -101,12 +103,12 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
     }
 
     private func renderPage(
-        _ page: [String: Any],
+        _ page: [String: any Sendable],
         requestPath: String
-    ) async -> [String: Any] {
+    ) async -> [String: any Sendable] {
         var result = page
         let markdown: String?
-        if let contents = page["contents"] as? [String: Any] {
+        if let contents = page["contents"] as? [String: any Sendable] {
             markdown = contents["html"] as? String
         }
         else if let contents = page["contents"] as? [String: String] {
@@ -116,8 +118,8 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
             markdown = page["content"] as? String
         }
         guard let markdown else { return result }
-        var renderedContents: [String: Any] =
-            (page["contents"] as? [String: Any])
+        var renderedContents: [String: any Sendable] =
+            (page["contents"] as? [String: any Sendable])
             ?? ["html": markdown]
         renderedContents["html"] = await contentRenderer.render(
             markdown: markdown,

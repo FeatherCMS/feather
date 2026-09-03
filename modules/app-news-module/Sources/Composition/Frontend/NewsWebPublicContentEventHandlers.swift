@@ -95,7 +95,7 @@ public enum NewsWebPublicContentEventHandlers {
 
     private static func summaryContext(
         _ value: NewsAppAPI.Components.Schemas.NewsArticleSummarySchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -107,7 +107,7 @@ public enum NewsWebPublicContentEventHandlers {
 
     private static func summaryContext(
         _ value: NewsAppAPI.Components.Schemas.NewsCategorySummarySchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -119,7 +119,7 @@ public enum NewsWebPublicContentEventHandlers {
 
     private static func pageContext(
         _ value: NewsAppAPI.Components.Schemas.NewsArticleDetailSchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -127,7 +127,7 @@ public enum NewsWebPublicContentEventHandlers {
             image: value.imageURL,
             permalink: value.metadata.slug
         )
-        result["contents"] = ["html": value.content] as [String: Any]
+        result["contents"] = ["html": value.content] as [String: any Sendable]
         result["categories"] = value.categories.map(summaryContext)
         result["noindex"] =
             value.metadata.status != "published"
@@ -137,7 +137,7 @@ public enum NewsWebPublicContentEventHandlers {
 
     private static func pageContext(
         _ value: NewsAppAPI.Components.Schemas.NewsCategoryDetailSchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -145,7 +145,7 @@ public enum NewsWebPublicContentEventHandlers {
             image: value.imageURL,
             permalink: value.metadata.slug
         )
-        result["contents"] = ["html": value.content] as [String: Any]
+        result["contents"] = ["html": value.content] as [String: any Sendable]
         result["news"] = value.news.map(summaryContext)
         result["noindex"] =
             value.metadata.status != "published"
@@ -159,7 +159,7 @@ public enum NewsWebPublicContentEventHandlers {
         description: String,
         image: String,
         permalink: String
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         let resolvedImageURL = WebImageURLResolver.resolve(
             image,
             mediaBaseURL: mediaBaseURL

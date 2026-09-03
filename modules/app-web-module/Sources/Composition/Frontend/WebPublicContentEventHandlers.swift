@@ -54,7 +54,7 @@ public enum WebPublicContentEventHandlers {
             .first(where: { $0.key == "main" })?
             .items
             .map(menuItemContext) ?? []
-        var payload: [String: Any] = [
+        var payload: [String: any Sendable] = [
             "baseUrl": normalizedURL(
                 base: origins.staticBaseURL,
                 path: ""
@@ -108,18 +108,18 @@ public enum WebPublicContentEventHandlers {
                     path: request.path
                 ),
                 "noindex": true,
-                "css": [],
-                "js": [],
-            ]
+                "css": [String](),
+                "js": [String](),
+            ] as [String: any Sendable]
         }
         return .init(payload: payload)
     }
 
     private static func siteContext(
         settings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
-        navigation: [[String: Any]]
-    ) -> [String: Any] {
-        var context: [String: Any] = [
+        navigation: [[String: any Sendable]]
+    ) -> [String: any Sendable] {
+        var context: [String: any Sendable] = [
             "name": settings.title.emptyToNil ?? "Feather CMS",
             "navigation": navigation,
             "noIndex": settings.noIndex,
@@ -154,7 +154,7 @@ public enum WebPublicContentEventHandlers {
         requestPath: String,
         siteSettings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
         siteBaseURL: String
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         let title =
             page.metadata.title.isEmpty
             ? siteSettings.title : page.metadata.title
@@ -174,7 +174,7 @@ public enum WebPublicContentEventHandlers {
         else {
             image = siteSettings.metaImage.emptyToNil
         }
-        var context: [String: Any] = [
+        var context: [String: any Sendable] = [
             "title": title,
             "description": description,
             "permalink": normalizedURL(
@@ -184,7 +184,7 @@ public enum WebPublicContentEventHandlers {
             "noindex": siteSettings.noIndex
                 || page.metadata.noIndex
                 || page.metadata.status != "published",
-            "contents": ["html": page.content] as [String: Any],
+            "contents": ["html": page.content] as [String: any Sendable],
         ]
 
         if let image {
@@ -202,7 +202,7 @@ public enum WebPublicContentEventHandlers {
 
     private static func menuItemContext(
         _ item: WebAppAPI.Components.Schemas.WebMenuItemSchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         [
             "label": item.label,
             "url": item.url,
