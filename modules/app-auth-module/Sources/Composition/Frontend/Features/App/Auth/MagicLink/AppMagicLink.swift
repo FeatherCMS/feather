@@ -38,7 +38,7 @@ struct AppMagicLink {
                                 label: "Email address",
                                 value: email
                             )
-                            )
+                        )
                         CheckboxField(
                             state: .init(
                                 key: "is_persistent",
@@ -159,9 +159,9 @@ struct AppMagicLink {
             case .unauthorized:
                 return try render(
                     request: request,
-                email: "",
-                isPersistent: true,
-                error:
+                    email: "",
+                    isPersistent: true,
+                    error:
                         "This magic link is invalid, expired, or has already been used.",
                     message: nil
                 )

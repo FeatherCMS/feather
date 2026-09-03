@@ -99,18 +99,19 @@ public enum WebPublicContentEventHandlers {
             }
         }
         else if request.templateIdentifier == "not-found" {
-            payload["page"] = [
-                "title": "Page not found",
-                "description":
-                    "The page you requested does not exist or is not available.",
-                "permalink": normalizedURL(
-                    base: origins.siteBaseURL,
-                    path: request.path
-                ),
-                "noindex": true,
-                "css": [String](),
-                "js": [String](),
-            ] as [String: any Sendable]
+            payload["page"] =
+                [
+                    "title": "Page not found",
+                    "description":
+                        "The page you requested does not exist or is not available.",
+                    "permalink": normalizedURL(
+                        base: origins.siteBaseURL,
+                        path: request.path
+                    ),
+                    "noindex": true,
+                    "css": [String](),
+                    "js": [String](),
+                ] as [String: any Sendable]
         }
         return .init(payload: payload)
     }
