@@ -29,6 +29,6 @@ struct AdminWebMenuTabs: Component, FlowContent {
     }
 
     func content() -> some BasicTag {
-        AdminPillTabs(links: links).content()
+        AdminPillTabs(links: links)
     }
 }

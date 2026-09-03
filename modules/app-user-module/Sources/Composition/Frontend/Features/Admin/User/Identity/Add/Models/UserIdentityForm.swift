@@ -2,7 +2,9 @@ import CSS
 import FeatherAdmin
 import HTML
 import SGML
+import UserAdminAPI
 import WebStandards
+import Foundation
 
 struct UserIdentityForm: Component, FlowContent {
 
@@ -51,13 +53,21 @@ struct UserIdentityForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            FormInputField(
+            FormSelectField(
                 name: state.status.key,
                 label: state.status.label,
-                value: state.status.value,
+                options: UserAdminAPI.Components.Schemas
+                    .UserIdentityStatusField.allCases
+                    .map {
+                        .init(
+                            label: $0.rawValue.capitalized,
+                            value: $0.rawValue
+                        )
+                    },
+                selectedValue: state.status.value,
                 error: state.status.error,
                 isRequired: state.status.isRequired,
-                inputClass: "text-input"
+                selectClass: "text-input"
             )
 
             if !state.roleOptions.isEmpty {

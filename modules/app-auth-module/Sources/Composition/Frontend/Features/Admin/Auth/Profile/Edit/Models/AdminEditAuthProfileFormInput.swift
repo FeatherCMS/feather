@@ -20,18 +20,7 @@ public struct AdminEditAuthProfileFormInput: Codable, Sendable, Equatable,
     Hashable
 {
 
-    public let email: String
-    public let password: String
     public var firstName: String? = nil
     public var lastName: String? = nil
     public var imageURL: String? = nil
-
-    var normalizedEmail: String {
-        email.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    var normalizedPassword: String? {
-        let value = password.trimmingCharacters(in: .whitespacesAndNewlines)
-        return value.isEmpty ? nil : value
-    }
 }

@@ -13,20 +13,12 @@ struct AdminEditAccountInvitationOpenAPIRepository:
         self.api = api
     }
 
-    init() {
-        self.api = AccountAdminAPIClient(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: nil
-        )
-    }
-
     func get(
         id: String
     ) async throws -> AccountInvitationDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
-                try await client
-                .accountInvitationGet(
+                try await client.accountInvitationGet(
                     path: .init(accountInvitationId: id),
                     headers: .init(accept: [.init(contentType: .json)])
                 )

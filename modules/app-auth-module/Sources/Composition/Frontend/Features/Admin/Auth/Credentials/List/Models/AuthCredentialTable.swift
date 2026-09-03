@@ -17,7 +17,6 @@ import WebStandards
 
 struct AuthCredentialTable: Component {
     struct State {
-        let identityId: String
         let canAccess: Bool
         let permissions: Set<String>
         let credentials:
@@ -40,18 +39,9 @@ struct AuthCredentialTable: Component {
             else {
                 AdminBreadcrumb(state: state.breadcrumb)
                 H1("User credentials")
-                Div {
-                    AdminNavigationButton(
-                        "Add credential",
-                        href: "/admin/auth/credentials/\(state.identityId)/add/"
-                    )
-                }
-                .class("button-row")
-                Br()
-                Br()
                 ListTableSearchForm(
                     state: .init(
-                        action: "/admin/auth/credentials/\(state.identityId)/",
+                        action: "/admin/auth/credentials/",
                         placeholder: "Quick search credentials",
                         search: state.search
                     )
@@ -68,6 +58,7 @@ struct AuthCredentialTable: Component {
                         table: Table {
                             Thead {
                                 Tr {
+                                    Th("User identifier")
                                     Th("Email")
                                     Th("Actions")
                                 }
@@ -75,6 +66,8 @@ struct AuthCredentialTable: Component {
                             Tbody {
                                 for credential in state.credentials {
                                     Tr {
+                                        Td(credential.userId)
+                                            .data("label", "User identifier")
                                         Td(credential.email)
                                             .data("label", "Email")
                                         ListTableRowActions(
@@ -110,7 +103,7 @@ struct AuthCredentialTable: Component {
                     ListTablePagination(
                         state: .init(
                             path:
-                                "/admin/auth/credentials/\(state.identityId)/",
+                                "/admin/auth/credentials/",
                             page: state.page,
                             pageSize: state.pageSize,
                             total: state.total,

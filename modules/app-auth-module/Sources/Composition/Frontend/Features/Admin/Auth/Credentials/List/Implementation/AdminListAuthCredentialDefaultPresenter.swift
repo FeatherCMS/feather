@@ -37,8 +37,7 @@ struct AdminListAuthCredentialDefaultPresenter: AdminListAuthCredentialPresenter
     }
 
     func renderError(
-        error: OpenAPIRepositoryError,
-        identityId: String
+        error: OpenAPIRepositoryError
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
             request: request,
@@ -59,10 +58,6 @@ struct AdminListAuthCredentialDefaultPresenter: AdminListAuthCredentialPresenter
                         .init(
                             label: "Credentials",
                             link: "/admin/auth/credentials/"
-                        ),
-                        .init(
-                            label: "User",
-                            link: "/admin/auth/credentials/\(identityId)/"
                         ),
                     ])
                 )

@@ -35,7 +35,7 @@ struct AuthCredentialConfirmation: Component {
                 details: [.init(prefix: "Email: ", value: state.email)],
                 submitLabel: "Remove credential",
                 actionURL: "/admin/auth/credentials/\(state.id)/remove/",
-                cancelURL: "/admin/auth/credentials/\(state.identityId)/"
+                cancelURL: "/admin/auth/credentials/"
             )
         )
     }

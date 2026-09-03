@@ -132,6 +132,7 @@ struct UserIdentityTable: Component {
                                         if canRemove {
                                             ListTableSelectAllCheckbox()
                                         }
+                                        Th("Id")
                                         Th("Status")
                                         Th("Roles")
                                         Th("Actions")
@@ -147,6 +148,8 @@ struct UserIdentityTable: Component {
                                                     )
                                                 )
                                             }
+                                            Td(identity.id)
+                                                .data("label", "User identifier")
                                             Td(identity.status.rawValue)
                                                 .data("label", "Status")
                                             Td(

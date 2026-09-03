@@ -21,7 +21,6 @@ struct AdminListAuthCredentialDefaultInteractor:
     let repository: any AdminListAuthCredentialRepository
 
     func execute(
-        identityId: String,
         page: Int,
         size: Int,
         search: String?
@@ -32,7 +31,6 @@ struct AdminListAuthCredentialDefaultInteractor:
         size: Int
     ) {
         try await repository.list(
-            identityId: identityId,
             page: page,
             size: size,
             search: search

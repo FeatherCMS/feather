@@ -23,9 +23,6 @@ struct AdminEditAuthProfile {
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditAuthProfileDefaultInteractor(
-                        repository: AdminEditAuthProfileOpenAPIRepository(
-                            api: context.authAdminAPI()
-                        ),
                         accountProfileRepository:
                             AdminAuthAccountProfileOpenAPIRepository(
                                 api: context.accountAppAPI()

@@ -49,8 +49,6 @@ struct AdminEditAuthProfileDefaultController:
                 id: profile.id,
                 isEdited: request.hasQueryFlag("edited"),
                 form: formState(
-                    email: profile.email,
-                    password: "",
                     firstName: profile.firstName,
                     lastName: profile.lastName,
                     imageURL: profile.imageURL
@@ -87,12 +85,9 @@ struct AdminEditAuthProfileDefaultController:
             context: context
         )
         do {
-            try await payload.validate()
             try await interactor.execute(
                 entity: .init(
                     id: profile.id,
-                    email: payload.normalizedEmail,
-                    password: payload.normalizedPassword,
                     firstName: payload.firstName,
                     lastName: payload.lastName,
                     imageURL: payload.imageURL
@@ -117,8 +112,6 @@ struct AdminEditAuthProfileDefaultController:
                 permissions: permissions,
                 state: validationState(
                     id: profile.id,
-                    email: profile.email,
-                    password: "",
                     firstName: payload.firstName,
                     lastName: payload.lastName,
                     imageURL: payload.imageURL,
@@ -134,8 +127,6 @@ struct AdminEditAuthProfileDefaultController:
                 permissions: permissions,
                 state: errorState(
                     id: profile.id,
-                    email: profile.email,
-                    password: "",
                     firstName: payload.firstName,
                     lastName: payload.lastName,
                     imageURL: payload.imageURL,
@@ -151,8 +142,6 @@ struct AdminEditAuthProfileDefaultController:
                 permissions: permissions,
                 state: genericErrorState(
                     id: profile.id,
-                    email: profile.email,
-                    password: "",
                     firstName: payload.firstName,
                     lastName: payload.lastName,
                     imageURL: payload.imageURL,
@@ -163,25 +152,11 @@ struct AdminEditAuthProfileDefaultController:
     }
 
     private func formState(
-        email: String,
-        password: String,
         firstName: String?,
         lastName: String?,
         imageURL: String?
     ) -> AuthProfileForm.State {
         .init(
-            email: .init(
-                key: "email",
-                label: "Email address",
-                value: email,
-                error: nil
-            ),
-            password: .init(
-                key: "password",
-                label: "Password",
-                value: password,
-                error: nil
-            ),
             firstName: .init(
                 key: "firstName",
                 label: "First name",
@@ -207,8 +182,6 @@ struct AdminEditAuthProfileDefaultController:
 
     private func validationState(
         id: String,
-        email: String,
-        password: String,
         firstName: String?,
         lastName: String?,
         imageURL: String?,
@@ -218,8 +191,6 @@ struct AdminEditAuthProfileDefaultController:
             id: id,
             isEdited: false,
             form: formState(
-                email: email,
-                password: password,
                 firstName: firstName,
                 lastName: lastName,
                 imageURL: imageURL
@@ -236,8 +207,6 @@ struct AdminEditAuthProfileDefaultController:
 
     private func errorState(
         id: String,
-        email: String,
-        password: String,
         firstName: String?,
         lastName: String?,
         imageURL: String?,
@@ -247,8 +216,6 @@ struct AdminEditAuthProfileDefaultController:
             id: id,
             isEdited: false,
             form: formState(
-                email: email,
-                password: password,
                 firstName: firstName,
                 lastName: lastName,
                 imageURL: imageURL
@@ -261,8 +228,6 @@ struct AdminEditAuthProfileDefaultController:
 
     private func genericErrorState(
         id: String,
-        email: String,
-        password: String,
         firstName: String?,
         lastName: String?,
         imageURL: String?,
@@ -272,8 +237,6 @@ struct AdminEditAuthProfileDefaultController:
             id: id,
             isEdited: false,
             form: formState(
-                email: email,
-                password: password,
                 firstName: firstName,
                 lastName: lastName,
                 imageURL: imageURL

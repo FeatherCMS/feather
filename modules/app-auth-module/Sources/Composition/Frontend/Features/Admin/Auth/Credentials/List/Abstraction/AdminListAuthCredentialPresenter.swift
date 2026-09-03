@@ -21,7 +21,6 @@ protocol AdminListAuthCredentialPresenter: Sendable {
     ) -> HTMLResponse
 
     func renderError(
-        error: OpenAPIRepositoryError,
-        identityId: String
+        error: OpenAPIRepositoryError
     ) -> HTMLResponse
 }

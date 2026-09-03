@@ -17,7 +17,6 @@ import WebStandards
 
 protocol AdminListAuthCredentialRepository: Sendable {
     func list(
-        identityId: String,
         page: Int,
         size: Int,
         search: String?
