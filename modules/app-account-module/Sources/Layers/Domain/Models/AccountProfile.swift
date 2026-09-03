@@ -7,25 +7,23 @@ public struct AccountProfile: Model {
         case invalidUserId
         case firstNameTooLong
         case lastNameTooLong
-        case imageURLTooLong
     }
 
     public struct New: Sendable {
         public let userId: String
         public let firstName: String?
         public let lastName: String?
-        public let imageURL: String?
+        public let profileImageAssetId: String?
     }
 
     public static let defaultFirstName: String? = nil
     public static let defaultLastName: String? = nil
     public static let maximumNameLength = 255
-    public static let maximumImageURLLength = 2048
 
     public let userId: String
     public var firstName: String?
     public var lastName: String?
-    public var imageURL: String?
+    public var profileImageAssetId: String?
     public let createdAt: Date
     public let updatedAt: Date
 
@@ -33,14 +31,14 @@ public struct AccountProfile: Model {
         userId: String,
         firstName: String?,
         lastName: String?,
-        imageURL: String?,
+        profileImageAssetId: String?,
         createdAt: Date,
         updatedAt: Date
     ) {
         self.userId = userId
         self.firstName = firstName
         self.lastName = lastName
-        self.imageURL = imageURL
+        self.profileImageAssetId = profileImageAssetId
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
@@ -59,41 +57,33 @@ extension AccountProfile {
         guard name?.count ?? 0 <= maximumNameLength else { throw error }
     }
 
-    private static func validate(imageURL: String?) throws(Self.Error) {
-        guard imageURL?.count ?? 0 <= maximumImageURLLength else {
-            throw .imageURLTooLong
-        }
-    }
-
     public static func create(
         userId: String,
         firstName: String? = Self.defaultFirstName,
         lastName: String? = Self.defaultLastName,
-        imageURL: String? = nil
+        profileImageAssetId: String? = nil
     ) throws(Self.Error) -> Self.New {
         try validate(userId: userId)
         try validate(name: firstName, error: .firstNameTooLong)
         try validate(name: lastName, error: .lastNameTooLong)
-        try validate(imageURL: imageURL)
         return .init(
             userId: userId,
             firstName: firstName,
             lastName: lastName,
-            imageURL: imageURL
+            profileImageAssetId: profileImageAssetId
         )
     }
 
     public mutating func update(
         firstName: String?,
         lastName: String?,
-        imageURL: String?
+        profileImageAssetId: String?
     ) throws(Self.Error) {
         try Self.validate(userId: userId)
         try Self.validate(name: firstName, error: .firstNameTooLong)
         try Self.validate(name: lastName, error: .lastNameTooLong)
-        try Self.validate(imageURL: imageURL)
         self.firstName = firstName
         self.lastName = lastName
-        self.imageURL = imageURL
+        self.profileImageAssetId = profileImageAssetId
     }
 }

@@ -5,6 +5,16 @@ import Foundation
 
 enum AdminEditUserIdentityFormFieldValidator {
 
+    static func name(_ value: String?) -> Validator<String> {
+        .init(
+            key: "name",
+            value: value,
+            required: true,
+            invocation: .all,
+            rules: [.trimmedNonempty(message: "Name is required.")]
+        )
+    }
+
     static func status(
         _ value: String?,
         required: Bool
@@ -32,6 +42,7 @@ extension AdminEditUserIdentityFormInput {
 
     private var validator: GroupValidator {
         GroupValidator {
+            AdminEditUserIdentityFormFieldValidator.name(name)
             AdminEditUserIdentityFormFieldValidator.status(
                 status,
                 required: true

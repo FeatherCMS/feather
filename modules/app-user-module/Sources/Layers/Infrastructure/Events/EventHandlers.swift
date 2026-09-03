@@ -38,7 +38,11 @@ public enum EventHandlers {
             context: UserEventContext.self
         ) { _, context in
             [
-                .init(id: context.idGenerator.generate(), isRoot: true)
+                .init(
+                    id: context.idGenerator.generate(),
+                    name: "Root User",
+                    isRoot: true
+                )
             ]
         }
     }

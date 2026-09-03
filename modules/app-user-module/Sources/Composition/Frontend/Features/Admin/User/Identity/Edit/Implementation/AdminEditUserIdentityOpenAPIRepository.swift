@@ -27,6 +27,7 @@ struct AdminEditUserIdentityOpenAPIRepository:
                 let identity = try ok.body.json
                 return .init(
                     id: identity.id,
+                    name: identity.name,
                     status: identity.status.rawValue,
                     roleIds: Array(identity.roleIds ?? [])
                 )
@@ -61,6 +62,7 @@ struct AdminEditUserIdentityOpenAPIRepository:
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
+                        name: payload.name,
                         status: .init(rawValue: payload.status) ?? .invited,
                         roleIds: payload.roleIds
                     )

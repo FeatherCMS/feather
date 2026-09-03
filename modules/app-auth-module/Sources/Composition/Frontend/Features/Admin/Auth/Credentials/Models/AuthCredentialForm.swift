@@ -24,6 +24,8 @@ struct AuthCredentialForm: Component, FlowContent {
     }
 
     struct State: FeatherAdmin.Object {
+        var identity: FieldState
+        var identityOptions: [AdminAutocompleteField.OptionState]
         var email: FieldState
         var password: FieldState
         var passwordRequired: Bool
@@ -31,6 +33,7 @@ struct AuthCredentialForm: Component, FlowContent {
         var success: String?
 
         mutating func apply(errors: [String: String]) {
+            identity.error = errors[identity.key]
             email.error = errors[email.key]
             password.error = errors[password.key]
         }
@@ -45,6 +48,17 @@ struct AuthCredentialForm: Component, FlowContent {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
+            AdminAutocompleteField(
+                state: .init(
+                    key: state.identity.key,
+                    label: state.identity.label,
+                    placeholder: "Select a user identity",
+                    options: state.identityOptions,
+                    error: state.identity.error,
+                    selectionMode: .single,
+                    isEnabled: true
+                )
+            )
             Section {
                 Label {
                     AdminFieldLabel(label: state.email.label, required: true)

@@ -37,6 +37,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
                     id: id,
                     isEdited: request.hasQueryFlag("edited"),
                     form: formState(
+                        name: loaded.name,
                         status: loaded.status,
                         selectedRoleIds: loaded.roleIds,
                         roleOptions: roleOptions
@@ -87,6 +88,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
                 try await interactor.update(
                     entity: .init(
                         id: id,
+                        name: payload.normalizedName,
                         status: payload.normalizedStatus,
                         roleIds: payload.roleIds ?? []
                     )
@@ -185,6 +187,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
         roleOptions: [AdminEditUserIdentityRoleOptionModel]
     ) -> UserIdentityForm.State {
         var state = formState(
+            name: payload?.normalizedName ?? identity.name,
             status: payload?.normalizedStatus ?? identity.status,
             selectedRoleIds: payload?.roleIds ?? identity.roleIds,
             roleOptions: roleOptions
@@ -195,12 +198,20 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
     }
 
     private func formState(
+        name: String = "",
         status: String = "invited",
         selectedRoleIds: [String] = [],
         roleOptions: [AdminEditUserIdentityRoleOptionModel] = []
     ) -> UserIdentityForm.State {
         let selectedRoleIdSet = Set(selectedRoleIds)
         return .init(
+            name: .init(
+                key: "name",
+                label: "Name",
+                isRequired: true,
+                value: name,
+                error: nil
+            ),
             status: .init(
                 key: "status",
                 label: "Status",

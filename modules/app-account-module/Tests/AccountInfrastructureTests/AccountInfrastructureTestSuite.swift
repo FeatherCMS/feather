@@ -96,18 +96,18 @@ struct AccountInfrastructureTestSuite {
             var profile = try await repository.get(userId: "account-1")
             #expect(profile.firstName == nil)
             #expect(profile.lastName == nil)
-            #expect(profile.imageURL == nil)
+            #expect(profile.profileImageAssetId == nil)
 
             try profile.update(
                 firstName: "Ada",
                 lastName: "Lovelace",
-                imageURL: "https://example.com/ada.png"
+                profileImageAssetId: "asset-ada"
             )
             let updated = try await repository.update(profile)
 
             #expect(updated.firstName == "Ada")
             #expect(updated.lastName == "Lovelace")
-            #expect(updated.imageURL == "https://example.com/ada.png")
+            #expect(updated.profileImageAssetId == "asset-ada")
             let persisted = try await repository.get(userId: "account-1")
             #expect(persisted.firstName == "Ada")
 

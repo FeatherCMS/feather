@@ -7,7 +7,7 @@ struct AccountProfileForm: Component, FlowContent {
     struct State {
         let firstName: String?
         let lastName: String?
-        let imageURL: String?
+        let profileImageAssetId: String?
         let canEdit: Bool
         let action: String
     }
@@ -40,26 +40,26 @@ struct AccountProfileForm: Component, FlowContent {
                 AdminMediaAssetPicker(
                     state: .init(
                         field: .init(
-                            key: "imageURL",
+                            key: "profileImageAssetId",
                             label: "Profile image",
-                            value: state.imageURL,
+                            value: state.profileImageAssetId,
                             error: nil
                         ),
                         selectedAsset: nil,
                         browsePath:
-                            "/admin/media/assets/?picker=1&field=imageURL&extensions=png,jpg,jpeg,webp",
+                            "/admin/media/assets/?picker=1&field=profileImageAssetId&extensions=png,jpg,jpeg,webp",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"],
-                        outputMode: .originalURL
+                        outputMode: .assetId
                     )
                 )
             }
             else {
                 FormInputField(
-                    name: "imageURL",
-                    label: "Image URL",
-                    value: state.imageURL,
+                    name: "profileImageAssetId",
+                    label: "Profile image asset ID",
+                    value: state.profileImageAssetId,
                     error: nil,
-                    placeholder: "https://...",
+                    placeholder: "Asset ID",
                     isRequired: false,
                     isDisabled: true,
                     inputClass: "text-input"

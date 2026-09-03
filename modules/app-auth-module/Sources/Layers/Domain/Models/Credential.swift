@@ -19,7 +19,7 @@ public struct Credential: Model {
     }
 
     public let id: String
-    public let userId: String
+    public var userId: String
     public var email: String
     public var passwordHash: String
     public let createdAt: Date
@@ -91,12 +91,17 @@ extension Credential {
     }
 
     public mutating func update(
+        userId: String? = nil,
         email: String? = nil,
         passwordHash: String? = nil,
     ) throws(Self.Error) {
         let newEmail = email ?? self.email
         let newPasswordHash = passwordHash ?? self.passwordHash
 
+        if let userId {
+            try Self.validate(userId: userId)
+            self.userId = userId
+        }
         try Self.validate(email: newEmail)
         try Self.validate(passwordHash: newPasswordHash)
 

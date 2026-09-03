@@ -21,6 +21,7 @@ extension IdentityTable.Row {
     ) -> IdentityList.Item {
         .init(
             id: id,
+            name: name,
             status: asIdentityStatus,
             roles: roles,
             createdAt: createdAt,
@@ -31,6 +32,7 @@ extension IdentityTable.Row {
     var asDetail: IdentityDetail {
         .init(
             id: id,
+            name: name,
             status: asIdentityStatus,
             createdAt: createdAt,
             updatedAt: updatedAt

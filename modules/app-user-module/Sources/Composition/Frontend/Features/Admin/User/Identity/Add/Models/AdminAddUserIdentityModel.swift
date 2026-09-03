@@ -2,9 +2,10 @@ import FeatherAdmin
 import Foundation
 
 struct AdminAddUserIdentityModel: Sendable {
+    let name: String
     let status: String
 
     var payload: UserIdentityFormPayloadModel {
-        .init(status: status, roleIds: [])
+        .init(name: name, status: status, roleIds: [])
     }
 }

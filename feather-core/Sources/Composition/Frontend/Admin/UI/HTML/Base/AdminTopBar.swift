@@ -6,6 +6,7 @@
 //
 
 import CSS
+import Foundation
 import HTML
 import SGML
 import SVG
@@ -14,6 +15,9 @@ import WebStandards
 public struct AdminTopBar: Component, FlowContent {
 
     public func content() -> some BasicTag {
+        let fallbackProfileImageURL =
+            "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/images/tiborbodecs-2026-512.png"
+
         Div {
             Div {
                 Label {
@@ -51,10 +55,10 @@ public struct AdminTopBar: Component, FlowContent {
                     .name("accountToggle")
                 Label {
                     Img(
-                        src:
-                            "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/images/tiborbodecs-2026-512.png",
+                        src: fallbackProfileImageURL,
                         alt: "My profile picture"
                     )
+                    .id("adminProfileImage")
                     .width(32)
                     .height(32)
                     Span("My profile")
@@ -75,5 +79,19 @@ public struct AdminTopBar: Component, FlowContent {
 
         }
         .class("top-bar")
+
+        Script(
+            """
+            (function() {
+              var image = document.getElementById("adminProfileImage");
+              if (!image) { return; }
+              var fallback = "\(fallbackProfileImageURL)";
+              image.addEventListener("error", function() {
+                if (image.src !== fallback) { image.src = fallback; }
+              });
+              image.src = "/admin/auth/profile/image/";
+            })();
+            """
+        )
     }
 }

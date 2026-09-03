@@ -29,7 +29,8 @@ struct AdminEditAuthProfileDefaultInteractor:
             id: account.user.id,
             firstName: accountProfile.firstName,
             lastName: accountProfile.lastName,
-            imageURL: accountProfile.imageURL
+            profileImageAssetId: accountProfile.profileImageAssetId,
+            profileImageAsset: accountProfile.profileImageAsset
         )
     }
 

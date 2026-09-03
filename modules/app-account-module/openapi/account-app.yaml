@@ -212,7 +212,7 @@ components:
         lastName:
           type: string
           nullable: true
-        imageURL:
+        profileImageAssetId:
           type: string
           nullable: true
     AccountProfileUpdateSchema:
@@ -224,7 +224,7 @@ components:
         lastName:
           type: string
           nullable: true
-        imageURL:
+        profileImageAssetId:
           type: string
           nullable: true
   responses:

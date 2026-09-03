@@ -4,6 +4,8 @@ import UserAdminAPI
 
 protocol AdminListUserIdentityRepository: Sendable {
 
+    func listRoles() async throws -> [Components.Schemas.UserRoleListItemSchema]
+
     func list(
         page: Int,
         size: Int,

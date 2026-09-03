@@ -14,7 +14,7 @@ public enum AuthAdminMenuEventHandlers {
                     groupKey: "admin",
                     label: "Auth",
                     icon: "shield",
-                    priority: 90
+                    priority: 95
                 )
             ]
         }
@@ -26,17 +26,10 @@ public enum AuthAdminMenuEventHandlers {
             return [
                 .init(
                     menuKey: "auth",
-                    label: "Access Control",
+                    label: "Credentials",
                     icon: "key",
-                    link: "/admin/auth/access-control/",
-                    permission: "auth:access-control:list"
-                ),
-                .init(
-                    menuKey: "auth",
-                    label: "Roles",
-                    icon: "users",
-                    link: "/admin/user/roles/",
-                    permission: "user:roles:list"
+                    link: "/admin/auth/credentials/",
+                    permission: "auth:credential:list"
                 ),
                 .init(
                     menuKey: "auth",
@@ -47,10 +40,10 @@ public enum AuthAdminMenuEventHandlers {
                 ),
                 .init(
                     menuKey: "auth",
-                    label: "Credentials",
+                    label: "Access Control",
                     icon: "key",
-                    link: "/admin/auth/credentials/",
-                    permission: "auth:credential:list"
+                    link: "/admin/auth/access-control/",
+                    permission: "auth:access-control:list"
                 ),
             ]
         }

@@ -157,6 +157,7 @@ extension AdminAPIGateway {
         .init(
             id: item.id,
             userId: item.userId,
+            identityName: item.identityName,
             email: item.email
         )
     }

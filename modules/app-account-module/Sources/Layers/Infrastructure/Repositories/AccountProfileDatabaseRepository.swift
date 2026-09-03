@@ -42,7 +42,7 @@ public struct AccountProfileDatabaseRepository: AccountProfileRepository {
                     userId: new.userId,
                     firstName: new.firstName,
                     lastName: new.lastName,
-                    imageURL: new.imageURL
+                    profileImageAssetId: new.profileImageAssetId
                 )
             )
     }
@@ -54,7 +54,7 @@ public struct AccountProfileDatabaseRepository: AccountProfileRepository {
                 row: .init(
                     firstName: model.firstName,
                     lastName: model.lastName,
-                    imageURL: model.imageURL
+                    profileImageAssetId: model.profileImageAssetId
                 )
             )
             .asDomain
@@ -73,7 +73,7 @@ extension AccountProfileTable.Row {
                 userId: userId,
                 firstName: firstName,
                 lastName: lastName,
-                imageURL: imageURL,
+                profileImageAssetId: profileImageAssetId,
                 createdAt: createdAt,
                 updatedAt: updatedAt
             )

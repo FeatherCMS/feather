@@ -16,6 +16,6 @@ import UserFrontend
 import WebStandards
 
 protocol AdminAddAuthCredentialInteractor: Sendable {
-    func execute(userId: String, payload: AuthCredentialFormPayloadModel)
-        async throws
+    func listIdentities() async throws -> [AuthCredentialIdentityOption]
+    func execute(payload: AuthCredentialFormPayloadModel) async throws
 }

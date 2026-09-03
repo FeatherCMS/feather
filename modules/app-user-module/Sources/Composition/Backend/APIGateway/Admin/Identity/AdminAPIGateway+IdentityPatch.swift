@@ -21,6 +21,7 @@ extension AdminAPIGateway {
             subject: subject,
             input: .init(
                 id: input.path.userIdentityId,
+                name: body.name,
                 roleIds: body.roleIds,
                 status: body.status.flatMap {
                     Identity.Status(rawValue: $0.rawValue)

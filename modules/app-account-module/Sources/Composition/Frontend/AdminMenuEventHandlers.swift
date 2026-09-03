@@ -14,7 +14,7 @@ public enum AccountAdminMenuEventHandlers {
                     groupKey: "admin",
                     label: "Account",
                     icon: "user",
-                    priority: 100
+                    priority: 90
                 )
             ]
         }
@@ -30,13 +30,6 @@ public enum AccountAdminMenuEventHandlers {
                     icon: "user",
                     link: "/admin/auth/profile/",
                     permission: "auth:profile:read"
-                ),
-                .init(
-                    menuKey: "account",
-                    label: "Users",
-                    icon: "users",
-                    link: "/admin/user/identities/",
-                    permission: "user:identities:list"
                 ),
                 .init(
                     menuKey: "account",

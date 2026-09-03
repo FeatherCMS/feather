@@ -22,5 +22,5 @@ public struct AdminEditAuthProfileFormInput: Codable, Sendable, Equatable,
 
     public var firstName: String? = nil
     public var lastName: String? = nil
-    public var imageURL: String? = nil
+    public var profileImageAssetId: String? = nil
 }

@@ -11,7 +11,6 @@ import WebStandards
 struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
     let request: Request
     private let permissions = UserPermissions.Roles.list
-    private let rolePermissions = PermissionKey("auth:access-control:update")
     let renderEngine: any RenderingEngine
 
     func renderListPage(
@@ -63,9 +62,6 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
                     permissions: permissions,
                     canAdd: permissions.contains(
                         UserPermissions.Roles.create.rawValue
-                    ),
-                    canManageRolePermissions: permissions.contains(
-                        rolePermissions.rawValue
                     ),
                     roles: model.items,
                     page: model.page,

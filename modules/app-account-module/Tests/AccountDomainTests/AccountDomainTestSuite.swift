@@ -19,7 +19,7 @@ struct AccountDomainTestSuite {
         #expect(profile.userId == "account-1")
         #expect(profile.firstName == nil)
         #expect(profile.lastName == nil)
-        #expect(profile.imageURL == nil)
+        #expect(profile.profileImageAssetId == nil)
     }
 
     @Test
@@ -39,12 +39,6 @@ struct AccountDomainTestSuite {
                 lastName: String(repeating: "A", count: 256)
             )
         }
-        #expect(throws: AccountProfile.Error.self) {
-            _ = try AccountProfile.create(
-                userId: "account-1",
-                imageURL: String(repeating: "A", count: 2049)
-            )
-        }
     }
 
     @Test
@@ -53,7 +47,7 @@ struct AccountDomainTestSuite {
             userId: "account-1",
             firstName: "Ada",
             lastName: "Lovelace",
-            imageURL: nil,
+            profileImageAssetId: nil,
             createdAt: .now,
             updatedAt: .now
         )
@@ -61,12 +55,12 @@ struct AccountDomainTestSuite {
         try profile.update(
             firstName: "Grace",
             lastName: "Hopper",
-            imageURL: "https://example.com/grace.png"
+            profileImageAssetId: "asset-grace"
         )
 
         #expect(profile.firstName == "Grace")
         #expect(profile.lastName == "Hopper")
-        #expect(profile.imageURL == "https://example.com/grace.png")
+        #expect(profile.profileImageAssetId == "asset-grace")
     }
 
     @Test
@@ -75,7 +69,7 @@ struct AccountDomainTestSuite {
             userId: "account-1",
             firstName: "Ada",
             lastName: "Lovelace",
-            imageURL: nil,
+            profileImageAssetId: nil,
             createdAt: .now,
             updatedAt: .now
         )
@@ -84,7 +78,7 @@ struct AccountDomainTestSuite {
             try profile.update(
                 firstName: String(repeating: "A", count: 256),
                 lastName: "Hopper",
-                imageURL: nil
+                profileImageAssetId: nil
             )
         }
         #expect(profile.firstName == "Ada")

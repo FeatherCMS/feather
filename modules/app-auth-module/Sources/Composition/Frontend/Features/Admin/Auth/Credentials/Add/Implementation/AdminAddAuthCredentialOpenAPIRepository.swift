@@ -18,9 +18,43 @@ import WebStandards
 struct AdminAddAuthCredentialOpenAPIRepository: AdminAddAuthCredentialRepository
 {
     let api: AuthAdminAPIClient
+    let userAPI: UserAdminAPIClient
 
-    func create(userId: String, payload: AuthCredentialFormPayloadModel)
-        async throws
+    func listIdentities() async throws -> [AuthCredentialIdentityOption] {
+        try await userAPI.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.userIdentitySearch(
+                headers: .init(accept: [.init(contentType: .json)]),
+                body: .json(
+                    .init(
+                        page: .init(size: 100, number: 1),
+                        filters: .init(search: nil)
+                    )
+                )
+            )
+            switch response {
+            case .ok(let ok):
+                let body = try ok.body.json
+                return body.data.items.map {
+                    .init(id: String($0.id), label: $0.name)
+                }
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to view user identities."
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your identity cannot access user identities."
+                )
+            case .undocumented(let statusCode, let response):
+                throw try await userAPI.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
+    func create(payload: AuthCredentialFormPayloadModel) async throws
     {
         guard let password = payload.password else { return }
         try await api.withOpenAPIRepositoryErrorMapping { client in
@@ -28,7 +62,7 @@ struct AdminAddAuthCredentialOpenAPIRepository: AdminAddAuthCredentialRepository
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
-                        userId: userId,
+                        userId: payload.userId,
                         email: payload.email,
                         password: password
                     )

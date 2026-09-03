@@ -21,7 +21,7 @@ struct AdminEditAccountProfileOpenAPIRepository:
                 return .init(
                     firstName: body.firstName,
                     lastName: body.lastName,
-                    imageURL: body.imageURL
+                    profileImageAssetId: body.profileImageAssetId
                 )
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
@@ -53,7 +53,7 @@ struct AdminEditAccountProfileOpenAPIRepository:
                         .init(
                             firstName: input.firstName,
                             lastName: input.lastName,
-                            imageURL: input.imageURL
+                            profileImageAssetId: input.profileImageAssetId
                         )
                     )
                 )

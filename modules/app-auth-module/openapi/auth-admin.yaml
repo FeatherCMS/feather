@@ -645,11 +645,14 @@ components:
           $ref: '#/components/schemas/AuthCredentialIdField'
         userId:
           $ref: '#/components/schemas/AuthCredentialUserIdField'
+        identityName:
+          $ref: '#/components/schemas/AuthCredentialIdentityNameField'
         email:
           $ref: '#/components/schemas/AuthCredentialEmailField'
       required:
       - id
       - userId
+      - identityName
       - email
     AuthCredentialIdField:
       type: string
@@ -657,6 +660,9 @@ components:
     AuthCredentialUserIdField:
       type: string
       example: user_7nL3xQ2v
+    AuthCredentialIdentityNameField:
+      type: string
+      example: Root User
     AuthCredentialEmailField:
       type: string
       example: john.doe@example.com
@@ -743,6 +749,8 @@ components:
     AuthCredentialPatchSchema:
       type: object
       properties:
+        userId:
+          $ref: '#/components/schemas/AuthCredentialUserIdField'
         email:
           $ref: '#/components/schemas/AuthCredentialEmailField'
         password:

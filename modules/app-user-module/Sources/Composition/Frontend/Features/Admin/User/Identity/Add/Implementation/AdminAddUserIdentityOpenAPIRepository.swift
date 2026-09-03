@@ -17,6 +17,7 @@ struct AdminAddUserIdentityOpenAPIRepository: AdminAddUserIdentityRepository {
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
+                            name: payload.name,
                             status: .init(rawValue: payload.status) ?? .invited
                         )
                     )

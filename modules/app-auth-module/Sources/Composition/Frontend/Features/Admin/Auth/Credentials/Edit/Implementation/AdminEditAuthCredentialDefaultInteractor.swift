@@ -20,6 +20,10 @@ struct AdminEditAuthCredentialDefaultInteractor:
 {
     let repository: any AdminEditAuthCredentialRepository
 
+    func listIdentities() async throws -> [AuthCredentialIdentityOption] {
+        try await repository.listIdentities()
+    }
+
     func get(id: String) async throws -> AuthCredentialDetailsModel {
         try await repository.get(id: id)
     }

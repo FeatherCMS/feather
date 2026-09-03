@@ -20,6 +20,7 @@ extension AdminAPIGateway {
         let result = try await useCase.execute(
             subject: subject,
             input: .init(
+                name: body.name,
                 status: Identity.Status(
                     rawValue: body.status?.rawValue ?? "invited"
                 )

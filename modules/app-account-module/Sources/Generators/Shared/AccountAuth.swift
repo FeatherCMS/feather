@@ -43,7 +43,7 @@ public struct AccountProfileNameField: SchemaRepresentable {
     }
 }
 
-public struct AccountProfileImageURLField: SchemaRepresentable {
+public struct AccountProfileImageAssetIDField: SchemaRepresentable {
     public var required: Bool
 
     public init(required: Bool = true) {
@@ -60,7 +60,7 @@ public struct AccountProfileResponseSchema: ObjectSchemaRepresentable {
         [
             "firstName": AccountProfileNameField(required: false),
             "lastName": AccountProfileNameField(required: false),
-            "imageURL": AccountProfileImageURLField(required: false),
+            "profileImageAssetId": AccountProfileImageAssetIDField(required: false),
         ]
     }
 
@@ -79,7 +79,7 @@ public struct AccountProfileUpdateSchema: ObjectSchemaRepresentable {
         [
             "firstName": AccountProfileNameField(required: false),
             "lastName": AccountProfileNameField(required: false),
-            "imageURL": AccountProfileImageURLField(required: false),
+            "profileImageAssetId": AccountProfileImageAssetIDField(required: false),
         ]
     }
 

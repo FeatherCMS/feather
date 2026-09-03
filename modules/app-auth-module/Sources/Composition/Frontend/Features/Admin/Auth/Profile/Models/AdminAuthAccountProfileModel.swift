@@ -1,5 +1,8 @@
+import FeatherAdmin
+
 struct AdminAuthAccountProfileModel: Sendable {
     let firstName: String?
     let lastName: String?
-    let imageURL: String?
+    let profileImageAssetId: String?
+    let profileImageAsset: AdminMediaAssetReferenceModel?
 }

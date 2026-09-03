@@ -20,6 +20,7 @@ extension AdminAPIGateway {
             subject: subject,
             input: .init(
                 id: input.path.authCredentialId,
+                userId: body.userId,
                 email: body.email,
                 password: body.password
             )

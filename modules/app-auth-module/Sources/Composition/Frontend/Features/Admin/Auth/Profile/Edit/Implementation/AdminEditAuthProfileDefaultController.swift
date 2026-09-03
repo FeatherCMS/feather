@@ -51,7 +51,8 @@ struct AdminEditAuthProfileDefaultController:
                 form: formState(
                     firstName: profile.firstName,
                     lastName: profile.lastName,
-                    imageURL: profile.imageURL
+                    profileImageAssetId: profile.profileImageAssetId,
+                    selectedImageAsset: profile.profileImageAsset
                 ),
                 breadcrumb: breadcrumb()
             ),
@@ -90,7 +91,8 @@ struct AdminEditAuthProfileDefaultController:
                     id: profile.id,
                     firstName: payload.firstName,
                     lastName: payload.lastName,
-                    imageURL: payload.imageURL
+                    profileImageAssetId: payload.profileImageAssetId,
+                    profileImageAsset: nil
                 )
             )
             return Response(
@@ -114,7 +116,7 @@ struct AdminEditAuthProfileDefaultController:
                     id: profile.id,
                     firstName: payload.firstName,
                     lastName: payload.lastName,
-                    imageURL: payload.imageURL,
+                    profileImageAssetId: payload.profileImageAssetId,
                     failures: error.failures
                 )
             )
@@ -129,7 +131,7 @@ struct AdminEditAuthProfileDefaultController:
                     id: profile.id,
                     firstName: payload.firstName,
                     lastName: payload.lastName,
-                    imageURL: payload.imageURL,
+                    profileImageAssetId: payload.profileImageAssetId,
                     error: error
                 )
             )
@@ -144,7 +146,7 @@ struct AdminEditAuthProfileDefaultController:
                     id: profile.id,
                     firstName: payload.firstName,
                     lastName: payload.lastName,
-                    imageURL: payload.imageURL,
+                    profileImageAssetId: payload.profileImageAssetId,
                     message: error.displayMessage
                 )
             )
@@ -154,7 +156,8 @@ struct AdminEditAuthProfileDefaultController:
     private func formState(
         firstName: String?,
         lastName: String?,
-        imageURL: String?
+        profileImageAssetId: String?,
+        selectedImageAsset: AdminMediaAssetReferenceModel? = nil
     ) -> AuthProfileForm.State {
         .init(
             firstName: .init(
@@ -169,12 +172,13 @@ struct AdminEditAuthProfileDefaultController:
                 value: lastName,
                 error: nil
             ),
-            imageURL: .init(
-                key: "imageURL",
+            profileImageAssetId: .init(
+                key: "profileImageAssetId",
                 label: "Profile image",
-                value: imageURL,
+                value: profileImageAssetId,
                 error: nil
             ),
+            selectedImageAsset: selectedImageAsset,
             error: nil,
             success: nil
         )
@@ -184,7 +188,7 @@ struct AdminEditAuthProfileDefaultController:
         id: String,
         firstName: String?,
         lastName: String?,
-        imageURL: String?,
+        profileImageAssetId: String?,
         failures: [FeatherValidation.Failure]
     ) -> AuthProfileEdit.State {
         var state = AuthProfileEdit.State(
@@ -193,7 +197,7 @@ struct AdminEditAuthProfileDefaultController:
             form: formState(
                 firstName: firstName,
                 lastName: lastName,
-                imageURL: imageURL
+                profileImageAssetId: profileImageAssetId
             ),
             breadcrumb: breadcrumb()
         )
@@ -209,7 +213,7 @@ struct AdminEditAuthProfileDefaultController:
         id: String,
         firstName: String?,
         lastName: String?,
-        imageURL: String?,
+        profileImageAssetId: String?,
         error: OpenAPIRepositoryError
     ) -> AuthProfileEdit.State {
         var state = AuthProfileEdit.State(
@@ -218,7 +222,7 @@ struct AdminEditAuthProfileDefaultController:
             form: formState(
                 firstName: firstName,
                 lastName: lastName,
-                imageURL: imageURL
+                profileImageAssetId: profileImageAssetId
             ),
             breadcrumb: breadcrumb()
         )
@@ -230,7 +234,7 @@ struct AdminEditAuthProfileDefaultController:
         id: String,
         firstName: String?,
         lastName: String?,
-        imageURL: String?,
+        profileImageAssetId: String?,
         message: String
     ) -> AuthProfileEdit.State {
         var state = AuthProfileEdit.State(
@@ -239,7 +243,7 @@ struct AdminEditAuthProfileDefaultController:
             form: formState(
                 firstName: firstName,
                 lastName: lastName,
-                imageURL: imageURL
+                profileImageAssetId: profileImageAssetId
             ),
             breadcrumb: breadcrumb()
         )
@@ -271,7 +275,7 @@ struct AdminEditAuthProfileDefaultController:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Auth", link: "/admin/auth/"),
+                .init(label: "Account", link: "/admin/account/"),
                 .init(label: "Profile", link: "/admin/auth/profile/"),
                 .init(
                     label: "Edit",

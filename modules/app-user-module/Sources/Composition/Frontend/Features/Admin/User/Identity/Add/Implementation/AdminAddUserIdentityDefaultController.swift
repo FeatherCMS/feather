@@ -17,7 +17,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
         return presenter.renderPage(
-            form: presenter.formState(status: "invited"),
+            form: presenter.formState(name: "", status: "invited"),
             permissions: context.currentUserPermissions
         )
     }
@@ -39,6 +39,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
 
             try await interactor.execute(
                 entity: .init(
+                    name: payload.name,
                     status: payload.status
                 )
             )
@@ -60,6 +61,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
                 errors[failure.key] = failure.message
             }
             var state = presenter.formState(
+                name: lastPayload?.name ?? "",
                 status: lastPayload?.status ?? "invited"
             )
             state.apply(errors: errors)
@@ -72,6 +74,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
         }
         catch let error as OpenAPIRepositoryError {
             var state = presenter.formState(
+                name: lastPayload?.name ?? "",
                 status: lastPayload?.status ?? "invited"
             )
             state.error = presenter.format(error: error)
@@ -84,6 +87,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
         }
         catch {
             var state = presenter.formState(
+                name: lastPayload?.name ?? "",
                 status: lastPayload?.status ?? "invited"
             )
             state.error = error.displayMessage

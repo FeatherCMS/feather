@@ -19,6 +19,7 @@ import WebStandards
 public struct AdminAuthCredentialFormInput: Codable, Sendable, Equatable,
     Hashable
 {
+    public let userId: String
     public let email: String
     public let password: String
 
@@ -29,5 +30,9 @@ public struct AdminAuthCredentialFormInput: Codable, Sendable, Equatable,
     var normalizedPassword: String? {
         let value = password.trimmingCharacters(in: .whitespacesAndNewlines)
         return value.isEmpty ? nil : value
+    }
+
+    var normalizedUserId: String {
+        userId.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

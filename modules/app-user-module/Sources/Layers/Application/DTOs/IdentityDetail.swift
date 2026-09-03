@@ -12,6 +12,7 @@ import struct Foundation.Date
 
 public struct IdentityDetail: DTO {
     public let id: String
+    public let name: String
     public let roleIds: [String]
     public let status: IdentityStatus
     public let createdAt: Date
@@ -19,12 +20,14 @@ public struct IdentityDetail: DTO {
 
     public init(
         id: String,
+        name: String,
         roleIds: [String] = [],
         status: IdentityStatus,
         createdAt: Date,
         updatedAt: Date
     ) {
         self.id = id
+        self.name = name
         self.roleIds = roleIds
         self.status = status
         self.createdAt = createdAt

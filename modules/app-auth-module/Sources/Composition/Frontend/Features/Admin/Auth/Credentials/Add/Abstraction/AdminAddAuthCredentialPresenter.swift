@@ -17,10 +17,14 @@ import WebStandards
 
 protocol AdminAddAuthCredentialPresenter: Sendable {
     func renderPage(
-        identityId: String,
         form: AuthCredentialForm.State,
         permissions: Set<String>
     ) -> HTMLResponse
     func format(error: OpenAPIRepositoryError) -> String
-    func formState(email: String, password: String) -> AuthCredentialForm.State
+    func formState(
+        userId: String,
+        identities: [AuthCredentialIdentityOption],
+        email: String,
+        password: String
+    ) -> AuthCredentialForm.State
 }

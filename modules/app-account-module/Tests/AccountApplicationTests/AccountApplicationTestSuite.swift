@@ -490,7 +490,7 @@ struct AccountApplicationTestSuite {
             input: .init(
                 firstName: "Grace",
                 lastName: "Hopper",
-                imageURL: nil,
+                profileImageAssetId: nil,
                 userId: profile.userId
             )
         )
@@ -525,7 +525,7 @@ struct AccountApplicationTestSuite {
                 input: .init(
                     firstName: "Grace",
                     lastName: "Hopper",
-                    imageURL: nil,
+                    profileImageAssetId: nil,
                     userId: profile.userId
                 )
             )
@@ -555,7 +555,7 @@ struct AccountApplicationTestSuite {
             input: .init(
                 firstName: "Grace",
                 lastName: "Hopper",
-                imageURL: "https://example.com/grace.png"
+                profileImageAssetId: "asset-grace"
             )
         )
 
@@ -589,7 +589,7 @@ struct AccountApplicationTestSuite {
                 input: .init(
                     firstName: "Grace",
                     lastName: "Hopper",
-                    imageURL: nil
+                    profileImageAssetId: nil
                 )
             )
         }
@@ -620,7 +620,7 @@ struct AccountApplicationTestSuite {
                 input: .init(
                     firstName: String(repeating: "A", count: 256),
                     lastName: "Lovelace",
-                    imageURL: nil
+                    profileImageAssetId: nil
                 )
             )
         }
@@ -809,7 +809,7 @@ struct AccountApplicationTestSuite {
             userId: "account-1",
             firstName: "Ada",
             lastName: "Lovelace",
-            imageURL: nil,
+            profileImageAssetId: nil,
             createdAt: Date(timeIntervalSince1970: 1),
             updatedAt: Date(timeIntervalSince1970: 2)
         )

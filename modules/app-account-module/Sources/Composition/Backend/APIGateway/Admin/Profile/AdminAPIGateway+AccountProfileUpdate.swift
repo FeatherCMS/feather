@@ -20,7 +20,7 @@ extension AdminAPIGateway {
                 input: .init(
                     firstName: body.firstName,
                     lastName: body.lastName,
-                    imageURL: body.imageURL,
+                    profileImageAssetId: body.profileImageAssetId,
                     userId: input.path.userId
                 )
             )
@@ -30,7 +30,7 @@ extension AdminAPIGateway {
                     .init(
                         firstName: result.firstName,
                         lastName: result.lastName,
-                        imageURL: result.imageURL
+                        profileImageAssetId: result.profileImageAssetId
                     )
                 )
             )

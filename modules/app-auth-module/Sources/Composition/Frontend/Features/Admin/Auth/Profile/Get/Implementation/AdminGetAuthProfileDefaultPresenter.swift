@@ -64,7 +64,7 @@ struct AdminGetAuthProfileDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Auth", link: "/admin/auth/"),
+                .init(label: "Account", link: "/admin/account/"),
                 .init(label: "Profile", link: "/admin/auth/profile/"),
             ]
         )

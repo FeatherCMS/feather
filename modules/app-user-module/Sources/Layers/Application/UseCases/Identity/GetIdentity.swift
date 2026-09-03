@@ -50,6 +50,7 @@ public struct GetIdentity: UseCase {
             )
             identity = .init(
                 id: identity.id,
+                name: identity.name,
                 roleIds: roleIds,
                 status: identity.status,
                 createdAt: identity.createdAt,

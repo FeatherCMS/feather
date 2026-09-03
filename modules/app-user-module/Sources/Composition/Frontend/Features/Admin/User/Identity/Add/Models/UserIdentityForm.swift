@@ -24,6 +24,7 @@ struct UserIdentityForm: Component, FlowContent {
     }
 
     struct State: FeatherAdmin.Object {
+        var name: FieldState
         var status: FieldState
         var roleOptions: [RoleOptionState]
         var roleIdsError: String?
@@ -33,6 +34,7 @@ struct UserIdentityForm: Component, FlowContent {
         mutating func apply(
             errors: [String: String]
         ) {
+            name.error = errors[name.key]
             status.error = errors[status.key]
             roleIdsError = errors["roleIds"] ?? errors["roleIds[]"]
         }
@@ -52,6 +54,14 @@ struct UserIdentityForm: Component, FlowContent {
             if let error = state.error {
                 P(error).class("error")
             }
+
+            FormInputField(
+                name: state.name.key,
+                label: state.name.label,
+                value: state.name.value,
+                error: state.name.error,
+                isRequired: state.name.isRequired
+            )
 
             FormSelectField(
                 name: state.status.key,

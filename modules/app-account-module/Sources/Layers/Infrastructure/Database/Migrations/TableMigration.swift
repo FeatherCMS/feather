@@ -27,7 +27,7 @@ public struct TableMigration: DatabaseMigration {
                     user_id TEXT NOT NULL UNIQUE REFERENCES user_identity(id) ON DELETE CASCADE,
                     first_name TEXT,
                     last_name TEXT,
-                    image_url TEXT,
+                    profile_image_asset_id TEXT,
                     created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
                 );
@@ -38,7 +38,7 @@ public struct TableMigration: DatabaseMigration {
                 ALTER TABLE account_profile
                     ALTER COLUMN first_name DROP NOT NULL,
                     ALTER COLUMN last_name DROP NOT NULL,
-                    ALTER COLUMN image_url DROP NOT NULL;
+                    ALTER COLUMN profile_image_asset_id DROP NOT NULL;
                 """#
         ) { _ in }
         try await connection.run(

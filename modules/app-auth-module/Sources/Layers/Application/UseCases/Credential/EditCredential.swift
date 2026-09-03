@@ -25,15 +25,18 @@ public struct EditCredential: UseCase {
 
     public struct Input: DTO {
         public let id: String
+        public let userId: String?
         public let email: String?
         public let password: String?
 
         public init(
             id: String,
+            userId: String? = nil,
             email: String?,
             password: String?,
         ) {
             self.id = id
+            self.userId = userId
             self.email = email
             self.password = password
         }
@@ -72,6 +75,7 @@ public struct EditCredential: UseCase {
             }
 
             try model.update(
+                userId: input.userId,
                 email: input.email,
                 passwordHash: passwordHash
             )

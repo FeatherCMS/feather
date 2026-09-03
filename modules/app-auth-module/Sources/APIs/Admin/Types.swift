@@ -865,6 +865,8 @@ public enum Components {
             public var id: Components.Schemas.AuthCredentialIdField
             /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/userId`.
             public var userId: Components.Schemas.AuthCredentialUserIdField
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/identityName`.
+            public var identityName: Components.Schemas.AuthCredentialIdentityNameField
             /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/email`.
             public var email: Components.Schemas.AuthCredentialEmailField
             /// Creates a new `AuthCredentialListItemSchema`.
@@ -876,15 +878,18 @@ public enum Components {
             public init(
                 id: Components.Schemas.AuthCredentialIdField,
                 userId: Components.Schemas.AuthCredentialUserIdField,
+                identityName: Components.Schemas.AuthCredentialIdentityNameField,
                 email: Components.Schemas.AuthCredentialEmailField
             ) {
                 self.id = id
                 self.userId = userId
+                self.identityName = identityName
                 self.email = email
             }
             public enum CodingKeys: String, CodingKey {
                 case id
                 case userId
+                case identityName
                 case email
             }
         }
@@ -892,6 +897,7 @@ public enum Components {
         public typealias AuthCredentialIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialUserIdField`.
         public typealias AuthCredentialUserIdField = Swift.String
+        public typealias AuthCredentialIdentityNameField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialEmailField`.
         public typealias AuthCredentialEmailField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchQuerySchema`.
@@ -1085,6 +1091,8 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/AuthCredentialPatchSchema`.
         public struct AuthCredentialPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialPatchSchema/userId`.
+            public var userId: Components.Schemas.AuthCredentialUserIdField?
             /// - Remark: Generated from `#/components/schemas/AuthCredentialPatchSchema/email`.
             public var email: Components.Schemas.AuthCredentialEmailField?
             /// - Remark: Generated from `#/components/schemas/AuthCredentialPatchSchema/password`.
@@ -1092,16 +1100,20 @@ public enum Components {
             /// Creates a new `AuthCredentialPatchSchema`.
             ///
             /// - Parameters:
+            ///   - userId:
             ///   - email:
             ///   - password:
             public init(
+                userId: Components.Schemas.AuthCredentialUserIdField? = nil,
                 email: Components.Schemas.AuthCredentialEmailField? = nil,
                 password: Components.Schemas.AuthCredentialPasswordField? = nil
             ) {
+                self.userId = userId
                 self.email = email
                 self.password = password
             }
             public enum CodingKeys: String, CodingKey {
+                case userId
                 case email
                 case password
             }

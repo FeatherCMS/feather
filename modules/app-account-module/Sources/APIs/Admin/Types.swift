@@ -356,27 +356,27 @@ public enum Components {
             public var firstName: Swift.String?
             /// - Remark: Generated from `#/components/schemas/AccountProfileResponseSchema/lastName`.
             public var lastName: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/AccountProfileResponseSchema/imageURL`.
-            public var imageURL: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/AccountProfileResponseSchema/profileImageAssetId`.
+            public var profileImageAssetId: Swift.String?
             /// Creates a new `AccountProfileResponseSchema`.
             ///
             /// - Parameters:
             ///   - firstName:
             ///   - lastName:
-            ///   - imageURL:
+            ///   - profileImageAssetId:
             public init(
                 firstName: Swift.String? = nil,
                 lastName: Swift.String? = nil,
-                imageURL: Swift.String? = nil
+                profileImageAssetId: Swift.String? = nil
             ) {
                 self.firstName = firstName
                 self.lastName = lastName
-                self.imageURL = imageURL
+                self.profileImageAssetId = profileImageAssetId
             }
             public enum CodingKeys: String, CodingKey {
                 case firstName
                 case lastName
-                case imageURL
+                case profileImageAssetId
             }
         }
         /// - Remark: Generated from `#/components/schemas/AccountProfileUpdateSchema`.
@@ -385,27 +385,27 @@ public enum Components {
             public var firstName: Swift.String?
             /// - Remark: Generated from `#/components/schemas/AccountProfileUpdateSchema/lastName`.
             public var lastName: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/AccountProfileUpdateSchema/imageURL`.
-            public var imageURL: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/AccountProfileUpdateSchema/profileImageAssetId`.
+            public var profileImageAssetId: Swift.String?
             /// Creates a new `AccountProfileUpdateSchema`.
             ///
             /// - Parameters:
             ///   - firstName:
             ///   - lastName:
-            ///   - imageURL:
+            ///   - profileImageAssetId:
             public init(
                 firstName: Swift.String? = nil,
                 lastName: Swift.String? = nil,
-                imageURL: Swift.String? = nil
+                profileImageAssetId: Swift.String? = nil
             ) {
                 self.firstName = firstName
                 self.lastName = lastName
-                self.imageURL = imageURL
+                self.profileImageAssetId = profileImageAssetId
             }
             public enum CodingKeys: String, CodingKey {
                 case firstName
                 case lastName
-                case imageURL
+                case profileImageAssetId
             }
         }
         /// - Remark: Generated from `#/components/schemas/AccountSettingsUserIDField`.

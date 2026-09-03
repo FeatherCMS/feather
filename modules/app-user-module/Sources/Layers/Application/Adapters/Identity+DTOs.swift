@@ -19,6 +19,7 @@ extension Identity {
     public var asDetail: IdentityDetail {
         .init(
             id: id,
+            name: name,
             status: status.asIdentityStatus,
             createdAt: createdAt,
             updatedAt: updatedAt

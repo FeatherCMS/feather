@@ -16,6 +16,7 @@ import UserFrontend
 import WebStandards
 
 struct AuthCredentialFormPayloadModel: Sendable {
+    let userId: String
     let email: String
     let password: String?
 }

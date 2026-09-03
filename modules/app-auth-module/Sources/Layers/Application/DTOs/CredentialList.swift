@@ -13,6 +13,7 @@ public struct CredentialList: DTO {
     public struct Item: Sendable {
         public let id: String
         public let userId: String
+        public let identityName: String
         public let email: String
         public let createdAt: Date
         public let updatedAt: Date
@@ -20,12 +21,14 @@ public struct CredentialList: DTO {
         package init(
             id: String,
             userId: String,
+            identityName: String,
             email: String,
             createdAt: Date,
             updatedAt: Date
         ) {
             self.id = id
             self.userId = userId
+            self.identityName = identityName
             self.email = email
             self.createdAt = createdAt
             self.updatedAt = updatedAt

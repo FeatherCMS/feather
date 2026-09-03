@@ -39,6 +39,17 @@ struct AuthCredentialTable: Component {
             else {
                 AdminBreadcrumb(state: state.breadcrumb)
                 H1("User credentials")
+                if state.permissions.contains("auth:credential:create") {
+                    Div {
+                        AdminNavigationButton(
+                            "Add credential",
+                            href: "/admin/auth/credentials/add/"
+                        )
+                    }
+                    .class("button-row")
+                    Br()
+                    Br()
+                }
                 ListTableSearchForm(
                     state: .init(
                         action: "/admin/auth/credentials/",
@@ -58,7 +69,7 @@ struct AuthCredentialTable: Component {
                         table: Table {
                             Thead {
                                 Tr {
-                                    Th("User identifier")
+                                    Th("User")
                                     Th("Email")
                                     Th("Actions")
                                 }
@@ -66,8 +77,8 @@ struct AuthCredentialTable: Component {
                             Tbody {
                                 for credential in state.credentials {
                                     Tr {
-                                        Td(credential.userId)
-                                            .data("label", "User identifier")
+                                        Td(credential.identityName)
+                                            .data("label", "User")
                                         Td(credential.email)
                                             .data("label", "Email")
                                         ListTableRowActions(
@@ -98,7 +109,7 @@ struct AuthCredentialTable: Component {
                                 }
                             }
                         }
-                        .class("cms-table", "action-table")
+                        .class("cms-table", "action-table", "credential-table")
                     )
                     ListTablePagination(
                         state: .init(

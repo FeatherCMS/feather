@@ -6,7 +6,8 @@ import struct Foundation.Date
 extension CredentialTable.Row {
 
     fileprivate init(
-        from row: DatabaseRow
+        from row: DatabaseRow,
+        includesIdentityName: Bool = false
     ) throws {
         self.init(
             id: try row.decode(column: "id", as: String.self),
@@ -15,6 +16,9 @@ extension CredentialTable.Row {
                 as: String.self
             ),
             email: try row.decode(column: "email", as: String.self),
+            identityName: includesIdentityName
+                ? try row.decode(column: "identity_name", as: String?.self)
+                : nil,
             passwordHash: try row.decode(
                 column: "password_hash",
                 as: String.self
@@ -37,6 +41,7 @@ public struct CredentialTable {
 
         public let id: String
         public let userId: String
+        public let identityName: String?
         public let email: String
         public let passwordHash: String
         public let createdAt: Date
@@ -46,6 +51,7 @@ public struct CredentialTable {
             id: String,
             userId: String,
             email: String,
+            identityName: String? = nil,
             passwordHash: String,
             createdAt: Date,
             updatedAt: Date
@@ -53,6 +59,7 @@ public struct CredentialTable {
             self.id = id
             self.userId = userId
             self.email = email
+            self.identityName = identityName
             self.passwordHash = passwordHash
             self.createdAt = createdAt
             self.updatedAt = updatedAt
@@ -76,24 +83,28 @@ public struct CredentialTable {
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT *
+                SELECT auth_credentials.*, user_identity.name AS identity_name
                 FROM auth_credentials
+                LEFT JOIN user_identity ON user_identity.id = auth_credentials.user_id
                 WHERE (
                     \#(userId == nil)
-                    OR user_id=\#(userId ?? "")
+                    OR auth_credentials.user_id=\#(userId ?? "")
                 )
                 AND (
                     \#(search == nil)
-                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(user_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_credentials.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_credentials.user_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(COALESCE(user_identity.name, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_credentials.email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 )
                 ORDER BY \#(unescaped: orderBy)
                 LIMIT \#(limit)
                 OFFSET \#(offset);
                 """#
         ) { sequence in
-            try await sequence.collect().map { try Row(from: $0) }
+            try await sequence.collect().map {
+                try Row(from: $0, includesIdentityName: true)
+            }
         }
     }
 
@@ -105,15 +116,17 @@ public struct CredentialTable {
             query: #"""
                 SELECT COUNT(*) AS count
                 FROM auth_credentials
+                LEFT JOIN user_identity ON user_identity.id = auth_credentials.user_id
                 WHERE (
                     \#(userId == nil)
-                    OR user_id=\#(userId ?? "")
+                    OR auth_credentials.user_id=\#(userId ?? "")
                 )
                 AND (
                     \#(search == nil)
-                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(user_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_credentials.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_credentials.user_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(COALESCE(user_identity.name, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_credentials.email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 );
                 """#
         ) { sequence in

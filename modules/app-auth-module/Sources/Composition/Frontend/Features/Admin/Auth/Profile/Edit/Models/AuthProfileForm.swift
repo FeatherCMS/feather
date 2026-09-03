@@ -27,7 +27,8 @@ struct AuthProfileForm: Component, FlowContent {
     struct State: FeatherAdmin.Object {
         var firstName: FieldState
         var lastName: FieldState
-        var imageURL: FieldState
+        var profileImageAssetId: FieldState
+        var selectedImageAsset: AdminMediaAssetReferenceModel?
         var error: String?
         var success: String?
 
@@ -36,7 +37,7 @@ struct AuthProfileForm: Component, FlowContent {
         ) {
             firstName.error = errors[firstName.key]
             lastName.error = errors[lastName.key]
-            imageURL.error = errors[imageURL.key]
+            profileImageAssetId.error = errors[profileImageAssetId.key]
         }
     }
 
@@ -56,16 +57,16 @@ struct AuthProfileForm: Component, FlowContent {
             AdminMediaAssetPicker(
                 state: .init(
                     field: .init(
-                        key: state.imageURL.key,
-                        label: state.imageURL.label,
-                        value: state.imageURL.value,
-                        error: state.imageURL.error
+                        key: state.profileImageAssetId.key,
+                        label: state.profileImageAssetId.label,
+                        value: state.profileImageAssetId.value,
+                        error: state.profileImageAssetId.error
                     ),
-                    selectedAsset: nil,
+                    selectedAsset: state.selectedImageAsset,
                     browsePath:
-                        "/admin/media/assets/?picker=1&field=imageURL&extensions=png,jpg,jpeg,webp",
+                        "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"],
-                    outputMode: .originalURL
+                    outputMode: .assetId
                 )
             )
 

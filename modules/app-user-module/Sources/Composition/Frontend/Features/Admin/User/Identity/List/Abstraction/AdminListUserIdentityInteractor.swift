@@ -4,6 +4,8 @@ import UserAdminAPI
 
 protocol AdminListUserIdentityInteractor: Sendable {
 
+    func listRoles() async throws -> [Components.Schemas.UserRoleListItemSchema]
+
     func execute(
         page: Int,
         size: Int,

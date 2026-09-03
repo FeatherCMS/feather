@@ -71,6 +71,7 @@ public struct TableSeedMigration: DatabaseMigration {
             let identity = try await identityRepository.insert(
                 id: definition.id,
                 model: Identity.create(
+                    name: definition.name,
                     status: .init(rawValue: definition.status.rawValue)
                         ?? .active,
                     isRoot: definition.isRoot

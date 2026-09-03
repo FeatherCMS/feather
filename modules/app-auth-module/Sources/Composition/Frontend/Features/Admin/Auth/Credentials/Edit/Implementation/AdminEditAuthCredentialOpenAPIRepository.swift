@@ -19,6 +19,12 @@ struct AdminEditAuthCredentialOpenAPIRepository:
     AdminEditAuthCredentialRepository
 {
     let api: AuthAdminAPIClient
+    let userAPI: UserAdminAPIClient
+
+    func listIdentities() async throws -> [AuthCredentialIdentityOption] {
+        try await AdminAddAuthCredentialOpenAPIRepository(api: api, userAPI: userAPI)
+            .listIdentities()
+    }
 
     func get(id: String) async throws -> AuthCredentialDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
@@ -64,6 +70,7 @@ struct AdminEditAuthCredentialOpenAPIRepository:
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
+                        userId: payload.userId,
                         email: payload.email,
                         password: payload.password
                     )

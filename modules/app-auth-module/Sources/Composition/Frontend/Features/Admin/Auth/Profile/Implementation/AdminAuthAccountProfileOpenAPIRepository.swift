@@ -1,11 +1,13 @@
 import AccountAppAPI
 import FeatherAdmin
+import MediaFrontend
 import OpenAPIRuntime
 
 struct AdminAuthAccountProfileOpenAPIRepository:
     AdminAuthAccountProfileRepository
 {
     let api: AccountAppAPIClient
+    let mediaAPI: MediaAdminAPIClient
 
     func get() async throws -> AdminAuthAccountProfileModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
@@ -18,7 +20,10 @@ struct AdminAuthAccountProfileOpenAPIRepository:
                 return .init(
                     firstName: body.firstName,
                     lastName: body.lastName,
-                    imageURL: body.imageURL
+                    profileImageAssetId: body.profileImageAssetId,
+                    profileImageAsset: try await loadImageAsset(
+                        assetId: body.profileImageAssetId
+                    )
                 )
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
@@ -37,6 +42,16 @@ struct AdminAuthAccountProfileOpenAPIRepository:
         }
     }
 
+    private func loadImageAsset(
+        assetId: String?
+    ) async throws -> AdminMediaAssetReferenceModel? {
+        guard let assetId, !assetId.isEmpty else { return nil }
+        let asset = try? await AdminMediaAssetOpenAPIRepository(
+            api: mediaAPI
+        ).getAsset(id: assetId)
+        return asset.map(AdminMediaAssetReferenceModel.init(schema:))
+    }
+
     func update(
         profile: AdminAuthAccountProfileModel
     ) async throws {
@@ -48,7 +63,7 @@ struct AdminAuthAccountProfileOpenAPIRepository:
                         .init(
                             firstName: profile.firstName,
                             lastName: profile.lastName,
-                            imageURL: profile.imageURL
+                            profileImageAssetId: profile.profileImageAssetId
                         )
                     )
                 )

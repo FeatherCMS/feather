@@ -22,6 +22,7 @@ struct UserIdentityTable: Component {
         let total: Int
         let search: String
         let role: String
+        let roleOptions: [Components.Schemas.UserRoleListItemSchema]
         let deniedInfo: String
         let deniedMessage: String
         let breadcrumb: AdminBreadcrumb.State
@@ -59,33 +60,33 @@ struct UserIdentityTable: Component {
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/user/identities/",
-                        placeholder: "Quick search identities",
-                        search: state.search,
-                        queryItems: state.role.isEmpty
-                            ? []
-                            : [("role", state.role)]
-                    )
-                )
                 Form {
                     Input()
                         .type(.search)
-                        .name("role")
-                        .value(state.role)
-                        .placeholder("Filter by role")
-                    if !state.search.isEmpty {
-                        Input()
-                            .type(.hidden)
-                            .name("search")
-                            .value(state.search)
+                        .name("search")
+                        .value(state.search)
+                        .placeholder("Quick search identities")
+                    Select {
+                        Option("All roles")
+                            .value("")
+                            .if(state.role.isEmpty) { $0.selected() }
+                        for option in state.roleOptions {
+                            Option(option.name ?? String(option.id))
+                                .value(String(option.id))
+                                .if(state.role == String(option.id)) {
+                                    $0.selected()
+                                }
+                        }
                     }
-                    Button("Filter").type(.submit)
+                    .name("role")
+                    Button("Search").type(.submit)
+                    A("Reset")
+                        .href("/admin/user/identities/")
+                        .class("table-search-reset")
                 }
                 .method(.get)
                 .action("/admin/user/identities/")
-                .class("table-search-form")
+                .class("table-search-form", "user-identity-search-form")
 
                 if state.identities.isEmpty {
                     let totalPages = max(
@@ -123,7 +124,10 @@ struct UserIdentityTable: Component {
                             page: state.page,
                             search: state.search,
                             canRemove: canRemove,
-                            buttonTitle: "Remove selected"
+                            buttonTitle: "Remove selected",
+                            queryItems: state.role.isEmpty
+                                ? []
+                                : [("role", state.role)]
                         ),
                         table: ListTableShell(
                             table: Table {
@@ -132,6 +136,7 @@ struct UserIdentityTable: Component {
                                         if canRemove {
                                             ListTableSelectAllCheckbox()
                                         }
+                                        Th("Name")
                                         Th("Id")
                                         Th("Status")
                                         Th("Roles")
@@ -148,6 +153,8 @@ struct UserIdentityTable: Component {
                                                     )
                                                 )
                                             }
+                                            Td(identity.name)
+                                                .data("label", "Name")
                                             Td(identity.id)
                                                 .data("label", "User identifier")
                                             Td(identity.status.rawValue)
@@ -207,7 +214,10 @@ struct UserIdentityTable: Component {
                             page: state.page,
                             pageSize: state.pageSize,
                             total: state.total,
-                            search: state.search
+                            search: state.search,
+                            queryItems: state.role.isEmpty
+                                ? []
+                                : [("role", state.role)]
                         )
                     )
                 }

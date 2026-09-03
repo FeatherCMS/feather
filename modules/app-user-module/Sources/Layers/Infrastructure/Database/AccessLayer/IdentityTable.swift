@@ -15,6 +15,7 @@ extension IdentityTable.Row {
         from row: DatabaseRow
     ) throws {
         self.id = try row.decode(column: "id", as: String.self)
+        self.name = try row.decode(column: "name", as: String.self)
         self.status = try row.decode(column: "status", as: String.self)
         self.isRoot = try row.decode(column: "is_root", as: Bool.self)
         self.createdAt = try row.decode(
@@ -33,11 +34,13 @@ struct IdentityTable {
     struct Row {
         struct Create {
             let id: String
+            let name: String
             let status: String
             let isRoot: Bool
         }
 
         let id: String
+        let name: String
         let status: String
         let isRoot: Bool
         let createdAt: Date
@@ -53,6 +56,7 @@ struct IdentityTable {
             query: #"""
                 INSERT INTO user_identity (
                     id,
+                    name,
                     status,
                     is_root,
                     created_at,
@@ -60,6 +64,7 @@ struct IdentityTable {
                 )
                 VALUES (
                     \#(row.id),
+                    \#(row.name),
                     \#(row.status),
                     \#(row.isRoot),
                     NOW(),
@@ -89,6 +94,7 @@ struct IdentityTable {
                 WHERE (
                     \#(search == nil)
                     OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(status) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 )
                 AND (\#(role == nil) OR EXISTS (
@@ -118,6 +124,7 @@ struct IdentityTable {
                 WHERE (
                     \#(search == nil)
                     OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(status) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 )
                 AND (\#(role == nil) OR EXISTS (
@@ -240,6 +247,7 @@ struct IdentityTable {
                 UPDATE user_identity
                 SET
                     id=\#(row.id),
+                    name=\#(row.name),
                     status=\#(row.status),
                     is_root=\#(row.isRoot),
                     updated_at=NOW()

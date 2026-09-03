@@ -49,6 +49,7 @@ struct AuthCredentialCreateSchema: ObjectSchemaRepresentable {
 struct AuthCredentialPatchSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
+            "userId": AuthCredentialUserIdField().reference(required: false),
             "email": AuthCredentialEmailField().reference(required: false),
             "password": AuthCredentialPasswordField()
                 .reference(required: false),
@@ -71,9 +72,14 @@ struct AuthCredentialListItemSchema: ObjectSchemaRepresentable {
         [
             "id": AuthCredentialIdField().reference(),
             "userId": AuthCredentialUserIdField().reference(),
+            "identityName": AuthCredentialIdentityNameField().reference(),
             "email": AuthCredentialEmailField().reference(),
         ]
     }
+}
+
+struct AuthCredentialIdentityNameField: StringSchemaRepresentable {
+    var example: String? = "Root User"
 }
 
 struct AuthCredentialListSchema: ArraySchemaRepresentable {

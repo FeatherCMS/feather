@@ -9,6 +9,7 @@ protocol AdminAddUserIdentityPresenter: Sendable {
     ) -> HTMLResponse
 
     func formState(
+        name: String,
         status: String
     ) -> UserIdentityForm.State
 
