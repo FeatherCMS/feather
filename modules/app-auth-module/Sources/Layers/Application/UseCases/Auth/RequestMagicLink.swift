@@ -60,19 +60,16 @@ public struct RequestMagicLink: UseCase {
                     )
                 )
 
-                guard
-                    let publicBaseURL = try await scope.variable.get(
+                let configuredPublicBaseURL =
+                    try await scope.variable.get(
                         "web-settings-public-base-url"
-                    ),
-                    !publicBaseURL.isEmpty
-                else {
-                    throw UseCaseError(
-                        reason: .validation,
-                        logMessage: "public_site_url_not_configured",
-                        userFriendlyMessage:
-                            "The public site URL is not configured."
-                    )
-                }
+                    )?
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                let publicBaseURL =
+                    configuredPublicBaseURL.flatMap {
+                        $0.isEmpty ? nil : $0
+                    }
+                    ?? "http://localhost:3456"
 
                 return (
                     token: token,

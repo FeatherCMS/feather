@@ -10,11 +10,18 @@ struct AppMagicLink {
 
     struct RequestInput: Codable, Sendable {
         let email: String
+        let isPersistent: CheckboxFormInput
+
+        enum CodingKeys: String, CodingKey {
+            case email
+            case isPersistent = "is_persistent"
+        }
     }
 
     struct Page: Component, FlowContent {
         let token: String?
         let email: String
+        let isPersistent: Bool
         let error: String?
         let message: String?
 
@@ -30,6 +37,15 @@ struct AppMagicLink {
                                 key: "email",
                                 label: "Email address",
                                 value: email
+                            )
+                            )
+                        CheckboxField(
+                            state: .init(
+                                key: "is_persistent",
+                                label: "Permanent link",
+                                value: isPersistent,
+                                error: nil,
+                                labelPosition: .before
                             )
                         )
                         Button("Send magic link").type(.submit)
@@ -53,6 +69,7 @@ struct AppMagicLink {
         render(
             request: request,
             email: "",
+            isPersistent: true,
             error: nil,
             message: nil
         )
@@ -71,7 +88,10 @@ struct AppMagicLink {
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.authMagicLink(
                         body: .json(
-                            .init(email: input.email, isPersistent: true)
+                            .init(
+                                email: input.email,
+                                isPersistent: input.isPersistent.value
+                            )
                         )
                     )
                 }
@@ -80,6 +100,7 @@ struct AppMagicLink {
                 return render(
                     request: request,
                     email: input.email,
+                    isPersistent: input.isPersistent.value,
                     error: nil,
                     message:
                         "If the account exists, a magic link has been sent."
@@ -96,6 +117,7 @@ struct AppMagicLink {
             return render(
                 request: request,
                 email: input.email,
+                isPersistent: input.isPersistent.value,
                 error: error.errorDescription,
                 message: nil
             )
@@ -137,8 +159,9 @@ struct AppMagicLink {
             case .unauthorized:
                 return try render(
                     request: request,
-                    email: "",
-                    error:
+                email: "",
+                isPersistent: true,
+                error:
                         "This magic link is invalid, expired, or has already been used.",
                     message: nil
                 )
@@ -155,6 +178,7 @@ struct AppMagicLink {
             return try render(
                 request: request,
                 email: "",
+                isPersistent: true,
                 error: error.errorDescription,
                 message: nil
             )
@@ -165,6 +189,7 @@ struct AppMagicLink {
     private func render(
         request: Request,
         email: String,
+        isPersistent: Bool,
         error: String?,
         message: String?
     ) -> HTMLResponse {
@@ -176,6 +201,7 @@ struct AppMagicLink {
             content: Page(
                 token: nil,
                 email: email,
+                isPersistent: isPersistent,
                 error: error,
                 message: message
             )

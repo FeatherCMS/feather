@@ -80,7 +80,7 @@ public enum EventHandlers {
                 ),
                 .init(
                     id: "web-settings-public-base-url",
-                    value: "",
+                    value: "http://localhost:3456",
                     name: "web.site.public_base_url",
                     notes: "Canonical public URL of the website"
                 ),
