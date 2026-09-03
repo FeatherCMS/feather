@@ -26,10 +26,12 @@ struct AdminAddAuthEmailOpenAPIRepository:
         try await userAPI.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.userIdentitySearch(
                 headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(.init(
-                    page: .init(size: 100, number: 1),
-                    filters: .init(search: nil)
-                ))
+                body: .json(
+                    .init(
+                        page: .init(size: 100, number: 1),
+                        filters: .init(search: nil)
+                    )
+                )
             )
             switch response {
             case .ok(let value):

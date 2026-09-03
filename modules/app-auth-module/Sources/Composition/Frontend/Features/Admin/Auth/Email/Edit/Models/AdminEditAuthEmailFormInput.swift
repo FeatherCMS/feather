@@ -50,9 +50,10 @@ public struct AdminEditAuthEmailFormInput: Codable, Sendable, Equatable,
             String.self,
             forKey: .identityId
         )
-        self.email = try container.decodeIfPresent(
-            String.self,
-            forKey: .email
-        ) ?? ""
+        self.email =
+            try container.decodeIfPresent(
+                String.self,
+                forKey: .email
+            ) ?? ""
     }
 }

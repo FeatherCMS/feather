@@ -51,7 +51,10 @@ struct AdminAddAuthCredentialOpenAPIRepository: AdminAddAuthCredentialRepository
     func create(payload: AuthCredentialFormPayloadModel) async throws {
         guard let password = payload.password else { return }
         let emails = try await listEmailDetails()
-        guard let selectedEmail = emails.first(where: { $0.email == payload.email })
+        guard
+            let selectedEmail = emails.first(where: {
+                $0.email == payload.email
+            })
         else {
             throw OpenAPIRepositoryError.notFound(
                 message: "Auth email not found."

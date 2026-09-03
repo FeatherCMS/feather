@@ -16,10 +16,13 @@ import UserAppAPI
 import UserFrontend
 import WebStandards
 
-struct AdminEditAuthMagicLinkDefaultInteractor: AdminEditAuthMagicLinkInteractor {
+struct AdminEditAuthMagicLinkDefaultInteractor: AdminEditAuthMagicLinkInteractor
+{
     let repository: any AdminEditAuthMagicLinkRepository
 
-    func listEmails() async throws -> [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema] {
+    func listEmails() async throws -> [AuthAdminAPI.Components.Schemas
+        .AuthEmailDetailSchema]
+    {
         try await repository.listEmails()
     }
 

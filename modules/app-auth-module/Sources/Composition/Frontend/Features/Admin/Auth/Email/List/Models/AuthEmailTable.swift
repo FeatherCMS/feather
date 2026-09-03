@@ -26,8 +26,7 @@ struct AuthEmailTable: Component {
         let canAccess: Bool
         let permissions: Set<String>
         let canAdd: Bool
-        let links:
-            [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema]
+        let links: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema]
         let identityNames: [String: String]
         let page: Int
         let pageSize: Int
@@ -176,11 +175,13 @@ struct AuthEmailTable: Component {
                                                 )
                                             }
                                             Td(
-                                                state.identityNames[link.identityId]
+                                                state.identityNames[
+                                                    link.identityId
+                                                ]
                                                     ?? "Unknown user"
                                             )
-                                                .data("label", "User name")
-                                                .columnWidth(percent: 30)
+                                            .data("label", "User name")
+                                            .columnWidth(percent: 30)
                                             Td(link.email)
                                                 .data("label", "Email")
                                                 .columnWidth(percent: 30)
@@ -195,7 +196,8 @@ struct AuthEmailTable: Component {
                                                             className: nil,
                                                             permission:
                                                                 AuthPermissions
-                                                                .Emails.read.rawValue
+                                                                .Emails.read
+                                                                .rawValue
                                                         ),
                                                         .init(
                                                             title: "Edit",
@@ -204,7 +206,8 @@ struct AuthEmailTable: Component {
                                                             className: "edit",
                                                             permission:
                                                                 AuthPermissions
-                                                                .Emails.update.rawValue
+                                                                .Emails.update
+                                                                .rawValue
                                                         ),
                                                         .init(
                                                             title: "Remove",
@@ -213,7 +216,8 @@ struct AuthEmailTable: Component {
                                                             className: "delete",
                                                             permission:
                                                                 AuthPermissions
-                                                                .Emails.delete.rawValue
+                                                                .Emails.delete
+                                                                .rawValue
                                                         ),
                                                     ],
                                                     permissions: state

@@ -26,7 +26,8 @@ struct AdminEditAuthEmailOpenAPIRepository:
         try await AdminAddAuthEmailOpenAPIRepository(
             api: api,
             userAPI: userAPI
-        ).listIdentities()
+        )
+        .listIdentities()
     }
 
     func get(

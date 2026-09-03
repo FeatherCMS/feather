@@ -55,7 +55,7 @@ struct AuthCredentialForm: Component, FlowContent {
             AdminAutocompleteField(
                 state: .init(
                     key: state.email.key,
-                label: "Auth email",
+                    label: "Auth email",
                     placeholder: "Select an email",
                     options: state.identityOptions,
                     error: state.email.error,

@@ -49,10 +49,11 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
                 as: AdminAuthCredentialFormInput.self,
                 context: context
             )
-            try await payload!.validate(
-                requiredPassword: true,
-                validateUserId: false
-            )
+            try await payload!
+                .validate(
+                    requiredPassword: true,
+                    validateUserId: false
+                )
             try await interactor.execute(
                 payload: .init(
                     userId: payload!.normalizedUserId,

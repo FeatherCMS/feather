@@ -48,15 +48,19 @@ struct AdminListAuthEmailOpenAPIRepository:
                 let body = try ok.body.json
                 var identityNames: [String: String] = [:]
                 for identityID in Set(body.map(\.identityId)) {
-                    let identityResponse = try await userAPI
+                    let identityResponse =
+                        try await userAPI
                         .withOpenAPIRepositoryErrorMapping { client in
                             try await client.userIdentityGet(
                                 path: .init(userIdentityId: identityID),
-                                headers: .init(accept: [.init(contentType: .json)])
+                                headers: .init(accept: [
+                                    .init(contentType: .json)
+                                ])
                             )
                         }
                     if case .ok(let identityOK) = identityResponse {
-                        identityNames[identityID] = try identityOK.body.json.name
+                        identityNames[identityID] = try identityOK.body.json
+                            .name
                     }
                 }
                 return (

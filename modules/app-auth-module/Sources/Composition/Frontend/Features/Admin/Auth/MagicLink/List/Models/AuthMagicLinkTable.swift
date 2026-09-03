@@ -181,8 +181,8 @@ struct AuthMagicLinkTable: Component {
                                                     String(link.credentialId)
                                                 ] ?? "Unknown email"
                                             )
-                                                .data("label", "Email")
-                                                .columnWidth(percent: 50)
+                                            .data("label", "Email")
+                                            .columnWidth(percent: 50)
                                             Td(
                                                 DateFormatting
                                                     .formatUnixTimestamp(

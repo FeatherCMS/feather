@@ -14,8 +14,7 @@ public struct ListAuthEmails: UseCase {
         self.authorizer = authorizer
         self.transaction = transaction
     }
-    public func execute(subject: Subject) async throws -> [AuthEmailDetail]
-    {
+    public func execute(subject: Subject) async throws -> [AuthEmailDetail] {
         guard try await authorizer.can(subject: subject, perform: Action())
         else {
             throw AuthError(kind: .forbidden, message: Action().key.rawValue)
