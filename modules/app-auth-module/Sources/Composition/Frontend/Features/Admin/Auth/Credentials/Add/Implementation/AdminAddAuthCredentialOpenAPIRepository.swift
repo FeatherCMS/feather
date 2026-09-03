@@ -54,8 +54,7 @@ struct AdminAddAuthCredentialOpenAPIRepository: AdminAddAuthCredentialRepository
         }
     }
 
-    func create(payload: AuthCredentialFormPayloadModel) async throws
-    {
+    func create(payload: AuthCredentialFormPayloadModel) async throws {
         guard let password = payload.password else { return }
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.authCredentialCreate(

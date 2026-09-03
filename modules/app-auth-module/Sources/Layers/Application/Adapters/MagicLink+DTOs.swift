@@ -13,7 +13,7 @@ extension MagicLink {
     var asDetail: MagicLinkDetail {
         .init(
             id: id,
-            credentialId: credentialId,
+            identityEmailId: identityEmailId,
             token: token,
             expiresAt: expiresAt,
             isPersistent: isPersistent,

@@ -2,9 +2,9 @@ import AuthAdminAPI
 import AuthAppAPI
 import CSS
 import FeatherAdmin
-import Foundation
 import FeatherValidation
 import FeatherValidationFoundation
+import Foundation
 import HTML
 import Hummingbird
 import MediaFrontend
@@ -48,20 +48,24 @@ public enum AuthFrontendRoutes {
     ) {
         router.get("/admin/auth/profile/image/") { _, context in
             do {
-                let profile = try await AdminAuthAccountProfileOpenAPIRepository(
-                    api: context.accountAppAPI(),
-                    mediaAPI: context.mediaAdminAPI()
-                ).get()
+                let profile =
+                    try await AdminAuthAccountProfileOpenAPIRepository(
+                        api: context.accountAppAPI(),
+                        mediaAPI: context.mediaAdminAPI()
+                    )
+                    .get()
                 guard let asset = profile.profileImageAsset else {
                     return Response(status: .notFound)
                 }
                 let prefix = "media/assets/"
-                let storageKey = asset.storageKey.hasPrefix(prefix)
+                let storageKey =
+                    asset.storageKey.hasPrefix(prefix)
                     ? String(asset.storageKey.dropFirst(prefix.count))
                     : asset.storageKey
-                let encodedStorageKey = storageKey.addingPercentEncoding(
-                    withAllowedCharacters: .urlPathAllowed
-                ) ?? storageKey
+                let encodedStorageKey =
+                    storageKey.addingPercentEncoding(
+                        withAllowedCharacters: .urlPathAllowed
+                    ) ?? storageKey
                 return Response(
                     status: .seeOther,
                     headers: [

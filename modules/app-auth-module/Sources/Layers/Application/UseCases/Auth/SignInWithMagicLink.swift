@@ -44,11 +44,11 @@ public struct SignInWithMagicLink: SignIn {
             }
 
             guard
-                let credential = try await scope.credential.findBy(
-                    id: usedLink.credentialId
+                let identityEmail = try await scope.identityEmail.findBy(
+                    id: usedLink.identityEmailId
                 ),
                 let user = try await scope.identity.findBy(
-                    id: credential.userId
+                    id: identityEmail.identityId
                 ),
                 user.status == .active
             else {

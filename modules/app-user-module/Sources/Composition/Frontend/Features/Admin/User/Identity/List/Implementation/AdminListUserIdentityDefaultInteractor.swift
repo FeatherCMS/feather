@@ -5,7 +5,8 @@ import UserAdminAPI
 struct AdminListUserIdentityDefaultInteractor: AdminListUserIdentityInteractor {
     let repository: any AdminListUserIdentityRepository
 
-    func listRoles() async throws -> [Components.Schemas.UserRoleListItemSchema] {
+    func listRoles() async throws -> [Components.Schemas.UserRoleListItemSchema]
+    {
         try await repository.listRoles()
     }
 

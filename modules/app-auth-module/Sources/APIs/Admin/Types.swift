@@ -70,6 +70,29 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/{authCredentialId}/put(authCredentialUpdate)`.
     func authCredentialUpdate(_ input: Operations.AuthCredentialUpdate.Input)
         async throws -> Operations.AuthCredentialUpdate.Output
+    /// - Remark: HTTP `POST /api/v1/admin/auth/identity-emails`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/post(authIdentityEmailCreate)`.
+    func authIdentityEmailCreate(
+        _ input: Operations.AuthIdentityEmailCreate.Input
+    ) async throws -> Operations.AuthIdentityEmailCreate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/auth/identity-emails/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails//get(authIdentityEmailList)`.
+    func authIdentityEmailList(_ input: Operations.AuthIdentityEmailList.Input)
+        async throws -> Operations.AuthIdentityEmailList.Output
+    /// - Remark: HTTP `GET /api/v1/admin/auth/identity-emails/{authIdentityEmailId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)`.
+    func authIdentityEmailGet(_ input: Operations.AuthIdentityEmailGet.Input)
+        async throws -> Operations.AuthIdentityEmailGet.Output
+    /// - Remark: HTTP `PATCH /api/v1/admin/auth/identity-emails/{authIdentityEmailId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)`.
+    func authIdentityEmailPatch(
+        _ input: Operations.AuthIdentityEmailPatch.Input
+    ) async throws -> Operations.AuthIdentityEmailPatch.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/identity-emails/{authIdentityEmailId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/delete(authIdentityEmailDelete)`.
+    func authIdentityEmailDelete(
+        _ input: Operations.AuthIdentityEmailDelete.Input
+    ) async throws -> Operations.AuthIdentityEmailDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/post(authRolePermissionCreate)`.
     func authRolePermissionCreate(
@@ -275,6 +298,71 @@ extension APIProtocol {
     ) async throws -> Operations.AuthCredentialUpdate.Output {
         try await authCredentialUpdate(
             Operations.AuthCredentialUpdate.Input(
+                path: path,
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/auth/identity-emails`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/post(authIdentityEmailCreate)`.
+    public func authIdentityEmailCreate(
+        headers: Operations.AuthIdentityEmailCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.AuthIdentityEmailRequestBody
+    ) async throws -> Operations.AuthIdentityEmailCreate.Output {
+        try await authIdentityEmailCreate(
+            Operations.AuthIdentityEmailCreate.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/auth/identity-emails/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails//get(authIdentityEmailList)`.
+    public func authIdentityEmailList(
+        headers: Operations.AuthIdentityEmailList.Input.Headers = .init()
+    ) async throws -> Operations.AuthIdentityEmailList.Output {
+        try await authIdentityEmailList(
+            Operations.AuthIdentityEmailList.Input(headers: headers)
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/auth/identity-emails/{authIdentityEmailId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)`.
+    public func authIdentityEmailGet(
+        path: Operations.AuthIdentityEmailGet.Input.Path,
+        headers: Operations.AuthIdentityEmailGet.Input.Headers = .init()
+    ) async throws -> Operations.AuthIdentityEmailGet.Output {
+        try await authIdentityEmailGet(
+            Operations.AuthIdentityEmailGet.Input(
+                path: path,
+                headers: headers
+            )
+        )
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/auth/identity-emails/{authIdentityEmailId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)`.
+    public func authIdentityEmailPatch(
+        path: Operations.AuthIdentityEmailPatch.Input.Path,
+        headers: Operations.AuthIdentityEmailPatch.Input.Headers = .init(),
+        body: Components.RequestBodies.AuthIdentityEmailPatchRequestBody
+    ) async throws -> Operations.AuthIdentityEmailPatch.Output {
+        try await authIdentityEmailPatch(
+            Operations.AuthIdentityEmailPatch.Input(
+                path: path,
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/identity-emails/{authIdentityEmailId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/delete(authIdentityEmailDelete)`.
+    public func authIdentityEmailDelete(
+        path: Operations.AuthIdentityEmailDelete.Input.Path,
+        headers: Operations.AuthIdentityEmailDelete.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.AuthIdentityEmailDelete.Output {
+        try await authIdentityEmailDelete(
+            Operations.AuthIdentityEmailDelete.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -866,7 +954,8 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/userId`.
             public var userId: Components.Schemas.AuthCredentialUserIdField
             /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/identityName`.
-            public var identityName: Components.Schemas.AuthCredentialIdentityNameField
+            public var identityName:
+                Components.Schemas.AuthCredentialIdentityNameField
             /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/email`.
             public var email: Components.Schemas.AuthCredentialEmailField
             /// Creates a new `AuthCredentialListItemSchema`.
@@ -874,11 +963,13 @@ public enum Components {
             /// - Parameters:
             ///   - id:
             ///   - userId:
+            ///   - identityName:
             ///   - email:
             public init(
                 id: Components.Schemas.AuthCredentialIdField,
                 userId: Components.Schemas.AuthCredentialUserIdField,
-                identityName: Components.Schemas.AuthCredentialIdentityNameField,
+                identityName: Components.Schemas
+                    .AuthCredentialIdentityNameField,
                 email: Components.Schemas.AuthCredentialEmailField
             ) {
                 self.id = id
@@ -897,6 +988,7 @@ public enum Components {
         public typealias AuthCredentialIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialUserIdField`.
         public typealias AuthCredentialUserIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialIdentityNameField`.
         public typealias AuthCredentialIdentityNameField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialEmailField`.
         public typealias AuthCredentialEmailField = Swift.String
@@ -1120,6 +1212,141 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/AuthCredentialPasswordField`.
         public typealias AuthCredentialPasswordField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailCreateSchema`.
+        public struct AuthIdentityEmailCreateSchema: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailCreateSchema/identityId`.
+            public var identityId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailCreateSchema/email`.
+            public var email: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailCreateSchema/isPrimary`.
+            public var isPrimary:
+                Components.Schemas.AuthIdentityEmailBooleanField?
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailCreateSchema/isVerified`.
+            public var isVerified:
+                Components.Schemas.AuthIdentityEmailBooleanField?
+            /// Creates a new `AuthIdentityEmailCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - identityId:
+            ///   - email:
+            ///   - isPrimary:
+            ///   - isVerified:
+            public init(
+                identityId: Swift.String,
+                email: Swift.String,
+                isPrimary: Components.Schemas.AuthIdentityEmailBooleanField? =
+                    nil,
+                isVerified: Components.Schemas.AuthIdentityEmailBooleanField? =
+                    nil
+            ) {
+                self.identityId = identityId
+                self.email = email
+                self.isPrimary = isPrimary
+                self.isVerified = isVerified
+            }
+            public enum CodingKeys: String, CodingKey {
+                case identityId
+                case email
+                case isPrimary
+                case isVerified
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailBooleanField`.
+        public typealias AuthIdentityEmailBooleanField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailDetailSchema`.
+        public struct AuthIdentityEmailDetailSchema: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailDetailSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailDetailSchema/identityId`.
+            public var identityId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailDetailSchema/email`.
+            public var email: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailDetailSchema/isPrimary`.
+            public var isPrimary: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailDetailSchema/isVerified`.
+            public var isVerified: Swift.Bool
+            /// Creates a new `AuthIdentityEmailDetailSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - identityId:
+            ///   - email:
+            ///   - isPrimary:
+            ///   - isVerified:
+            public init(
+                id: Swift.String,
+                identityId: Swift.String,
+                email: Swift.String,
+                isPrimary: Swift.Bool,
+                isVerified: Swift.Bool
+            ) {
+                self.id = id
+                self.identityId = identityId
+                self.email = email
+                self.isPrimary = isPrimary
+                self.isVerified = isVerified
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case identityId
+                case email
+                case isPrimary
+                case isVerified
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailListSchema`.
+        public typealias AuthIdentityEmailListSchema = [Components.Schemas
+            .AuthIdentityEmailDetailSchema]
+        /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailIdField`.
+        public typealias AuthIdentityEmailIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailPatchSchema`.
+        public struct AuthIdentityEmailPatchSchema: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailPatchSchema/identityId`.
+            public var identityId:
+                Components.Schemas.AuthIdentityEmailIdentityIdField?
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailPatchSchema/email`.
+            public var email: Components.Schemas.AuthIdentityEmailEmailField?
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailPatchSchema/isPrimary`.
+            public var isPrimary:
+                Components.Schemas.AuthIdentityEmailBooleanField?
+            /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailPatchSchema/isVerified`.
+            public var isVerified:
+                Components.Schemas.AuthIdentityEmailBooleanField?
+            /// Creates a new `AuthIdentityEmailPatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - identityId:
+            ///   - email:
+            ///   - isPrimary:
+            ///   - isVerified:
+            public init(
+                identityId: Components.Schemas
+                    .AuthIdentityEmailIdentityIdField? = nil,
+                email: Components.Schemas.AuthIdentityEmailEmailField? = nil,
+                isPrimary: Components.Schemas.AuthIdentityEmailBooleanField? =
+                    nil,
+                isVerified: Components.Schemas.AuthIdentityEmailBooleanField? =
+                    nil
+            ) {
+                self.identityId = identityId
+                self.email = email
+                self.isPrimary = isPrimary
+                self.isVerified = isVerified
+            }
+            public enum CodingKeys: String, CodingKey {
+                case identityId
+                case email
+                case isPrimary
+                case isVerified
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailIdentityIdField`.
+        public typealias AuthIdentityEmailIdentityIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthIdentityEmailEmailField`.
+        public typealias AuthIdentityEmailEmailField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthRolePermissionCreateSchema`.
         public struct AuthRolePermissionCreateSchema: Codable, Hashable,
             Sendable
@@ -1682,6 +1909,9 @@ public enum Components {
         /// - Remark: Generated from `#/components/parameters/AuthCredentialIdParameter`.
         public typealias AuthCredentialIdParameter = Components.Schemas
             .AuthCredentialIdField
+        /// - Remark: Generated from `#/components/parameters/AuthIdentityEmailIdParameter`.
+        public typealias AuthIdentityEmailIdParameter = Components.Schemas
+            .AuthIdentityEmailIdField
         /// - Remark: Generated from `#/components/parameters/AuthMagicLinkIdParameter`.
         public typealias AuthMagicLinkIdParameter = Components.Schemas
             .AuthMagicLinkIdField
@@ -1723,6 +1953,17 @@ public enum Components {
         @frozen public enum AuthCredentialPatchRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/AuthCredentialPatchRequestBody/content/application\/json`.
             case json(Components.Schemas.AuthCredentialPatchSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/AuthIdentityEmailRequestBody`.
+        @frozen public enum AuthIdentityEmailRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/AuthIdentityEmailRequestBody/content/application\/json`.
+            case json(Components.Schemas.AuthIdentityEmailCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/AuthIdentityEmailPatchRequestBody`.
+        @frozen
+        public enum AuthIdentityEmailPatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/AuthIdentityEmailPatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.AuthIdentityEmailPatchSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/AuthRolePermissionRequestBody`.
         @frozen public enum AuthRolePermissionRequestBody: Sendable, Hashable {
@@ -1958,6 +2199,71 @@ public enum Components {
             public init(
                 body: Components.Responses
                     .AuthCredentialListItemSearchSchemaSearchResponse.Body
+            ) {
+                self.body = body
+            }
+        }
+        public struct AuthIdentityEmailDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AuthIdentityEmailDetailResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/AuthIdentityEmailDetailResponse/content/application\/json`.
+                case json(Components.Schemas.AuthIdentityEmailDetailSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json:
+                    Components.Schemas.AuthIdentityEmailDetailSchema
+                {
+                    get throws {
+                        switch self {
+                        case .json(let body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body:
+                Components.Responses.AuthIdentityEmailDetailResponse.Body
+            /// Creates a new `AuthIdentityEmailDetailResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(
+                body: Components.Responses.AuthIdentityEmailDetailResponse.Body
+            ) {
+                self.body = body
+            }
+        }
+        public struct AuthIdentityEmailListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AuthIdentityEmailListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/AuthIdentityEmailListResponse/content/application\/json`.
+                case json(Components.Schemas.AuthIdentityEmailListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.AuthIdentityEmailListSchema
+                {
+                    get throws {
+                        switch self {
+                        case .json(let body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body:
+                Components.Responses.AuthIdentityEmailListResponse.Body
+            /// Creates a new `AuthIdentityEmailListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(
+                body: Components.Responses.AuthIdentityEmailListResponse.Body
             ) {
                 self.body = body
             }
@@ -4435,6 +4741,1001 @@ public enum Operations {
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
                 Operations.AuthCredentialUpdate.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/auth/identity-emails`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/post(authIdentityEmailCreate)`.
+    public enum AuthIdentityEmailCreate {
+        public static let id: Swift.String = "authIdentityEmailCreate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailCreate.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailCreate.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AuthIdentityEmailCreate.Input.Headers
+            public var body:
+                Components.RequestBodies.AuthIdentityEmailRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.AuthIdentityEmailCreate.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies.AuthIdentityEmailRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Auth identity email response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/post(authIdentityEmailCreate)/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(Components.Responses.AuthIdentityEmailDetailResponse)
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created:
+                Components.Responses.AuthIdentityEmailDetailResponse
+            {
+                get throws {
+                    switch self {
+                    case .created(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/post(authIdentityEmailCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.AuthIdentityEmailCreate.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/post(authIdentityEmailCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.AuthIdentityEmailCreate.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/post(authIdentityEmailCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.AuthIdentityEmailCreate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/post(authIdentityEmailCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.AuthIdentityEmailCreate.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/auth/identity-emails/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails//get(authIdentityEmailList)`.
+    public enum AuthIdentityEmailList {
+        public static let id: Swift.String = "authIdentityEmailList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailList.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailList.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AuthIdentityEmailList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            public init(
+                headers: Operations.AuthIdentityEmailList.Input.Headers =
+                    .init()
+            ) {
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Auth identity email list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails//get(authIdentityEmailList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.AuthIdentityEmailListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.AuthIdentityEmailListResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails//get(authIdentityEmailList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.AuthIdentityEmailList.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails//get(authIdentityEmailList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.AuthIdentityEmailList.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails//get(authIdentityEmailList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.AuthIdentityEmailList.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails//get(authIdentityEmailList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.AuthIdentityEmailList.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/auth/identity-emails/{authIdentityEmailId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)`.
+    public enum AuthIdentityEmailGet {
+        public static let id: Swift.String = "authIdentityEmailGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/{authIdentityEmailId}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/{authIdentityEmailId}/GET/path/authIdentityEmailId`.
+                public var authIdentityEmailId:
+                    Components.Parameters.AuthIdentityEmailIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - authIdentityEmailId:
+                public init(
+                    authIdentityEmailId: Components.Parameters
+                        .AuthIdentityEmailIdParameter
+                ) {
+                    self.authIdentityEmailId = authIdentityEmailId
+                }
+            }
+            public var path: Operations.AuthIdentityEmailGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/{authIdentityEmailId}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailGet.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailGet.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AuthIdentityEmailGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.AuthIdentityEmailGet.Input.Path,
+                headers: Operations.AuthIdentityEmailGet.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Auth identity email response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.AuthIdentityEmailDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.AuthIdentityEmailDetailResponse
+            {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Auth identity email not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.AuthIdentityEmailGet.Output.NotFound)
+            /// Auth identity email not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.AuthIdentityEmailGet.Output.NotFound
+            {
+                get throws {
+                    switch self {
+                    case .notFound(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.AuthIdentityEmailGet.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.AuthIdentityEmailGet.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.AuthIdentityEmailGet.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/get(authIdentityEmailGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.AuthIdentityEmailGet.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/auth/identity-emails/{authIdentityEmailId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)`.
+    public enum AuthIdentityEmailPatch {
+        public static let id: Swift.String = "authIdentityEmailPatch"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/{authIdentityEmailId}/PATCH/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/{authIdentityEmailId}/PATCH/path/authIdentityEmailId`.
+                public var authIdentityEmailId:
+                    Components.Parameters.AuthIdentityEmailIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - authIdentityEmailId:
+                public init(
+                    authIdentityEmailId: Components.Parameters
+                        .AuthIdentityEmailIdParameter
+                ) {
+                    self.authIdentityEmailId = authIdentityEmailId
+                }
+            }
+            public var path: Operations.AuthIdentityEmailPatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/{authIdentityEmailId}/PATCH/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailPatch.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailPatch.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AuthIdentityEmailPatch.Input.Headers
+            public var body:
+                Components.RequestBodies.AuthIdentityEmailPatchRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.AuthIdentityEmailPatch.Input.Path,
+                headers: Operations.AuthIdentityEmailPatch.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies.AuthIdentityEmailPatchRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Auth identity email response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.AuthIdentityEmailDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.AuthIdentityEmailDetailResponse
+            {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Auth identity email not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.AuthIdentityEmailPatch.Output.NotFound)
+            /// Auth identity email not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound:
+                Operations.AuthIdentityEmailPatch.Output.NotFound
+            {
+                get throws {
+                    switch self {
+                    case .notFound(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.AuthIdentityEmailPatch.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.AuthIdentityEmailPatch.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.AuthIdentityEmailPatch.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/patch(authIdentityEmailPatch)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.AuthIdentityEmailPatch.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/identity-emails/{authIdentityEmailId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/delete(authIdentityEmailDelete)`.
+    public enum AuthIdentityEmailDelete {
+        public static let id: Swift.String = "authIdentityEmailDelete"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/{authIdentityEmailId}/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/{authIdentityEmailId}/DELETE/path/authIdentityEmailId`.
+                public var authIdentityEmailId:
+                    Components.Parameters.AuthIdentityEmailIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - authIdentityEmailId:
+                public init(
+                    authIdentityEmailId: Components.Parameters
+                        .AuthIdentityEmailIdParameter
+                ) {
+                    self.authIdentityEmailId = authIdentityEmailId
+                }
+            }
+            public var path: Operations.AuthIdentityEmailDelete.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/auth/identity-emails/{authIdentityEmailId}/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailDelete.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AuthIdentityEmailDelete.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AuthIdentityEmailDelete.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.AuthIdentityEmailDelete.Input.Path,
+                headers: Operations.AuthIdentityEmailDelete.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies.DeleteRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/delete(authIdentityEmailDelete)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.DeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.DeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/delete(authIdentityEmailDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.AuthIdentityEmailDelete.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/delete(authIdentityEmailDelete)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.AuthIdentityEmailDelete.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/delete(authIdentityEmailDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.AuthIdentityEmailDelete.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/auth/identity-emails/{authIdentityEmailId}/delete(authIdentityEmailDelete)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.AuthIdentityEmailDelete.Output.Forbidden
             {
                 get throws {
                     switch self {

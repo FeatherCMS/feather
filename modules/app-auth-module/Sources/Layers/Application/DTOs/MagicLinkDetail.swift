@@ -12,7 +12,7 @@ import struct Foundation.Date
 
 public struct MagicLinkDetail: DTO {
     public let id: String
-    public let credentialId: String
+    public let identityEmailId: String
     public let token: String
     public let expiresAt: Date
     public let isPersistent: Bool
@@ -22,7 +22,7 @@ public struct MagicLinkDetail: DTO {
 
     package init(
         id: String,
-        credentialId: String,
+        identityEmailId: String,
         token: String,
         expiresAt: Date,
         isPersistent: Bool,
@@ -31,7 +31,7 @@ public struct MagicLinkDetail: DTO {
         updatedAt: Date,
     ) {
         self.id = id
-        self.credentialId = credentialId
+        self.identityEmailId = identityEmailId
         self.token = token
         self.expiresAt = expiresAt
         self.isPersistent = isPersistent

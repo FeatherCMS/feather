@@ -41,7 +41,8 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
                     page: page,
                     size: pageSize
                 )
-            let roleOptions = canAccess
+            let roleOptions =
+                canAccess
                 ? try await interactor.listRoles()
                 : []
 

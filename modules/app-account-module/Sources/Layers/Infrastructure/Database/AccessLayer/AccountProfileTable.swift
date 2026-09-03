@@ -8,7 +8,10 @@ extension AccountProfileTable.Row {
         self.userId = try row.decode(column: "user_id", as: String.self)
         self.firstName = try row.decode(column: "first_name", as: String?.self)
         self.lastName = try row.decode(column: "last_name", as: String?.self)
-        self.profileImageAssetId = try row.decode(column: "profile_image_asset_id", as: String?.self)
+        self.profileImageAssetId = try row.decode(
+            column: "profile_image_asset_id",
+            as: String?.self
+        )
         self.createdAt = try row.decode(column: "created_at", as: Date.self)
         self.updatedAt = try row.decode(column: "updated_at", as: Date.self)
     }

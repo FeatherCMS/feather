@@ -26,6 +26,13 @@ public enum AuthAdminMenuEventHandlers {
             return [
                 .init(
                     menuKey: "auth",
+                    label: "Emails",
+                    icon: "mail",
+                    link: "/admin/auth/emails/",
+                    permission: "auth:identity-email:list"
+                ),
+                .init(
+                    menuKey: "auth",
                     label: "Credentials",
                     icon: "key",
                     link: "/admin/auth/credentials/",

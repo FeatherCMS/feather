@@ -22,8 +22,11 @@ struct AdminEditAuthCredentialOpenAPIRepository:
     let userAPI: UserAdminAPIClient
 
     func listIdentities() async throws -> [AuthCredentialIdentityOption] {
-        try await AdminAddAuthCredentialOpenAPIRepository(api: api, userAPI: userAPI)
-            .listIdentities()
+        try await AdminAddAuthCredentialOpenAPIRepository(
+            api: api,
+            userAPI: userAPI
+        )
+        .listIdentities()
     }
 
     func get(id: String) async throws -> AuthCredentialDetailsModel {

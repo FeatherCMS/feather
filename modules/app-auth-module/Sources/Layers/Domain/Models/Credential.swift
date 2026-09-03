@@ -19,6 +19,7 @@ public struct Credential: Model {
     }
 
     public let id: String
+    public let identityEmailId: String
     public var userId: String
     public var email: String
     public var passwordHash: String
@@ -27,6 +28,7 @@ public struct Credential: Model {
 
     package init(
         id: String,
+        identityEmailId: String = "",
         userId: String,
         email: String,
         passwordHash: String,
@@ -34,6 +36,7 @@ public struct Credential: Model {
         updatedAt: Date
     ) {
         self.id = id
+        self.identityEmailId = identityEmailId
         self.userId = userId
         self.email = email
         self.passwordHash = passwordHash

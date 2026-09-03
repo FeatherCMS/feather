@@ -11,6 +11,10 @@ extension CredentialTable.Row {
     ) throws {
         self.init(
             id: try row.decode(column: "id", as: String.self),
+            identityEmailId: try row.decode(
+                column: "identity_email_id",
+                as: String.self
+            ),
             userId: try row.decode(
                 column: "user_id",
                 as: String.self
@@ -40,6 +44,7 @@ public struct CredentialTable {
     public struct Row: Sendable {
 
         public let id: String
+        public let identityEmailId: String
         public let userId: String
         public let identityName: String?
         public let email: String
@@ -49,6 +54,7 @@ public struct CredentialTable {
 
         public init(
             id: String,
+            identityEmailId: String,
             userId: String,
             email: String,
             identityName: String? = nil,
@@ -57,6 +63,7 @@ public struct CredentialTable {
             updatedAt: Date
         ) {
             self.id = id
+            self.identityEmailId = identityEmailId
             self.userId = userId
             self.email = email
             self.identityName = identityName
@@ -83,28 +90,34 @@ public struct CredentialTable {
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT auth_credentials.*, user_identity.name AS identity_name
+                SELECT auth_credentials.*, auth_identity_email.identity_id AS user_id,
+                    auth_identity_email.email AS email,
+                    user_identity.name AS identity_name
                 FROM auth_credentials
-                LEFT JOIN user_identity ON user_identity.id = auth_credentials.user_id
+                INNER JOIN auth_identity_email
+                    ON auth_identity_email.id = auth_credentials.identity_email_id
+                INNER JOIN user_identity
+                    ON user_identity.id = auth_identity_email.identity_id
                 WHERE (
                     \#(userId == nil)
-                    OR auth_credentials.user_id=\#(userId ?? "")
+                    OR auth_identity_email.identity_id=\#(userId ?? "")
                 )
                 AND (
                     \#(search == nil)
                     OR LOWER(auth_credentials.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(auth_credentials.user_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_identity_email.identity_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(COALESCE(user_identity.name, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(auth_credentials.email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_identity_email.email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 )
                 ORDER BY \#(unescaped: orderBy)
                 LIMIT \#(limit)
                 OFFSET \#(offset);
                 """#
         ) { sequence in
-            try await sequence.collect().map {
-                try Row(from: $0, includesIdentityName: true)
-            }
+            try await sequence.collect()
+                .map {
+                    try Row(from: $0, includesIdentityName: true)
+                }
         }
     }
 
@@ -116,17 +129,20 @@ public struct CredentialTable {
             query: #"""
                 SELECT COUNT(*) AS count
                 FROM auth_credentials
-                LEFT JOIN user_identity ON user_identity.id = auth_credentials.user_id
+                INNER JOIN auth_identity_email
+                    ON auth_identity_email.id = auth_credentials.identity_email_id
+                INNER JOIN user_identity
+                    ON user_identity.id = auth_identity_email.identity_id
                 WHERE (
                     \#(userId == nil)
-                    OR auth_credentials.user_id=\#(userId ?? "")
+                    OR auth_identity_email.identity_id=\#(userId ?? "")
                 )
                 AND (
                     \#(search == nil)
                     OR LOWER(auth_credentials.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(auth_credentials.user_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_identity_email.identity_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(COALESCE(user_identity.name, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(auth_credentials.email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(auth_identity_email.email) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 );
                 """#
         ) { sequence in
@@ -142,9 +158,12 @@ public struct CredentialTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT *
+                SELECT auth_credentials.*, auth_identity_email.identity_id AS user_id,
+                    auth_identity_email.email AS email
                 FROM auth_credentials
-                WHERE id=\#(id)
+                INNER JOIN auth_identity_email
+                    ON auth_identity_email.id = auth_credentials.identity_email_id
+                WHERE auth_credentials.id=\#(id)
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -160,9 +179,12 @@ public struct CredentialTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT *
+                SELECT auth_credentials.*, auth_identity_email.identity_id AS user_id,
+                    auth_identity_email.email AS email
                 FROM auth_credentials
-                WHERE user_id=\#(userId)
+                INNER JOIN auth_identity_email
+                    ON auth_identity_email.id = auth_credentials.identity_email_id
+                WHERE auth_identity_email.identity_id=\#(userId)
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -178,9 +200,12 @@ public struct CredentialTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT *
+                SELECT auth_credentials.*, auth_identity_email.identity_id AS user_id,
+                    auth_identity_email.email AS email
                 FROM auth_credentials
-                WHERE email=\#(email)
+                INNER JOIN auth_identity_email
+                    ON auth_identity_email.id = auth_credentials.identity_email_id
+                WHERE auth_identity_email.email=\#(email)
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -196,23 +221,28 @@ public struct CredentialTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO auth_credentials (
+                WITH inserted AS (
+                    INSERT INTO auth_credentials (
                     id,
-                    user_id,
-                    email,
+                    identity_email_id,
                     password_hash,
                     created_at,
                     updated_at
                 )
-                VALUES (
-                    \#(row.id),
-                    \#(row.userId),
-                    \#(row.email),
-                    \#(row.passwordHash),
-                    NOW(),
-                    NOW()
+                    VALUES (
+                        \#(row.id),
+                        \#(row.identityEmailId),
+                        \#(row.passwordHash),
+                        NOW(),
+                        NOW()
+                    )
+                    RETURNING *
                 )
-                RETURNING *;
+                SELECT inserted.*, auth_identity_email.identity_id AS user_id,
+                    auth_identity_email.email AS email
+                FROM inserted
+                INNER JOIN auth_identity_email
+                    ON auth_identity_email.id = inserted.identity_email_id;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -228,15 +258,21 @@ public struct CredentialTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                UPDATE auth_credentials
-                SET
-                    id=\#(row.id),
-                    user_id=\#(row.userId),
-                    email=\#(row.email),
-                    password_hash=\#(row.passwordHash),
-                    updated_at=NOW()
-                WHERE id=\#(id)
-                RETURNING *;
+                WITH updated AS (
+                    UPDATE auth_credentials
+                    SET
+                        id=\#(row.id),
+                        identity_email_id=\#(row.identityEmailId),
+                        password_hash=\#(row.passwordHash),
+                        updated_at=NOW()
+                    WHERE id=\#(id)
+                    RETURNING *
+                )
+                SELECT updated.*, auth_identity_email.identity_id AS user_id,
+                    auth_identity_email.email AS email
+                FROM updated
+                INNER JOIN auth_identity_email
+                    ON auth_identity_email.id = updated.identity_email_id;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {

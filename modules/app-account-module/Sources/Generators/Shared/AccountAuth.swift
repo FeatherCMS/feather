@@ -60,7 +60,9 @@ public struct AccountProfileResponseSchema: ObjectSchemaRepresentable {
         [
             "firstName": AccountProfileNameField(required: false),
             "lastName": AccountProfileNameField(required: false),
-            "profileImageAssetId": AccountProfileImageAssetIDField(required: false),
+            "profileImageAssetId": AccountProfileImageAssetIDField(
+                required: false
+            ),
         ]
     }
 
@@ -79,7 +81,9 @@ public struct AccountProfileUpdateSchema: ObjectSchemaRepresentable {
         [
             "firstName": AccountProfileNameField(required: false),
             "lastName": AccountProfileNameField(required: false),
-            "profileImageAssetId": AccountProfileImageAssetIDField(required: false),
+            "profileImageAssetId": AccountProfileImageAssetIDField(
+                required: false
+            ),
         ]
     }
 

@@ -1,10 +1,10 @@
 import CSS
 import FeatherAdmin
+import Foundation
 import HTML
 import SGML
 import UserAdminAPI
 import WebStandards
-import Foundation
 
 struct UserIdentityForm: Component, FlowContent {
 

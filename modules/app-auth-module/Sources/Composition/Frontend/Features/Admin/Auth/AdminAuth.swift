@@ -26,6 +26,20 @@ struct AdminAuth {
         )
         .controller.route(on: router)
 
+        AdminListAuthEmail(
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+
+        AdminGetAuthEmail(
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+
+        AdminAddAuthEmail(renderingEngine: renderingEngine).controller.route(on: router)
+        AdminEditAuthEmail(renderingEngine: renderingEngine).controller.route(on: router)
+        AdminRemoveAuthEmail(renderingEngine: renderingEngine).controller.route(on: router)
+
         AdminListAuthMagicLink(
             renderingEngine: renderingEngine
         )

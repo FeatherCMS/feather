@@ -98,7 +98,7 @@ extension AdminAPIGateway {
     ) -> AuthAdminAPI.Components.Schemas.AuthMagicLinkDetailSchema {
         .init(
             id: detail.id,
-            credentialId: detail.credentialId,
+            credentialId: detail.identityEmailId,
             token: detail.token,
             expiresAt: detail.expiresAt.timeIntervalSince1970,
             isPersistent: detail.isPersistent,
@@ -111,7 +111,7 @@ extension AdminAPIGateway {
     ) -> AuthAdminAPI.Components.Schemas.AuthMagicLinkListItemSchema {
         .init(
             id: item.id,
-            credentialId: item.credentialId,
+            credentialId: item.identityEmailId,
             token: item.token,
             expiresAt: item.expiresAt.timeIntervalSince1970,
             isPersistent: item.isPersistent,

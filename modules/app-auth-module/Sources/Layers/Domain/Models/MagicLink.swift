@@ -11,8 +11,8 @@ import struct Foundation.Date
 public struct MagicLink: Model {
 
     public enum Error: DomainError {
-        case credentialIdTooShort
-        case credentialIdTooLong
+        case identityEmailIdTooShort
+        case identityEmailIdTooLong
         case tokenTooShort
         case tokenTooLong
 
@@ -26,14 +26,14 @@ public struct MagicLink: Model {
     // MARK: -
 
     public struct New: Sendable {
-        public let credentialId: String
+        public let identityEmailId: String
         public let token: String
         public let expiresAtInterval: Double
         public let isPersistent: Bool
     }
 
     public let id: String
-    public let credentialId: String
+    public let identityEmailId: String
     public let token: String
     public let expiresAt: Date
     public let isPersistent: Bool
@@ -43,7 +43,7 @@ public struct MagicLink: Model {
 
     package init(
         id: String,
-        credentialId: String,
+        identityEmailId: String,
         token: String,
         expiresAt: Date,
         isPersistent: Bool,
@@ -52,7 +52,7 @@ public struct MagicLink: Model {
         updatedAt: Date,
     ) {
         self.id = id
-        self.credentialId = credentialId
+        self.identityEmailId = identityEmailId
         self.token = token
         self.expiresAt = expiresAt
         self.isPersistent = isPersistent
@@ -65,13 +65,13 @@ public struct MagicLink: Model {
 extension MagicLink {
 
     private static func validate(
-        credentialId: String
+        identityEmailId: String
     ) throws(Self.Error) {
-        guard credentialId.count > 3 else {
-            throw .credentialIdTooShort
+        guard identityEmailId.count > 3 else {
+            throw .identityEmailIdTooShort
         }
-        guard credentialId.count < 255 else {
-            throw .credentialIdTooLong
+        guard identityEmailId.count < 255 else {
+            throw .identityEmailIdTooLong
         }
     }
 
@@ -87,15 +87,15 @@ extension MagicLink {
     }
 
     public static func create(
-        credentialId: String,
+        identityEmailId: String,
         token: String,
         isPersistent: Bool
     ) throws(Self.Error) -> Self.New {
-        try validate(credentialId: credentialId)
+        try validate(identityEmailId: identityEmailId)
         try validate(token: token)
 
         return .init(
-            credentialId: credentialId,
+            identityEmailId: identityEmailId,
             token: token,
             expiresAtInterval: lifetime,
             isPersistent: isPersistent

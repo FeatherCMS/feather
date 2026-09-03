@@ -27,16 +27,16 @@ public struct EditMagicLink: UseCase {
 
     public struct Input: DTO {
         public let id: String
-        public let credentialId: String?
+        public let identityEmailId: String?
         public let isPersistent: Bool?
 
         public init(
             id: String,
-            credentialId: String?,
+            identityEmailId: String?,
             isPersistent: Bool?
         ) {
             self.id = id
-            self.credentialId = credentialId
+            self.identityEmailId = identityEmailId
             self.isPersistent = isPersistent
         }
     }
@@ -66,7 +66,8 @@ public struct EditMagicLink: UseCase {
 
             let updated = MagicLink(
                 id: existing.id,
-                credentialId: input.credentialId ?? existing.credentialId,
+                identityEmailId: input.identityEmailId
+                    ?? existing.identityEmailId,
                 token: existing.token,
                 expiresAt: existing.expiresAt,
                 isPersistent: input.isPersistent ?? existing.isPersistent,

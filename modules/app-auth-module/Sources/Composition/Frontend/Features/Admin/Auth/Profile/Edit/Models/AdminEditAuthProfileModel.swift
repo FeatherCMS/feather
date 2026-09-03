@@ -24,6 +24,11 @@ struct AdminEditAuthProfileModel: Sendable {
     let profileImageAsset: AdminMediaAssetReferenceModel?
 
     var accountProfile: AdminAuthAccountProfileModel {
-        .init(firstName: firstName, lastName: lastName, profileImageAssetId: profileImageAssetId, profileImageAsset: profileImageAsset)
+        .init(
+            firstName: firstName,
+            lastName: lastName,
+            profileImageAssetId: profileImageAssetId,
+            profileImageAsset: profileImageAsset
+        )
     }
 }

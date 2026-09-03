@@ -156,7 +156,10 @@ struct UserIdentityTable: Component {
                                             Td(identity.name)
                                                 .data("label", "Name")
                                             Td(identity.id)
-                                                .data("label", "User identifier")
+                                                .data(
+                                                    "label",
+                                                    "User identifier"
+                                                )
                                             Td(identity.status.rawValue)
                                                 .data("label", "Status")
                                             Td(

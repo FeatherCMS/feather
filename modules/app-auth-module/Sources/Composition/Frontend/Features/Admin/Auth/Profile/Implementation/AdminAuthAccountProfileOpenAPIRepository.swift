@@ -48,7 +48,8 @@ struct AdminAuthAccountProfileOpenAPIRepository:
         guard let assetId, !assetId.isEmpty else { return nil }
         let asset = try? await AdminMediaAssetOpenAPIRepository(
             api: mediaAPI
-        ).getAsset(id: assetId)
+        )
+        .getAsset(id: assetId)
         return asset.map(AdminMediaAssetReferenceModel.init(schema:))
     }
 

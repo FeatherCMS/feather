@@ -9,6 +9,7 @@ tags:
   description: User identities related endpoints.
 - name: AuthCredentials
   description: Manage user credentials.
+- name: AuthIdentityEmails
 - name: AuthRolePermissions
   description: Manage role-permission assignments.
 - name: AuthMagicLinks
@@ -227,6 +228,90 @@ paths:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
         404:
           description: AuthCredential not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/auth/identity-emails:
+    post:
+      tags:
+      - AuthIdentityEmails
+      operationId: authIdentityEmailCreate
+      requestBody:
+        $ref: '#/components/requestBodies/AuthIdentityEmailRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AuthIdentityEmailDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/auth/identity-emails/:
+    get:
+      tags:
+      - AuthIdentityEmails
+      operationId: authIdentityEmailList
+      responses:
+        200:
+          $ref: '#/components/responses/AuthIdentityEmailListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/auth/identity-emails/{authIdentityEmailId}:
+    get:
+      tags:
+      - AuthIdentityEmails
+      operationId: authIdentityEmailGet
+      parameters:
+      - $ref: '#/components/parameters/AuthIdentityEmailIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthIdentityEmailDetailResponse'
+        404:
+          description: Auth identity email not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - AuthIdentityEmails
+      operationId: authIdentityEmailDelete
+      parameters:
+      - $ref: '#/components/parameters/AuthIdentityEmailIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - AuthIdentityEmails
+      operationId: authIdentityEmailPatch
+      parameters:
+      - $ref: '#/components/parameters/AuthIdentityEmailIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AuthIdentityEmailPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthIdentityEmailDetailResponse'
+        404:
+          description: Auth identity email not found
         401:
           description: Unauthorized
         403:
@@ -703,19 +788,19 @@ components:
       - userId
       - identityName
       - email
-      minProperties: 3
+      minProperties: 4
     AuthCredentialIdField:
       type: string
       examples:
       - credential_7nL3xQ2v
     AuthCredentialUserIdField:
       type: string
+      examples:
+      - user_7nL3xQ2v
     AuthCredentialIdentityNameField:
       type: string
       examples:
       - Root User
-      examples:
-      - user_7nL3xQ2v
     AuthCredentialEmailField:
       type: string
       examples:
@@ -748,8 +833,8 @@ components:
         filters:
           type: object
           examples:
-          - search: foo
-            userId: user_7nL3xQ2v
+          - userId: user_7nL3xQ2v
+            search: foo
           properties:
             search:
               $ref: '#/components/schemas/AuthCredentialSearchField'
@@ -830,6 +915,83 @@ components:
       type: string
       examples:
       - correct-horse-battery-staple
+    AuthIdentityEmailCreateSchema:
+      type: object
+      properties:
+        identityId:
+          type: string
+          examples:
+          - user_7nL3xQ2v
+        email:
+          type: string
+          examples:
+          - john.doe@example.com
+        isPrimary:
+          $ref: '#/components/schemas/AuthIdentityEmailBooleanField'
+        isVerified:
+          $ref: '#/components/schemas/AuthIdentityEmailBooleanField'
+      required:
+      - identityId
+      - email
+      minProperties: 2
+    AuthIdentityEmailBooleanField:
+      type: boolean
+    AuthIdentityEmailDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - email_7nL3xQ2v
+        identityId:
+          type: string
+          examples:
+          - user_7nL3xQ2v
+        email:
+          type: string
+          examples:
+          - john.doe@example.com
+        isPrimary:
+          type: boolean
+        isVerified:
+          type: boolean
+      required:
+      - id
+      - identityId
+      - email
+      - isPrimary
+      - isVerified
+      minProperties: 5
+    AuthIdentityEmailListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/AuthIdentityEmailDetailSchema'
+      minItems: 0
+      uniqueItems: false
+    AuthIdentityEmailIdField:
+      type: string
+      examples:
+      - email_7nL3xQ2v
+    AuthIdentityEmailPatchSchema:
+      type: object
+      properties:
+        identityId:
+          $ref: '#/components/schemas/AuthIdentityEmailIdentityIdField'
+        email:
+          $ref: '#/components/schemas/AuthIdentityEmailEmailField'
+        isPrimary:
+          $ref: '#/components/schemas/AuthIdentityEmailBooleanField'
+        isVerified:
+          $ref: '#/components/schemas/AuthIdentityEmailBooleanField'
+      minProperties: 0
+    AuthIdentityEmailIdentityIdField:
+      type: string
+      examples:
+      - user_7nL3xQ2v
+    AuthIdentityEmailEmailField:
+      type: string
+      examples:
+      - john.doe@example.com
     AuthRolePermissionCreateSchema:
       type: object
       properties:
@@ -1169,6 +1331,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthCredentialListItemSearchSchema'
+    AuthIdentityEmailDetailResponse:
+      description: Auth identity email response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthIdentityEmailDetailSchema'
+    AuthIdentityEmailListResponse:
+      description: Auth identity email list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthIdentityEmailListSchema'
     AuthRolePermissionDetailResponse:
       description: AuthRolePermission response
       content:
@@ -1213,6 +1387,12 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/AuthCredentialIdField'
+    AuthIdentityEmailIdParameter:
+      name: authIdentityEmailId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AuthIdentityEmailIdField'
     AuthMagicLinkIdParameter:
       name: authMagicLinkId
       in: path
@@ -1261,6 +1441,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthCredentialPatchSchema'
+      required: true
+    AuthIdentityEmailRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthIdentityEmailCreateSchema'
+      required: true
+    AuthIdentityEmailPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthIdentityEmailPatchSchema'
       required: true
     AuthRolePermissionRequestBody:
       content:

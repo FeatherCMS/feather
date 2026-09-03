@@ -36,30 +36,42 @@ public struct TableMigration: DatabaseMigration {
                 FOREIGN KEY(identity_id) REFERENCES user_identity(id) ON DELETE CASCADE
             );
             """#,
+            // MARK: - identity email
+            #"""
+            CREATE TABLE IF NOT EXISTS auth_identity_email (
+                id TEXT PRIMARY KEY,
+                identity_id TEXT NOT NULL,
+                email TEXT NOT NULL UNIQUE,
+                is_primary BOOLEAN NOT NULL DEFAULT FALSE,
+                is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                FOREIGN KEY(identity_id) REFERENCES user_identity(id) ON DELETE CASCADE
+            );
+            """#,
             // MARK: - auth credentials
             #"""
             CREATE TABLE IF NOT EXISTS auth_credentials (
                 id TEXT PRIMARY KEY,
-                user_id TEXT NOT NULL,
-                email TEXT NOT NULL,
+                identity_email_id TEXT NOT NULL,
                 password_hash TEXT NOT NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
-                FOREIGN KEY(user_id) REFERENCES user_identity(id) ON DELETE CASCADE
+                FOREIGN KEY(identity_email_id) REFERENCES auth_identity_email(id) ON DELETE CASCADE
             );
             """#,
             // MARK: - magic link
             #"""
             CREATE TABLE IF NOT EXISTS auth_magic_link (
                 id TEXT PRIMARY KEY,
-                credential_id TEXT NOT NULL,
+                identity_email_id TEXT NOT NULL,
                 token TEXT NOT NULL UNIQUE,
                 expires_at TIMESTAMPTZ NOT NULL,
                 is_persistent BOOLEAN NOT NULL DEFAULT FALSE,
                 is_used BOOLEAN NOT NULL DEFAULT FALSE,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
-                FOREIGN KEY(credential_id) REFERENCES auth_credentials(id) ON DELETE CASCADE
+                FOREIGN KEY(identity_email_id) REFERENCES auth_identity_email(id) ON DELETE CASCADE
             );
             """#,
             // MARK: - role permission
@@ -75,8 +87,8 @@ public struct TableMigration: DatabaseMigration {
             );
             """#,
             #"CREATE INDEX IF NOT EXISTS auth_session_identity_id_idx ON auth_session (identity_id);"#,
-            #"CREATE INDEX IF NOT EXISTS auth_credentials_user_id_idx ON auth_credentials (user_id);"#,
-            #"CREATE INDEX IF NOT EXISTS auth_magic_link_credential_id_idx ON auth_magic_link (credential_id);"#,
+            #"CREATE INDEX IF NOT EXISTS auth_credentials_identity_email_id_idx ON auth_credentials (identity_email_id);"#,
+            #"CREATE INDEX IF NOT EXISTS auth_magic_link_identity_email_id_idx ON auth_magic_link (identity_email_id);"#,
             #"CREATE INDEX IF NOT EXISTS auth_role_permission_permission_id_idx ON auth_role_permission (permission_id);"#,
         ]
 

@@ -49,7 +49,7 @@ struct AdminAddAuthMagicLinkDefaultPresenter: AdminAddAuthMagicLinkPresenter {
         .init(
             credentialId: .init(
                 key: "credential_id",
-                label: "Credential ID",
+                label: "Identity email ID",
                 value: credentialId,
                 error: nil
             ),

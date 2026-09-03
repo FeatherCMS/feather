@@ -48,7 +48,7 @@ struct UserIdentityCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "name": UserIdentityNameField().reference(),
-            "status": UserIdentityStatusField().reference(required: false)
+            "status": UserIdentityStatusField().reference(required: false),
         ]
     }
 }

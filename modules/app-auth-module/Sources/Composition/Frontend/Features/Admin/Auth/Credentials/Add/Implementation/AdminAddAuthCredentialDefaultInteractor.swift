@@ -23,8 +23,7 @@ struct AdminAddAuthCredentialDefaultInteractor: AdminAddAuthCredentialInteractor
         try await repository.listIdentities()
     }
 
-    func execute(payload: AuthCredentialFormPayloadModel) async throws
-    {
+    func execute(payload: AuthCredentialFormPayloadModel) async throws {
         try await repository.create(payload: payload)
     }
 }

@@ -15,8 +15,8 @@ extension MagicLinkTable.Row {
         from row: DatabaseRow
     ) throws {
         self.id = try row.decode(column: "id", as: String.self)
-        self.credentialId = try row.decode(
-            column: "credential_id",
+        self.identityEmailId = try row.decode(
+            column: "identity_email_id",
             as: String.self
         )
         self.token = try row.decode(column: "token", as: String.self)
@@ -45,7 +45,7 @@ struct MagicLinkTable {
     struct Row {
         struct Create {
             let id: String
-            let credentialId: String
+            let identityEmailId: String
             let token: String
             let expiresAtInterval: Double
             let isPersistent: Bool
@@ -53,7 +53,7 @@ struct MagicLinkTable {
         }
 
         let id: String
-        let credentialId: String
+        let identityEmailId: String
         let token: String
         let expiresAt: Date
         let isPersistent: Bool
@@ -71,7 +71,7 @@ struct MagicLinkTable {
             query: #"""
                 INSERT INTO auth_magic_link (
                     id,
-                    credential_id,
+                    identity_email_id,
                     token,
                     expires_at,
                     is_persistent,
@@ -81,7 +81,7 @@ struct MagicLinkTable {
                 )
                 VALUES (
                     \#(row.id),
-                    \#(row.credentialId),
+                    \#(row.identityEmailId),
                     \#(row.token),
                     NOW() + (\#(row.expiresAtInterval) * INTERVAL '1 second'),
                     \#(row.isPersistent),
@@ -110,16 +110,16 @@ struct MagicLinkTable {
             query: #"""
                 SELECT magic_link.*
                 FROM auth_magic_link AS magic_link
-                INNER JOIN auth_credentials AS credential
-                    ON credential.id=magic_link.credential_id
+                INNER JOIN auth_identity_email AS identity_email
+                    ON identity_email.id=magic_link.identity_email_id
                 WHERE (
                     \#(userId == nil)
-                    OR credential.user_id=\#(userId ?? "")
+                    OR identity_email.identity_id=\#(userId ?? "")
                 )
                 AND (
                     \#(search == nil)
                     OR LOWER(magic_link.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(magic_link.credential_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(magic_link.identity_email_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(magic_link.token) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR CAST(magic_link.expires_at AS TEXT) LIKE '%' || \#(search ?? "") || '%'
                     OR LOWER(CAST(magic_link.is_persistent AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
@@ -142,16 +142,16 @@ struct MagicLinkTable {
             query: #"""
                 SELECT COUNT(*) AS count
                 FROM auth_magic_link AS magic_link
-                INNER JOIN auth_credentials AS credential
-                    ON credential.id=magic_link.credential_id
+                INNER JOIN auth_identity_email AS identity_email
+                    ON identity_email.id=magic_link.identity_email_id
                 WHERE (
                     \#(userId == nil)
-                    OR credential.user_id=\#(userId ?? "")
+                    OR identity_email.identity_id=\#(userId ?? "")
                 )
                 AND (
                     \#(search == nil)
                     OR LOWER(magic_link.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(magic_link.credential_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(magic_link.identity_email_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(magic_link.token) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR CAST(magic_link.expires_at AS TEXT) LIKE '%' || \#(search ?? "") || '%'
                     OR LOWER(CAST(magic_link.is_persistent AS TEXT)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
@@ -234,7 +234,7 @@ struct MagicLinkTable {
                 UPDATE auth_magic_link
                 SET
                     id=\#(row.id),
-                credential_id=\#(row.credentialId),
+                    identity_email_id=\#(row.identityEmailId),
                     token=\#(row.token),
                     expires_at=TO_TIMESTAMP(\#(row.expiresAt.timeIntervalSince1970)),
                     is_persistent=\#(row.isPersistent),
