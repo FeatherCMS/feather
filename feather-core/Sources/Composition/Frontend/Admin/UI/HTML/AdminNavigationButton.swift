@@ -18,7 +18,7 @@ public struct AdminNavigationButton: Component, FlowContent {
     }
 
     public func content() -> some BasicTag {
-        var button = Button(label)
+        var button = HTML.Button(label)
             .type(.button)
             .onClick(
                 "window.location.href='\(href)'"

@@ -42,7 +42,7 @@ public struct ListTableSearchForm: Component, FlowContent {
                 .name("search")
                 .value(state.search)
                 .placeholder(state.placeholder)
-            Button("Search").type(.submit)
+            HTML.Button("Search").type(.submit)
             A("Reset")
                 .href(state.resetPath)
                 .class("table-search-reset")

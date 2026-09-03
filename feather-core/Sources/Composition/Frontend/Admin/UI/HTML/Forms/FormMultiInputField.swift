@@ -209,7 +209,7 @@ public struct FormMultiInputField: Component, FlowContent {
     ) -> some BasicTag {
         Span {
             Span(value).class("form-multi-input-field__chip-label")
-            Button("×")
+            HTML.Button("×")
                 .type(.button)
                 .class("form-multi-input-field__remove")
                 .ariaLabel("Remove \(value)")

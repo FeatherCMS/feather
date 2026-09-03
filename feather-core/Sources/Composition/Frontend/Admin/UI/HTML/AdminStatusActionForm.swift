@@ -33,7 +33,7 @@ public struct AdminStatusActionForm: Component, FlowContent {
                 .type(.hidden)
                 .name("status")
                 .value(status)
-            Button(label)
+            HTML.Button(label)
                 .type(.submit)
                 .class(classes.joined(separator: " "))
         }

@@ -263,7 +263,7 @@ public struct AdminMediaAssetPicker: Component, FlowContent {
                     currentCard()
                 }
                 else {
-                    Button("")
+                    HTML.Button("")
                         .type(.button)
                         .data("media-picker-open", state.field.key)
                         .style("display:none;")
@@ -302,14 +302,14 @@ extension AdminMediaAssetPicker {
             }
 
             Div {
-                Button("Choose asset")
+                HTML.Button("Choose asset")
                     .type(.button)
                     .class("secondary")
                     .data(
                         "media-picker-open",
                         state.field.key
                     )
-                Button("Clear")
+                HTML.Button("Clear")
                     .type(.button)
                     .class("ghost")
                     .data(
@@ -360,7 +360,7 @@ extension AdminMediaAssetPicker {
                         H3(state.field.label)
                         P(helperText)
                     }
-                    Button("Close")
+                    HTML.Button("Close")
                         .type(.button)
                         .class("ghost")
                         .data(
@@ -371,7 +371,7 @@ extension AdminMediaAssetPicker {
                 .class("admin-media-asset-picker-dialog-header")
 
                 Div {
-                    Button("Gallery")
+                    HTML.Button("Gallery")
                         .type(.button)
                         .class("is-current")
                         .data(
@@ -382,7 +382,7 @@ extension AdminMediaAssetPicker {
                             "media-picker-field",
                             state.field.key
                         )
-                    Button("Upload")
+                    HTML.Button("Upload")
                         .type(.button)
                         .data(
                             "media-picker-tab",

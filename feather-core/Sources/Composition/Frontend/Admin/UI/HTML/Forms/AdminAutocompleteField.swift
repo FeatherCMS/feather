@@ -251,7 +251,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
                                 .ariaActiveDescendant("")
                                 .ariaExpanded("false")
                                 .ariaHasPopup(.listbox)
-                            Button {
+                            HTML.Button {
                                 Span {}.class("multiselect__chevron")
                             }
                             .type(.button)

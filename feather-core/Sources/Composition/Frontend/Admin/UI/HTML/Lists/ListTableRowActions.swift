@@ -56,7 +56,7 @@ public struct ListTableRowActions: Component {
 
             for (index, action) in visibleActions.enumerated() {
                 if let copyText = action.copyText {
-                    Button(action.title)
+                    HTML.Button(action.title)
                         .type(.button)
                         .class("row-btn", action.className ?? "")
                         .onClick(

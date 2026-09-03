@@ -61,6 +61,13 @@ public enum AdminMenuEventHandlers {
                     link: "/admin/system/jobs/",
                     permission: "system:jobs:list"
                 ),
+                .init(
+                    menuKey: "system",
+                    label: "Design System",
+                    icon: "layers",
+                    link: "/admin/design-system/",
+                    permission: "system.admin.access"
+                ),
             ]
         }
     }

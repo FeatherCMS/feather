@@ -28,6 +28,9 @@ public struct AdminSystem {
         )
         .controller.route(on: router)
 
+        AdminGetDesignSystem()
+        .controller.route(on: router)
+
         AdminListSystemPermission(
             renderingEngine: renderingEngine
         )

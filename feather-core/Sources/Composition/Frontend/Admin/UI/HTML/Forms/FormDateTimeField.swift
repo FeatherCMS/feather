@@ -277,10 +277,10 @@ public struct FormDateTimeField: Component, FlowContent {
     private func picker() -> some FlowContent {
         Div {
             Div {
-                Button("‹").type(.button).ariaLabel("Previous month")
+                HTML.Button("‹").type(.button).ariaLabel("Previous month")
                     .class("form-datetime-field__previous")
                 Strong("Select date and time")
-                Button("›").type(.button).ariaLabel("Next month")
+                HTML.Button("›").type(.button).ariaLabel("Next month")
                     .class("form-datetime-field__next")
             }
             .class("form-datetime-field__header")
@@ -307,9 +307,9 @@ public struct FormDateTimeField: Component, FlowContent {
             }
             .class("form-datetime-field__time")
             Div {
-                Button("Cancel").type(.button)
+                HTML.Button("Cancel").type(.button)
                     .class("form-datetime-field__cancel")
-                Button("Apply").type(.button)
+                HTML.Button("Apply").type(.button)
                     .class("form-datetime-field__apply")
             }
             .class("form-datetime-field__actions")

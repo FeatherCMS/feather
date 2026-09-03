@@ -45,7 +45,7 @@ public struct ListTableRemoveForm<Table: FlowContent>: Component,
                 table
 
                 Div {
-                    Button(state.buttonTitle)
+                    HTML.Button(state.buttonTitle)
                         .type(.submit)
                         .disabled()
                         .class("remove-submit")
