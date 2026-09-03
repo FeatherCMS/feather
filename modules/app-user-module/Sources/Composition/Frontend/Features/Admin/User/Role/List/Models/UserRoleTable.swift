@@ -15,7 +15,6 @@ struct UserRoleTable: Component {
         let canAccess: Bool
         let permissions: Set<String>
         let canAdd: Bool
-        let canManageRolePermissions: Bool
         let roles: [Components.Schemas.UserRoleListItemSchema]
         let page: Int
         let pageSize: Int
@@ -41,18 +40,13 @@ struct UserRoleTable: Component {
                 if state.isAdded { P("User role added successfully.") }
                 if state.isEdited { P("User role edited successfully.") }
                 if state.isRemoved { P("User role removed successfully.") }
-                if state.canAdd || state.canManageRolePermissions {
+                if state.canAdd {
                     Div {
                         if state.canAdd {
                             AdminNavigationButton(
                                 "Add role",
                                 href: "/admin/user/roles/add/"
                             )
-                        }
-                        if state.canManageRolePermissions {
-                            A("Manage access control")
-                                .href("/admin/auth/access-control/")
-                                .class("secondary")
                         }
                     }
                     .class("button-row")

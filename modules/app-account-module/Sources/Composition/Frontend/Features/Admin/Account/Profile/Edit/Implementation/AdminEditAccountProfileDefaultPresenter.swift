@@ -30,7 +30,7 @@ struct AdminEditAccountProfileDefaultPresenter:
                 state: .init(
                     firstName: model.firstName,
                     lastName: model.lastName,
-                    imageURL: model.imageURL,
+                    profileImageAssetId: model.profileImageAssetId,
                     canEdit: canEdit,
                     action: path
                 ),

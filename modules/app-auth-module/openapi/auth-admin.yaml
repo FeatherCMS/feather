@@ -9,6 +9,7 @@ tags:
   description: User identities related endpoints.
 - name: AuthCredentials
   description: Manage user credentials.
+- name: AuthEmails
 - name: AuthRolePermissions
   description: Manage role-permission assignments.
 - name: AuthMagicLinks
@@ -227,6 +228,90 @@ paths:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
         404:
           description: AuthCredential not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/auth/emails:
+    post:
+      tags:
+      - AuthEmails
+      operationId: authEmailCreate
+      requestBody:
+        $ref: '#/components/requestBodies/AuthEmailRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AuthEmailDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/auth/emails/:
+    get:
+      tags:
+      - AuthEmails
+      operationId: authEmailList
+      responses:
+        200:
+          $ref: '#/components/responses/AuthEmailListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/auth/emails/{authEmailId}:
+    get:
+      tags:
+      - AuthEmails
+      operationId: authEmailGet
+      parameters:
+      - $ref: '#/components/parameters/AuthEmailIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthEmailDetailResponse'
+        404:
+          description: Auth auth email not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - AuthEmails
+      operationId: authEmailDelete
+      parameters:
+      - $ref: '#/components/parameters/AuthEmailIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - AuthEmails
+      operationId: authEmailPatch
+      parameters:
+      - $ref: '#/components/parameters/AuthEmailIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AuthEmailPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AuthEmailDetailResponse'
+        404:
+          description: Auth auth email not found
         401:
           description: Unauthorized
         403:
@@ -645,11 +730,14 @@ components:
           $ref: '#/components/schemas/AuthCredentialIdField'
         userId:
           $ref: '#/components/schemas/AuthCredentialUserIdField'
+        identityName:
+          $ref: '#/components/schemas/AuthCredentialIdentityNameField'
         email:
           $ref: '#/components/schemas/AuthCredentialEmailField'
       required:
       - id
       - userId
+      - identityName
       - email
     AuthCredentialIdField:
       type: string
@@ -657,6 +745,9 @@ components:
     AuthCredentialUserIdField:
       type: string
       example: user_7nL3xQ2v
+    AuthCredentialIdentityNameField:
+      type: string
+      example: Root User
     AuthCredentialEmailField:
       type: string
       example: john.doe@example.com
@@ -684,8 +775,8 @@ components:
         filters:
           type: object
           example:
-            userId: user_7nL3xQ2v
             search: foo
+            userId: user_7nL3xQ2v
           properties:
             search:
               $ref: '#/components/schemas/AuthCredentialSearchField'
@@ -743,6 +834,8 @@ components:
     AuthCredentialPatchSchema:
       type: object
       properties:
+        userId:
+          $ref: '#/components/schemas/AuthCredentialUserIdField'
         email:
           $ref: '#/components/schemas/AuthCredentialEmailField'
         password:
@@ -750,6 +843,54 @@ components:
     AuthCredentialPasswordField:
       type: string
       example: correct-horse-battery-staple
+    AuthEmailCreateSchema:
+      type: object
+      properties:
+        identityId:
+          type: string
+          example: user_7nL3xQ2v
+        email:
+          type: string
+          example: john.doe@example.com
+      required:
+      - identityId
+      - email
+    AuthEmailDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: email_7nL3xQ2v
+        identityId:
+          type: string
+          example: user_7nL3xQ2v
+        email:
+          type: string
+          example: john.doe@example.com
+      required:
+      - id
+      - identityId
+      - email
+    AuthEmailListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/AuthEmailDetailSchema'
+    AuthEmailIdField:
+      type: string
+      example: email_7nL3xQ2v
+    AuthEmailPatchSchema:
+      type: object
+      properties:
+        identityId:
+          $ref: '#/components/schemas/AuthEmailIdentityIdField'
+        email:
+          $ref: '#/components/schemas/AuthEmailEmailField'
+    AuthEmailIdentityIdField:
+      type: string
+      example: user_7nL3xQ2v
+    AuthEmailEmailField:
+      type: string
+      example: john.doe@example.com
     AuthRolePermissionCreateSchema:
       type: object
       properties:
@@ -1039,6 +1180,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthCredentialListItemSearchSchema'
+    AuthEmailDetailResponse:
+      description: Auth auth email response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthEmailDetailSchema'
+    AuthEmailListResponse:
+      description: Auth auth email list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthEmailListSchema'
     AuthRolePermissionDetailResponse:
       description: AuthRolePermission response
       content:
@@ -1083,6 +1236,12 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/AuthCredentialIdField'
+    AuthEmailIdParameter:
+      name: authEmailId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AuthEmailIdField'
     AuthMagicLinkIdParameter:
       name: authMagicLinkId
       in: path
@@ -1131,6 +1290,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthCredentialPatchSchema'
+      required: true
+    AuthEmailRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthEmailCreateSchema'
+      required: true
+    AuthEmailPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthEmailPatchSchema'
       required: true
     AuthRolePermissionRequestBody:
       content:

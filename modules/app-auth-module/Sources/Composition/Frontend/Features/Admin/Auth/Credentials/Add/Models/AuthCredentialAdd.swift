@@ -17,7 +17,6 @@ import WebStandards
 
 struct AuthCredentialAdd: Component {
     struct State {
-        let identityId: String
         let form: AuthCredentialForm.State
         let breadcrumb: AdminBreadcrumb.State
     }
@@ -30,7 +29,7 @@ struct AuthCredentialAdd: Component {
             H1("Add user credential")
             AuthCredentialForm(
                 state: state.form,
-                action: "/admin/auth/credentials/\(state.identityId)/add/",
+                action: "/admin/auth/credentials/add/",
                 submitLabel: "Add credential",
                 removeHref: nil
             )

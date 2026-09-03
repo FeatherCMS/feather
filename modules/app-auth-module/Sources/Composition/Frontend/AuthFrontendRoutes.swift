@@ -4,8 +4,10 @@ import CSS
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
+import Foundation
 import HTML
 import Hummingbird
+import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
@@ -44,6 +46,38 @@ public enum AuthFrontendRoutes {
         router: Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine
     ) {
+        router.get("/admin/auth/profile/image/") { _, context in
+            do {
+                let profile =
+                    try await AdminAuthAccountProfileOpenAPIRepository(
+                        api: context.accountAppAPI(),
+                        mediaAPI: context.mediaAdminAPI()
+                    )
+                    .get()
+                guard let asset = profile.profileImageAsset else {
+                    return Response(status: .notFound)
+                }
+                let prefix = "media/assets/"
+                let storageKey =
+                    asset.storageKey.hasPrefix(prefix)
+                    ? String(asset.storageKey.dropFirst(prefix.count))
+                    : asset.storageKey
+                let encodedStorageKey =
+                    storageKey.addingPercentEncoding(
+                        withAllowedCharacters: .urlPathAllowed
+                    ) ?? storageKey
+                return Response(
+                    status: .seeOther,
+                    headers: [
+                        .location:
+                            "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/assets/\(encodedStorageKey)"
+                    ]
+                )
+            }
+            catch {
+                return Response(status: .notFound)
+            }
+        }
         AdminAuth(renderingEngine: renderingEngine).route(on: router)
         AdminListAuthSession(renderingEngine: renderingEngine)
             .controller

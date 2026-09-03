@@ -49,14 +49,12 @@ struct AdminRemoveAuthCredentialDefaultController:
     {
         let id = try context.requiredID()
         let (interactor, _) = buildRuntime(request, context)
-        let credential = try await interactor.get(id: id)
         try await interactor.delete(id: id)
         return Response(
             status: .seeOther,
             headers: [
                 .location: AdminToastRedirect.location(
-                    defaultPath:
-                        "/admin/auth/credentials/\(credential.userId)/",
+                    defaultPath: "/admin/auth/credentials/",
                     title: "Removed",
                     message: "User credential removed successfully."
                 )

@@ -43,7 +43,7 @@ public struct RequestMagicLink: UseCase {
         let result: (token: String, publicBaseURL: String, template: String?)? =
             try await transaction.run { scope in
                 guard
-                    let credential = try await scope.credential.findBy(
+                    let authEmail = try await scope.authEmail.findBy(
                         email: input.email
                     )
                 else {
@@ -54,25 +54,22 @@ public struct RequestMagicLink: UseCase {
 
                 _ = try await scope.magicLink.insert(
                     MagicLink.create(
-                        credentialId: credential.id,
+                        authEmailId: authEmail.id,
                         token: token,
                         isPersistent: input.isPersistent
                     )
                 )
 
-                guard
-                    let publicBaseURL = try await scope.variable.get(
+                let configuredPublicBaseURL =
+                    try await scope.variable.get(
                         "web-settings-public-base-url"
-                    ),
-                    !publicBaseURL.isEmpty
-                else {
-                    throw UseCaseError(
-                        reason: .validation,
-                        logMessage: "public_site_url_not_configured",
-                        userFriendlyMessage:
-                            "The public site URL is not configured."
-                    )
-                }
+                    )?
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                let publicBaseURL =
+                    configuredPublicBaseURL.flatMap {
+                        $0.isEmpty ? nil : $0
+                    }
+                    ?? "http://localhost:3456"
 
                 return (
                     token: token,

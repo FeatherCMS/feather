@@ -16,6 +16,6 @@ import UserFrontend
 import WebStandards
 
 protocol AdminAddAuthCredentialRepository: Sendable {
-    func create(userId: String, payload: AuthCredentialFormPayloadModel)
-        async throws
+    func listEmails() async throws -> [AuthCredentialIdentityOption]
+    func create(payload: AuthCredentialFormPayloadModel) async throws
 }

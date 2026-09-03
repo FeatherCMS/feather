@@ -14,7 +14,7 @@ public struct MagicLinkList: DTO {
 
     public struct Item: Sendable {
         public let id: String
-        public let credentialId: String
+        public let authEmailId: String
         public let token: String
         public let expiresAt: Date
         public let isPersistent: Bool
@@ -24,7 +24,7 @@ public struct MagicLinkList: DTO {
 
         package init(
             id: String,
-            credentialId: String,
+            authEmailId: String,
             token: String,
             expiresAt: Date,
             isPersistent: Bool,
@@ -33,7 +33,7 @@ public struct MagicLinkList: DTO {
             updatedAt: Date,
         ) {
             self.id = id
-            self.credentialId = credentialId
+            self.authEmailId = authEmailId
             self.token = token
             self.expiresAt = expiresAt
             self.isPersistent = isPersistent

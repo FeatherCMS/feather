@@ -48,6 +48,7 @@ extension AdminAPIGateway {
     ) -> Components.Schemas.UserIdentityDetailSchema {
         .init(
             id: detail.id,
+            name: detail.name,
             status: .init(rawValue: detail.status.rawValue)!,
             roleIds: detail.roleIds
         )
@@ -58,6 +59,7 @@ extension AdminAPIGateway {
     ) -> Components.Schemas.UserIdentityListItemSchema {
         .init(
             id: item.id,
+            name: item.name,
             status: .init(rawValue: item.status.rawValue)!,
             roles: item.roles
         )

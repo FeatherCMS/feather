@@ -17,6 +17,15 @@ import UserFrontend
 import WebStandards
 
 enum AdminAuthCredentialFormValidation {
+    static func userId(_ value: String?) -> Validator<String> {
+        .init(
+            key: "userId",
+            value: value,
+            required: true,
+            invocation: .all,
+            rules: [.trimmedNonempty(message: "User identity is required.")]
+        )
+    }
     static func email(_ value: String?) -> Validator<String> {
         .init(
             key: "email",
@@ -45,8 +54,14 @@ enum AdminAuthCredentialFormValidation {
 }
 
 extension AdminAuthCredentialFormInput {
-    func validate(requiredPassword: Bool) async throws(ValidationError) {
+    func validate(
+        requiredPassword: Bool,
+        validateUserId: Bool = true
+    ) async throws(ValidationError) {
         try await GroupValidator {
+            if validateUserId {
+                AdminAuthCredentialFormValidation.userId(userId)
+            }
             AdminAuthCredentialFormValidation.email(email)
             AdminAuthCredentialFormValidation.password(
                 requiredPassword

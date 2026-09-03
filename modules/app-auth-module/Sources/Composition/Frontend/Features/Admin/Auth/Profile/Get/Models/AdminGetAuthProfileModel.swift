@@ -23,7 +23,7 @@ struct AdminGetAuthProfileModel: Sendable {
     let permissions: [String]
     let firstName: String?
     let lastName: String?
-    let imageURL: String?
+    let profileImageAssetId: String?
 
     init(
         account: AccountModel,
@@ -35,6 +35,6 @@ struct AdminGetAuthProfileModel: Sendable {
         self.permissions = account.permissions
         self.firstName = accountProfile.firstName
         self.lastName = accountProfile.lastName
-        self.imageURL = accountProfile.imageURL
+        self.profileImageAssetId = accountProfile.profileImageAssetId
     }
 }

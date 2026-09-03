@@ -32,7 +32,26 @@ struct AuthProfileDetails: Component {
             H1("Profile")
 
             AdminDetailsField(label: "ID", value: state.profile.id)
-            AdminDetailsField(label: "Email", value: state.profile.email)
+            Div {
+                P("Profile image")
+                    .class("admin-details-field__label")
+                if state.profile.profileImageAssetId != nil {
+                    Img(
+                        src: "/admin/auth/profile/image/",
+                        alt: "My profile picture"
+                    )
+                    .width(120)
+                    .height(120)
+                    .style(
+                        "display:block;width:120px;height:120px;object-fit:cover;border-radius:18px;border:1px solid var(--cms-gray-3);"
+                    )
+                }
+                else {
+                    P("No profile image assigned")
+                        .class("admin-details-field__value")
+                }
+            }
+            .class("admin-details-field")
             AdminDetailsField(
                 label: "First name",
                 value: state.profile.firstName ?? ""
@@ -41,11 +60,6 @@ struct AuthProfileDetails: Component {
                 label: "Last name",
                 value: state.profile.lastName ?? ""
             )
-            AdminDetailsField(
-                label: "Image URL",
-                value: state.profile.imageURL ?? ""
-            )
-
             Div {
                 P("Roles")
                     .class("admin-details-field__label")

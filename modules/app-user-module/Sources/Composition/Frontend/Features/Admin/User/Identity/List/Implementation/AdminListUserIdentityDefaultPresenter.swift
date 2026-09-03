@@ -50,6 +50,7 @@ struct AdminListUserIdentityDefaultPresenter:
         selectedIds: [String],
         page: Int,
         search: String?,
+        role: String?,
         permissions: Set<String>
     ) -> HTMLResponse {
         renderEngine.renderAdminPage(
@@ -72,6 +73,7 @@ struct AdminListUserIdentityDefaultPresenter:
                         path: "/admin/user/identities/",
                         page: page,
                         search: search,
+                        queryItems: role.map { [("role", $0)] } ?? [],
                         title: nil,
                         message: nil
                     ),

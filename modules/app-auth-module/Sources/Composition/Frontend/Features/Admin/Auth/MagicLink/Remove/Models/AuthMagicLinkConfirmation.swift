@@ -33,7 +33,10 @@ struct AuthMagicLinkConfirmation: Component {
                 message:
                     "Are you sure you want to remove this user magic link? This action cannot be undone.",
                 details: [
-                    .init(prefix: "Credential ID: ", value: state.credentialId)
+                    .init(
+                        prefix: "Auth email ID: ",
+                        value: state.credentialId
+                    )
                 ],
                 submitLabel: "Remove magic link",
                 actionURL: "/admin/auth/magic-links/\(state.id)/remove/",

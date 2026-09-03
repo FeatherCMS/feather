@@ -84,11 +84,11 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
-            from: "2.20.1"
+            from: "2.26.0"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird-auth",
-            from: "2.0.0"
+            from: "2.3.0"
         ),
         .package(
             url: "https://github.com/BinaryBirds/swift-web-standards",

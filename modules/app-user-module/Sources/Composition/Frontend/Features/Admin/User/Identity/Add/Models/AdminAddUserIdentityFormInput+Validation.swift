@@ -4,6 +4,16 @@ import FeatherValidationFoundation
 
 enum AdminAddUserIdentityFormFieldValidator {
 
+    static func name(_ value: String?) -> Validator<String> {
+        .init(
+            key: "name",
+            value: value,
+            required: true,
+            invocation: .all,
+            rules: [.trimmedNonempty(message: "Name is required.")]
+        )
+    }
+
     static func status(
         _ value: String?,
         required: Bool
@@ -24,6 +34,7 @@ extension AdminAddUserIdentityFormInput {
 
     private var validator: GroupValidator {
         GroupValidator {
+            AdminAddUserIdentityFormFieldValidator.name(name)
             AdminAddUserIdentityFormFieldValidator.status(
                 status,
                 required: true

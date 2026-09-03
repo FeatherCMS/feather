@@ -24,6 +24,8 @@ struct AuthCredentialForm: Component, FlowContent {
     }
 
     struct State: FeatherAdmin.Object {
+        var identity: FieldState
+        var identityOptions: [AdminAutocompleteField.OptionState]
         var email: FieldState
         var password: FieldState
         var passwordRequired: Bool
@@ -31,6 +33,7 @@ struct AuthCredentialForm: Component, FlowContent {
         var success: String?
 
         mutating func apply(errors: [String: String]) {
+            identity.error = errors[identity.key]
             email.error = errors[email.key]
             password.error = errors[password.key]
         }
@@ -45,20 +48,21 @@ struct AuthCredentialForm: Component, FlowContent {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
-            Section {
-                Label {
-                    AdminFieldLabel(label: state.email.label, required: true)
-                    Input()
-                        .type(.email)
-                        .id(state.email.key)
-                        .name(state.email.key)
-                        .value(state.email.value)
-                }
-                if let error = state.email.error {
-                    Span(error).class("field-error")
-                }
-            }
-            .if(state.email.error != nil) { $0.class("has-error") }
+            Input()
+                .type(.hidden)
+                .name("userId")
+                .value(state.identity.value)
+            AdminAutocompleteField(
+                state: .init(
+                    key: state.email.key,
+                    label: "Auth email",
+                    placeholder: "Select an email",
+                    options: state.identityOptions,
+                    error: state.email.error,
+                    selectionMode: .single,
+                    isEnabled: true
+                )
+            )
             Section {
                 Label {
                     AdminFieldLabel(

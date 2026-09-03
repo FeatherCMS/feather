@@ -64,10 +64,28 @@ struct AdminEditAuthCredentialDefaultPresenter: AdminEditAuthCredentialPresenter
         )
     }
 
-    func formState(email: String, password: String = "")
+    func formState(
+        userId: String,
+        emails: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema],
+        email: String,
+        password: String = ""
+    )
         -> AuthCredentialForm.State
     {
         .init(
+            identity: .init(
+                key: "userId",
+                label: "User identity",
+                value: userId,
+                error: nil
+            ),
+            identityOptions: emails.map {
+                .init(
+                    label: $0.email,
+                    value: $0.email,
+                    isSelected: $0.email == email
+                )
+            },
             email: .init(
                 key: "email",
                 label: "Email address",

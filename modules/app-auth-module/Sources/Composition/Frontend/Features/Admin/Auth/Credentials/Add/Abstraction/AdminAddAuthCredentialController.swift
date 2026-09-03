@@ -24,7 +24,7 @@ protocol AdminAddAuthCredentialController: Sendable {
 
 extension AdminAddAuthCredentialController {
     func route(on router: Router<DefaultRequestContext>) {
-        router.get("/admin/auth/credentials/{id}/add", use: getAddCredential)
-        router.post("/admin/auth/credentials/{id}/add", use: postAddCredential)
+        router.get("/admin/auth/credentials/add", use: getAddCredential)
+        router.post("/admin/auth/credentials/add", use: postAddCredential)
     }
 }

@@ -32,18 +32,18 @@ public struct EditAccountProfile: UseCase {
     public struct Input: DTO {
         public let firstName: String?
         public let lastName: String?
-        public let imageURL: String?
+        public let profileImageAssetId: String?
         public let userId: String?
 
         public init(
             firstName: String?,
             lastName: String?,
-            imageURL: String?,
+            profileImageAssetId: String?,
             userId: String? = nil
         ) {
             self.firstName = firstName
             self.lastName = lastName
-            self.imageURL = imageURL
+            self.profileImageAssetId = profileImageAssetId
             self.userId = userId
         }
     }
@@ -62,7 +62,7 @@ public struct EditAccountProfile: UseCase {
             try model.update(
                 firstName: input.firstName,
                 lastName: input.lastName,
-                imageURL: input.imageURL
+                profileImageAssetId: input.profileImageAssetId
             )
             return try await scope.profile.update(model)
         }

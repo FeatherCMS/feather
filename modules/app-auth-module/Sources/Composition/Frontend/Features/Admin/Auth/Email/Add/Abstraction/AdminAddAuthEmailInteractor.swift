@@ -16,7 +16,11 @@ import UserAppAPI
 import UserFrontend
 import WebStandards
 
-struct AdminEditAuthProfileFormPayloadModel: Sendable {
-    let email: String
-    let password: String?
+protocol AdminAddAuthEmailInteractor: Sendable {
+
+    func listIdentities() async throws -> [AuthCredentialIdentityOption]
+
+    func execute(
+        entity: AdminAddAuthEmailModel
+    ) async throws
 }

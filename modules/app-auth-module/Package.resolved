@@ -1,5 +1,5 @@
 {
-  "originHash" : "ac88cfb51b8698c0627ad607e18211357b48859475d2d72384f8d718bcd2ae0e",
+  "originHash" : "035fdd64b133864bf2217503228b1bd73f6f8dfea98de6772260e983b2b64774",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -35,6 +35,24 @@
       "state" : {
         "revision" : "22df7f076f6ef27f25a80daf7bec8b55fdb40212",
         "version" : "1.0.0-beta.7"
+      }
+    },
+    {
+      "identity" : "feather-storage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-storage",
+      "state" : {
+        "revision" : "d9cf9f07b3b270d34b5ac34fcbbbe765a85b17b8",
+        "version" : "1.0.0-beta.2"
+      }
+    },
+    {
+      "identity" : "feather-storage-fs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-storage-fs",
+      "state" : {
+        "revision" : "d8ba920af6e6d02740f978ae2f3997a996827125",
+        "version" : "1.0.0-beta.1"
       }
     },
     {
@@ -341,6 +359,15 @@
       "state" : {
         "revision" : "9829955b385e5bb88128b73f1b8389e9b9c3191a",
         "version" : "2.11.0"
+      }
+    },
+    {
+      "identity" : "swift-subprocess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-subprocess",
+      "state" : {
+        "revision" : "13d087685b95d64d6aac9b94500d347bbe84c39b",
+        "version" : "0.4.0"
       }
     },
     {

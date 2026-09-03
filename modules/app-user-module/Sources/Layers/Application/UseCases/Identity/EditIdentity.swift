@@ -32,15 +32,18 @@ public struct EditIdentity: UseCase {
 
     public struct Input: DTO {
         public let id: String
+        public let name: String?
         public let roleIds: [String]?
         public let status: Identity.Status?
 
         public init(
             id: String,
+            name: String? = nil,
             roleIds: [String]?,
             status: Identity.Status?
         ) {
             self.id = id
+            self.name = name
             self.roleIds = roleIds
             self.status = status
         }
@@ -62,7 +65,7 @@ public struct EditIdentity: UseCase {
                 throw Error(message: "Identity not found")
             }
 
-            model.update(status: input.status)
+            model.update(name: input.name, status: input.status)
 
             let updated = try await scope.identity.update(model)
 

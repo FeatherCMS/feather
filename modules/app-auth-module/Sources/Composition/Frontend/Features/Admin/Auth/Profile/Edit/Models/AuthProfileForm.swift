@@ -25,22 +25,19 @@ struct AuthProfileForm: Component, FlowContent {
     }
 
     struct State: FeatherAdmin.Object {
-        var email: FieldState
-        var password: FieldState
         var firstName: FieldState
         var lastName: FieldState
-        var imageURL: FieldState
+        var profileImageAssetId: FieldState
+        var selectedImageAsset: AdminMediaAssetReferenceModel?
         var error: String?
         var success: String?
 
         mutating func apply(
             errors: [String: String]
         ) {
-            email.error = errors[email.key]
-            password.error = errors[password.key]
             firstName.error = errors[firstName.key]
             lastName.error = errors[lastName.key]
-            imageURL.error = errors[imageURL.key]
+            profileImageAssetId.error = errors[profileImageAssetId.key]
         }
     }
 
@@ -57,22 +54,20 @@ struct AuthProfileForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            FormInputField(
-                name: state.email.key,
-                label: state.email.label,
-                value: state.email.value,
-                error: state.email.error,
-                isRequired: true,
-                inputClass: "text-input"
-            )
-
-            FormInputField(
-                name: state.password.key,
-                label: state.password.label,
-                value: state.password.value,
-                error: state.password.error,
-                type: .password,
-                inputClass: "text-input"
+            AdminMediaAssetPicker(
+                state: .init(
+                    field: .init(
+                        key: state.profileImageAssetId.key,
+                        label: state.profileImageAssetId.label,
+                        value: state.profileImageAssetId.value,
+                        error: state.profileImageAssetId.error
+                    ),
+                    selectedAsset: state.selectedImageAsset,
+                    browsePath:
+                        "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                    allowedExtensions: ["png", "jpg", "jpeg", "webp"],
+                    outputMode: .assetId
+                )
             )
 
             FormInputField(
@@ -90,21 +85,6 @@ struct AuthProfileForm: Component, FlowContent {
                 error: state.lastName.error,
                 isRequired: false,
                 inputClass: "text-input"
-            )
-            AdminMediaAssetPicker(
-                state: .init(
-                    field: .init(
-                        key: state.imageURL.key,
-                        label: state.imageURL.label,
-                        value: state.imageURL.value,
-                        error: state.imageURL.error
-                    ),
-                    selectedAsset: nil,
-                    browsePath:
-                        "/admin/media/assets/?picker=1&field=imageURL&extensions=png,jpg,jpeg,webp",
-                    allowedExtensions: ["png", "jpg", "jpeg", "webp"],
-                    outputMode: .originalURL
-                )
             )
 
             Section {

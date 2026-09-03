@@ -19,6 +19,33 @@ struct AdminEditAuthCredentialOpenAPIRepository:
     AdminEditAuthCredentialRepository
 {
     let api: AuthAdminAPIClient
+    let userAPI: UserAdminAPIClient
+
+    func listEmails() async throws -> [AuthAdminAPI.Components.Schemas
+        .AuthEmailDetailSchema]
+    {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.authEmailList(
+                headers: .init(accept: [.init(contentType: .json)])
+            )
+            switch response {
+            case .ok(let value): return try value.body.json
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to view auth emails."
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your identity cannot access auth emails."
+                )
+            case .undocumented(let status, let body):
+                throw try await api.failure(
+                    statusCode: status,
+                    responseBody: body.body
+                )
+            }
+        }
+    }
 
     func get(id: String) async throws -> AuthCredentialDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
@@ -64,6 +91,7 @@ struct AdminEditAuthCredentialOpenAPIRepository:
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
+                        userId: payload.userId,
                         email: payload.email,
                         password: payload.password
                     )

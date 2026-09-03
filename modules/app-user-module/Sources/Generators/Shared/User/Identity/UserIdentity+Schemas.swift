@@ -17,6 +17,12 @@ public struct UserIdentityIDField: StringSchemaRepresentable {
     public init() {}
 }
 
+public struct UserIdentityNameField: StringSchemaRepresentable {
+    public var example: String? = "Root User"
+
+    public init() {}
+}
+
 public struct UserIdentityStatusField: StringSchemaRepresentable {
     public var allowedValues: [String]? = [
         "invited",
@@ -61,6 +67,7 @@ public struct UserIdentityDetailSchema: ObjectSchemaRepresentable {
     public var propertyMap: SchemaMap {
         [
             "id": UserIdentityIDField().reference(),
+            "name": UserIdentityNameField().reference(),
             "status": UserIdentityStatusField().reference(),
             "roleIds": UserIdentityRoleIDListSchema()
                 .reference(required: false),

@@ -6,6 +6,7 @@ import FeatherValidation
 import FeatherValidationFoundation
 import HTML
 import Hummingbird
+import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
@@ -25,7 +26,8 @@ struct AdminGetAuthProfile {
                     interactor: AdminGetAuthProfileDefaultInteractor(
                         accountProfileRepository:
                             AdminAuthAccountProfileOpenAPIRepository(
-                                api: context.accountAppAPI()
+                                api: context.accountAppAPI(),
+                                mediaAPI: context.mediaAdminAPI()
                             )
                     ),
                     presenter: AdminGetAuthProfileDefaultPresenter(

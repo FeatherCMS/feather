@@ -73,6 +73,7 @@ public struct CompleteInvitationRegistration: UseCase {
             }
             return .init(
                 id: updated.id,
+                name: updated.name,
                 roleIds: invitation.roleIDs,
                 status: .init(rawValue: updated.status.rawValue) ?? .invited,
                 createdAt: updated.createdAt,

@@ -6,7 +6,7 @@ extension AccountProfile {
             userId: userId,
             firstName: firstName,
             lastName: lastName,
-            imageURL: imageURL,
+            profileImageAssetId: profileImageAssetId,
             createdAt: createdAt,
             updatedAt: updatedAt
         )

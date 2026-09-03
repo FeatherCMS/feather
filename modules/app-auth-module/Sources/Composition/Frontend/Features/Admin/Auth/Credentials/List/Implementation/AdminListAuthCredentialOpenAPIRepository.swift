@@ -21,7 +21,6 @@ struct AdminListAuthCredentialOpenAPIRepository:
     let api: AuthAdminAPIClient
 
     func list(
-        identityId: String,
         page: Int,
         size: Int,
         search: String?
@@ -37,7 +36,7 @@ struct AdminListAuthCredentialOpenAPIRepository:
                 body: .json(
                     .init(
                         page: .init(size: size, number: page),
-                        filters: .init(search: search, userId: identityId)
+                        filters: .init(search: search, userId: nil)
                     )
                 )
             )

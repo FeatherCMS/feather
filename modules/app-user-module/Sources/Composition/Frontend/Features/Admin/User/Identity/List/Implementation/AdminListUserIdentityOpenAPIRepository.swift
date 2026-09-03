@@ -13,6 +13,17 @@ struct AdminListUserIdentityOpenAPIRepository:
     private let deleteUnauthorizedMessage =
         "Please sign in again to delete this user identity."
 
+    func listRoles() async throws -> [Components.Schemas.UserRoleListItemSchema]
+    {
+        let result = try await AdminListUserRoleOpenAPIRepository(api: api)
+            .list(
+                page: 1,
+                size: 100,
+                search: nil
+            )
+        return result.items
+    }
+
     func list(
         page: Int,
         size: Int,

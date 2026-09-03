@@ -20,3 +20,8 @@ struct AuthCredentialDetailsModel: Sendable {
     let userId: String
     let email: String
 }
+
+struct AuthCredentialIdentityOption: Sendable, Equatable {
+    let id: String
+    let label: String
+}

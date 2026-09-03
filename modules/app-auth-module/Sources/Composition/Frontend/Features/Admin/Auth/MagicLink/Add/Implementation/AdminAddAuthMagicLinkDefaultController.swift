@@ -27,10 +27,12 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime(request, context)
+        let emails = try await interactor.listEmails()
         return presenter.renderPage(
             form: presenter.formState(
                 credentialId: "",
+                emails: emails,
                 isPersistent: false
             ),
             permissions: context.currentUserPermissions
@@ -72,6 +74,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
             for f in error.failures { errs[f.key] = f.message }
             var state = presenter.formState(
                 credentialId: lastPayload?.normalizedCredentialId ?? "",
+                emails: (try? await interactor.listEmails()) ?? [],
                 isPersistent: lastPayload?.isPersistent.value ?? false
             )
             state.apply(errors: errs)
@@ -85,6 +88,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
         catch let error as OpenAPIRepositoryError {
             var state = presenter.formState(
                 credentialId: lastPayload?.normalizedCredentialId ?? "",
+                emails: (try? await interactor.listEmails()) ?? [],
                 isPersistent: lastPayload?.isPersistent.value ?? false
             )
             state.error = presenter.format(error: error)
@@ -98,6 +102,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
         catch {
             var state = presenter.formState(
                 credentialId: lastPayload?.normalizedCredentialId ?? "",
+                emails: (try? await interactor.listEmails()) ?? [],
                 isPersistent: lastPayload?.isPersistent.value ?? false
             )
             state.error = error.displayMessage

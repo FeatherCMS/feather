@@ -29,7 +29,6 @@ struct AdminListAuthCredentialDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let identityId = try context.requiredID()
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
@@ -43,7 +42,6 @@ struct AdminListAuthCredentialDefaultController:
             let result =
                 canAccess
                 ? try await interactor.execute(
-                    identityId: identityId,
                     page: page,
                     size: pageSize,
                     search: search
@@ -51,7 +49,6 @@ struct AdminListAuthCredentialDefaultController:
                 : (items: [], total: 0, page: page, size: pageSize)
             return presenter.renderPage(
                 state: .init(
-                    identityId: identityId,
                     canAccess: canAccess,
                     permissions: permissions,
                     credentials: result.items,
@@ -66,16 +63,12 @@ struct AdminListAuthCredentialDefaultController:
                             label: "Credentials",
                             link: "/admin/auth/credentials/"
                         ),
-                        .init(
-                            label: "User",
-                            link: "/admin/auth/credentials/\(identityId)/"
-                        ),
                     ])
                 )
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return presenter.renderError(error: error, identityId: identityId)
+            return presenter.renderError(error: error)
         }
     }
 }

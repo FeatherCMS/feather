@@ -41,6 +41,10 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
                     page: page,
                     size: pageSize
                 )
+            let roleOptions =
+                canAccess
+                ? try await interactor.listRoles()
+                : []
 
             let state = UserIdentityTable.State(
                 isAdded: request.hasQueryFlag("added"),
@@ -57,6 +61,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
                 total: result.total,
                 search: search ?? "",
                 role: role ?? "",
+                roleOptions: roleOptions,
                 deniedInfo: "Forbidden",
                 deniedMessage:
                     "Your identity cannot access user identities.",
@@ -86,6 +91,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
         let selectedIds = request.queryStrings("selectedIds")
         let page = request.queryPage()
         let search = request.querySearch()
+        let role = request.uri.queryParameters["role"].map(String.init)
         guard !selectedIds.isEmpty else {
             return Response(
                 status: .seeOther,
@@ -94,6 +100,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
                         path: "/admin/user/identities/",
                         page: page,
                         search: search,
+                        queryItems: role.map { [("role", $0)] } ?? [],
                         title: nil,
                         message: nil
                     )
@@ -105,6 +112,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
                 selectedIds: selectedIds,
                 page: page,
                 search: search,
+                role: role,
                 permissions: context.currentUserPermissions
             )
             .response(from: request, context: context)
@@ -119,6 +127,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
             as: ListRemoveFormInput.self,
             context: context
         )
+        let role = request.uri.queryParameters["role"].map(String.init)
         if !payload.normalizedSelectedIds.isEmpty {
             try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
@@ -129,6 +138,7 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
                     path: "/admin/user/identities/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,
+                    queryItems: role.map { [("role", $0)] } ?? [],
                     title: !payload.normalizedSelectedIds.isEmpty
                         ? "Removed" : nil,
                     message: !payload.normalizedSelectedIds.isEmpty

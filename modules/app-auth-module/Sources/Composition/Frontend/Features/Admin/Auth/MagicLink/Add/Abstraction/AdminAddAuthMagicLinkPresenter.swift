@@ -25,6 +25,7 @@ protocol AdminAddAuthMagicLinkPresenter: Sendable {
 
     func formState(
         credentialId: String,
+        emails: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema],
         isPersistent: Bool
     ) -> AuthMagicLinkForm.State
 

@@ -25,6 +25,7 @@ protocol AdminListAuthMagicLinkInteractor: Sendable {
         userID: String?
     ) async throws -> (
         items: [AuthAdminAPI.Components.Schemas.AuthMagicLinkListItemSchema],
+        emailByAuthEmailId: [String: String],
         total: Int,
         page: Int,
         size: Int

@@ -279,7 +279,7 @@ components:
           type:
           - string
           - 'null'
-        imageURL:
+        profileImageAssetId:
           type:
           - string
           - 'null'
@@ -295,7 +295,7 @@ components:
           type:
           - string
           - 'null'
-        imageURL:
+        profileImageAssetId:
           type:
           - string
           - 'null'

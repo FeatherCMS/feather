@@ -261,8 +261,15 @@ components:
     UserIdentityCreateSchema:
       type: object
       properties:
+        name:
+          $ref: '#/components/schemas/UserIdentityNameField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
+      required:
+      - name
+    UserIdentityNameField:
+      type: string
+      example: Root User
     UserIdentityStatusField:
       type: string
       enum:
@@ -277,6 +284,8 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/UserIdentityIDField'
+        name:
+          $ref: '#/components/schemas/UserIdentityNameField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
         roleIds:
@@ -359,6 +368,8 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/UserIdentityIDField'
+        name:
+          $ref: '#/components/schemas/UserIdentityNameField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
         roles:
@@ -451,6 +462,8 @@ components:
     UserIdentityUpdateSchema:
       type: object
       properties:
+        name:
+          $ref: '#/components/schemas/UserIdentityNameField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
         roleIds:
@@ -465,6 +478,8 @@ components:
     UserIdentityPatchSchema:
       type: object
       properties:
+        name:
+          $ref: '#/components/schemas/UserIdentityNameField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
         roleIds:

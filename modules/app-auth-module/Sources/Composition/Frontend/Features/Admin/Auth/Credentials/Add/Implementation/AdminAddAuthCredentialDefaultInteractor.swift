@@ -19,9 +19,11 @@ struct AdminAddAuthCredentialDefaultInteractor: AdminAddAuthCredentialInteractor
 {
     let repository: any AdminAddAuthCredentialRepository
 
-    func execute(userId: String, payload: AuthCredentialFormPayloadModel)
-        async throws
-    {
-        try await repository.create(userId: userId, payload: payload)
+    func listEmails() async throws -> [AuthCredentialIdentityOption] {
+        try await repository.listEmails()
+    }
+
+    func execute(payload: AuthCredentialFormPayloadModel) async throws {
+        try await repository.create(payload: payload)
     }
 }

@@ -687,6 +687,9 @@ public struct AdminAutocompleteField: Component, FlowContent {
                     if (!(target instanceof HTMLElement)) {
                         return;
                     }
+                    if (target.closest(".multiselect__input")) {
+                        return;
+                    }
                     if (target.closest(".multiselect__chip-remove") || target.closest(".multiselect__toggle")) {
                         return;
                     }

@@ -17,6 +17,8 @@ import WebStandards
 
 protocol AdminEditAuthCredentialInteractor: Sendable {
     func get(id: String) async throws -> AuthCredentialDetailsModel
+    func listEmails() async throws -> [AuthAdminAPI.Components.Schemas
+        .AuthEmailDetailSchema]
     func execute(id: String, payload: AuthCredentialFormPayloadModel)
         async throws
 }

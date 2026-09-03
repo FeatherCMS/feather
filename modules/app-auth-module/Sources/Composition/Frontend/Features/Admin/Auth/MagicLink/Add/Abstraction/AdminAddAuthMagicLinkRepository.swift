@@ -18,6 +18,9 @@ import WebStandards
 
 protocol AdminAddAuthMagicLinkRepository: Sendable {
 
+    func listEmails() async throws
+        -> [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema]
+
     func create(
         payload: AuthMagicLinkFormPayloadModel
     ) async throws

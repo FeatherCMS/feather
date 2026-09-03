@@ -1,7 +1,9 @@
 import CSS
 import FeatherAdmin
+import Foundation
 import HTML
 import SGML
+import UserAdminAPI
 import WebStandards
 
 struct UserIdentityForm: Component, FlowContent {
@@ -22,6 +24,7 @@ struct UserIdentityForm: Component, FlowContent {
     }
 
     struct State: FeatherAdmin.Object {
+        var name: FieldState
         var status: FieldState
         var roleOptions: [RoleOptionState]
         var roleIdsError: String?
@@ -31,6 +34,7 @@ struct UserIdentityForm: Component, FlowContent {
         mutating func apply(
             errors: [String: String]
         ) {
+            name.error = errors[name.key]
             status.error = errors[status.key]
             roleIdsError = errors["roleIds"] ?? errors["roleIds[]"]
         }
@@ -52,12 +56,28 @@ struct UserIdentityForm: Component, FlowContent {
             }
 
             FormInputField(
+                name: state.name.key,
+                label: state.name.label,
+                value: state.name.value,
+                error: state.name.error,
+                isRequired: state.name.isRequired
+            )
+
+            FormSelectField(
                 name: state.status.key,
                 label: state.status.label,
-                value: state.status.value,
+                options: UserAdminAPI.Components.Schemas
+                    .UserIdentityStatusField.allCases
+                    .map {
+                        .init(
+                            label: $0.rawValue.capitalized,
+                            value: $0.rawValue
+                        )
+                    },
+                selectedValue: state.status.value,
                 error: state.status.error,
                 isRequired: state.status.isRequired,
-                inputClass: "text-input"
+                selectClass: "text-input"
             )
 
             if !state.roleOptions.isEmpty {

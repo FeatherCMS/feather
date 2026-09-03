@@ -10,6 +10,7 @@ extension CredentialTable.Row {
         .init(
             id: id,
             userId: userId,
+            identityName: identityName ?? userId,
             email: email,
             createdAt: createdAt,
             updatedAt: updatedAt

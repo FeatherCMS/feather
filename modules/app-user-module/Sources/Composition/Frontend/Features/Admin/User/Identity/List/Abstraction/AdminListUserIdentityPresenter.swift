@@ -15,6 +15,7 @@ protocol AdminListUserIdentityPresenter: Sendable {
         selectedIds: [String],
         page: Int,
         search: String?,
+        role: String?,
         permissions: Set<String>
     ) -> HTMLResponse
 }

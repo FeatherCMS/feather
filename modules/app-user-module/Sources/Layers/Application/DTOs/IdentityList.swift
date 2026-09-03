@@ -14,6 +14,7 @@ public struct IdentityList: DTO {
 
     public struct Item: Sendable {
         public let id: String
+        public let name: String
         public var status: IdentityStatus
         public let roles: [String]
         public let createdAt: Date
@@ -21,12 +22,14 @@ public struct IdentityList: DTO {
 
         package init(
             id: String,
+            name: String,
             status: IdentityStatus,
             roles: [String],
             createdAt: Date,
             updatedAt: Date,
         ) {
             self.id = id
+            self.name = name
             self.status = status
             self.roles = roles
             self.createdAt = createdAt

@@ -27,7 +27,7 @@ public struct TableMigration: DatabaseMigration {
                     user_id TEXT NOT NULL UNIQUE REFERENCES user_identity(id) ON DELETE CASCADE,
                     first_name TEXT,
                     last_name TEXT,
-                    image_url TEXT,
+                    profile_image_asset_id TEXT,
                     created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
                 );
@@ -35,15 +35,7 @@ public struct TableMigration: DatabaseMigration {
         ) { _ in }
         try await connection.run(
             query: #"""
-                ALTER TABLE account_profile
-                    ALTER COLUMN first_name DROP NOT NULL,
-                    ALTER COLUMN last_name DROP NOT NULL,
-                    ALTER COLUMN image_url DROP NOT NULL;
-                """#
-        ) { _ in }
-        try await connection.run(
-            query: #"""
-                CREATE TABLE IF NOT EXISTS account_settings (
+                CREATE TABLE IF NOT EXISTS settings (
                     id TEXT PRIMARY KEY,
                     user_id TEXT NOT NULL UNIQUE REFERENCES user_identity(id) ON DELETE CASCADE,
                     language TEXT NOT NULL DEFAULT 'en',
@@ -51,7 +43,7 @@ public struct TableMigration: DatabaseMigration {
                     page_size INT NOT NULL DEFAULT 20,
                     created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
-                    CONSTRAINT account_settings_page_size_check
+                    CONSTRAINT settings_page_size_check
                         CHECK (page_size IN (10, 20, 50, 100))
                 );
                 """#
@@ -70,10 +62,6 @@ public struct TableMigration: DatabaseMigration {
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
                 );
                 """#
-        ) { _ in }
-        try await connection.run(
-            query:
-                #"ALTER TABLE account_invitation ADD COLUMN IF NOT EXISTS role_ids TEXT NOT NULL DEFAULT '[]';"#
         ) { _ in }
     }
 }

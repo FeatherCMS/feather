@@ -20,7 +20,7 @@ extension AppAPIGateway {
                     .init(
                         firstName: result.firstName,
                         lastName: result.lastName,
-                        imageURL: result.imageURL
+                        profileImageAssetId: result.profileImageAssetId
                     )
                 )
             )
@@ -42,7 +42,7 @@ extension AppAPIGateway {
                 input: .init(
                     firstName: body.firstName,
                     lastName: body.lastName,
-                    imageURL: body.imageURL
+                    profileImageAssetId: body.profileImageAssetId
                 )
             )
         return .ok(
@@ -51,7 +51,7 @@ extension AppAPIGateway {
                     .init(
                         firstName: result.firstName,
                         lastName: result.lastName,
-                        imageURL: result.imageURL
+                        profileImageAssetId: result.profileImageAssetId
                     )
                 )
             )

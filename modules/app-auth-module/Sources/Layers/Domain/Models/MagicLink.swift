@@ -11,8 +11,8 @@ import struct Foundation.Date
 public struct MagicLink: Model {
 
     public enum Error: DomainError {
-        case credentialIdTooShort
-        case credentialIdTooLong
+        case authEmailIdTooShort
+        case authEmailIdTooLong
         case tokenTooShort
         case tokenTooLong
 
@@ -26,14 +26,14 @@ public struct MagicLink: Model {
     // MARK: -
 
     public struct New: Sendable {
-        public let credentialId: String
+        public let authEmailId: String
         public let token: String
         public let expiresAtInterval: Double
         public let isPersistent: Bool
     }
 
     public let id: String
-    public let credentialId: String
+    public let authEmailId: String
     public let token: String
     public let expiresAt: Date
     public let isPersistent: Bool
@@ -43,7 +43,7 @@ public struct MagicLink: Model {
 
     package init(
         id: String,
-        credentialId: String,
+        authEmailId: String,
         token: String,
         expiresAt: Date,
         isPersistent: Bool,
@@ -52,7 +52,7 @@ public struct MagicLink: Model {
         updatedAt: Date,
     ) {
         self.id = id
-        self.credentialId = credentialId
+        self.authEmailId = authEmailId
         self.token = token
         self.expiresAt = expiresAt
         self.isPersistent = isPersistent
@@ -65,13 +65,13 @@ public struct MagicLink: Model {
 extension MagicLink {
 
     private static func validate(
-        credentialId: String
+        authEmailId: String
     ) throws(Self.Error) {
-        guard credentialId.count > 3 else {
-            throw .credentialIdTooShort
+        guard authEmailId.count > 3 else {
+            throw .authEmailIdTooShort
         }
-        guard credentialId.count < 255 else {
-            throw .credentialIdTooLong
+        guard authEmailId.count < 255 else {
+            throw .authEmailIdTooLong
         }
     }
 
@@ -87,15 +87,15 @@ extension MagicLink {
     }
 
     public static func create(
-        credentialId: String,
+        authEmailId: String,
         token: String,
         isPersistent: Bool
     ) throws(Self.Error) -> Self.New {
-        try validate(credentialId: credentialId)
+        try validate(authEmailId: authEmailId)
         try validate(token: token)
 
         return .init(
-            credentialId: credentialId,
+            authEmailId: authEmailId,
             token: token,
             expiresAtInterval: lifetime,
             isPersistent: isPersistent

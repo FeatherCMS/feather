@@ -26,11 +26,15 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
     func getAddCredential(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
-        let identityId = try context.requiredID()
-        let (_, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime(request, context)
+        let emails = try await interactor.listEmails()
         return presenter.renderPage(
-            identityId: identityId,
-            form: presenter.formState(email: "", password: ""),
+            form: presenter.formState(
+                userId: "",
+                emails: emails,
+                email: "",
+                password: ""
+            ),
             permissions: context.currentUserPermissions
         )
     }
@@ -38,7 +42,6 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
     func postAddCredential(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let identityId = try context.requiredID()
         let (interactor, presenter) = buildRuntime(request, context)
         var payload: AdminAuthCredentialFormInput?
         do {
@@ -46,10 +49,14 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
                 as: AdminAuthCredentialFormInput.self,
                 context: context
             )
-            try await payload!.validate(requiredPassword: true)
+            try await payload!
+                .validate(
+                    requiredPassword: true,
+                    validateUserId: false
+                )
             try await interactor.execute(
-                userId: identityId,
                 payload: .init(
+                    userId: payload!.normalizedUserId,
                     email: payload!.normalizedEmail,
                     password: payload!.normalizedPassword
                 )
@@ -58,7 +65,7 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
                 status: .seeOther,
                 headers: [
                     .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/auth/credentials/\(identityId)/",
+                        defaultPath: "/admin/auth/credentials/",
                         title: "Added",
                         message: "User credential added successfully."
                     )
@@ -67,6 +74,8 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         }
         catch let error as ValidationError {
             var state = presenter.formState(
+                userId: payload?.normalizedUserId ?? "",
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )
@@ -79,7 +88,6 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
             )
             return
                 try presenter.renderPage(
-                    identityId: identityId,
                     form: state,
                     permissions: context.currentUserPermissions
                 )
@@ -87,13 +95,14 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         }
         catch let error as OpenAPIRepositoryError {
             var state = presenter.formState(
+                userId: payload?.normalizedUserId ?? "",
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )
             state.error = presenter.format(error: error)
             return
                 try presenter.renderPage(
-                    identityId: identityId,
                     form: state,
                     permissions: context.currentUserPermissions
                 )
@@ -101,13 +110,14 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         }
         catch {
             var state = presenter.formState(
+                userId: payload?.normalizedUserId ?? "",
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )
             state.error = error.displayMessage
             return
                 try presenter.renderPage(
-                    identityId: identityId,
                     form: state,
                     permissions: context.currentUserPermissions
                 )

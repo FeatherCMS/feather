@@ -51,6 +51,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                 )
                 : (
                     items: [],
+                    emailByAuthEmailId: [:],
                     total: 0,
                     page: page,
                     size: pageSize
@@ -66,6 +67,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                     AuthPermissions.MagicLinks.create.rawValue
                 ),
                 links: result.items,
+                emailByAuthEmailId: result.emailByAuthEmailId,
                 page: result.page,
                 pageSize: result.size,
                 total: result.total,

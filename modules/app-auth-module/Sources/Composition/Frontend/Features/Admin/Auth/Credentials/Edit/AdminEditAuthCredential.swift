@@ -24,7 +24,8 @@ struct AdminEditAuthCredential {
                 (
                     interactor: AdminEditAuthCredentialDefaultInteractor(
                         repository: AdminEditAuthCredentialOpenAPIRepository(
-                            api: context.authAdminAPI()
+                            api: context.authAdminAPI(),
+                            userAPI: context.userAdminAPI()
                         )
                     ),
                     presenter: AdminEditAuthCredentialDefaultPresenter(

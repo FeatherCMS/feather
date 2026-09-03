@@ -31,9 +31,12 @@ struct AdminEditAuthCredentialDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         do {
             let credential = try await interactor.get(id: id)
+            let emails = try await interactor.listEmails()
             return presenter.renderPage(
                 id: id,
                 form: presenter.formState(
+                    userId: credential.userId,
+                    emails: emails,
                     email: credential.email,
                     password: ""
                 ),
@@ -64,6 +67,7 @@ struct AdminEditAuthCredentialDefaultController:
             try await interactor.execute(
                 id: id,
                 payload: .init(
+                    userId: payload!.normalizedUserId,
                     email: payload!.normalizedEmail,
                     password: payload!.normalizedPassword
                 )
@@ -81,6 +85,8 @@ struct AdminEditAuthCredentialDefaultController:
         }
         catch let error as ValidationError {
             var state = presenter.formState(
+                userId: payload?.normalizedUserId ?? "",
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )
@@ -101,6 +107,8 @@ struct AdminEditAuthCredentialDefaultController:
         }
         catch let error as OpenAPIRepositoryError {
             var state = presenter.formState(
+                userId: payload?.normalizedUserId ?? "",
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )
@@ -115,6 +123,8 @@ struct AdminEditAuthCredentialDefaultController:
         }
         catch {
             var state = presenter.formState(
+                userId: payload?.normalizedUserId ?? "",
+                emails: (try? await interactor.listEmails()) ?? [],
                 email: payload?.normalizedEmail ?? "",
                 password: ""
             )

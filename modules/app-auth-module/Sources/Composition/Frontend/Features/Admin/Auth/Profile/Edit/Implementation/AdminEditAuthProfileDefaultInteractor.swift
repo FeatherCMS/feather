@@ -19,7 +19,6 @@ import WebStandards
 struct AdminEditAuthProfileDefaultInteractor:
     AdminEditAuthProfileInteractor
 {
-    let repository: any AdminEditAuthProfileRepository
     let accountProfileRepository: any AdminAuthAccountProfileRepository
 
     func loadProfile(
@@ -28,21 +27,16 @@ struct AdminEditAuthProfileDefaultInteractor:
         let accountProfile = try await accountProfileRepository.get()
         return .init(
             id: account.user.id,
-            email: account.user.email,
-            password: nil,
             firstName: accountProfile.firstName,
             lastName: accountProfile.lastName,
-            imageURL: accountProfile.imageURL
+            profileImageAssetId: accountProfile.profileImageAssetId,
+            profileImageAsset: accountProfile.profileImageAsset
         )
     }
 
     func execute(
         entity: AdminEditAuthProfileModel
     ) async throws {
-        try await repository.update(
-            id: entity.id,
-            payload: entity.payload
-        )
         try await accountProfileRepository.update(
             profile: entity.accountProfile
         )

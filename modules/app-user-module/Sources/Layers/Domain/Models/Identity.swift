@@ -10,6 +10,7 @@ import struct Foundation.Date
 
 public struct Identity: Model {
     public struct New: Sendable {
+        public let name: String
         public let status: Status
         public let isRoot: Bool
     }
@@ -23,6 +24,7 @@ public struct Identity: Model {
     }
 
     public let id: String
+    public var name: String
     public var status: Status
     public let isRoot: Bool
     public let createdAt: Date
@@ -30,12 +32,14 @@ public struct Identity: Model {
 
     package init(
         id: String,
+        name: String = "User",
         status: Status,
         isRoot: Bool,
         createdAt: Date,
         updatedAt: Date,
     ) {
         self.id = id
+        self.name = name
         self.status = status
         self.isRoot = isRoot
         self.createdAt = createdAt
@@ -46,18 +50,22 @@ public struct Identity: Model {
 extension Identity {
 
     public static func create(
+        name: String = "User",
         status: Status,
         isRoot: Bool = false
     ) -> Self.New {
         .init(
+            name: name,
             status: status,
             isRoot: isRoot
         )
     }
 
     public mutating func update(
+        name: String? = nil,
         status: Identity.Status? = nil
     ) {
+        self.name = name ?? self.name
         self.status = status ?? self.status
     }
 }

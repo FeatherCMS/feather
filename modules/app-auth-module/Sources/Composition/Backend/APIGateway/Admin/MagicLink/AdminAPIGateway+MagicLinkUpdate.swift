@@ -20,7 +20,7 @@ extension AdminAPIGateway {
             subject: subject,
             input: AuthApplication.EditMagicLink.Input(
                 id: input.path.authMagicLinkId,
-                credentialId: body.credentialId,
+                authEmailId: body.credentialId,
                 isPersistent: body.isPersistent
             )
         )

@@ -44,15 +44,23 @@ struct AdminAddAuthMagicLinkDefaultPresenter: AdminAddAuthMagicLinkPresenter {
 
     func formState(
         credentialId: String = "",
+        emails: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema] = [],
         isPersistent: Bool = false
     ) -> AuthMagicLinkForm.State {
         .init(
             credentialId: .init(
                 key: "credential_id",
-                label: "Credential ID",
+                label: "Auth email",
                 value: credentialId,
                 error: nil
             ),
+            emailOptions: emails.map {
+                .init(
+                    label: $0.email,
+                    value: $0.id,
+                    isSelected: $0.id == credentialId
+                )
+            },
             isPersistent: .init(
                 key: "is_persistent",
                 label: "Persistent link",

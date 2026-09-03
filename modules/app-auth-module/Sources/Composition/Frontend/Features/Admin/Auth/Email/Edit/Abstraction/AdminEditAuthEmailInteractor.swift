@@ -16,10 +16,15 @@ import UserAppAPI
 import UserFrontend
 import WebStandards
 
-protocol AdminEditAuthProfileRepository: Sendable {
+protocol AdminEditAuthEmailInteractor: Sendable {
 
-    func update(
-        id: String,
-        payload: AdminEditAuthProfileFormPayloadModel
+    func listIdentities() async throws -> [AuthCredentialIdentityOption]
+
+    func get(
+        id: String
+    ) async throws -> AuthEmailDetailsModel
+
+    func execute(
+        entity: AdminEditAuthEmailModel
     ) async throws
 }

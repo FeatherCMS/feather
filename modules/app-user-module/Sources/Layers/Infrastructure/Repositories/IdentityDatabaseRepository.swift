@@ -20,6 +20,7 @@ extension IdentityTable.Row {
             }
             return .init(
                 id: id,
+                name: name,
                 status: status,
                 isRoot: isRoot,
                 createdAt: createdAt,
@@ -85,6 +86,7 @@ public struct IdentityDatabaseRepository: IdentityRepository {
         let saved = try await table.save(
             row: .init(
                 id: id,
+                name: model.name,
                 status: model.status.rawValue,
                 isRoot: model.isRoot
             )
@@ -160,6 +162,7 @@ public struct IdentityDatabaseRepository: IdentityRepository {
             id: rowId,
             row: .init(
                 id: model.id,
+                name: model.name,
                 status: model.status.rawValue,
                 isRoot: model.isRoot,
                 createdAt: model.createdAt,

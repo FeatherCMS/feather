@@ -14,6 +14,7 @@ struct UserIdentityListItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": UserIdentityIDField().reference(),
+            "name": UserIdentityNameField().reference(),
             "status": UserIdentityStatusField().reference(),
             "roles": UserIdentityRoleIDListSchema().reference(),
         ]
@@ -36,6 +37,7 @@ struct UserIdentityDetailSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": UserIdentityIDField().reference(),
+            "name": UserIdentityNameField().reference(),
             "status": UserIdentityStatusField().reference(),
             "roleIds": UserIdentityRoleIdsField().reference(),
         ]
@@ -45,7 +47,8 @@ struct UserIdentityDetailSchema: ObjectSchemaRepresentable {
 struct UserIdentityCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "status": UserIdentityStatusField().reference(required: false)
+            "name": UserIdentityNameField().reference(),
+            "status": UserIdentityStatusField().reference(required: false),
         ]
     }
 }
@@ -53,6 +56,7 @@ struct UserIdentityCreateSchema: ObjectSchemaRepresentable {
 struct UserIdentityUpdateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
+            "name": UserIdentityNameField().reference(required: false),
             "status": UserIdentityStatusField().reference(required: false),
             "roleIds": UserIdentityRoleIdsField().reference(required: false),
         ]
@@ -62,6 +66,7 @@ struct UserIdentityUpdateSchema: ObjectSchemaRepresentable {
 struct UserIdentityPatchSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
+            "name": UserIdentityNameField().reference(required: false),
             "status": UserIdentityStatusField().reference(required: false),
             "roleIds": UserIdentityRoleIdsField().reference(required: false),
         ]

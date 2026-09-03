@@ -27,14 +27,14 @@ public struct AddMagicLink: UseCase {
     }
 
     public struct Input: DTO {
-        public let credentialId: String
+        public let authEmailId: String
         public let isPersistent: Bool
 
         public init(
-            credentialId: String,
+            authEmailId: String,
             isPersistent: Bool
         ) {
-            self.credentialId = credentialId
+            self.authEmailId = authEmailId
             self.isPersistent = isPersistent
         }
     }
@@ -52,7 +52,7 @@ public struct AddMagicLink: UseCase {
         let model = try await transaction.run { scope in
             try await scope.magicLink.insert(
                 MagicLink.create(
-                    credentialId: input.credentialId,
+                    authEmailId: input.authEmailId,
                     token: generateToken(),
                     isPersistent: input.isPersistent
                 )

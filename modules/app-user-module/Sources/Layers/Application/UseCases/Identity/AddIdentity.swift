@@ -29,11 +29,14 @@ public struct AddIdentity: UseCase {
     }
 
     public struct Input: DTO {
+        public let name: String
         public let status: Identity.Status
 
         public init(
+            name: String = "User",
             status: Identity.Status
         ) {
+            self.name = name
             self.status = status
         }
     }
@@ -50,7 +53,7 @@ public struct AddIdentity: UseCase {
 
         return try await transaction.run { scope, context in
             let model = try await scope.identity.insert(
-                Identity.create(status: input.status)
+                Identity.create(name: input.name, status: input.status)
             )
             try await events.trigger(
                 event: UserIdentityDidInsert(identityID: model.id),

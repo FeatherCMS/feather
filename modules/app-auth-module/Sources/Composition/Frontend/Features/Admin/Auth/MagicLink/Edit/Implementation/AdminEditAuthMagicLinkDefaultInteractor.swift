@@ -20,6 +20,12 @@ struct AdminEditAuthMagicLinkDefaultInteractor: AdminEditAuthMagicLinkInteractor
 {
     let repository: any AdminEditAuthMagicLinkRepository
 
+    func listEmails() async throws -> [AuthAdminAPI.Components.Schemas
+        .AuthEmailDetailSchema]
+    {
+        try await repository.listEmails()
+    }
+
     func get(
         id: String
     ) async throws -> AuthMagicLinkDetailsModel {

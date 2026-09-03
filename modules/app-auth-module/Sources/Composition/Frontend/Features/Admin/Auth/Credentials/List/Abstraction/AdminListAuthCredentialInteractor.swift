@@ -17,7 +17,6 @@ import WebStandards
 
 protocol AdminListAuthCredentialInteractor: Sendable {
     func execute(
-        identityId: String,
         page: Int,
         size: Int,
         search: String?

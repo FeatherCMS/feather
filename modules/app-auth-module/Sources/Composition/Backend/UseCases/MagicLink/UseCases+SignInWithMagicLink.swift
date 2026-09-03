@@ -22,6 +22,9 @@ extension UseCases {
                 WriteAuth(
                     identity: IdentityDatabaseRepository(context: context),
                     credential: CredentialDatabaseRepository(context: context),
+                    authEmail: AuthEmailDatabaseRepository(
+                        context: context
+                    ),
                     session: SessionDatabaseRepository(context: context),
                     magicLink: MagicLinkDatabaseRepository(context: context)
                 )

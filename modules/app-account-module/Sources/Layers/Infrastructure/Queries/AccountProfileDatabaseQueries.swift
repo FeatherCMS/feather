@@ -28,7 +28,7 @@ extension AccountProfileTable.Row {
                 userId: userId,
                 firstName: firstName,
                 lastName: lastName,
-                imageURL: imageURL,
+                profileImageAssetId: profileImageAssetId,
                 createdAt: createdAt,
                 updatedAt: updatedAt
             )

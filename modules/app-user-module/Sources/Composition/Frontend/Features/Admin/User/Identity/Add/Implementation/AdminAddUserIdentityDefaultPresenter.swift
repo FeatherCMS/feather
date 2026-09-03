@@ -29,9 +29,17 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
     }
 
     func formState(
+        name: String = "",
         status: String = "invited"
     ) -> UserIdentityForm.State {
         .init(
+            name: .init(
+                key: "name",
+                label: "Name",
+                isRequired: true,
+                value: name,
+                error: nil
+            ),
             status: .init(
                 key: "status",
                 label: "Status",

@@ -26,6 +26,11 @@ protocol AdminEditAuthCredentialPresenter: Sendable {
         error: OpenAPIRepositoryError,
         permissions: Set<String>
     ) -> HTMLResponse
-    func formState(email: String, password: String) -> AuthCredentialForm.State
+    func formState(
+        userId: String,
+        emails: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema],
+        email: String,
+        password: String
+    ) -> AuthCredentialForm.State
     func format(error: OpenAPIRepositoryError) -> String
 }

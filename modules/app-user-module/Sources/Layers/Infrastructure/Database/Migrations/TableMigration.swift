@@ -25,6 +25,7 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE TABLE IF NOT EXISTS user_identity (
                 id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
                 status TEXT NOT NULL,
                 is_root BOOLEAN NOT NULL DEFAULT FALSE,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),

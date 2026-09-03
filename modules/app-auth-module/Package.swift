@@ -69,7 +69,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
-            from: "2.20.1"
+            from: "2.26.0"
         ),
         .package(
             url: "https://github.com/swift-server/async-http-client",
@@ -90,6 +90,7 @@ let package = Package(
         ),
         .package(path: "../../feather-core"),
         .package(path: "../app-account-module"),
+        .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
         .package(path: "../app-user-module"),
         .package(path: "../app-web-module"),
@@ -208,6 +209,7 @@ let package = Package(
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
                 .product(name: "AccountAppAPI", package: "app-account-module"),
+                .product(name: "MediaFrontend", package: "app-media-module"),
                 .product(name: "UserFrontend", package: "app-user-module"),
                 .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),

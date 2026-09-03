@@ -8,7 +8,10 @@ extension AccountProfileTable.Row {
         self.userId = try row.decode(column: "user_id", as: String.self)
         self.firstName = try row.decode(column: "first_name", as: String?.self)
         self.lastName = try row.decode(column: "last_name", as: String?.self)
-        self.imageURL = try row.decode(column: "image_url", as: String?.self)
+        self.profileImageAssetId = try row.decode(
+            column: "profile_image_asset_id",
+            as: String?.self
+        )
         self.createdAt = try row.decode(column: "created_at", as: Date.self)
         self.updatedAt = try row.decode(column: "updated_at", as: Date.self)
     }
@@ -21,20 +24,20 @@ struct AccountProfileTable {
             let userId: String
             let firstName: String?
             let lastName: String?
-            let imageURL: String?
+            let profileImageAssetId: String?
         }
 
         struct Update {
             let firstName: String?
             let lastName: String?
-            let imageURL: String?
+            let profileImageAssetId: String?
         }
 
         let id: String
         let userId: String
         let firstName: String?
         let lastName: String?
-        let imageURL: String?
+        let profileImageAssetId: String?
         let createdAt: Date
         let updatedAt: Date
     }
@@ -47,9 +50,9 @@ struct AccountProfileTable {
         try await connection.run(
             query: #"""
                 INSERT INTO account_profile (
-                    id, user_id, first_name, last_name, image_url, created_at, updated_at
+                    id, user_id, first_name, last_name, profile_image_asset_id, created_at, updated_at
                 ) VALUES (
-                    \#(row.id), \#(row.userId), \#(row.firstName), \#(row.lastName), \#(row.imageURL), NOW(), NOW()
+                    \#(row.id), \#(row.userId), \#(row.firstName), \#(row.lastName), \#(row.profileImageAssetId), NOW(), NOW()
                 ) RETURNING *;
                 """#
         ) { sequence in
@@ -83,7 +86,7 @@ struct AccountProfileTable {
             query: #"""
                 UPDATE account_profile
                 SET first_name = \#(row.firstName), last_name = \#(row.lastName),
-                    image_url = \#(row.imageURL), updated_at = NOW()
+                    profile_image_asset_id = \#(row.profileImageAssetId), updated_at = NOW()
                 WHERE user_id = \#(userId)
                 RETURNING *;
                 """#

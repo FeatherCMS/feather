@@ -20,7 +20,6 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
     let renderEngine: any RenderingEngine
 
     func renderPage(
-        identityId: String,
         form: AuthCredentialForm.State,
         permissions: Set<String>
     ) -> HTMLResponse {
@@ -35,18 +34,35 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
             ),
             content: AuthCredentialAdd(
                 state: .init(
-                    identityId: identityId,
                     form: form,
-                    breadcrumb: breadcrumb(identityId: identityId)
+                    breadcrumb: breadcrumb()
                 )
             )
         )
     }
 
-    func formState(email: String = "", password: String = "")
+    func formState(
+        userId: String = "",
+        emails: [AuthCredentialIdentityOption] = [],
+        email: String = "",
+        password: String = ""
+    )
         -> AuthCredentialForm.State
     {
         .init(
+            identity: .init(
+                key: "userId",
+                label: "User identity",
+                value: userId,
+                error: nil
+            ),
+            identityOptions: emails.map {
+                .init(
+                    label: $0.label,
+                    value: $0.id,
+                    isSelected: $0.id == email
+                )
+            },
             email: .init(
                 key: "email",
                 label: "Email address",
@@ -69,19 +85,12 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
         error.errorDescription
     }
 
-    private func breadcrumb(identityId: String) -> AdminBreadcrumb.State {
+    private func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
             .init(label: "Credentials", link: "/admin/auth/credentials/"),
-            .init(
-                label: "User",
-                link: "/admin/auth/credentials/\(identityId)/"
-            ),
-            .init(
-                label: "Add",
-                link: "/admin/auth/credentials/\(identityId)/add/"
-            ),
+            .init(label: "Add", link: "/admin/auth/credentials/add/"),
         ])
     }
 }

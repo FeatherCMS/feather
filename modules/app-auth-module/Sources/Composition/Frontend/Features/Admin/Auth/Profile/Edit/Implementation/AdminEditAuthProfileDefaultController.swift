@@ -49,11 +49,10 @@ struct AdminEditAuthProfileDefaultController:
                 id: profile.id,
                 isEdited: request.hasQueryFlag("edited"),
                 form: formState(
-                    email: profile.email,
-                    password: "",
                     firstName: profile.firstName,
                     lastName: profile.lastName,
-                    imageURL: profile.imageURL
+                    profileImageAssetId: profile.profileImageAssetId,
+                    selectedImageAsset: profile.profileImageAsset
                 ),
                 breadcrumb: breadcrumb()
             ),
@@ -87,15 +86,13 @@ struct AdminEditAuthProfileDefaultController:
             context: context
         )
         do {
-            try await payload.validate()
             try await interactor.execute(
                 entity: .init(
                     id: profile.id,
-                    email: payload.normalizedEmail,
-                    password: payload.normalizedPassword,
                     firstName: payload.firstName,
                     lastName: payload.lastName,
-                    imageURL: payload.imageURL
+                    profileImageAssetId: payload.profileImageAssetId,
+                    profileImageAsset: nil
                 )
             )
             return Response(
@@ -117,11 +114,9 @@ struct AdminEditAuthProfileDefaultController:
                 permissions: permissions,
                 state: validationState(
                     id: profile.id,
-                    email: profile.email,
-                    password: "",
                     firstName: payload.firstName,
                     lastName: payload.lastName,
-                    imageURL: payload.imageURL,
+                    profileImageAssetId: payload.profileImageAssetId,
                     failures: error.failures
                 )
             )
@@ -134,11 +129,9 @@ struct AdminEditAuthProfileDefaultController:
                 permissions: permissions,
                 state: errorState(
                     id: profile.id,
-                    email: profile.email,
-                    password: "",
                     firstName: payload.firstName,
                     lastName: payload.lastName,
-                    imageURL: payload.imageURL,
+                    profileImageAssetId: payload.profileImageAssetId,
                     error: error
                 )
             )
@@ -151,11 +144,9 @@ struct AdminEditAuthProfileDefaultController:
                 permissions: permissions,
                 state: genericErrorState(
                     id: profile.id,
-                    email: profile.email,
-                    password: "",
                     firstName: payload.firstName,
                     lastName: payload.lastName,
-                    imageURL: payload.imageURL,
+                    profileImageAssetId: payload.profileImageAssetId,
                     message: error.displayMessage
                 )
             )
@@ -163,25 +154,12 @@ struct AdminEditAuthProfileDefaultController:
     }
 
     private func formState(
-        email: String,
-        password: String,
         firstName: String?,
         lastName: String?,
-        imageURL: String?
+        profileImageAssetId: String?,
+        selectedImageAsset: AdminMediaAssetReferenceModel? = nil
     ) -> AuthProfileForm.State {
         .init(
-            email: .init(
-                key: "email",
-                label: "Email address",
-                value: email,
-                error: nil
-            ),
-            password: .init(
-                key: "password",
-                label: "Password",
-                value: password,
-                error: nil
-            ),
             firstName: .init(
                 key: "firstName",
                 label: "First name",
@@ -194,12 +172,13 @@ struct AdminEditAuthProfileDefaultController:
                 value: lastName,
                 error: nil
             ),
-            imageURL: .init(
-                key: "imageURL",
+            profileImageAssetId: .init(
+                key: "profileImageAssetId",
                 label: "Profile image",
-                value: imageURL,
+                value: profileImageAssetId,
                 error: nil
             ),
+            selectedImageAsset: selectedImageAsset,
             error: nil,
             success: nil
         )
@@ -207,22 +186,18 @@ struct AdminEditAuthProfileDefaultController:
 
     private func validationState(
         id: String,
-        email: String,
-        password: String,
         firstName: String?,
         lastName: String?,
-        imageURL: String?,
+        profileImageAssetId: String?,
         failures: [FeatherValidation.Failure]
     ) -> AuthProfileEdit.State {
         var state = AuthProfileEdit.State(
             id: id,
             isEdited: false,
             form: formState(
-                email: email,
-                password: password,
                 firstName: firstName,
                 lastName: lastName,
-                imageURL: imageURL
+                profileImageAssetId: profileImageAssetId
             ),
             breadcrumb: breadcrumb()
         )
@@ -236,22 +211,18 @@ struct AdminEditAuthProfileDefaultController:
 
     private func errorState(
         id: String,
-        email: String,
-        password: String,
         firstName: String?,
         lastName: String?,
-        imageURL: String?,
+        profileImageAssetId: String?,
         error: OpenAPIRepositoryError
     ) -> AuthProfileEdit.State {
         var state = AuthProfileEdit.State(
             id: id,
             isEdited: false,
             form: formState(
-                email: email,
-                password: password,
                 firstName: firstName,
                 lastName: lastName,
-                imageURL: imageURL
+                profileImageAssetId: profileImageAssetId
             ),
             breadcrumb: breadcrumb()
         )
@@ -261,22 +232,18 @@ struct AdminEditAuthProfileDefaultController:
 
     private func genericErrorState(
         id: String,
-        email: String,
-        password: String,
         firstName: String?,
         lastName: String?,
-        imageURL: String?,
+        profileImageAssetId: String?,
         message: String
     ) -> AuthProfileEdit.State {
         var state = AuthProfileEdit.State(
             id: id,
             isEdited: false,
             form: formState(
-                email: email,
-                password: password,
                 firstName: firstName,
                 lastName: lastName,
-                imageURL: imageURL
+                profileImageAssetId: profileImageAssetId
             ),
             breadcrumb: breadcrumb()
         )
@@ -308,7 +275,7 @@ struct AdminEditAuthProfileDefaultController:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Auth", link: "/admin/auth/"),
+                .init(label: "Account", link: "/admin/account/"),
                 .init(label: "Profile", link: "/admin/auth/profile/"),
                 .init(
                     label: "Edit",
