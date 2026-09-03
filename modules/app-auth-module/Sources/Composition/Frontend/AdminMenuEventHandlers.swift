@@ -29,7 +29,7 @@ public enum AuthAdminMenuEventHandlers {
                     label: "Emails",
                     icon: "mail",
                     link: "/admin/auth/emails/",
-                    permission: "auth:auth-email:list"
+                    permission: "auth:email:list"
                 ),
                 .init(
                     menuKey: "auth",
