@@ -13,5 +13,6 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 // Auth frontend feature sources are located in this target.

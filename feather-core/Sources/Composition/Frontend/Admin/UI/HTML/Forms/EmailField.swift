@@ -8,9 +8,10 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct EmailField: Component, FlowContent {
+public struct EmailField: Leaf {
 
     public struct State: Object {
         public var key: String
@@ -43,19 +44,20 @@ public struct EmailField: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Div {
+        Div {
+            Span(state.label)
 
-        Span(state.label)
+            Input()
+                .type(.text)
+                .id(state.key)
+                .name(state.key)
+                .value(state.value)
 
-        Input()
-            .type(.text)
-            .id(state.key)
-            .name(state.key)
-            .value(state.value)
-
-        if let error = state.error {
-            Span(error)
-                .class("error")
+            if let error = state.error {
+                Span(error)
+                    .class("error")
+            }
         }
     }
 }

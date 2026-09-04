@@ -4,9 +4,10 @@ import Foundation
 import HTML
 import SGML
 import UserAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserIdentityForm: Component, FlowContent {
+struct UserIdentityForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -46,7 +47,7 @@ struct UserIdentityForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -61,7 +62,7 @@ struct UserIdentityForm: Component, FlowContent {
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: state.name.isRequired
-            )
+            ).renderHTML()
 
             FormSelectField(
                 name: state.status.key,
@@ -78,11 +79,11 @@ struct UserIdentityForm: Component, FlowContent {
                 error: state.status.error,
                 isRequired: state.status.isRequired,
                 selectClass: "text-input"
-            )
+            ).renderHTML()
 
             if !state.roleOptions.isEmpty {
                 Section {
-                    AdminFieldLabel(label: "Roles", required: false)
+                    AdminFieldLabel(label: "Roles", required: false).renderHTML()
                     Div {
                         for option in state.roleOptions {
                             Label {
@@ -113,7 +114,7 @@ struct UserIdentityForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")

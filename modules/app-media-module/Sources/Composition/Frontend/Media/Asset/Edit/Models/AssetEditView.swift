@@ -6,9 +6,10 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AssetEditView: Component {
+struct AssetEditView: Leaf {
     struct State {
         let model: AdminEditMediaAssetModel
         let isEdited: Bool
@@ -18,14 +19,14 @@ struct AssetEditView: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your account cannot edit media assets.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Edit media asset")
                 if state.isEdited {
                     P("Media asset updated successfully.")
@@ -37,13 +38,13 @@ struct AssetEditView: Component {
                 AdminDetailsField(
                     label: "Storage key",
                     value: state.model.storageKey
-                )
-                AdminDetailsField(label: "Type", value: state.model.type)
-                AdminDetailsField(label: "Status", value: state.model.status)
+                ).renderHTML()
+                AdminDetailsField(label: "Type", value: state.model.type).renderHTML()
+                AdminDetailsField(label: "Status", value: state.model.status).renderHTML()
                 AdminDetailsField(
                     label: "Size bytes",
                     value: "\(state.model.sizeBytes)"
-                )
+                ).renderHTML()
 
                 Form {
                     FormInputField(
@@ -51,14 +52,14 @@ struct AssetEditView: Component {
                         label: "Title",
                         value: state.model.title,
                         inputClass: "text-input"
-                    )
+                    ).renderHTML()
 
                     FormInputField(
                         name: "altText",
                         label: "Alt text",
                         value: state.model.altText,
                         inputClass: "text-input"
-                    )
+                    ).renderHTML()
 
                     Section {
                         Div { Button("Save").type(.submit) }.class("button-row")

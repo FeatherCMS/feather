@@ -14,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AppLogoutAuthDefaultPresenter: AppLogoutAuthPresenter {
     func expiredSessionCookie() -> Cookie {

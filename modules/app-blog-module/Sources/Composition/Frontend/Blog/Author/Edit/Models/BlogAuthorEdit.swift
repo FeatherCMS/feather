@@ -8,9 +8,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogAuthorEdit: Component {
+struct BlogAuthorEdit: Leaf {
 
     struct State {
         let id: String
@@ -21,16 +22,16 @@ struct BlogAuthorEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1 {
                 Span("Edit author")
                 AdminPreviewLink(
                     slug: state.form.metadata.slug.value,
                     label: "Preview author"
-                )
+                ).renderHTML()
             }
             if state.isEdited { P("Author edited successfully.") }
             BlogAuthorForm(

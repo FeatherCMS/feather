@@ -2,9 +2,12 @@ import CSS
 import FeatherContracts
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct FormDateTimeField: Component, FlowContent {
+private typealias HTMLButton = HTML.Button
+
+public struct FormDateTimeField: Leaf {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -218,7 +221,7 @@ public struct FormDateTimeField: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Section {
         Section {
             Label {
                 fieldLabel()
@@ -277,10 +280,10 @@ public struct FormDateTimeField: Component, FlowContent {
     private func picker() -> some FlowContent {
         Div {
             Div {
-                HTML.Button("‹").type(.button).ariaLabel("Previous month")
+                HTMLButton("‹").type(.button).ariaLabel("Previous month")
                     .class("form-datetime-field__previous")
                 Strong("Select date and time")
-                HTML.Button("›").type(.button).ariaLabel("Next month")
+                HTMLButton("›").type(.button).ariaLabel("Next month")
                     .class("form-datetime-field__next")
             }
             .class("form-datetime-field__header")
@@ -307,9 +310,9 @@ public struct FormDateTimeField: Component, FlowContent {
             }
             .class("form-datetime-field__time")
             Div {
-                HTML.Button("Cancel").type(.button)
+                HTMLButton("Cancel").type(.button)
                     .class("form-datetime-field__cancel")
-                HTML.Button("Apply").type(.button)
+                HTMLButton("Apply").type(.button)
                     .class("form-datetime-field__apply")
             }
             .class("form-datetime-field__actions")

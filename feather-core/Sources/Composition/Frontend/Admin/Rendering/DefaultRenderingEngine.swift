@@ -3,7 +3,8 @@ import HTML
 import Hummingbird
 import SGML
 import SVG
-import WebStandards
+import WebComponents
+import WebBuilders
 
 public struct RenderingEngineAssetConfiguration: Sendable {
     public let publicStylesheetPaths: [String]
@@ -55,12 +56,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
             content
         }
 
-        let collector = ComponentStylesheetCollector()
-        let renderer = StylesheetRenderer(minify: false, indent: 4)
-        let css = renderer.render(collector.getStylesheet(from: body))
-
-        let head = Head {
-            Metadata(
+        let metadata = Metadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -72,17 +68,14 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     path: imagePath
                 ),
                 noIndex: false
-            )
-            for path in assets.publicStylesheetPaths {
-                Link(rel: .stylesheet)
-                    .href(stylesheetURL(path: path))
-            }
-            if let path = assets.rootStylesheetPath {
-                Link(rel: .stylesheet)
-                    .href(path)
-            }
-            Style(css)
+            ).renderHTML()
+        var headElements = metadata.children + assets.publicStylesheetPaths.map {
+            Link(rel: .stylesheet).href(stylesheetURL(path: $0))
         }
+        if let path = assets.rootStylesheetPath {
+            headElements.append(Link(rel: .stylesheet).href(path))
+        }
+        let head = Head(elements: headElements.compactMap { $0 as? any MetadataContent })
 
         let html = Html {
             head
@@ -93,7 +86,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         return .init(html)
     }
 
-    public func renderAdminPage<T: Component>(
+    public func renderAdminPage<T: Leaf>(
         request: Request,
         title: String,
         description: String,
@@ -109,15 +102,10 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     toast: toast,
                     content: content
                 )
-            )
+            ).renderHTML()
         }
 
-        let collector = ComponentStylesheetCollector()
-        let renderer = StylesheetRenderer(minify: false, indent: 4)
-        let css = renderer.render(collector.getStylesheet(from: body))
-
-        let head = Head {
-            Metadata(
+        let metadata = Metadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -129,17 +117,14 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     path: imagePath
                 ),
                 noIndex: false
-            )
-            for path in assets.adminStylesheetPaths {
-                Link(rel: .stylesheet)
-                    .href(stylesheetURL(path: path))
-            }
-            if let path = assets.rootStylesheetPath {
-                Link(rel: .stylesheet)
-                    .href(path)
-            }
-            Style(css)
+            ).renderHTML()
+        var headElements = metadata.children + assets.adminStylesheetPaths.map {
+            Link(rel: .stylesheet).href(stylesheetURL(path: $0))
         }
+        if let path = assets.rootStylesheetPath {
+            headElements.append(Link(rel: .stylesheet).href(path))
+        }
+        let head = Head(elements: headElements.compactMap { $0 as? any MetadataContent })
 
         let html = Html {
             head

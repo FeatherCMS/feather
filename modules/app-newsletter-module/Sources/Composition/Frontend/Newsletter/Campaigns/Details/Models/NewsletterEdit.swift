@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct NewsletterEdit: Component {
+struct NewsletterEdit: Leaf {
     struct State {
         let id: String
         let isEdited: Bool
@@ -16,17 +17,17 @@ struct NewsletterEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminNewsletterCampaignTabs(campaignId: state.id, active: .details)
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminNewsletterCampaignTabs(campaignId: state.id, active: .details).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Edit campaign")
             if state.isEdited { P("Campaign edited successfully.") }
             NewsletterForm(
                 state: state.form,
                 action: "/admin/newsletters/\(state.id)/edit/",
                 submitLabel: "Save"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

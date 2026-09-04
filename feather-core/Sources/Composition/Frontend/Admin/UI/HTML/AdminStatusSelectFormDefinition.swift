@@ -1,8 +1,9 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminStatusSelectFormDefinition: Component, FlowContent {
+public struct AdminStatusSelectFormDefinition: Leaf {
     public let id: String
     public let action: String
     public let returnTo: String
@@ -13,7 +14,7 @@ public struct AdminStatusSelectFormDefinition: Component, FlowContent {
         self.returnTo = returnTo
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Form {
         Form {
             Input()
                 .type(.hidden)
@@ -25,4 +26,5 @@ public struct AdminStatusSelectFormDefinition: Component, FlowContent {
         .action(action)
         .style("display:none;")
     }
+
 }

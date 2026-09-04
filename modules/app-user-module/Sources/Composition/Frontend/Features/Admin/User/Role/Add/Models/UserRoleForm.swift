@@ -2,9 +2,10 @@ import CSS
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserRoleForm: Component, FlowContent {
+struct UserRoleForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -37,7 +38,7 @@ struct UserRoleForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -53,7 +54,7 @@ struct UserRoleForm: Component, FlowContent {
                     value: id.value,
                     error: id.error,
                     isRequired: true
-                )
+                ).renderHTML()
             }
 
             FormInputField(
@@ -61,14 +62,14 @@ struct UserRoleForm: Component, FlowContent {
                 label: state.name.label,
                 value: state.name.value,
                 error: state.name.error
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: state.notes.key,
                 label: state.notes.label,
                 value: state.notes.value,
                 error: state.notes.error
-            )
+            ).renderHTML()
 
             Section {
                 Div {
@@ -79,7 +80,7 @@ struct UserRoleForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")

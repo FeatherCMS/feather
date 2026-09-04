@@ -2,9 +2,10 @@ import CSS
 import FeatherContracts
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct FormInputField: Component, FlowContent {
+public struct FormInputField: Leaf {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -110,7 +111,7 @@ public struct FormInputField: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Section {
             Label {
                 fieldLabel()

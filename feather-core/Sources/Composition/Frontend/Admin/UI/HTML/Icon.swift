@@ -9,9 +9,10 @@ import CSS
 import HTML
 import SGML
 import SVG
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct Icon: Component, FlowContent {
+public struct Icon: Leaf {
 
     public let svg: SVG
     public let `class`: String?
@@ -24,7 +25,7 @@ public struct Icon: Component, FlowContent {
         self.class = `class`
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> SVG {
         svg.if(`class` != nil) {
             $0.addAttribute(name: "class", value: `class`)
         }

@@ -10,7 +10,8 @@ import NIOCore
 import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 public struct ContactAdminAPIClient: Sendable {
     public let client: ContactAdminAPI.Client

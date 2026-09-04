@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserRoleTable: Component {
+struct UserRoleTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -27,14 +28,14 @@ struct UserRoleTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("User roles")
 
                 if state.isAdded { P("User role added successfully.") }
@@ -46,7 +47,7 @@ struct UserRoleTable: Component {
                             AdminNavigationButton(
                                 "Add role",
                                 href: "/admin/user/roles/add/"
-                            )
+                            ).renderHTML()
                         }
                     }
                     .class("button-row")
@@ -59,7 +60,7 @@ struct UserRoleTable: Component {
                         placeholder: "Quick search user roles",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.roles.isEmpty {
                     let totalPages = max(
@@ -102,7 +103,7 @@ struct UserRoleTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Name")
                                         Th("Actions")
@@ -114,7 +115,7 @@ struct UserRoleTable: Component {
                                             if canRemove {
                                                 ListTableRowSelectCheckbox(
                                                     state: .init(id: role.id)
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(role.name ?? "")
                                                 .data(
@@ -153,15 +154,15 @@ struct UserRoleTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/user/roles/",
@@ -170,7 +171,7 @@ struct UserRoleTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

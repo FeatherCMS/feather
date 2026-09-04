@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthMagicLinkEdit: Component {
+struct AuthMagicLinkEdit: Leaf {
 
     struct State {
         let id: String
@@ -26,9 +27,9 @@ struct AuthMagicLinkEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Edit user magic link")
             if state.isEdited { P("User magic link edited successfully.") }
@@ -38,7 +39,7 @@ struct AuthMagicLinkEdit: Component {
                 submitLabel: "Edit magic link",
                 removeHref: "/admin/auth/magic-links/\(state.id)/remove/",
                 removeLabel: "Remove magic link"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

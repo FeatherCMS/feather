@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemVariableConfirmation: Component {
+struct SystemVariableConfirmation: Leaf {
 
     struct State {
         let id: String
@@ -16,8 +17,8 @@ struct SystemVariableConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove system variable",
@@ -30,6 +31,6 @@ struct SystemVariableConfirmation: Component {
                 actionURL: "/admin/system/variables/\(state.id)/remove/",
                 cancelURL: "/admin/system/variables/"
             )
-        )
+        ).renderHTML()
     }
 }

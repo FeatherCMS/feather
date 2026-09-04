@@ -3,9 +3,10 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMenuItemForm: Component, FlowContent {
+struct WebMenuItemForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -52,7 +53,7 @@ struct WebMenuItemForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -67,21 +68,21 @@ struct WebMenuItemForm: Component, FlowContent {
                 value: state.label.value,
                 error: state.label.error,
                 isRequired: true
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.url.key,
                 label: state.url.label,
                 value: state.url.value,
                 error: state.url.error,
                 isRequired: true
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.priority.key,
                 label: state.priority.label,
                 value: state.priority.value,
                 error: state.priority.error,
                 isRequired: true
-            )
+            ).renderHTML()
             checkbox(state.isBlank)
             AdminAutocompleteField(
                 state: .init(
@@ -93,7 +94,7 @@ struct WebMenuItemForm: Component, FlowContent {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            )
+            ).renderHTML()
             FormSelectField(
                 name: state.authentication.key,
                 label: state.authentication.label,
@@ -105,8 +106,8 @@ struct WebMenuItemForm: Component, FlowContent {
                 selectedValue: state.authentication.value,
                 error: state.authentication.error,
                 isRequired: true
-            )
-            textarea(state.notes)
+            ).renderHTML()
+            textarea(state.notes).renderHTML()
 
             Section {
                 Div {
@@ -117,7 +118,7 @@ struct WebMenuItemForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")
@@ -143,7 +144,7 @@ struct WebMenuItemForm: Component, FlowContent {
 
     private func checkbox(
         _ field: CheckboxState
-    ) -> some BasicTag {
+    ) -> Section {
         Section {
             CheckboxField(
                 state: .init(
@@ -152,7 +153,7 @@ struct WebMenuItemForm: Component, FlowContent {
                     value: field.value,
                     error: field.error
                 )
-            )
+            ).renderHTML()
         }
     }
 

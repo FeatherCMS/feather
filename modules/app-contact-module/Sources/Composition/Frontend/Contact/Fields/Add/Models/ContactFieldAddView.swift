@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFieldAddView: Component {
+struct ContactFieldAddView: Leaf {
     struct State {
         let key: String
         let type: String
@@ -18,14 +19,14 @@ struct ContactFieldAddView: Component {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Add contact form field")
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Type", required: true)
+                    AdminFieldLabel(label: "Type", required: true).renderHTML()
                     Select {
                         if state.type == "text" {
                             Option("Text").value("text").selected()
@@ -61,17 +62,17 @@ struct ContactFieldAddView: Component {
                     .name("type").class("text-input")
                 }
                 Label {
-                    AdminFieldLabel(label: "Key", required: true)
+                    AdminFieldLabel(label: "Key", required: true).renderHTML()
                     Input().type(.text).class("text-input").name("key")
                         .value(state.key).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "Label", required: true)
+                    AdminFieldLabel(label: "Label", required: true).renderHTML()
                     Input().type(.text).class("text-input").name("label")
                         .value(state.label).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "Allowed values", required: false)
+                    AdminFieldLabel(label: "Allowed values", required: false).renderHTML()
                     Textarea(state.allowedValues).class("text-input")
                         .name("allowedValues").placeholder("One value per line")
                 }

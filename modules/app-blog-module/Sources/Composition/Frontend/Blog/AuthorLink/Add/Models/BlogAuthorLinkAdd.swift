@@ -8,9 +8,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogAuthorLinkAdd: Component {
+struct BlogAuthorLinkAdd: Leaf {
 
     struct State {
         let menuId: String
@@ -20,9 +21,9 @@ struct BlogAuthorLinkAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Add blog author link")
             BlogAuthorLinkForm(

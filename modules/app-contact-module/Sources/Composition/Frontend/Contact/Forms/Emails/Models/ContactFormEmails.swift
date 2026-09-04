@@ -4,26 +4,27 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormEmails: Component {
+struct ContactFormEmails: Leaf {
     let id: String
     let mails: [AdminContactFormEmail]
     let canRemove: Bool
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: id, active: .emails)
-            AdminBreadcrumb(state: breadcrumb)
+            AdminContactFormTabs(formId: id, active: .emails).renderHTML()
+            AdminBreadcrumb(state: breadcrumb).renderHTML()
             H1("Contact form emails")
             if let error { P(error).class("error") }
             Div {
                 AdminNavigationButton(
                     "Add email",
                     href: "/admin/contact/forms/\(id)/emails/add/"
-                )
+                ).renderHTML()
             }
             .class("button-row")
             Br()
@@ -45,7 +46,7 @@ struct ContactFormEmails: Component {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox()
+                                        ListTableSelectAllCheckbox().renderHTML()
                                     }
                                     Th("From")
                                     Th("To")
@@ -59,7 +60,7 @@ struct ContactFormEmails: Component {
                                         if canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: mail.id)
-                                            )
+                                            ).renderHTML()
                                         }
                                         Td(mail.mailFrom).data("label", "From")
                                         Td(mail.mailTo).data("label", "To")
@@ -90,15 +91,15 @@ struct ContactFormEmails: Component {
                                                     "contact:forms:update"
                                                 ]
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    )
-                )
+                    ).renderHTML()
+                ).renderHTML()
             }
         }
         .class("cms-section")

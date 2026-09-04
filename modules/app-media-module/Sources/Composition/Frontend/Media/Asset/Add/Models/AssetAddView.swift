@@ -6,9 +6,10 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AssetAddView: Component {
+struct AssetAddView: Leaf {
     struct State {
         let form: FormState
         let breadcrumb: AdminBreadcrumb.State
@@ -30,10 +31,10 @@ struct AssetAddView: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.form.isPicker {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Add media asset")
             }
             if let error = state.form.error { P(error).class("error") }
@@ -181,7 +182,7 @@ struct AssetAddView: Component {
                 value: state.form.title,
                 id: "title",
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: "altText",
@@ -189,7 +190,7 @@ struct AssetAddView: Component {
                 value: state.form.altText,
                 id: "altText",
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: "file",
@@ -198,7 +199,7 @@ struct AssetAddView: Component {
                 type: .file,
                 isRequired: true,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             Input().type(.hidden).name("data").id("data")
                 .value(state.form.data)
 
@@ -229,7 +230,7 @@ struct AssetAddView: Component {
                 value: state.form.title,
                 id: "title",
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: "altText",
@@ -237,7 +238,7 @@ struct AssetAddView: Component {
                 value: state.form.altText,
                 id: "altText",
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: "file",
@@ -246,7 +247,7 @@ struct AssetAddView: Component {
                 type: .file,
                 isRequired: true,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             Input().type(.hidden).name("data").id("data")
                 .value(state.form.data)
 

@@ -1,9 +1,10 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthSessionError: Component {
+struct AuthSessionError: Leaf {
 
     struct State {
         let info: String
@@ -13,9 +14,9 @@ struct AuthSessionError: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1(state.info)
             P(state.message)

@@ -1,8 +1,11 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct ListTableRowActions: Component {
+private typealias HTMLButton = HTML.Button
+
+public struct ListTableRowActions: Leaf {
 
     public struct Action: Sendable {
         public let title: String
@@ -48,7 +51,7 @@ public struct ListTableRowActions: Component {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Td {
             let visibleActions = state.actions.filter {
                 state.permissions.contains($0.permission)
@@ -56,7 +59,7 @@ public struct ListTableRowActions: Component {
 
             for (index, action) in visibleActions.enumerated() {
                 if let copyText = action.copyText {
-                    HTML.Button(action.title)
+                    HTMLButton(action.title)
                         .type(.button)
                         .class("row-btn", action.className ?? "")
                         .onClick(

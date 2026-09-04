@@ -1,5 +1,6 @@
 import CSS
-import WebStandards
+import WebComponents
+import WebBuilders
 
 public enum AdminDetailFieldStyles {
 

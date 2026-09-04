@@ -1,8 +1,9 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct ListTableRowSelectCheckbox: Component {
+public struct ListTableRowSelectCheckbox: Leaf {
 
     public struct State: Sendable {
         public let id: String
@@ -18,7 +19,7 @@ public struct ListTableRowSelectCheckbox: Component {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Td {
             Input()
                 .type(.checkbox)

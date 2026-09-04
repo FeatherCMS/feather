@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormAdd: Component {
+struct ContactFormAdd: Leaf {
     struct State {
         let form: ContactFormForm.State
         let breadcrumb: AdminBreadcrumb.State
@@ -14,15 +15,15 @@ struct ContactFormAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Add contact form")
             ContactFormForm(
                 state: state.form,
                 action: "/admin/contact/forms/add/",
                 submitLabel: "Add form"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

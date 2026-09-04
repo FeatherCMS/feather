@@ -8,9 +8,10 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct Metadata: Component, MetadataContent {
+public struct Metadata: Leaf {
 
     let canonicalUrl: String
     let title: String
@@ -32,30 +33,32 @@ public struct Metadata: Component, MetadataContent {
         self.noIndex = noIndex
     }
 
-    public func content() -> some BasicTag {
-        Meta().charset("utf-8")
-        Meta().name(.viewport).content("width=device-width, initial-scale=1")
-        Link(rel: .canonical).href(canonicalUrl)
+    public func renderHTML() -> Head {
+        Head {
+            Meta().charset("utf-8")
+            Meta().name(.viewport).content("width=device-width, initial-scale=1")
+            Link(rel: .canonical).href(canonicalUrl)
 
-        Title(title)
-        Meta().name(.description).content(description)
-        if noIndex {
-            Meta().name("robots").content("noindex")
-        }
+            Title(title)
+            Meta().name(.description).content(description)
+            if noIndex {
+                Meta().name("robots").content("noindex")
+            }
 
-        Meta().property("og:url").content(canonicalUrl)
-        Meta().property("og:title").content(title)
-        Meta().property("og:description").content(description)
-        if let imageUrl {
-            Meta().property("og:image").content(imageUrl)
-        }
+            Meta().property("og:url").content(canonicalUrl)
+            Meta().property("og:title").content(title)
+            Meta().property("og:description").content(description)
+            if let imageUrl {
+                Meta().property("og:image").content(imageUrl)
+            }
 
-        Meta().name("twitter:card").content("summary_large_image")
-        Meta().name("twitter:url").content(canonicalUrl)
-        Meta().name("twitter:title").content(title)
-        Meta().name("twitter:description").content(description)
-        if let imageUrl {
-            Meta().name("twitter:image").content(imageUrl)
+            Meta().name("twitter:card").content("summary_large_image")
+            Meta().name("twitter:url").content(canonicalUrl)
+            Meta().name("twitter:title").content(title)
+            Meta().name("twitter:description").content(description)
+            if let imageUrl {
+                Meta().name("twitter:image").content(imageUrl)
+            }
         }
     }
 }

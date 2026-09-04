@@ -5,9 +5,10 @@ import HTML
 import OpenAPIRuntime
 import SGML
 import WebContracts
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMetadataForm: Component, FlowContent {
+struct WebMetadataForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -72,7 +73,7 @@ struct WebMetadataForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -87,45 +88,45 @@ struct WebMetadataForm: Component, FlowContent {
                 value: state.slug.value,
                 error: state.slug.error,
                 isRequired: true
-            )
-            templateField(state.template)
+            ).renderHTML()
+            templateField(state.template).renderHTML()
             FormDateTimeField(
                 name: state.publicationDate.key,
                 label: state.publicationDate.label,
                 value: state.publicationDate.value,
                 error: state.publicationDate.error
-            )
+            ).renderHTML()
             FormDateTimeField(
                 name: state.expirationDate.key,
                 label: state.expirationDate.label,
                 value: state.expirationDate.value,
                 error: state.expirationDate.error
-            )
-            statusField(state.status)
+            ).renderHTML()
+            statusField(state.status).renderHTML()
             FormInputField(
                 name: state.title.key,
                 label: state.title.label,
                 value: state.title.value,
                 error: state.title.error
-            )
-            textarea(state.excerpt, rows: 4)
+            ).renderHTML()
+            textarea(state.excerpt, rows: 4).renderHTML()
             imagePicker(state.imageUrl, selectedAsset: state.selectedImageAsset)
             FormInputField(
                 name: state.canonicalUrl.key,
                 label: state.canonicalUrl.label,
                 value: state.canonicalUrl.value,
                 error: state.canonicalUrl.error
-            )
+            ).renderHTML()
             checkbox(state.noIndex)
             FormInputField(
                 name: state.primaryKeyword.key,
                 label: state.primaryKeyword.label,
                 value: state.primaryKeyword.value,
                 error: state.primaryKeyword.error
-            )
-            textarea(state.cssCodeInjection, rows: 10)
-            textarea(state.javascriptCodeInjection, rows: 10)
-            textarea(state.structuredDataCodeInjection, rows: 10)
+            ).renderHTML()
+            textarea(state.cssCodeInjection, rows: 10).renderHTML()
+            textarea(state.javascriptCodeInjection, rows: 10).renderHTML()
+            textarea(state.structuredDataCodeInjection, rows: 10).renderHTML()
 
             Section {
                 Div {
@@ -136,7 +137,7 @@ struct WebMetadataForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")
@@ -153,7 +154,7 @@ struct WebMetadataForm: Component, FlowContent {
     ) -> some BasicTag {
         Section {
             Label {
-                AdminFieldLabel(label: field.label, required: false)
+                AdminFieldLabel(label: field.label, required: false).renderHTML()
                 Input()
                     .type(.text)
                     .id(field.key)
@@ -208,7 +209,7 @@ struct WebMetadataForm: Component, FlowContent {
     private func imagePicker(
         _ field: FieldState,
         selectedAsset: AdminMediaAssetReferenceModel?
-    ) -> some FlowContent {
+    ) -> Section {
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
         return AdminMediaAssetPicker(
@@ -224,12 +225,12 @@ struct WebMetadataForm: Component, FlowContent {
                 allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                 outputMode: .originalURL
             )
-        )
+        ).renderHTML()
     }
 
     private func checkbox(
         _ field: CheckboxState
-    ) -> some BasicTag {
+    ) -> Section {
         Section {
             CheckboxField(
                 state: .init(
@@ -238,7 +239,7 @@ struct WebMetadataForm: Component, FlowContent {
                     value: field.value,
                     error: field.error
                 )
-            )
+            ).renderHTML()
         }
         .if(field.error != nil) { $0.class("has-error") }
     }

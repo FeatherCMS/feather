@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthEmailEdit: Component {
+struct AuthEmailEdit: Leaf {
 
     struct State {
         let id: String
@@ -26,9 +27,9 @@ struct AuthEmailEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Edit user email")
             if state.isEdited { P("User email edited successfully.") }
@@ -38,7 +39,7 @@ struct AuthEmailEdit: Component {
                 submitLabel: "Edit email",
                 removeHref: "/admin/auth/emails/\(state.id)/remove/",
                 removeLabel: "Remove email"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

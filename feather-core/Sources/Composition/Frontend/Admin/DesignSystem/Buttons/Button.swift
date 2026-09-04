@@ -1,10 +1,12 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
+import DOM
 
 /// The base anchor component for admin design-system buttons.
-public struct Button: Component, FlowContent {
+public struct Button: FlowContent {
 
     public let label: String
     public let href: String
@@ -20,20 +22,16 @@ public struct Button: Component, FlowContent {
         self.classes = classes
     }
 
-    public func selectors() -> [any Selector] {
-        for selector in FeatherCSS.Buttons.selectors() {
-            selector
-        }
-    }
-
-    public func content() -> some BasicTag {
+    public func content() -> A {
         A(label)
             .href(href)
             .class(([("feather-button")] + classes).joined(separator: " "))
     }
+
+    public var node: Node { content().node }
 }
 
-public struct PrimaryButton: Component, FlowContent {
+public struct PrimaryButton: FlowContent {
 
     public let label: String
     public let href: String
@@ -43,12 +41,14 @@ public struct PrimaryButton: Component, FlowContent {
         self.href = href
     }
 
-    public func content() -> some BasicTag {
-        Button(label, href: href, classes: ["feather-button--primary"])
+    public func content() -> A {
+        Button(label, href: href, classes: ["feather-button--primary"]).content()
     }
+
+    public var node: Node { content().node }
 }
 
-public struct SecondaryButton: Component, FlowContent {
+public struct SecondaryButton: FlowContent {
 
     public let label: String
     public let href: String
@@ -58,12 +58,14 @@ public struct SecondaryButton: Component, FlowContent {
         self.href = href
     }
 
-    public func content() -> some BasicTag {
-        Button(label, href: href, classes: ["feather-button--secondary"])
+    public func content() -> A {
+        Button(label, href: href, classes: ["feather-button--secondary"]).content()
     }
+
+    public var node: Node { content().node }
 }
 
-public struct DestructiveButton: Component, FlowContent {
+public struct DestructiveButton: FlowContent {
 
     public let label: String
     public let href: String
@@ -73,12 +75,14 @@ public struct DestructiveButton: Component, FlowContent {
         self.href = href
     }
 
-    public func content() -> some BasicTag {
-        Button(label, href: href, classes: ["feather-button--destructive"])
+    public func content() -> A {
+        Button(label, href: href, classes: ["feather-button--destructive"]).content()
     }
+
+    public var node: Node { content().node }
 }
 
-public struct PrimaryActionButton: Component, FlowContent {
+public struct PrimaryActionButton: FlowContent {
 
     public let label: String
     public let href: String
@@ -88,16 +92,18 @@ public struct PrimaryActionButton: Component, FlowContent {
         self.href = href
     }
 
-    public func content() -> some BasicTag {
+    public func content() -> A {
         Button(
             label,
             href: href,
             classes: ["feather-button--primary", "feather-button--action"]
-        )
+        ).content()
     }
+
+    public var node: Node { content().node }
 }
 
-public struct SecondaryActionButton: Component, FlowContent {
+public struct SecondaryActionButton: FlowContent {
 
     public let label: String
     public let href: String
@@ -107,16 +113,18 @@ public struct SecondaryActionButton: Component, FlowContent {
         self.href = href
     }
 
-    public func content() -> some BasicTag {
+    public func content() -> A {
         Button(
             label,
             href: href,
             classes: ["feather-button--secondary", "feather-button--action"]
-        )
+        ).content()
     }
+
+    public var node: Node { content().node }
 }
 
-public struct DestructiveActionButton: Component, FlowContent {
+public struct DestructiveActionButton: FlowContent {
 
     public let label: String
     public let href: String
@@ -126,7 +134,7 @@ public struct DestructiveActionButton: Component, FlowContent {
         self.href = href
     }
 
-    public func content() -> some BasicTag {
+    public func content() -> A {
         Button(
             label,
             href: href,
@@ -134,6 +142,8 @@ public struct DestructiveActionButton: Component, FlowContent {
                 "feather-button--destructive",
                 "feather-button--action",
             ]
-        )
+        ).content()
     }
+
+    public var node: Node { content().node }
 }

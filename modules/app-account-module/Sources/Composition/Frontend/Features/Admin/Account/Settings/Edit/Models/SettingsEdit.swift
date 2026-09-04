@@ -1,9 +1,10 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SettingsEdit: Component {
+struct SettingsEdit: Leaf {
 
     struct State {
         let userID: String?
@@ -15,9 +16,9 @@ struct SettingsEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Settings")
 
@@ -48,7 +49,7 @@ struct SettingsEdit: Component {
                         href: "/admin/auth/magic-links/?userId=\(userID)",
                         isCurrent: false
                     ),
-                ])
+                ]).renderHTML()
             }
 
             if !state.canEdit {
@@ -61,7 +62,7 @@ struct SettingsEdit: Component {
                 P("Settings edited successfully.").class("success")
             }
 
-            SettingsForm(state: state.form)
+            SettingsForm(state: state.form).renderHTML()
         }
         .class("cms-section")
     }

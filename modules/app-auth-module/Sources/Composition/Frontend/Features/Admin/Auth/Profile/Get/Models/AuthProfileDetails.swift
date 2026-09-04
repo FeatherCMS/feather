@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthProfileDetails: Component {
+struct AuthProfileDetails: Leaf {
 
     struct State {
         let profile: AdminGetAuthProfileModel
@@ -25,13 +26,13 @@ struct AuthProfileDetails: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor()
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminDetailFieldStyleAnchor().renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Profile")
 
-            AdminDetailsField(label: "ID", value: state.profile.id)
+            AdminDetailsField(label: "ID", value: state.profile.id).renderHTML()
             Div {
                 P("Profile image")
                     .class("admin-details-field__label")
@@ -55,11 +56,11 @@ struct AuthProfileDetails: Component {
             AdminDetailsField(
                 label: "First name",
                 value: state.profile.firstName ?? ""
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Last name",
                 value: state.profile.lastName ?? ""
-            )
+            ).renderHTML()
             Div {
                 P("Roles")
                     .class("admin-details-field__label")
@@ -97,7 +98,7 @@ struct AuthProfileDetails: Component {
                     AdminNavigationButton(
                         "Edit profile",
                         href: "/admin/auth/profile/edit/"
-                    )
+                    ).renderHTML()
                 }
                 .class("button-row", "admin-detail-actions")
             }

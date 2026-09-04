@@ -10,25 +10,26 @@ import Foundation
 import HTML
 import SGML
 import SVG
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminTopBar: Component, FlowContent {
+public struct AdminTopBar: Leaf {
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         let fallbackProfileImageURL =
             "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/images/tiborbodecs-2026-512.png"
 
-        Div {
+        return Div {
             Div {
                 Label {
                     Icon(
                         svg: FeatherIcons.sidebar(),
                         class: "menu-trigger-icon menu-trigger-desktop"
-                    )
+                    ).renderHTML()
                     Icon(
                         svg: FeatherIcons.menu(),
                         class: "menu-trigger-icon menu-trigger-mobile"
-                    )
+                    ).renderHTML()
                     Span("Menu").class("sr-only")
                 }
                 .for("menuToggle")
@@ -80,18 +81,5 @@ public struct AdminTopBar: Component, FlowContent {
         }
         .class("top-bar")
 
-        Script(
-            """
-            (function() {
-              var image = document.getElementById("adminProfileImage");
-              if (!image) { return; }
-              var fallback = "\(fallbackProfileImageURL)";
-              image.addEventListener("error", function() {
-                if (image.src !== fallback) { image.src = fallback; }
-              });
-              image.src = "/admin/auth/profile/image/";
-            })();
-            """
-        )
     }
 }

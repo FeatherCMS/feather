@@ -8,7 +8,8 @@ import MediaAdminAPI
 import MediaContracts
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
     let request: Request
@@ -66,7 +67,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                             info: "Unable to load media assets.",
                             message: error,
                             breadcrumb: mediaAssetsBreadcrumb()
-                        )
+                        ).renderHTML()
                     }
                 )
             }
@@ -93,7 +94,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 description: "Select media asset",
                 imagePath: "images/logos/logo.png",
                 content: Div {
-                    content
+                    content.renderHTML()
                 }
             )
         }

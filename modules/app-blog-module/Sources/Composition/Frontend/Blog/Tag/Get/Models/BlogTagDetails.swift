@@ -11,9 +11,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogTagDetails: Component {
+struct BlogTagDetails: Leaf {
     struct State {
         let rule: BlogTagDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -24,9 +25,9 @@ struct BlogTagDetails: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Blog tag details")
             if state.isPublished {
                 P("Blog tag published successfully.")
@@ -34,20 +35,20 @@ struct BlogTagDetails: Component {
             if state.isUnpublished {
                 P("Blog tag unpublished successfully.")
             }
-            AdminDetailsField(label: "ID", value: state.rule.id)
-            AdminDetailsField(label: "Title", value: state.rule.title)
+            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
+            AdminDetailsField(label: "Title", value: state.rule.title).renderHTML()
             AdminDetailsField(
                 label: "Status",
                 value: state.rule.metadata.status.capitalized
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Published date",
                 value: format(state.rule.metadata.publicationDate)
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Expiration date",
                 value: format(state.rule.metadata.expirationDate)
-            )
+            ).renderHTML()
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -70,7 +71,7 @@ struct BlogTagDetails: Component {
                     AdminNavigationButton(
                         "Edit tag",
                         href: "/admin/blog/tags/\(state.rule.id)/edit/"
-                    )
+                    ).renderHTML()
                 }
                 if state.permissions.contains(
                     BlogPermissions.Tags.delete.rawValue
@@ -79,7 +80,7 @@ struct BlogTagDetails: Component {
                         "Remove tag",
                         href: "/admin/blog/tags/\(state.rule.id)/remove/",
                         classes: ["danger"]
-                    )
+                    ).renderHTML()
                 }
             }
             .class("button-row", "admin-detail-actions")

@@ -2,9 +2,10 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebSettingsForm: Component, FlowContent {
+struct WebSettingsForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -75,7 +76,7 @@ struct WebSettingsForm: Component, FlowContent {
     var action: String = "/admin/web/settings/"
     var submitLabel: String = "Save settings"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -97,8 +98,8 @@ struct WebSettingsForm: Component, FlowContent {
                 error: state.title.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
-            textarea(state.excerpt, rows: 4)
+            ).renderHTML()
+            textarea(state.excerpt, rows: 4).renderHTML()
             imagePicker(state.metaImage)
             homePagePicker(state.homePage)
             FormInputField(
@@ -108,7 +109,7 @@ struct WebSettingsForm: Component, FlowContent {
                 error: state.locale.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.timezone.key,
                 label: state.timezone.label,
@@ -116,7 +117,7 @@ struct WebSettingsForm: Component, FlowContent {
                 error: state.timezone.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             H2("Theme")
             FormInputField(
@@ -126,7 +127,7 @@ struct WebSettingsForm: Component, FlowContent {
                 error: state.primaryColor.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.secondaryColor.key,
                 label: state.secondaryColor.label,
@@ -134,7 +135,7 @@ struct WebSettingsForm: Component, FlowContent {
                 error: state.secondaryColor.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.tertiaryColor.key,
                 label: state.tertiaryColor.label,
@@ -142,7 +143,7 @@ struct WebSettingsForm: Component, FlowContent {
                 error: state.tertiaryColor.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.primaryFont.key,
                 label: state.primaryFont.label,
@@ -150,7 +151,7 @@ struct WebSettingsForm: Component, FlowContent {
                 error: state.primaryFont.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.secondaryFont.key,
                 label: state.secondaryFont.label,
@@ -158,11 +159,11 @@ struct WebSettingsForm: Component, FlowContent {
                 error: state.secondaryFont.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             H2("Code injection")
-            textarea(state.css, rows: 10)
-            textarea(state.js, rows: 10)
+            textarea(state.css, rows: 10).renderHTML()
+            textarea(state.js, rows: 10).renderHTML()
 
             if state.canEdit {
                 Section {
@@ -191,14 +192,14 @@ struct WebSettingsForm: Component, FlowContent {
                     value: field.value,
                     error: field.error
                 )
-            )
+            ).renderHTML()
         }
         .if(field.error != nil) { $0.class("has-error") }
     }
 
     private func homePagePicker(
         _ field: HomePageState
-    ) -> some FlowContent {
+    ) -> Section {
         AdminAutocompleteField(
             state: .init(
                 key: field.key,
@@ -209,12 +210,12 @@ struct WebSettingsForm: Component, FlowContent {
                 selectionMode: .single,
                 isEnabled: state.canEdit
             )
-        )
+        ).renderHTML()
     }
 
     private func imagePicker(
         _ field: FieldState
-    ) -> some FlowContent {
+    ) -> Section {
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
         return AdminMediaAssetPicker(
@@ -232,7 +233,7 @@ struct WebSettingsForm: Component, FlowContent {
                 allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                 outputMode: .originalURL
             )
-        )
+        ).renderHTML()
     }
 
     private func textarea(

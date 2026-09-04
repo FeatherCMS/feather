@@ -9,7 +9,8 @@ import OpenAPIRuntime
 import SGML
 import WebContracts
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 public struct AdminBlog {
     public let renderingEngine: any RenderingEngine

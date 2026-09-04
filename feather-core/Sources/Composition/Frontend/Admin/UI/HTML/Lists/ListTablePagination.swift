@@ -1,9 +1,10 @@
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct ListTablePagination: Component, FlowContent {
+public struct ListTablePagination: Leaf {
 
     public struct State: Sendable {
         public let path: String
@@ -36,7 +37,7 @@ public struct ListTablePagination: Component, FlowContent {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Div {
         let extraQuerySuffix =
             state.queryItems
             .filter { !$0.1.isEmpty }

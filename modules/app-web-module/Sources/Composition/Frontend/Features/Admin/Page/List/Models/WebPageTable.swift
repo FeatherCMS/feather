@@ -7,9 +7,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebContracts
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebPageTable: Component {
+struct WebPageTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -33,14 +34,14 @@ struct WebPageTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Web pages")
                 statusFormDefinitions()
 
@@ -64,7 +65,7 @@ struct WebPageTable: Component {
                         AdminNavigationButton(
                             "Add page",
                             href: "/admin/web/pages/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -76,7 +77,7 @@ struct WebPageTable: Component {
                         placeholder: "Quick search web pages",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -121,7 +122,7 @@ struct WebPageTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Title")
                                         Th("Status")
@@ -138,7 +139,7 @@ struct WebPageTable: Component {
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             titleCell(for: item)
                                             statusCell(for: item)
@@ -168,8 +169,8 @@ struct WebPageTable: Component {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/web/pages/",
@@ -178,7 +179,7 @@ struct WebPageTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }
@@ -225,7 +226,7 @@ struct WebPageTable: Component {
                 Span(item.title)
                 if let previewPath = previewPath(for: item.metadata) {
                     A {
-                        Icon(svg: FeatherIcons.externalLink())
+                        Icon(svg: FeatherIcons.externalLink()).renderHTML()
                     }
                     .href(previewPath)
                     .target(.blank)
@@ -250,7 +251,7 @@ struct WebPageTable: Component {
                 AdminStatusSelectField(
                     formID: statusFormID(for: item.id),
                     selectedStatus: item.metadata.normalizedStatus
-                )
+                ).renderHTML()
             }
             else {
                 Span(item.metadata.status.capitalized)
@@ -267,7 +268,7 @@ struct WebPageTable: Component {
                         id: statusFormID(for: item.id),
                         action: "/admin/web/pages/\(item.id)/status/",
                         returnTo: "/admin/web/pages/"
-                    )
+                    ).renderHTML()
                 }
             }
         }

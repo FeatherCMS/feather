@@ -9,12 +9,13 @@ import MediaAdminAPI
 import MediaContracts
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 import class Foundation.ByteCountFormatter
 import struct Foundation.CharacterSet
 
-struct AssetListView: Component {
+struct AssetListView: Leaf {
     struct State {
         let folders: [Components.Schemas.MediaFolderListItemSchema]
         let items: [AdminListMediaAssetModel.AssetItem]
@@ -240,7 +241,7 @@ struct AssetListView: Component {
         }
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
@@ -248,7 +249,7 @@ struct AssetListView: Component {
             }
             else {
                 if !state.picker.isEnabled {
-                    AdminBreadcrumb(state: state.breadcrumb)
+                    AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                     H1("Media assets")
 
                     if state.isAdded { P("Item added successfully.") }
@@ -278,7 +279,7 @@ struct AssetListView: Component {
                         search: state.search,
                         queryItems: queryItems()
                     )
-                )
+                ).renderHTML()
                 if state.picker.isEnabled {
                     Script(pickerScript())
                 }
@@ -502,7 +503,7 @@ extension AssetListView {
         Div {
             Div {
                 if state.canAdd && !state.picker.isEnabled {
-                    AdminNavigationButton("Add asset", href: addAssetPath())
+                    AdminNavigationButton("Add asset", href: addAssetPath()).renderHTML()
                 }
                 if state.canAdd && !state.picker.isEnabled {
                     A("Add folder")
@@ -525,7 +526,7 @@ extension AssetListView {
                             resetPath: browsePath(parentId: state.parentId),
                             queryItems: queryItems()
                         )
-                    )
+                    ).renderHTML()
                 }
                 Div {
                     A("Grid")
@@ -662,7 +663,7 @@ extension AssetListView {
                     Thead {
                         Tr {
                             if canRemove {
-                                ListTableSelectAllCheckbox()
+                                ListTableSelectAllCheckbox().renderHTML()
                             }
                             Th("Preview").columnWidth(percent: 10)
                             Th("File name")
@@ -688,8 +689,8 @@ extension AssetListView {
                 }
                 .class("cms-table", "action-table")
                 .if(canRemove) { $0.class("select-table") }
-            )
-        )
+            ).renderHTML()
+        ).renderHTML()
     }
 
     fileprivate func upCard(
@@ -698,7 +699,7 @@ extension AssetListView {
         Div {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.cornerUpLeft())
+                    Icon(svg: FeatherIcons.cornerUpLeft()).renderHTML()
                 }
                 .class("media-assets-card-preview", "media-assets-folder-icon")
             }
@@ -724,7 +725,7 @@ extension AssetListView {
         Div {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.folder())
+                    Icon(svg: FeatherIcons.folder()).renderHTML()
                 }
                 .class("media-assets-card-preview", "media-assets-folder-icon")
             }
@@ -780,7 +781,7 @@ extension AssetListView {
                         }
                         else {
                             Div {
-                                Icon(svg: FeatherIcons.file())
+                                Icon(svg: FeatherIcons.file()).renderHTML()
                             }
                             .class("media-assets-folder-icon")
                         }
@@ -809,7 +810,7 @@ extension AssetListView {
                         }
                         else {
                             Div {
-                                Icon(svg: FeatherIcons.file())
+                                Icon(svg: FeatherIcons.file()).renderHTML()
                             }
                             .class("media-assets-folder-icon")
                         }
@@ -945,7 +946,7 @@ extension AssetListView {
         let originalURL = assetOriginalLink(for: item.asset)
         return Tr {
             if canRemove {
-                ListTableRowSelectCheckbox(state: .init(id: item.asset.id))
+                ListTableRowSelectCheckbox(state: .init(id: item.asset.id)).renderHTML()
             }
             assetPreviewCell(
                 for: item,
@@ -1085,7 +1086,7 @@ extension AssetListView {
         Td {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.cornerUpLeft())
+                    Icon(svg: FeatherIcons.cornerUpLeft()).renderHTML()
                 }
                 .class("media-assets-folder-icon")
             }
@@ -1104,7 +1105,7 @@ extension AssetListView {
         Td {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.folder())
+                    Icon(svg: FeatherIcons.folder()).renderHTML()
                 }
                 .class("media-assets-folder-icon")
             }
@@ -1128,7 +1129,7 @@ extension AssetListView {
                 }
                 else {
                     Div {
-                        Icon(svg: FeatherIcons.file())
+                        Icon(svg: FeatherIcons.file()).renderHTML()
                     }
                     .class("media-assets-folder-icon")
                 }
@@ -1162,7 +1163,7 @@ extension AssetListView {
                     .target(.blank)
                     .ariaLabel("Open \(displayTitle(for: item.asset))")
                 A {
-                    Icon(svg: FeatherIcons.externalLink())
+                    Icon(svg: FeatherIcons.externalLink()).renderHTML()
                 }
                 .href(originalURL)
                 .target(.blank)

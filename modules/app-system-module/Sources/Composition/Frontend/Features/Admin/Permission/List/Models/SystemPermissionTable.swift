@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemPermissionTable: Component {
+struct SystemPermissionTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -27,14 +28,14 @@ struct SystemPermissionTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("System permissions")
 
                 if state.isAdded {
@@ -51,7 +52,7 @@ struct SystemPermissionTable: Component {
                         AdminNavigationButton(
                             "Add permission",
                             href: "/admin/system/permissions/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -63,7 +64,7 @@ struct SystemPermissionTable: Component {
                         placeholder: "Quick search system permissions",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.items.isEmpty {
                     let totalPages = max(
@@ -109,7 +110,7 @@ struct SystemPermissionTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Name")
                                         Th("Actions")
@@ -123,7 +124,7 @@ struct SystemPermissionTable: Component {
                                                     state: .init(
                                                         id: permission.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(permission.name ?? "")
                                                 .data(
@@ -162,15 +163,15 @@ struct SystemPermissionTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/system/permissions/",
@@ -179,7 +180,7 @@ struct SystemPermissionTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

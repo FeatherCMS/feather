@@ -5,9 +5,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebPageConfirmation: Component {
+struct WebPageConfirmation: Leaf {
 
     struct State {
         let id: String
@@ -17,8 +18,8 @@ struct WebPageConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove page",
@@ -31,6 +32,6 @@ struct WebPageConfirmation: Component {
                 actionURL: "/admin/web/pages/\(state.id)/remove/",
                 cancelURL: "/admin/web/pages/"
             )
-        )
+        ).renderHTML()
     }
 }

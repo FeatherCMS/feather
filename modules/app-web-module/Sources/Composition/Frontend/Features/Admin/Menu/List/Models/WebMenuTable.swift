@@ -5,9 +5,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMenuTable: Component {
+struct WebMenuTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -28,14 +29,14 @@ struct WebMenuTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Menus")
 
                 if state.isAdded {
@@ -52,7 +53,7 @@ struct WebMenuTable: Component {
                         AdminNavigationButton(
                             "Add menu",
                             href: "/admin/web/menus/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -64,7 +65,7 @@ struct WebMenuTable: Component {
                         placeholder: "Quick search menus",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -109,7 +110,7 @@ struct WebMenuTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Key")
                                         Th("Name")
@@ -124,7 +125,7 @@ struct WebMenuTable: Component {
                                                     state: .init(
                                                         id: rule.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(rule.key)
                                                 .data(
@@ -168,15 +169,15 @@ struct WebMenuTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/web/menus/",
@@ -185,7 +186,7 @@ struct WebMenuTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

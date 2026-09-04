@@ -4,9 +4,10 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AccountInvitationConfirmation: Component {
+struct AccountInvitationConfirmation: Leaf {
 
     struct State {
         let id: String
@@ -16,8 +17,8 @@ struct AccountInvitationConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove user invitation",
@@ -30,6 +31,6 @@ struct AccountInvitationConfirmation: Component {
                 actionURL: "/admin/account/invitations/\(state.id)/remove/",
                 cancelURL: "/admin/account/invitations/"
             )
-        )
+        ).renderHTML()
     }
 }

@@ -15,9 +15,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthEmailTable: Component {
+struct AuthEmailTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -40,14 +41,14 @@ struct AuthEmailTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("User emails")
 
                 if let userID = state.userID {
@@ -77,7 +78,7 @@ struct AuthEmailTable: Component {
                             href: "/admin/auth/emails/?userId=\(userID)",
                             isCurrent: true
                         ),
-                    ])
+                    ]).renderHTML()
                 }
 
                 if state.isAdded {
@@ -94,7 +95,7 @@ struct AuthEmailTable: Component {
                         AdminNavigationButton(
                             "Add email",
                             href: "/admin/auth/emails/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -107,7 +108,7 @@ struct AuthEmailTable: Component {
                         search: state.search,
                         queryItems: state.userID.map { [("userId", $0)] } ?? []
                     )
-                )
+                ).renderHTML()
 
                 if state.links.isEmpty {
                     let totalPages = max(
@@ -157,7 +158,7 @@ struct AuthEmailTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("User name")
                                             .columnWidth(percent: 30)
@@ -172,7 +173,7 @@ struct AuthEmailTable: Component {
                                             if canRemove {
                                                 ListTableRowSelectCheckbox(
                                                     state: .init(id: link.id)
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(
                                                 state.identityNames[
@@ -223,15 +224,15 @@ struct AuthEmailTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/auth/emails/",
@@ -242,7 +243,7 @@ struct AuthEmailTable: Component {
                             queryItems: state.userID.map { [("userId", $0)] }
                                 ?? []
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

@@ -8,9 +8,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogTagConfirmation: Component {
+struct BlogTagConfirmation: Leaf {
 
     struct State {
         let id: String
@@ -20,8 +21,8 @@ struct BlogTagConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove tag",
@@ -34,6 +35,6 @@ struct BlogTagConfirmation: Component {
                 actionURL: "/admin/blog/tags/\(state.id)/remove/",
                 cancelURL: "/admin/blog/tags/"
             )
-        )
+        ).renderHTML()
     }
 }

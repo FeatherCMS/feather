@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthEmailAdd: Component {
+struct AuthEmailAdd: Leaf {
 
     struct State {
         let form: AuthEmailForm.State
@@ -24,16 +25,16 @@ struct AuthEmailAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Add user email")
             AuthEmailForm(
                 state: state.form,
                 action: "/admin/auth/emails/add/",
                 submitLabel: "Add email"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

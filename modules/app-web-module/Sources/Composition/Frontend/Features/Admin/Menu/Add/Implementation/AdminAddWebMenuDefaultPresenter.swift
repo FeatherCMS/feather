@@ -3,7 +3,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminAddWebMenuDefaultPresenter: AdminAddWebMenuPresenter {
     let request: Request

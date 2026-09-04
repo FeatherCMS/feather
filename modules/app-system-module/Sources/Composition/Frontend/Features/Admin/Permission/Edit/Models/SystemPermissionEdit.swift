@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemPermissionEdit: Component {
+struct SystemPermissionEdit: Leaf {
 
     struct State {
         let id: String
@@ -17,9 +18,9 @@ struct SystemPermissionEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Edit system permission")
             if state.isEdited { P("System permission edited successfully.") }
@@ -29,7 +30,7 @@ struct SystemPermissionEdit: Component {
                 submitLabel: "Edit permission",
                 removeHref: "/admin/system/permissions/\(state.id)/remove/",
                 removeLabel: "Remove permission"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

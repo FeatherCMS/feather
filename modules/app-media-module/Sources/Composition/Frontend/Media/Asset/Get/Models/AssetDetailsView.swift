@@ -6,9 +6,10 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AssetDetailsView: Component {
+struct AssetDetailsView: Leaf {
     let item: Components.Schemas.MediaAssetDetailSchema
     let variants: [Components.Schemas.MediaAssetVariantListItemSchema]
     let breadcrumb: AdminBreadcrumb.State
@@ -40,16 +41,16 @@ struct AssetDetailsView: Component {
             "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)\(prefix)\(encoded)"
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor()
-            AdminBreadcrumb(state: breadcrumb)
+            AdminDetailFieldStyleAnchor().renderHTML()
+            AdminBreadcrumb(state: breadcrumb).renderHTML()
             H1("Media asset details")
-            AdminDetailsField(label: "ID", value: item.id)
-            AdminDetailsField(label: "Storage key", value: item.storageKey)
-            AdminDetailsField(label: "Type", value: item._type)
-            AdminDetailsField(label: "Status", value: item.status)
-            AdminDetailsField(label: "Size bytes", value: "\(item.sizeBytes)")
+            AdminDetailsField(label: "ID", value: item.id).renderHTML()
+            AdminDetailsField(label: "Storage key", value: item.storageKey).renderHTML()
+            AdminDetailsField(label: "Type", value: item._type).renderHTML()
+            AdminDetailsField(label: "Status", value: item.status).renderHTML()
+            AdminDetailsField(label: "Size bytes", value: "\(item.sizeBytes)").renderHTML()
             Div {
                 P("Preview original")
                     .class("admin-details-field__label")
@@ -64,10 +65,10 @@ struct AssetDetailsView: Component {
             }
             .class("admin-details-field")
             if let title = item.title {
-                AdminDetailsField(label: "Title", value: title)
+                AdminDetailsField(label: "Title", value: title).renderHTML()
             }
             if let altText = item.altText {
-                AdminDetailsField(label: "Alt text", value: altText)
+                AdminDetailsField(label: "Alt text", value: altText).renderHTML()
             }
             if variants.isEmpty {
                 P("No generated variants linked to this asset yet.")
@@ -106,21 +107,21 @@ struct AssetDetailsView: Component {
                         }
                     }
                     .class("cms-table")
-                )
+                ).renderHTML()
             }
             Div {
                 if canEdit {
                     AdminNavigationButton(
                         "Edit asset",
                         href: "/admin/media/assets/\(item.id)/edit/"
-                    )
+                    ).renderHTML()
                 }
                 if canRemove {
                     AdminNavigationButton(
                         "Remove asset",
                         href: "/admin/media/assets/\(item.id)/remove/",
                         classes: ["danger"]
-                    )
+                    ).renderHTML()
                 }
             }
             .class("button-row", "admin-detail-actions")

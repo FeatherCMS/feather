@@ -9,7 +9,8 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminListBlogAuthorLinkModel: Sendable {
     let items: [BlogAdminAPI.Components.Schemas.BlogAuthorLinkListItemSchema]

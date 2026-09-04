@@ -5,9 +5,10 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct RedirectRuleError: Component {
+struct RedirectRuleError: Leaf {
 
     struct State {
         let info: String
@@ -17,9 +18,9 @@ struct RedirectRuleError: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1(state.info)
             P(state.message)

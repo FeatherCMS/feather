@@ -4,15 +4,16 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminContactFormTabs: Component, FlowContent {
+struct AdminContactFormTabs: Leaf {
     enum Tab { case details, emails, submissions }
 
     let formId: String
     let active: Tab
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Div {
         AdminPillTabs(links: [
             .init(
                 label: "Details",
@@ -29,7 +30,6 @@ struct AdminContactFormTabs: Component, FlowContent {
                 href: "/admin/contact/forms/\(formId)/submissions/",
                 isCurrent: active == .submissions
             ),
-        ])
-        .content()
+        ]).renderHTML()
     }
 }

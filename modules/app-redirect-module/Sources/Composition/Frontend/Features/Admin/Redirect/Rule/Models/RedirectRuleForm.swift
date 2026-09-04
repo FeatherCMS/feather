@@ -3,9 +3,10 @@ import FeatherAdmin
 import Foundation
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct RedirectRuleForm: Component, FlowContent {
+struct RedirectRuleForm: Leaf {
 
     private static let statusOptions = [
         ("301", "301 Moved Permanently"),
@@ -45,7 +46,7 @@ struct RedirectRuleForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -60,7 +61,7 @@ struct RedirectRuleForm: Component, FlowContent {
                 value: state.source.value,
                 error: state.source.error,
                 isRequired: true
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: state.destination.key,
@@ -68,7 +69,7 @@ struct RedirectRuleForm: Component, FlowContent {
                 value: state.destination.value,
                 error: state.destination.error,
                 isRequired: true
-            )
+            ).renderHTML()
 
             FormSelectField(
                 name: state.statusCode.key,
@@ -79,14 +80,14 @@ struct RedirectRuleForm: Component, FlowContent {
                 selectedValue: state.statusCode.value ?? "301",
                 error: state.statusCode.error,
                 isRequired: true
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: state.notes.key,
                 label: state.notes.label,
                 value: state.notes.value,
                 error: state.notes.error
-            )
+            ).renderHTML()
 
             Section {
                 Div {
@@ -97,7 +98,7 @@ struct RedirectRuleForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")

@@ -4,16 +4,17 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct NewsletterCampaignSubscriberRemoveView: Component {
+struct NewsletterCampaignSubscriberRemoveView: Leaf {
     let email: String
     let subscriberId: String
     let newsletterId: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
                 title: "Remove subscriber",
@@ -25,6 +26,6 @@ struct NewsletterCampaignSubscriberRemoveView: Component {
                     "/admin/newsletters/\(newsletterId)/subscribers/\(subscriberId)/remove/",
                 cancelURL: "/admin/newsletters/\(newsletterId)/subscribers/"
             )
-        )
+        ).renderHTML()
     }
 }

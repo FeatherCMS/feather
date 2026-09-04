@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct NewsletterTable: Component {
+struct NewsletterTable: Leaf {
     struct State {
         let isAdded: Bool
         let isEdited: Bool
@@ -20,9 +21,9 @@ struct NewsletterTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1(state.isPicker ? "Select newsletter campaign" : "Campaigns")
             if state.isAdded { P("Campaign added successfully.") }
             if state.isEdited { P("Campaign edited successfully.") }
@@ -31,7 +32,7 @@ struct NewsletterTable: Component {
                 AdminNavigationButton(
                     "Add campaign",
                     href: "/admin/newsletters/add/"
-                )
+                ).renderHTML()
             }
             .class("button-row")
             Br()
@@ -42,7 +43,7 @@ struct NewsletterTable: Component {
                     placeholder: "Quick search campaigns",
                     search: state.search
                 )
-            )
+            ).renderHTML()
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -67,7 +68,7 @@ struct NewsletterTable: Component {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox()
+                                        ListTableSelectAllCheckbox().renderHTML()
                                     }
                                     Th("Name")
                                     Th("Actions")
@@ -79,7 +80,7 @@ struct NewsletterTable: Component {
                                         if canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            )
+                                            ).renderHTML()
                                         }
                                         if state.isPicker {
                                             Td {
@@ -134,15 +135,15 @@ struct NewsletterTable: Component {
                                                     "newsletter:campaigns:delete",
                                                 ]
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    )
-                )
+                    ).renderHTML()
+                ).renderHTML()
             }
         }
         .class("cms-section")

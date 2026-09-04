@@ -5,7 +5,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AppAcceptAccountInvitation {
 
@@ -15,7 +16,7 @@ struct AppAcceptAccountInvitation {
         let confirmation: String
     }
 
-    struct Page: Component, FlowContent {
+    struct Page: Leaf {
         let token: String
         let email: String?
         let password: String
@@ -23,12 +24,12 @@ struct AppAcceptAccountInvitation {
         let error: String?
         let success: String?
 
-        func content() -> some BasicTag {
+        func renderHTML() -> Section {
             Section {
                 H1("Create your account")
                 if let success {
                     P(success).class("success")
-                    AdminNavigationButton("Go to login", href: "/login/")
+                    AdminNavigationButton("Go to login", href: "/login/").renderHTML()
                 }
                 else {
                     P("Complete your registration using the invitation.")
@@ -42,14 +43,14 @@ struct AppAcceptAccountInvitation {
                                 label: "Password",
                                 value: password
                             )
-                        )
+                        ).renderHTML()
                         PasswordField(
                             state: .init(
                                 key: "confirmation",
                                 label: "Confirm password",
                                 value: confirmation
                             )
-                        )
+                        ).renderHTML()
                         Button("Create account").type(.submit)
                     }
                     .method(.post)
@@ -222,7 +223,7 @@ struct AppAcceptAccountInvitation {
                 confirmation: confirmation,
                 error: error,
                 success: success
-            )
+            ).renderHTML()
         )
     }
 

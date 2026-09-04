@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct NewsletterIssueAddView: Component {
+struct NewsletterIssueAddView: Leaf {
     struct State {
         let subject: String
         let content: String
@@ -17,13 +18,13 @@ struct NewsletterIssueAddView: Component {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             AdminNewsletterCampaignTabs(
                 campaignId: state.newsletterId,
                 active: .issues
-            )
-            AdminBreadcrumb(state: state.breadcrumb)
+            ).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1(
                 state.issueId == nil
                     ? "Add campaign issue" : "Edit campaign issue"
@@ -31,12 +32,12 @@ struct NewsletterIssueAddView: Component {
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Subject", required: true)
+                    AdminFieldLabel(label: "Subject", required: true).renderHTML()
                     Input().type(.text).class("text-input").name("subject")
                         .value(state.subject).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "Content", required: true)
+                    AdminFieldLabel(label: "Content", required: true).renderHTML()
                     Textarea(state.content).class("text-input").name("content")
                         .required()
                 }
@@ -44,7 +45,7 @@ struct NewsletterIssueAddView: Component {
                     AdminFieldLabel(
                         label: "Schedule (optional)",
                         required: false
-                    )
+                    ).renderHTML()
                     Input().type(.text).class("text-input").name("scheduledAt")
                         .value(state.scheduledAt).placeholder("Unix timestamp")
                 }
@@ -84,7 +85,7 @@ struct NewsletterIssueAddView: Component {
                             AdminFieldLabel(
                                 label: "Test email address",
                                 required: true
-                            )
+                            ).renderHTML()
                             Input().type(.email).class("text-input")
                                 .name("email").required()
                         }

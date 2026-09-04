@@ -1,9 +1,10 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminFieldLabel: Component, FlowContent {
+public struct AdminFieldLabel: Leaf {
     public let label: String
     public let required: Bool
 
@@ -27,7 +28,7 @@ public struct AdminFieldLabel: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Span {
         Span {
             InlineText(label)
             if required {

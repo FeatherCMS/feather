@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemVariableEdit: Component {
+struct SystemVariableEdit: Leaf {
 
     struct State {
         let id: String
@@ -17,9 +18,9 @@ struct SystemVariableEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Edit system variable")
             if state.isEdited { P("System variable edited successfully.") }
@@ -29,7 +30,7 @@ struct SystemVariableEdit: Component {
                 submitLabel: "Edit variable",
                 removeHref: "/admin/system/variables/\(state.id)/remove/",
                 removeLabel: "Remove variable"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

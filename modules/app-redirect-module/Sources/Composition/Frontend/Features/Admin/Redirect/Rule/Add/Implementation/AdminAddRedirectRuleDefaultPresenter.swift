@@ -3,7 +3,8 @@ import Foundation
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminAddRedirectRuleDefaultPresenter: AdminAddRedirectRulePresenter {
     let request: Request

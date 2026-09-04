@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFieldsTable: Component {
+struct ContactFieldsTable: Leaf {
     struct State {
         let fields: [AdminContactFieldRow]
         let search: String
@@ -17,15 +18,15 @@ struct ContactFieldsTable: Component {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         let basePath = "/admin/contact/fields"
-        Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+        return Section {
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Contact form fields")
             if let error = state.error { P(error).class("error") }
             if state.isEdited { P("Contact form field edited successfully.") }
             if state.isRemoved { P("Contact form field removed successfully.") }
-            Div { AdminNavigationButton("Add field", href: "\(basePath)/add/") }
+            Div { AdminNavigationButton("Add field", href: "\(basePath)/add/").renderHTML() }
                 .class("button-row")
             Br()
             Br()
@@ -35,7 +36,7 @@ struct ContactFieldsTable: Component {
                     placeholder: "Quick search contact fields",
                     search: state.search
                 )
-            )
+            ).renderHTML()
             if state.fields.isEmpty {
                 P("No fields yet.")
             }
@@ -53,7 +54,7 @@ struct ContactFieldsTable: Component {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox()
+                                        ListTableSelectAllCheckbox().renderHTML()
                                     }
                                     Th("Key")
                                     Th("Label")
@@ -68,7 +69,7 @@ struct ContactFieldsTable: Component {
                                         if state.canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: field.id)
-                                            )
+                                            ).renderHTML()
                                         }
                                         Td(field.key).data("label", "Key")
                                         Td(field.label).data("label", "Label")
@@ -101,15 +102,15 @@ struct ContactFieldsTable: Component {
                                                     "contact:form-fields:delete",
                                                 ]
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    )
-                )
+                    ).renderHTML()
+                ).renderHTML()
             }
         }
         .class("cms-section")

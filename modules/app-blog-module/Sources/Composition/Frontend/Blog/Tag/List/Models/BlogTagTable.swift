@@ -11,9 +11,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogTagTable: Component {
+struct BlogTagTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -37,14 +38,14 @@ struct BlogTagTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Blog tags")
                 statusFormDefinitions()
 
@@ -68,7 +69,7 @@ struct BlogTagTable: Component {
                         AdminNavigationButton(
                             "Add tag",
                             href: "/admin/blog/tags/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -80,7 +81,7 @@ struct BlogTagTable: Component {
                         placeholder: "Quick search blog tags",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -125,7 +126,7 @@ struct BlogTagTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Title")
                                         Th("Status")
@@ -142,7 +143,7 @@ struct BlogTagTable: Component {
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             titleCell(for: item)
                                             statusCell(for: item)
@@ -172,8 +173,8 @@ struct BlogTagTable: Component {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/blog/tags/",
@@ -182,7 +183,7 @@ struct BlogTagTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }
@@ -229,7 +230,7 @@ struct BlogTagTable: Component {
                 Span(item.title)
                 if let previewPath = previewPath(for: item.metadata) {
                     A {
-                        Icon(svg: FeatherIcons.externalLink())
+                        Icon(svg: FeatherIcons.externalLink()).renderHTML()
                     }
                     .href(previewPath)
                     .target(.blank)

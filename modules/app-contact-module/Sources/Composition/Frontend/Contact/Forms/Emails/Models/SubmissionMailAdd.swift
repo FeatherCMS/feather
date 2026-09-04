@@ -4,19 +4,20 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SubmissionMailAdd: Component {
+struct SubmissionMailAdd: Leaf {
     let formId: String
     let mail: AdminContactFormEmail
     let availableFields: [AdminContactFormFieldOption]
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: formId, active: .emails)
-            AdminBreadcrumb(state: breadcrumb)
+            AdminContactFormTabs(formId: formId, active: .emails).renderHTML()
+            AdminBreadcrumb(state: breadcrumb).renderHTML()
             H1("Add contact form email")
             replacementVariables
             SubmissionMailForm(
@@ -24,7 +25,7 @@ struct SubmissionMailAdd: Component {
                 action: "/admin/contact/forms/\(formId)/emails/add/",
                 submitLabel: "Add email",
                 error: error
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

@@ -1,9 +1,10 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthSessionRemoveConfirmation: Component {
+struct AuthSessionRemoveConfirmation: Leaf {
 
     struct State {
         let model: AdminRemoveAuthSessionModel
@@ -12,8 +13,8 @@ struct AuthSessionRemoveConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove session",
@@ -41,6 +42,6 @@ struct AuthSessionRemoveConfirmation: Component {
                     "/admin/user/identities/\(state.model.identityId)/sessions/\(state.model.sessionId)/remove/",
                 cancelURL: "/admin/user/identities/\(state.model.identityId)/"
             )
-        )
+        ).renderHTML()
     }
 }

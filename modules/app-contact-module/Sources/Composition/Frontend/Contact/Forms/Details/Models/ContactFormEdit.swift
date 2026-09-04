@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormEdit: Component {
+struct ContactFormEdit: Leaf {
     struct State {
         let id: String
         let isEdited: Bool
@@ -16,17 +17,17 @@ struct ContactFormEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: state.id, active: .details)
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminContactFormTabs(formId: state.id, active: .details).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Edit contact form")
             if state.isEdited { P("Contact form edited successfully.") }
             ContactFormForm(
                 state: state.form,
                 action: "/admin/contact/forms/\(state.id)/edit/",
                 submitLabel: "Save"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

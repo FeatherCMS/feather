@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminNewsletterCampaignTabs: Component, FlowContent {
+struct AdminNewsletterCampaignTabs: Leaf {
     enum Tab: String {
         case details
         case subscribers
@@ -16,7 +17,7 @@ struct AdminNewsletterCampaignTabs: Component, FlowContent {
     let campaignId: String
     let active: Tab
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Div {
         AdminPillTabs(links: [
             .init(
                 label: "Details",
@@ -33,7 +34,6 @@ struct AdminNewsletterCampaignTabs: Component, FlowContent {
                 href: "/admin/newsletters/\(campaignId)/issues/",
                 isCurrent: active == .issues
             ),
-        ])
-        .content()
+        ]).renderHTML()
     }
 }

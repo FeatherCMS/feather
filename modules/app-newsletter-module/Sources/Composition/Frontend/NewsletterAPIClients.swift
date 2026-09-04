@@ -10,7 +10,8 @@ import NewsletterAppAPI
 import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 public struct NewsletterAdminAPIClient: Sendable {
     public let client: NewsletterAdminAPI.Client

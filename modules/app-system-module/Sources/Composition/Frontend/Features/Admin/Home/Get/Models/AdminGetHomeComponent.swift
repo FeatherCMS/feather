@@ -3,18 +3,19 @@ import Foundation
 import HTML
 import SGML
 import SVG
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminGetHomeComponent: Component {
+struct AdminGetHomeComponent: Leaf {
     private let chartPrimaryColor = "var(--cms-primary-hover)"
 
     let model: AdminGetHomeModel
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             AdminBreadcrumb(
                 state: .init(links: [.init(label: "Admin", link: "/admin/")])
-            )
+            ).renderHTML()
             H1("Dashboard")
             P(model.summary)
                 .style("margin:0 0 16px 0;")

@@ -6,9 +6,10 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct MediaProcessorFormView: Component {
+struct MediaProcessorFormView: Leaf {
     struct FormState {
         var fileSuffix: String = ""
         var matchExtensions: String = ""
@@ -22,9 +23,9 @@ struct MediaProcessorFormView: Component {
     let form: FormState
     let breadcrumb: AdminBreadcrumb.State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb)
+            AdminBreadcrumb(state: breadcrumb).renderHTML()
             H1(title)
             if let error = form.error { P(error).class("error") }
             Form {
@@ -34,7 +35,7 @@ struct MediaProcessorFormView: Component {
                     value: form.fileSuffix,
                     isRequired: true,
                     inputClass: "text-input"
-                )
+                ).renderHTML()
 
                 FormInputField(
                     name: "matchExtensions",
@@ -42,7 +43,7 @@ struct MediaProcessorFormView: Component {
                     value: form.matchExtensions,
                     isRequired: true,
                     inputClass: "text-input"
-                )
+                ).renderHTML()
 
                 FormTextAreaField(
                     name: "commandTemplate",
@@ -51,7 +52,7 @@ struct MediaProcessorFormView: Component {
                     rows: 4,
                     isRequired: true,
                     textareaClass: "text-input"
-                )
+                ).renderHTML()
 
                 Section {
                     P(

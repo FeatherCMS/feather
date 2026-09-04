@@ -1,9 +1,10 @@
 import Foundation
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminStatusSelectField: Component, FlowContent {
+public struct AdminStatusSelectField: Leaf {
     public let formID: String
     public let selectedStatus: String
     public let options: [String]
@@ -18,7 +19,7 @@ public struct AdminStatusSelectField: Component, FlowContent {
         self.options = options
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Select {
         Select {
             for option in options {
                 Option(option.capitalized)
@@ -46,4 +47,5 @@ public struct AdminStatusSelectField: Component, FlowContent {
             """
         )
     }
+
 }

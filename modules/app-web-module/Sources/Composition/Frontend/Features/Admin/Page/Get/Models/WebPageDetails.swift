@@ -5,9 +5,10 @@ import HTML
 import OpenAPIRuntime
 import SGML
 import WebContracts
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebPageDetails: Component {
+struct WebPageDetails: Leaf {
     struct State {
         let rule: WebPageDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -18,9 +19,9 @@ struct WebPageDetails: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Web page details")
             if state.isPublished {
                 P("Web page published successfully.")
@@ -28,20 +29,20 @@ struct WebPageDetails: Component {
             if state.isUnpublished {
                 P("Web page unpublished successfully.")
             }
-            AdminDetailsField(label: "ID", value: state.rule.id)
-            AdminDetailsField(label: "Title", value: state.rule.title)
+            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
+            AdminDetailsField(label: "Title", value: state.rule.title).renderHTML()
             AdminDetailsField(
                 label: "Status",
                 value: state.rule.metadata.status.capitalized
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Published date",
                 value: format(state.rule.metadata.publicationDate)
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Expiration date",
                 value: format(state.rule.metadata.expirationDate)
-            )
+            ).renderHTML()
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -60,11 +61,11 @@ struct WebPageDetails: Component {
                         status: isPublished ? "draft" : "published",
                         label: isPublished ? "Unpublish" : "Publish",
                         classes: ["secondary"]
-                    )
+                    ).renderHTML()
                     AdminNavigationButton(
                         "Edit page",
                         href: "/admin/web/pages/\(state.rule.id)/edit/"
-                    )
+                    ).renderHTML()
                 }
                 if state.permissions.contains(
                     WebPermissions.Pages.delete.rawValue
@@ -73,7 +74,7 @@ struct WebPageDetails: Component {
                         "Remove page",
                         href: "/admin/web/pages/\(state.rule.id)/remove/",
                         classes: ["danger"]
-                    )
+                    ).renderHTML()
                 }
             }
             .class("button-row", "admin-detail-actions")

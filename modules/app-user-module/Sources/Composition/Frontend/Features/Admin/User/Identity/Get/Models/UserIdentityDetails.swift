@@ -1,9 +1,10 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserIdentityDetails: Component {
+struct UserIdentityDetails: Leaf {
     struct State {
         let identity: AdminGetUserIdentityModel
         let breadcrumb: AdminBreadcrumb.State
@@ -12,10 +13,10 @@ struct UserIdentityDetails: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor()
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminDetailFieldStyleAnchor().renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("User identity details")
             AdminPillTabs(links: [
                 .init(
@@ -45,11 +46,11 @@ struct UserIdentityDetails: Component {
                         "/admin/auth/magic-links/?userId=\(state.identity.id)",
                     isCurrent: false
                 ),
-            ])
+            ]).renderHTML()
 
-            AdminDetailsField(label: "Status", value: state.identity.status)
+            AdminDetailsField(label: "Status", value: state.identity.status).renderHTML()
             if state.identity.roleNames.isEmpty {
-                AdminDetailsField(label: "Roles", value: "No roles assigned")
+                AdminDetailsField(label: "Roles", value: "No roles assigned").renderHTML()
             }
             else {
                 Div {
@@ -68,12 +69,12 @@ struct UserIdentityDetails: Component {
                 AdminNavigationButton(
                     "Edit identity",
                     href: "/admin/user/identities/\(state.identity.id)/edit/"
-                )
+                ).renderHTML()
                 AdminNavigationButton(
                     "Remove identity",
                     href: "/admin/user/identities/\(state.identity.id)/remove/",
                     classes: ["danger"]
-                )
+                ).renderHTML()
             }
             .class(
                 "button-row",

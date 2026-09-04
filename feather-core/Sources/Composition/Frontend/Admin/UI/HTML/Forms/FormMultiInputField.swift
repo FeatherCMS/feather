@@ -3,9 +3,12 @@ import FeatherContracts
 import Foundation
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct FormMultiInputField: Component, FlowContent {
+private typealias HTMLButton = HTML.Button
+
+public struct FormMultiInputField: Leaf {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -140,7 +143,7 @@ public struct FormMultiInputField: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Section {
         Section {
             Label {
                 fieldLabel()
@@ -209,7 +212,7 @@ public struct FormMultiInputField: Component, FlowContent {
     ) -> some BasicTag {
         Span {
             Span(value).class("form-multi-input-field__chip-label")
-            HTML.Button("×")
+            HTMLButton("×")
                 .type(.button)
                 .class("form-multi-input-field__remove")
                 .ariaLabel("Remove \(value)")

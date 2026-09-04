@@ -6,9 +6,10 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct MediaProcessorsListView: Component {
+struct MediaProcessorsListView: Leaf {
     let items: [Components.Schemas.MediaProcessorListItemSchema]
     let page: Int
     let pageSize: Int
@@ -23,14 +24,14 @@ struct MediaProcessorsListView: Component {
     let deniedMessage: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !canAccess {
                 H1(deniedInfo)
                 P(deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: breadcrumb)
+                AdminBreadcrumb(state: breadcrumb).renderHTML()
                 H1("Processors")
 
                 if isAdded { P("Processor added successfully.") }
@@ -41,7 +42,7 @@ struct MediaProcessorsListView: Component {
                         AdminNavigationButton(
                             "Add processor",
                             href: "/admin/media/processors/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -83,7 +84,7 @@ struct MediaProcessorsListView: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("File suffix")
                                             .columnWidth(percent: 50)
@@ -98,7 +99,7 @@ struct MediaProcessorsListView: Component {
                                             if canRemove {
                                                 ListTableRowSelectCheckbox(
                                                     state: .init(id: item.id)
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(item.name)
                                                 .data(
@@ -143,15 +144,15 @@ struct MediaProcessorsListView: Component {
                                                     ],
                                                     permissions: permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                 }
                 ListTablePagination(
                     state: .init(
@@ -161,7 +162,7 @@ struct MediaProcessorsListView: Component {
                         total: total,
                         search: ""
                     )
-                )
+                ).renderHTML()
             }
         }
         .class("cms-section")

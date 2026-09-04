@@ -1,9 +1,10 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminPillTabs: Component, FlowContent {
+public struct AdminPillTabs: Leaf {
 
     public struct Link: Sendable {
         public let label: String
@@ -78,7 +79,7 @@ public struct AdminPillTabs: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Div {
         Div {
             for link in links {
                 A(link.label)

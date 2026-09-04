@@ -1,15 +1,16 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemJobError: Component {
+struct SystemJobError: Leaf {
     let message: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb)
+            AdminBreadcrumb(state: breadcrumb).renderHTML()
             H1("Unable to load worker jobs")
             P(message)
         }

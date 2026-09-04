@@ -9,9 +9,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogAuthorLinkForm: Component, FlowContent {
+struct BlogAuthorLinkForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -55,7 +56,7 @@ struct BlogAuthorLinkForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -70,28 +71,28 @@ struct BlogAuthorLinkForm: Component, FlowContent {
                 value: state.label.value,
                 error: state.label.error,
                 isRequired: true
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.url.key,
                 label: state.url.label,
                 value: state.url.value,
                 error: state.url.error,
                 isRequired: true
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.priority.key,
                 label: state.priority.label,
                 value: state.priority.value,
                 error: state.priority.error,
                 isRequired: true
-            )
+            ).renderHTML()
             checkbox(state.isBlank)
             FormInputField(
                 name: state.permission.key,
                 label: state.permission.label,
                 value: state.permission.value,
                 error: state.permission.error
-            )
+            ).renderHTML()
             textarea(state.notes)
 
             Section {
@@ -103,7 +104,7 @@ struct BlogAuthorLinkForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")
@@ -124,7 +125,7 @@ struct BlogAuthorLinkForm: Component, FlowContent {
             value: field.value,
             error: field.error,
             rows: 6
-        )
+        ).renderHTML()
     }
 
     private func checkbox(

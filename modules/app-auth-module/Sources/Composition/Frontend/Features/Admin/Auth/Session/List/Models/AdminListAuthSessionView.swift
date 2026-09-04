@@ -1,9 +1,10 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminListAuthSessionView: Component {
+struct AdminListAuthSessionView: Leaf {
     struct State {
         let identityID: String
         let items: [AdminListAuthSessionModel.Item]
@@ -12,7 +13,7 @@ struct AdminListAuthSessionView: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             AdminBreadcrumb(
                 state: .init(
@@ -30,7 +31,7 @@ struct AdminListAuthSessionView: Component {
                         ),
                     ]
                 )
-            )
+            ).renderHTML()
             H1("Sessions")
             AdminPillTabs(links: [
                 .init(
@@ -59,7 +60,7 @@ struct AdminListAuthSessionView: Component {
                     href: "/admin/auth/magic-links/?userId=\(state.identityID)",
                     isCurrent: false
                 ),
-            ])
+            ]).renderHTML()
             if state.items.isEmpty {
                 P("No active sessions.")
             }
@@ -86,7 +87,7 @@ struct AdminListAuthSessionView: Component {
                                             href:
                                                 "/admin/user/identities/\(state.identityID)/sessions/\(item.id)/remove/",
                                             classes: ["danger"]
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }

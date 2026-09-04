@@ -14,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 public struct AdminAuthCredentialFormInput: Codable, Sendable, Equatable,
     Hashable

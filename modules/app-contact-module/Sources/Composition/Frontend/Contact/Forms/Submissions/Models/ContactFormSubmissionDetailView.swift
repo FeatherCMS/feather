@@ -5,9 +5,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormSubmissionDetailView: Component {
+struct ContactFormSubmissionDetailView: Leaf {
     struct State {
         let formId: String
         let item: AdminContactFormSubmissionItem
@@ -16,10 +17,10 @@ struct ContactFormSubmissionDetailView: Component {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: state.formId, active: .submissions)
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminContactFormTabs(formId: state.formId, active: .submissions).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Contact form submission")
             if let error = state.error { P(error).class("error") }
             if state.isEdited { P("Submission status updated successfully.") }
@@ -45,7 +46,7 @@ struct ContactFormSubmissionDetailView: Component {
             }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Status", required: true)
+                    AdminFieldLabel(label: "Status", required: true).renderHTML()
                     Select {
                         for status in [
                             "received", "processed", "spam", "failed",

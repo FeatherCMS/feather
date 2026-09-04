@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 protocol AdminGetContactFormController: Sendable {
     func get(request: Request, context: DefaultRequestContext) async throws

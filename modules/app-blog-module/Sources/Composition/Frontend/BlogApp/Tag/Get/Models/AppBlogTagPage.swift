@@ -8,12 +8,13 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AppBlogTagPage: Component, FlowContent {
+struct AppBlogTagPage: Leaf {
     let state: AppGetBlogTagModel
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Main {
             AppPublicStyleAnchor()
             Div {

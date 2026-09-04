@@ -2,9 +2,10 @@ import CSS
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemPermissionForm: Component, FlowContent {
+struct SystemPermissionForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -33,7 +34,7 @@ struct SystemPermissionForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -48,14 +49,14 @@ struct SystemPermissionForm: Component, FlowContent {
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: true
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: state.notes.key,
                 label: state.notes.label,
                 value: state.notes.value,
                 error: state.notes.error
-            )
+            ).renderHTML()
 
             Section {
                 Div {
@@ -66,7 +67,7 @@ struct SystemPermissionForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")

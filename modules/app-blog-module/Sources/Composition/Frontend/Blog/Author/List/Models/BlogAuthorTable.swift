@@ -11,11 +11,12 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 import struct Foundation.CharacterSet
 
-struct BlogAuthorTable: Component {
+struct BlogAuthorTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -76,14 +77,14 @@ struct BlogAuthorTable: Component {
         }
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Blog authors")
                 statusFormDefinitions()
 
@@ -107,7 +108,7 @@ struct BlogAuthorTable: Component {
                         AdminNavigationButton(
                             "Add author",
                             href: "/admin/blog/authors/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -119,7 +120,7 @@ struct BlogAuthorTable: Component {
                         placeholder: "Quick search blog authors",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -164,7 +165,7 @@ struct BlogAuthorTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Profile")
                                         Th("Name")
@@ -182,7 +183,7 @@ struct BlogAuthorTable: Component {
                                                     state: .init(
                                                         id: rule.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td {
                                                 if let profileImage = rule
@@ -244,8 +245,8 @@ struct BlogAuthorTable: Component {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/blog/authors/",
@@ -254,7 +255,7 @@ struct BlogAuthorTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }
@@ -320,7 +321,7 @@ struct BlogAuthorTable: Component {
                 Span(item.name)
                 if let previewPath = previewPath(for: item.metadata) {
                     A {
-                        Icon(svg: FeatherIcons.externalLink())
+                        Icon(svg: FeatherIcons.externalLink()).renderHTML()
                     }
                     .href(previewPath)
                     .target(.blank)

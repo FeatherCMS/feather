@@ -5,9 +5,10 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct RedirectRuleAdd: Component {
+struct RedirectRuleAdd: Leaf {
 
     struct State {
         let form: RedirectRuleForm.State
@@ -16,16 +17,16 @@ struct RedirectRuleAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Add redirect rule")
             RedirectRuleForm(
                 state: state.form,
                 action: "/admin/redirect/rules/add/",
                 submitLabel: "Add rule"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

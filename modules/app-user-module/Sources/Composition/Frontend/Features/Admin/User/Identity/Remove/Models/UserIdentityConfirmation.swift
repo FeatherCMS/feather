@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserIdentityConfirmation: Component {
+struct UserIdentityConfirmation: Leaf {
 
     struct State {
         let id: String
@@ -15,8 +16,8 @@ struct UserIdentityConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove identity",
@@ -27,6 +28,6 @@ struct UserIdentityConfirmation: Component {
                 actionURL: "/admin/user/identities/\(state.id)/remove/",
                 cancelURL: "/admin/user/identities/"
             )
-        )
+        ).renderHTML()
     }
 }

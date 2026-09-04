@@ -11,9 +11,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogAuthorDetails: Component {
+struct BlogAuthorDetails: Leaf {
     struct State {
         let author: BlogAuthorDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -26,10 +27,10 @@ struct BlogAuthorDetails: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor()
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminDetailFieldStyleAnchor().renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Blog author details")
             if state.isPublished {
                 P("Blog author published successfully.")
@@ -65,23 +66,23 @@ struct BlogAuthorDetails: Component {
                 AdminDetailsField(
                     label: "Profile picture asset ID",
                     value: profileImageAssetId
-                )
+                ).renderHTML()
             }
-            AdminDetailsField(label: "ID", value: state.author.id)
-            AdminDetailsField(label: "Name", value: state.author.name)
+            AdminDetailsField(label: "ID", value: state.author.id).renderHTML()
+            AdminDetailsField(label: "Name", value: state.author.name).renderHTML()
             AdminDetailsField(
                 label: "Status",
                 value: state.author.metadata.status.capitalized
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Published date",
                 value: format(state.author.metadata.publicationDate)
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Expiration date",
                 value: format(state.author.metadata.expirationDate)
-            )
-            AdminDetailsField(label: "Content", value: state.author.content)
+            ).renderHTML()
+            AdminDetailsField(label: "Content", value: state.author.content).renderHTML()
 
             Div {
                 if let previewPath = previewPath {
@@ -110,7 +111,7 @@ struct BlogAuthorDetails: Component {
                     AdminNavigationButton(
                         "Edit author",
                         href: "/admin/blog/authors/\(state.author.id)/edit/"
-                    )
+                    ).renderHTML()
                 }
                 if state.permissions.contains(
                     BlogPermissions.Authors.delete.rawValue
@@ -119,7 +120,7 @@ struct BlogAuthorDetails: Component {
                         "Remove author",
                         href: "/admin/blog/authors/\(state.author.id)/remove/",
                         classes: ["danger"]
-                    )
+                    ).renderHTML()
                 }
             }
             .class(
@@ -143,7 +144,7 @@ struct BlogAuthorDetails: Component {
                         "Add link",
                         href:
                             "/admin/blog/authors/\(state.author.id)/links/add/"
-                    )
+                    ).renderHTML()
                 }
                 .class("button-row", "blog-author-details-link-add")
             }
@@ -168,7 +169,7 @@ struct BlogAuthorDetails: Component {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox()
+                                        ListTableSelectAllCheckbox().renderHTML()
                                     }
                                     Th("Label")
                                     Th("URL")
@@ -184,7 +185,7 @@ struct BlogAuthorDetails: Component {
                                         if canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            )
+                                            ).renderHTML()
                                         }
                                         Td(item.label)
                                             .data("label", "Label")
@@ -227,15 +228,15 @@ struct BlogAuthorDetails: Component {
                                                 ],
                                                 permissions: state.permissions
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    )
-                )
+                    ).renderHTML()
+                ).renderHTML()
             }
         }
         .class("cms-section")

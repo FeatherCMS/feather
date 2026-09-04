@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthProfileForm: Component, FlowContent {
+struct AuthProfileForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -45,7 +46,7 @@ struct AuthProfileForm: Component, FlowContent {
     var action: String = "/admin/auth/profile/edit/"
     var submitLabel: String = "Edit profile"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -68,7 +69,7 @@ struct AuthProfileForm: Component, FlowContent {
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                     outputMode: .assetId
                 )
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: state.firstName.key,
@@ -77,7 +78,7 @@ struct AuthProfileForm: Component, FlowContent {
                 error: state.firstName.error,
                 isRequired: false,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.lastName.key,
                 label: state.lastName.label,
@@ -85,7 +86,7 @@ struct AuthProfileForm: Component, FlowContent {
                 error: state.lastName.error,
                 isRequired: false,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             Section {
                 Div {

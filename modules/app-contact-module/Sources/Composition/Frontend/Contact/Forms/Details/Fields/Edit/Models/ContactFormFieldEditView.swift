@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormFieldEditView: Component {
+struct ContactFormFieldEditView: Leaf {
     struct State {
         let formId: String
         let field: AdminContactFormFieldRow
@@ -14,17 +15,17 @@ struct ContactFormFieldEditView: Component {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         let basePath = "/admin/contact/forms/\(state.formId)/fields"
-        Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+        return Section {
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Edit contact form field")
             if let error = state.error { P(error).class("error") }
             ContactFormFieldForm(
                 field: state.field,
                 action: "\(basePath)/\(state.field.id)/edit/",
                 submitLabel: "Save"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

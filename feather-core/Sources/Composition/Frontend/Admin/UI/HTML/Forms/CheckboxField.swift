@@ -1,9 +1,10 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct CheckboxField: Component, FlowContent {
+public struct CheckboxField: Leaf {
 
     public enum LabelPosition: String, Codable, Sendable {
         case before
@@ -130,7 +131,7 @@ public struct CheckboxField: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Section {
         Section {
             Label {
                 if state.labelPosition == .before {

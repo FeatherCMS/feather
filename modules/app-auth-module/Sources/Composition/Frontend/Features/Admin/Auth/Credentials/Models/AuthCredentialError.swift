@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthCredentialError: Component {
+struct AuthCredentialError: Leaf {
     struct State {
         let info: String
         let message: String
@@ -24,9 +25,9 @@ struct AuthCredentialError: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1(state.info)
             P(state.message)
         }

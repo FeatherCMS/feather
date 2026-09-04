@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthCredentialTable: Component {
+struct AuthCredentialTable: Leaf {
     struct State {
         let canAccess: Bool
         let permissions: Set<String>
@@ -30,21 +31,21 @@ struct AuthCredentialTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your identity cannot access user credentials.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("User credentials")
                 if state.permissions.contains("auth:credential:create") {
                     Div {
                         AdminNavigationButton(
                             "Add credential",
                             href: "/admin/auth/credentials/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -56,7 +57,7 @@ struct AuthCredentialTable: Component {
                         placeholder: "Quick search credentials",
                         search: state.search
                     )
-                )
+                ).renderHTML()
                 if state.credentials.isEmpty {
                     P(
                         state.search.isEmpty
@@ -104,13 +105,13 @@ struct AuthCredentialTable: Component {
                                                 ],
                                                 permissions: state.permissions
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table", "credential-table")
-                    )
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path:
@@ -120,7 +121,7 @@ struct AuthCredentialTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

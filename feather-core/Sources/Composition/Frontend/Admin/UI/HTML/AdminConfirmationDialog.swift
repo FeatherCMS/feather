@@ -1,8 +1,9 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminConfirmationDialog: Component {
+public struct AdminConfirmationDialog: Leaf {
 
     public struct HiddenField: Sendable {
         public let name: String
@@ -70,9 +71,9 @@ public struct AdminConfirmationDialog: Component {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             Div {
                 H1(state.title)

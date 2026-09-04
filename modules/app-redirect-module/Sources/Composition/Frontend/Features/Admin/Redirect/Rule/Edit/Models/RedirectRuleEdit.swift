@@ -5,9 +5,10 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct RedirectRuleEdit: Component {
+struct RedirectRuleEdit: Leaf {
 
     struct State {
         let id: String
@@ -18,9 +19,9 @@ struct RedirectRuleEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Edit redirect rule")
             if state.isEdited { P("Redirect rule edited successfully.") }
@@ -30,7 +31,7 @@ struct RedirectRuleEdit: Component {
                 submitLabel: "Edit rule",
                 removeHref: "/admin/redirect/rules/\(state.id)/remove/",
                 removeLabel: "Remove rule"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

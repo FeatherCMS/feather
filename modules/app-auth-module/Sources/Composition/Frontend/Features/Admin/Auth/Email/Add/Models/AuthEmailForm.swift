@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthEmailForm: Component, FlowContent {
+struct AuthEmailForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -64,7 +65,7 @@ struct AuthEmailForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -83,7 +84,7 @@ struct AuthEmailForm: Component, FlowContent {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: state.email.key,
@@ -92,7 +93,7 @@ struct AuthEmailForm: Component, FlowContent {
                 error: state.email.error,
                 type: .email,
                 isRequired: true
-            )
+            ).renderHTML()
 
             Section {
                 Div {
@@ -103,7 +104,7 @@ struct AuthEmailForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")

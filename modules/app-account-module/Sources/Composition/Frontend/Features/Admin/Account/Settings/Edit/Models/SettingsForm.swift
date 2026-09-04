@@ -2,9 +2,10 @@ import CSS
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SettingsForm: Component, FlowContent {
+struct SettingsForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -26,7 +27,7 @@ struct SettingsForm: Component, FlowContent {
     var action: String = "/admin/account/settings/"
     var submitLabel: String = "Save settings"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -44,7 +45,7 @@ struct SettingsForm: Component, FlowContent {
                 isRequired: true,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             FormInputField(
                 name: state.timezone.key,
@@ -55,7 +56,7 @@ struct SettingsForm: Component, FlowContent {
                 isRequired: true,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             FormSelectField(
                 name: state.pageSize.key,
@@ -70,7 +71,7 @@ struct SettingsForm: Component, FlowContent {
                 isRequired: true,
                 isDisabled: !state.canEdit,
                 selectClass: "text-input page-size-select"
-            )
+            ).renderHTML()
 
             if state.canEdit {
                 Section {

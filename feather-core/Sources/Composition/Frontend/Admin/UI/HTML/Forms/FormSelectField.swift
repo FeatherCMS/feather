@@ -2,9 +2,12 @@ import CSS
 import FeatherContracts
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct FormSelectField: Component, FlowContent {
+private typealias HTMLOption = HTML.Option
+
+public struct FormSelectField: Leaf {
     public struct Option: Sendable {
         public var label: String
         public var value: String
@@ -104,7 +107,7 @@ public struct FormSelectField: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Section {
         Section {
             Label {
                 fieldLabel()
@@ -135,7 +138,7 @@ public struct FormSelectField: Component, FlowContent {
     private func select() -> Select {
         var select = Select {
             for option in state.options {
-                HTML.Option(option.label)
+                HTMLOption(option.label)
                     .value(option.value)
                     .if(option.value == state.selectedValue) {
                         $0.selected()

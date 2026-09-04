@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 protocol AdminRemoveContactSubmissionsPresenter: Sendable {
     func renderConfirmation(selectedIds: [String], permissions: Set<String>)

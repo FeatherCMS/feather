@@ -6,7 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
     let request: Request
@@ -41,7 +42,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                 description: "Upload media asset",
                 imagePath: "images/logos/logo.png",
                 content: Div {
-                    content
+                    content.renderHTML()
                 }
             )
         }

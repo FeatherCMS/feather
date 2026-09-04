@@ -5,18 +5,19 @@ import Foundation
 import HTML
 import SGML
 import SVG
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AnalyticsInsightsView: Component {
+struct AnalyticsInsightsView: Leaf {
 
     private let chartPrimaryColor = "var(--cms-primary-hover)"
 
     let page: AdminAnalyticsInsightsPage
     let permissions: Set<String>
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb)
+            AdminBreadcrumb(state: breadcrumb).renderHTML()
             H1(page.source.pageTitle)
             P(page.source.summary)
                 .style(

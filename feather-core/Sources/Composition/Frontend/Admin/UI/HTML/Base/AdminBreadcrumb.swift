@@ -2,9 +2,10 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminBreadcrumb: Component, FlowContent {
+public struct AdminBreadcrumb: Leaf {
 
     public struct State: Sendable {
 
@@ -31,7 +32,7 @@ public struct AdminBreadcrumb: Component, FlowContent {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Nav {
         Nav {
             Ol {
                 for (idx, breadcrumb) in state.links.enumerated() {

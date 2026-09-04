@@ -5,9 +5,10 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct RedirectRuleConfirmation: Component {
+struct RedirectRuleConfirmation: Leaf {
 
     struct State {
         let id: String
@@ -17,8 +18,8 @@ struct RedirectRuleConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove redirect rule",
@@ -31,6 +32,6 @@ struct RedirectRuleConfirmation: Component {
                 actionURL: "/admin/redirect/rules/\(state.id)/remove/",
                 cancelURL: "/admin/redirect/rules/"
             )
-        )
+        ).renderHTML()
     }
 }

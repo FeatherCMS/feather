@@ -4,34 +4,35 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SubmissionMailForm: Component, FlowContent {
+struct SubmissionMailForm: Leaf {
     let mail: AdminContactFormEmail
     let action: String
     let submitLabel: String
     let error: String?
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let error { P(error).class("error") }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Mail from", required: true)
+                    AdminFieldLabel(label: "Mail from", required: true).renderHTML()
                     Input().type(.text).name("mailFrom").value(mail.mailFrom)
                         .required()
                 }
             }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Mail to address", required: true)
+                    AdminFieldLabel(label: "Mail to address", required: true).renderHTML()
                     Input().type(.text).name("mailTo").value(mail.mailTo)
                         .required()
                 }
             }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Subject", required: true)
+                    AdminFieldLabel(label: "Subject", required: true).renderHTML()
                     Input().type(.text).name("subject").value(mail.subject)
                         .required()
                 }
@@ -41,14 +42,14 @@ struct SubmissionMailForm: Component, FlowContent {
                     AdminFieldLabel(
                         label: "Additional headers",
                         required: false
-                    )
+                    ).renderHTML()
                     Textarea(mail.additionalHeaders).class("text-input")
                         .name("additionalHeaders").rows(4)
                 }
             }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Message body", required: true)
+                    AdminFieldLabel(label: "Message body", required: true).renderHTML()
                     Textarea(mail.messageBody).class("text-input")
                         .name("messageBody").rows(12).required()
                 }

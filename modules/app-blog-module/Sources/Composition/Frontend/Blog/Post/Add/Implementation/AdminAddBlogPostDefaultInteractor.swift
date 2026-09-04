@@ -9,7 +9,8 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminAddBlogPostDefaultInteractor: AdminAddBlogPostInteractor {
     let repository: any AdminAddBlogPostRepository

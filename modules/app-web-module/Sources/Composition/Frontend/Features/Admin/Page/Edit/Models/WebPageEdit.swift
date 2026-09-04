@@ -6,9 +6,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebPageEdit: Component {
+struct WebPageEdit: Leaf {
 
     struct State {
         let id: String
@@ -19,9 +20,9 @@ struct WebPageEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1 {
                 Span("Edit page")
@@ -30,7 +31,7 @@ struct WebPageEdit: Component {
                         .isEmpty
                 {
                     A {
-                        Icon(svg: FeatherIcons.externalLink())
+                        Icon(svg: FeatherIcons.externalLink()).renderHTML()
                     }
                     .href(
                         "/\(slug.trimmingCharacters(in: .whitespacesAndNewlines))/"
@@ -51,7 +52,7 @@ struct WebPageEdit: Component {
                 submitLabel: "Edit page",
                 removeHref: "/admin/web/pages/\(state.id)/remove/",
                 removeLabel: "Remove page"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

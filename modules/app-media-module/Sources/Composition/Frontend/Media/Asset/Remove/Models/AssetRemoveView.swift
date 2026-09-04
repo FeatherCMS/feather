@@ -6,14 +6,15 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AssetRemoveView: Component {
+struct AssetRemoveView: Leaf {
     let id: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
                 title: "Remove media asset",
@@ -26,6 +27,6 @@ struct AssetRemoveView: Component {
                 actionURL: "/admin/media/assets/\(id)/remove/",
                 cancelURL: "/admin/media/assets/"
             )
-        )
+        ).renderHTML()
     }
 }

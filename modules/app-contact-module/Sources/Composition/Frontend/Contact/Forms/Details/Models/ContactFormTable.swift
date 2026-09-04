@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormTable: Component {
+struct ContactFormTable: Leaf {
     struct State {
         let isAdded: Bool
         let isEdited: Bool
@@ -20,9 +21,9 @@ struct ContactFormTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1(state.isPicker ? "Select contact form" : "Contact forms")
             if state.isAdded { P("Contact form added successfully.") }
             if state.isEdited { P("Contact form edited successfully.") }
@@ -31,7 +32,7 @@ struct ContactFormTable: Component {
                 AdminNavigationButton(
                     "Add form",
                     href: "/admin/contact/forms/add/"
-                )
+                ).renderHTML()
             }
             .class("button-row")
             Br()
@@ -42,7 +43,7 @@ struct ContactFormTable: Component {
                     placeholder: "Quick search contact forms",
                     search: state.search
                 )
-            )
+            ).renderHTML()
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -64,7 +65,7 @@ struct ContactFormTable: Component {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox()
+                                        ListTableSelectAllCheckbox().renderHTML()
                                     }
                                     Th("Name")
                                     Th("Actions")
@@ -76,7 +77,7 @@ struct ContactFormTable: Component {
                                         if state.canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            )
+                                            ).renderHTML()
                                         }
                                         if state.isPicker {
                                             Td {
@@ -131,15 +132,15 @@ struct ContactFormTable: Component {
                                                     "contact:forms:delete",
                                                 ]
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    )
-                )
+                    ).renderHTML()
+                ).renderHTML()
             }
         }
         .class("cms-section")

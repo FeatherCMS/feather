@@ -4,18 +4,19 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminContactSubmissionsDirectoryView: Component {
+struct AdminContactSubmissionsDirectoryView: Leaf {
     let items: [AdminContactSubmissionDirectoryItem]
     let search: String
     let canRemove: Bool
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb)
+            AdminBreadcrumb(state: breadcrumb).renderHTML()
             H1("Submissions")
             P("All contact form submissions.")
             if let error { P(error).class("error") }
@@ -25,7 +26,7 @@ struct AdminContactSubmissionsDirectoryView: Component {
                     placeholder: "Quick search contact submissions",
                     search: search
                 )
-            )
+            ).renderHTML()
             if items.isEmpty {
                 P(
                     search.isEmpty
@@ -47,7 +48,7 @@ struct AdminContactSubmissionsDirectoryView: Component {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox()
+                                        ListTableSelectAllCheckbox().renderHTML()
                                     }
                                     Th("Form")
                                     Th("Submitted")
@@ -65,7 +66,7 @@ struct AdminContactSubmissionsDirectoryView: Component {
                                                     id:
                                                         "\(item.formId):\(item.id)"
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                         Td(item.formName).data("label", "Form")
                                         Td(item.createdAt)
@@ -101,15 +102,15 @@ struct AdminContactSubmissionsDirectoryView: Component {
                                                     "contact:form-submissions:delete",
                                                 ]
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    )
-                )
+                    ).renderHTML()
+                ).renderHTML()
             }
         }
         .class("cms-section")

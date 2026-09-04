@@ -3,7 +3,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 //
 //  File.swift
@@ -12,9 +13,9 @@ import WebStandards
 //  Addd by Tibor Bödecs on 2026. 03. 08..
 //
 
-struct AdminGetWebHomeComponent: Component {
+struct AdminGetWebHomeComponent: Leaf {
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             Nav {
                 Ol {

@@ -5,9 +5,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMetadataError: Component {
+struct WebMetadataError: Leaf {
 
     struct State {
         let info: String
@@ -17,9 +18,9 @@ struct WebMetadataError: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1(state.info)
             P(state.message)

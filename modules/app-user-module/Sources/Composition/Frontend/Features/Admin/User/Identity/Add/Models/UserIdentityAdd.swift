@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserIdentityAdd: Component {
+struct UserIdentityAdd: Leaf {
 
     struct State {
         let form: UserIdentityForm.State
@@ -15,9 +16,9 @@ struct UserIdentityAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Add identity")
 
@@ -25,7 +26,7 @@ struct UserIdentityAdd: Component {
                 state: state.form,
                 action: "/admin/user/identities/add/",
                 submitLabel: "Add identity"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

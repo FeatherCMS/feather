@@ -4,9 +4,10 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AccountInvitationTable: Component {
+struct AccountInvitationTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -27,14 +28,14 @@ struct AccountInvitationTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("User invitations")
 
                 if state.isAdded {
@@ -51,7 +52,7 @@ struct AccountInvitationTable: Component {
                         AdminNavigationButton(
                             "Add invitation",
                             href: "/admin/account/invitations/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -63,7 +64,7 @@ struct AccountInvitationTable: Component {
                         placeholder: "Quick search invitations",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.invitations.isEmpty {
                     let totalPages = max(
@@ -109,7 +110,7 @@ struct AccountInvitationTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Email")
                                             .columnWidth(percent: 62)
@@ -126,7 +127,7 @@ struct AccountInvitationTable: Component {
                                                     state: .init(
                                                         id: invitation.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(invitation.email)
                                                 .data(
@@ -177,15 +178,15 @@ struct AccountInvitationTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/account/invitations/",
@@ -194,7 +195,7 @@ struct AccountInvitationTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

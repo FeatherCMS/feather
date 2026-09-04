@@ -2,14 +2,15 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AppWebPagePage: Component, FlowContent {
+struct AppWebPagePage: Leaf {
     let state: AppGetWebPageModel
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Main {
         Main {
-            AppPublicStyleAnchor()
+            AppPublicStyleAnchor().renderHTML()
             Div {
                 Article {
                     Div {
@@ -28,7 +29,7 @@ struct AppWebPagePage: Component, FlowContent {
                         .class("public-image")
                     }
 
-                    AppPublicTextBlock(text: state.content)
+                    AppPublicTextBlock(text: state.content).renderHTML()
                 }
                 .class("public-panel")
             }

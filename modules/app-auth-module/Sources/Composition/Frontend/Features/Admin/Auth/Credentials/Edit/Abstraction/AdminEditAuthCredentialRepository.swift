@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 protocol AdminEditAuthCredentialRepository: Sendable {
     func get(id: String) async throws -> AuthCredentialDetailsModel

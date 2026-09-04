@@ -6,12 +6,14 @@
 //
 
 import CSS
+import DOM
 import HTML
 import SGML
 import SVG
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminBody<T: Component>: Component, FlowContent {
+public struct AdminBody<T: Leaf>: Leaf {
 
     public struct State: Sendable {
         public let sidebar: AdminSidebar.State
@@ -35,38 +37,41 @@ public struct AdminBody<T: Component>: Component, FlowContent {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
-        AdminTopBar()
-        if let toast = state.toast {
-            AdminToastBootstrap(payload: toast)
-        }
-
+    public func renderHTML() -> Div {
         Div {
-            AdminSidebar(state: state.sidebar)
-
-            Main {
-                Div {
-                    state.content
-                }
-                .class("panel", "cms-content")
+            AdminTopBar().renderHTML()
+            if let toast = state.toast {
+                AdminToastBootstrap(payload: toast).renderHTML()
             }
-        }
-        .class("container")
 
-        Script()
-            .src(
-                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/toast.js"
-            )
-            .defer()
-        Script()
-            .src(
-                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/navigation.js"
-            )
-            .defer()
-        Script()
-            .src(
-                "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.js"
-            )
-            .defer()
+            Div {
+                AdminSidebar(state: state.sidebar).renderHTML()
+
+                Main {
+                    Div {
+                        state.content.renderHTML()
+                    }
+                    .class("panel", "cms-content")
+                }
+            }
+            .class("container")
+
+            Script()
+                .src(
+                    "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/toast.js"
+                )
+                .defer()
+            Script()
+                .src(
+                    "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/navigation.js"
+                )
+                .defer()
+            Script()
+                .src(
+                    "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.js"
+                )
+                .defer()
+            }
     }
+
 }

@@ -6,7 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 public struct AdminMedia {
     private let renderingEngine: any RenderingEngine

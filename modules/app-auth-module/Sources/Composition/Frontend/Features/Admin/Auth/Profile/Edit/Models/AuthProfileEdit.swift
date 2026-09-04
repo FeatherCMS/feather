@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthProfileEdit: Component {
+struct AuthProfileEdit: Leaf {
 
     struct State {
         let id: String
@@ -26,9 +27,9 @@ struct AuthProfileEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Edit profile")
             if state.isEdited {
@@ -39,7 +40,7 @@ struct AuthProfileEdit: Component {
                 state: state.form,
                 action: "/admin/auth/profile/edit/",
                 submitLabel: "Edit profile"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

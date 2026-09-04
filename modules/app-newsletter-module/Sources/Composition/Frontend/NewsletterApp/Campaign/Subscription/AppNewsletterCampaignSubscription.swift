@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 public struct AppNewsletterCampaignSubscription {
     let controller: any AppNewsletterCampaignSubscriptionController

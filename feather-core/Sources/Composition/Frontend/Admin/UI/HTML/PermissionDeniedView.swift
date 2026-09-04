@@ -1,8 +1,9 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct PermissionDeniedView: Component {
+public struct PermissionDeniedView: Leaf {
 
     public struct State: Sendable {
         public let info: String
@@ -26,9 +27,9 @@ public struct PermissionDeniedView: Component {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("No permission")
             P(state.info).class("error")

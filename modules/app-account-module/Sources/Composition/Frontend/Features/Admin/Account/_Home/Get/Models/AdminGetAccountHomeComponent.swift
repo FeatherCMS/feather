@@ -1,10 +1,11 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminGetAccountHomeComponent: Component {
-    func content() -> some BasicTag {
+struct AdminGetAccountHomeComponent: Leaf {
+    func renderHTML() -> some BasicTag {
         Section {
             Nav {
                 Ol {

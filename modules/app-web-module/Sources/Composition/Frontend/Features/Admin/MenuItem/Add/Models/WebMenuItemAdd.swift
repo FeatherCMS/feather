@@ -5,9 +5,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMenuItemAdd: Component {
+struct WebMenuItemAdd: Leaf {
 
     struct State {
         let menuId: String
@@ -17,17 +18,17 @@ struct WebMenuItemAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Add item")
-            AdminWebMenuTabs(menuID: state.menuId, active: .items)
+            AdminWebMenuTabs(menuID: state.menuId, active: .items).renderHTML()
             WebMenuItemForm(
                 state: state.form,
                 action: "/admin/web/menus/\(state.menuId)/items/add/",
                 submitLabel: "Add item"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

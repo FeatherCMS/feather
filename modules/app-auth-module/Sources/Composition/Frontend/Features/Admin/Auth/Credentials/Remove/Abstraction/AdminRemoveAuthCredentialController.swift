@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 protocol AdminRemoveAuthCredentialController: Sendable {
     func getRemoveCredential(request: Request, context: DefaultRequestContext)

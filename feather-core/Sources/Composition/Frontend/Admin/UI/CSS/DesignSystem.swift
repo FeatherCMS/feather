@@ -5,42 +5,4 @@
 //  Created by Tibor Bödecs on 2026. 03. 07..
 //
 
-import CSS
-import WebStandards
-
 public enum FeatherCSS {}
-
-extension FeatherCSS {
-
-    public struct Base: GlobalStyleComponent {
-
-        public static func rules() -> [any Rule] {
-            Media {
-                Custom("html") {
-                    ScrollBehavior(.smooth)
-                }
-                Custom(
-                    ".cms-table th:first-child,.cms-table td:first-child,.action-table th:first-child,.action-table td:first-child"
-                ) {
-                    TextAlign(.left).important()
-                }
-                Custom(
-                    ".select-table th:first-child,.select-table td:first-child"
-                ) {
-                    TextAlign(.center).important()
-                    Width(48.px)
-                    MinWidth(48.px)
-                }
-                Custom(
-                    ".select-table th:first-child input[type=\"checkbox\"],.select-table td:first-child input[type=\"checkbox\"]"
-                ) {
-                    Display(.block)
-                    Margin(vertical: .length(0), horizontal: .auto)
-                }
-                Custom(".cms-table tbody tr:last-child td") {
-                    BorderBottom(0)
-                }
-            }
-        }
-    }
-}

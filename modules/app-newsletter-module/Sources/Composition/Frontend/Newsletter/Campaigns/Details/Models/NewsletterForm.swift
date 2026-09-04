@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct NewsletterForm: Component, FlowContent {
+struct NewsletterForm: Leaf {
     struct State: FeatherAdmin.Object {
         var name: String
         var fromEmail: String
@@ -18,18 +19,18 @@ struct NewsletterForm: Component, FlowContent {
     var action: String
     var submitLabel: String
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Name", required: true)
+                    AdminFieldLabel(label: "Name", required: true).renderHTML()
                     Input().type(.text).id("name").name("name")
                         .value(state.name).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "From email", required: true)
+                    AdminFieldLabel(label: "From email", required: true).renderHTML()
                     Input().type(.email).id("fromEmail").name("fromEmail")
                         .value(state.fromEmail).required()
                 }

@@ -5,9 +5,10 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserIdentityTable: Component {
+struct UserIdentityTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -30,14 +31,14 @@ struct UserIdentityTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("User identities")
 
                 if state.isAdded {
@@ -54,7 +55,7 @@ struct UserIdentityTable: Component {
                         AdminNavigationButton(
                             "Add identity",
                             href: "/admin/user/identities/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -134,7 +135,7 @@ struct UserIdentityTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Name")
                                         Th("Id")
@@ -151,7 +152,7 @@ struct UserIdentityTable: Component {
                                                     state: .init(
                                                         id: identity.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(identity.name)
                                                 .data("label", "Name")
@@ -202,15 +203,15 @@ struct UserIdentityTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/user/identities/",
@@ -222,7 +223,7 @@ struct UserIdentityTable: Component {
                                 ? []
                                 : [("role", state.role)]
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

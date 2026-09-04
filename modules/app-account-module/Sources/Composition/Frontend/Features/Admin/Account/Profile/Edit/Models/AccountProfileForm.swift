@@ -1,9 +1,10 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AccountProfileForm: Component, FlowContent {
+struct AccountProfileForm: Leaf {
     struct State {
         let firstName: String?
         let lastName: String?
@@ -14,7 +15,7 @@ struct AccountProfileForm: Component, FlowContent {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             FormInputField(
                 name: "firstName",
@@ -25,7 +26,7 @@ struct AccountProfileForm: Component, FlowContent {
                 isRequired: false,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: "lastName",
                 label: "Last name",
@@ -35,7 +36,7 @@ struct AccountProfileForm: Component, FlowContent {
                 isRequired: false,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             if state.canEdit {
                 AdminMediaAssetPicker(
                     state: .init(
@@ -51,7 +52,7 @@ struct AccountProfileForm: Component, FlowContent {
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                         outputMode: .assetId
                     )
-                )
+                ).renderHTML()
             }
             else {
                 FormInputField(
@@ -63,7 +64,7 @@ struct AccountProfileForm: Component, FlowContent {
                     isRequired: false,
                     isDisabled: true,
                     inputClass: "text-input"
-                )
+                ).renderHTML()
             }
             if state.canEdit {
                 Div {

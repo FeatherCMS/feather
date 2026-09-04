@@ -5,9 +5,10 @@ import Foundation
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AnalyticsLogTable: Component {
+struct AnalyticsLogTable: Leaf {
 
     private static let methodOptions = [
         ("", "All methods"),
@@ -58,14 +59,14 @@ struct AnalyticsLogTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Analytics logs")
                 Form {
                     Div {
@@ -204,13 +205,13 @@ struct AnalyticsLogTable: Component {
                                                 ],
                                                 permissions: state.permissions
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
-                    )
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/analytics/logs/",
@@ -224,7 +225,7 @@ struct AnalyticsLogTable: Component {
                                 ("responseCode", state.responseCode),
                             ]
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

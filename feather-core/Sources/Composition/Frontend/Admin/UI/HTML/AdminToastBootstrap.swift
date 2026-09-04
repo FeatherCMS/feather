@@ -1,11 +1,12 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminToastBootstrap: Component, FlowContent {
+public struct AdminToastBootstrap: Leaf {
     let payload: AdminToastRedirect.Payload
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Div {
             // empty
         }

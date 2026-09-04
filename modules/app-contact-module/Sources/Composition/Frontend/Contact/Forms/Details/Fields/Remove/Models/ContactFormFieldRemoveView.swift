@@ -4,16 +4,17 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormFieldRemoveView: Component {
+struct ContactFormFieldRemoveView: Leaf {
     let formId: String
     let fieldId: String
     let label: String
     let breadcrumb: AdminBreadcrumb.State
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         let basePath = "/admin/contact/forms/\(formId)/fields"
-        AdminConfirmationDialog(
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
                 title: "Remove contact form field",
@@ -24,6 +25,6 @@ struct ContactFormFieldRemoveView: Component {
                 actionURL: "\(basePath)/\(fieldId)/remove/",
                 cancelURL: "\(basePath)/"
             )
-        )
+        ).renderHTML()
     }
 }

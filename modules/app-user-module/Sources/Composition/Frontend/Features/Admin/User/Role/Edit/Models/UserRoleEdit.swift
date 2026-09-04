@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserRoleEdit: Component {
+struct UserRoleEdit: Leaf {
 
     struct State {
         let id: String
@@ -17,9 +18,9 @@ struct UserRoleEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Edit user role")
             if state.isEdited { P("User role edited successfully.") }
@@ -29,7 +30,7 @@ struct UserRoleEdit: Component {
                 submitLabel: "Edit role",
                 removeHref: "/admin/user/roles/\(state.id)/remove/",
                 removeLabel: "Remove role"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

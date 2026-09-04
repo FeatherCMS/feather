@@ -1,8 +1,12 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminNavigationButton: Component, FlowContent {
+private typealias HTMLButton = HTML.Button
+public typealias AdminNavigationRenderedButton = HTML.Button
+
+public struct AdminNavigationButton: Leaf {
     public let label: String
     public let href: String
     public let className: String?
@@ -17,8 +21,8 @@ public struct AdminNavigationButton: Component, FlowContent {
         self.className = classes.isEmpty ? nil : classes.joined(separator: " ")
     }
 
-    public func content() -> some BasicTag {
-        var button = HTML.Button(label)
+    public func renderHTML() -> AdminNavigationRenderedButton {
+        var button = HTMLButton(label)
             .type(.button)
             .onClick(
                 "window.location.href='\(href)'"
@@ -28,4 +32,5 @@ public struct AdminNavigationButton: Component, FlowContent {
         }
         return button
     }
+
 }

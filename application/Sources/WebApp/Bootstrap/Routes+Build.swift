@@ -18,11 +18,9 @@ import HummingbirdAuth
 import AuthFrontend
 import AccountFrontend
 import Logging
-import WebStandards
 import WebApplication
 
 func buildRouter(
-    styleshetCollector: GlobalStylesheetCollector,
     environment: AppEnvironment,
     referenceTypeOptions: [WebMetadataReferenceTypeOption],
     templateOptions: [WebPageTemplateOption],
@@ -110,8 +108,7 @@ func buildRouter(
         renderingEngine: renderingEngine,
         themeRenderer: themeRenderer,
         publicContentRepository: publicContentRepository,
-        publicContentEvents: publicContentEvents,
-        styleshetCollector: styleshetCollector
+        publicContentEvents: publicContentEvents
     )
 
     AuthFrontendRoutes.registerAppRoutes(

@@ -1,11 +1,14 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
+
+private typealias HTMLButton = HTML.Button
 
 import class Foundation.JSONEncoder
 
-public struct AdminAutocompleteField: Component, FlowContent {
+public struct AdminAutocompleteField: Leaf {
 
     public enum SelectionMode: String, Codable, Sendable {
         case single
@@ -227,7 +230,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Section {
         let selectedOptions = state.options.filter(\.isSelected)
 
         return Section {
@@ -251,7 +254,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
                                 .ariaActiveDescendant("")
                                 .ariaExpanded("false")
                                 .ariaHasPopup(.listbox)
-                            HTML.Button {
+                            HTMLButton {
                                 Span {}.class("multiselect__chevron")
                             }
                             .type(.button)
@@ -299,7 +302,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
             }
             else {
                 Label {
-                    AdminFieldLabel(label: state.label, required: false)
+                    AdminFieldLabel(label: state.label, required: false).renderHTML()
                     Input()
                         .type(.text)
                         .class("text-input")

@@ -1,11 +1,14 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
+
+private typealias HTMLButton = HTML.Button
 
 import struct Foundation.CharacterSet
 
-public struct AdminMediaAssetPicker: Component, FlowContent {
+public struct AdminMediaAssetPicker: Leaf {
     public enum OutputMode: String, Sendable {
         case assetId
         case originalURL = "original_url"
@@ -244,7 +247,7 @@ public struct AdminMediaAssetPicker: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Section {
         Section {
             Div {
                 Input()
@@ -258,12 +261,12 @@ public struct AdminMediaAssetPicker: Component, FlowContent {
                         AdminFieldLabel(
                             label: state.field.label,
                             required: false
-                        )
+                        ).renderHTML()
                     }
                     currentCard()
                 }
                 else {
-                    HTML.Button("")
+                    HTMLButton("")
                         .type(.button)
                         .data("media-picker-open", state.field.key)
                         .style("display:none;")
@@ -302,14 +305,14 @@ extension AdminMediaAssetPicker {
             }
 
             Div {
-                HTML.Button("Choose asset")
+                HTMLButton("Choose asset")
                     .type(.button)
                     .class("secondary")
                     .data(
                         "media-picker-open",
                         state.field.key
                     )
-                HTML.Button("Clear")
+                HTMLButton("Clear")
                     .type(.button)
                     .class("ghost")
                     .data(
@@ -337,11 +340,11 @@ extension AdminMediaAssetPicker {
                     )
                 }
                 else {
-                    Icon(svg: FeatherIcons.file())
+                    Icon(svg: FeatherIcons.file()).renderHTML()
                 }
             }
             else {
-                Icon(svg: FeatherIcons.image())
+                Icon(svg: FeatherIcons.image()).renderHTML()
             }
         }
         .class("admin-media-asset-picker-preview")
@@ -360,7 +363,7 @@ extension AdminMediaAssetPicker {
                         H3(state.field.label)
                         P(helperText)
                     }
-                    HTML.Button("Close")
+                    HTMLButton("Close")
                         .type(.button)
                         .class("ghost")
                         .data(
@@ -371,7 +374,7 @@ extension AdminMediaAssetPicker {
                 .class("admin-media-asset-picker-dialog-header")
 
                 Div {
-                    HTML.Button("Gallery")
+                    HTMLButton("Gallery")
                         .type(.button)
                         .class("is-current")
                         .data(
@@ -382,7 +385,7 @@ extension AdminMediaAssetPicker {
                             "media-picker-field",
                             state.field.key
                         )
-                    HTML.Button("Upload")
+                    HTMLButton("Upload")
                         .type(.button)
                         .data(
                             "media-picker-tab",

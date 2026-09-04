@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthCredentialEdit: Component {
+struct AuthCredentialEdit: Leaf {
     struct State {
         let id: String
         let form: AuthCredentialForm.State
@@ -24,16 +25,16 @@ struct AuthCredentialEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Edit user credential")
             AuthCredentialForm(
                 state: state.form,
                 action: "/admin/auth/credentials/\(state.id)/edit/",
                 submitLabel: "Edit credential",
                 removeHref: "/admin/auth/credentials/\(state.id)/remove/"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

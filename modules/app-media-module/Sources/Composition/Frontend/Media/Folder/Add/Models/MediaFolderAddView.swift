@@ -6,9 +6,10 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct MediaFolderAddView: Component {
+struct MediaFolderAddView: Leaf {
     struct State {
         let form: FormState
         let breadcrumb: AdminBreadcrumb.State
@@ -23,9 +24,9 @@ struct MediaFolderAddView: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Add media folder")
             if let error = state.form.error {
                 P(error).class("error")
@@ -42,7 +43,7 @@ struct MediaFolderAddView: Component {
                     value: state.form.name,
                     isRequired: true,
                     inputClass: "text-input"
-                )
+                ).renderHTML()
 
                 Section {
                     Div { Button("Add").type(.submit) }.class("button-row")

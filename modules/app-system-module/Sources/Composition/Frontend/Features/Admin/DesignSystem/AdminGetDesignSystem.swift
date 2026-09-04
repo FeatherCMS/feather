@@ -2,7 +2,7 @@ import FeatherAdmin
 import Hummingbird
 
 struct AdminGetDesignSystem {
-    let controller: any AdminGetDesignSystemController
+    let controller: AdminGetDesignSystemDefaultController
 
     init() {
         self.controller = AdminGetDesignSystemDefaultController()

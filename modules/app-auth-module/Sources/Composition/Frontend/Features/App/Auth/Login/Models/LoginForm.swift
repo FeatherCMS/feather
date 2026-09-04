@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 //
 //  File.swift
@@ -22,7 +23,7 @@ import WebStandards
 //  Addd by Tibor Bödecs on 2026. 03. 01..
 //
 
-struct LoginForm: Component, FlowContent {
+struct LoginForm: Leaf {
 
     struct State: FeatherAdmin.Object {
         var email: EmailField.State
@@ -44,20 +45,20 @@ struct LoginForm: Component, FlowContent {
         }
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             Section {
-                EmailField(state: state.email)
+                EmailField(state: state.email).renderHTML()
             }
             .class("login-field")
 
             Section {
-                PasswordField(state: state.password)
+                PasswordField(state: state.password).renderHTML()
             }
             .class("login-field")
 
             Section {
-                CheckboxField(state: state.isPersistent)
+                CheckboxField(state: state.isPersistent).renderHTML()
             }
             .class("login-checkbox-field")
 

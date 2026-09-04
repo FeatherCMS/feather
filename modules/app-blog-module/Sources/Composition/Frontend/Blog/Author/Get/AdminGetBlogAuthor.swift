@@ -8,7 +8,8 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminGetBlogAuthor {
     let controller: any AdminGetBlogAuthorController

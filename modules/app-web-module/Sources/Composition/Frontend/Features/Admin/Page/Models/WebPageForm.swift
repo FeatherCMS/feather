@@ -4,9 +4,10 @@ import Foundation
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebPageForm: Component, FlowContent {
+struct WebPageForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -60,7 +61,7 @@ struct WebPageForm: Component, FlowContent {
         return links
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -69,7 +70,7 @@ struct WebPageForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            AdminPillTabs(links: metadataTabLinks()).content()
+            AdminPillTabs(links: metadataTabLinks()).renderHTML()
 
             Div {
 
@@ -86,7 +87,7 @@ struct WebPageForm: Component, FlowContent {
                             "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                     )
-                )
+                ).renderHTML()
 
                 FormInputField(
                     name: state.title.key,
@@ -94,8 +95,8 @@ struct WebPageForm: Component, FlowContent {
                     value: state.title.value,
                     error: state.title.error,
                     isRequired: true
-                )
-                textarea(state.excerpt, rows: 4)
+                ).renderHTML()
+                textarea(state.excerpt, rows: 4).renderHTML()
                 markdownEditor(state.content)
             }
             Section {
@@ -114,7 +115,7 @@ struct WebPageForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")
@@ -145,7 +146,7 @@ struct WebPageForm: Component, FlowContent {
         _ field: FieldState
     ) -> some FlowContent {
         Section {
-            AdminFieldLabel(label: field.label, required: true)
+            AdminFieldLabel(label: field.label, required: true).renderHTML()
             Link(rel: .stylesheet)
                 .href(
                     "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.css"
@@ -277,7 +278,7 @@ struct WebPageForm: Component, FlowContent {
                     outputMode: .relativeURL,
                     showsCurrentCard: false
                 )
-            )
+            ).renderHTML()
             AdminMediaAssetPicker(
                 state: .init(
                     field: .init(
@@ -293,7 +294,7 @@ struct WebPageForm: Component, FlowContent {
                     outputMode: .relativeURL,
                     showsCurrentCard: false
                 )
-            )
+            ).renderHTML()
             if let error = field.error {
                 Span(error).class("field-error")
             }

@@ -2,9 +2,10 @@ import FeatherAdmin
 import HTML
 import SGML
 import SystemAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemJobTable: Component {
+struct SystemJobTable: Leaf {
     struct State {
         let jobs: [Components.Schemas.SystemJobSchema]
         let page: Int
@@ -17,9 +18,9 @@ struct SystemJobTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Worker jobs")
             ListTableSearchForm(
                 state: .init(
@@ -27,7 +28,7 @@ struct SystemJobTable: Component {
                     placeholder: "Quick search worker jobs",
                     search: state.search
                 )
-            )
+            ).renderHTML()
 
             if state.jobs.isEmpty {
                 let totalPages = max(
@@ -91,13 +92,13 @@ struct SystemJobTable: Component {
                                             ],
                                             permissions: state.permissions
                                         )
-                                    )
+                                    ).renderHTML()
                                 }
                             }
                         }
                     }
                     .class("cms-table", "action-table")
-                )
+                ).renderHTML()
                 ListTablePagination(
                     state: .init(
                         path: "/admin/system/jobs/",
@@ -106,7 +107,7 @@ struct SystemJobTable: Component {
                         total: state.total,
                         search: state.search
                     )
-                )
+                ).renderHTML()
             }
         }
         .class("cms-section")

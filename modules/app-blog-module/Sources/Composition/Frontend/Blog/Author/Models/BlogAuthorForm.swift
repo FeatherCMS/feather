@@ -9,9 +9,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogAuthorForm: Component, FlowContent {
+struct BlogAuthorForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -67,7 +68,7 @@ struct BlogAuthorForm: Component, FlowContent {
         return links
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -76,7 +77,7 @@ struct BlogAuthorForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            AdminPillTabs(links: metadataTabLinks()).content()
+            AdminPillTabs(links: metadataTabLinks()).renderHTML()
 
             Div {
 
@@ -93,14 +94,14 @@ struct BlogAuthorForm: Component, FlowContent {
                             "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                     )
-                )
+                ).renderHTML()
                 FormInputField(
                     name: state.name.key,
                     label: state.name.label,
                     value: state.name.value,
                     error: state.name.error,
                     isRequired: true
-                )
+                ).renderHTML()
                 textarea(state.excerpt, required: true, rows: 4)
                 textarea(state.content, required: true)
             }
@@ -120,7 +121,7 @@ struct BlogAuthorForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")
@@ -144,6 +145,6 @@ struct BlogAuthorForm: Component, FlowContent {
             error: field.error,
             rows: rows,
             isRequired: required
-        )
+        ).renderHTML()
     }
 }

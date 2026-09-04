@@ -6,16 +6,17 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct MediaProcessorRemoveView: Component {
+struct MediaProcessorRemoveView: Leaf {
     let id: String
     let cancelURL: String
     let formURL: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
                 title: "Remove processor",
@@ -28,6 +29,6 @@ struct MediaProcessorRemoveView: Component {
                 actionURL: formURL,
                 cancelURL: cancelURL
             )
-        )
+        ).renderHTML()
     }
 }

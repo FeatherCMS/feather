@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemVariableTable: Component {
+struct SystemVariableTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -27,14 +28,14 @@ struct SystemVariableTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("System variables")
 
                 if state.isAdded {
@@ -51,7 +52,7 @@ struct SystemVariableTable: Component {
                         AdminNavigationButton(
                             "Add variable",
                             href: "/admin/system/variables/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -63,7 +64,7 @@ struct SystemVariableTable: Component {
                         placeholder: "Quick search system variables",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.variables.isEmpty {
                     let totalPages = max(
@@ -108,7 +109,7 @@ struct SystemVariableTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Name")
                                             .columnWidth(percent: 50)
@@ -125,7 +126,7 @@ struct SystemVariableTable: Component {
                                                     state: .init(
                                                         id: variable.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(variable.name ?? "")
                                                 .data(
@@ -171,15 +172,15 @@ struct SystemVariableTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/system/variables/",
@@ -188,7 +189,7 @@ struct SystemVariableTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

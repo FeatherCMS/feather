@@ -11,7 +11,8 @@ import OpenAPIRuntime
 import SGML
 import WebAdminAPI
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 extension AdminMediaAssetOpenAPIRepository {
     init(api: BlogAdminAPIClient) {
@@ -24,7 +25,7 @@ extension AdminMediaAssetOpenAPIRepository {
     }
 }
 
-struct AdminMetadataFields: Component, FlowContent {
+struct AdminMetadataFields: Leaf {
     struct FieldState: FeatherAdmin.Object {
         var key: String
         var label: String
@@ -81,7 +82,7 @@ struct AdminMetadataFields: Component, FlowContent {
     var showTemplate: Bool = false
     var titleRequired: Bool = false
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Div {
             FormInputField(
                 name: state.slug.key,
@@ -90,7 +91,7 @@ struct AdminMetadataFields: Component, FlowContent {
                 value: state.slug.value,
                 error: state.slug.error,
                 isRequired: true
-            )
+            ).renderHTML()
             if showTemplate {
                 FormSelectField(
                     name: state.template.key,
@@ -99,7 +100,7 @@ struct AdminMetadataFields: Component, FlowContent {
                     selectedValue: state.template.value,
                     error: state.template.error,
                     isRequired: true
-                )
+                ).renderHTML()
             }
             Div {
                 H3("Publishing")
@@ -113,7 +114,7 @@ struct AdminMetadataFields: Component, FlowContent {
                     selectedValue: state.status.value,
                     error: state.status.error,
                     isRequired: true
-                )
+                ).renderHTML()
                 FormDateTimeField(
                     name: state.publicationDate.key,
                     label: state.publicationDate.label,
@@ -139,7 +140,7 @@ struct AdminMetadataFields: Component, FlowContent {
                             value: state.title.value,
                             error: state.title.error,
                             isRequired: titleRequired
-                        )
+                        ).renderHTML()
                     }
                     FormTextAreaField(
                         name: state.excerpt.key,
@@ -147,7 +148,7 @@ struct AdminMetadataFields: Component, FlowContent {
                         value: state.excerpt.value,
                         error: state.excerpt.error,
                         rows: 4
-                    )
+                    ).renderHTML()
                     AdminMediaAssetPicker(
                         state: .init(
                             field: .init(
@@ -162,7 +163,7 @@ struct AdminMetadataFields: Component, FlowContent {
                             allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                             outputMode: .originalURL
                         )
-                    )
+                    ).renderHTML()
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -176,7 +177,7 @@ struct AdminMetadataFields: Component, FlowContent {
                         label: state.canonicalUrl.label,
                         value: state.canonicalUrl.value,
                         error: state.canonicalUrl.error
-                    )
+                    ).renderHTML()
                     CheckboxField(
                         state: .init(
                             key: state.noIndex.key,
@@ -190,28 +191,28 @@ struct AdminMetadataFields: Component, FlowContent {
                         label: state.primaryKeyword.label,
                         value: state.primaryKeyword.value,
                         error: state.primaryKeyword.error
-                    )
+                    ).renderHTML()
                     FormTextAreaField(
                         name: state.cssCodeInjection.key,
                         label: state.cssCodeInjection.label,
                         value: state.cssCodeInjection.value,
                         error: state.cssCodeInjection.error,
                         rows: 10
-                    )
+                    ).renderHTML()
                     FormTextAreaField(
                         name: state.javascriptCodeInjection.key,
                         label: state.javascriptCodeInjection.label,
                         value: state.javascriptCodeInjection.value,
                         error: state.javascriptCodeInjection.error,
                         rows: 10
-                    )
+                    ).renderHTML()
                     FormTextAreaField(
                         name: state.structuredDataCodeInjection.key,
                         label: state.structuredDataCodeInjection.label,
                         value: state.structuredDataCodeInjection.value,
                         error: state.structuredDataCodeInjection.error,
                         rows: 10
-                    )
+                    ).renderHTML()
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -400,14 +401,14 @@ public struct AppPublicTagSummaryModel: Sendable {
     }
 }
 
-public struct AppPublicStyleAnchor: Component, FlowContent {
-    public func content() -> some BasicTag { Div {} }
+public struct AppPublicStyleAnchor: Leaf {
+    public func renderHTML() -> some BasicTag { Div {} }
 }
 
-public struct AppPublicTextBlock: Component, FlowContent {
+public struct AppPublicTextBlock: Leaf {
     public let text: String
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Div { text }.class("public-body")
     }
 }

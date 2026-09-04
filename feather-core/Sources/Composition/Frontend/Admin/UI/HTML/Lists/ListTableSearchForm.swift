@@ -1,8 +1,11 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct ListTableSearchForm: Component, FlowContent {
+private typealias HTMLButton = HTML.Button
+
+public struct ListTableSearchForm: Leaf {
 
     public struct State: Sendable {
         public let action: String
@@ -32,7 +35,7 @@ public struct ListTableSearchForm: Component, FlowContent {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Form {
         Form {
             for item in state.queryItems {
                 Input().type(.hidden).name(item.0).value(item.1)
@@ -42,7 +45,7 @@ public struct ListTableSearchForm: Component, FlowContent {
                 .name("search")
                 .value(state.search)
                 .placeholder(state.placeholder)
-            HTML.Button("Search").type(.submit)
+            HTMLButton("Search").type(.submit)
             A("Reset")
                 .href(state.resetPath)
                 .class("table-search-reset")

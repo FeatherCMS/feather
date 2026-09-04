@@ -2,9 +2,10 @@ import FeatherAdmin
 import Foundation
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct RedirectRuleDetails: Component {
+struct RedirectRuleDetails: Leaf {
     struct State {
         let rule: RedirectRuleDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -12,31 +13,31 @@ struct RedirectRuleDetails: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Redirect rule details")
-            AdminDetailsField(label: "ID", value: state.rule.id)
-            AdminDetailsField(label: "Source", value: state.rule.source)
+            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
+            AdminDetailsField(label: "Source", value: state.rule.source).renderHTML()
             AdminDetailsField(
                 label: "Destination",
                 value: state.rule.destination
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Status code",
                 value: "\(state.rule.statusCode)"
-            )
-            AdminDetailsField(label: "Notes", value: state.rule.notes ?? "")
+            ).renderHTML()
+            AdminDetailsField(label: "Notes", value: state.rule.notes ?? "").renderHTML()
             Div {
                 AdminNavigationButton(
                     "Edit rule",
                     href: "/admin/redirect/rules/\(state.rule.id)/edit/"
-                )
+                ).renderHTML()
                 AdminNavigationButton(
                     "Remove rule",
                     href: "/admin/redirect/rules/\(state.rule.id)/remove/",
                     classes: ["danger"]
-                )
+                ).renderHTML()
             }
             .class("button-row", "admin-detail-actions")
         }

@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 protocol AdminEditContactFormInteractor: Sendable {
     func get(id: String) async throws -> AdminContactFormDetailsItem

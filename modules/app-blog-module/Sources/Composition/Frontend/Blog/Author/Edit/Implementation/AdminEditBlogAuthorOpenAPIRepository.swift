@@ -9,7 +9,8 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminEditBlogAuthorOpenAPIRepository: AdminEditBlogAuthorRepository {
     let api: BlogAdminAPIClient

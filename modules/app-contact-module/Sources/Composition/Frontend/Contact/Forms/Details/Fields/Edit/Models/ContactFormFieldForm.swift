@@ -5,17 +5,18 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormFieldForm: Component, FlowContent {
+struct ContactFormFieldForm: Leaf {
     let field: AdminContactFormFieldRow
     let action: String
     let submitLabel: String
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             Label {
-                AdminFieldLabel(label: "Type", required: true)
+                AdminFieldLabel(label: "Type", required: true).renderHTML()
                 Select {
                     for type in [
                         "text", "textarea", "select", "radio", "toggle",
@@ -27,17 +28,17 @@ struct ContactFormFieldForm: Component, FlowContent {
                 .name("type").class("text-input")
             }
             Label {
-                AdminFieldLabel(label: "Key", required: true)
+                AdminFieldLabel(label: "Key", required: true).renderHTML()
                 Input().type(.text).class("text-input").name("key")
                     .value(field.key).required()
             }
             Label {
-                AdminFieldLabel(label: "Label", required: true)
+                AdminFieldLabel(label: "Label", required: true).renderHTML()
                 Input().type(.text).class("text-input").name("label")
                     .value(field.label).required()
             }
             Label {
-                AdminFieldLabel(label: "Allowed values", required: false)
+                AdminFieldLabel(label: "Allowed values", required: false).renderHTML()
                 Textarea(field.allowedValues).class("text-input")
                     .name("allowedValues")
             }

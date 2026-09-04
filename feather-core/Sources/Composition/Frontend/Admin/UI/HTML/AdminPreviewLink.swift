@@ -2,9 +2,10 @@ import CSS
 import Foundation
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminPreviewLink: Component, PhrasingContent {
+public struct AdminPreviewLink: Leaf {
     public let slug: String?
     public let label: String
 
@@ -14,7 +15,7 @@ public struct AdminPreviewLink: Component, PhrasingContent {
     }
 
     public func selectors() -> [any CSS.Selector] {
-        Class("admin-preview-link") {
+        [Class("admin-preview-link") {
             Display(.inlineFlex)
             AlignItems(.center)
             JustifyContent(.center)
@@ -22,19 +23,21 @@ public struct AdminPreviewLink: Component, PhrasingContent {
             Height(1.25.rem)
             MarginLeft(0.4.rem)
             VerticalAlign(.middle)
-        }
+        }]
     }
 
-    public func content() -> some BasicTag {
-        if let slug = normalizedSlug {
-            A {
-                Icon(svg: FeatherIcons.externalLink())
-            }
-            .href("/\(slug)/")
-            .target(.blank)
-            .ariaLabel(label)
-            .class("admin-preview-link")
+    public func renderHTML() -> A {
+        var link = A {
+            Icon(svg: FeatherIcons.externalLink()).renderHTML()
         }
+        if let slug = normalizedSlug {
+            link = link
+                .href("/\(slug)/")
+                .target(.blank)
+                .ariaLabel(label)
+                .class("admin-preview-link")
+        }
+        return link
     }
 
     private var normalizedSlug: String? {

@@ -9,9 +9,10 @@ import CSS
 import HTML
 import SGML
 import SVG
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminSidebar: Component, FlowContent {
+public struct AdminSidebar: Leaf {
 
     public struct State: Sendable {
         public struct Group: Sendable {
@@ -68,7 +69,7 @@ public struct AdminSidebar: Component, FlowContent {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Div {
             Input()
                 .id("menuToggle")
@@ -88,7 +89,7 @@ public struct AdminSidebar: Component, FlowContent {
                                                     Icon(
                                                         svg: menu.current.icon,
                                                         class: "menu-icon"
-                                                    )
+                                                    ).renderHTML()
                                                     Span(menu.current.label)
                                                 }
                                                 .title(menu.current.label)
@@ -101,7 +102,7 @@ public struct AdminSidebar: Component, FlowContent {
                                                 Icon(
                                                     svg: menu.current.icon,
                                                     class: "menu-icon"
-                                                )
+                                                ).renderHTML()
                                                 Span(menu.current.label)
                                             }
                                         }
@@ -127,7 +128,7 @@ public struct AdminSidebar: Component, FlowContent {
                                                             svg: menu.current
                                                                 .icon,
                                                             class: "menu-icon"
-                                                        )
+                                                        ).renderHTML()
                                                         Span(menu.current.label)
                                                     }
                                                     .title(menu.current.label)
@@ -137,7 +138,7 @@ public struct AdminSidebar: Component, FlowContent {
                                                     Icon(
                                                         svg: menu.current.icon,
                                                         class: "menu-icon"
-                                                    )
+                                                    ).renderHTML()
                                                     Span(menu.current.label)
                                                 }
                                             }
@@ -155,7 +156,7 @@ public struct AdminSidebar: Component, FlowContent {
                                                                 svg: child.icon,
                                                                 class:
                                                                     "menu-icon"
-                                                            )
+                                                            ).renderHTML()
                                                             Span(child.label)
                                                         }
                                                         .title(child.label)

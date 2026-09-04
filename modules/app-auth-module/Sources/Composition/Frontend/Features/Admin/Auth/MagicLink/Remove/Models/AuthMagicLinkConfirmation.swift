@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthMagicLinkConfirmation: Component {
+struct AuthMagicLinkConfirmation: Leaf {
 
     struct State {
         let id: String
@@ -25,8 +26,8 @@ struct AuthMagicLinkConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove user magic link",
@@ -42,6 +43,6 @@ struct AuthMagicLinkConfirmation: Component {
                 actionURL: "/admin/auth/magic-links/\(state.id)/remove/",
                 cancelURL: "/admin/auth/magic-links/"
             )
-        )
+        ).renderHTML()
     }
 }

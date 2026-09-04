@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct NewsletterCampaignSubscriberFormView: Component {
+struct NewsletterCampaignSubscriberFormView: Leaf {
     struct State {
         let newsletterId: String
         let email: String
@@ -20,9 +21,9 @@ struct NewsletterCampaignSubscriberFormView: Component {
     }
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1(
                 state.isEdit
                     ? "Edit campaign subscriber" : "Add campaign subscriber"
@@ -30,20 +31,20 @@ struct NewsletterCampaignSubscriberFormView: Component {
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Email", required: true)
+                    AdminFieldLabel(label: "Email", required: true).renderHTML()
                     Input().type(.email).name("email").value(state.email)
                         .required().if(state.isEdit) { $0.readOnly() }
                 }
                 Label {
-                    AdminFieldLabel(label: "First name", required: false)
+                    AdminFieldLabel(label: "First name", required: false).renderHTML()
                     Input().type(.text).name("firstName").value(state.firstName)
                 }
                 Label {
-                    AdminFieldLabel(label: "Last name", required: false)
+                    AdminFieldLabel(label: "Last name", required: false).renderHTML()
                     Input().type(.text).name("lastName").value(state.lastName)
                 }
                 Label {
-                    AdminFieldLabel(label: "Status", required: true)
+                    AdminFieldLabel(label: "Status", required: true).renderHTML()
                     Select {
                         Option("Subscribed").value("subscribed")
                             .if(state.status == "subscribed") { $0.selected() }

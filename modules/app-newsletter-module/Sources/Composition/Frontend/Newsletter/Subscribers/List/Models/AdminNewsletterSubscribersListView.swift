@@ -4,23 +4,24 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminNewsletterSubscribersListView: Component {
+struct AdminNewsletterSubscribersListView: Leaf {
     let model: AdminNewsletterSubscribersListModel
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
     let canRemove: Bool
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb)
+            AdminBreadcrumb(state: breadcrumb).renderHTML()
             H1("Subscribers")
             Div {
                 AdminNavigationButton(
                     "Add subscriber",
                     href: "/admin/newsletters/subscribers/add/"
-                )
+                ).renderHTML()
             }
             .class("button-row")
             Br()
@@ -70,7 +71,7 @@ struct AdminNewsletterSubscribersListView: Component {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox()
+                                        ListTableSelectAllCheckbox().renderHTML()
                                     }
                                     Th("Email")
                                     Th("Name")
@@ -84,7 +85,7 @@ struct AdminNewsletterSubscribersListView: Component {
                                         if canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            )
+                                            ).renderHTML()
                                         }
                                         Td(item.email).data("label", "Email")
                                         Td(item.name).data("label", "Name")
@@ -137,7 +138,7 @@ struct AdminNewsletterSubscribersListView: Component {
                                                         "newsletter:subscribers:delete",
                                                     ]
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
@@ -145,8 +146,8 @@ struct AdminNewsletterSubscribersListView: Component {
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    )
-                )
+                    ).renderHTML()
+                ).renderHTML()
             }
         }
         .class("cms-section")

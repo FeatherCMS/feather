@@ -8,9 +8,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogPostConfirmation: Component {
+struct BlogPostConfirmation: Leaf {
 
     struct State {
         let id: String
@@ -20,8 +21,8 @@ struct BlogPostConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove post",
@@ -34,6 +35,6 @@ struct BlogPostConfirmation: Component {
                 actionURL: "/admin/blog/posts/\(state.id)/remove/",
                 cancelURL: "/admin/blog/posts/"
             )
-        )
+        ).renderHTML()
     }
 }

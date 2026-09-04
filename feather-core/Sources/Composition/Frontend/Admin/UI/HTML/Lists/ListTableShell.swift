@@ -1,8 +1,9 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct ListTableShell<Table: FlowContent>: Component, FlowContent {
+public struct ListTableShell<Table: FlowContent>: Leaf {
 
     public let table: Table
 
@@ -10,7 +11,7 @@ public struct ListTableShell<Table: FlowContent>: Component, FlowContent {
         self.table = table
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Div {
         Div {
             Div {
                 table

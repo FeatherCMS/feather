@@ -2,7 +2,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 //
 //  File.swift
@@ -11,9 +12,9 @@ import WebStandards
 //  Addd by Tibor Bödecs on 2026. 03. 08..
 //
 
-struct AdminGetUserHomeComponent: Component {
+struct AdminGetUserHomeComponent: Leaf {
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             Nav {
                 Ol {

@@ -8,9 +8,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogAuthorLinkTable: Component {
+struct BlogAuthorLinkTable: Leaf {
 
     struct State {
         let menuId: String
@@ -33,14 +34,14 @@ struct BlogAuthorLinkTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Blog author links")
 
                 if state.isAdded {
@@ -58,7 +59,7 @@ struct BlogAuthorLinkTable: Component {
                             "Add link",
                             href:
                                 "/admin/blog/authors/\(state.menuId)/links/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -70,7 +71,7 @@ struct BlogAuthorLinkTable: Component {
                         placeholder: "Quick search blog author links",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.items.isEmpty {
                     let totalPages = max(
@@ -119,7 +120,7 @@ struct BlogAuthorLinkTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Label")
                                         Th("URL")
@@ -137,7 +138,7 @@ struct BlogAuthorLinkTable: Component {
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(item.label)
                                                 .data(
@@ -196,15 +197,15 @@ struct BlogAuthorLinkTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/blog/authors/\(state.menuId)/links/",
@@ -213,7 +214,7 @@ struct BlogAuthorLinkTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

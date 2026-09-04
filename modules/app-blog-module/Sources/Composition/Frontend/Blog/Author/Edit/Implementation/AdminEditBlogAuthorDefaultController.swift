@@ -10,7 +10,8 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminEditBlogAuthorDefaultController:
     AdminEditBlogAuthorController

@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthCredentialIdentityTable: Component {
+struct AuthCredentialIdentityTable: Leaf {
     struct State {
         let canAccess: Bool
         let permissions: Set<String>
@@ -30,14 +31,14 @@ struct AuthCredentialIdentityTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your identity cannot access user credentials.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Credentials")
                 P("Select a user to manage their credentials.")
                 ListTableSearchForm(
@@ -46,7 +47,7 @@ struct AuthCredentialIdentityTable: Component {
                         placeholder: "Quick search users",
                         search: state.search
                     )
-                )
+                ).renderHTML()
                 if state.identities.isEmpty {
                     P(
                         state.search.isEmpty
@@ -79,7 +80,7 @@ struct AuthCredentialIdentityTable: Component {
                             }
                         }
                         .class("cms-table", "action-table")
-                    )
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/auth/credentials/",
@@ -88,7 +89,7 @@ struct AuthCredentialIdentityTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

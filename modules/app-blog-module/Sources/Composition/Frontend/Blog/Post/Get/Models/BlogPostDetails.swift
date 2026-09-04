@@ -11,9 +11,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogPostDetails: Component {
+struct BlogPostDetails: Leaf {
     struct State {
         let rule: BlogPostDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -24,9 +25,9 @@ struct BlogPostDetails: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Blog post details")
             if state.isPublished {
                 P("Blog post published successfully.")
@@ -34,30 +35,30 @@ struct BlogPostDetails: Component {
             if state.isUnpublished {
                 P("Blog post unpublished successfully.")
             }
-            AdminDetailsField(label: "ID", value: state.rule.id)
-            AdminDetailsField(label: "Title", value: state.rule.title)
+            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
+            AdminDetailsField(label: "Title", value: state.rule.title).renderHTML()
             AdminDetailsField(
                 label: "Status",
                 value: state.rule.metadata.status.capitalized
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Published date",
                 value: format(state.rule.metadata.publicationDate)
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Expiration date",
                 value: format(state.rule.metadata.expirationDate)
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Authors",
                 value: state.rule.authorIds.isEmpty
                     ? "None" : state.rule.authorIds.joined(separator: ", ")
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Tags",
                 value: state.rule.tagIds.isEmpty
                     ? "None" : state.rule.tagIds.joined(separator: ", ")
-            )
+            ).renderHTML()
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -80,7 +81,7 @@ struct BlogPostDetails: Component {
                     AdminNavigationButton(
                         "Edit post",
                         href: "/admin/blog/posts/\(state.rule.id)/edit/"
-                    )
+                    ).renderHTML()
                 }
                 if state.permissions.contains(
                     BlogPermissions.Posts.delete.rawValue
@@ -89,7 +90,7 @@ struct BlogPostDetails: Component {
                         "Remove post",
                         href: "/admin/blog/posts/\(state.rule.id)/remove/",
                         classes: ["danger"]
-                    )
+                    ).renderHTML()
                 }
             }
             .class("button-row", "admin-detail-actions")

@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemVariableAdd: Component {
+struct SystemVariableAdd: Leaf {
 
     struct State {
         let form: SystemVariableForm.State
@@ -15,16 +16,16 @@ struct SystemVariableAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Add system variable")
             SystemVariableForm(
                 state: state.form,
                 action: "/admin/system/variables/add/",
                 submitLabel: "Add variable"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

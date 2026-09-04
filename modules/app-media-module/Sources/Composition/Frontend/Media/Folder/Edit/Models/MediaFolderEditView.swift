@@ -6,11 +6,12 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 import class Foundation.ByteCountFormatter
 
-struct MediaFolderEditView: Component {
+struct MediaFolderEditView: Leaf {
     struct State {
         let model: AdminEditMediaFolderModel
         let isEdited: Bool
@@ -20,14 +21,14 @@ struct MediaFolderEditView: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your account cannot edit media folders.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Edit media folder")
                 if state.isEdited {
                     P("Media folder updated successfully.")
@@ -36,20 +37,20 @@ struct MediaFolderEditView: Component {
                     P(error).class("error")
                 }
 
-                AdminDetailsField(label: "Path", value: state.model.path)
+                AdminDetailsField(label: "Path", value: state.model.path).renderHTML()
                 AdminDetailsField(
                     label: "Items",
                     value: state.model.assetCount == 1
                         ? "1 item"
                         : "\(state.model.assetCount) items"
-                )
+                ).renderHTML()
                 AdminDetailsField(
                     label: "Total size",
                     value: ByteCountFormatter.string(
                         fromByteCount: state.model.totalSizeBytes,
                         countStyle: .file
                     )
-                )
+                ).renderHTML()
 
                 Form {
                     FormInputField(
@@ -58,7 +59,7 @@ struct MediaFolderEditView: Component {
                         value: state.model.name,
                         isRequired: true,
                         inputClass: "text-input"
-                    )
+                    ).renderHTML()
 
                     Section {
                         Div { Button("Save").type(.submit) }.class("button-row")

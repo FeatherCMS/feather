@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthCredentialForm: Component, FlowContent {
+struct AuthCredentialForm: Leaf {
     struct FieldState: FeatherAdmin.Object {
         var key: String
         var label: String
@@ -44,7 +45,7 @@ struct AuthCredentialForm: Component, FlowContent {
     var submitLabel: String
     var removeHref: String?
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
@@ -62,13 +63,13 @@ struct AuthCredentialForm: Component, FlowContent {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            )
+            ).renderHTML()
             Section {
                 Label {
                     AdminFieldLabel(
                         label: state.password.label,
                         required: state.passwordRequired
-                    )
+                    ).renderHTML()
                     Input()
                         .type(.password)
                         .id(state.password.key)
@@ -88,7 +89,7 @@ struct AuthCredentialForm: Component, FlowContent {
                             "Remove credential",
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")

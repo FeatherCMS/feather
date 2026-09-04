@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthMagicLinkTable: Component {
+struct AuthMagicLinkTable: Leaf {
 
     struct State {
         let isAdded: Bool
@@ -38,14 +39,14 @@ struct AuthMagicLinkTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("User magic links")
 
                 if let userID = state.userID {
@@ -75,7 +76,7 @@ struct AuthMagicLinkTable: Component {
                             href: "/admin/auth/magic-links/?userId=\(userID)",
                             isCurrent: true
                         ),
-                    ])
+                    ]).renderHTML()
                 }
 
                 if state.isAdded {
@@ -92,7 +93,7 @@ struct AuthMagicLinkTable: Component {
                         AdminNavigationButton(
                             "Add magic link",
                             href: "/admin/auth/magic-links/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -105,7 +106,7 @@ struct AuthMagicLinkTable: Component {
                         search: state.search,
                         queryItems: state.userID.map { [("userId", $0)] } ?? []
                     )
-                )
+                ).renderHTML()
 
                 if state.links.isEmpty {
                     let totalPages = max(
@@ -155,7 +156,7 @@ struct AuthMagicLinkTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Email")
                                             .columnWidth(percent: 50)
@@ -174,7 +175,7 @@ struct AuthMagicLinkTable: Component {
                                             if canRemove {
                                                 ListTableRowSelectCheckbox(
                                                     state: .init(id: link.id)
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(
                                                 state.emailByAuthEmailId[
@@ -229,15 +230,15 @@ struct AuthMagicLinkTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/auth/magic-links/",
@@ -248,7 +249,7 @@ struct AuthMagicLinkTable: Component {
                             queryItems: state.userID.map { [("userId", $0)] }
                                 ?? []
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

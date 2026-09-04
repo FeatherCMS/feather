@@ -6,16 +6,17 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct MediaAssetErrorView: Component {
+struct MediaAssetErrorView: Leaf {
     let info: String
     let message: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb)
+            AdminBreadcrumb(state: breadcrumb).renderHTML()
             H1("Error")
             P { Strong(info) }
             P(message)

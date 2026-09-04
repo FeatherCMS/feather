@@ -3,9 +3,10 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AppPublicStyleAnchor: Component, FlowContent {
+struct AppPublicStyleAnchor: Leaf {
     func selectors() -> [any Selector] {
         Class("public-shell") {
             MinHeight(100.vh)
@@ -144,7 +145,7 @@ struct AppPublicStyleAnchor: Component, FlowContent {
         }
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Div {
         Div {}
     }
 }

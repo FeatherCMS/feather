@@ -2,9 +2,10 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct ListRemoveConfirmation: Component {
+public struct ListRemoveConfirmation: Leaf {
 
     public struct State: Sendable {
         public let breadcrumb: AdminBreadcrumb.State
@@ -40,11 +41,11 @@ public struct ListRemoveConfirmation: Component {
         self.state = state
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         let previewIds = state.selectedIds.prefix(10)
         let remainingIds = state.selectedIds.count - previewIds.count
 
-        AdminConfirmationDialog(
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: state.title,
@@ -69,6 +70,6 @@ public struct ListRemoveConfirmation: Component {
                     .init(name: "selectedIds", value: $0)
                 } + state.hiddenFields
             )
-        )
+        ).renderHTML()
     }
 }

@@ -14,9 +14,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthAccessControlMatrix: Component {
+struct AuthAccessControlMatrix: Leaf {
 
     struct State {
         let isEdited: Bool
@@ -32,7 +33,7 @@ struct AuthAccessControlMatrix: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         let visiblePermissions = state.permissions.filter {
             state.search.isEmpty
                 || ($0.name ?? "")
@@ -42,7 +43,7 @@ struct AuthAccessControlMatrix: Component {
         let table = matrixTable(groups: groupedPermissions)
 
         return Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Access Control")
             P("Rows are permissions, columns are roles.")
 
@@ -60,7 +61,7 @@ struct AuthAccessControlMatrix: Component {
                         placeholder: "Quick search access control",
                         search: state.search
                     )
-                )
+                ).renderHTML()
             }
             .style(
                 "margin: 1.5rem 0 0.75rem;"
@@ -74,7 +75,7 @@ struct AuthAccessControlMatrix: Component {
             }
             else if state.canEdit {
                 Form {
-                    ListTableShell(table: table)
+                    ListTableShell(table: table).renderHTML()
 
                     Div {
                         Button("Save access control")
@@ -96,7 +97,7 @@ struct AuthAccessControlMatrix: Component {
                 P(
                     "You can view the access control matrix, but you need update permission to save changes."
                 )
-                ListTableShell(table: table)
+                ListTableShell(table: table).renderHTML()
             }
         }
         .class("cms-section")

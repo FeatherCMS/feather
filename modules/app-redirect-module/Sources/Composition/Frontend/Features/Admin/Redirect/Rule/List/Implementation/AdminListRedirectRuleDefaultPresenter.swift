@@ -5,7 +5,8 @@ import HTML
 import Hummingbird
 import RedirectContracts
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminListRedirectRuleDefaultPresenter:
     AdminListRedirectRulePresenter

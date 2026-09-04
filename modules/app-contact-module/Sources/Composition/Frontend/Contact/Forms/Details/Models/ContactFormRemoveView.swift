@@ -4,15 +4,16 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormRemoveView: Component {
+struct ContactFormRemoveView: Leaf {
     let id: String
     let name: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
                 title: "Remove contact form",
@@ -24,6 +25,6 @@ struct ContactFormRemoveView: Component {
                 cancelURL: "/admin/contact/forms/",
                 hiddenFields: [.init(name: "selectedIds[]", value: id)]
             )
-        )
+        ).renderHTML()
     }
 }

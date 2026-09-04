@@ -6,7 +6,8 @@ import Hummingbird
 import NewsletterAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminListNewsletterIssuesOpenAPIRepository {
     let api: NewsletterAdminAPIClient

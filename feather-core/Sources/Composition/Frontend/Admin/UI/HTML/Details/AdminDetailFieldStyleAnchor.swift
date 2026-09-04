@@ -1,9 +1,10 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminDetailFieldStyleAnchor: Component, FlowContent {
+public struct AdminDetailFieldStyleAnchor: Leaf {
 
     public init() {}
 
@@ -13,7 +14,7 @@ public struct AdminDetailFieldStyleAnchor: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Div {
         Div {}.hidden()
     }
 }

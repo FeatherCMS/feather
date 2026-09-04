@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct SystemPermissionConfirmation: Component {
+struct SystemPermissionConfirmation: Leaf {
 
     struct State {
         let id: String
@@ -16,8 +17,8 @@ struct SystemPermissionConfirmation: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
+    func renderHTML() -> some BasicTag {
+        return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove system permission",
@@ -30,6 +31,6 @@ struct SystemPermissionConfirmation: Component {
                 actionURL: "/admin/system/permissions/\(state.id)/remove/",
                 cancelURL: "/admin/system/permissions/"
             )
-        )
+        ).renderHTML()
     }
 }

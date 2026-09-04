@@ -5,9 +5,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebPageAdd: Component {
+struct WebPageAdd: Leaf {
 
     struct State {
         let form: WebPageForm.State
@@ -16,9 +17,9 @@ struct WebPageAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Add page")
             WebPageForm(
@@ -26,7 +27,7 @@ struct WebPageAdd: Component {
                 action: "/admin/web/pages/add/",
                 submitLabel: "Add page",
                 publishLabel: "Publish page"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

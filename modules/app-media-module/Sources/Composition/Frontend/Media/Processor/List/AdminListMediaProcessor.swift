@@ -6,7 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminListMediaProcessors {
     let controller: any AdminListMediaProcessorController

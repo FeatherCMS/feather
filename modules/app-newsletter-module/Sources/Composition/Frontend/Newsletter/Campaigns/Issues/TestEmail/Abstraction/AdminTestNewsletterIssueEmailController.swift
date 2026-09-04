@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 protocol AdminTestNewsletterIssueEmailController: Sendable {
     func send(request: Request, context: DefaultRequestContext) async throws

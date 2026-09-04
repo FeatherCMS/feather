@@ -6,14 +6,16 @@
 //
 
 import FeatherAdmin
+import DOM
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminGetAnalyticsHomeComponent: Component {
+struct AdminGetAnalyticsHomeComponent: Leaf {
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             Nav {
                 Ol {
@@ -70,4 +72,5 @@ struct AdminGetAnalyticsHomeComponent: Component {
             "display:block;padding:18px;border:1px solid rgba(0,0,0,0.12);border-radius:12px;background:#fff;color:inherit;text-decoration:none;"
         )
     }
+
 }

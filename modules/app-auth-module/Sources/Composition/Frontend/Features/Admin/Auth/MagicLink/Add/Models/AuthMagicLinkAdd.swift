@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthMagicLinkAdd: Component {
+struct AuthMagicLinkAdd: Leaf {
 
     struct State {
         let form: AuthMagicLinkForm.State
@@ -24,16 +25,16 @@ struct AuthMagicLinkAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Add user magic link")
             AuthMagicLinkForm(
                 state: state.form,
                 action: "/admin/auth/magic-links/add/",
                 submitLabel: "Add magic link"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

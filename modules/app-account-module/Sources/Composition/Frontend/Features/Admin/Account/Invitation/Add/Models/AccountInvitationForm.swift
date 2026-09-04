@@ -2,9 +2,10 @@ import CSS
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AccountInvitationForm: Component, FlowContent {
+struct AccountInvitationForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -40,7 +41,7 @@ struct AccountInvitationForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -55,13 +56,13 @@ struct AccountInvitationForm: Component, FlowContent {
                 value: state.email.value,
                 error: state.email.error,
                 isRequired: true
-            )
+            ).renderHTML()
             Section {
                 if state.roleOptions.isEmpty {
                     P("No roles available.")
                 }
                 else {
-                    AdminFieldLabel(label: "Roles", required: false)
+                    AdminFieldLabel(label: "Roles", required: false).renderHTML()
                     Div {
                         for option in state.roleOptions {
                             Label {
@@ -91,7 +92,7 @@ struct AccountInvitationForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")

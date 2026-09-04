@@ -8,7 +8,8 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 enum BlogSettingsVariableKey: String, CaseIterable, Sendable {
     case postListPath = "blog.post.list_path"

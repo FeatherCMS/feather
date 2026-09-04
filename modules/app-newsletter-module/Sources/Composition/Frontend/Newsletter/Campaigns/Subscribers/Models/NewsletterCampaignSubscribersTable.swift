@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct NewsletterCampaignSubscribersTable: Component {
+struct NewsletterCampaignSubscribersTable: Leaf {
     struct State {
         let newsletterId: String
         let isAdded: Bool
@@ -20,13 +21,13 @@ struct NewsletterCampaignSubscribersTable: Component {
     }
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             AdminNewsletterCampaignTabs(
                 campaignId: state.newsletterId,
                 active: .subscribers
-            )
-            AdminBreadcrumb(state: state.breadcrumb)
+            ).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Campaign subscribers")
             if let error = state.error { P(error).class("error") }
             if state.isAdded { P("Subscriber added successfully.") }
@@ -37,7 +38,7 @@ struct NewsletterCampaignSubscribersTable: Component {
                     "Add subscriber",
                     href:
                         "/admin/newsletters/\(state.newsletterId)/subscribers/add/"
-                )
+                ).renderHTML()
             }
             .class("button-row")
             Br()
@@ -49,7 +50,7 @@ struct NewsletterCampaignSubscribersTable: Component {
                     placeholder: "Quick search subscribers",
                     search: state.search
                 )
-            )
+            ).renderHTML()
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -72,7 +73,7 @@ struct NewsletterCampaignSubscribersTable: Component {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox()
+                                        ListTableSelectAllCheckbox().renderHTML()
                                     }
                                     Th("Email")
                                     Th("Name")
@@ -86,7 +87,7 @@ struct NewsletterCampaignSubscribersTable: Component {
                                         if state.canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            )
+                                            ).renderHTML()
                                         }
                                         Td(item.email).data("label", "Email")
                                         Td("\(item.firstName) \(item.lastName)")
@@ -118,15 +119,15 @@ struct NewsletterCampaignSubscribersTable: Component {
                                                     "newsletter:subscribers:delete",
                                                 ]
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    )
-                )
+                    ).renderHTML()
+                ).renderHTML()
             }
         }
         .class("cms-section")

@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminNewsletterIssuesListView: Component {
+struct AdminNewsletterIssuesListView: Leaf {
     struct State {
         let newsletterId: String
         let items: [AdminNewsletterIssueItem]
@@ -17,20 +18,20 @@ struct AdminNewsletterIssuesListView: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             AdminNewsletterCampaignTabs(
                 campaignId: state.newsletterId,
                 active: .issues
-            )
-            AdminBreadcrumb(state: state.breadcrumb)
+            ).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Campaign issues")
             if let error = state.error { P(error).class("error") }
             Div {
                 AdminNavigationButton(
                     "Add issue",
                     href: "/admin/newsletters/\(state.newsletterId)/issues/add/"
-                )
+                ).renderHTML()
             }
             .class("button-row")
             Br()
@@ -84,13 +85,13 @@ struct AdminNewsletterIssuesListView: Component {
                                                 "newsletter:issues:delete",
                                             ]
                                         )
-                                    )
+                                    ).renderHTML()
                                 }
                             }
                         }
                     }
                     .class("cms-table", "action-table")
-                )
+                ).renderHTML()
                 let deliveries = state.items.flatMap(\.deliveries)
                 if !deliveries.isEmpty {
                     H2("Delivery status")
@@ -123,7 +124,7 @@ struct AdminNewsletterIssuesListView: Component {
                             }
                         }
                         .class("cms-table")
-                    )
+                    ).renderHTML()
                 }
             }
         }

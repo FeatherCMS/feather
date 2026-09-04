@@ -7,9 +7,10 @@ import OpenAPIRuntime
 import SGML
 import WebAdminAPI
 import WebContracts
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMetadataTable: Component {
+struct WebMetadataTable: Leaf {
 
     struct State {
         let isEdited: Bool
@@ -29,14 +30,14 @@ struct WebMetadataTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Metadata")
 
                 if state.isEdited { P("Web metadata edited successfully.") }
@@ -138,13 +139,13 @@ struct WebMetadataTable: Component {
                                                 ],
                                                 permissions: state.permissions
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
-                    )
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/web/metadata/",
@@ -154,7 +155,7 @@ struct WebMetadataTable: Component {
                             search: state.search,
                             queryItems: [("referenceType", state.referenceType)]
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

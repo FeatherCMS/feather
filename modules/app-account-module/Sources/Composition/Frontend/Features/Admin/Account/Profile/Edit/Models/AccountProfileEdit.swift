@@ -1,14 +1,15 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AccountProfileEdit: Component {
+struct AccountProfileEdit: Leaf {
     let userID: String
     let state: AccountProfileForm.State
     let isEdited: Bool
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             AdminBreadcrumb(
                 state: .init(
@@ -19,7 +20,7 @@ struct AccountProfileEdit: Component {
                         .init(label: "Profile", link: state.action),
                     ]
                 )
-            )
+            ).renderHTML()
             H1("Profile")
             AdminPillTabs(links: [
                 .init(
@@ -43,11 +44,11 @@ struct AccountProfileEdit: Component {
                     href: "/admin/auth/magic-links/?userId=\(userID)",
                     isCurrent: false
                 ),
-            ])
+            ]).renderHTML()
             if isEdited {
                 P("Profile edited successfully.").class("success")
             }
-            AccountProfileForm(state: state)
+            AccountProfileForm(state: state).renderHTML()
         }
         .class("cms-section")
     }

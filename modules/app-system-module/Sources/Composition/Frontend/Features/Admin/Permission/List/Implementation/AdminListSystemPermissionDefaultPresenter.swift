@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import SystemContracts
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminListSystemPermissionDefaultPresenter:
     AdminListSystemPermissionPresenter

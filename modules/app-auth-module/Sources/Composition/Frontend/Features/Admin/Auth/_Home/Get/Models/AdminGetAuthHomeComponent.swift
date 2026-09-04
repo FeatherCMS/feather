@@ -13,10 +13,11 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminGetAuthHomeComponent: Component {
-    func content() -> some BasicTag {
+struct AdminGetAuthHomeComponent: Leaf {
+    func renderHTML() -> some BasicTag {
         Section {
             Nav {
                 Ol {

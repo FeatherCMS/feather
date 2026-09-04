@@ -1,8 +1,11 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminStatusActionForm: Component, FlowContent {
+private typealias HTMLButton = HTML.Button
+
+public struct AdminStatusActionForm: Leaf {
     let action: String
     let returnTo: String
     let status: String
@@ -23,7 +26,7 @@ public struct AdminStatusActionForm: Component, FlowContent {
         self.classes = classes
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Form {
         Form {
             Input()
                 .type(.hidden)
@@ -33,7 +36,7 @@ public struct AdminStatusActionForm: Component, FlowContent {
                 .type(.hidden)
                 .name("status")
                 .value(status)
-            HTML.Button(label)
+            HTMLButton(label)
                 .type(.submit)
                 .class(classes.joined(separator: " "))
         }
@@ -41,4 +44,5 @@ public struct AdminStatusActionForm: Component, FlowContent {
         .action(action)
         .style("display:inline")
     }
+
 }

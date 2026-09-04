@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 protocol AdminRemoveNewsletterCampaignController: Sendable {
     func confirm(request: Request, context: DefaultRequestContext) async throws

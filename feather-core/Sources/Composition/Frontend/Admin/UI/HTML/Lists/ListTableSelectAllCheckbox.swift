@@ -1,12 +1,13 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct ListTableSelectAllCheckbox: Component {
+public struct ListTableSelectAllCheckbox: Leaf {
 
     public init() {}
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Th {
             Input()
                 .type(.checkbox)

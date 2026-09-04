@@ -1,9 +1,10 @@
 import CSS
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminDetailsField: Component, FlowContent {
+public struct AdminDetailsField: Leaf {
     public let label: String
     public let value: String
 
@@ -18,7 +19,7 @@ public struct AdminDetailsField: Component, FlowContent {
         }
     }
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> Div {
         Div {
             P(label)
                 .class("admin-details-field__label")

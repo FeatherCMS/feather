@@ -5,9 +5,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormForm: Component, FlowContent {
+struct ContactFormForm: Leaf {
     struct State: FeatherAdmin.Object {
         var name: String
         var successMessage: String
@@ -111,13 +112,13 @@ struct ContactFormForm: Component, FlowContent {
         }
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Name", required: true)
+                    AdminFieldLabel(label: "Name", required: true).renderHTML()
                     Input().type(.text).id("name").name("name")
                         .value(state.name).required()
                 }
@@ -125,24 +126,24 @@ struct ContactFormForm: Component, FlowContent {
             .if(state.error != nil) { $0.class("has-error") }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Success message", required: false)
+                    AdminFieldLabel(label: "Success message", required: false).renderHTML()
                     Input().type(.text).id("successMessage")
                         .name("successMessage").value(state.successMessage)
                 }
                 Label {
-                    AdminFieldLabel(label: "Failure message", required: false)
+                    AdminFieldLabel(label: "Failure message", required: false).renderHTML()
                     Input().type(.text).id("failureMessage")
                         .name("failureMessage").value(state.failureMessage)
                 }
                 Label {
-                    AdminFieldLabel(label: "Redirect URL", required: false)
+                    AdminFieldLabel(label: "Redirect URL", required: false).renderHTML()
                     Input().type(.text).id("redirectUrl").name("redirectUrl")
                         .value(state.redirectUrl ?? "")
                 }
             }
             if !state.availableFields.isEmpty {
                 Section {
-                    AdminFieldLabel(label: "Fields", required: false)
+                    AdminFieldLabel(label: "Fields", required: false).renderHTML()
                     Div {
                         Div {
                             H3("Selected fields")

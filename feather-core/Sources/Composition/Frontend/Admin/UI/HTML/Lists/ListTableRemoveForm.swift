@@ -1,9 +1,11 @@
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct ListTableRemoveForm<Table: FlowContent>: Component,
-    FlowContent
+private typealias HTMLButton = HTML.Button
+
+public struct ListTableRemoveForm<Table: FlowContent>: Leaf
 {
 
     public struct State: Sendable {
@@ -39,13 +41,14 @@ public struct ListTableRemoveForm<Table: FlowContent>: Component,
         self.table = table
     }
 
-    public func content() -> some BasicTag {
-        if state.canRemove {
-            Form {
-                table
+    public func renderHTML() -> Div {
+        Div {
+            if state.canRemove {
+                Form {
+                    table
 
                 Div {
-                    HTML.Button(state.buttonTitle)
+                    HTMLButton(state.buttonTitle)
                         .type(.submit)
                         .disabled()
                         .class("remove-submit")
@@ -73,13 +76,14 @@ public struct ListTableRemoveForm<Table: FlowContent>: Component,
                 }
 
                 Script(script())
+                }
+                .method(.get)
+                .action(state.action)
+                .class("table-remove-form")
             }
-            .method(.get)
-            .action(state.action)
-            .class("table-remove-form")
-        }
-        else {
-            table
+            else {
+                table
+            }
         }
     }
 

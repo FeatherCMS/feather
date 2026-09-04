@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthMagicLinkForm: Component, FlowContent {
+struct AuthMagicLinkForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -65,7 +66,7 @@ struct AuthMagicLinkForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -84,7 +85,7 @@ struct AuthMagicLinkForm: Component, FlowContent {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            )
+            ).renderHTML()
 
             CheckboxField(
                 state: .init(
@@ -95,7 +96,7 @@ struct AuthMagicLinkForm: Component, FlowContent {
                     labelPosition: .before,
 
                 )
-            )
+            ).renderHTML()
 
             Section {
                 Div {
@@ -106,7 +107,7 @@ struct AuthMagicLinkForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")

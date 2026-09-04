@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AppMagicLink {
 
@@ -18,14 +19,14 @@ struct AppMagicLink {
         }
     }
 
-    struct Page: Component, FlowContent {
+    struct Page: Leaf {
         let token: String?
         let email: String
         let isPersistent: Bool
         let error: String?
         let message: String?
 
-        func content() -> some BasicTag {
+        func renderHTML() -> Section {
             Section {
                 H1(token == nil ? "Request a magic link" : "Signing in")
                 if let message { P(message).class("success") }
@@ -38,7 +39,7 @@ struct AppMagicLink {
                                 label: "Email address",
                                 value: email
                             )
-                        )
+                        ).renderHTML()
                         CheckboxField(
                             state: .init(
                                 key: "is_persistent",
@@ -47,7 +48,7 @@ struct AppMagicLink {
                                 error: nil,
                                 labelPosition: .before
                             )
-                        )
+                        ).renderHTML()
                         Button("Send magic link").type(.submit)
                     }
                     .method(.post)
@@ -204,7 +205,7 @@ struct AppMagicLink {
                 isPersistent: isPersistent,
                 error: error,
                 message: message
-            )
+            ).renderHTML()
         )
     }
 

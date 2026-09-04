@@ -3,9 +3,10 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMenuForm: Component, FlowContent {
+struct WebMenuForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -36,7 +37,7 @@ struct WebMenuForm: Component, FlowContent {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -51,15 +52,15 @@ struct WebMenuForm: Component, FlowContent {
                 value: state.key.value,
                 error: state.key.error,
                 isRequired: true
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.name.key,
                 label: state.name.label,
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: true
-            )
-            textarea(state.notes)
+            ).renderHTML()
+            textarea(state.notes).renderHTML()
 
             Section {
                 Div {
@@ -70,7 +71,7 @@ struct WebMenuForm: Component, FlowContent {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        )
+                        ).renderHTML()
                     }
                 }
                 .class("button-row")

@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct LoginPage: Component, FlowContent {
+struct LoginPage: Leaf {
 
     struct State {
         var form: LoginForm.State
@@ -134,7 +135,7 @@ struct LoginPage: Component, FlowContent {
         }
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Main {
         Main {
             Div {
                 Div {
@@ -144,7 +145,7 @@ struct LoginPage: Component, FlowContent {
                 }
                 .class("login-copy")
 
-                LoginForm(state: state.form)
+                LoginForm(state: state.form).renderHTML()
 
                 A("Sign in with a magic link")
                     .href("/magic-link/")

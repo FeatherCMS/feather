@@ -5,9 +5,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMetadataEdit: Component {
+struct WebMetadataEdit: Leaf {
 
     struct State {
         let id: String
@@ -21,24 +22,24 @@ struct WebMetadataEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1 {
                 Span(state.title)
                 AdminPreviewLink(
                     slug: state.form.slug.value,
                     label: "Preview page"
-                )
+                ).renderHTML()
             }
             if state.isEdited { P("Web metadata edited successfully.") }
-            AdminPillTabs(links: state.navigationTabs)
+            AdminPillTabs(links: state.navigationTabs).renderHTML()
             WebMetadataForm(
                 state: state.form,
                 action: state.action,
                 submitLabel: "Edit entry"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

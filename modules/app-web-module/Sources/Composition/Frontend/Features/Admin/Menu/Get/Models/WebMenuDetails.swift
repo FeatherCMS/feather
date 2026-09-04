@@ -3,9 +3,10 @@ import HTML
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMenuDetails: Component {
+struct WebMenuDetails: Leaf {
     struct State {
         let menu: WebMenuDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -16,25 +17,25 @@ struct WebMenuDetails: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Menu details")
-            AdminDetailsField(label: "ID", value: state.menu.id)
-            AdminDetailsField(label: "Key", value: state.menu.key)
-            AdminDetailsField(label: "Name", value: state.menu.name)
-            AdminDetailsField(label: "Notes", value: state.menu.notes ?? "")
+            AdminDetailsField(label: "ID", value: state.menu.id).renderHTML()
+            AdminDetailsField(label: "Key", value: state.menu.key).renderHTML()
+            AdminDetailsField(label: "Name", value: state.menu.name).renderHTML()
+            AdminDetailsField(label: "Notes", value: state.menu.notes ?? "").renderHTML()
 
             Div {
                 AdminNavigationButton(
                     "Edit menu",
                     href: "/admin/web/menus/\(state.menu.id)/edit/"
-                )
+                ).renderHTML()
                 AdminNavigationButton(
                     "Remove menu",
                     href: "/admin/web/menus/\(state.menu.id)/remove/",
                     classes: ["danger"]
-                )
+                ).renderHTML()
             }
             .class(
                 "button-row",

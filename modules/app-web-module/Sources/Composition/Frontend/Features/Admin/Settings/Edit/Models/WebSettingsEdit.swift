@@ -2,9 +2,10 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebSettingsEdit: Component {
+struct WebSettingsEdit: Leaf {
 
     struct State {
         let isEdited: Bool
@@ -15,9 +16,9 @@ struct WebSettingsEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Settings")
             P(
@@ -33,7 +34,7 @@ struct WebSettingsEdit: Component {
                 P("Settings edited successfully.").class("success")
             }
 
-            WebSettingsForm(state: state.form)
+            WebSettingsForm(state: state.form).renderHTML()
         }
         .class("cms-section")
     }

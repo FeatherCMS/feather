@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserRoleAdd: Component {
+struct UserRoleAdd: Leaf {
 
     struct State {
         let form: UserRoleForm.State
@@ -15,16 +16,16 @@ struct UserRoleAdd: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Add user role")
             UserRoleForm(
                 state: state.form,
                 action: "/admin/user/roles/add/",
                 submitLabel: "Add role"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

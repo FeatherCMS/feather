@@ -4,9 +4,10 @@ import Foundation
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminMetadataFields: Component, FlowContent {
+struct AdminMetadataFields: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -127,7 +128,7 @@ struct AdminMetadataFields: Component, FlowContent {
         }
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Div {
             FormInputField(
                 name: state.slug.key,
@@ -136,26 +137,26 @@ struct AdminMetadataFields: Component, FlowContent {
                 value: state.slug.value,
                 error: state.slug.error,
                 isRequired: true
-            )
+            ).renderHTML()
             if showTemplate {
-                templateField(state.template)
+                templateField(state.template).renderHTML()
             }
 
             Div {
                 H3("Publishing")
-                statusField(state.status)
+                statusField(state.status).renderHTML()
                 FormDateTimeField(
                     name: state.publicationDate.key,
                     label: state.publicationDate.label,
                     value: state.publicationDate.value,
                     error: state.publicationDate.error
-                )
+                ).renderHTML()
                 FormDateTimeField(
                     name: state.expirationDate.key,
                     label: state.expirationDate.label,
                     value: state.expirationDate.value,
                     error: state.expirationDate.error
-                )
+                ).renderHTML()
             }
             .class("admin-metadata-fields__group")
 
@@ -169,9 +170,9 @@ struct AdminMetadataFields: Component, FlowContent {
                             value: state.title.value,
                             error: state.title.error,
                             isRequired: titleRequired
-                        )
+                        ).renderHTML()
                     }
-                    textarea(state.excerpt, rows: 4)
+                    textarea(state.excerpt, rows: 4).renderHTML()
                     imagePicker(
                         state.imageUrl,
                         selectedAsset: state.selectedImageAsset
@@ -189,17 +190,17 @@ struct AdminMetadataFields: Component, FlowContent {
                         label: state.canonicalUrl.label,
                         value: state.canonicalUrl.value,
                         error: state.canonicalUrl.error
-                    )
+                    ).renderHTML()
                     checkbox(state.noIndex)
                     FormInputField(
                         name: state.primaryKeyword.key,
                         label: state.primaryKeyword.label,
                         value: state.primaryKeyword.value,
                         error: state.primaryKeyword.error
-                    )
-                    textarea(state.cssCodeInjection, rows: 10)
-                    textarea(state.javascriptCodeInjection, rows: 10)
-                    textarea(state.structuredDataCodeInjection, rows: 10)
+                    ).renderHTML()
+                    textarea(state.cssCodeInjection, rows: 10).renderHTML()
+                    textarea(state.javascriptCodeInjection, rows: 10).renderHTML()
+                    textarea(state.structuredDataCodeInjection, rows: 10).renderHTML()
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -240,7 +241,7 @@ struct AdminMetadataFields: Component, FlowContent {
     private func imagePicker(
         _ field: FieldState,
         selectedAsset: AdminMediaAssetReferenceModel?
-    ) -> some FlowContent {
+    ) -> Section {
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
         return AdminMediaAssetPicker(
@@ -256,7 +257,7 @@ struct AdminMetadataFields: Component, FlowContent {
                 allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                 outputMode: .originalURL
             )
-        )
+        ).renderHTML()
     }
 
     private func textarea(
@@ -283,7 +284,7 @@ struct AdminMetadataFields: Component, FlowContent {
                     value: field.value,
                     error: field.error
                 )
-            )
+            ).renderHTML()
         }
         .if(field.error != nil) { $0.class("has-error") }
     }

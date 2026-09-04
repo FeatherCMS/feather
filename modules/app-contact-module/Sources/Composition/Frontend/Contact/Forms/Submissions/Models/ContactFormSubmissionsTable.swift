@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct ContactFormSubmissionsTable: Component {
+struct ContactFormSubmissionsTable: Leaf {
     struct State {
         let formId: String
         let items: [AdminContactFormSubmissionItem]
@@ -16,10 +17,10 @@ struct ContactFormSubmissionsTable: Component {
         let canRemove: Bool
     }
     let state: State
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: state.formId, active: .submissions)
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminContactFormTabs(formId: state.formId, active: .submissions).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Contact form submissions")
             if let error = state.error { P(error).class("error") }
             ListTableSearchForm(
@@ -28,7 +29,7 @@ struct ContactFormSubmissionsTable: Component {
                     placeholder: "Quick search submissions",
                     search: state.search
                 )
-            )
+            ).renderHTML()
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -51,7 +52,7 @@ struct ContactFormSubmissionsTable: Component {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox()
+                                        ListTableSelectAllCheckbox().renderHTML()
                                     }
                                     Th("Submitted")
                                     if hasEmailColumn { Th("Email") }
@@ -65,7 +66,7 @@ struct ContactFormSubmissionsTable: Component {
                                         if state.canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            )
+                                            ).renderHTML()
                                         }
                                         Td(item.createdAt)
                                             .data("label", "Submitted")
@@ -100,15 +101,15 @@ struct ContactFormSubmissionsTable: Component {
                                                     "contact:form-submissions:delete",
                                                 ]
                                             )
-                                        )
+                                        ).renderHTML()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    )
-                )
+                    ).renderHTML()
+                ).renderHTML()
             }
         }
         .class("cms-section")

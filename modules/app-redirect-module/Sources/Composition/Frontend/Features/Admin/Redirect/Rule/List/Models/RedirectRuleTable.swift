@@ -5,9 +5,10 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct RedirectRuleTable: Component {
+struct RedirectRuleTable: Leaf {
 
     private static let statusOptions = [
         ("", "All statuses"),
@@ -38,14 +39,14 @@ struct RedirectRuleTable: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Redirect rules")
 
                 if state.isAdded {
@@ -62,7 +63,7 @@ struct RedirectRuleTable: Component {
                         AdminNavigationButton(
                             "Add rule",
                             href: "/admin/redirect/rules/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -141,7 +142,7 @@ struct RedirectRuleTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         Th("Source")
                                         Th("Destination")
@@ -157,7 +158,7 @@ struct RedirectRuleTable: Component {
                                                     state: .init(
                                                         id: rule.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             Td(rule.source)
                                                 .data(
@@ -206,15 +207,15 @@ struct RedirectRuleTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/redirect/rules/",
@@ -224,7 +225,7 @@ struct RedirectRuleTable: Component {
                             search: state.search,
                             queryItems: [("statusCode", state.statusCode)]
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

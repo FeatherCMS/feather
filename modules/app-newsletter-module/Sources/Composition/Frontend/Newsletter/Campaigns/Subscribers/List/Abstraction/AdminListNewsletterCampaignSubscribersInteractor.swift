@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
 protocol AdminListNewsletterCampaignSubscribersInteractor: Sendable {
     func list(newsletterId: String, search: String?) async throws

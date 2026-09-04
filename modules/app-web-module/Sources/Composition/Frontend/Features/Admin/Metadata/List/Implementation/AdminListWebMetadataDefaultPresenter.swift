@@ -5,7 +5,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebContracts
-import WebStandards
+import WebComponents
+import WebBuilders
 
 struct AdminListWebMetadataDefaultPresenter:
     AdminListWebMetadataPresenter

@@ -13,9 +13,10 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AuthMagicLinkDetails: Component {
+struct AuthMagicLinkDetails: Leaf {
     struct State {
         let link: AuthMagicLinkDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -23,29 +24,29 @@ struct AuthMagicLinkDetails: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("User magic link details")
-            AdminDetailsField(label: "ID", value: state.link.id)
+            AdminDetailsField(label: "ID", value: state.link.id).renderHTML()
             AdminDetailsField(
                 label: "Credential ID",
                 value: state.link.credentialId
-            )
+            ).renderHTML()
             AdminDetailsField(
                 label: "Persistent",
                 value: state.link.isPersistent ? "Yes" : "No"
-            )
+            ).renderHTML()
             Div {
                 AdminNavigationButton(
                     "Edit magic link",
                     href: "/admin/auth/magic-links/\(state.link.id)/edit/"
-                )
+                ).renderHTML()
                 AdminNavigationButton(
                     "Remove magic link",
                     href: "/admin/auth/magic-links/\(state.link.id)/remove/",
                     classes: ["danger"]
-                )
+                ).renderHTML()
             }
             .class("button-row", "admin-detail-actions")
         }

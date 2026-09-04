@@ -1,9 +1,10 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AdminWebMenuTabs: Component, FlowContent {
+struct AdminWebMenuTabs: Leaf {
     enum Tab: Equatable {
         case details
         case items
@@ -28,7 +29,7 @@ struct AdminWebMenuTabs: Component, FlowContent {
         ]
     }
 
-    func content() -> some BasicTag {
-        AdminPillTabs(links: links)
+    func renderHTML() -> Div {
+        return AdminPillTabs(links: links).renderHTML()
     }
 }

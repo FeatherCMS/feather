@@ -1,9 +1,10 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct UserIdentityEdit: Component {
+struct UserIdentityEdit: Leaf {
 
     struct State {
         let id: String
@@ -14,9 +15,9 @@ struct UserIdentityEdit: Component {
 
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
 
             H1("Edit identity")
             if state.isEdited {
@@ -28,7 +29,7 @@ struct UserIdentityEdit: Component {
                 submitLabel: "Edit identity",
                 removeHref: "/admin/user/identities/\(state.id)/remove/",
                 removeLabel: "Remove identity"
-            )
+            ).renderHTML()
         }
         .class("cms-section")
     }

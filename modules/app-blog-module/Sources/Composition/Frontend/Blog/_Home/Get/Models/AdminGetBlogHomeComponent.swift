@@ -8,7 +8,8 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
 //
 //  File.swift
@@ -17,9 +18,9 @@ import WebStandards
 //  Addd by Tibor Bödecs on 2026. 03. 08..
 //
 
-struct AdminGetBlogHomeComponent: Component {
+struct AdminGetBlogHomeComponent: Leaf {
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             Nav {
                 Ol {

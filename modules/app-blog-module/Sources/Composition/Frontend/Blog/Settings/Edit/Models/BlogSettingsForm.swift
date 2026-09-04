@@ -8,9 +8,10 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebFrontend
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct BlogSettingsForm: Component, FlowContent {
+struct BlogSettingsForm: Leaf {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -46,7 +47,7 @@ struct BlogSettingsForm: Component, FlowContent {
     var action: String = "/admin/blog/settings/"
     var submitLabel: String = "Save settings"
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -63,7 +64,7 @@ struct BlogSettingsForm: Component, FlowContent {
                 error: state.postListPath.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.authorListPath.key,
                 label: state.authorListPath.label,
@@ -71,7 +72,7 @@ struct BlogSettingsForm: Component, FlowContent {
                 error: state.authorListPath.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.tagListPath.key,
                 label: state.tagListPath.label,
@@ -79,7 +80,7 @@ struct BlogSettingsForm: Component, FlowContent {
                 error: state.tagListPath.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             H2("Prefixes")
             FormInputField(
@@ -89,7 +90,7 @@ struct BlogSettingsForm: Component, FlowContent {
                 error: state.postPathPrefix.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.authorPathPrefix.key,
                 label: state.authorPathPrefix.label,
@@ -97,7 +98,7 @@ struct BlogSettingsForm: Component, FlowContent {
                 error: state.authorPathPrefix.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
             FormInputField(
                 name: state.tagPathPrefix.key,
                 label: state.tagPathPrefix.label,
@@ -105,7 +106,7 @@ struct BlogSettingsForm: Component, FlowContent {
                 error: state.tagPathPrefix.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            )
+            ).renderHTML()
 
             if state.canEdit {
                 Section {

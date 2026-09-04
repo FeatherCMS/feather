@@ -6,9 +6,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct WebMenuItemTable: Component {
+struct WebMenuItemTable: Leaf {
 
     struct State {
         let menuId: String
@@ -71,16 +72,16 @@ struct WebMenuItemTable: Component {
         }
     }
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb)
+                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
                 H1("Edit menu")
-                AdminWebMenuTabs(menuID: state.menuId, active: .items)
+                AdminWebMenuTabs(menuID: state.menuId, active: .items).renderHTML()
 
                 if state.isAdded {
                     P("Item added successfully.")
@@ -96,7 +97,7 @@ struct WebMenuItemTable: Component {
                         AdminNavigationButton(
                             "Add item",
                             href: "/admin/web/menus/\(state.menuId)/items/add/"
-                        )
+                        ).renderHTML()
                     }
                     .class("button-row")
                     Br()
@@ -108,7 +109,7 @@ struct WebMenuItemTable: Component {
                         placeholder: "Quick search items",
                         search: state.search
                     )
-                )
+                ).renderHTML()
 
                 if state.items.isEmpty {
                     let totalPages = max(
@@ -157,7 +158,7 @@ struct WebMenuItemTable: Component {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox()
+                                            ListTableSelectAllCheckbox().renderHTML()
                                         }
                                         if state.canReorder { Th("Order") }
                                         Th("Label")
@@ -175,7 +176,7 @@ struct WebMenuItemTable: Component {
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                )
+                                                ).renderHTML()
                                             }
                                             if state.canReorder {
                                                 Td {
@@ -273,7 +274,7 @@ struct WebMenuItemTable: Component {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            )
+                                            ).renderHTML()
                                         }
                                         .class("web-menu-item-row")
                                         .data("web-menu-item", item.id)
@@ -286,8 +287,8 @@ struct WebMenuItemTable: Component {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        )
-                    )
+                        ).renderHTML()
+                    ).renderHTML()
                     if state.canReorder {
                         Script(reorderScript())
                     }
@@ -299,7 +300,7 @@ struct WebMenuItemTable: Component {
                             total: state.total,
                             search: state.search
                         )
-                    )
+                    ).renderHTML()
                 }
             }
         }

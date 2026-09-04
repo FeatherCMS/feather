@@ -2,12 +2,13 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct AppPublicTextBlock: Component, FlowContent {
+struct AppPublicTextBlock: Leaf {
     let text: String
 
-    func content() -> some BasicTag {
+    func renderHTML() -> Div {
         Div {
             text
         }

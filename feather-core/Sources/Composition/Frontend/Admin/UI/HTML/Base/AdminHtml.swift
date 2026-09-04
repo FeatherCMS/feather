@@ -9,9 +9,10 @@ import CSS
 import HTML
 import SGML
 import SVG
-import WebStandards
+import WebComponents
+import WebBuilders
 
-public struct AdminHtml<T: Component>: Component {
+public struct AdminHtml<T: Leaf>: Leaf {
 
     struct State {
         let head: AdminHeadElements.State
@@ -20,13 +21,11 @@ public struct AdminHtml<T: Component>: Component {
 
     let state: State
 
-    public func content() -> some BasicTag {
+    public func renderHTML() -> some BasicTag {
         Html {
-            Head {
-                AdminHeadElements(state: state.head)
-            }
+            AdminHeadElements(state: state.head).renderHTML()
             Body {
-                AdminBody<T>(state: state.body)
+                AdminBody<T>(state: state.body).renderHTML()
             }
         }
         .lang("en-US")

@@ -4,9 +4,10 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebComponents
+import WebBuilders
 
-struct NewsletterCampaignAddView: Component {
+struct NewsletterCampaignAddView: Leaf {
     struct State {
         let name: String
         let fromEmail: String
@@ -15,22 +16,22 @@ struct NewsletterCampaignAddView: Component {
     }
     let state: State
 
-    func content() -> some BasicTag {
+    func renderHTML() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
+            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
             H1("Add campaign")
             if let error = state.error { P(error).class("error") }
             Form {
                 Section {
                     Label {
-                        AdminFieldLabel(label: "Name", required: true)
+                        AdminFieldLabel(label: "Name", required: true).renderHTML()
                         Input().type(.text).class("text-input").name("name")
                             .value(state.name).id("name").required()
                     }
                 }
                 Section {
                     Label {
-                        AdminFieldLabel(label: "From email", required: true)
+                        AdminFieldLabel(label: "From email", required: true).renderHTML()
                         Input().type(.email).class("text-input")
                             .name("fromEmail").value(state.fromEmail)
                             .id("fromEmail").required()
