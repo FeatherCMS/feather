@@ -21,25 +21,15 @@ struct AdminGetDesignSystemDefaultController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let body = RootBody(state: .init(content: AdminGetDesignSystemComponent()))
 
         let origins = AppEnvironmentStore.current.publicOrigins
 
-        let head = Metadata(
-                canonicalUrl: "\(origins.siteBaseURL)/admin/design-system/",
-                title: "Design System",
-                description: "Feather admin design-system component showcase",
-                imageUrl: "\(origins.staticBaseURL)/images/logos/logo.png",
-                noIndex: true
-            ).html()
-
-        return .init(
-            Html {
-                head
-                body.html()
-            }
-            .lang("en-US")
+        let component = NewAdminHTML(
+            title: "Feather CMS :: Design System",
+            body: .init(content: AdminGetDesignSystemComponent())
         )
+
+        return .init(component.html())
     }
 
 }
