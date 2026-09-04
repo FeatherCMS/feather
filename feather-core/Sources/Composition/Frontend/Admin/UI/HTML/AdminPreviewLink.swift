@@ -26,9 +26,9 @@ public struct AdminPreviewLink: Leaf {
         }]
     }
 
-    public func renderHTML() -> A {
+    public func html() -> A {
         var link = A {
-            Icon(svg: FeatherIcons.externalLink()).renderHTML()
+            Icon(svg: FeatherIcons.externalLink()).html()
         }
         if let slug = normalizedSlug {
             link = link

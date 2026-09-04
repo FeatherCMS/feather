@@ -44,7 +44,7 @@ public struct EmailField: Leaf {
         }
     }
 
-    public func renderHTML() -> Div {
+    public func html() -> Div {
         Div {
             Span(state.label)
 

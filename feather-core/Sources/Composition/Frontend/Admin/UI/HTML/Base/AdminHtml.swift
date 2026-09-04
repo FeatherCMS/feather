@@ -21,11 +21,11 @@ public struct AdminHtml<T: Leaf>: Leaf {
 
     let state: State
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         Html {
-            AdminHeadElements(state: state.head).renderHTML()
+            AdminHeadElements(state: state.head).html()
             Body {
-                AdminBody<T>(state: state.body).renderHTML()
+                AdminBody<T>(state: state.body).html()
             }
         }
         .lang("en-US")

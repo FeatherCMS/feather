@@ -20,9 +20,9 @@ struct WebPageEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1 {
                 Span("Edit page")
@@ -31,7 +31,7 @@ struct WebPageEdit: Leaf {
                         .isEmpty
                 {
                     A {
-                        Icon(svg: FeatherIcons.externalLink()).renderHTML()
+                        Icon(svg: FeatherIcons.externalLink()).html()
                     }
                     .href(
                         "/\(slug.trimmingCharacters(in: .whitespacesAndNewlines))/"
@@ -52,7 +52,7 @@ struct WebPageEdit: Leaf {
                 submitLabel: "Edit page",
                 removeHref: "/admin/web/pages/\(state.id)/remove/",
                 removeLabel: "Remove page"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

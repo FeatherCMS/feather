@@ -46,7 +46,7 @@ struct RedirectRuleForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -61,7 +61,7 @@ struct RedirectRuleForm: Leaf {
                 value: state.source.value,
                 error: state.source.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: state.destination.key,
@@ -69,7 +69,7 @@ struct RedirectRuleForm: Leaf {
                 value: state.destination.value,
                 error: state.destination.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
 
             FormSelectField(
                 name: state.statusCode.key,
@@ -80,14 +80,14 @@ struct RedirectRuleForm: Leaf {
                 selectedValue: state.statusCode.value ?? "301",
                 error: state.statusCode.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: state.notes.key,
                 label: state.notes.label,
                 value: state.notes.value,
                 error: state.notes.error
-            ).renderHTML()
+            ).html()
 
             Section {
                 Div {
@@ -98,7 +98,7 @@ struct RedirectRuleForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")

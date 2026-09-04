@@ -37,7 +37,7 @@ struct WebMenuForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -52,15 +52,15 @@ struct WebMenuForm: Leaf {
                 value: state.key.value,
                 error: state.key.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: state.name.key,
                 label: state.name.label,
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: true
-            ).renderHTML()
-            textarea(state.notes).renderHTML()
+            ).html()
+            textarea(state.notes).html()
 
             Section {
                 Div {
@@ -71,7 +71,7 @@ struct WebMenuForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")

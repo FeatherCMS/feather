@@ -12,7 +12,7 @@ struct ContactFormRemoveView: Leaf {
     let name: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
@@ -25,6 +25,6 @@ struct ContactFormRemoveView: Leaf {
                 cancelURL: "/admin/contact/forms/",
                 hiddenFields: [.init(name: "selectedIds[]", value: id)]
             )
-        ).renderHTML()
+        ).html()
     }
 }

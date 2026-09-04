@@ -13,15 +13,15 @@ struct AdminNewsletterSubscribersListView: Leaf {
     let error: String?
     let canRemove: Bool
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1("Subscribers")
             Div {
                 AdminNavigationButton(
                     "Add subscriber",
                     href: "/admin/newsletters/subscribers/add/"
-                ).renderHTML()
+                ).html()
             }
             .class("button-row")
             Br()
@@ -71,7 +71,7 @@ struct AdminNewsletterSubscribersListView: Leaf {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox().renderHTML()
+                                        ListTableSelectAllCheckbox().html()
                                     }
                                     Th("Email")
                                     Th("Name")
@@ -85,7 +85,7 @@ struct AdminNewsletterSubscribersListView: Leaf {
                                         if canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                         Td(item.email).data("label", "Email")
                                         Td(item.name).data("label", "Name")
@@ -138,7 +138,7 @@ struct AdminNewsletterSubscribersListView: Leaf {
                                                         "newsletter:subscribers:delete",
                                                     ]
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                     }
                                 }
@@ -146,8 +146,8 @@ struct AdminNewsletterSubscribersListView: Leaf {
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    ).renderHTML()
-                ).renderHTML()
+                    ).html()
+                ).html()
             }
         }
         .class("cms-section")

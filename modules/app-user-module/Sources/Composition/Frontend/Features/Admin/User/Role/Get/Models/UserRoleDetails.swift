@@ -12,23 +12,23 @@ struct UserRoleDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("User role details")
-            AdminDetailsField(label: "ID", value: state.role.id).renderHTML()
-            AdminDetailsField(label: "Name", value: state.role.name).renderHTML()
-            AdminDetailsField(label: "Notes", value: state.role.notes).renderHTML()
+            AdminDetailsField(label: "ID", value: state.role.id).html()
+            AdminDetailsField(label: "Name", value: state.role.name).html()
+            AdminDetailsField(label: "Notes", value: state.role.notes).html()
             Div {
                 AdminNavigationButton(
                     "Edit role",
                     href: "/admin/user/roles/\(state.role.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove role",
                     href: "/admin/user/roles/\(state.role.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

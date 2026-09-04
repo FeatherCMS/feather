@@ -25,16 +25,16 @@ struct AuthMagicLinkAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Add user magic link")
             AuthMagicLinkForm(
                 state: state.form,
                 action: "/admin/auth/magic-links/add/",
                 submitLabel: "Add magic link"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

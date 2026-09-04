@@ -143,7 +143,7 @@ public struct FormMultiInputField: Leaf {
         }
     }
 
-    public func renderHTML() -> Section {
+    public func html() -> Section {
         Section {
             Label {
                 fieldLabel()

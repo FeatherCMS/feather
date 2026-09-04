@@ -19,7 +19,7 @@ public struct AdminStatusSelectField: Leaf {
         self.options = options
     }
 
-    public func renderHTML() -> Select {
+    public func html() -> Select {
         Select {
             for option in options {
                 Option(option.capitalized)

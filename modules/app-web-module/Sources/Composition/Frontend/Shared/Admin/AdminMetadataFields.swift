@@ -128,7 +128,7 @@ struct AdminMetadataFields: Leaf {
         }
     }
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Div {
             FormInputField(
                 name: state.slug.key,
@@ -137,26 +137,26 @@ struct AdminMetadataFields: Leaf {
                 value: state.slug.value,
                 error: state.slug.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
             if showTemplate {
-                templateField(state.template).renderHTML()
+                templateField(state.template).html()
             }
 
             Div {
                 H3("Publishing")
-                statusField(state.status).renderHTML()
+                statusField(state.status).html()
                 FormDateTimeField(
                     name: state.publicationDate.key,
                     label: state.publicationDate.label,
                     value: state.publicationDate.value,
                     error: state.publicationDate.error
-                ).renderHTML()
+                ).html()
                 FormDateTimeField(
                     name: state.expirationDate.key,
                     label: state.expirationDate.label,
                     value: state.expirationDate.value,
                     error: state.expirationDate.error
-                ).renderHTML()
+                ).html()
             }
             .class("admin-metadata-fields__group")
 
@@ -170,9 +170,9 @@ struct AdminMetadataFields: Leaf {
                             value: state.title.value,
                             error: state.title.error,
                             isRequired: titleRequired
-                        ).renderHTML()
+                        ).html()
                     }
-                    textarea(state.excerpt, rows: 4).renderHTML()
+                    textarea(state.excerpt, rows: 4).html()
                     imagePicker(
                         state.imageUrl,
                         selectedAsset: state.selectedImageAsset
@@ -190,17 +190,17 @@ struct AdminMetadataFields: Leaf {
                         label: state.canonicalUrl.label,
                         value: state.canonicalUrl.value,
                         error: state.canonicalUrl.error
-                    ).renderHTML()
+                    ).html()
                     checkbox(state.noIndex)
                     FormInputField(
                         name: state.primaryKeyword.key,
                         label: state.primaryKeyword.label,
                         value: state.primaryKeyword.value,
                         error: state.primaryKeyword.error
-                    ).renderHTML()
-                    textarea(state.cssCodeInjection, rows: 10).renderHTML()
-                    textarea(state.javascriptCodeInjection, rows: 10).renderHTML()
-                    textarea(state.structuredDataCodeInjection, rows: 10).renderHTML()
+                    ).html()
+                    textarea(state.cssCodeInjection, rows: 10).html()
+                    textarea(state.javascriptCodeInjection, rows: 10).html()
+                    textarea(state.structuredDataCodeInjection, rows: 10).html()
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -257,7 +257,7 @@ struct AdminMetadataFields: Leaf {
                 allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                 outputMode: .originalURL
             )
-        ).renderHTML()
+        ).html()
     }
 
     private func textarea(
@@ -284,7 +284,7 @@ struct AdminMetadataFields: Leaf {
                     value: field.value,
                     error: field.error
                 )
-            ).renderHTML()
+            ).html()
         }
         .if(field.error != nil) { $0.class("has-error") }
     }

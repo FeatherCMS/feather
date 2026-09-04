@@ -14,7 +14,7 @@ struct AnalyticsNotFoundView: Leaf {
 
     let model: AdminGetAnalyticsNotFoundModel
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             AdminBreadcrumb(
                 state: .init(
@@ -26,7 +26,7 @@ struct AnalyticsNotFoundView: Leaf {
                         ),
                     ]
                 )
-            ).renderHTML()
+            ).html()
             H1("404s")
             filters
             dailyChart

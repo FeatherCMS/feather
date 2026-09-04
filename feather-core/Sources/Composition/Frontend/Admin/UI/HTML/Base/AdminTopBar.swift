@@ -15,7 +15,7 @@ import WebBuilders
 
 public struct AdminTopBar: Leaf {
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         let fallbackProfileImageURL =
             "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/images/tiborbodecs-2026-512.png"
 
@@ -25,11 +25,11 @@ public struct AdminTopBar: Leaf {
                     Icon(
                         svg: FeatherIcons.sidebar(),
                         class: "menu-trigger-icon menu-trigger-desktop"
-                    ).renderHTML()
+                    ).html()
                     Icon(
                         svg: FeatherIcons.menu(),
                         class: "menu-trigger-icon menu-trigger-mobile"
-                    ).renderHTML()
+                    ).html()
                     Span("Menu").class("sr-only")
                 }
                 .for("menuToggle")

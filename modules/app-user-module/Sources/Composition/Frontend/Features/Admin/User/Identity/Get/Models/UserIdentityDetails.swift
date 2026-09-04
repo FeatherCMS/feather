@@ -13,10 +13,10 @@ struct UserIdentityDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor().renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminDetailFieldStyleAnchor().html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("User identity details")
             AdminPillTabs(links: [
                 .init(
@@ -46,11 +46,11 @@ struct UserIdentityDetails: Leaf {
                         "/admin/auth/magic-links/?userId=\(state.identity.id)",
                     isCurrent: false
                 ),
-            ]).renderHTML()
+            ]).html()
 
-            AdminDetailsField(label: "Status", value: state.identity.status).renderHTML()
+            AdminDetailsField(label: "Status", value: state.identity.status).html()
             if state.identity.roleNames.isEmpty {
-                AdminDetailsField(label: "Roles", value: "No roles assigned").renderHTML()
+                AdminDetailsField(label: "Roles", value: "No roles assigned").html()
             }
             else {
                 Div {
@@ -69,12 +69,12 @@ struct UserIdentityDetails: Leaf {
                 AdminNavigationButton(
                     "Edit identity",
                     href: "/admin/user/identities/\(state.identity.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove identity",
                     href: "/admin/user/identities/\(state.identity.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class(
                 "button-row",

@@ -16,9 +16,9 @@ struct SettingsEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Settings")
 
@@ -49,7 +49,7 @@ struct SettingsEdit: Leaf {
                         href: "/admin/auth/magic-links/?userId=\(userID)",
                         isCurrent: false
                     ),
-                ]).renderHTML()
+                ]).html()
             }
 
             if !state.canEdit {
@@ -62,7 +62,7 @@ struct SettingsEdit: Leaf {
                 P("Settings edited successfully.").class("success")
             }
 
-            SettingsForm(state: state.form).renderHTML()
+            SettingsForm(state: state.form).html()
         }
         .class("cms-section")
     }

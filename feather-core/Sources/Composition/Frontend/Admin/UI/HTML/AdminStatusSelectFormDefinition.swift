@@ -14,7 +14,7 @@ public struct AdminStatusSelectFormDefinition: Leaf {
         self.returnTo = returnTo
     }
 
-    public func renderHTML() -> Form {
+    public func html() -> Form {
         Form {
             Input()
                 .type(.hidden)

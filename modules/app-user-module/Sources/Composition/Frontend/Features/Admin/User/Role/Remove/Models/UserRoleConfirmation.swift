@@ -17,7 +17,7 @@ struct UserRoleConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
@@ -31,6 +31,6 @@ struct UserRoleConfirmation: Leaf {
                 actionURL: "/admin/user/roles/\(state.id)/remove/",
                 cancelURL: "/admin/user/roles/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

@@ -61,7 +61,7 @@ struct WebPageForm: Leaf {
         return links
     }
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -70,7 +70,7 @@ struct WebPageForm: Leaf {
                 P(error).class("error")
             }
 
-            AdminPillTabs(links: metadataTabLinks()).renderHTML()
+            AdminPillTabs(links: metadataTabLinks()).html()
 
             Div {
 
@@ -87,7 +87,7 @@ struct WebPageForm: Leaf {
                             "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                     )
-                ).renderHTML()
+                ).html()
 
                 FormInputField(
                     name: state.title.key,
@@ -95,8 +95,8 @@ struct WebPageForm: Leaf {
                     value: state.title.value,
                     error: state.title.error,
                     isRequired: true
-                ).renderHTML()
-                textarea(state.excerpt, rows: 4).renderHTML()
+                ).html()
+                textarea(state.excerpt, rows: 4).html()
                 markdownEditor(state.content)
             }
             Section {
@@ -115,7 +115,7 @@ struct WebPageForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")
@@ -146,7 +146,7 @@ struct WebPageForm: Leaf {
         _ field: FieldState
     ) -> some FlowContent {
         Section {
-            AdminFieldLabel(label: field.label, required: true).renderHTML()
+            AdminFieldLabel(label: field.label, required: true).html()
             Link(rel: .stylesheet)
                 .href(
                     "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.css"
@@ -278,7 +278,7 @@ struct WebPageForm: Leaf {
                     outputMode: .relativeURL,
                     showsCurrentCard: false
                 )
-            ).renderHTML()
+            ).html()
             AdminMediaAssetPicker(
                 state: .init(
                     field: .init(
@@ -294,7 +294,7 @@ struct WebPageForm: Leaf {
                     outputMode: .relativeURL,
                     showsCurrentCard: false
                 )
-            ).renderHTML()
+            ).html()
             if let error = field.error {
                 Span(error).class("field-error")
             }

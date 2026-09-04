@@ -13,26 +13,26 @@ struct SubmissionMailForm: Leaf {
     let submitLabel: String
     let error: String?
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let error { P(error).class("error") }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Mail from", required: true).renderHTML()
+                    AdminFieldLabel(label: "Mail from", required: true).html()
                     Input().type(.text).name("mailFrom").value(mail.mailFrom)
                         .required()
                 }
             }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Mail to address", required: true).renderHTML()
+                    AdminFieldLabel(label: "Mail to address", required: true).html()
                     Input().type(.text).name("mailTo").value(mail.mailTo)
                         .required()
                 }
             }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Subject", required: true).renderHTML()
+                    AdminFieldLabel(label: "Subject", required: true).html()
                     Input().type(.text).name("subject").value(mail.subject)
                         .required()
                 }
@@ -42,14 +42,14 @@ struct SubmissionMailForm: Leaf {
                     AdminFieldLabel(
                         label: "Additional headers",
                         required: false
-                    ).renderHTML()
+                    ).html()
                     Textarea(mail.additionalHeaders).class("text-input")
                         .name("additionalHeaders").rows(4)
                 }
             }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Message body", required: true).renderHTML()
+                    AdminFieldLabel(label: "Message body", required: true).html()
                     Textarea(mail.messageBody).class("text-input")
                         .name("messageBody").rows(12).required()
                 }

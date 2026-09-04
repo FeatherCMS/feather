@@ -53,7 +53,7 @@ struct WebMenuItemForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -68,21 +68,21 @@ struct WebMenuItemForm: Leaf {
                 value: state.label.value,
                 error: state.label.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: state.url.key,
                 label: state.url.label,
                 value: state.url.value,
                 error: state.url.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: state.priority.key,
                 label: state.priority.label,
                 value: state.priority.value,
                 error: state.priority.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
             checkbox(state.isBlank)
             AdminAutocompleteField(
                 state: .init(
@@ -94,7 +94,7 @@ struct WebMenuItemForm: Leaf {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            ).renderHTML()
+            ).html()
             FormSelectField(
                 name: state.authentication.key,
                 label: state.authentication.label,
@@ -106,8 +106,8 @@ struct WebMenuItemForm: Leaf {
                 selectedValue: state.authentication.value,
                 error: state.authentication.error,
                 isRequired: true
-            ).renderHTML()
-            textarea(state.notes).renderHTML()
+            ).html()
+            textarea(state.notes).html()
 
             Section {
                 Div {
@@ -118,7 +118,7 @@ struct WebMenuItemForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")
@@ -153,7 +153,7 @@ struct WebMenuItemForm: Leaf {
                     value: field.value,
                     error: field.error
                 )
-            ).renderHTML()
+            ).html()
         }
     }
 

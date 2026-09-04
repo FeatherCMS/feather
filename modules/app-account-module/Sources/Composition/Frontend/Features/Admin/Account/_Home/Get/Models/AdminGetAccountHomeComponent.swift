@@ -5,7 +5,7 @@ import WebComponents
 import WebBuilders
 
 struct AdminGetAccountHomeComponent: Leaf {
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             Nav {
                 Ol {

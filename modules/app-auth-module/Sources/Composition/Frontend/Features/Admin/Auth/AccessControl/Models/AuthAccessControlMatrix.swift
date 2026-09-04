@@ -33,7 +33,7 @@ struct AuthAccessControlMatrix: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         let visiblePermissions = state.permissions.filter {
             state.search.isEmpty
                 || ($0.name ?? "")
@@ -43,7 +43,7 @@ struct AuthAccessControlMatrix: Leaf {
         let table = matrixTable(groups: groupedPermissions)
 
         return Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Access Control")
             P("Rows are permissions, columns are roles.")
 
@@ -61,7 +61,7 @@ struct AuthAccessControlMatrix: Leaf {
                         placeholder: "Quick search access control",
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
             }
             .style(
                 "margin: 1.5rem 0 0.75rem;"
@@ -75,7 +75,7 @@ struct AuthAccessControlMatrix: Leaf {
             }
             else if state.canEdit {
                 Form {
-                    ListTableShell(table: table).renderHTML()
+                    ListTableShell(table: table).html()
 
                     Div {
                         Button("Save access control")
@@ -97,7 +97,7 @@ struct AuthAccessControlMatrix: Leaf {
                 P(
                     "You can view the access control matrix, but you need update permission to save changes."
                 )
-                ListTableShell(table: table).renderHTML()
+                ListTableShell(table: table).html()
             }
         }
         .class("cms-section")

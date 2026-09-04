@@ -34,7 +34,7 @@ struct SystemPermissionForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -49,14 +49,14 @@ struct SystemPermissionForm: Leaf {
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: state.notes.key,
                 label: state.notes.label,
                 value: state.notes.value,
                 error: state.notes.error
-            ).renderHTML()
+            ).html()
 
             Section {
                 Div {
@@ -67,7 +67,7 @@ struct SystemPermissionForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")

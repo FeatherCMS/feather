@@ -13,9 +13,9 @@ struct MediaProcessorErrorView: Leaf {
     let info: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1("Error")
             P(info)
         }

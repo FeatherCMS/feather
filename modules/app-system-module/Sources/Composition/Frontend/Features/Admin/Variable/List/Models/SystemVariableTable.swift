@@ -28,14 +28,14 @@ struct SystemVariableTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("System variables")
 
                 if state.isAdded {
@@ -52,7 +52,7 @@ struct SystemVariableTable: Leaf {
                         AdminNavigationButton(
                             "Add variable",
                             href: "/admin/system/variables/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -64,7 +64,7 @@ struct SystemVariableTable: Leaf {
                         placeholder: "Quick search system variables",
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
 
                 if state.variables.isEmpty {
                     let totalPages = max(
@@ -109,7 +109,7 @@ struct SystemVariableTable: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         Th("Name")
                                             .columnWidth(percent: 50)
@@ -126,7 +126,7 @@ struct SystemVariableTable: Leaf {
                                                     state: .init(
                                                         id: variable.id
                                                     )
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             Td(variable.name ?? "")
                                                 .data(
@@ -172,15 +172,15 @@ struct SystemVariableTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/system/variables/",
@@ -189,7 +189,7 @@ struct SystemVariableTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

@@ -34,14 +34,14 @@ struct WebPageTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("Web pages")
                 statusFormDefinitions()
 
@@ -65,7 +65,7 @@ struct WebPageTable: Leaf {
                         AdminNavigationButton(
                             "Add page",
                             href: "/admin/web/pages/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -77,7 +77,7 @@ struct WebPageTable: Leaf {
                         placeholder: "Quick search web pages",
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -122,7 +122,7 @@ struct WebPageTable: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         Th("Title")
                                         Th("Status")
@@ -139,7 +139,7 @@ struct WebPageTable: Leaf {
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             titleCell(for: item)
                                             statusCell(for: item)
@@ -169,8 +169,8 @@ struct WebPageTable: Leaf {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/web/pages/",
@@ -179,7 +179,7 @@ struct WebPageTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }
@@ -226,7 +226,7 @@ struct WebPageTable: Leaf {
                 Span(item.title)
                 if let previewPath = previewPath(for: item.metadata) {
                     A {
-                        Icon(svg: FeatherIcons.externalLink()).renderHTML()
+                        Icon(svg: FeatherIcons.externalLink()).html()
                     }
                     .href(previewPath)
                     .target(.blank)
@@ -251,7 +251,7 @@ struct WebPageTable: Leaf {
                 AdminStatusSelectField(
                     formID: statusFormID(for: item.id),
                     selectedStatus: item.metadata.normalizedStatus
-                ).renderHTML()
+                ).html()
             }
             else {
                 Span(item.metadata.status.capitalized)
@@ -268,7 +268,7 @@ struct WebPageTable: Leaf {
                         id: statusFormID(for: item.id),
                         action: "/admin/web/pages/\(item.id)/status/",
                         returnTo: "/admin/web/pages/"
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

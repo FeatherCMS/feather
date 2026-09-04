@@ -23,9 +23,9 @@ struct MediaProcessorFormView: Leaf {
     let form: FormState
     let breadcrumb: AdminBreadcrumb.State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1(title)
             if let error = form.error { P(error).class("error") }
             Form {
@@ -35,7 +35,7 @@ struct MediaProcessorFormView: Leaf {
                     value: form.fileSuffix,
                     isRequired: true,
                     inputClass: "text-input"
-                ).renderHTML()
+                ).html()
 
                 FormInputField(
                     name: "matchExtensions",
@@ -43,7 +43,7 @@ struct MediaProcessorFormView: Leaf {
                     value: form.matchExtensions,
                     isRequired: true,
                     inputClass: "text-input"
-                ).renderHTML()
+                ).html()
 
                 FormTextAreaField(
                     name: "commandTemplate",
@@ -52,7 +52,7 @@ struct MediaProcessorFormView: Leaf {
                     rows: 4,
                     isRequired: true,
                     textareaClass: "text-input"
-                ).renderHTML()
+                ).html()
 
                 Section {
                     P(

@@ -66,7 +66,7 @@ struct AuthMagicLinkForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -85,7 +85,7 @@ struct AuthMagicLinkForm: Leaf {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            ).renderHTML()
+            ).html()
 
             CheckboxField(
                 state: .init(
@@ -96,7 +96,7 @@ struct AuthMagicLinkForm: Leaf {
                     labelPosition: .before,
 
                 )
-            ).renderHTML()
+            ).html()
 
             Section {
                 Div {
@@ -107,7 +107,7 @@ struct AuthMagicLinkForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")

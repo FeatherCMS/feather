@@ -17,17 +17,17 @@ struct NewsletterEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminNewsletterCampaignTabs(campaignId: state.id, active: .details).renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminNewsletterCampaignTabs(campaignId: state.id, active: .details).html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Edit campaign")
             if state.isEdited { P("Campaign edited successfully.") }
             NewsletterForm(
                 state: state.form,
                 action: "/admin/newsletters/\(state.id)/edit/",
                 submitLabel: "Save"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

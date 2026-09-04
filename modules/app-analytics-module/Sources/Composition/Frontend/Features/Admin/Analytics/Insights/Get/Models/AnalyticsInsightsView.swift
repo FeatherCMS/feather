@@ -15,9 +15,9 @@ struct AnalyticsInsightsView: Leaf {
     let page: AdminAnalyticsInsightsPage
     let permissions: Set<String>
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1(page.source.pageTitle)
             P(page.source.summary)
                 .style(

@@ -25,16 +25,16 @@ struct AuthEmailAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Add user email")
             AuthEmailForm(
                 state: state.form,
                 action: "/admin/auth/emails/add/",
                 submitLabel: "Add email"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

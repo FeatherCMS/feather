@@ -27,7 +27,7 @@ struct SettingsForm: Leaf {
     var action: String = "/admin/account/settings/"
     var submitLabel: String = "Save settings"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -45,7 +45,7 @@ struct SettingsForm: Leaf {
                 isRequired: true,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: state.timezone.key,
@@ -56,7 +56,7 @@ struct SettingsForm: Leaf {
                 isRequired: true,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             FormSelectField(
                 name: state.pageSize.key,
@@ -71,7 +71,7 @@ struct SettingsForm: Leaf {
                 isRequired: true,
                 isDisabled: !state.canEdit,
                 selectClass: "text-input page-size-select"
-            ).renderHTML()
+            ).html()
 
             if state.canEdit {
                 Section {

@@ -69,7 +69,7 @@ public struct AdminSidebar: Leaf {
         self.state = state
     }
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         Div {
             Input()
                 .id("menuToggle")
@@ -89,7 +89,7 @@ public struct AdminSidebar: Leaf {
                                                     Icon(
                                                         svg: menu.current.icon,
                                                         class: "menu-icon"
-                                                    ).renderHTML()
+                                                    ).html()
                                                     Span(menu.current.label)
                                                 }
                                                 .title(menu.current.label)
@@ -102,7 +102,7 @@ public struct AdminSidebar: Leaf {
                                                 Icon(
                                                     svg: menu.current.icon,
                                                     class: "menu-icon"
-                                                ).renderHTML()
+                                                ).html()
                                                 Span(menu.current.label)
                                             }
                                         }
@@ -128,7 +128,7 @@ public struct AdminSidebar: Leaf {
                                                             svg: menu.current
                                                                 .icon,
                                                             class: "menu-icon"
-                                                        ).renderHTML()
+                                                        ).html()
                                                         Span(menu.current.label)
                                                     }
                                                     .title(menu.current.label)
@@ -138,7 +138,7 @@ public struct AdminSidebar: Leaf {
                                                     Icon(
                                                         svg: menu.current.icon,
                                                         class: "menu-icon"
-                                                    ).renderHTML()
+                                                    ).html()
                                                     Span(menu.current.label)
                                                 }
                                             }
@@ -156,7 +156,7 @@ public struct AdminSidebar: Leaf {
                                                                 svg: child.icon,
                                                                 class:
                                                                     "menu-icon"
-                                                            ).renderHTML()
+                                                            ).html()
                                                             Span(child.label)
                                                         }
                                                         .title(child.label)

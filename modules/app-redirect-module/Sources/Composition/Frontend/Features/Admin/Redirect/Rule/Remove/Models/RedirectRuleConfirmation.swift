@@ -18,7 +18,7 @@ struct RedirectRuleConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
@@ -32,6 +32,6 @@ struct RedirectRuleConfirmation: Leaf {
                 actionURL: "/admin/redirect/rules/\(state.id)/remove/",
                 cancelURL: "/admin/redirect/rules/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

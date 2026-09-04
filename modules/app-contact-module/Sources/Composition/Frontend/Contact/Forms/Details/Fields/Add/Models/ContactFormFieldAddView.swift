@@ -20,15 +20,15 @@ struct ContactFormFieldAddView: Leaf {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         let basePath = "/admin/contact/forms/\(state.formId)/fields"
         return Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Add contact form field")
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Type", required: true).renderHTML()
+                    AdminFieldLabel(label: "Type", required: true).html()
                     Select {
                         if state.type == "text" {
                             Option("Text").value("text").selected()
@@ -64,17 +64,17 @@ struct ContactFormFieldAddView: Leaf {
                     .name("type").class("text-input")
                 }
                 Label {
-                    AdminFieldLabel(label: "Key", required: true).renderHTML()
+                    AdminFieldLabel(label: "Key", required: true).html()
                     Input().type(.text).class("text-input").name("key")
                         .value(state.key).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "Label", required: true).renderHTML()
+                    AdminFieldLabel(label: "Label", required: true).html()
                     Input().type(.text).class("text-input").name("label")
                         .value(state.label).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "Allowed values", required: false).renderHTML()
+                    AdminFieldLabel(label: "Allowed values", required: false).html()
                     Textarea(state.allowedValues).class("text-input")
                         .name("allowedValues").placeholder("One value per line")
                 }

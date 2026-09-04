@@ -26,7 +26,7 @@ struct AuthMagicLinkConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
@@ -43,6 +43,6 @@ struct AuthMagicLinkConfirmation: Leaf {
                 actionURL: "/admin/auth/magic-links/\(state.id)/remove/",
                 cancelURL: "/admin/auth/magic-links/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

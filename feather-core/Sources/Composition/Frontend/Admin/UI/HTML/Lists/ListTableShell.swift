@@ -11,7 +11,7 @@ public struct ListTableShell<Table: FlowContent>: Leaf {
         self.table = table
     }
 
-    public func renderHTML() -> Div {
+    public func html() -> Div {
         Div {
             Div {
                 table

@@ -18,9 +18,9 @@ struct AccountInvitationEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Edit user invitation")
             if state.isEdited { P("User invitation edited successfully.") }
@@ -30,7 +30,7 @@ struct AccountInvitationEdit: Leaf {
                 submitLabel: "Edit invitation",
                 removeHref: "/admin/account/invitations/\(state.id)/remove/",
                 removeLabel: "Remove invitation"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

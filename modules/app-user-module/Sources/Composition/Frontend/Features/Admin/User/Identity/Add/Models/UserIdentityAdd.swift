@@ -16,9 +16,9 @@ struct UserIdentityAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Add identity")
 
@@ -26,7 +26,7 @@ struct UserIdentityAdd: Leaf {
                 state: state.form,
                 action: "/admin/user/identities/add/",
                 submitLabel: "Add identity"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

@@ -65,7 +65,7 @@ struct AuthEmailForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -84,7 +84,7 @@ struct AuthEmailForm: Leaf {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: state.email.key,
@@ -93,7 +93,7 @@ struct AuthEmailForm: Leaf {
                 error: state.email.error,
                 type: .email,
                 isRequired: true
-            ).renderHTML()
+            ).html()
 
             Section {
                 Div {
@@ -104,7 +104,7 @@ struct AuthEmailForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")

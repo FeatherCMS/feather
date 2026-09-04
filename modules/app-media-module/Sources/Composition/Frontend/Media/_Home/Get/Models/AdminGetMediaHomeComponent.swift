@@ -10,7 +10,7 @@ import WebComponents
 import WebBuilders
 
 struct AdminGetMediaHomeComponent: Leaf {
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             Nav {
                 Ol {

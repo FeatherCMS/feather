@@ -230,7 +230,7 @@ public struct AdminAutocompleteField: Leaf {
         }
     }
 
-    public func renderHTML() -> Section {
+    public func html() -> Section {
         let selectedOptions = state.options.filter(\.isSelected)
 
         return Section {
@@ -302,7 +302,7 @@ public struct AdminAutocompleteField: Leaf {
             }
             else {
                 Label {
-                    AdminFieldLabel(label: state.label, required: false).renderHTML()
+                    AdminFieldLabel(label: state.label, required: false).html()
                     Input()
                         .type(.text)
                         .class("text-input")

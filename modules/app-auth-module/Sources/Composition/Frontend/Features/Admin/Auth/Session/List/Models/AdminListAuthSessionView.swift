@@ -13,7 +13,7 @@ struct AdminListAuthSessionView: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             AdminBreadcrumb(
                 state: .init(
@@ -31,7 +31,7 @@ struct AdminListAuthSessionView: Leaf {
                         ),
                     ]
                 )
-            ).renderHTML()
+            ).html()
             H1("Sessions")
             AdminPillTabs(links: [
                 .init(
@@ -60,7 +60,7 @@ struct AdminListAuthSessionView: Leaf {
                     href: "/admin/auth/magic-links/?userId=\(state.identityID)",
                     isCurrent: false
                 ),
-            ]).renderHTML()
+            ]).html()
             if state.items.isEmpty {
                 P("No active sessions.")
             }
@@ -87,7 +87,7 @@ struct AdminListAuthSessionView: Leaf {
                                             href:
                                                 "/admin/user/identities/\(state.identityID)/sessions/\(item.id)/remove/",
                                             classes: ["danger"]
-                                        ).renderHTML()
+                                        ).html()
                                     }
                                 }
                             }

@@ -135,7 +135,7 @@ struct LoginPage: Leaf {
         }
     }
 
-    func renderHTML() -> Main {
+    func html() -> Main {
         Main {
             Div {
                 Div {
@@ -145,7 +145,7 @@ struct LoginPage: Leaf {
                 }
                 .class("login-copy")
 
-                LoginForm(state: state.form).renderHTML()
+                LoginForm(state: state.form).html()
 
                 A("Sign in with a magic link")
                     .href("/magic-link/")

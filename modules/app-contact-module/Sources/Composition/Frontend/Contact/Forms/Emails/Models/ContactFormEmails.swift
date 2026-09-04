@@ -14,17 +14,17 @@ struct ContactFormEmails: Leaf {
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: id, active: .emails).renderHTML()
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminContactFormTabs(formId: id, active: .emails).html()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1("Contact form emails")
             if let error { P(error).class("error") }
             Div {
                 AdminNavigationButton(
                     "Add email",
                     href: "/admin/contact/forms/\(id)/emails/add/"
-                ).renderHTML()
+                ).html()
             }
             .class("button-row")
             Br()
@@ -46,7 +46,7 @@ struct ContactFormEmails: Leaf {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox().renderHTML()
+                                        ListTableSelectAllCheckbox().html()
                                     }
                                     Th("From")
                                     Th("To")
@@ -60,7 +60,7 @@ struct ContactFormEmails: Leaf {
                                         if canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: mail.id)
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                         Td(mail.mailFrom).data("label", "From")
                                         Td(mail.mailTo).data("label", "To")
@@ -91,15 +91,15 @@ struct ContactFormEmails: Leaf {
                                                     "contact:forms:update"
                                                 ]
                                             )
-                                        ).renderHTML()
+                                        ).html()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    ).renderHTML()
-                ).renderHTML()
+                    ).html()
+                ).html()
             }
         }
         .class("cms-section")

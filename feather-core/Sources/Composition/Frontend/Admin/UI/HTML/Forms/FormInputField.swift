@@ -111,7 +111,7 @@ public struct FormInputField: Leaf {
         }
     }
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         Section {
             Label {
                 fieldLabel()

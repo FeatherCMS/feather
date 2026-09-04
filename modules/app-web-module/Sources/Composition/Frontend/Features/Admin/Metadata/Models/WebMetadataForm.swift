@@ -73,7 +73,7 @@ struct WebMetadataForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -88,45 +88,45 @@ struct WebMetadataForm: Leaf {
                 value: state.slug.value,
                 error: state.slug.error,
                 isRequired: true
-            ).renderHTML()
-            templateField(state.template).renderHTML()
+            ).html()
+            templateField(state.template).html()
             FormDateTimeField(
                 name: state.publicationDate.key,
                 label: state.publicationDate.label,
                 value: state.publicationDate.value,
                 error: state.publicationDate.error
-            ).renderHTML()
+            ).html()
             FormDateTimeField(
                 name: state.expirationDate.key,
                 label: state.expirationDate.label,
                 value: state.expirationDate.value,
                 error: state.expirationDate.error
-            ).renderHTML()
-            statusField(state.status).renderHTML()
+            ).html()
+            statusField(state.status).html()
             FormInputField(
                 name: state.title.key,
                 label: state.title.label,
                 value: state.title.value,
                 error: state.title.error
-            ).renderHTML()
-            textarea(state.excerpt, rows: 4).renderHTML()
+            ).html()
+            textarea(state.excerpt, rows: 4).html()
             imagePicker(state.imageUrl, selectedAsset: state.selectedImageAsset)
             FormInputField(
                 name: state.canonicalUrl.key,
                 label: state.canonicalUrl.label,
                 value: state.canonicalUrl.value,
                 error: state.canonicalUrl.error
-            ).renderHTML()
+            ).html()
             checkbox(state.noIndex)
             FormInputField(
                 name: state.primaryKeyword.key,
                 label: state.primaryKeyword.label,
                 value: state.primaryKeyword.value,
                 error: state.primaryKeyword.error
-            ).renderHTML()
-            textarea(state.cssCodeInjection, rows: 10).renderHTML()
-            textarea(state.javascriptCodeInjection, rows: 10).renderHTML()
-            textarea(state.structuredDataCodeInjection, rows: 10).renderHTML()
+            ).html()
+            textarea(state.cssCodeInjection, rows: 10).html()
+            textarea(state.javascriptCodeInjection, rows: 10).html()
+            textarea(state.structuredDataCodeInjection, rows: 10).html()
 
             Section {
                 Div {
@@ -137,7 +137,7 @@ struct WebMetadataForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")
@@ -154,7 +154,7 @@ struct WebMetadataForm: Leaf {
     ) -> some BasicTag {
         Section {
             Label {
-                AdminFieldLabel(label: field.label, required: false).renderHTML()
+                AdminFieldLabel(label: field.label, required: false).html()
                 Input()
                     .type(.text)
                     .id(field.key)
@@ -225,7 +225,7 @@ struct WebMetadataForm: Leaf {
                 allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                 outputMode: .originalURL
             )
-        ).renderHTML()
+        ).html()
     }
 
     private func checkbox(
@@ -239,7 +239,7 @@ struct WebMetadataForm: Leaf {
                     value: field.value,
                     error: field.error
                 )
-            ).renderHTML()
+            ).html()
         }
         .if(field.error != nil) { $0.class("has-error") }
     }

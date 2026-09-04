@@ -45,20 +45,20 @@ struct LoginForm: Leaf {
         }
     }
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             Section {
-                EmailField(state: state.email).renderHTML()
+                EmailField(state: state.email).html()
             }
             .class("login-field")
 
             Section {
-                PasswordField(state: state.password).renderHTML()
+                PasswordField(state: state.password).html()
             }
             .class("login-field")
 
             Section {
-                CheckboxField(state: state.isPersistent).renderHTML()
+                CheckboxField(state: state.isPersistent).html()
             }
             .class("login-checkbox-field")
 

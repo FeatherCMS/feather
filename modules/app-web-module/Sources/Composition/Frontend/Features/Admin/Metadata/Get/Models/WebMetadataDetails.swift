@@ -13,63 +13,63 @@ struct WebMetadataDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Web metadata details")
-            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
+            AdminDetailsField(label: "ID", value: state.rule.id).html()
             AdminDetailsField(
                 label: "Reference type",
                 value: state.rule.referenceType.isEmpty
                     ? "-" : state.rule.referenceType
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Reference ID",
                 value: state.rule.referenceId.isEmpty
                     ? "-" : state.rule.referenceId
-            ).renderHTML()
-            AdminDetailsField(label: "Slug", value: state.rule.slug).renderHTML()
+            ).html()
+            AdminDetailsField(label: "Slug", value: state.rule.slug).html()
             AdminDetailsField(
                 label: "Status",
                 value: state.rule.status.isEmpty ? "-" : state.rule.status
-            ).renderHTML()
-            AdminDetailsField(label: "Title", value: state.rule.title).renderHTML()
+            ).html()
+            AdminDetailsField(label: "Title", value: state.rule.title).html()
             AdminDetailsField(
                 label: "Publication date",
                 value: state.rule.publicationDate.isEmpty
                     ? "-" : state.rule.publicationDate
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Expiration date",
                 value: state.rule.expirationDate.isEmpty
                     ? "-" : state.rule.expirationDate
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Image URL",
                 value: state.rule.imageUrl.isEmpty ? "-" : state.rule.imageUrl
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Canonical URL",
                 value: state.rule.canonicalUrl.isEmpty
                     ? "-" : state.rule.canonicalUrl
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "No index",
                 value: state.rule.noIndex ? "Yes" : "No"
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Primary keyword",
                 value: state.rule.primaryKeyword.isEmpty
                     ? "-" : state.rule.primaryKeyword
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Created",
                 value: state.rule.createdAt.isEmpty ? "-" : state.rule.createdAt
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Updated",
                 value: state.rule.updatedAt.isEmpty ? "-" : state.rule.updatedAt
-            ).renderHTML()
+            ).html()
             Section {
                 H2("Excerpt")
                 if state.rule.excerpt.isEmpty {
@@ -111,7 +111,7 @@ struct WebMetadataDetails: Leaf {
                 AdminNavigationButton(
                     "Edit web metadata",
                     href: "/admin/web/metadata/\(state.rule.id)/edit/"
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

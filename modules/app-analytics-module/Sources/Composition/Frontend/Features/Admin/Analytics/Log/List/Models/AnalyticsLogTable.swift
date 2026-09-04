@@ -59,14 +59,14 @@ struct AnalyticsLogTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("Analytics logs")
                 Form {
                     Div {
@@ -205,13 +205,13 @@ struct AnalyticsLogTable: Leaf {
                                                 ],
                                                 permissions: state.permissions
                                             )
-                                        ).renderHTML()
+                                        ).html()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
-                    ).renderHTML()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/analytics/logs/",
@@ -225,7 +225,7 @@ struct AnalyticsLogTable: Leaf {
                                 ("responseCode", state.responseCode),
                             ]
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

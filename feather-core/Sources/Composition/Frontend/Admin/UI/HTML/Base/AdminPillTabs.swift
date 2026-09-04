@@ -79,7 +79,7 @@ public struct AdminPillTabs: Leaf {
         }
     }
 
-    public func renderHTML() -> Div {
+    public func html() -> Div {
         Div {
             for link in links {
                 A(link.label)

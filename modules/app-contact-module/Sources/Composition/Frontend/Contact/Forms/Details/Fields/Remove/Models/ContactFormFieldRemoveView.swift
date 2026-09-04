@@ -12,7 +12,7 @@ struct ContactFormFieldRemoveView: Leaf {
     let fieldId: String
     let label: String
     let breadcrumb: AdminBreadcrumb.State
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         let basePath = "/admin/contact/forms/\(formId)/fields"
         return AdminConfirmationDialog(
             state: .init(
@@ -25,6 +25,6 @@ struct ContactFormFieldRemoveView: Leaf {
                 actionURL: "\(basePath)/\(fieldId)/remove/",
                 cancelURL: "\(basePath)/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

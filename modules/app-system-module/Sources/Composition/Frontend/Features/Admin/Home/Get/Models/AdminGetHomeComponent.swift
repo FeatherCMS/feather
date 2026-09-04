@@ -11,11 +11,11 @@ struct AdminGetHomeComponent: Leaf {
 
     let model: AdminGetHomeModel
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             AdminBreadcrumb(
                 state: .init(links: [.init(label: "Admin", link: "/admin/")])
-            ).renderHTML()
+            ).html()
             H1("Dashboard")
             P(model.summary)
                 .style("margin:0 0 16px 0;")

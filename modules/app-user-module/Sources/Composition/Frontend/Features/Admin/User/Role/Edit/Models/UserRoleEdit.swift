@@ -18,9 +18,9 @@ struct UserRoleEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Edit user role")
             if state.isEdited { P("User role edited successfully.") }
@@ -30,7 +30,7 @@ struct UserRoleEdit: Leaf {
                 submitLabel: "Edit role",
                 removeHref: "/admin/user/roles/\(state.id)/remove/",
                 removeLabel: "Remove role"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

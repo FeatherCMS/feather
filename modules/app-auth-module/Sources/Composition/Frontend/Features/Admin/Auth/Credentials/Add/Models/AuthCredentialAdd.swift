@@ -24,16 +24,16 @@ struct AuthCredentialAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Add user credential")
             AuthCredentialForm(
                 state: state.form,
                 action: "/admin/auth/credentials/add/",
                 submitLabel: "Add credential",
                 removeHref: nil
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

@@ -145,7 +145,7 @@ struct AppPublicStyleAnchor: Leaf {
         }
     }
 
-    func renderHTML() -> Div {
+    func html() -> Div {
         Div {}
     }
 }

@@ -29,7 +29,7 @@ struct AdminWebMenuTabs: Leaf {
         ]
     }
 
-    func renderHTML() -> Div {
-        return AdminPillTabs(links: links).renderHTML()
+    func html() -> Div {
+        return AdminPillTabs(links: links).html()
     }
 }

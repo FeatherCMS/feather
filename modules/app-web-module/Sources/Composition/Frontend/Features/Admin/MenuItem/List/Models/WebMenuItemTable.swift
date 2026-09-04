@@ -72,16 +72,16 @@ struct WebMenuItemTable: Leaf {
         }
     }
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("Edit menu")
-                AdminWebMenuTabs(menuID: state.menuId, active: .items).renderHTML()
+                AdminWebMenuTabs(menuID: state.menuId, active: .items).html()
 
                 if state.isAdded {
                     P("Item added successfully.")
@@ -97,7 +97,7 @@ struct WebMenuItemTable: Leaf {
                         AdminNavigationButton(
                             "Add item",
                             href: "/admin/web/menus/\(state.menuId)/items/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -109,7 +109,7 @@ struct WebMenuItemTable: Leaf {
                         placeholder: "Quick search items",
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
 
                 if state.items.isEmpty {
                     let totalPages = max(
@@ -158,7 +158,7 @@ struct WebMenuItemTable: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         if state.canReorder { Th("Order") }
                                         Th("Label")
@@ -176,7 +176,7 @@ struct WebMenuItemTable: Leaf {
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             if state.canReorder {
                                                 Td {
@@ -274,7 +274,7 @@ struct WebMenuItemTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                         .class("web-menu-item-row")
                                         .data("web-menu-item", item.id)
@@ -287,8 +287,8 @@ struct WebMenuItemTable: Leaf {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                     if state.canReorder {
                         Script(reorderScript())
                     }
@@ -300,7 +300,7 @@ struct WebMenuItemTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

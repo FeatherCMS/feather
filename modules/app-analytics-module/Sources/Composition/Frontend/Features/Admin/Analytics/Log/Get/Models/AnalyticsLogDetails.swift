@@ -14,88 +14,88 @@ struct AnalyticsLogDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor().renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminDetailFieldStyleAnchor().html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Analytics log details")
-            AdminDetailsField(label: "ID", value: state.log.id).renderHTML()
+            AdminDetailsField(label: "ID", value: state.log.id).html()
             AdminDetailsField(
                 label: "Account ID",
                 value: display(state.log.accountId)
-            ).renderHTML()
-            AdminDetailsField(label: "Source", value: state.log.source).renderHTML()
-            AdminDetailsField(label: "Method", value: state.log.method).renderHTML()
+            ).html()
+            AdminDetailsField(label: "Source", value: state.log.source).html()
+            AdminDetailsField(label: "Method", value: state.log.method).html()
             AdminDetailsField(
                 label: "Status",
                 value: "\(state.log.responseCode)"
-            ).renderHTML()
-            AdminDetailsField(label: "Path", value: state.log.path).renderHTML()
-            AdminDetailsField(label: "URL", value: state.log.url).renderHTML()
-            AdminDetailsField(label: "IP", value: display(state.log.ip)).renderHTML()
+            ).html()
+            AdminDetailsField(label: "Path", value: state.log.path).html()
+            AdminDetailsField(label: "URL", value: state.log.url).html()
+            AdminDetailsField(label: "IP", value: display(state.log.ip)).html()
             AdminDetailsField(
                 label: "Referer",
                 value: display(state.log.referer)
-            ).renderHTML()
-            AdminDetailsField(label: "Origin", value: display(state.log.origin)).renderHTML()
+            ).html()
+            AdminDetailsField(label: "Origin", value: display(state.log.origin)).html()
             AdminDetailsField(
                 label: "Accept-Language",
                 value: display(state.log.acceptLanguage)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "User-Agent",
                 value: display(state.log.userAgent)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Language",
                 value: display(state.log.language)
-            ).renderHTML()
-            AdminDetailsField(label: "Region", value: display(state.log.region)).renderHTML()
+            ).html()
+            AdminDetailsField(label: "Region", value: display(state.log.region)).html()
             AdminDetailsField(
                 label: "OS Name",
                 value: display(state.log.osName)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "OS Version",
                 value: display(state.log.osVersion)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Browser Name",
                 value: display(state.log.browserName)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Browser Version",
                 value: display(state.log.browserVersion)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Engine Name",
                 value: display(state.log.engineName)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Engine Version",
                 value: display(state.log.engineVersion)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Device Vendor",
                 value: display(state.log.deviceVendor)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Device Type",
                 value: display(state.log.deviceType)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Device Model",
                 value: display(state.log.deviceModel)
-            ).renderHTML()
-            AdminDetailsField(label: "CPU", value: display(state.log.cpu)).renderHTML()
+            ).html()
+            AdminDetailsField(label: "CPU", value: display(state.log.cpu)).html()
             AdminDetailsField(
                 label: "Created",
                 value: DateFormatting.formatUnixTimestamp(state.log.createdAt)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Updated",
                 value: DateFormatting.formatUnixTimestamp(state.log.updatedAt)
-            ).renderHTML()
+            ).html()
             Div {
                 P("Headers")
                     .class("admin-details-field__label")

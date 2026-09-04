@@ -12,35 +12,35 @@ struct AccountInvitationDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("User invitation details")
-            AdminDetailsField(label: "ID", value: state.invitation.id).renderHTML()
-            AdminDetailsField(label: "Email", value: state.invitation.email).renderHTML()
+            AdminDetailsField(label: "ID", value: state.invitation.id).html()
+            AdminDetailsField(label: "Email", value: state.invitation.email).html()
             AdminDetailsField(
                 label: "Roles",
                 value: state.invitation.roleNames.isEmpty
                     ? "No roles assigned"
                     : state.invitation.roleNames.joined(separator: ", ")
-            ).renderHTML()
+            ).html()
             Div {
                 AdminNavigationButton(
                     "Resend invitation",
                     href:
                         "/admin/account/invitations/\(state.invitation.id)/resend/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Edit invitation",
                     href:
                         "/admin/account/invitations/\(state.invitation.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove invitation",
                     href:
                         "/admin/account/invitations/\(state.invitation.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

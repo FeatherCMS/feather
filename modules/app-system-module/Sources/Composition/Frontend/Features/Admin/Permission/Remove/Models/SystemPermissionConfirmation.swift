@@ -17,7 +17,7 @@ struct SystemPermissionConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
@@ -31,6 +31,6 @@ struct SystemPermissionConfirmation: Leaf {
                 actionURL: "/admin/system/permissions/\(state.id)/remove/",
                 cancelURL: "/admin/system/permissions/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

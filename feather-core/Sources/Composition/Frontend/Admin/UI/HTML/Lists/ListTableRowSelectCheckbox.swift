@@ -19,7 +19,7 @@ public struct ListTableRowSelectCheckbox: Leaf {
         self.state = state
     }
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         Td {
             Input()
                 .type(.checkbox)

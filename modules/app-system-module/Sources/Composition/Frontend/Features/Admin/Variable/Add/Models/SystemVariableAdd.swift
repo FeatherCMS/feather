@@ -16,16 +16,16 @@ struct SystemVariableAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Add system variable")
             SystemVariableForm(
                 state: state.form,
                 action: "/admin/system/variables/add/",
                 submitLabel: "Add variable"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

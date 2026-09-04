@@ -17,7 +17,7 @@ struct AdminNewsletterCampaignTabs: Leaf {
     let campaignId: String
     let active: Tab
 
-    func renderHTML() -> Div {
+    func html() -> Div {
         AdminPillTabs(links: [
             .init(
                 label: "Details",
@@ -34,6 +34,6 @@ struct AdminNewsletterCampaignTabs: Leaf {
                 href: "/admin/newsletters/\(campaignId)/issues/",
                 isCurrent: active == .issues
             ),
-        ]).renderHTML()
+        ]).html()
     }
 }

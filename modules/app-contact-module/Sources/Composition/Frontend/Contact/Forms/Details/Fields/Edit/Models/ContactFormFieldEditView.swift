@@ -15,17 +15,17 @@ struct ContactFormFieldEditView: Leaf {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         let basePath = "/admin/contact/forms/\(state.formId)/fields"
         return Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Edit contact form field")
             if let error = state.error { P(error).class("error") }
             ContactFormFieldForm(
                 field: state.field,
                 action: "\(basePath)/\(state.field.id)/edit/",
                 submitLabel: "Save"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

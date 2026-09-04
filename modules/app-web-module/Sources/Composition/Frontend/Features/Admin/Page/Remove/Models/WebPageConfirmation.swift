@@ -18,7 +18,7 @@ struct WebPageConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
@@ -32,6 +32,6 @@ struct WebPageConfirmation: Leaf {
                 actionURL: "/admin/web/pages/\(state.id)/remove/",
                 cancelURL: "/admin/web/pages/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

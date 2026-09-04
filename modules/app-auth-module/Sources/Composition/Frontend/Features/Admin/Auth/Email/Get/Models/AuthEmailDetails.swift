@@ -24,25 +24,25 @@ struct AuthEmailDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("User email details")
-            AdminDetailsField(label: "ID", value: state.link.id).renderHTML()
+            AdminDetailsField(label: "ID", value: state.link.id).html()
             AdminDetailsField(
                 label: "Identity ID",
                 value: state.link.identityId
-            ).renderHTML()
+            ).html()
             Div {
                 AdminNavigationButton(
                     "Edit email",
                     href: "/admin/auth/emails/\(state.link.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove email",
                     href: "/admin/auth/emails/\(state.link.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

@@ -13,10 +13,10 @@ struct ContactFieldForm: Leaf {
     let action: String
     let submitLabel: String
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             Label {
-                AdminFieldLabel(label: "Type", required: true).renderHTML()
+                AdminFieldLabel(label: "Type", required: true).html()
                 Select {
                     for type in [
                         "text", "textarea", "select", "radio", "toggle",
@@ -28,17 +28,17 @@ struct ContactFieldForm: Leaf {
                 .name("type").class("text-input")
             }
             Label {
-                AdminFieldLabel(label: "Key", required: true).renderHTML()
+                AdminFieldLabel(label: "Key", required: true).html()
                 Input().type(.text).class("text-input").name("key")
                     .value(field.key).required()
             }
             Label {
-                AdminFieldLabel(label: "Label", required: true).renderHTML()
+                AdminFieldLabel(label: "Label", required: true).html()
                 Input().type(.text).class("text-input").name("label")
                     .value(field.label).required()
             }
             Label {
-                AdminFieldLabel(label: "Allowed values", required: false).renderHTML()
+                AdminFieldLabel(label: "Allowed values", required: false).html()
                 Textarea(field.allowedValues).class("text-input")
                     .name("allowedValues")
             }

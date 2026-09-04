@@ -112,13 +112,13 @@ struct ContactFormForm: Leaf {
         }
     }
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Name", required: true).renderHTML()
+                    AdminFieldLabel(label: "Name", required: true).html()
                     Input().type(.text).id("name").name("name")
                         .value(state.name).required()
                 }
@@ -126,24 +126,24 @@ struct ContactFormForm: Leaf {
             .if(state.error != nil) { $0.class("has-error") }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Success message", required: false).renderHTML()
+                    AdminFieldLabel(label: "Success message", required: false).html()
                     Input().type(.text).id("successMessage")
                         .name("successMessage").value(state.successMessage)
                 }
                 Label {
-                    AdminFieldLabel(label: "Failure message", required: false).renderHTML()
+                    AdminFieldLabel(label: "Failure message", required: false).html()
                     Input().type(.text).id("failureMessage")
                         .name("failureMessage").value(state.failureMessage)
                 }
                 Label {
-                    AdminFieldLabel(label: "Redirect URL", required: false).renderHTML()
+                    AdminFieldLabel(label: "Redirect URL", required: false).html()
                     Input().type(.text).id("redirectUrl").name("redirectUrl")
                         .value(state.redirectUrl ?? "")
                 }
             }
             if !state.availableFields.isEmpty {
                 Section {
-                    AdminFieldLabel(label: "Fields", required: false).renderHTML()
+                    AdminFieldLabel(label: "Fields", required: false).html()
                     Div {
                         Div {
                             H3("Selected fields")

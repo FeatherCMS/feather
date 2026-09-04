@@ -19,14 +19,14 @@ struct AssetEditView: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your account cannot edit media assets.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("Edit media asset")
                 if state.isEdited {
                     P("Media asset updated successfully.")
@@ -38,13 +38,13 @@ struct AssetEditView: Leaf {
                 AdminDetailsField(
                     label: "Storage key",
                     value: state.model.storageKey
-                ).renderHTML()
-                AdminDetailsField(label: "Type", value: state.model.type).renderHTML()
-                AdminDetailsField(label: "Status", value: state.model.status).renderHTML()
+                ).html()
+                AdminDetailsField(label: "Type", value: state.model.type).html()
+                AdminDetailsField(label: "Status", value: state.model.status).html()
                 AdminDetailsField(
                     label: "Size bytes",
                     value: "\(state.model.sizeBytes)"
-                ).renderHTML()
+                ).html()
 
                 Form {
                     FormInputField(
@@ -52,14 +52,14 @@ struct AssetEditView: Leaf {
                         label: "Title",
                         value: state.model.title,
                         inputClass: "text-input"
-                    ).renderHTML()
+                    ).html()
 
                     FormInputField(
                         name: "altText",
                         label: "Alt text",
                         value: state.model.altText,
                         inputClass: "text-input"
-                    ).renderHTML()
+                    ).html()
 
                     Section {
                         Div { Button("Save").type(.submit) }.class("button-row")

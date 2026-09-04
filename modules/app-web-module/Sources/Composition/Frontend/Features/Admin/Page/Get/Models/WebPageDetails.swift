@@ -19,9 +19,9 @@ struct WebPageDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Web page details")
             if state.isPublished {
                 P("Web page published successfully.")
@@ -29,20 +29,20 @@ struct WebPageDetails: Leaf {
             if state.isUnpublished {
                 P("Web page unpublished successfully.")
             }
-            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
-            AdminDetailsField(label: "Title", value: state.rule.title).renderHTML()
+            AdminDetailsField(label: "ID", value: state.rule.id).html()
+            AdminDetailsField(label: "Title", value: state.rule.title).html()
             AdminDetailsField(
                 label: "Status",
                 value: state.rule.metadata.status.capitalized
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Published date",
                 value: format(state.rule.metadata.publicationDate)
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Expiration date",
                 value: format(state.rule.metadata.expirationDate)
-            ).renderHTML()
+            ).html()
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -61,11 +61,11 @@ struct WebPageDetails: Leaf {
                         status: isPublished ? "draft" : "published",
                         label: isPublished ? "Unpublish" : "Publish",
                         classes: ["secondary"]
-                    ).renderHTML()
+                    ).html()
                     AdminNavigationButton(
                         "Edit page",
                         href: "/admin/web/pages/\(state.rule.id)/edit/"
-                    ).renderHTML()
+                    ).html()
                 }
                 if state.permissions.contains(
                     WebPermissions.Pages.delete.rawValue
@@ -74,7 +74,7 @@ struct WebPageDetails: Leaf {
                         "Remove page",
                         href: "/admin/web/pages/\(state.rule.id)/remove/",
                         classes: ["danger"]
-                    ).renderHTML()
+                    ).html()
                 }
             }
             .class("button-row", "admin-detail-actions")

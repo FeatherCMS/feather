@@ -25,7 +25,7 @@ public struct Icon: Leaf {
         self.class = `class`
     }
 
-    public func renderHTML() -> SVG {
+    public func html() -> SVG {
         svg.if(`class` != nil) {
             $0.addAttribute(name: "class", value: `class`)
         }

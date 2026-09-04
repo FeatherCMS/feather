@@ -18,9 +18,9 @@ struct SystemVariableEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Edit system variable")
             if state.isEdited { P("System variable edited successfully.") }
@@ -30,7 +30,7 @@ struct SystemVariableEdit: Leaf {
                 submitLabel: "Edit variable",
                 removeHref: "/admin/system/variables/\(state.id)/remove/",
                 removeLabel: "Remove variable"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

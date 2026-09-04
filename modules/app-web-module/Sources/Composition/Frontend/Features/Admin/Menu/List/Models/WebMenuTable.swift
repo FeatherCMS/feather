@@ -29,14 +29,14 @@ struct WebMenuTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("Menus")
 
                 if state.isAdded {
@@ -53,7 +53,7 @@ struct WebMenuTable: Leaf {
                         AdminNavigationButton(
                             "Add menu",
                             href: "/admin/web/menus/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -65,7 +65,7 @@ struct WebMenuTable: Leaf {
                         placeholder: "Quick search menus",
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -110,7 +110,7 @@ struct WebMenuTable: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         Th("Key")
                                         Th("Name")
@@ -125,7 +125,7 @@ struct WebMenuTable: Leaf {
                                                     state: .init(
                                                         id: rule.id
                                                     )
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             Td(rule.key)
                                                 .data(
@@ -169,15 +169,15 @@ struct WebMenuTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/web/menus/",
@@ -186,7 +186,7 @@ struct WebMenuTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

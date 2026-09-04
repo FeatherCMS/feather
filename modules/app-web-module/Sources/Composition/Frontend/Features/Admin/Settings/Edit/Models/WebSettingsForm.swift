@@ -76,7 +76,7 @@ struct WebSettingsForm: Leaf {
     var action: String = "/admin/web/settings/"
     var submitLabel: String = "Save settings"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -98,8 +98,8 @@ struct WebSettingsForm: Leaf {
                 error: state.title.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
-            textarea(state.excerpt, rows: 4).renderHTML()
+            ).html()
+            textarea(state.excerpt, rows: 4).html()
             imagePicker(state.metaImage)
             homePagePicker(state.homePage)
             FormInputField(
@@ -109,7 +109,7 @@ struct WebSettingsForm: Leaf {
                 error: state.locale.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: state.timezone.key,
                 label: state.timezone.label,
@@ -117,7 +117,7 @@ struct WebSettingsForm: Leaf {
                 error: state.timezone.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             H2("Theme")
             FormInputField(
@@ -127,7 +127,7 @@ struct WebSettingsForm: Leaf {
                 error: state.primaryColor.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: state.secondaryColor.key,
                 label: state.secondaryColor.label,
@@ -135,7 +135,7 @@ struct WebSettingsForm: Leaf {
                 error: state.secondaryColor.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: state.tertiaryColor.key,
                 label: state.tertiaryColor.label,
@@ -143,7 +143,7 @@ struct WebSettingsForm: Leaf {
                 error: state.tertiaryColor.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: state.primaryFont.key,
                 label: state.primaryFont.label,
@@ -151,7 +151,7 @@ struct WebSettingsForm: Leaf {
                 error: state.primaryFont.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: state.secondaryFont.key,
                 label: state.secondaryFont.label,
@@ -159,11 +159,11 @@ struct WebSettingsForm: Leaf {
                 error: state.secondaryFont.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             H2("Code injection")
-            textarea(state.css, rows: 10).renderHTML()
-            textarea(state.js, rows: 10).renderHTML()
+            textarea(state.css, rows: 10).html()
+            textarea(state.js, rows: 10).html()
 
             if state.canEdit {
                 Section {
@@ -192,7 +192,7 @@ struct WebSettingsForm: Leaf {
                     value: field.value,
                     error: field.error
                 )
-            ).renderHTML()
+            ).html()
         }
         .if(field.error != nil) { $0.class("has-error") }
     }
@@ -210,7 +210,7 @@ struct WebSettingsForm: Leaf {
                 selectionMode: .single,
                 isEnabled: state.canEdit
             )
-        ).renderHTML()
+        ).html()
     }
 
     private func imagePicker(
@@ -233,7 +233,7 @@ struct WebSettingsForm: Leaf {
                 allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                 outputMode: .originalURL
             )
-        ).renderHTML()
+        ).html()
     }
 
     private func textarea(

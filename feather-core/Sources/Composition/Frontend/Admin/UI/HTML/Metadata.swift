@@ -33,7 +33,7 @@ public struct Metadata: Leaf {
         self.noIndex = noIndex
     }
 
-    public func renderHTML() -> Head {
+    public func html() -> Head {
         Head {
             Meta().charset("utf-8")
             Meta().name(.viewport).content("width=device-width, initial-scale=1")

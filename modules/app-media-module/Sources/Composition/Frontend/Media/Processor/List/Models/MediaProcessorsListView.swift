@@ -24,14 +24,14 @@ struct MediaProcessorsListView: Leaf {
     let deniedMessage: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !canAccess {
                 H1(deniedInfo)
                 P(deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: breadcrumb).renderHTML()
+                AdminBreadcrumb(state: breadcrumb).html()
                 H1("Processors")
 
                 if isAdded { P("Processor added successfully.") }
@@ -42,7 +42,7 @@ struct MediaProcessorsListView: Leaf {
                         AdminNavigationButton(
                             "Add processor",
                             href: "/admin/media/processors/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -84,7 +84,7 @@ struct MediaProcessorsListView: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         Th("File suffix")
                                             .columnWidth(percent: 50)
@@ -99,7 +99,7 @@ struct MediaProcessorsListView: Leaf {
                                             if canRemove {
                                                 ListTableRowSelectCheckbox(
                                                     state: .init(id: item.id)
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             Td(item.name)
                                                 .data(
@@ -144,15 +144,15 @@ struct MediaProcessorsListView: Leaf {
                                                     ],
                                                     permissions: permissions
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                 }
                 ListTablePagination(
                     state: .init(
@@ -162,7 +162,7 @@ struct MediaProcessorsListView: Leaf {
                         total: total,
                         search: ""
                     )
-                ).renderHTML()
+                ).html()
             }
         }
         .class("cms-section")

@@ -45,7 +45,7 @@ struct AuthCredentialForm: Leaf {
     var submitLabel: String
     var removeHref: String?
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
@@ -63,13 +63,13 @@ struct AuthCredentialForm: Leaf {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            ).renderHTML()
+            ).html()
             Section {
                 Label {
                     AdminFieldLabel(
                         label: state.password.label,
                         required: state.passwordRequired
-                    ).renderHTML()
+                    ).html()
                     Input()
                         .type(.password)
                         .id(state.password.key)
@@ -89,7 +89,7 @@ struct AuthCredentialForm: Leaf {
                             "Remove credential",
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")

@@ -27,9 +27,9 @@ struct AuthProfileEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Edit profile")
             if state.isEdited {
@@ -40,7 +40,7 @@ struct AuthProfileEdit: Leaf {
                 state: state.form,
                 action: "/admin/auth/profile/edit/",
                 submitLabel: "Edit profile"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

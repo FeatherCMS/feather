@@ -35,7 +35,7 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
                     form: form,
                     message: message
                 )
-            ).renderHTML()
+            ).html()
         )
     }
 

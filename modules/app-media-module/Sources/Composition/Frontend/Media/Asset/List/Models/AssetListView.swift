@@ -241,7 +241,7 @@ struct AssetListView: Leaf {
         }
     }
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
@@ -249,7 +249,7 @@ struct AssetListView: Leaf {
             }
             else {
                 if !state.picker.isEnabled {
-                    AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                    AdminBreadcrumb(state: state.breadcrumb).html()
                     H1("Media assets")
 
                     if state.isAdded { P("Item added successfully.") }
@@ -279,7 +279,7 @@ struct AssetListView: Leaf {
                         search: state.search,
                         queryItems: queryItems()
                     )
-                ).renderHTML()
+                ).html()
                 if state.picker.isEnabled {
                     Script(pickerScript())
                 }
@@ -503,7 +503,7 @@ extension AssetListView {
         Div {
             Div {
                 if state.canAdd && !state.picker.isEnabled {
-                    AdminNavigationButton("Add asset", href: addAssetPath()).renderHTML()
+                    AdminNavigationButton("Add asset", href: addAssetPath()).html()
                 }
                 if state.canAdd && !state.picker.isEnabled {
                     A("Add folder")
@@ -526,7 +526,7 @@ extension AssetListView {
                             resetPath: browsePath(parentId: state.parentId),
                             queryItems: queryItems()
                         )
-                    ).renderHTML()
+                    ).html()
                 }
                 Div {
                     A("Grid")
@@ -663,7 +663,7 @@ extension AssetListView {
                     Thead {
                         Tr {
                             if canRemove {
-                                ListTableSelectAllCheckbox().renderHTML()
+                                ListTableSelectAllCheckbox().html()
                             }
                             Th("Preview").columnWidth(percent: 10)
                             Th("File name")
@@ -689,8 +689,8 @@ extension AssetListView {
                 }
                 .class("cms-table", "action-table")
                 .if(canRemove) { $0.class("select-table") }
-            ).renderHTML()
-        ).renderHTML()
+            ).html()
+        ).html()
     }
 
     fileprivate func upCard(
@@ -699,7 +699,7 @@ extension AssetListView {
         Div {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.cornerUpLeft()).renderHTML()
+                    Icon(svg: FeatherIcons.cornerUpLeft()).html()
                 }
                 .class("media-assets-card-preview", "media-assets-folder-icon")
             }
@@ -725,7 +725,7 @@ extension AssetListView {
         Div {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.folder()).renderHTML()
+                    Icon(svg: FeatherIcons.folder()).html()
                 }
                 .class("media-assets-card-preview", "media-assets-folder-icon")
             }
@@ -781,7 +781,7 @@ extension AssetListView {
                         }
                         else {
                             Div {
-                                Icon(svg: FeatherIcons.file()).renderHTML()
+                                Icon(svg: FeatherIcons.file()).html()
                             }
                             .class("media-assets-folder-icon")
                         }
@@ -810,7 +810,7 @@ extension AssetListView {
                         }
                         else {
                             Div {
-                                Icon(svg: FeatherIcons.file()).renderHTML()
+                                Icon(svg: FeatherIcons.file()).html()
                             }
                             .class("media-assets-folder-icon")
                         }
@@ -946,7 +946,7 @@ extension AssetListView {
         let originalURL = assetOriginalLink(for: item.asset)
         return Tr {
             if canRemove {
-                ListTableRowSelectCheckbox(state: .init(id: item.asset.id)).renderHTML()
+                ListTableRowSelectCheckbox(state: .init(id: item.asset.id)).html()
             }
             assetPreviewCell(
                 for: item,
@@ -1086,7 +1086,7 @@ extension AssetListView {
         Td {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.cornerUpLeft()).renderHTML()
+                    Icon(svg: FeatherIcons.cornerUpLeft()).html()
                 }
                 .class("media-assets-folder-icon")
             }
@@ -1105,7 +1105,7 @@ extension AssetListView {
         Td {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.folder()).renderHTML()
+                    Icon(svg: FeatherIcons.folder()).html()
                 }
                 .class("media-assets-folder-icon")
             }
@@ -1129,7 +1129,7 @@ extension AssetListView {
                 }
                 else {
                     Div {
-                        Icon(svg: FeatherIcons.file()).renderHTML()
+                        Icon(svg: FeatherIcons.file()).html()
                     }
                     .class("media-assets-folder-icon")
                 }
@@ -1163,7 +1163,7 @@ extension AssetListView {
                     .target(.blank)
                     .ariaLabel("Open \(displayTitle(for: item.asset))")
                 A {
-                    Icon(svg: FeatherIcons.externalLink()).renderHTML()
+                    Icon(svg: FeatherIcons.externalLink()).html()
                 }
                 .href(originalURL)
                 .target(.blank)

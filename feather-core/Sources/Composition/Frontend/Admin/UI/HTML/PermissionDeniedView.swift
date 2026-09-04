@@ -27,9 +27,9 @@ public struct PermissionDeniedView: Leaf {
         self.state = state
     }
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("No permission")
             P(state.info).class("error")

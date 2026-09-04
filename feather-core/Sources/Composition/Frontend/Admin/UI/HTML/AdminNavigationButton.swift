@@ -21,7 +21,7 @@ public struct AdminNavigationButton: Leaf {
         self.className = classes.isEmpty ? nil : classes.joined(separator: " ")
     }
 
-    public func renderHTML() -> AdminNavigationRenderedButton {
+    public func html() -> AdminNavigationRenderedButton {
         var button = HTMLButton(label)
             .type(.button)
             .onClick(

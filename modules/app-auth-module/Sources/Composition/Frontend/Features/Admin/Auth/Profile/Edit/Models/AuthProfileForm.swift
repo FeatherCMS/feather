@@ -46,7 +46,7 @@ struct AuthProfileForm: Leaf {
     var action: String = "/admin/auth/profile/edit/"
     var submitLabel: String = "Edit profile"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -69,7 +69,7 @@ struct AuthProfileForm: Leaf {
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                     outputMode: .assetId
                 )
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: state.firstName.key,
@@ -78,7 +78,7 @@ struct AuthProfileForm: Leaf {
                 error: state.firstName.error,
                 isRequired: false,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: state.lastName.key,
                 label: state.lastName.label,
@@ -86,7 +86,7 @@ struct AuthProfileForm: Leaf {
                 error: state.lastName.error,
                 isRequired: false,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             Section {
                 Div {

@@ -14,7 +14,7 @@ public struct AdminDetailFieldStyleAnchor: Leaf {
         }
     }
 
-    public func renderHTML() -> Div {
+    public func html() -> Div {
         Div {}.hidden()
     }
 }

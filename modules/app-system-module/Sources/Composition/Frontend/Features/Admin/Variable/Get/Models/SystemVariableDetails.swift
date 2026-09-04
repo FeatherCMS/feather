@@ -12,25 +12,25 @@ struct SystemVariableDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("System variable details")
-            AdminDetailsField(label: "ID", value: state.variable.id).renderHTML()
-            AdminDetailsField(label: "Value", value: state.variable.value).renderHTML()
-            AdminDetailsField(label: "Name", value: state.variable.name ?? "").renderHTML()
-            AdminDetailsField(label: "Notes", value: state.variable.notes ?? "").renderHTML()
+            AdminDetailsField(label: "ID", value: state.variable.id).html()
+            AdminDetailsField(label: "Value", value: state.variable.value).html()
+            AdminDetailsField(label: "Name", value: state.variable.name ?? "").html()
+            AdminDetailsField(label: "Notes", value: state.variable.notes ?? "").html()
             Div {
                 AdminNavigationButton(
                     "Edit variable",
                     href: "/admin/system/variables/\(state.variable.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove variable",
                     href:
                         "/admin/system/variables/\(state.variable.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

@@ -15,7 +15,7 @@ import WebBuilders
 
 struct AdminGetRedirectHomeComponent: Leaf {
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             Nav {
                 Ol {

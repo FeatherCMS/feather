@@ -21,7 +21,7 @@ struct AdminGetDesignSystemDefaultController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let body = RootBody(state: .init(content: AdminGetDesignSystemComponent().renderHTML())).content()
+        let body = RootBody(state: .init(content: AdminGetDesignSystemComponent()))
 
         let origins = AppEnvironmentStore.current.publicOrigins
 
@@ -31,12 +31,12 @@ struct AdminGetDesignSystemDefaultController {
                 description: "Feather admin design-system component showcase",
                 imageUrl: "\(origins.staticBaseURL)/images/logos/logo.png",
                 noIndex: true
-            ).renderHTML()
+            ).html()
 
         return .init(
             Html {
                 head
-                body
+                body.html()
             }
             .lang("en-US")
         )
@@ -46,7 +46,7 @@ struct AdminGetDesignSystemDefaultController {
 
 struct AdminGetDesignSystemComponent: Leaf {
 
-    func renderHTML() -> Section {
+    func html() -> Section {
         Section {
             Nav {
                 Ol {

@@ -24,12 +24,12 @@ struct AppAcceptAccountInvitation {
         let error: String?
         let success: String?
 
-        func renderHTML() -> Section {
+        func html() -> Section {
             Section {
                 H1("Create your account")
                 if let success {
                     P(success).class("success")
-                    AdminNavigationButton("Go to login", href: "/login/").renderHTML()
+                    AdminNavigationButton("Go to login", href: "/login/").html()
                 }
                 else {
                     P("Complete your registration using the invitation.")
@@ -43,14 +43,14 @@ struct AppAcceptAccountInvitation {
                                 label: "Password",
                                 value: password
                             )
-                        ).renderHTML()
+                        ).html()
                         PasswordField(
                             state: .init(
                                 key: "confirmation",
                                 label: "Confirm password",
                                 value: confirmation
                             )
-                        ).renderHTML()
+                        ).html()
                         Button("Create account").type(.submit)
                     }
                     .method(.post)
@@ -223,7 +223,7 @@ struct AppAcceptAccountInvitation {
                 confirmation: confirmation,
                 error: error,
                 success: success
-            ).renderHTML()
+            ).html()
         )
     }
 

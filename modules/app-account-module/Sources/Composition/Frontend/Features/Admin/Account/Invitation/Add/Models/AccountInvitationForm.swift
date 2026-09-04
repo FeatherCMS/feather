@@ -41,7 +41,7 @@ struct AccountInvitationForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -56,13 +56,13 @@ struct AccountInvitationForm: Leaf {
                 value: state.email.value,
                 error: state.email.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
             Section {
                 if state.roleOptions.isEmpty {
                     P("No roles available.")
                 }
                 else {
-                    AdminFieldLabel(label: "Roles", required: false).renderHTML()
+                    AdminFieldLabel(label: "Roles", required: false).html()
                     Div {
                         for option in state.roleOptions {
                             Label {
@@ -92,7 +92,7 @@ struct AccountInvitationForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")

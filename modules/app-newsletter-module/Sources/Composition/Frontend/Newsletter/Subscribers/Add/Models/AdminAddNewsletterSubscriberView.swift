@@ -12,25 +12,25 @@ struct AdminAddNewsletterSubscriberView: Leaf {
     let isAdded: Bool
     let breadcrumb: AdminBreadcrumb.State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1("Add subscriber")
             if isAdded { P("Subscriber added successfully.") }
             if let error = model.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Email", required: true).renderHTML()
+                    AdminFieldLabel(label: "Email", required: true).html()
                     Input().type(.email).class("text-input").name("email")
                         .value(model.email).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "First name", required: false).renderHTML()
+                    AdminFieldLabel(label: "First name", required: false).html()
                     Input().type(.text).class("text-input").name("firstName")
                         .value(model.firstName)
                 }
                 Label {
-                    AdminFieldLabel(label: "Last name", required: false).renderHTML()
+                    AdminFieldLabel(label: "Last name", required: false).html()
                     Input().type(.text).class("text-input").name("lastName")
                         .value(model.lastName)
                 }
@@ -52,7 +52,7 @@ struct AdminAddNewsletterSubscriberView: Leaf {
                         selectionMode: .multiple,
                         isEnabled: true
                     )
-                ).renderHTML()
+                ).html()
                 Div { Button("Add subscriber").type(.submit) }
                     .class("button-row")
             }

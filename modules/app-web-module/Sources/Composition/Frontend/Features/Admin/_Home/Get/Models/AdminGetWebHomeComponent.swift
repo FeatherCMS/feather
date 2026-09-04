@@ -15,7 +15,7 @@ import WebBuilders
 
 struct AdminGetWebHomeComponent: Leaf {
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             Nav {
                 Ol {

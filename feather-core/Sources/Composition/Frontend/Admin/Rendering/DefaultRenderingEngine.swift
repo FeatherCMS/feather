@@ -68,7 +68,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     path: imagePath
                 ),
                 noIndex: false
-            ).renderHTML()
+            ).html()
         var headElements = metadata.children + assets.publicStylesheetPaths.map {
             Link(rel: .stylesheet).href(stylesheetURL(path: $0))
         }
@@ -102,7 +102,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     toast: toast,
                     content: content
                 )
-            ).renderHTML()
+            ).html()
         }
 
         let metadata = Metadata(
@@ -117,7 +117,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     path: imagePath
                 ),
                 noIndex: false
-            ).renderHTML()
+            ).html()
         var headElements = metadata.children + assets.adminStylesheetPaths.map {
             Link(rel: .stylesheet).href(stylesheetURL(path: $0))
         }

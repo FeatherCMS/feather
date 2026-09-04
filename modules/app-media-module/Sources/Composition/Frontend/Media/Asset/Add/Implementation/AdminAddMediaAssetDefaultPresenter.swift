@@ -42,7 +42,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                 description: "Upload media asset",
                 imagePath: "images/logos/logo.png",
                 content: Div {
-                    content.renderHTML()
+                    content.html()
                 }
             )
         }

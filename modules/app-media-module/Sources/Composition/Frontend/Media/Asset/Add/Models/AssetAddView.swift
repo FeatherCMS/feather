@@ -31,10 +31,10 @@ struct AssetAddView: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.form.isPicker {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("Add media asset")
             }
             if let error = state.form.error { P(error).class("error") }
@@ -182,7 +182,7 @@ struct AssetAddView: Leaf {
                 value: state.form.title,
                 id: "title",
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: "altText",
@@ -190,7 +190,7 @@ struct AssetAddView: Leaf {
                 value: state.form.altText,
                 id: "altText",
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: "file",
@@ -199,7 +199,7 @@ struct AssetAddView: Leaf {
                 type: .file,
                 isRequired: true,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             Input().type(.hidden).name("data").id("data")
                 .value(state.form.data)
 
@@ -230,7 +230,7 @@ struct AssetAddView: Leaf {
                 value: state.form.title,
                 id: "title",
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: "altText",
@@ -238,7 +238,7 @@ struct AssetAddView: Leaf {
                 value: state.form.altText,
                 id: "altText",
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: "file",
@@ -247,7 +247,7 @@ struct AssetAddView: Leaf {
                 type: .file,
                 isRequired: true,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             Input().type(.hidden).name("data").id("data")
                 .value(state.form.data)
 

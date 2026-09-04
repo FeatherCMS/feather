@@ -17,10 +17,10 @@ struct ContactFormSubmissionsTable: Leaf {
         let canRemove: Bool
     }
     let state: State
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: state.formId, active: .submissions).renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminContactFormTabs(formId: state.formId, active: .submissions).html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Contact form submissions")
             if let error = state.error { P(error).class("error") }
             ListTableSearchForm(
@@ -29,7 +29,7 @@ struct ContactFormSubmissionsTable: Leaf {
                     placeholder: "Quick search submissions",
                     search: state.search
                 )
-            ).renderHTML()
+            ).html()
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -52,7 +52,7 @@ struct ContactFormSubmissionsTable: Leaf {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox().renderHTML()
+                                        ListTableSelectAllCheckbox().html()
                                     }
                                     Th("Submitted")
                                     if hasEmailColumn { Th("Email") }
@@ -66,7 +66,7 @@ struct ContactFormSubmissionsTable: Leaf {
                                         if state.canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                         Td(item.createdAt)
                                             .data("label", "Submitted")
@@ -101,15 +101,15 @@ struct ContactFormSubmissionsTable: Leaf {
                                                     "contact:form-submissions:delete",
                                                 ]
                                             )
-                                        ).renderHTML()
+                                        ).html()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    ).renderHTML()
-                ).renderHTML()
+                    ).html()
+                ).html()
             }
         }
         .class("cms-section")

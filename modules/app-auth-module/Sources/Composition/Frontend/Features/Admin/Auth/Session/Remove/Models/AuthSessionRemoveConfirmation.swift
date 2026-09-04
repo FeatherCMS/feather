@@ -13,7 +13,7 @@ struct AuthSessionRemoveConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
@@ -42,6 +42,6 @@ struct AuthSessionRemoveConfirmation: Leaf {
                     "/admin/user/identities/\(state.model.identityId)/sessions/\(state.model.sessionId)/remove/",
                 cancelURL: "/admin/user/identities/\(state.model.identityId)/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

@@ -17,7 +17,7 @@ struct SystemVariableConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
@@ -31,6 +31,6 @@ struct SystemVariableConfirmation: Leaf {
                 actionURL: "/admin/system/variables/\(state.id)/remove/",
                 cancelURL: "/admin/system/variables/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

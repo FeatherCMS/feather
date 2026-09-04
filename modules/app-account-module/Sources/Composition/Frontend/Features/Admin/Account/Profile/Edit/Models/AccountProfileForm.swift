@@ -15,7 +15,7 @@ struct AccountProfileForm: Leaf {
 
     let state: State
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             FormInputField(
                 name: "firstName",
@@ -26,7 +26,7 @@ struct AccountProfileForm: Leaf {
                 isRequired: false,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             FormInputField(
                 name: "lastName",
                 label: "Last name",
@@ -36,7 +36,7 @@ struct AccountProfileForm: Leaf {
                 isRequired: false,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ).html()
             if state.canEdit {
                 AdminMediaAssetPicker(
                     state: .init(
@@ -52,7 +52,7 @@ struct AccountProfileForm: Leaf {
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                         outputMode: .assetId
                     )
-                ).renderHTML()
+                ).html()
             }
             else {
                 FormInputField(
@@ -64,7 +64,7 @@ struct AccountProfileForm: Leaf {
                     isRequired: false,
                     isDisabled: true,
                     inputClass: "text-input"
-                ).renderHTML()
+                ).html()
             }
             if state.canEdit {
                 Div {

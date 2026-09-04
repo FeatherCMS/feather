@@ -41,7 +41,7 @@ public struct ListTableRemoveForm<Table: FlowContent>: Leaf
         self.table = table
     }
 
-    public func renderHTML() -> Div {
+    public func html() -> Div {
         Div {
             if state.canRemove {
                 Form {

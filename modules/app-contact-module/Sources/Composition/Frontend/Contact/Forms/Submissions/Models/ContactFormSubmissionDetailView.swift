@@ -17,10 +17,10 @@ struct ContactFormSubmissionDetailView: Leaf {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: state.formId, active: .submissions).renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminContactFormTabs(formId: state.formId, active: .submissions).html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Contact form submission")
             if let error = state.error { P(error).class("error") }
             if state.isEdited { P("Submission status updated successfully.") }
@@ -46,7 +46,7 @@ struct ContactFormSubmissionDetailView: Leaf {
             }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Status", required: true).renderHTML()
+                    AdminFieldLabel(label: "Status", required: true).html()
                     Select {
                         for status in [
                             "received", "processed", "spam", "failed",

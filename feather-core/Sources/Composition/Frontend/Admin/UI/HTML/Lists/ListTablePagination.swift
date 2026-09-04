@@ -37,7 +37,7 @@ public struct ListTablePagination: Leaf {
         self.state = state
     }
 
-    public func renderHTML() -> Div {
+    public func html() -> Div {
         let extraQuerySuffix =
             state.queryItems
             .filter { !$0.1.isEmpty }

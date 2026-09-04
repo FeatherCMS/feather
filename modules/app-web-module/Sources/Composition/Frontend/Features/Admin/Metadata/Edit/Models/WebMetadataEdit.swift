@@ -22,24 +22,24 @@ struct WebMetadataEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1 {
                 Span(state.title)
                 AdminPreviewLink(
                     slug: state.form.slug.value,
                     label: "Preview page"
-                ).renderHTML()
+                ).html()
             }
             if state.isEdited { P("Web metadata edited successfully.") }
-            AdminPillTabs(links: state.navigationTabs).renderHTML()
+            AdminPillTabs(links: state.navigationTabs).html()
             WebMetadataForm(
                 state: state.form,
                 action: state.action,
                 submitLabel: "Edit entry"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

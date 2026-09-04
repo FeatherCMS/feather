@@ -41,7 +41,7 @@ public struct ListRemoveConfirmation: Leaf {
         self.state = state
     }
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         let previewIds = state.selectedIds.prefix(10)
         let remainingIds = state.selectedIds.count - previewIds.count
 
@@ -70,6 +70,6 @@ public struct ListRemoveConfirmation: Leaf {
                     .init(name: "selectedIds", value: $0)
                 } + state.hiddenFields
             )
-        ).renderHTML()
+        ).html()
     }
 }

@@ -18,9 +18,9 @@ struct SystemPermissionEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Edit system permission")
             if state.isEdited { P("System permission edited successfully.") }
@@ -30,7 +30,7 @@ struct SystemPermissionEdit: Leaf {
                 submitLabel: "Edit permission",
                 removeHref: "/admin/system/permissions/\(state.id)/remove/",
                 removeLabel: "Remove permission"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

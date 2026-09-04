@@ -37,19 +37,19 @@ public struct AdminBody<T: Leaf>: Leaf {
         self.state = state
     }
 
-    public func renderHTML() -> Div {
+    public func html() -> Div {
         Div {
-            AdminTopBar().renderHTML()
+            AdminTopBar().html()
             if let toast = state.toast {
-                AdminToastBootstrap(payload: toast).renderHTML()
+                AdminToastBootstrap(payload: toast).html()
             }
 
             Div {
-                AdminSidebar(state: state.sidebar).renderHTML()
+                AdminSidebar(state: state.sidebar).html()
 
                 Main {
                     Div {
-                        state.content.renderHTML()
+                        state.content.html()
                     }
                     .class("panel", "cms-content")
                 }

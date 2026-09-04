@@ -31,21 +31,21 @@ struct AuthCredentialTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your identity cannot access user credentials.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("User credentials")
                 if state.permissions.contains("auth:credential:create") {
                     Div {
                         AdminNavigationButton(
                             "Add credential",
                             href: "/admin/auth/credentials/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -57,7 +57,7 @@ struct AuthCredentialTable: Leaf {
                         placeholder: "Quick search credentials",
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
                 if state.credentials.isEmpty {
                     P(
                         state.search.isEmpty
@@ -105,13 +105,13 @@ struct AuthCredentialTable: Leaf {
                                                 ],
                                                 permissions: state.permissions
                                             )
-                                        ).renderHTML()
+                                        ).html()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table", "credential-table")
-                    ).renderHTML()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path:
@@ -121,7 +121,7 @@ struct AuthCredentialTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

@@ -41,16 +41,16 @@ struct AssetDetailsView: Leaf {
             "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)\(prefix)\(encoded)"
     }
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor().renderHTML()
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminDetailFieldStyleAnchor().html()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1("Media asset details")
-            AdminDetailsField(label: "ID", value: item.id).renderHTML()
-            AdminDetailsField(label: "Storage key", value: item.storageKey).renderHTML()
-            AdminDetailsField(label: "Type", value: item._type).renderHTML()
-            AdminDetailsField(label: "Status", value: item.status).renderHTML()
-            AdminDetailsField(label: "Size bytes", value: "\(item.sizeBytes)").renderHTML()
+            AdminDetailsField(label: "ID", value: item.id).html()
+            AdminDetailsField(label: "Storage key", value: item.storageKey).html()
+            AdminDetailsField(label: "Type", value: item._type).html()
+            AdminDetailsField(label: "Status", value: item.status).html()
+            AdminDetailsField(label: "Size bytes", value: "\(item.sizeBytes)").html()
             Div {
                 P("Preview original")
                     .class("admin-details-field__label")
@@ -65,10 +65,10 @@ struct AssetDetailsView: Leaf {
             }
             .class("admin-details-field")
             if let title = item.title {
-                AdminDetailsField(label: "Title", value: title).renderHTML()
+                AdminDetailsField(label: "Title", value: title).html()
             }
             if let altText = item.altText {
-                AdminDetailsField(label: "Alt text", value: altText).renderHTML()
+                AdminDetailsField(label: "Alt text", value: altText).html()
             }
             if variants.isEmpty {
                 P("No generated variants linked to this asset yet.")
@@ -107,21 +107,21 @@ struct AssetDetailsView: Leaf {
                         }
                     }
                     .class("cms-table")
-                ).renderHTML()
+                ).html()
             }
             Div {
                 if canEdit {
                     AdminNavigationButton(
                         "Edit asset",
                         href: "/admin/media/assets/\(item.id)/edit/"
-                    ).renderHTML()
+                    ).html()
                 }
                 if canRemove {
                     AdminNavigationButton(
                         "Remove asset",
                         href: "/admin/media/assets/\(item.id)/remove/",
                         classes: ["danger"]
-                    ).renderHTML()
+                    ).html()
                 }
             }
             .class("button-row", "admin-detail-actions")

@@ -24,9 +24,9 @@ struct MediaFolderAddView: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Add media folder")
             if let error = state.form.error {
                 P(error).class("error")
@@ -43,7 +43,7 @@ struct MediaFolderAddView: Leaf {
                     value: state.form.name,
                     isRequired: true,
                     inputClass: "text-input"
-                ).renderHTML()
+                ).html()
 
                 Section {
                     Div { Button("Add").type(.submit) }.class("button-row")

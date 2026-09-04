@@ -21,9 +21,9 @@ struct NewsletterTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1(state.isPicker ? "Select newsletter campaign" : "Campaigns")
             if state.isAdded { P("Campaign added successfully.") }
             if state.isEdited { P("Campaign edited successfully.") }
@@ -32,7 +32,7 @@ struct NewsletterTable: Leaf {
                 AdminNavigationButton(
                     "Add campaign",
                     href: "/admin/newsletters/add/"
-                ).renderHTML()
+                ).html()
             }
             .class("button-row")
             Br()
@@ -43,7 +43,7 @@ struct NewsletterTable: Leaf {
                     placeholder: "Quick search campaigns",
                     search: state.search
                 )
-            ).renderHTML()
+            ).html()
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -68,7 +68,7 @@ struct NewsletterTable: Leaf {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox().renderHTML()
+                                        ListTableSelectAllCheckbox().html()
                                     }
                                     Th("Name")
                                     Th("Actions")
@@ -80,7 +80,7 @@ struct NewsletterTable: Leaf {
                                         if canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                         if state.isPicker {
                                             Td {
@@ -135,15 +135,15 @@ struct NewsletterTable: Leaf {
                                                     "newsletter:campaigns:delete",
                                                 ]
                                             )
-                                        ).renderHTML()
+                                        ).html()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    ).renderHTML()
-                ).renderHTML()
+                    ).html()
+                ).html()
             }
         }
         .class("cms-section")

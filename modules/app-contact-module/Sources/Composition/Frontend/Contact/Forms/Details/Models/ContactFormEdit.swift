@@ -17,17 +17,17 @@ struct ContactFormEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: state.id, active: .details).renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminContactFormTabs(formId: state.id, active: .details).html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Edit contact form")
             if state.isEdited { P("Contact form edited successfully.") }
             ContactFormForm(
                 state: state.form,
                 action: "/admin/contact/forms/\(state.id)/edit/",
                 submitLabel: "Save"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

@@ -18,20 +18,20 @@ struct AdminNewsletterIssuesListView: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             AdminNewsletterCampaignTabs(
                 campaignId: state.newsletterId,
                 active: .issues
-            ).renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            ).html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Campaign issues")
             if let error = state.error { P(error).class("error") }
             Div {
                 AdminNavigationButton(
                     "Add issue",
                     href: "/admin/newsletters/\(state.newsletterId)/issues/add/"
-                ).renderHTML()
+                ).html()
             }
             .class("button-row")
             Br()
@@ -85,13 +85,13 @@ struct AdminNewsletterIssuesListView: Leaf {
                                                 "newsletter:issues:delete",
                                             ]
                                         )
-                                    ).renderHTML()
+                                    ).html()
                                 }
                             }
                         }
                     }
                     .class("cms-table", "action-table")
-                ).renderHTML()
+                ).html()
                 let deliveries = state.items.flatMap(\.deliveries)
                 if !deliveries.isEmpty {
                     H2("Delivery status")
@@ -124,7 +124,7 @@ struct AdminNewsletterIssuesListView: Leaf {
                             }
                         }
                         .class("cms-table")
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

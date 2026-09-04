@@ -16,16 +16,16 @@ struct AccountInvitationAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Add user invitation")
             AccountInvitationForm(
                 state: state.form,
                 action: "/admin/account/invitations/add/",
                 submitLabel: "Add invitation"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

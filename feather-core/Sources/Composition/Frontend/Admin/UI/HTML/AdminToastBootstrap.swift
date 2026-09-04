@@ -6,7 +6,7 @@ import WebBuilders
 public struct AdminToastBootstrap: Leaf {
     let payload: AdminToastRedirect.Payload
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         Div {
             // empty
         }

@@ -13,31 +13,31 @@ struct RedirectRuleDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Redirect rule details")
-            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
-            AdminDetailsField(label: "Source", value: state.rule.source).renderHTML()
+            AdminDetailsField(label: "ID", value: state.rule.id).html()
+            AdminDetailsField(label: "Source", value: state.rule.source).html()
             AdminDetailsField(
                 label: "Destination",
                 value: state.rule.destination
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Status code",
                 value: "\(state.rule.statusCode)"
-            ).renderHTML()
-            AdminDetailsField(label: "Notes", value: state.rule.notes ?? "").renderHTML()
+            ).html()
+            AdminDetailsField(label: "Notes", value: state.rule.notes ?? "").html()
             Div {
                 AdminNavigationButton(
                     "Edit rule",
                     href: "/admin/redirect/rules/\(state.rule.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove rule",
                     href: "/admin/redirect/rules/\(state.rule.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

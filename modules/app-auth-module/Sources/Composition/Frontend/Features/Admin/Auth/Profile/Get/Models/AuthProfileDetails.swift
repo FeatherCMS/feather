@@ -26,13 +26,13 @@ struct AuthProfileDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor().renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminDetailFieldStyleAnchor().html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Profile")
 
-            AdminDetailsField(label: "ID", value: state.profile.id).renderHTML()
+            AdminDetailsField(label: "ID", value: state.profile.id).html()
             Div {
                 P("Profile image")
                     .class("admin-details-field__label")
@@ -56,11 +56,11 @@ struct AuthProfileDetails: Leaf {
             AdminDetailsField(
                 label: "First name",
                 value: state.profile.firstName ?? ""
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Last name",
                 value: state.profile.lastName ?? ""
-            ).renderHTML()
+            ).html()
             Div {
                 P("Roles")
                     .class("admin-details-field__label")
@@ -98,7 +98,7 @@ struct AuthProfileDetails: Leaf {
                     AdminNavigationButton(
                         "Edit profile",
                         href: "/admin/auth/profile/edit/"
-                    ).renderHTML()
+                    ).html()
                 }
                 .class("button-row", "admin-detail-actions")
             }

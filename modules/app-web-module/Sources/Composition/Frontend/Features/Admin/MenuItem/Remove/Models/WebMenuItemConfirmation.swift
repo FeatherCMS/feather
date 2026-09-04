@@ -19,7 +19,7 @@ struct WebMenuItemConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
@@ -34,6 +34,6 @@ struct WebMenuItemConfirmation: Leaf {
                     "/admin/web/menus/\(state.menuId)/items/\(state.id)/remove/",
                 cancelURL: "/admin/web/menus/\(state.menuId)/items/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

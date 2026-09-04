@@ -8,9 +8,9 @@ struct SystemJobError: Leaf {
     let message: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1("Unable to load worker jobs")
             P(message)
         }

@@ -47,7 +47,7 @@ struct UserIdentityForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -62,7 +62,7 @@ struct UserIdentityForm: Leaf {
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: state.name.isRequired
-            ).renderHTML()
+            ).html()
 
             FormSelectField(
                 name: state.status.key,
@@ -79,11 +79,11 @@ struct UserIdentityForm: Leaf {
                 error: state.status.error,
                 isRequired: state.status.isRequired,
                 selectClass: "text-input"
-            ).renderHTML()
+            ).html()
 
             if !state.roleOptions.isEmpty {
                 Section {
-                    AdminFieldLabel(label: "Roles", required: false).renderHTML()
+                    AdminFieldLabel(label: "Roles", required: false).html()
                     Div {
                         for option in state.roleOptions {
                             Label {
@@ -114,7 +114,7 @@ struct UserIdentityForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")

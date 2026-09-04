@@ -17,9 +17,9 @@ struct WebPageAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Add page")
             WebPageForm(
@@ -27,7 +27,7 @@ struct WebPageAdd: Leaf {
                 action: "/admin/web/pages/add/",
                 submitLabel: "Add page",
                 publishLabel: "Publish page"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

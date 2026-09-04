@@ -26,7 +26,7 @@ public struct AdminStatusActionForm: Leaf {
         self.classes = classes
     }
 
-    public func renderHTML() -> Form {
+    public func html() -> Form {
         Form {
             Input()
                 .type(.hidden)

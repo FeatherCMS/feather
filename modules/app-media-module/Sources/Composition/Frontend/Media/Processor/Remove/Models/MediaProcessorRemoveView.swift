@@ -15,7 +15,7 @@ struct MediaProcessorRemoveView: Leaf {
     let formURL: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
@@ -29,6 +29,6 @@ struct MediaProcessorRemoveView: Leaf {
                 actionURL: formURL,
                 cancelURL: cancelURL
             )
-        ).renderHTML()
+        ).html()
     }
 }

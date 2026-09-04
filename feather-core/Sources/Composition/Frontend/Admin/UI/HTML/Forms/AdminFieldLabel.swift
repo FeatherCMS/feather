@@ -28,7 +28,7 @@ public struct AdminFieldLabel: Leaf {
         }
     }
 
-    public func renderHTML() -> Span {
+    public func html() -> Span {
         Span {
             InlineText(label)
             if required {

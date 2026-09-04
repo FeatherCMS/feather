@@ -9,7 +9,7 @@ struct AccountProfileEdit: Leaf {
     let state: AccountProfileForm.State
     let isEdited: Bool
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             AdminBreadcrumb(
                 state: .init(
@@ -20,7 +20,7 @@ struct AccountProfileEdit: Leaf {
                         .init(label: "Profile", link: state.action),
                     ]
                 )
-            ).renderHTML()
+            ).html()
             H1("Profile")
             AdminPillTabs(links: [
                 .init(
@@ -44,11 +44,11 @@ struct AccountProfileEdit: Leaf {
                     href: "/admin/auth/magic-links/?userId=\(userID)",
                     isCurrent: false
                 ),
-            ]).renderHTML()
+            ]).html()
             if isEdited {
                 P("Profile edited successfully.").class("success")
             }
-            AccountProfileForm(state: state).renderHTML()
+            AccountProfileForm(state: state).html()
         }
         .class("cms-section")
     }

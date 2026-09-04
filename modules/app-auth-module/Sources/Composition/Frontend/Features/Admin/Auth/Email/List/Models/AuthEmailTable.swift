@@ -41,14 +41,14 @@ struct AuthEmailTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("User emails")
 
                 if let userID = state.userID {
@@ -78,7 +78,7 @@ struct AuthEmailTable: Leaf {
                             href: "/admin/auth/emails/?userId=\(userID)",
                             isCurrent: true
                         ),
-                    ]).renderHTML()
+                    ]).html()
                 }
 
                 if state.isAdded {
@@ -95,7 +95,7 @@ struct AuthEmailTable: Leaf {
                         AdminNavigationButton(
                             "Add email",
                             href: "/admin/auth/emails/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -108,7 +108,7 @@ struct AuthEmailTable: Leaf {
                         search: state.search,
                         queryItems: state.userID.map { [("userId", $0)] } ?? []
                     )
-                ).renderHTML()
+                ).html()
 
                 if state.links.isEmpty {
                     let totalPages = max(
@@ -158,7 +158,7 @@ struct AuthEmailTable: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         Th("User name")
                                             .columnWidth(percent: 30)
@@ -173,7 +173,7 @@ struct AuthEmailTable: Leaf {
                                             if canRemove {
                                                 ListTableRowSelectCheckbox(
                                                     state: .init(id: link.id)
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             Td(
                                                 state.identityNames[
@@ -224,15 +224,15 @@ struct AuthEmailTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/auth/emails/",
@@ -243,7 +243,7 @@ struct AuthEmailTable: Leaf {
                             queryItems: state.userID.map { [("userId", $0)] }
                                 ?? []
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

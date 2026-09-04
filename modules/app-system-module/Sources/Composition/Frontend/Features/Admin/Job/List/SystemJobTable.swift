@@ -18,9 +18,9 @@ struct SystemJobTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Worker jobs")
             ListTableSearchForm(
                 state: .init(
@@ -28,7 +28,7 @@ struct SystemJobTable: Leaf {
                     placeholder: "Quick search worker jobs",
                     search: state.search
                 )
-            ).renderHTML()
+            ).html()
 
             if state.jobs.isEmpty {
                 let totalPages = max(
@@ -92,13 +92,13 @@ struct SystemJobTable: Leaf {
                                             ],
                                             permissions: state.permissions
                                         )
-                                    ).renderHTML()
+                                    ).html()
                                 }
                             }
                         }
                     }
                     .class("cms-table", "action-table")
-                ).renderHTML()
+                ).html()
                 ListTablePagination(
                     state: .init(
                         path: "/admin/system/jobs/",
@@ -107,7 +107,7 @@ struct SystemJobTable: Leaf {
                         total: state.total,
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
             }
         }
         .class("cms-section")

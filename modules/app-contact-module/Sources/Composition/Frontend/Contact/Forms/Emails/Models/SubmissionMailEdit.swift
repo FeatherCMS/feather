@@ -14,10 +14,10 @@ struct SubmissionMailEdit: Leaf {
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: formId, active: .emails).renderHTML()
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminContactFormTabs(formId: formId, active: .emails).html()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1("Edit contact form email")
             replacementVariables
             SubmissionMailForm(
@@ -26,7 +26,7 @@ struct SubmissionMailEdit: Leaf {
                     "/admin/contact/forms/\(formId)/emails/\(mail.id)/edit/",
                 submitLabel: "Save",
                 error: error
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

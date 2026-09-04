@@ -247,7 +247,7 @@ public struct AdminMediaAssetPicker: Leaf {
         }
     }
 
-    public func renderHTML() -> Section {
+    public func html() -> Section {
         Section {
             Div {
                 Input()
@@ -261,7 +261,7 @@ public struct AdminMediaAssetPicker: Leaf {
                         AdminFieldLabel(
                             label: state.field.label,
                             required: false
-                        ).renderHTML()
+                        ).html()
                     }
                     currentCard()
                 }
@@ -340,11 +340,11 @@ extension AdminMediaAssetPicker {
                     )
                 }
                 else {
-                    Icon(svg: FeatherIcons.file()).renderHTML()
+                    Icon(svg: FeatherIcons.file()).html()
                 }
             }
             else {
-                Icon(svg: FeatherIcons.image()).renderHTML()
+                Icon(svg: FeatherIcons.image()).html()
             }
         }
         .class("admin-media-asset-picker-preview")

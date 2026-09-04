@@ -26,7 +26,7 @@ struct AppMagicLink {
         let error: String?
         let message: String?
 
-        func renderHTML() -> Section {
+        func html() -> Section {
             Section {
                 H1(token == nil ? "Request a magic link" : "Signing in")
                 if let message { P(message).class("success") }
@@ -39,7 +39,7 @@ struct AppMagicLink {
                                 label: "Email address",
                                 value: email
                             )
-                        ).renderHTML()
+                        ).html()
                         CheckboxField(
                             state: .init(
                                 key: "is_persistent",
@@ -48,7 +48,7 @@ struct AppMagicLink {
                                 error: nil,
                                 labelPosition: .before
                             )
-                        ).renderHTML()
+                        ).html()
                         Button("Send magic link").type(.submit)
                     }
                     .method(.post)
@@ -205,7 +205,7 @@ struct AppMagicLink {
                 isPersistent: isPersistent,
                 error: error,
                 message: message
-            ).renderHTML()
+            ).html()
         )
     }
 

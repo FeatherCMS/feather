@@ -19,7 +19,7 @@ public struct AdminDetailsField: Leaf {
         }
     }
 
-    public func renderHTML() -> Div {
+    public func html() -> Div {
         Div {
             P(label)
                 .class("admin-details-field__label")

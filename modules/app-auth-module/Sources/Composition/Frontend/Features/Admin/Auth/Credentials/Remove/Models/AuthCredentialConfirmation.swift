@@ -26,7 +26,7 @@ struct AuthCredentialConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
@@ -38,6 +38,6 @@ struct AuthCredentialConfirmation: Leaf {
                 actionURL: "/admin/auth/credentials/\(state.id)/remove/",
                 cancelURL: "/admin/auth/credentials/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

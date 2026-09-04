@@ -67,7 +67,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                             info: "Unable to load media assets.",
                             message: error,
                             breadcrumb: mediaAssetsBreadcrumb()
-                        ).renderHTML()
+                        ).html()
                     }
                 )
             }
@@ -94,7 +94,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 description: "Select media asset",
                 imagePath: "images/logos/logo.png",
                 content: Div {
-                    content.renderHTML()
+                    content.html()
                 }
             )
         }

@@ -221,7 +221,7 @@ public struct FormDateTimeField: Leaf {
         }
     }
 
-    public func renderHTML() -> Section {
+    public func html() -> Section {
         Section {
             Label {
                 fieldLabel()

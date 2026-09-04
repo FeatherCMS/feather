@@ -51,7 +51,7 @@ public struct ListTableRowActions: Leaf {
         self.state = state
     }
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         Td {
             let visibleActions = state.actions.filter {
                 state.permissions.contains($0.permission)

@@ -24,29 +24,29 @@ struct AuthMagicLinkDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("User magic link details")
-            AdminDetailsField(label: "ID", value: state.link.id).renderHTML()
+            AdminDetailsField(label: "ID", value: state.link.id).html()
             AdminDetailsField(
                 label: "Credential ID",
                 value: state.link.credentialId
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Persistent",
                 value: state.link.isPersistent ? "Yes" : "No"
-            ).renderHTML()
+            ).html()
             Div {
                 AdminNavigationButton(
                     "Edit magic link",
                     href: "/admin/auth/magic-links/\(state.link.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove magic link",
                     href: "/admin/auth/magic-links/\(state.link.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

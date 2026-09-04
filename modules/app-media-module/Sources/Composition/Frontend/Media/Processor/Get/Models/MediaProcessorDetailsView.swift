@@ -13,34 +13,34 @@ struct MediaProcessorDetailsView: Leaf {
     let item: Components.Schemas.MediaProcessorDetailSchema
     let breadcrumb: AdminBreadcrumb.State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).renderHTML()
+            AdminBreadcrumb(state: breadcrumb).html()
             H1("Processor details")
-            AdminDetailsField(label: "ID", value: item.id).renderHTML()
-            AdminDetailsField(label: "File suffix", value: item.name).renderHTML()
+            AdminDetailsField(label: "ID", value: item.id).html()
+            AdminDetailsField(label: "File suffix", value: item.name).html()
             AdminDetailsField(
                 label: "Match extensions",
                 value: item.matchExtensions
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Command template",
                 value: item.commandTemplate
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Active",
                 value: item.isActive ? "Yes" : "No"
-            ).renderHTML()
+            ).html()
             Div {
                 AdminNavigationButton(
                     "Edit processor",
                     href: "/admin/media/processors/\(item.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove processor",
                     href: "/admin/media/processors/\(item.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

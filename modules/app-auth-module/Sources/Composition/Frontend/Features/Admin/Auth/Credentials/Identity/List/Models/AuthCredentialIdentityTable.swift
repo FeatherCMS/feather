@@ -31,14 +31,14 @@ struct AuthCredentialIdentityTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your identity cannot access user credentials.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("Credentials")
                 P("Select a user to manage their credentials.")
                 ListTableSearchForm(
@@ -47,7 +47,7 @@ struct AuthCredentialIdentityTable: Leaf {
                         placeholder: "Quick search users",
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
                 if state.identities.isEmpty {
                     P(
                         state.search.isEmpty
@@ -80,7 +80,7 @@ struct AuthCredentialIdentityTable: Leaf {
                             }
                         }
                         .class("cms-table", "action-table")
-                    ).renderHTML()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/auth/credentials/",
@@ -89,7 +89,7 @@ struct AuthCredentialIdentityTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

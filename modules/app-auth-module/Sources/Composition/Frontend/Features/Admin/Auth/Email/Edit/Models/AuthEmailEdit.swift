@@ -27,9 +27,9 @@ struct AuthEmailEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Edit user email")
             if state.isEdited { P("User email edited successfully.") }
@@ -39,7 +39,7 @@ struct AuthEmailEdit: Leaf {
                 submitLabel: "Edit email",
                 removeHref: "/admin/auth/emails/\(state.id)/remove/",
                 removeLabel: "Remove email"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

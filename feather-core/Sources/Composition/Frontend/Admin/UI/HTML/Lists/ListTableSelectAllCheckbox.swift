@@ -7,7 +7,7 @@ public struct ListTableSelectAllCheckbox: Leaf {
 
     public init() {}
 
-    public func renderHTML() -> some BasicTag {
+    public func html() -> some BasicTag {
         Th {
             Input()
                 .type(.checkbox)

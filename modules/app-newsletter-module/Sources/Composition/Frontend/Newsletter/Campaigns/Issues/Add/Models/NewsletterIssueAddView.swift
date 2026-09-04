@@ -18,13 +18,13 @@ struct NewsletterIssueAddView: Leaf {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             AdminNewsletterCampaignTabs(
                 campaignId: state.newsletterId,
                 active: .issues
-            ).renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            ).html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1(
                 state.issueId == nil
                     ? "Add campaign issue" : "Edit campaign issue"
@@ -32,12 +32,12 @@ struct NewsletterIssueAddView: Leaf {
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Subject", required: true).renderHTML()
+                    AdminFieldLabel(label: "Subject", required: true).html()
                     Input().type(.text).class("text-input").name("subject")
                         .value(state.subject).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "Content", required: true).renderHTML()
+                    AdminFieldLabel(label: "Content", required: true).html()
                     Textarea(state.content).class("text-input").name("content")
                         .required()
                 }
@@ -45,7 +45,7 @@ struct NewsletterIssueAddView: Leaf {
                     AdminFieldLabel(
                         label: "Schedule (optional)",
                         required: false
-                    ).renderHTML()
+                    ).html()
                     Input().type(.text).class("text-input").name("scheduledAt")
                         .value(state.scheduledAt).placeholder("Unix timestamp")
                 }
@@ -85,7 +85,7 @@ struct NewsletterIssueAddView: Leaf {
                             AdminFieldLabel(
                                 label: "Test email address",
                                 required: true
-                            ).renderHTML()
+                            ).html()
                             Input().type(.email).class("text-input")
                                 .name("email").required()
                         }

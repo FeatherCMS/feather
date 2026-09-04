@@ -21,13 +21,13 @@ struct NewsletterCampaignSubscribersTable: Leaf {
     }
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             AdminNewsletterCampaignTabs(
                 campaignId: state.newsletterId,
                 active: .subscribers
-            ).renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            ).html()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Campaign subscribers")
             if let error = state.error { P(error).class("error") }
             if state.isAdded { P("Subscriber added successfully.") }
@@ -38,7 +38,7 @@ struct NewsletterCampaignSubscribersTable: Leaf {
                     "Add subscriber",
                     href:
                         "/admin/newsletters/\(state.newsletterId)/subscribers/add/"
-                ).renderHTML()
+                ).html()
             }
             .class("button-row")
             Br()
@@ -50,7 +50,7 @@ struct NewsletterCampaignSubscribersTable: Leaf {
                     placeholder: "Quick search subscribers",
                     search: state.search
                 )
-            ).renderHTML()
+            ).html()
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -73,7 +73,7 @@ struct NewsletterCampaignSubscribersTable: Leaf {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox().renderHTML()
+                                        ListTableSelectAllCheckbox().html()
                                     }
                                     Th("Email")
                                     Th("Name")
@@ -87,7 +87,7 @@ struct NewsletterCampaignSubscribersTable: Leaf {
                                         if state.canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                         Td(item.email).data("label", "Email")
                                         Td("\(item.firstName) \(item.lastName)")
@@ -119,15 +119,15 @@ struct NewsletterCampaignSubscribersTable: Leaf {
                                                     "newsletter:subscribers:delete",
                                                 ]
                                             )
-                                        ).renderHTML()
+                                        ).html()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    ).renderHTML()
-                ).renderHTML()
+                    ).html()
+                ).html()
             }
         }
         .class("cms-section")

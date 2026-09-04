@@ -32,7 +32,7 @@ public struct AdminBreadcrumb: Leaf {
         self.state = state
     }
 
-    public func renderHTML() -> Nav {
+    public func html() -> Nav {
         Nav {
             Ol {
                 for (idx, breadcrumb) in state.links.enumerated() {

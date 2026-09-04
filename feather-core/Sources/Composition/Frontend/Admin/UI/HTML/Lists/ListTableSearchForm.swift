@@ -35,7 +35,7 @@ public struct ListTableSearchForm: Leaf {
         self.state = state
     }
 
-    public func renderHTML() -> Form {
+    public func html() -> Form {
         Form {
             for item in state.queryItems {
                 Input().type(.hidden).name(item.0).value(item.1)

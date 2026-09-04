@@ -18,17 +18,17 @@ struct WebMenuItemAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Add item")
-            AdminWebMenuTabs(menuID: state.menuId, active: .items).renderHTML()
+            AdminWebMenuTabs(menuID: state.menuId, active: .items).html()
             WebMenuItemForm(
                 state: state.form,
                 action: "/admin/web/menus/\(state.menuId)/items/add/",
                 submitLabel: "Add item"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

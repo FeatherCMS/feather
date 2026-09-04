@@ -13,40 +13,40 @@ struct WebMenuItemDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Item details")
-            AdminDetailsField(label: "ID", value: state.item.id).renderHTML()
-            AdminDetailsField(label: "Label", value: state.item.label).renderHTML()
-            AdminDetailsField(label: "URL", value: state.item.url).renderHTML()
+            AdminDetailsField(label: "ID", value: state.item.id).html()
+            AdminDetailsField(label: "Label", value: state.item.label).html()
+            AdminDetailsField(label: "URL", value: state.item.url).html()
             AdminDetailsField(
                 label: "Priority",
                 value: "\(state.item.priority)"
-            ).renderHTML()
+            ).html()
             AdminDetailsField(
                 label: "Blank target",
                 value: state.item.isBlank ? "Yes" : "No"
-            ).renderHTML()
-            AdminDetailsField(label: "Permission", value: state.item.permission).renderHTML()
+            ).html()
+            AdminDetailsField(label: "Permission", value: state.item.permission).html()
             AdminDetailsField(
                 label: "Authentication",
                 value: state.item.authentication
-            ).renderHTML()
-            AdminDetailsField(label: "Notes", value: state.item.notes ?? "").renderHTML()
+            ).html()
+            AdminDetailsField(label: "Notes", value: state.item.notes ?? "").html()
 
             Div {
                 AdminNavigationButton(
                     "Edit item",
                     href:
                         "/admin/web/menus/\(state.item.menuId)/items/\(state.item.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove item",
                     href:
                         "/admin/web/menus/\(state.item.menuId)/items/\(state.item.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

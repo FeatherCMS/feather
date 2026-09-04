@@ -19,18 +19,18 @@ struct NewsletterForm: Leaf {
     var action: String
     var submitLabel: String
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Name", required: true).renderHTML()
+                    AdminFieldLabel(label: "Name", required: true).html()
                     Input().type(.text).id("name").name("name")
                         .value(state.name).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "From email", required: true).renderHTML()
+                    AdminFieldLabel(label: "From email", required: true).html()
                     Input().type(.email).id("fromEmail").name("fromEmail")
                         .value(state.fromEmail).required()
                 }

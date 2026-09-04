@@ -8,7 +8,7 @@ import WebBuilders
 struct AppPublicTextBlock: Leaf {
     let text: String
 
-    func renderHTML() -> Div {
+    func html() -> Div {
         Div {
             text
         }

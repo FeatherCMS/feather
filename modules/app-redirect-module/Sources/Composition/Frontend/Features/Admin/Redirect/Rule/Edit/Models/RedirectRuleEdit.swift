@@ -19,9 +19,9 @@ struct RedirectRuleEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Edit redirect rule")
             if state.isEdited { P("Redirect rule edited successfully.") }
@@ -31,7 +31,7 @@ struct RedirectRuleEdit: Leaf {
                 submitLabel: "Edit rule",
                 removeHref: "/admin/redirect/rules/\(state.id)/remove/",
                 removeLabel: "Remove rule"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

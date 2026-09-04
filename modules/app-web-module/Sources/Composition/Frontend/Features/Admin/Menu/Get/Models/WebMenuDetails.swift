@@ -17,25 +17,25 @@ struct WebMenuDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Menu details")
-            AdminDetailsField(label: "ID", value: state.menu.id).renderHTML()
-            AdminDetailsField(label: "Key", value: state.menu.key).renderHTML()
-            AdminDetailsField(label: "Name", value: state.menu.name).renderHTML()
-            AdminDetailsField(label: "Notes", value: state.menu.notes ?? "").renderHTML()
+            AdminDetailsField(label: "ID", value: state.menu.id).html()
+            AdminDetailsField(label: "Key", value: state.menu.key).html()
+            AdminDetailsField(label: "Name", value: state.menu.name).html()
+            AdminDetailsField(label: "Notes", value: state.menu.notes ?? "").html()
 
             Div {
                 AdminNavigationButton(
                     "Edit menu",
                     href: "/admin/web/menus/\(state.menu.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove menu",
                     href: "/admin/web/menus/\(state.menu.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class(
                 "button-row",

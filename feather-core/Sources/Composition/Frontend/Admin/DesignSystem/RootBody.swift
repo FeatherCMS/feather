@@ -11,7 +11,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct RootBody<T: FlowContent> {
+public struct RootBody<T: Renderable>: Branch where T.HTML: FlowContent {
 
     public struct State: Sendable {
         public let content: T
@@ -35,9 +35,13 @@ public struct RootBody<T: FlowContent> {
         []
     }
 
-    public func content() -> Body {
+    public var children: [any Component] {
+        state.content
+    }
+
+    public func html() -> Body {
         Body {
-            state.content
+            state.content.html()
         }
     }
 }

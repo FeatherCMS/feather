@@ -16,9 +16,9 @@ struct WebSettingsEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Settings")
             P(
@@ -34,7 +34,7 @@ struct WebSettingsEdit: Leaf {
                 P("Settings edited successfully.").class("success")
             }
 
-            WebSettingsForm(state: state.form).renderHTML()
+            WebSettingsForm(state: state.form).html()
         }
         .class("cms-section")
     }

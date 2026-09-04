@@ -13,7 +13,7 @@ struct AdminContactFormTabs: Leaf {
     let formId: String
     let active: Tab
 
-    func renderHTML() -> Div {
+    func html() -> Div {
         AdminPillTabs(links: [
             .init(
                 label: "Details",
@@ -30,6 +30,6 @@ struct AdminContactFormTabs: Leaf {
                 href: "/admin/contact/forms/\(formId)/submissions/",
                 isCurrent: active == .submissions
             ),
-        ]).renderHTML()
+        ]).html()
     }
 }

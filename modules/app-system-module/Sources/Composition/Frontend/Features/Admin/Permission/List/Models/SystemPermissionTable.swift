@@ -28,14 +28,14 @@ struct SystemPermissionTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("System permissions")
 
                 if state.isAdded {
@@ -52,7 +52,7 @@ struct SystemPermissionTable: Leaf {
                         AdminNavigationButton(
                             "Add permission",
                             href: "/admin/system/permissions/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -64,7 +64,7 @@ struct SystemPermissionTable: Leaf {
                         placeholder: "Quick search system permissions",
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
 
                 if state.items.isEmpty {
                     let totalPages = max(
@@ -110,7 +110,7 @@ struct SystemPermissionTable: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         Th("Name")
                                         Th("Actions")
@@ -124,7 +124,7 @@ struct SystemPermissionTable: Leaf {
                                                     state: .init(
                                                         id: permission.id
                                                     )
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             Td(permission.name ?? "")
                                                 .data(
@@ -163,15 +163,15 @@ struct SystemPermissionTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/system/permissions/",
@@ -180,7 +180,7 @@ struct SystemPermissionTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

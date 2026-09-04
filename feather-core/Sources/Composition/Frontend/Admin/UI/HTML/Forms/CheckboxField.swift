@@ -131,7 +131,7 @@ public struct CheckboxField: Leaf {
         }
     }
 
-    public func renderHTML() -> Section {
+    public func html() -> Section {
         Section {
             Label {
                 if state.labelPosition == .before {

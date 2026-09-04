@@ -12,28 +12,28 @@ struct SystemPermissionDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("System permission details")
-            AdminDetailsField(label: "ID", value: state.permission.id).renderHTML()
-            AdminDetailsField(label: "Name", value: state.permission.name ?? "").renderHTML()
+            AdminDetailsField(label: "ID", value: state.permission.id).html()
+            AdminDetailsField(label: "Name", value: state.permission.name ?? "").html()
             AdminDetailsField(
                 label: "Notes",
                 value: state.permission.notes ?? ""
-            ).renderHTML()
+            ).html()
             Div {
                 AdminNavigationButton(
                     "Edit permission",
                     href:
                         "/admin/system/permissions/\(state.permission.id)/edit/"
-                ).renderHTML()
+                ).html()
                 AdminNavigationButton(
                     "Remove permission",
                     href:
                         "/admin/system/permissions/\(state.permission.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ).html()
             }
             .class("button-row", "admin-detail-actions")
         }

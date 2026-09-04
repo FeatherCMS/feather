@@ -38,7 +38,7 @@ struct SystemVariableForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> Form {
+    func html() -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -53,7 +53,7 @@ struct SystemVariableForm: Leaf {
                 value: state.id.value,
                 error: state.id.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: state.name.key,
@@ -61,7 +61,7 @@ struct SystemVariableForm: Leaf {
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: state.value.key,
@@ -69,14 +69,14 @@ struct SystemVariableForm: Leaf {
                 value: state.value.value,
                 error: state.value.error,
                 isRequired: true
-            ).renderHTML()
+            ).html()
 
             FormInputField(
                 name: state.notes.key,
                 label: state.notes.label,
                 value: state.notes.value,
                 error: state.notes.error
-            ).renderHTML()
+            ).html()
 
             Section {
                 Div {
@@ -87,7 +87,7 @@ struct SystemVariableForm: Leaf {
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ).html()
                     }
                 }
                 .class("button-row")

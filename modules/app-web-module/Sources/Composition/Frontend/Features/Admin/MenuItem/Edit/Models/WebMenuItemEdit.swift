@@ -20,12 +20,12 @@ struct WebMenuItemEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Edit item")
-            AdminWebMenuTabs(menuID: state.menuId, active: .items).renderHTML()
+            AdminWebMenuTabs(menuID: state.menuId, active: .items).html()
             if state.isEdited { P("Item edited successfully.") }
             WebMenuItemForm(
                 state: state.form,
@@ -35,7 +35,7 @@ struct WebMenuItemEdit: Leaf {
                 removeHref:
                     "/admin/web/menus/\(state.menuId)/items/\(state.id)/remove/",
                 removeLabel: "Remove item"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

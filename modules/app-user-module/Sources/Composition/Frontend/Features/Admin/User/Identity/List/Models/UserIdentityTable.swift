@@ -31,14 +31,14 @@ struct UserIdentityTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("User identities")
 
                 if state.isAdded {
@@ -55,7 +55,7 @@ struct UserIdentityTable: Leaf {
                         AdminNavigationButton(
                             "Add identity",
                             href: "/admin/user/identities/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -135,7 +135,7 @@ struct UserIdentityTable: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         Th("Name")
                                         Th("Id")
@@ -152,7 +152,7 @@ struct UserIdentityTable: Leaf {
                                                     state: .init(
                                                         id: identity.id
                                                     )
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             Td(identity.name)
                                                 .data("label", "Name")
@@ -203,15 +203,15 @@ struct UserIdentityTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/user/identities/",
@@ -223,7 +223,7 @@ struct UserIdentityTable: Leaf {
                                 ? []
                                 : [("role", state.role)]
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

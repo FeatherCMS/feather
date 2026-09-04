@@ -39,14 +39,14 @@ struct AuthMagicLinkTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("User magic links")
 
                 if let userID = state.userID {
@@ -76,7 +76,7 @@ struct AuthMagicLinkTable: Leaf {
                             href: "/admin/auth/magic-links/?userId=\(userID)",
                             isCurrent: true
                         ),
-                    ]).renderHTML()
+                    ]).html()
                 }
 
                 if state.isAdded {
@@ -93,7 +93,7 @@ struct AuthMagicLinkTable: Leaf {
                         AdminNavigationButton(
                             "Add magic link",
                             href: "/admin/auth/magic-links/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -106,7 +106,7 @@ struct AuthMagicLinkTable: Leaf {
                         search: state.search,
                         queryItems: state.userID.map { [("userId", $0)] } ?? []
                     )
-                ).renderHTML()
+                ).html()
 
                 if state.links.isEmpty {
                     let totalPages = max(
@@ -156,7 +156,7 @@ struct AuthMagicLinkTable: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         Th("Email")
                                             .columnWidth(percent: 50)
@@ -175,7 +175,7 @@ struct AuthMagicLinkTable: Leaf {
                                             if canRemove {
                                                 ListTableRowSelectCheckbox(
                                                     state: .init(id: link.id)
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             Td(
                                                 state.emailByAuthEmailId[
@@ -230,15 +230,15 @@ struct AuthMagicLinkTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/auth/magic-links/",
@@ -249,7 +249,7 @@ struct AuthMagicLinkTable: Leaf {
                             queryItems: state.userID.map { [("userId", $0)] }
                                 ?? []
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

@@ -25,14 +25,14 @@ public struct AdminHeadElements: Leaf {
 
     let state: State
 
-    public func renderHTML() -> Head {
+    public func html() -> Head {
         let metadata = Metadata(
             canonicalUrl: state.canonicalUrl,
             title: state.title,
             description: state.description,
             imageUrl: state.imageUrl,
             noIndex: false
-        ).renderHTML()
+        ).html()
 
         return Head(elements: metadata.children.compactMap { $0 as? any MetadataContent } + state.externalCSSUrls.map {
             Link(rel: .stylesheet).href($0)

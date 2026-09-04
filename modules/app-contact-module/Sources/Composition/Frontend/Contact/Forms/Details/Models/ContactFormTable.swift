@@ -21,9 +21,9 @@ struct ContactFormTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1(state.isPicker ? "Select contact form" : "Contact forms")
             if state.isAdded { P("Contact form added successfully.") }
             if state.isEdited { P("Contact form edited successfully.") }
@@ -32,7 +32,7 @@ struct ContactFormTable: Leaf {
                 AdminNavigationButton(
                     "Add form",
                     href: "/admin/contact/forms/add/"
-                ).renderHTML()
+                ).html()
             }
             .class("button-row")
             Br()
@@ -43,7 +43,7 @@ struct ContactFormTable: Leaf {
                     placeholder: "Quick search contact forms",
                     search: state.search
                 )
-            ).renderHTML()
+            ).html()
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -65,7 +65,7 @@ struct ContactFormTable: Leaf {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox().renderHTML()
+                                        ListTableSelectAllCheckbox().html()
                                     }
                                     Th("Name")
                                     Th("Actions")
@@ -77,7 +77,7 @@ struct ContactFormTable: Leaf {
                                         if state.canRemove {
                                             ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                         if state.isPicker {
                                             Td {
@@ -132,15 +132,15 @@ struct ContactFormTable: Leaf {
                                                     "contact:forms:delete",
                                                 ]
                                             )
-                                        ).renderHTML()
+                                        ).html()
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    ).renderHTML()
-                ).renderHTML()
+                    ).html()
+                ).html()
             }
         }
         .class("cms-section")

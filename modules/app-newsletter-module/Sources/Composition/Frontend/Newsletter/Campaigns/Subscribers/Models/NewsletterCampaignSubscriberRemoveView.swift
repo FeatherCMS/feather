@@ -13,7 +13,7 @@ struct NewsletterCampaignSubscriberRemoveView: Leaf {
     let newsletterId: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         return AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
@@ -26,6 +26,6 @@ struct NewsletterCampaignSubscriberRemoveView: Leaf {
                     "/admin/newsletters/\(newsletterId)/subscribers/\(subscriberId)/remove/",
                 cancelURL: "/admin/newsletters/\(newsletterId)/subscribers/"
             )
-        ).renderHTML()
+        ).html()
     }
 }

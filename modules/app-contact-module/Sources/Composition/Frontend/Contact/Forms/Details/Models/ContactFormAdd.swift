@@ -15,15 +15,15 @@ struct ContactFormAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1("Add contact form")
             ContactFormForm(
                 state: state.form,
                 action: "/admin/contact/forms/add/",
                 submitLabel: "Add form"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

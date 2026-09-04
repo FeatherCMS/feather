@@ -8,9 +8,9 @@ import WebBuilders
 struct AppWebPagePage: Leaf {
     let state: AppGetWebPageModel
 
-    func renderHTML() -> Main {
+    func html() -> Main {
         Main {
-            AppPublicStyleAnchor().renderHTML()
+            AppPublicStyleAnchor().html()
             Div {
                 Article {
                     Div {
@@ -29,7 +29,7 @@ struct AppWebPagePage: Leaf {
                         .class("public-image")
                     }
 
-                    AppPublicTextBlock(text: state.content).renderHTML()
+                    AppPublicTextBlock(text: state.content).html()
                 }
                 .class("public-panel")
             }

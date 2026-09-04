@@ -15,9 +15,9 @@ struct UserIdentityEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
 
             H1("Edit identity")
             if state.isEdited {
@@ -29,7 +29,7 @@ struct UserIdentityEdit: Leaf {
                 submitLabel: "Edit identity",
                 removeHref: "/admin/user/identities/\(state.id)/remove/",
                 removeLabel: "Remove identity"
-            ).renderHTML()
+            ).html()
         }
         .class("cms-section")
     }

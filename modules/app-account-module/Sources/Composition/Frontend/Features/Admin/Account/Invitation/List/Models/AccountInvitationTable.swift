@@ -28,14 +28,14 @@ struct AccountInvitationTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                AdminBreadcrumb(state: state.breadcrumb).html()
                 H1("User invitations")
 
                 if state.isAdded {
@@ -52,7 +52,7 @@ struct AccountInvitationTable: Leaf {
                         AdminNavigationButton(
                             "Add invitation",
                             href: "/admin/account/invitations/add/"
-                        ).renderHTML()
+                        ).html()
                     }
                     .class("button-row")
                     Br()
@@ -64,7 +64,7 @@ struct AccountInvitationTable: Leaf {
                         placeholder: "Quick search invitations",
                         search: state.search
                     )
-                ).renderHTML()
+                ).html()
 
                 if state.invitations.isEmpty {
                     let totalPages = max(
@@ -110,7 +110,7 @@ struct AccountInvitationTable: Leaf {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            ListTableSelectAllCheckbox().html()
                                         }
                                         Th("Email")
                                             .columnWidth(percent: 62)
@@ -127,7 +127,7 @@ struct AccountInvitationTable: Leaf {
                                                     state: .init(
                                                         id: invitation.id
                                                     )
-                                                ).renderHTML()
+                                                ).html()
                                             }
                                             Td(invitation.email)
                                                 .data(
@@ -178,15 +178,15 @@ struct AccountInvitationTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).renderHTML()
+                                            ).html()
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
+                        ).html()
+                    ).html()
                     ListTablePagination(
                         state: .init(
                             path: "/admin/account/invitations/",
@@ -195,7 +195,7 @@ struct AccountInvitationTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ).html()
                 }
             }
         }

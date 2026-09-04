@@ -21,9 +21,9 @@ struct NewsletterCampaignSubscriberFormView: Leaf {
     }
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html() -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            AdminBreadcrumb(state: state.breadcrumb).html()
             H1(
                 state.isEdit
                     ? "Edit campaign subscriber" : "Add campaign subscriber"
@@ -31,20 +31,20 @@ struct NewsletterCampaignSubscriberFormView: Leaf {
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Email", required: true).renderHTML()
+                    AdminFieldLabel(label: "Email", required: true).html()
                     Input().type(.email).name("email").value(state.email)
                         .required().if(state.isEdit) { $0.readOnly() }
                 }
                 Label {
-                    AdminFieldLabel(label: "First name", required: false).renderHTML()
+                    AdminFieldLabel(label: "First name", required: false).html()
                     Input().type(.text).name("firstName").value(state.firstName)
                 }
                 Label {
-                    AdminFieldLabel(label: "Last name", required: false).renderHTML()
+                    AdminFieldLabel(label: "Last name", required: false).html()
                     Input().type(.text).name("lastName").value(state.lastName)
                 }
                 Label {
-                    AdminFieldLabel(label: "Status", required: true).renderHTML()
+                    AdminFieldLabel(label: "Status", required: true).html()
                     Select {
                         Option("Subscribed").value("subscribed")
                             .if(state.status == "subscribed") { $0.selected() }
