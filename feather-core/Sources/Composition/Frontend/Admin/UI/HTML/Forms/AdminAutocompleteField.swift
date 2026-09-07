@@ -32,6 +32,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
         public var error: String?
         public var selectionMode: SelectionMode
         public var isEnabled: Bool
+        public var isRequired: Bool
 
         public init(
             key: String,
@@ -40,7 +41,8 @@ public struct AdminAutocompleteField: Component, FlowContent {
             options: [OptionState],
             error: String?,
             selectionMode: SelectionMode,
-            isEnabled: Bool
+            isEnabled: Bool,
+            isRequired: Bool = false
         ) {
             self.key = key
             self.label = label
@@ -49,6 +51,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
             self.error = error
             self.selectionMode = selectionMode
             self.isEnabled = isEnabled
+            self.isRequired = isRequired
         }
     }
 
@@ -251,6 +254,9 @@ public struct AdminAutocompleteField: Component, FlowContent {
                                 .ariaActiveDescendant("")
                                 .ariaExpanded("false")
                                 .ariaHasPopup(.listbox)
+                                .if(state.isRequired && selectedOptions.isEmpty) {
+                                    $0.required()
+                                }
                             Button {
                                 Span {}.class("multiselect__chevron")
                             }
@@ -294,6 +300,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
                     "mode",
                     state.selectionMode.rawValue
                 )
+                .data("required", state.isRequired ? "true" : "false")
 
                 Script(script())
             }
@@ -374,7 +381,8 @@ public struct AdminAutocompleteField: Component, FlowContent {
                     selected: [],
                     query: "",
                     open: false,
-                    highlightedIndex: -1
+                    highlightedIndex: -1,
+                    isRequired: root.dataset.required === "true"
                 };
 
                 function setupAria() {
@@ -593,6 +601,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
                 function render() {
                     renderChips();
                     renderHiddenInputs();
+                    input.required = state.isRequired && state.selected.length === 0;
                     control.classList.toggle(
                         "multiselect__control--has-selection",
                         state.selected.length > 0
@@ -658,6 +667,9 @@ public struct AdminAutocompleteField: Component, FlowContent {
                     event
                 ) {
                     var isEnabled = !!(event.detail && event.detail.isEnabled);
+                    if (event.detail && typeof event.detail.isRequired === "boolean") {
+                        state.isRequired = event.detail.isRequired;
+                    }
                     input.disabled = !isEnabled;
                     toggleButton.disabled = !isEnabled;
                     root.classList.toggle("multiselect--disabled", !isEnabled);
