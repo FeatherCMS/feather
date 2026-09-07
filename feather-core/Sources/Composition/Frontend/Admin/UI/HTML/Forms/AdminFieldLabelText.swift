@@ -2,5 +2,5 @@ public func adminFieldLabelText(
     _ label: String,
     required: Bool
 ) -> String {
-    required ? "\(label) (required)" : label
+    required ? label : "\(label) (Optional)"
 }

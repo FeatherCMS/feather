@@ -271,7 +271,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
                         for option in selectedOptions {
                             Input()
                                 .type(.hidden)
-                                .name(state.key)
+                                .name(formName)
                                 .value(option.value)
                         }
                     }
@@ -289,7 +289,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
                         .class("multiselect__options")
                 }
                 .class("multiselect")
-                .data("name", state.key)
+                .data("name", formName)
                 .data(
                     "mode",
                     state.selectionMode.rawValue
@@ -332,6 +332,13 @@ public struct AdminAutocompleteField: Component, FlowContent {
             return "[]"
         }
         return json
+    }
+
+    private var formName: String {
+        guard state.selectionMode == .multiple, !state.key.hasSuffix("[]") else {
+            return state.key
+        }
+        return "\(state.key)[]"
     }
 
     private func script() -> String {
@@ -593,6 +600,21 @@ public struct AdminAutocompleteField: Component, FlowContent {
                     renderDropdown();
                 }
 
+                function notifySelectionChange() {
+                    root.dispatchEvent(new CustomEvent(
+                        "webapp:multiselect-change",
+                        {
+                            bubbles: true,
+                            detail: {
+                                root: root,
+                                values: state.selected.map(function (item) {
+                                    return item.value;
+                                })
+                            }
+                        }
+                    ));
+                }
+
                 function addSelected(option) {
                     if (selectionMode === "single") {
                         state.selected = [option];
@@ -614,6 +636,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
 
                     render();
                     announce(option.label + " selected.");
+                    notifySelectionChange();
                 }
 
                 function removeSelected(value) {
@@ -627,8 +650,23 @@ public struct AdminAutocompleteField: Component, FlowContent {
 
                     if (removed) {
                         announce(removed.label + " removed.");
+                        notifySelectionChange();
                     }
                 }
+
+                root.addEventListener("webapp:multiselect-set-enabled", function (
+                    event
+                ) {
+                    var isEnabled = !!(event.detail && event.detail.isEnabled);
+                    input.disabled = !isEnabled;
+                    toggleButton.disabled = !isEnabled;
+                    root.classList.toggle("multiselect--disabled", !isEnabled);
+                    if (!isEnabled) {
+                        state.selected = [];
+                        closeDropdown();
+                        render();
+                    }
+                });
 
                 function highlight(index) {
                     state.highlightedIndex = index;
