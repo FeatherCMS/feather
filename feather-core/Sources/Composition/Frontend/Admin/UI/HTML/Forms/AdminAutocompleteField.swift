@@ -676,8 +676,8 @@ public struct AdminAutocompleteField: Component, FlowContent {
                     if (!isEnabled) {
                         state.selected = [];
                         closeDropdown();
-                        render();
                     }
+                    render();
                 });
 
                 function highlight(index) {

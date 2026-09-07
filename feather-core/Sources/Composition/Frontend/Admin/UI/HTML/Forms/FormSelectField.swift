@@ -25,6 +25,7 @@ public struct FormSelectField: Component, FlowContent {
         public var name: String
         public var label: String
         public var options: [Option]
+        public var placeholder: String?
         public var selectedValue: String?
         public var error: String?
         public var help: String?
@@ -38,6 +39,7 @@ public struct FormSelectField: Component, FlowContent {
             name: String,
             label: String,
             options: [Option],
+            placeholder: String? = nil,
             selectedValue: String? = nil,
             error: String? = nil,
             help: String? = nil,
@@ -50,6 +52,7 @@ public struct FormSelectField: Component, FlowContent {
             self.name = name
             self.label = label
             self.options = options
+            self.placeholder = placeholder
             self.selectedValue = selectedValue
             self.error = error
             self.help = help
@@ -71,6 +74,7 @@ public struct FormSelectField: Component, FlowContent {
         name: String,
         label: String,
         options: [Option],
+        placeholder: String? = nil,
         selectedValue: String? = nil,
         error: String? = nil,
         help: String? = nil,
@@ -84,6 +88,7 @@ public struct FormSelectField: Component, FlowContent {
             name: name,
             label: label,
             options: options,
+            placeholder: placeholder,
             selectedValue: selectedValue,
             error: error,
             help: help,
@@ -134,6 +139,14 @@ public struct FormSelectField: Component, FlowContent {
 
     private func select() -> Select {
         var select = Select {
+            if let placeholder = state.placeholder {
+                HTML.Option(placeholder)
+                    .value("")
+                    .disabled()
+                    .if(state.selectedValue == nil) {
+                        $0.selected()
+                    }
+            }
             for option in state.options {
                 HTML.Option(option.label)
                     .value(option.value)
