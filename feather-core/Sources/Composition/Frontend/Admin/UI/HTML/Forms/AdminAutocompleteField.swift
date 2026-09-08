@@ -32,6 +32,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
         public var error: String?
         public var selectionMode: SelectionMode
         public var isEnabled: Bool
+        public var isRequired: Bool
 
         public init(
             key: String,
@@ -40,7 +41,8 @@ public struct AdminAutocompleteField: Component, FlowContent {
             options: [OptionState],
             error: String?,
             selectionMode: SelectionMode,
-            isEnabled: Bool
+            isEnabled: Bool,
+            isRequired: Bool = false
         ) {
             self.key = key
             self.label = label
@@ -49,6 +51,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
             self.error = error
             self.selectionMode = selectionMode
             self.isEnabled = isEnabled
+            self.isRequired = isRequired
         }
     }
 
@@ -59,6 +62,11 @@ public struct AdminAutocompleteField: Component, FlowContent {
     }
 
     public func selectors() -> [any Selector] {
+        Class("multiselect") {
+            Width(100.percent)
+            MaxWidth(100.percent)
+            MinWidth(0.px)
+        }
         Class("multiselect__label") {
             Display(.block)
             MarginBottom(6.px)
@@ -67,12 +75,16 @@ public struct AdminAutocompleteField: Component, FlowContent {
         }
         Class("multiselect__menu") {
             Position(.relative)
+            Width(100.percent)
+            MaxWidth(100.percent)
+            MinWidth(0.px)
         }
         Class("multiselect__control") {
             MinHeight(42.px)
             Display(.grid)
-            GridTemplateColumns(
-                .tracks([.auto, .fraction(1.fr), .length(28.px)])
+            UnsafeRawProperty(
+                name: "grid-template-columns",
+                value: "minmax(0, 1fr) 28px"
             )
             Gap(6.px)
             Padding(top: 0.px, right: 10.px, bottom: 0.px, left: 10.px)
@@ -80,6 +92,10 @@ public struct AdminAutocompleteField: Component, FlowContent {
             BorderRadius(10.px)
             Background(color: .color(.variable("cms-white")))
             UnsafeRawProperty(name: "align-items", value: "center")
+            UnsafeRawProperty(name: "box-sizing", value: "border-box")
+            Width(100.percent)
+            MaxWidth(100.percent)
+            MinWidth(0.px)
         }
         Custom(".multiselect__control:focus-within") {
             BorderColor(.variable("cms-gray-3"))
@@ -89,9 +105,30 @@ public struct AdminAutocompleteField: Component, FlowContent {
             )
             UnsafeRawProperty(name: "outline-offset", value: "1px")
         }
+        Class("multiselect__viewport") {
+            Display(.flex)
+            AlignItems(.center)
+            Gap(6.px)
+            Width(100.percent)
+            MaxWidth(100.percent)
+            MinWidth(0.px)
+            OverflowX(.auto)
+            OverflowY(.hidden)
+            UnsafeRawProperty(name: "flex-wrap", value: "nowrap")
+            UnsafeRawProperty(name: "scrollbar-width", value: "none")
+            UnsafeRawProperty(name: "-ms-overflow-style", value: "none")
+            UnsafeRawProperty(
+                name: "-webkit-overflow-scrolling",
+                value: "touch"
+            )
+        }
+        Custom(".multiselect__viewport::-webkit-scrollbar") {
+            Display(.none)
+        }
         Class("multiselect__chips") {
             Display(.inlineFlex)
-            FlexWrap(.wrap)
+            UnsafeRawProperty(name: "flex", value: "0 0 auto")
+            UnsafeRawProperty(name: "flex-wrap", value: "nowrap")
             AlignItems(.center)
             Gap(6.px)
             MinWidth(0.px)
@@ -104,6 +141,8 @@ public struct AdminAutocompleteField: Component, FlowContent {
             Color(.variable("cms-strong-font"))
             FontSize(14.px)
             Overflow(.hidden)
+            UnsafeRawProperty(name: "flex", value: "0 0 auto")
+            WhiteSpace(.nowrap)
         }
         Class("multiselect__chip-label") {
             Padding(top: 4.px, right: 8.px, bottom: 4.px, left: 10.px)
@@ -123,8 +162,9 @@ public struct AdminAutocompleteField: Component, FlowContent {
             UnsafeRawProperty(name: "outline", value: "none")
         }
         Custom(".cms-form input.multiselect__input[type=\"text\"]") {
-            Width(100.percent)
-            MinWidth(0.px)
+            UnsafeRawProperty(name: "width", value: "auto")
+            MinWidth(100.px)
+            UnsafeRawProperty(name: "flex", value: "1 0 100px")
             Border(0.px)
             Background(color: .transparent)
             FontSize(15.px)
@@ -238,19 +278,28 @@ public struct AdminAutocompleteField: Component, FlowContent {
 
                     Div {
                         Div {
-                            Div {}
-                                .class("multiselect__chips")
+                            Div {
+                                Div {}
+                                    .class("multiselect__chips")
 
-                            Input()
-                                .type(.text)
-                                .class("multiselect__input")
-                                .autocomplete(.off)
-                                .placeholder(state.placeholder)
-                                .role("combobox")
-                                .ariaAutoComplete(.list)
-                                .ariaActiveDescendant("")
-                                .ariaExpanded("false")
-                                .ariaHasPopup(.listbox)
+                                Input()
+                                    .type(.text)
+                                    .class("multiselect__input")
+                                    .autocomplete(.off)
+                                    .placeholder(state.placeholder)
+                                    .role("combobox")
+                                    .ariaAutoComplete(.list)
+                                    .ariaActiveDescendant("")
+                                    .ariaExpanded("false")
+                                    .ariaHasPopup(.listbox)
+                                    .if(
+                                        state.isRequired
+                                            && selectedOptions.isEmpty
+                                    ) {
+                                        $0.required()
+                                    }
+                            }
+                            .class("multiselect__viewport")
                             Button {
                                 Span {}.class("multiselect__chevron")
                             }
@@ -271,7 +320,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
                         for option in selectedOptions {
                             Input()
                                 .type(.hidden)
-                                .name(state.key)
+                                .name(formName)
                                 .value(option.value)
                         }
                     }
@@ -289,11 +338,12 @@ public struct AdminAutocompleteField: Component, FlowContent {
                         .class("multiselect__options")
                 }
                 .class("multiselect")
-                .data("name", state.key)
+                .data("name", formName)
                 .data(
                     "mode",
                     state.selectionMode.rawValue
                 )
+                .data("required", state.isRequired ? "true" : "false")
 
                 Script(script())
             }
@@ -334,6 +384,13 @@ public struct AdminAutocompleteField: Component, FlowContent {
         return json
     }
 
+    private var formName: String {
+        guard state.selectionMode == .multiple, !state.key.hasSuffix("[]") else {
+            return state.key
+        }
+        return "\(state.key)[]"
+    }
+
     private func script() -> String {
         #"""
         (function () {
@@ -350,6 +407,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
                 window.__webAppAdminAutocompleteCounter = multiselectCounter;
                 var input = root.querySelector(".multiselect__input");
                 var label = root.querySelector(".multiselect__label");
+                var viewport = root.querySelector(".multiselect__viewport");
                 var chipsContainer = root.querySelector(".multiselect__chips");
                 var listbox = root.querySelector(".multiselect__dropdown");
                 var control = root.querySelector(".multiselect__control");
@@ -358,7 +416,7 @@ public struct AdminAutocompleteField: Component, FlowContent {
                 var valuesContainer = root.querySelector(".multiselect__values");
                 var optionsSource = root.querySelector(".multiselect__options");
 
-                if (!input || !chipsContainer || !listbox || !control || !toggleButton || !statusRegion || !valuesContainer || !optionsSource) {
+                if (!input || !viewport || !chipsContainer || !listbox || !control || !toggleButton || !statusRegion || !valuesContainer || !optionsSource) {
                     return;
                 }
 
@@ -367,7 +425,8 @@ public struct AdminAutocompleteField: Component, FlowContent {
                     selected: [],
                     query: "",
                     open: false,
-                    highlightedIndex: -1
+                    highlightedIndex: -1,
+                    isRequired: root.dataset.required === "true"
                 };
 
                 function setupAria() {
@@ -586,11 +645,27 @@ public struct AdminAutocompleteField: Component, FlowContent {
                 function render() {
                     renderChips();
                     renderHiddenInputs();
+                    input.required = state.isRequired && state.selected.length === 0;
                     control.classList.toggle(
                         "multiselect__control--has-selection",
                         state.selected.length > 0
                     );
                     renderDropdown();
+                }
+
+                function notifySelectionChange() {
+                    root.dispatchEvent(new CustomEvent(
+                        "webapp:multiselect-change",
+                        {
+                            bubbles: true,
+                            detail: {
+                                root: root,
+                                values: state.selected.map(function (item) {
+                                    return item.value;
+                                })
+                            }
+                        }
+                    ));
                 }
 
                 function addSelected(option) {
@@ -613,7 +688,11 @@ public struct AdminAutocompleteField: Component, FlowContent {
                     }
 
                     render();
+                    requestAnimationFrame(function () {
+                        viewport.scrollLeft = viewport.scrollWidth;
+                    });
                     announce(option.label + " selected.");
+                    notifySelectionChange();
                 }
 
                 function removeSelected(value) {
@@ -627,8 +706,26 @@ public struct AdminAutocompleteField: Component, FlowContent {
 
                     if (removed) {
                         announce(removed.label + " removed.");
+                        notifySelectionChange();
                     }
                 }
+
+                root.addEventListener("webapp:multiselect-set-enabled", function (
+                    event
+                ) {
+                    var isEnabled = !!(event.detail && event.detail.isEnabled);
+                    if (event.detail && typeof event.detail.isRequired === "boolean") {
+                        state.isRequired = event.detail.isRequired;
+                    }
+                    input.disabled = !isEnabled;
+                    toggleButton.disabled = !isEnabled;
+                    root.classList.toggle("multiselect--disabled", !isEnabled);
+                    if (!isEnabled) {
+                        state.selected = [];
+                        closeDropdown();
+                    }
+                    render();
+                });
 
                 function highlight(index) {
                     state.highlightedIndex = index;

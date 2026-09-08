@@ -924,6 +924,36 @@ body .cms-breadcrumb li a:hover {
   display: none;
 }
 
+.cms-form input[type='file']::file-selector-button {
+  border: 0;
+  border-radius: 6px;
+  background: var(--cms-gray-4);
+  color: var(--cms-strong-font);
+  margin-right: 10px;
+  padding: 6px 10px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cms-form input[type='file']::file-selector-button:hover {
+  background: var(--cms-gray-3);
+}
+
+.cms-form input[type='file']::-webkit-file-upload-button {
+  border: 0;
+  border-radius: 6px;
+  background: var(--cms-gray-4);
+  color: var(--cms-strong-font);
+  margin-right: 10px;
+  padding: 6px 10px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cms-form input[type='file']::-webkit-file-upload-button:hover {
+  background: var(--cms-gray-3);
+}
+
 .cms-form input[type='password']::-webkit-credentials-auto-fill-button {
   visibility: hidden;
   pointer-events: none;

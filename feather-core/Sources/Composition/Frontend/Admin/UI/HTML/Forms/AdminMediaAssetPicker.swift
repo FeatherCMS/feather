@@ -415,7 +415,7 @@ extension AdminMediaAssetPicker {
             }
             .class("admin-media-asset-picker-dialog")
 
-            Script(pickerScript())
+            Script(Self.pickerScript())
         }
         .id("mediaPickerModal-\(state.field.key)")
         .class("admin-media-asset-picker-modal")
@@ -434,7 +434,7 @@ extension AdminMediaAssetPicker {
         )
     }
 
-    fileprivate func pickerScript() -> String {
+    static func pickerScript() -> String {
         """
         (function() {
           if (window.__adminMediaAssetPickerInit) { return; }
@@ -508,9 +508,44 @@ extension AdminMediaAssetPicker {
             return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>';
           }
 
+          function appendMultiPickerItem(field, asset) {
+            var container = document.querySelector('[data-media-picker-values="' + field + '"]');
+            if (!container || !asset || !asset.id) { return; }
+            if (container.querySelector('[data-media-picker-value="' + asset.id + '"]')) { return; }
+
+            var item = document.createElement("div");
+            item.className = "admin-media-asset-multi-picker__item";
+            item.setAttribute("data-media-picker-value", asset.id);
+
+            var details = document.createElement("div");
+            details.className = "admin-media-asset-multi-picker__details";
+            var name = document.createElement("span");
+            name.className = "admin-media-asset-multi-picker__name";
+            name.textContent = fileName(asset);
+            details.appendChild(name);
+
+            var remove = document.createElement("button");
+            remove.type = "button";
+            remove.className = "ghost";
+            remove.textContent = "Remove";
+            remove.setAttribute("data-media-picker-remove", asset.id);
+
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = field + "[]";
+            input.value = asset.id;
+
+            item.append(details, remove, input);
+            container.appendChild(item);
+          }
+
           function updatePicker(field, asset) {
             var input = document.getElementById(field);
             var modal = modalFor(field);
+            if (modal && modal.getAttribute("data-media-picker-selection") === "multiple") {
+              appendMultiPickerItem(field, asset);
+              return;
+            }
             var outputMode = modal ? (modal.getAttribute("data-media-picker-output") || "assetId") : "assetId";
             if (input) {
               input.value = asset
@@ -663,6 +698,9 @@ extension AdminMediaAssetPicker {
           window.__adminMediaAssetPickerHandleUploadedAsset = function(field, asset) {
             var modal = modalFor(field);
             if (modal) {
+              if (modal.getAttribute("data-media-picker-selection") === "multiple") {
+                updatePicker(field, asset);
+              }
               loadPanel(field, "gallery", browsePath(modal));
             }
           };
@@ -765,6 +803,13 @@ extension AdminMediaAssetPicker {
               return;
             }
 
+            var removeTrigger = event.target.closest("[data-media-picker-remove]");
+            if (removeTrigger) {
+              var item = removeTrigger.closest("[data-media-picker-value]");
+              if (item) { item.remove(); }
+              return;
+            }
+
             var tabTrigger = event.target.closest("[data-media-picker-tab]");
             if (tabTrigger) {
               var tabField = tabTrigger.getAttribute("data-media-picker-field");
@@ -844,7 +889,9 @@ extension AdminMediaAssetPicker {
                 status: selectTrigger.getAttribute("data-picker-status")
               });
               var modal = modalFor(field);
-              hideModal(modal);
+              if (!modal || modal.getAttribute("data-media-picker-selection") !== "multiple") {
+                hideModal(modal);
+              }
               return;
             }
 

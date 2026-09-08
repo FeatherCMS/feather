@@ -103,6 +103,7 @@ struct AssetListView: Component {
             Display(.grid)
             RowGap(20.px)
             ColumnGap(20.px)
+            MarginBottom(24.px)
             GridTemplateColumns(
                 .repeat(1, .fraction(Fraction(value: 1)))
             )
@@ -114,7 +115,6 @@ struct AssetListView: Component {
             Display(.flex)
             FlexDirection(.column)
             Gap(12.px)
-            Height(100.percent)
             Padding(14.px)
             Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(18.px)
@@ -148,7 +148,8 @@ struct AssetListView: Component {
             Margin(0)
         }
         Class("media-assets-card-body") {
-            Display(.grid)
+            Display(.flex)
+            FlexDirection(.column)
             Gap(8.px)
             Flex(1)
         }

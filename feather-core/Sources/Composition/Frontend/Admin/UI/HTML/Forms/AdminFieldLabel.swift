@@ -19,10 +19,10 @@ public struct AdminFieldLabel: Component, FlowContent {
         Custom("label .field-label") {
             Color(.variable("cms-strong-font"))
         }
-        Class("field-label__required") {
+        Class("field-label__optional") {
             Color(.variable("cms-light-font"))
         }
-        Custom("label .field-label__required") {
+        Custom("label .field-label__optional") {
             Color(.variable("cms-light-font"))
         }
     }
@@ -30,9 +30,9 @@ public struct AdminFieldLabel: Component, FlowContent {
     public func content() -> some BasicTag {
         Span {
             InlineText(label)
-            if required {
-                Span(" (required)")
-                    .class("field-label__required")
+            if !required {
+                Span(" (Optional)")
+                    .class("field-label__optional")
             }
         }
         .class("field-label")
