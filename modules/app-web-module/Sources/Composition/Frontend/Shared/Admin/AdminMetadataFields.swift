@@ -80,7 +80,7 @@ struct AdminMetadataFields: Leaf {
         Class("admin-metadata-fields__section") {
             Display(.grid)
             Gap(18.px)
-            BorderBottom(1.px, .solid, .variable("cms-gray-2"))
+            // BorderBottom(1.px, .solid, .variable("cms-gray-2"))
             PaddingBottom(20.px)
         }
         Custom(".admin-metadata-fields__section h3") {
@@ -93,7 +93,7 @@ struct AdminMetadataFields: Leaf {
             Gap(12.px)
         }
         Class("admin-metadata-fields__prefix") {
-            Color(.variable("cms-gray-7"))
+            // Color(.variable("cms-gray-7"))
             FontFamily(
                 "ui-monospace",
                 "SFMono-Regular",

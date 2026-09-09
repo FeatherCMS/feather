@@ -70,17 +70,17 @@ public struct AdminMediaAssetPicker: Leaf {
             Display(.grid)
             Gap(12.px)
             Padding(14.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+//            Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(14.px)
-            Background(color: .color(.variable("cms-white")))
+//            Background(color: .variable("cms-white"))
         }
         Class("admin-media-asset-picker-preview") {
             Width(120.px)
             Height(120.px)
             BorderRadius(12.px)
             Overflow(.hidden)
-            Border(1.px, .solid, .variable("cms-gray-3"))
-            Background(color: .color(.variable("cms-gray-1")))
+//            Border(1.px, .solid, .variable("cms-gray-3"))
+//            Background(color: .variable("cms-gray-1"))
             Display(.grid)
             UnsafeRawProperty(name: "place-items", value: "center")
         }
@@ -94,7 +94,7 @@ public struct AdminMediaAssetPicker: Leaf {
         Custom(".admin-media-asset-picker-preview svg") {
             Width(2.75.rem)
             Height(2.75.rem)
-            Color(.variable("cms-primary-bg"))
+//            Color(.variable("cms-primary-bg"))
         }
         Class("admin-media-asset-picker-actions") {
             Display(.flex)
@@ -131,9 +131,9 @@ public struct AdminMediaAssetPicker: Leaf {
             )
             Gap(12.px)
             Padding(18.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+//            Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(20.px)
-            Background(color: .color(.variable("cms-white")))
+//            Background(color: .variable("cms-white"))
             UnsafeRawProperty(
                 name: "box-shadow",
                 value: "0 20px 48px rgb(15 23 42 / 0.22)"
@@ -151,12 +151,12 @@ public struct AdminMediaAssetPicker: Leaf {
             Margin(0)
         }
         Custom(".admin-media-asset-picker-dialog-header p") {
-            Color(.variable("cms-light-font"))
+//            Color(.variable("cms-light-font"))
         }
         Class("admin-media-asset-picker-tabs") {
             Display(.flex)
             AlignItems(.center)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+//            Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(999.px)
             MarginBottom(8.px)
             Padding(4.px)
@@ -168,19 +168,19 @@ public struct AdminMediaAssetPicker: Leaf {
             Border(0)
             BorderRadius(999.px)
             Background(color: .transparent)
-            Color(.variable("cms-light-font"))
+//            Color(.variable("cms-light-font"))
             Padding(vertical: 8.px, horizontal: 12.px)
             LineHeight(1.2)
             TextAlign(.center)
             UnsafeRawProperty(name: "cursor", value: "pointer")
         }
         Custom(".admin-media-asset-picker-tabs button:hover:not(.is-current)") {
-            Color(.variable("cms-link-hover"))
+//            Color(.variable("cms-link-hover"))
             TextDecoration(.underline)
         }
         Custom(".admin-media-asset-picker-tabs button.is-current") {
             UnsafeRawProperty(name: "background", value: "var(--cms-gray-4)")
-            Color(.variable("cms-strong-font"))
+//            Color(.variable("cms-strong-font"))
         }
         Class("admin-media-asset-picker-panel") {
             MinHeight(0.px)
@@ -243,7 +243,7 @@ public struct AdminMediaAssetPicker: Leaf {
             Display(.grid)
             UnsafeRawProperty(name: "place-items", value: "center")
             MinHeight(12.rem)
-            Color(.variable("cms-light-font"))
+//            Color(.variable("cms-light-font"))
         }
     }
 

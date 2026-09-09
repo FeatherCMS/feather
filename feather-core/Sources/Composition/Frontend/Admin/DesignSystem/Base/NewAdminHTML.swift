@@ -30,7 +30,11 @@ public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
         self.language = language
         self.body = body
         self.designSystem = .init()
+        #if DEBUG
+        self.cssRenderer = .init(minify: false)
+        #else
         self.cssRenderer = .init(minify: true)
+        #endif
         self.styleCollector = .init()
         self.scriptCollector = .init()
     }
@@ -38,6 +42,15 @@ public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
     public var children: [any Component] {
         designSystem
         body
+    }
+
+    public func rules() -> [any Rule] {
+        Media {
+            Universal {
+                Margin(0)
+                Padding(0)
+            }
+        }
     }
 
     public func html() -> Html {

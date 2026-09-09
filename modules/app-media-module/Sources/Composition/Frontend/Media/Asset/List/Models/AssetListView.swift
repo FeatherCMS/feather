@@ -80,7 +80,7 @@ struct AssetListView: Leaf {
         }
         Class("media-assets-toggle") {
             Display(.inlineFlex)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(999.px)
             Padding(4.px)
             Gap(4.px)
@@ -89,16 +89,16 @@ struct AssetListView: Leaf {
             BorderRadius(999.px)
             Padding(vertical: 8.px, horizontal: 12.px)
             TextDecoration(.none)
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
             UnsafeRawProperty(name: "cursor", value: "pointer")
         }
         Custom(".media-assets-toggle a:hover:not(.is-current)") {
-            Color(.variable("cms-link-hover"))
+            // Color(.variable("cms-link-hover"))
             TextDecoration(.underline)
         }
         Custom(".media-assets-toggle a.is-current") {
             UnsafeRawProperty(name: "background", value: "var(--cms-gray-4)")
-            Color(.variable("cms-strong-font"))
+            // Color(.variable("cms-strong-font"))
         }
         Class("media-assets-grid") {
             Display(.grid)
@@ -117,9 +117,9 @@ struct AssetListView: Leaf {
             Gap(12.px)
             Height(100.percent)
             Padding(14.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(18.px)
-            Background(color: .color(.variable("cms-bg")))
+            // Background(.variable("cms-bg"))
         }
         Class("media-assets-card-preview") {
             UnsafeRawProperty(name: "aspect-ratio", value: "4 / 3")
@@ -128,8 +128,8 @@ struct AssetListView: Leaf {
             Position(.relative)
             Overflow(.hidden)
             BorderRadius(14.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
-            Background(color: .color(.variable("cms-gray-2")))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
+            // Background(.variable("cms-gray-2"))
         }
         Class("media-assets-card-preview-button") {
             Border(0)
@@ -159,12 +159,11 @@ struct AssetListView: Leaf {
             LineHeight(1.3)
         }
         Custom(".media-assets-card-body h3 a") {
-            Color(.inherit)
             TextDecoration(.none)
         }
         Custom(".media-assets-card-body p") {
             Margin(0)
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
             FontSize(0.86.rem)
             WordBreak(.breakWord)
         }
@@ -186,12 +185,11 @@ struct AssetListView: Leaf {
             Width(56.px)
             Height(56.px)
             BorderRadius(10.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
-            Background(color: .color(.variable("cms-gray-2")))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
+            // Background(.variable("cms-gray-2"))
         }
         Custom(".media-assets-table-preview a") {
             Display(.inlineBlock)
-            Color(.inherit)
             TextDecoration(.none)
         }
         Custom(".media-assets-table-preview img") {
@@ -199,7 +197,7 @@ struct AssetListView: Leaf {
             Height(56.px)
             ObjectFit(.cover)
             BorderRadius(10.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
             Display(.block)
             Margin(0)
         }
@@ -208,7 +206,7 @@ struct AssetListView: Leaf {
             Height(28.px)
         }
         Class("media-assets-folder-icon") {
-            Color(.variable("cms-primary-bg"))
+            // Color(.variable("cms-primary-bg"))
         }
         Custom(".media-assets-folder-icon svg") {
             Width(2.5.rem)

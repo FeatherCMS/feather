@@ -100,10 +100,10 @@ public struct FormSelectField: Leaf {
 
     public func selectors() -> [any Selector] {
         Class("field-label__optional") {
-            Color(.variable("cms-tertiary-font"))
+//            Color(.variable("cms-tertiary-font"))
         }
         Custom("label .field-label__optional") {
-            Color(.variable("cms-tertiary-font"))
+//            Color(.variable("cms-tertiary-font"))
         }
     }
 

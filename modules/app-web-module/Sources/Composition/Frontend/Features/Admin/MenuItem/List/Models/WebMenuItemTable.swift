@@ -40,7 +40,7 @@ struct WebMenuItemTable: Leaf {
             Opacity(0.55)
         }
         Class("web-menu-item-drag") {
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
             FontSize(18.px)
             Width(18.px)
             TextAlign(.center)
@@ -68,7 +68,7 @@ struct WebMenuItemTable: Leaf {
             AlignItems(.center)
         }
         Class("web-menu-item-reorder-status") {
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
         }
     }
 

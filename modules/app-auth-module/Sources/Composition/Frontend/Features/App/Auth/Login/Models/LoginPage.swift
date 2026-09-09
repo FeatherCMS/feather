@@ -45,7 +45,7 @@ struct LoginPage: Leaf {
             Display(.grid)
             Gap(18.px)
             Padding(24.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(22.px)
             UnsafeRawProperty(
                 name: "background",
@@ -73,11 +73,11 @@ struct LoginPage: Leaf {
             )
             LineHeight(1.05)
             LetterSpacing((-0.04).em)
-            Color(.variable("cms-strong-font"))
+            // Color(.variable("cms-strong-font"))
         }
         Custom(".login-copy p") {
             Margin(0)
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
             FontSize(0.96.rem)
             LineHeight(1.55)
         }
@@ -95,7 +95,7 @@ struct LoginPage: Leaf {
             Gap(10.px)
         }
         Custom(".login-checkbox-field span") {
-            Color(.variable("cms-strong-font"))
+            // Color(.variable("cms-strong-font"))
             FontSize(0.95.rem)
             LineHeight(1.3)
         }
@@ -109,27 +109,27 @@ struct LoginPage: Leaf {
             JustifyContent(.center)
             Padding(vertical: 12.px, horizontal: 18.px)
             BorderRadius(999.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
-            Background(color: .color(.variable("cms-strong-font")))
-            Color(.variable("cms-white"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
+//            Background(.variable(TokenKey.Background.primary))
+            // Color(.variable("cms-white"))
             FontWeight(600)
             LineHeight(1)
         }
         Class("login-home-link") {
             UnsafeRawProperty(name: "justify-self", value: "center")
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
             FontSize(0.92.rem)
         }
         Custom(".login-home-link:hover") {
-            Color(.variable("cms-strong-font"))
+            // Color(.variable("cms-strong-font"))
         }
         Class("login-error") {
             Margin(0)
             Padding(vertical: 10.px, horizontal: 12.px)
-            Border(1.px, .solid, .variable("cms-red-border"))
+            // Border(1.px, .solid, .variable("cms-red-border"))
             BorderRadius(10.px)
-            Background(color: .color(.variable("cms-red")))
-            Color(.variable("cms-strong-font"))
+//            Background(.variable(TokenKey.Background.primary))
+            // Color(.variable("cms-strong-font"))
             FontSize(0.92.rem)
             LineHeight(1.45)
         }

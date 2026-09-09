@@ -1,55 +1,16 @@
 import FeatherAdmin
-import Hummingbird
 import HTML
 import SGML
 import WebComponents
 import WebBuilders
 
-
-struct AdminGetDesignSystemDefaultController {
-
-    func route(
-        on router: Router<DefaultRequestContext>
-    ) {
-        router.get(
-            "/admin/design-system",
-            use: getDesignSystem
-        )
-    }
-
-    func getDesignSystem(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> HTMLResponse {
-
-        let origins = AppEnvironmentStore.current.publicOrigins
-
-        let component = NewAdminHTML(
-            title: "Feather CMS :: Design System",
-            body: .init(content: AdminGetDesignSystemComponent())
-        )
-
-        return .init(component.html())
-    }
-
-}
-
 struct AdminGetDesignSystemComponent: Leaf {
 
     func html() -> Section {
         Section {
-            Nav {
-                Ol {
-                    Li { A("Admin").href("/admin/") }
-                    Li("Design System").ariaCurrent(.page)
-                }
-            }
-            .class("cms-breadcrumb")
-            .ariaLabel("Breadcrumb")
 
             H1("Design System")
             P("Design-system component showcase")
-
 
             Section {
                 H2("Tokens")

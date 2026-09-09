@@ -59,7 +59,7 @@ struct BlogAuthorTable: Leaf {
             BorderRadius(50.percent)
             MaxWidth(.none)
             Margin(.auto)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
         }
         Custom(
             ".cms-table td.blog-author-list-profile-cell .blog-author-list-profile-placeholder"
@@ -69,9 +69,9 @@ struct BlogAuthorTable: Leaf {
             Display(.grid)
             UnsafeRawProperty(name: "place-items", value: "center")
             BorderRadius(50.percent)
-            Border(1.px, .solid, .variable("cms-gray-3"))
-            Background(color: .color(.variable("cms-gray-1")))
-            Color(.variable("cms-light-font"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
+            // Background(color: .color(.variable("cms-gray-1")))
+            // Color(.variable("cms-light-font"))
             FontSize(0.58.rem)
             Margin(.auto)
         }

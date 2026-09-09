@@ -22,7 +22,17 @@ public struct NewAdminBody<T: Renderable>: Branch where T.HTML: FlowContent {
     // MARK: -
 
     public func rules() -> [any Rule] {
-        []
+        Media {
+            Custom("body") {
+                Background(.variable(TokenKey.Colors.Background.primary))
+                Color(.variable(TokenKey.Colors.Text.primary))
+                FontFamily(.family("'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif"))
+            }
+            Id("footer") {
+                Padding(32.px)
+                TextAlign(.center)
+            }
+        }
     }
 
     public var children: [any Component] {
@@ -32,6 +42,11 @@ public struct NewAdminBody<T: Renderable>: Branch where T.HTML: FlowContent {
     public func html() -> Body {
         Body {
             content.html()
+
+            Div {
+                P("Powered by Feather CMS")
+            }
+            .id("footer")
         }
     }
 }

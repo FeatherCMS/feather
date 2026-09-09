@@ -39,11 +39,11 @@ struct ContactFormForm: Leaf {
             Margin(0)
             FontSize(0.95.rem)
             FontWeight(.number(600))
-            Color(.variable("cms-strong-font"))
+            // Color(.variable("cms-strong-font"))
         }
         Class("contact-form-field-group-help") {
             Margin(0)
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
             FontSize(0.9.rem)
         }
         Class("contact-form-field-list") {
@@ -55,15 +55,15 @@ struct ContactFormForm: Leaf {
             AlignItems(.center)
             Gap(10.px)
             Padding(vertical: 10.px, horizontal: 12.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(10.px)
-            Background(color: .color(.variable("cms-bg")))
+//            Background(.variable(TokenKey.Background.primary))
         }
         Custom(".contact-form-field-row.is-available") {
-            Background(color: .color(.variable("cms-white")))
+//            Background(.variable(TokenKey.Background.primary))
         }
         Class("contact-form-field-drag") {
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
             FontSize(18.px)
             Width(18.px)
             TextAlign(.center)

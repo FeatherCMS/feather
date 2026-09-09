@@ -1,28 +1,68 @@
 import CSS
-import HTML
-import SGML
-import CSS
-import HTML
-import SGML
-import SVG
-import WebComponents
 
 /// Design-system token keys
 public enum TokenKey {
 
-    public enum Color: String, CaseIterable, Sendable {
-        case primary
-        case secondary
+    public enum Colors {
 
-    }
+        public enum Text: String, CSSVariableNameRepresentable {
+            case primary
+            case secondary
+            case tertiary
+            case muted
 
-    public enum Background {
-        case primary
-        case secondary
-    }
+            public var propertyName: String {
+                "text-color-" + rawValue
+            }
+        }
 
-    public enum Link {
-        case primary
-        case secondary
+        public enum Background: String, CSSVariableNameRepresentable {
+            case primary
+            case secondary
+            case tertiary
+            case muted
+
+            public var propertyName: String {
+                "background-color-" + rawValue
+            }
+        }
+
+        public enum Border: String, CSSVariableNameRepresentable {
+            case primary
+            case secondary
+            case tertiary
+            case muted
+
+            public var propertyName: String {
+                "border-color-" + rawValue
+            }
+        }
+
+        public enum Link: String, CSSVariableNameRepresentable {
+            case `default`
+            case hover
+            case visited
+            case active
+
+            public var propertyName: String {
+                let prefix = "link-color"
+                switch self {
+                case .default:
+                    return prefix
+                default:
+                    return prefix + "-" + rawValue
+                }
+            }
+        }
+
+        public enum Selection: String, CSSVariableNameRepresentable {
+            case `default`
+
+            public var propertyName: String {
+                switch self {
+                case .default: "selection-color"
+                }
+            }
+        }
     }
 }

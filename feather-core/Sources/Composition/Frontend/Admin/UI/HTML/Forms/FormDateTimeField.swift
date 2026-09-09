@@ -74,10 +74,10 @@ public struct FormDateTimeField: Leaf {
 
     public func selectors() -> [any Selector] {
         Class("field-label__optional") {
-            Color(.variable("cms-tertiary-font"))
+//            Color(.variable("cms-tertiary-font"))
         }
         Custom("label .field-label__optional") {
-            Color(.variable("cms-tertiary-font"))
+//            Color(.variable("cms-tertiary-font"))
         }
         Class("form-datetime-field") {
             Position(.relative)
@@ -89,8 +89,8 @@ public struct FormDateTimeField: Leaf {
         Custom(".cms-form .form-datetime-field__display") {
             Width(100.percent)
             Cursor(.pointer)
-            Background(color: .variable("cms-white"))
-            Color(.variable("cms-strong-font"))
+//            Background(color: .variable("cms-white"))
+//            Color(.variable("cms-strong-font"))
         }
         Class("form-datetime-field__picker") {
             Position(.absolute)
@@ -100,8 +100,8 @@ public struct FormDateTimeField: Leaf {
             MaxWidth(100.percent)
             MarginTop(6.px)
             Padding(16.px)
-            Background(color: .variable("cms-white"))
-            Border(1.px, .solid, .variable("cms-gray-2"))
+//            Background(color: .variable("cms-white"))
+//            Border(1.px, .solid, .variable("cms-gray-2"))
             BorderRadius(12.px)
             UnsafeRawProperty(name: "box-shadow", value: "var(--cms-shadow)")
             UnsafeRawProperty(name: "z-index", value: "10")
@@ -113,7 +113,7 @@ public struct FormDateTimeField: Leaf {
             Gap(8.px)
         }
         Custom(".form-datetime-field__header strong") {
-            Color(.variable("cms-strong-font"))
+            // Color(.variable("cms-strong-font"))
             FontSize(0.95.rem)
             FontWeight(600)
         }
@@ -121,14 +121,14 @@ public struct FormDateTimeField: Leaf {
             Width(32.px)
             Height(32.px)
             Padding(0.px)
-            Border(1.px, .solid, .variable("cms-gray-2"))
+//            Border(1.px, .solid, .variable("cms-gray-2"))
             BorderRadius(8.px)
-            Background(color: .variable("cms-gray-1"))
-            Color(.variable("cms-strong-font"))
+//            Background(color: .variable("cms-gray-1"))
+            // Color(.variable("cms-strong-font"))
             Cursor(.pointer)
         }
         Custom(".form-datetime-field__header button:hover") {
-            Background(color: .variable("cms-gray-2"))
+            // Background(color: .variable("cms-gray-2"))
         }
         Class("form-datetime-field__calendar") {
             Display(.grid)
@@ -146,21 +146,21 @@ public struct FormDateTimeField: Leaf {
             Width(100.percent)
             Height(32.px)
             Padding(0.px)
-            Border(1.px, .solid, .variable("cms-gray-2"))
+//            Border(1.px, .solid, .variable("cms-gray-2"))
             BorderRadius(8.px)
-            Background(color: .variable("cms-white"))
-            Color(.variable("cms-light-font"))
+//            Background(color: .variable("cms-white"))
+            // Color(.variable("cms-light-font"))
             Cursor(.pointer)
         }
         Custom(".form-datetime-field__calendar button:hover") {
-            BorderColor(.variable("cms-primary-border"))
-            Background(color: .variable("cms-gray-1"))
+//            BorderColor(.variable("cms-primary-border"))
+//            Background(color: .variable("cms-gray-1"))
         }
         Custom(".form-datetime-field__calendar button[aria-selected=\"true\"]")
         {
-            BorderColor(.variable("cms-primary-border"))
-            Background(color: .variable("cms-primary"))
-            Color(.variable("cms-white"))
+//            BorderColor(.variable("cms-primary-border"))
+//            Background(color: .variable("cms-primary"))
+//            Color(.variable("cms-white"))
             FontWeight(600)
         }
         Class("form-datetime-field__time") {
@@ -171,23 +171,23 @@ public struct FormDateTimeField: Leaf {
         }
         Custom(".form-datetime-field__time-label") {
             FontSize(0.95.rem)
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
         }
         Custom(".form-datetime-field__time input") {
             Width(68.px)
             Height(40.px)
             BoxSizing(.borderBox)
             Padding(vertical: 10.px, horizontal: 12.px)
-            Border(1.px, .solid, .variable("cms-gray-2"))
+            // Border(1.px, .solid, .variable("cms-gray-2"))
             BorderRadius(10.px)
-            Background(color: .variable("cms-white"))
-            Color(.variable("cms-strong-font"))
+            // Background(color: .variable("cms-white"))
+            // Color(.variable("cms-strong-font"))
             FontSize(1.rem)
             LineHeight(1.2)
             TextAlign(.center)
         }
         Custom(".form-datetime-field__time input:focus") {
-            BorderColor(.variable("cms-primary-border"))
+            // BorderColor(.variable("cms-primary-border"))
             UnsafeRawProperty(name: "outline", value: "none")
         }
         Custom(".form-datetime-field__time input::-webkit-inner-spin-button") {
@@ -210,14 +210,14 @@ public struct FormDateTimeField: Leaf {
             Cursor(.pointer)
         }
         Custom(".form-datetime-field__cancel") {
-            Border(1.px, .solid, .variable("cms-gray-2"))
-            Background(color: .variable("cms-white"))
-            Color(.variable("cms-strong-font"))
+            // Border(1.px, .solid, .variable("cms-gray-2"))
+            // Background(color: .variable("cms-white"))
+            // Color(.variable("cms-strong-font"))
         }
         Custom(".form-datetime-field__apply") {
-            Border(1.px, .solid, .variable("cms-primary-border"))
-            Background(color: .variable("cms-primary"))
-            Color(.variable("cms-white"))
+            // Border(1.px, .solid, .variable("cms-primary-border"))
+            // Background(color: .variable("cms-primary"))
+            // Color(.variable("cms-white"))
         }
     }
 

@@ -32,7 +32,7 @@ public struct AdminPillTabs: Leaf {
         Class("admin-pill-tabs") {
             Display(.flex)
             AlignItems(.center)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+//            Border(1.px, .solid, .variable(TokenKey.Background.primary))
             BorderRadius(999.px)
             MarginBottom(16.px)
             Padding(4.px)
@@ -61,7 +61,7 @@ public struct AdminPillTabs: Leaf {
             Border(0)
             BorderRadius(999.px)
             BackgroundColor(.transparent)
-            Color(.variable("cms-light-font"))
+//            Color(.variable(TokenKey.Background.primary))
             Padding(vertical: 8.px, horizontal: 12.px)
             LineHeight(1.2)
             TextAlign(.center)
@@ -70,12 +70,12 @@ public struct AdminPillTabs: Leaf {
             WhiteSpace(.nowrap)
         }
         Custom(".admin-pill-tabs a:hover:not(.is-current)") {
-            Color(.variable("cms-link-hover"))
+//            Color(.variable(TokenKey.Background.primary))
             TextDecoration(.underline)
         }
         Custom(".admin-pill-tabs a.is-current") {
-            BackgroundColor(.variable("cms-gray-4"))
-            Color(.variable("cms-strong-font"))
+//            Background(.variable(TokenKey.Background.primary))
+//            Color(.variable(TokenKey.Background.primary))
         }
     }
 

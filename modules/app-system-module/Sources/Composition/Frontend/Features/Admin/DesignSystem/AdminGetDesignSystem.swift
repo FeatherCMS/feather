@@ -1,10 +1,28 @@
 import FeatherAdmin
 import Hummingbird
+import FeatherContracts
 
 struct AdminGetDesignSystem {
-    let controller: AdminGetDesignSystemDefaultController
+    let controller: any AdminGetDesignSystemController
 
-    init() {
-        self.controller = AdminGetDesignSystemDefaultController()
+    init(
+        renderingEngine: any RenderingEngine,
+        events: any EventPublisher
+    ) {
+        self.controller = AdminGetDesignSystemDefaultController(
+            buildRuntime: { request, context in
+                (
+                    interactor: AdminGetDesignSystemDefaultInteractor(
+                        
+                    ),
+                    presenter: AdminGetDesignSystemDefaultPresenter(
+                        request: request,
+                        context: context,
+                        events: events,
+                        renderEngine: renderingEngine
+                    )
+                )
+            }
+        )
     }
 }

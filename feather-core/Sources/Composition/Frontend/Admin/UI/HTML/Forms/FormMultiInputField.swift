@@ -80,10 +80,10 @@ public struct FormMultiInputField: Leaf {
 
     public func selectors() -> [any CSS.Selector] {
         Class("field-label__optional") {
-            Color(.variable("cms-tertiary-font"))
+//            Color(.variable("cms-tertiary-font"))
         }
         Custom("label .field-label__optional") {
-            Color(.variable("cms-tertiary-font"))
+//            Color(.variable("cms-tertiary-font"))
         }
         Class("form-multi-input-field__control") {
             MinHeight(48.px)
@@ -92,12 +92,12 @@ public struct FormMultiInputField: Leaf {
             AlignItems(.center)
             Gap(6.px)
             Padding(top: 0.px, right: 8.px, bottom: 0.px, left: 8.px)
-            Border(1.px, .solid, .variable("cms-gray-2"))
+//            Border(1.px, .solid, .variable("cms-gray-2"))
             BorderRadius(10.px)
-            Background(color: .variable("cms-white"))
+//            Background(color: .variable("cms-white"))
         }
         Custom(".form-multi-input-field__control:focus-within") {
-            BorderColor(.variable("cms-gray-3"))
+//            BorderColor(.variable("cms-gray-3"))
             UnsafeRawProperty(
                 name: "outline",
                 value: "2px solid var(--cms-gray-5)"
@@ -110,8 +110,8 @@ public struct FormMultiInputField: Leaf {
             Gap(4.px)
             BorderRadius(999.px)
             Padding(left: 10.px)
-            Background(color: .variable("cms-gray-2"))
-            Color(.variable("cms-strong-font"))
+//            Background(color: .variable("cms-gray-2"))
+//            Color(.variable("cms-strong-font"))
             FontSize(14.px)
         }
         Class("form-multi-input-field__remove") {
@@ -121,13 +121,13 @@ public struct FormMultiInputField: Leaf {
             Border(0.px)
             BorderRadius(999.px)
             Background(color: .transparent)
-            Color(.variable("cms-light-font"))
+//            Color(.variable("cms-light-font"))
             Cursor(.pointer)
         }
         Custom(
             ".form-multi-input-field__remove:hover, .form-multi-input-field__remove:focus-visible"
         ) {
-            Background(color: .variable("cms-gray-3"))
+//            Background(color: .variable("cms-gray-3"))
             UnsafeRawProperty(name: "outline", value: "none")
         }
         Custom(".cms-form input.form-multi-input-field__input") {
@@ -137,7 +137,7 @@ public struct FormMultiInputField: Leaf {
             Padding(4.px)
             Border(0.px)
             Background(color: .transparent)
-            Color(.variable("cms-strong-font"))
+//            Color(.variable("cms-strong-font"))
             UnsafeRawProperty(name: "outline", value: "none")
             UnsafeRawProperty(name: "box-shadow", value: "none")
         }
