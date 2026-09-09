@@ -250,6 +250,8 @@ public struct NewAdminSidebar: Leaf {
                 Width(250.px)
                 MaxHeight(.none)
                 Overflow(.hidden)
+                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
+                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
 
             }
             Custom(".menu .group-label") {

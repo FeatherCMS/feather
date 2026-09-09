@@ -56,6 +56,20 @@ public struct NewAdminBaseLayout<T: Leaf>: Branch {
                 Background(.variable(TokenKey.Colors.Background.secondary))
                 MinHeight(100.vh)
             }
+            Custom(".menu-container main") {
+                Margin(15.px)
+                Padding(15.px)
+                Background(.variable(TokenKey.Colors.Background.primary))
+                Border(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
+                BorderRadius(5.px)
+                BoxShadow(
+                    0.px,
+                    12.px,
+                    blur: 26.px,
+                    spread: 2.px,
+                    color: CSSColor(stringLiteral: "var(--background-color-tertiary)")
+                )
+            }
         }
         Media(.minWidth("600px")) {
             Class("menu-container") {
@@ -78,7 +92,6 @@ public struct NewAdminBaseLayout<T: Leaf>: Branch {
                     Div {
                         content.html()
                     }
-                    .class("panel")
                 }
             }
             .class("menu-container")
