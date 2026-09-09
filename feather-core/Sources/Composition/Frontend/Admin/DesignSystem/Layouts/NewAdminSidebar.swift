@@ -325,19 +325,39 @@ public struct NewAdminSidebar: Leaf {
         document.addEventListener("DOMContentLoaded", function () {
             var key = "adminMenuCollapsed";
             var menuToggle = document.getElementById("menuToggle");
+            var isDesktop = window.matchMedia("(min-width: 600px)").matches;
+            var openCurrentSubmenus = function () {
+                document.querySelectorAll(
+                    ".menu .has-submenu.has-current > .submenu-toggle"
+                ).forEach(function (submenuToggle) {
+                    submenuToggle.checked = true;
+                });
+            };
 
             if (!menuToggle) {
                 return;
             }
 
-            try {
-                menuToggle.checked = window.localStorage.getItem(key) === "1";
+            if (isDesktop) {
+                try {
+                    menuToggle.checked = window.localStorage.getItem(key) === "1";
+                }
+                catch (_) {
+                    // Ignore storage access errors.
+                }
+                openCurrentSubmenus();
             }
-            catch (_) {
-                // Ignore storage access errors.
+            else {
+                menuToggle.checked = false;
             }
 
             menuToggle.addEventListener("change", function () {
+                if (!window.matchMedia("(min-width: 600px)").matches) {
+                    if (menuToggle.checked) {
+                        openCurrentSubmenus();
+                    }
+                    return;
+                }
                 try {
                     window.localStorage.setItem(
                         key, menuToggle.checked ? "1" : "0"
@@ -347,6 +367,7 @@ public struct NewAdminSidebar: Leaf {
                     // Ignore storage access errors.
                 }
             });
+
         });
         """#
     }
@@ -427,7 +448,6 @@ public struct NewAdminSidebar: Leaf {
             Input()
                 .id("applicationMenu\(index)Toggle")
                 .type(.checkbox)
-                .if(hasCurrentChild) { $0.checked() }
                 .class("submenu-toggle")
             Label {
                 renderMenuParent(item: menu.parent)
@@ -439,6 +459,7 @@ public struct NewAdminSidebar: Leaf {
             renderSubmenu(items: menu.children)
         }
         .class("has-submenu")
+        .if(hasCurrentChild) { $0.addClass("has-current") }
     }
 
     private func renderMenu(
