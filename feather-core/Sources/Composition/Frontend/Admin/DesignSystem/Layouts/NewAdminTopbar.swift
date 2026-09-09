@@ -46,12 +46,28 @@ public struct NewAdminTopBar: Leaf {
             }
             Custom(".top-bar-title h1") {
                 Margin(0.px)
+                FontSize(20.px)
                 WhiteSpace(.nowrap)
                 Overflow(.hidden)
                 TextOverflow(.ellipsis)
             }
-            Class("top-bar-title-link") {
-//                Color(.inherit)
+            Custom(".top-bar-title-link, .top-bar-title-link:hover, .top-bar-title-link:visited, .top-bar-title-link:active") {
+                BackgroundImage(
+                    .linearGradient(
+                        LinearGradient(
+                            direction: .angle(120.deg),
+                            stops: [
+                                .init(CSSColor(stringLiteral: "var(--link-color)"), 0.percent),
+                                .init(CSSColor(stringLiteral: "var(--link-color-active)"), 100.percent)
+                            ]
+                        )
+                    )
+                )
+                UnsafeRawProperty(name: "-webkit-background-clip", value: "text")
+                UnsafeRawProperty(name: "background-clip", value: "text")
+                Color(.transparent)
+                WebkitTextFillColor(.transparent)
+                TextDecoration(.none)
             }
             Class("menu-trigger") {
                 Display(.inlineFlex)
@@ -63,16 +79,73 @@ public struct NewAdminTopBar: Leaf {
             Class("menu-trigger-icon") {
                 Display(.block)
             }
-            Custom(".menu-trigger .sr-only") {
+            Custom(".menu-trigger .sr-only, .account-trigger .sr-only") {
                 Position(.absolute)
                 Width(1.px)
                 Height(1.px)
                 Padding(0)
                 Margin((-1).px)
                 Overflow(.hidden)
-                UnsafeRawProperty(name: "clip", value: "rect(0, 0, 0, 0)")
+                Clip(.shape("rect(0, 0, 0, 0)"))
                 WhiteSpace(.nowrap)
                 Border(0)
+            }
+            Custom("#accountToggle, #accountToggle + .account-trigger") {
+                Cursor(.pointer)
+            }
+            Id("accountToggle") {
+                Position(.absolute)
+                Width(1.px)
+                Height(1.px)
+                Opacity(0)
+                PointerEvents(.none)
+            }
+            Class("account-trigger") {
+                Display(.inlineFlex)
+                AlignItems(.center)
+                JustifyContent(.center)
+                Padding(2.px)
+            }
+            Custom(".account-trigger img, .account-trigger .account-profile-icon") {
+                Display(.block)
+                Width(28.px)
+                Height(28.px)
+                BorderRadius(999.px)
+                Border(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
+                BoxSizing(.borderBox)
+            }
+            Custom(".account-trigger .account-profile-icon") {
+                Color(.variable(TokenKey.Colors.Link.visited))
+            }
+            Class("account-menu") {
+                Position(.absolute)
+                Right(0.px)
+                Top(40.px)
+                MinWidth(140.px)
+                ListStyle(.none)
+                Padding(vertical: 8.px, horizontal: 0.px)
+                Margin(0)
+                Display(.none)
+                ZIndex(.number(20))
+                Background(.variable(TokenKey.Colors.Background.primary))
+                Border(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
+                BorderRadius(10.px)
+                UnsafeRawProperty(
+                    name: "box-shadow",
+                    value: "0 10px 24px rgba(15, 23, 42, 0.1)"
+                )
+            }
+            Custom(".account-menu li a") {
+                Display(.block)
+                Padding(vertical: 8.px, horizontal: 12.px)
+                Color(.variable(TokenKey.Colors.Text.primary))
+                TextDecoration(.none)
+            }
+            Custom("#accountToggle:checked + .account-trigger + .account-menu") {
+                Display(.block)
+            }
+            Custom(".account-menu li a:hover, .account-menu li a:focus-visible") {
+                Background(.variable(TokenKey.Colors.Background.secondary))
             }
             Custom(".menu-trigger-mobile line") {
                 UnsafeRawProperty(
@@ -125,22 +198,16 @@ public struct NewAdminTopBar: Leaf {
     }
 
     private func renderAccountActions() -> Div {
-        let fallbackProfileImageURL =
-            "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/images/tiborbodecs-2026-512.png"
-
         return Div {
             Input()
                 .type(.checkbox)
                 .id("accountToggle")
                 .name("accountToggle")
             Label {
-                Img(
-                    src: fallbackProfileImageURL,
-                    alt: "My profile picture"
-                )
-                .id("adminProfileImage")
-                .width(32)
-                .height(32)
+                Icon(
+                    svg: FeatherIcons.user(),
+                    class: "account-profile-icon"
+                ).html()
                 Span("My profile")
                     .class("sr-only")
             }

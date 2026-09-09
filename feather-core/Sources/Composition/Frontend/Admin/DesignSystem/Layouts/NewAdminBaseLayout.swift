@@ -51,6 +51,8 @@ public struct NewAdminBaseLayout<T: Leaf>: Branch {
             Class("menu-container") {
                 Display(.grid)
                 GridTemplateColumns(.tracks([.fraction(1.fr)]))
+                AlignItems(.flexStart)
+                AlignContent(.flexStart)
                 Background(.variable(TokenKey.Colors.Background.secondary))
                 MinHeight(100.vh)
             }
