@@ -71,11 +71,7 @@ public struct NewAdminSidebar: Leaf {
 
     public func rules() -> [any Rule] {
         Media {
-            Custom(".menu-groups, .menu-groups .sub-menu") {
-                Margin(0)
-                Padding(0)
-            }
-            Custom(".menu-group + .menu-group") {
+            Custom(".group + .group") {
                 BorderTop(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
             }
             Custom(".group-label") {
@@ -88,15 +84,11 @@ public struct NewAdminSidebar: Leaf {
                 PaddingBottom(8.px)
                 Color(.variable(TokenKey.Colors.Text.primary))
             }
-            Custom(".menu li") {
-                ListStyle(.none)
-            }
             Custom(".menu li a") {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(8.px)
                 Padding(16.px)
-                Color(.variable(TokenKey.Colors.Text.primary))
                 TextDecoration(.none)
             }
             Custom(".submenu-toggle") {
@@ -114,18 +106,11 @@ public struct NewAdminSidebar: Leaf {
                 Padding(16.px)
                 Width(100.percent)
                 BoxSizing(.borderBox)
-                Color(.variable(TokenKey.Colors.Text.primary))
-                Background(.variable(TokenKey.Colors.Background.primary))
                 Cursor(.pointer)
             }
-            Custom(".submenu-label > a") {
-                Padding(0)
-                Width(100.percent)
-            }
-            Custom(".menu-icon") {
+            Custom(".menu svg") {
                 Width(16.px)
                 Height(16.px)
-                Color(.variable(TokenKey.Colors.Accent.Primary.default))
                 UnsafeRawProperty(name: "fill", value: "none")
                 UnsafeRawProperty(name: "stroke", value: "currentColor")
                 UnsafeRawProperty(name: "stroke-width", value: "1.5")
@@ -136,7 +121,6 @@ public struct NewAdminSidebar: Leaf {
             Custom(".submenu-label::after") {
                 Content(.string("\"\""))
                 Position(.absolute)
-                Color(.variable(TokenKey.Colors.Accent.Primary.default))
                 Right(16.px)
                 Top(50.percent)
                 Width(7.px)
@@ -168,45 +152,6 @@ public struct NewAdminSidebar: Leaf {
             }
             Custom(".submenu-toggle:checked + .submenu-label + .sub-menu") {
                 MaxHeight(100.vh)
-            }
-            Custom(".menu .has-submenu > .sub-menu") {
-                Background(.variable(TokenKey.Colors.Background.tertiary))
-            }
-            Custom(".menu .sub-menu .sub-menu li a") {
-                Padding(vertical: 12.px, horizontal: 16.px)
-                Background(.variable(TokenKey.Colors.Background.secondary))
-            }
-            Custom(".menu .submenu-menu-icon") {
-                Color(.variable(TokenKey.Colors.Accent.Secondary.default))
-            }
-            Custom(".menu .sub-menu .sub-menu li a:hover") {
-                Background(.variable(TokenKey.Colors.Selection.tertiary))
-            }
-            Custom(".menu .submenu-items li > a:hover") {
-                Background(.variable(TokenKey.Colors.Selection.tertiary))
-            }
-            Custom(".submenu-label:hover, .menu li a:hover") {
-                Background(.variable(TokenKey.Colors.Selection.secondary))
-            }
-            Custom(".submenu-label:hover .menu-icon, .menu li a:hover .menu-icon, .submenu-label:hover::after") {
-                Color(.variable(TokenKey.Colors.Accent.Primary.hover))
-            }
-            Custom(".submenu-label.isCurrent, .menu li a.isCurrent") {
-                Color(.variable(TokenKey.Colors.Selection.text))
-                Background(.variable(TokenKey.Colors.Selection.primary))
-            }
-            Custom(".submenu-label.isCurrent .menu-icon, .menu li a.isCurrent .menu-icon, .submenu-label.isCurrent::after") {
-                Color(.variable(TokenKey.Colors.Accent.Primary.hover))
-            }
-            Custom(".menu .sub-menu .sub-menu li a.isCurrent, .menu .submenu-items li > a.isCurrent") {
-                Color(.variable(TokenKey.Colors.Selection.text))
-                Background(.variable(TokenKey.Colors.Selection.secondary))
-            }
-            Custom(".submenu-label.isCurrent") {
-                Background(.variable(TokenKey.Colors.Selection.tertiary))
-            }
-            Custom(".menu .submenu-menu-icon:hover, .menu .submenu-items li > a:hover .submenu-menu-icon, .menu .submenu-items li > a.isCurrent .submenu-menu-icon") {
-                Color(.variable(TokenKey.Colors.Accent.Secondary.hover))
             }
             Id("menuToggle") {
                 Position(.absolute)
@@ -257,7 +202,6 @@ public struct NewAdminSidebar: Leaf {
                 Overflow(.hidden)
                 BorderRight(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
                 BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
-
             }
             Custom(".menu .group-label") {
                 Overflow(.hidden)
@@ -316,6 +260,27 @@ public struct NewAdminSidebar: Leaf {
             }
             Class("menu-trigger-mobile") {
                 Display(.none)
+            }
+        }
+        Media {
+            Custom(".menu a") {
+                Color(.variable(TokenKey.Colors.Text.primary))
+            }
+            Custom(".menu svg") {
+                Color(.variable(TokenKey.Colors.Accent.Primary.default))
+            }
+            Custom(".menu .sub-menu svg") {
+                Color(.variable(TokenKey.Colors.Accent.Secondary.default))
+            }
+            Custom(".menu .sub-menu") {
+                Background(.variable(TokenKey.Colors.Selection.primary))
+            }
+            Custom(".isCurrent") {
+                Color(.variable(TokenKey.Colors.Selection.text))
+                Background(.variable(TokenKey.Colors.Selection.secondary))
+            }
+            Custom(".menu a:hover, .menu .submenu-label:hover") {
+                Background(.variable(TokenKey.Colors.Selection.tertiary))
             }
         }
     }
@@ -378,7 +343,7 @@ public struct NewAdminSidebar: Leaf {
         Li {
             if let link = item.link {
                 A {
-                    Icon(svg: item.icon, class: "menu-icon top-level-menu-icon").html()
+                    Icon(svg: item.icon).html()
                     Span(item.label)
                 }
                 .title(item.label)
@@ -386,10 +351,11 @@ public struct NewAdminSidebar: Leaf {
                 .if(item.isCurrent) { $0.class("isCurrent") }
             }
             else {
-                Icon(svg: item.icon, class: "menu-icon top-level-menu-icon").html()
+                Icon(svg: item.icon).html()
                 Span(item.label)
             }
         }
+        .class("plain")
     }
 
     private func renderMenuParent(
@@ -398,7 +364,7 @@ public struct NewAdminSidebar: Leaf {
         if let link = item.link {
             return [
                 A {
-                    Icon(svg: item.icon, class: "menu-icon top-level-menu-icon").html()
+                    Icon(svg: item.icon).html()
                     Span(item.label)
                 }
                 .title(item.label)
@@ -407,7 +373,7 @@ public struct NewAdminSidebar: Leaf {
         }
         else {
             return [
-                Icon(svg: item.icon, class: "menu-icon top-level-menu-icon").html(),
+                Icon(svg: item.icon).html(),
                 Span(item.label)
             ]
         }
@@ -418,13 +384,14 @@ public struct NewAdminSidebar: Leaf {
     ) -> Li {
         Li {
             A {
-                Icon(svg: item.icon, class: "menu-icon submenu-menu-icon").html()
+                Icon(svg: item.icon).html()
                 Span(item.label)
             }
             .title(item.label)
             .href(item.link)
             .if(item.isCurrent) { $0.class("isCurrent") }
         }
+        .class("plain")
     }
 
     private func renderSubmenu(
@@ -435,7 +402,7 @@ public struct NewAdminSidebar: Leaf {
                 renderSubmenuItem(item: item)
             }
         }
-        .class("sub-menu", "submenu-items")
+        .class("sub-menu")
     }
 
     private func renderSubmenuMenu(
@@ -458,7 +425,7 @@ public struct NewAdminSidebar: Leaf {
             .if(menu.parent.isCurrent) { $0.addClass("isCurrent") }
             renderSubmenu(items: menu.children)
         }
-        .class("has-submenu")
+        .class("has-submenu", "plain")
         .if(hasCurrentChild) { $0.addClass("has-current") }
     }
 
@@ -478,15 +445,16 @@ public struct NewAdminSidebar: Leaf {
         group: Group
     ) -> Li {
         Li {
-            Span(group.label).class("group-label")
+            Span(group.label)
+                .class("group-label")
             Ul {
                 for (index, menu) in group.menus.enumerated() {
                     renderMenu(menu: menu, index: index)
                 }
             }
-            .class("sub-menu")
+            .class("group")
         }
-        .class("menu-group")
+        .class("plain")
     }
 
     private func renderNavigation() -> Nav {
@@ -496,7 +464,7 @@ public struct NewAdminSidebar: Leaf {
                     renderGroup(group: group)
                 }
             }
-            .class("menu-groups")
+            .class("groups")
         }
         .class("menu")
     }

@@ -50,6 +50,15 @@ public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
                 Margin(0)
                 Padding(0)
             }
+            
+            Custom("ul.inline") {
+                Display(.flex)
+                FlexWrap(.wrap)
+                Gap(16.px)
+            }
+            Custom("ul.plain li, ul.inline li") {
+                ListStyleType(.none)
+            }
         }
     }
 

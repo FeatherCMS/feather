@@ -44,15 +44,20 @@ struct HTMLDesignSystem: Component {
                 Variable(TokenKey.Colors.Link.active, "#5b21b6")
 
                 Variable(TokenKey.Colors.Accent.Primary.default, "#6536ab")
-                Variable(TokenKey.Colors.Accent.Secondary.default, "#9333ea")
                 Variable(TokenKey.Colors.Accent.Primary.hover, "#733fc2")
+
+                Variable(TokenKey.Colors.Accent.Secondary.default, "#9333ea")
                 Variable(TokenKey.Colors.Accent.Secondary.hover, "#7e22ce")
+
                 Variable(TokenKey.Colors.Destructive.default, "#b4232d")
                 Variable(TokenKey.Colors.Destructive.hover, "#8f1a22")
+
                 Variable(TokenKey.Colors.Ghost.Primary.default, "#4b5563")
                 Variable(TokenKey.Colors.Ghost.Primary.hover, "#374151")
+
                 Variable(TokenKey.Colors.Ghost.Secondary.default, "#7c8490")
                 Variable(TokenKey.Colors.Ghost.Secondary.hover, "#4b5563")
+
                 Variable(TokenKey.Colors.Button.Disabled.background, "#e2e8f0")
                 Variable(TokenKey.Colors.Button.Disabled.border, "#f8fafc")
                 Variable(TokenKey.Colors.Button.Disabled.text, "#6b7280")
@@ -90,15 +95,20 @@ struct HTMLDesignSystem: Component {
                 Variable(TokenKey.Colors.Link.active, "#7c3aed")
 
                 Variable(TokenKey.Colors.Accent.Primary.default, "#8c4ef0")
-                Variable(TokenKey.Colors.Accent.Secondary.default, "#a855f7")
                 Variable(TokenKey.Colors.Accent.Primary.hover, "#7a43d1")
+
+                Variable(TokenKey.Colors.Accent.Secondary.default, "#ef5eb0")
                 Variable(TokenKey.Colors.Accent.Secondary.hover, "#9333ea")
+
                 Variable(TokenKey.Colors.Destructive.default, "#dc2626")
                 Variable(TokenKey.Colors.Destructive.hover, "#b91c1c")
+
                 Variable(TokenKey.Colors.Ghost.Primary.default, "#2c2c2e")
                 Variable(TokenKey.Colors.Ghost.Primary.hover, "#1f1f22")
+
                 Variable(TokenKey.Colors.Ghost.Secondary.default, "#525255")
                 Variable(TokenKey.Colors.Ghost.Secondary.hover, "#3a3a3c")
+
                 Variable(TokenKey.Colors.Button.Disabled.background, "#141416")
                 Variable(TokenKey.Colors.Button.Disabled.border, "#242428")
                 Variable(TokenKey.Colors.Button.Disabled.text, "#a39aa8")
