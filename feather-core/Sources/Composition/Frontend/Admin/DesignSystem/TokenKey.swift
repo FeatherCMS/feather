@@ -40,7 +40,6 @@ public enum TokenKey {
 
         public enum Link: String, CSSVariableNameRepresentable {
             case `default`
-            case secondary
             case hover
             case visited
             case active
@@ -56,30 +55,83 @@ public enum TokenKey {
             }
         }
 
-        public enum Accent: String, CSSVariableNameRepresentable {
-            case primary
-            case secondary
-            case tertiary
-            case muted
+        public enum Accent {
+            public enum Primary: String, CSSVariableNameRepresentable {
+                case `default`
+                case hover
+
+                public var propertyName: String {
+                    "accent-color-primary" + (self == .default ? "" : "-hover")
+                }
+            }
+
+            public enum Secondary: String, CSSVariableNameRepresentable {
+                case `default`
+                case hover
+
+                public var propertyName: String {
+                    "accent-color-secondary" + (self == .default ? "" : "-hover")
+                }
+            }
+
+        }
+
+        public enum Destructive: String, CSSVariableNameRepresentable {
+            case `default`
+            case hover
 
             public var propertyName: String {
-                let prefix = "accent-color"
+                let prefix = "destructive-color"
                 switch self {
-                case .primary:
+                case .default:
                     return prefix
-                default:
-                    return prefix + "-" + rawValue
+                case .hover:
+                    return prefix + "-hover"
+                }
+            }
+        }
+
+        public enum Ghost {
+            public enum Primary: String, CSSVariableNameRepresentable {
+                case `default`
+                case hover
+
+                public var propertyName: String {
+                    "ghost-color-primary" + (self == .default ? "" : "-hover")
+                }
+            }
+
+            public enum Secondary: String, CSSVariableNameRepresentable {
+                case `default`
+                case hover
+
+                public var propertyName: String {
+                    "ghost-color-secondary" + (self == .default ? "" : "-hover")
+                }
+            }
+        }
+
+        public enum Button {
+            public enum Disabled: String, CSSVariableNameRepresentable {
+                case background
+                case border
+                case text
+
+                public var propertyName: String {
+                    "button-disabled-" + rawValue
                 }
             }
         }
 
         public enum Selection: String, CSSVariableNameRepresentable {
-            case `default`
+            case primary
+            case secondary
+            case tertiary
+            case muted
+            case text
 
             public var propertyName: String {
-                switch self {
-                case .default: "selection-color"
-                }
+                "selection-color-" + rawValue
             }
         }
 

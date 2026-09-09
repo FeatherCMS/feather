@@ -58,6 +58,7 @@ public struct NewAdminBaseLayout<T: Leaf>: Branch {
             }
             Custom(".menu-container main") {
                 Margin(15.px)
+                MarginBottom(32.px)
                 Padding(15.px)
                 Background(.variable(TokenKey.Colors.Background.primary))
                 Border(1.px, .solid, .variable(TokenKey.Colors.Border.primary))

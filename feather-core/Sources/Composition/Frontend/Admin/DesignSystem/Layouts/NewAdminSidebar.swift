@@ -97,7 +97,6 @@ public struct NewAdminSidebar: Leaf {
                 Gap(8.px)
                 Padding(16.px)
                 Color(.variable(TokenKey.Colors.Text.primary))
-                Background(.variable(TokenKey.Colors.Background.primary))
                 TextDecoration(.none)
             }
             Custom(".submenu-toggle") {
@@ -126,7 +125,7 @@ public struct NewAdminSidebar: Leaf {
             Custom(".menu-icon") {
                 Width(16.px)
                 Height(16.px)
-                Color(.variable(TokenKey.Colors.Accent.primary))
+                Color(.variable(TokenKey.Colors.Accent.Primary.default))
                 UnsafeRawProperty(name: "fill", value: "none")
                 UnsafeRawProperty(name: "stroke", value: "currentColor")
                 UnsafeRawProperty(name: "stroke-width", value: "1.5")
@@ -137,13 +136,13 @@ public struct NewAdminSidebar: Leaf {
             Custom(".submenu-label::after") {
                 Content(.string("\"\""))
                 Position(.absolute)
-                Color(.variable(TokenKey.Colors.Accent.primary))
+                Color(.variable(TokenKey.Colors.Accent.Primary.default))
                 Right(16.px)
                 Top(50.percent)
                 Width(7.px)
                 Height(7.px)
-                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Accent.primary))
-                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Accent.primary))
+                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Accent.Primary.default))
+                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Accent.Primary.default))
                 UnsafeRawProperty(
                     name: "transform",
                     value: "translateY(-50%) rotate(-45deg)"
@@ -170,38 +169,44 @@ public struct NewAdminSidebar: Leaf {
             Custom(".submenu-toggle:checked + .submenu-label + .sub-menu") {
                 MaxHeight(100.vh)
             }
+            Custom(".menu .has-submenu > .sub-menu") {
+                Background(.variable(TokenKey.Colors.Background.tertiary))
+            }
             Custom(".menu .sub-menu .sub-menu li a") {
                 Padding(vertical: 12.px, horizontal: 16.px)
-                Background(.variable(TokenKey.Colors.Background.primary))
+                Background(.variable(TokenKey.Colors.Background.secondary))
             }
-            Custom(".menu .sub-menu .sub-menu li a .menu-icon") {
-                Color(.variable(TokenKey.Colors.Accent.secondary))
+            Custom(".menu .submenu-menu-icon") {
+                Color(.variable(TokenKey.Colors.Accent.Secondary.default))
             }
             Custom(".menu .sub-menu .sub-menu li a:hover") {
-                Background(.variable(TokenKey.Colors.Background.secondary))
+                Background(.variable(TokenKey.Colors.Selection.tertiary))
             }
-            Custom(".menu .sub-menu .sub-menu li a:hover .menu-icon") {
-                Color(.variable(TokenKey.Colors.Accent.tertiary))
+            Custom(".menu .submenu-items li > a:hover") {
+                Background(.variable(TokenKey.Colors.Selection.tertiary))
             }
             Custom(".submenu-label:hover, .menu li a:hover") {
-                Background(.variable(TokenKey.Colors.Background.secondary))
+                Background(.variable(TokenKey.Colors.Selection.secondary))
             }
             Custom(".submenu-label:hover .menu-icon, .menu li a:hover .menu-icon, .submenu-label:hover::after") {
-                Color(.variable(TokenKey.Colors.Accent.tertiary))
+                Color(.variable(TokenKey.Colors.Accent.Primary.hover))
             }
             Custom(".submenu-label.isCurrent, .menu li a.isCurrent") {
-                Color(.variable(TokenKey.Colors.Text.primary))
-                Background(.variable(TokenKey.Colors.Selection.default))
+                Color(.variable(TokenKey.Colors.Selection.text))
+                Background(.variable(TokenKey.Colors.Selection.primary))
             }
             Custom(".submenu-label.isCurrent .menu-icon, .menu li a.isCurrent .menu-icon, .submenu-label.isCurrent::after") {
-                Color(.variable(TokenKey.Colors.Accent.tertiary))
+                Color(.variable(TokenKey.Colors.Accent.Primary.hover))
             }
-            Custom(".menu .sub-menu .sub-menu li a.isCurrent") {
-                Color(.variable(TokenKey.Colors.Text.primary))
-                Background(.variable(TokenKey.Colors.Selection.default))
+            Custom(".menu .sub-menu .sub-menu li a.isCurrent, .menu .submenu-items li > a.isCurrent") {
+                Color(.variable(TokenKey.Colors.Selection.text))
+                Background(.variable(TokenKey.Colors.Selection.secondary))
             }
-            Custom(".submenu-label.isCurrent:hover") {
-                Background(.variable(TokenKey.Colors.Selection.default))
+            Custom(".submenu-label.isCurrent") {
+                Background(.variable(TokenKey.Colors.Selection.tertiary))
+            }
+            Custom(".menu .submenu-menu-icon:hover, .menu .submenu-items li > a:hover .submenu-menu-icon, .menu .submenu-items li > a.isCurrent .submenu-menu-icon") {
+                Color(.variable(TokenKey.Colors.Accent.Secondary.hover))
             }
             Id("menuToggle") {
                 Position(.absolute)
@@ -269,12 +274,6 @@ public struct NewAdminSidebar: Leaf {
                 Opacity(1)
                 Transform(.translateX(0.px))
             }
-            Custom(".menu .submenu-label::after") {
-                UnsafeRawProperty(
-                    name: "transition",
-                    value: "transform 0.16s ease-out"
-                )
-            }
             Custom("#menuToggle:checked ~ .menu") {
                 Width(60.px)
             }
@@ -306,7 +305,6 @@ public struct NewAdminSidebar: Leaf {
                 Padding(16.px)
             }
             Custom("#menuToggle:checked ~ .menu .submenu-label > a") {
-                Padding(0)
                 PointerEvents(.none)
             }
             Custom("#menuToggle:checked ~ .menu .has-submenu > .submenu-toggle:checked + .submenu-label + .sub-menu") {
@@ -380,7 +378,7 @@ public struct NewAdminSidebar: Leaf {
         Li {
             if let link = item.link {
                 A {
-                    Icon(svg: item.icon, class: "menu-icon").html()
+                    Icon(svg: item.icon, class: "menu-icon top-level-menu-icon").html()
                     Span(item.label)
                 }
                 .title(item.label)
@@ -388,7 +386,7 @@ public struct NewAdminSidebar: Leaf {
                 .if(item.isCurrent) { $0.class("isCurrent") }
             }
             else {
-                Icon(svg: item.icon, class: "menu-icon").html()
+                Icon(svg: item.icon, class: "menu-icon top-level-menu-icon").html()
                 Span(item.label)
             }
         }
@@ -400,7 +398,7 @@ public struct NewAdminSidebar: Leaf {
         if let link = item.link {
             return [
                 A {
-                    Icon(svg: item.icon, class: "menu-icon").html()
+                    Icon(svg: item.icon, class: "menu-icon top-level-menu-icon").html()
                     Span(item.label)
                 }
                 .title(item.label)
@@ -409,7 +407,7 @@ public struct NewAdminSidebar: Leaf {
         }
         else {
             return [
-                Icon(svg: item.icon, class: "menu-icon").html(),
+                Icon(svg: item.icon, class: "menu-icon top-level-menu-icon").html(),
                 Span(item.label)
             ]
         }
@@ -420,7 +418,7 @@ public struct NewAdminSidebar: Leaf {
     ) -> Li {
         Li {
             A {
-                Icon(svg: item.icon, class: "menu-icon").html()
+                Icon(svg: item.icon, class: "menu-icon submenu-menu-icon").html()
                 Span(item.label)
             }
             .title(item.label)
@@ -437,7 +435,7 @@ public struct NewAdminSidebar: Leaf {
                 renderSubmenuItem(item: item)
             }
         }
-        .class("sub-menu")
+        .class("sub-menu", "submenu-items")
     }
 
     private func renderSubmenuMenu(

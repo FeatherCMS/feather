@@ -31,6 +31,7 @@ public struct NewAdminBody<T: Renderable>: Branch where T.HTML: FlowContent {
             Id("footer") {
                 Padding(32.px)
                 TextAlign(.center)
+                BorderTop(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
             }
         }
     }

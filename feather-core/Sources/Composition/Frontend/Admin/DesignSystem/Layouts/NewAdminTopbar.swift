@@ -57,8 +57,8 @@ public struct NewAdminTopBar: Leaf {
                         LinearGradient(
                             direction: .angle(120.deg),
                             stops: [
-                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accent.primary.propertyName))"), 0.percent),
-                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accent.secondary.propertyName))"), 100.percent)
+                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accent.Primary.default.propertyName))"), 0.percent),
+                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accent.Secondary.default.propertyName))"), 100.percent)
                             ]
                         )
                     )
