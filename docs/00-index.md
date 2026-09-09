@@ -1,5 +1,17 @@
 # FATHOMS — Feather Architecture for Highly Organized Modular System
 
+## Documentation index
+
+Architecture and implementation guidance:
+
+- [Architecture overview](01-modules.md)
+- [Server layer](02-server.md)
+- [ECS deployment architecture](03-deployment.md)
+- [AWS infrastructure](04-infrastructure.md)
+- [CI/CD workflow](05-ci-cd.md)
+- [Operations runbook](06-operations.md)
+- [Legacy deployment migration](08-legacy-deployment.md)
+
 This document explains how a FATHOMS-based app is organized from an architectural point of view.
 
 Goal: help new developers understand the system quickly, without needing to read the whole codebase first.
