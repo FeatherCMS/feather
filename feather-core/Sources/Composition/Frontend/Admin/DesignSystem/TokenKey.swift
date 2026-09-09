@@ -40,6 +40,7 @@ public enum TokenKey {
 
         public enum Link: String, CSSVariableNameRepresentable {
             case `default`
+            case secondary
             case hover
             case visited
             case active
@@ -55,6 +56,23 @@ public enum TokenKey {
             }
         }
 
+        public enum Accent: String, CSSVariableNameRepresentable {
+            case primary
+            case secondary
+            case tertiary
+            case muted
+
+            public var propertyName: String {
+                let prefix = "accent-color"
+                switch self {
+                case .primary:
+                    return prefix
+                default:
+                    return prefix + "-" + rawValue
+                }
+            }
+        }
+
         public enum Selection: String, CSSVariableNameRepresentable {
             case `default`
 
@@ -62,6 +80,14 @@ public enum TokenKey {
                 switch self {
                 case .default: "selection-color"
                 }
+            }
+        }
+
+        public enum BoxShadow: String, CSSVariableNameRepresentable {
+            case `default`
+
+            public var propertyName: String {
+                "box-shadow-color"
             }
         }
     }

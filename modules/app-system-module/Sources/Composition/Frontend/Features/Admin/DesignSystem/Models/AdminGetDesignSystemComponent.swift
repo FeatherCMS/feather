@@ -1,10 +1,57 @@
 import FeatherAdmin
+import CSS
 import HTML
 import SGML
 import WebComponents
 import WebBuilders
 
 struct AdminGetDesignSystemComponent: Leaf {
+
+    func rules() -> [any Rule] {
+        Media {
+            Custom(".button-row .feather-button") {
+                Display(.inlineFlex)
+                AlignItems(.center)
+                JustifyContent(.center)
+                Border(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
+                Background(.variable(TokenKey.Colors.Background.primary))
+                Color(.variable(TokenKey.Colors.Text.primary))
+                FontWeight(.number(700))
+                BorderRadius(999.px)
+                Padding(vertical: 8.px, horizontal: 14.px)
+                Cursor(.pointer)
+                TextDecoration(.none)
+                UnsafeRawProperty(
+                    name: "transition",
+                    value: "background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease"
+                )
+            }
+            Custom(".button-row .feather-button--primary") {
+                Background(.variable(TokenKey.Colors.Link.default))
+                BorderColor(.variable(TokenKey.Colors.Link.default))
+                Color(.variable(TokenKey.Colors.Background.primary))
+            }
+            Custom(".button-row .feather-button--primary:hover") {
+                Background(.variable(TokenKey.Colors.Link.hover))
+                BorderColor(.variable(TokenKey.Colors.Link.hover))
+                Color(.variable(TokenKey.Colors.Background.primary))
+            }
+            Custom(".button-row .feather-button--secondary") {
+                Background(.variable(TokenKey.Colors.Background.primary))
+                BorderColor(.variable(TokenKey.Colors.Border.primary))
+                Color(.variable(TokenKey.Colors.Text.primary))
+            }
+            Custom(".button-row .feather-button--secondary:hover") {
+                Background(.variable(TokenKey.Colors.Background.secondary))
+                BorderColor(.variable(TokenKey.Colors.Border.secondary))
+                Color(.variable(TokenKey.Colors.Text.primary))
+            }
+            Custom(".button-row .feather-button--action") {
+                Padding(vertical: 7.px, horizontal: 10.px)
+                BorderRadius(6.px)
+            }
+        }
+    }
 
     func html() -> Section {
         Section {

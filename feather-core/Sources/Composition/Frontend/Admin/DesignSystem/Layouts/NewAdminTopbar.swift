@@ -24,7 +24,7 @@ public struct NewAdminTopBar: Leaf {
                 JustifyContent(.spaceBetween)
                 Padding(vertical: 8.px, horizontal: 16.px)
                 Background(.variable(TokenKey.Colors.Background.primary))
-                BorderBottom(0.5.px, .solid, .variable(TokenKey.Colors.Border.primary))
+                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
             }
             Class("top-bar-brand") {
                 Display(.flex)
@@ -46,7 +46,7 @@ public struct NewAdminTopBar: Leaf {
             }
             Custom(".top-bar-title h1") {
                 Margin(0.px)
-                FontSize(20.px)
+                FontSize(22.px)
                 WhiteSpace(.nowrap)
                 Overflow(.hidden)
                 TextOverflow(.ellipsis)
@@ -57,8 +57,8 @@ public struct NewAdminTopBar: Leaf {
                         LinearGradient(
                             direction: .angle(120.deg),
                             stops: [
-                                .init(CSSColor(stringLiteral: "var(--link-color)"), 0.percent),
-                                .init(CSSColor(stringLiteral: "var(--link-color-active)"), 100.percent)
+                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accent.primary.propertyName))"), 0.percent),
+                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accent.secondary.propertyName))"), 100.percent)
                             ]
                         )
                     )
@@ -130,9 +130,11 @@ public struct NewAdminTopBar: Leaf {
                 Background(.variable(TokenKey.Colors.Background.primary))
                 Border(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
                 BorderRadius(10.px)
-                UnsafeRawProperty(
-                    name: "box-shadow",
-                    value: "0 10px 24px rgba(15, 23, 42, 0.1)"
+                BoxShadow(
+                    0.px,
+                    10.px,
+                    blur: 24.px,
+                    color: CSSColor(stringLiteral: "var(--\(TokenKey.Colors.BoxShadow.default.propertyName))")
                 )
             }
             Custom(".account-menu li a") {

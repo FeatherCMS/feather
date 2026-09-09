@@ -126,7 +126,7 @@ public struct NewAdminSidebar: Leaf {
             Custom(".menu-icon") {
                 Width(16.px)
                 Height(16.px)
-                Color(.variable(TokenKey.Colors.Link.visited))
+                Color(.variable(TokenKey.Colors.Accent.primary))
                 UnsafeRawProperty(name: "fill", value: "none")
                 UnsafeRawProperty(name: "stroke", value: "currentColor")
                 UnsafeRawProperty(name: "stroke-width", value: "1.5")
@@ -137,13 +137,13 @@ public struct NewAdminSidebar: Leaf {
             Custom(".submenu-label::after") {
                 Content(.string("\"\""))
                 Position(.absolute)
-                Color(.variable(TokenKey.Colors.Link.visited))
+                Color(.variable(TokenKey.Colors.Accent.primary))
                 Right(16.px)
                 Top(50.percent)
                 Width(7.px)
                 Height(7.px)
-                BorderRight(2.px, .solid, .variable(TokenKey.Colors.Link.visited))
-                BorderBottom(2.px, .solid, .variable(TokenKey.Colors.Link.visited))
+                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Accent.primary))
+                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Accent.primary))
                 UnsafeRawProperty(
                     name: "transform",
                     value: "translateY(-50%) rotate(-45deg)"
@@ -175,26 +175,26 @@ public struct NewAdminSidebar: Leaf {
                 Background(.variable(TokenKey.Colors.Background.primary))
             }
             Custom(".menu .sub-menu .sub-menu li a .menu-icon") {
-                Color(.variable(TokenKey.Colors.Link.default))
+                Color(.variable(TokenKey.Colors.Accent.secondary))
             }
             Custom(".menu .sub-menu .sub-menu li a:hover") {
                 Background(.variable(TokenKey.Colors.Background.secondary))
             }
             Custom(".menu .sub-menu .sub-menu li a:hover .menu-icon") {
-                Color(.variable(TokenKey.Colors.Link.active))
+                Color(.variable(TokenKey.Colors.Accent.tertiary))
             }
             Custom(".submenu-label:hover, .menu li a:hover") {
                 Background(.variable(TokenKey.Colors.Background.secondary))
             }
             Custom(".submenu-label:hover .menu-icon, .menu li a:hover .menu-icon, .submenu-label:hover::after") {
-                Color(.variable(TokenKey.Colors.Link.active))
+                Color(.variable(TokenKey.Colors.Accent.tertiary))
             }
             Custom(".submenu-label.isCurrent, .menu li a.isCurrent") {
                 Color(.variable(TokenKey.Colors.Text.primary))
                 Background(.variable(TokenKey.Colors.Selection.default))
             }
             Custom(".submenu-label.isCurrent .menu-icon, .menu li a.isCurrent .menu-icon, .submenu-label.isCurrent::after") {
-                Color(.variable(TokenKey.Colors.Link.active))
+                Color(.variable(TokenKey.Colors.Accent.tertiary))
             }
             Custom(".menu .sub-menu .sub-menu li a.isCurrent") {
                 Color(.variable(TokenKey.Colors.Text.primary))
@@ -250,8 +250,8 @@ public struct NewAdminSidebar: Leaf {
                 Width(250.px)
                 MaxHeight(.none)
                 Overflow(.hidden)
-                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
-                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
+                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
+                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
 
             }
             Custom(".menu .group-label") {

@@ -60,14 +60,14 @@ public struct NewAdminBaseLayout<T: Leaf>: Branch {
                 Margin(15.px)
                 Padding(15.px)
                 Background(.variable(TokenKey.Colors.Background.primary))
-                Border(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
-                BorderRadius(5.px)
+                Border(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
+                BorderRadius(20.px)
                 BoxShadow(
                     0.px,
                     12.px,
                     blur: 26.px,
                     spread: 2.px,
-                    color: CSSColor(stringLiteral: "var(--background-color-tertiary)")
+                    color: CSSColor(stringLiteral: "var(--\(TokenKey.Colors.BoxShadow.default.propertyName))")
                 )
             }
         }
