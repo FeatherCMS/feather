@@ -59,6 +59,22 @@ public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
             Custom("ul.plain li, ul.inline li") {
                 ListStyleType(.none)
             }
+
+            Custom("a:link") {
+                Color(.variable(TokenKey.Colors.Link.default))
+            }
+            Custom("a:visited") {
+                Color(.variable(TokenKey.Colors.Link.visited))
+            }
+            Custom("a:hover") {
+                Color(.variable(TokenKey.Colors.Link.hover))
+            }
+            Custom("a:active") {
+                Color(.variable(TokenKey.Colors.Link.active))
+            }
+            Class("panel") {
+                Background(.variable(TokenKey.Colors.Background.secondary))
+            }
         }
     }
 

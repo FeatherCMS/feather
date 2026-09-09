@@ -46,7 +46,7 @@ struct HTMLDesignSystem: Component {
                 Variable(TokenKey.Colors.Accent.Primary.default, "#6536ab")
                 Variable(TokenKey.Colors.Accent.Primary.hover, "#733fc2")
 
-                Variable(TokenKey.Colors.Accent.Secondary.default, "#9333ea")
+                Variable(TokenKey.Colors.Accent.Secondary.default, "#ef5eb0")
                 Variable(TokenKey.Colors.Accent.Secondary.hover, "#7e22ce")
 
                 Variable(TokenKey.Colors.Destructive.default, "#b4232d")
@@ -78,7 +78,6 @@ struct HTMLDesignSystem: Component {
 
                 Variable(TokenKey.Colors.Background.primary, "#000")
                 Variable(TokenKey.Colors.Background.secondary, "#000")
-//                Variable(TokenKey.Colors.Background.secondary, "#141416")
                 Variable(TokenKey.Colors.Background.tertiary, "#1f1f22")
                 Variable(TokenKey.Colors.Background.muted, "#2a2a2e")
 
@@ -121,39 +120,12 @@ struct HTMLDesignSystem: Component {
             }
         }
 
-        Media(.minWidth(600.px)) {
-            Root {
-                Variable(TokenKey.Colors.Background.primary, "#fff")
-                Variable(TokenKey.Colors.Background.secondary, "#f8f8fa")
-                Variable(TokenKey.Colors.Background.tertiary, "#eef0f3")
-                Variable(TokenKey.Colors.Background.muted, "#f5f6f8")
-            }
-        }
-
         Media(.prefersColorScheme(.dark) && .minWidth(600.px)) {
             Root {
                 Variable(TokenKey.Colors.Background.primary, "#1c1c1e")
                 Variable(TokenKey.Colors.Background.secondary, "#1c1c1e")
                 Variable(TokenKey.Colors.Background.tertiary, "#303033")
                 Variable(TokenKey.Colors.Background.muted, "#3a3a3e")
-            }
-        }
-
-        Media { 
-            Custom("a:link") {
-                Color(.variable(TokenKey.Colors.Link.default))
-            }
-            Custom("a:visited") {
-                Color(.variable(TokenKey.Colors.Link.visited))
-            }
-            Custom("a:hover") {
-                Color(.variable(TokenKey.Colors.Link.hover))
-            }
-            Custom("a:active") {
-                Color(.variable(TokenKey.Colors.Link.active))
-            }
-            Class("panel") {
-                Background(.variable(TokenKey.Colors.Background.secondary))
             }
         }
     }
