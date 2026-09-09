@@ -71,6 +71,128 @@ public struct NewAdminSidebar: Leaf {
 
     public func rules() -> [any Rule] {
         Media {
+            Custom(".menu-groups, .menu-groups .sub-menu") {
+                Margin(0)
+                Padding(0)
+            }
+            Custom(".menu-group + .menu-group") {
+                BorderTop(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
+            }
+            Custom(".group-label") {
+                Display(.block)
+                TextTransform(.uppercase)
+                LetterSpacing(0.08.em)
+                FontSize(12.px)
+                FontWeight(.number(700))
+                Padding(16.px)
+                PaddingBottom(8.px)
+                Color(.variable(TokenKey.Colors.Text.primary))
+            }
+            Custom(".menu li") {
+                ListStyle(.none)
+            }
+            Custom(".menu li a") {
+                Display(.flex)
+                AlignItems(.center)
+                Gap(8.px)
+                Padding(16.px)
+                Color(.variable(TokenKey.Colors.Text.primary))
+                Background(.variable(TokenKey.Colors.Background.primary))
+                TextDecoration(.none)
+            }
+            Custom(".submenu-toggle") {
+                Position(.absolute)
+                Width(1.px)
+                Height(1.px)
+                Opacity(0)
+                PointerEvents(.none)
+            }
+            Custom(".submenu-label") {
+                Display(.flex)
+                AlignItems(.center)
+                Gap(8.px)
+                Position(.relative)
+                Padding(16.px)
+                Width(100.percent)
+                BoxSizing(.borderBox)
+                Color(.variable(TokenKey.Colors.Text.primary))
+                Background(.variable(TokenKey.Colors.Background.primary))
+                Cursor(.pointer)
+            }
+            Custom(".menu-icon") {
+                Width(16.px)
+                Height(16.px)
+                Color(.variable(TokenKey.Colors.Link.visited))
+                UnsafeRawProperty(name: "fill", value: "none")
+                UnsafeRawProperty(name: "stroke", value: "currentColor")
+                UnsafeRawProperty(name: "stroke-width", value: "1.5")
+                UnsafeRawProperty(name: "stroke-linecap", value: "round")
+                UnsafeRawProperty(name: "stroke-linejoin", value: "round")
+                FlexShrink(0)
+            }
+            Custom(".submenu-label::after") {
+                Content(.string("\"\""))
+                Position(.absolute)
+                Color(.variable(TokenKey.Colors.Link.visited))
+                Right(16.px)
+                Top(50.percent)
+                Width(7.px)
+                Height(7.px)
+                BorderRight(2.px, .solid, .variable(TokenKey.Colors.Link.visited))
+                BorderBottom(2.px, .solid, .variable(TokenKey.Colors.Link.visited))
+                UnsafeRawProperty(
+                    name: "transform",
+                    value: "translateY(-50%) rotate(-45deg)"
+                )
+                UnsafeRawProperty(
+                    name: "transition",
+                    value: "transform 0.25s ease-in-out"
+                )
+            }
+            Custom(".submenu-toggle + .submenu-label + .sub-menu") {
+                MaxHeight(0.px)
+                Overflow(.hidden)
+                UnsafeRawProperty(
+                    name: "transition",
+                    value: "max-height 0.25s ease-in-out"
+                )
+            }
+            Custom(".submenu-toggle:checked + .submenu-label::after") {
+                UnsafeRawProperty(
+                    name: "transform",
+                    value: "translateY(-50%) rotate(45deg)"
+                )
+            }
+            Custom(".submenu-toggle:checked + .submenu-label + .sub-menu") {
+                MaxHeight(100.vh)
+            }
+            Custom(".menu .sub-menu .sub-menu li a") {
+                Padding(vertical: 12.px, horizontal: 16.px)
+                Background(.variable(TokenKey.Colors.Background.primary))
+            }
+            Custom(".menu .sub-menu .sub-menu li a .menu-icon") {
+                Color(.variable(TokenKey.Colors.Link.default))
+            }
+            Custom(".submenu-label:hover, .menu li a:hover") {
+                Background(.variable(TokenKey.Colors.Background.secondary))
+            }
+            Custom(".submenu-label:hover .menu-icon, .menu li a:hover .menu-icon, .submenu-label:hover::after") {
+                Color(.variable(TokenKey.Colors.Link.active))
+            }
+            Custom(".submenu-label.isCurrent, .menu li a.isCurrent") {
+                Color(.variable(TokenKey.Colors.Text.primary))
+                Background(.variable(TokenKey.Colors.Selection.default))
+            }
+            Custom(".submenu-label.isCurrent .menu-icon, .menu li a.isCurrent .menu-icon, .submenu-label.isCurrent::after") {
+                Color(.variable(TokenKey.Colors.Link.active))
+            }
+            Custom(".menu .sub-menu .sub-menu li a.isCurrent") {
+                Color(.variable(TokenKey.Colors.Text.primary))
+                Background(.variable(TokenKey.Colors.Selection.default))
+            }
+            Custom(".submenu-label.isCurrent:hover") {
+                Background(.variable(TokenKey.Colors.Selection.default))
+            }
             Id("menuToggle") {
                 Position(.absolute)
                 Width(1.px)
