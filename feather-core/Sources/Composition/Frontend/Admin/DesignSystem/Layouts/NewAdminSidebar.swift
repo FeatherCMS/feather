@@ -119,6 +119,10 @@ public struct NewAdminSidebar: Leaf {
                 Background(.variable(TokenKey.Colors.Background.primary))
                 Cursor(.pointer)
             }
+            Custom(".submenu-label > a") {
+                Padding(0)
+                Width(100.percent)
+            }
             Custom(".menu-icon") {
                 Width(16.px)
                 Height(16.px)
@@ -146,7 +150,7 @@ public struct NewAdminSidebar: Leaf {
                 )
                 UnsafeRawProperty(
                     name: "transition",
-                    value: "transform 0.25s ease-in-out"
+                    value: "transform 0.16s ease-out"
                 )
             }
             Custom(".submenu-toggle + .submenu-label + .sub-menu") {
@@ -154,7 +158,7 @@ public struct NewAdminSidebar: Leaf {
                 Overflow(.hidden)
                 UnsafeRawProperty(
                     name: "transition",
-                    value: "max-height 0.25s ease-in-out"
+                    value: "max-height 0.18s ease-out"
                 )
             }
             Custom(".submenu-toggle:checked + .submenu-label::after") {
@@ -172,6 +176,12 @@ public struct NewAdminSidebar: Leaf {
             }
             Custom(".menu .sub-menu .sub-menu li a .menu-icon") {
                 Color(.variable(TokenKey.Colors.Link.default))
+            }
+            Custom(".menu .sub-menu .sub-menu li a:hover") {
+                Background(.variable(TokenKey.Colors.Background.secondary))
+            }
+            Custom(".menu .sub-menu .sub-menu li a:hover .menu-icon") {
+                Color(.variable(TokenKey.Colors.Link.active))
             }
             Custom(".submenu-label:hover, .menu li a:hover") {
                 Background(.variable(TokenKey.Colors.Background.secondary))
@@ -204,11 +214,11 @@ public struct NewAdminSidebar: Leaf {
                 Width(100.percent)
                 MaxHeight(0)
                 Overflow(.hidden)
-                UnsafeRawProperty(name: "transition", value: "max-height 0.32s ease 0s")
+                UnsafeRawProperty(name: "transition", value: "max-height 0.22s ease-out")
                 Background(.variable(TokenKey.Colors.Background.primary))
             }
             Custom("#menuToggle:checked ~ .menu") {
-                UnsafeRawProperty(name: "max-height", value: "80dvh")
+                MaxHeight(.none)
             }
             Class("menu-trigger-desktop") {
                 Display(.none)
@@ -217,7 +227,7 @@ public struct NewAdminSidebar: Leaf {
                 Display(.block)
                 UnsafeRawProperty(
                     name: "transition",
-                    value: "transform 0.32s ease 0s"
+                    value: "transform 0.22s ease-out"
                 )
                 UnsafeRawProperty(name: "transform-origin", value: "50% 50%")
             }
@@ -260,7 +270,7 @@ public struct NewAdminSidebar: Leaf {
             Custom(".menu .submenu-label::after") {
                 UnsafeRawProperty(
                     name: "transition",
-                    value: "transform 0.25s ease-in-out"
+                    value: "transform 0.16s ease-out"
                 )
             }
             Custom("#menuToggle:checked ~ .menu") {
@@ -281,14 +291,28 @@ public struct NewAdminSidebar: Leaf {
             Custom("#menuToggle:checked ~ .menu .submenu-label::after") {
                 Opacity(0)
             }
+            Custom("#menuToggle:checked ~ .menu .has-submenu > .sub-menu") {
+                Display(.block)
+                MaxHeight(0.px)
+                Position(.static)
+                Width(100.percent)
+                Overflow(.hidden)
+            }
             Custom("#menuToggle:checked ~ .menu .submenu-label, #menuToggle:checked ~ .menu li a") {
                 JustifyContent(.center)
                 Gap(0.px)
                 Padding(16.px)
             }
+            Custom("#menuToggle:checked ~ .menu .submenu-label > a") {
+                Padding(0)
+                PointerEvents(.none)
+            }
+            Custom("#menuToggle:checked ~ .menu .has-submenu > .submenu-toggle:checked + .submenu-label + .sub-menu") {
+                MaxHeight(.none)
+            }
             Class("menu-trigger-desktop") {
                 Display(.block)
-                UnsafeRawProperty(name: "transition", value: "transform 0.32s ease")
+                UnsafeRawProperty(name: "transition", value: "transform 0.22s ease-out")
             }
             Class("menu-trigger-mobile") {
                 Display(.none)

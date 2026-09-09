@@ -63,6 +63,17 @@ public struct NewAdminTopBar: Leaf {
             Class("menu-trigger-icon") {
                 Display(.block)
             }
+            Custom(".menu-trigger .sr-only") {
+                Position(.absolute)
+                Width(1.px)
+                Height(1.px)
+                Padding(0)
+                Margin((-1).px)
+                Overflow(.hidden)
+                UnsafeRawProperty(name: "clip", value: "rect(0, 0, 0, 0)")
+                WhiteSpace(.nowrap)
+                Border(0)
+            }
             Custom(".menu-trigger-mobile line") {
                 UnsafeRawProperty(
                     name: "transition",
@@ -93,6 +104,7 @@ public struct NewAdminTopBar: Leaf {
                 Span("Menu").class("sr-only")
             }
             .for("menuToggle")
+            .ariaLabel("Toggle menu")
             .class("menu-trigger")
         }
         .class("top-bar-brand")

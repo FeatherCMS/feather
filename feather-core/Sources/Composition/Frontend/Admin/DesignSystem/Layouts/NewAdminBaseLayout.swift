@@ -50,9 +50,14 @@ public struct NewAdminBaseLayout<T: Leaf>: Branch {
         Media {
             Class("menu-container") {
                 Display(.grid)
-                GridTemplateColumns(.tracks([.auto, .fraction(1.fr)]))
+                GridTemplateColumns(.tracks([.fraction(1.fr)]))
                 Background(.variable(TokenKey.Colors.Background.secondary))
                 MinHeight(100.vh)
+            }
+        }
+        Media(.minWidth("600px")) {
+            Class("menu-container") {
+                GridTemplateColumns(.tracks([.auto, .fraction(1.fr)]))
             }
         }
     }
