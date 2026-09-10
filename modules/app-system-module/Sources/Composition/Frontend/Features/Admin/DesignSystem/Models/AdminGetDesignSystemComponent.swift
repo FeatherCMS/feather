@@ -5,7 +5,25 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AdminGetDesignSystemComponent: Leaf {
+struct AdminGetDesignSystemComponent: Branch {
+
+    let breadcrumb: NewAdminBreadcrumb
+
+    init() {
+        self.breadcrumb = .init(
+            links: [
+                .init(label: "Admin", link: "/admin/"),
+                .init(label: "Lorem ipsum", link: "/admin/"),
+                .init(label: "Design System", link: "/admin/design-system/"),
+                .init(label: "Components", link: "#components"),
+                .init(label: "Breadcrumb", link: "#breadcrumb")
+            ]
+        )
+    }
+
+    var children: [any Component] {
+        breadcrumb
+    }
 
     func rules() -> [any Rule] {
         Media {
@@ -116,8 +134,13 @@ struct AdminGetDesignSystemComponent: Leaf {
         }
     }
 
+
+
+
     func html() -> Section {
         Section {
+            breadcrumb.html()
+
             H1("Design System")
             P("Available design-system materials, colors, and components.")
 

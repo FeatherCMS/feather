@@ -46,7 +46,7 @@ public struct NewAdminTopBar: Leaf {
             }
             Custom(".top-bar-title h1") {
                 Margin(0.px)
-                FontSize(22.px)
+                FontSize(24.px)
                 WhiteSpace(.nowrap)
                 Overflow(.hidden)
                 TextOverflow(.ellipsis)

@@ -13,7 +13,7 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct NewAdminBaseLayout<T: Leaf>: Branch {
+public struct NewAdminBaseLayout<T: Renderable>: Branch {
 
     public let content: T
 
