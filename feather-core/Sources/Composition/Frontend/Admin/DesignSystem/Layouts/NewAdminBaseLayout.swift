@@ -53,22 +53,22 @@ public struct NewAdminBaseLayout<T: Leaf>: Branch {
                 GridTemplateColumns(.tracks([.fraction(1.fr)]))
                 AlignItems(.flexStart)
                 AlignContent(.flexStart)
-                Background(.variable(TokenKey.Colors.Background.secondary))
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
                 MinHeight(100.vh)
             }
             Custom(".menu-container main") {
                 Margin(15.px)
                 MarginBottom(32.px)
                 Padding(15.px)
-                Background(.variable(TokenKey.Colors.Background.primary))
-                Border(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
                 BorderRadius(20.px)
                 BoxShadow(
                     0.px,
                     12.px,
                     blur: 26.px,
                     spread: 2.px,
-                    color: CSSColor(stringLiteral: "var(--\(TokenKey.Colors.BoxShadow.default.propertyName))")
+                    color: CSSColor(stringLiteral: "var(--\(TokenKey.Colors.BoxShadow.tint.propertyName))")
                 )
             }
         }

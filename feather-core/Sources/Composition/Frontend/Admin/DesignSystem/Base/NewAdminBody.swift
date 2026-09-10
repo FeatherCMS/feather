@@ -24,14 +24,14 @@ public struct NewAdminBody<T: Renderable>: Branch where T.HTML: FlowContent {
     public func rules() -> [any Rule] {
         Media {
             Custom("body") {
-                Background(.variable(TokenKey.Colors.Background.primary))
-                Color(.variable(TokenKey.Colors.Text.primary))
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 FontFamily(.family("'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif"))
             }
             Id("footer") {
                 Padding(32.px)
                 TextAlign(.center)
-                BorderTop(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
+                BorderTop(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
             }
         }
     }

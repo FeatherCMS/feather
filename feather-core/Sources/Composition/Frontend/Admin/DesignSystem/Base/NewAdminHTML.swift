@@ -73,7 +73,7 @@ public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
                 Color(.variable(TokenKey.Colors.Link.active))
             }
             Class("panel") {
-                Background(.variable(TokenKey.Colors.Background.secondary))
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
         }
     }

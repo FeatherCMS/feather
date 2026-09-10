@@ -72,7 +72,7 @@ public struct NewAdminSidebar: Leaf {
     public func rules() -> [any Rule] {
         Media {
             Custom(".group + .group") {
-                BorderTop(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
+                BorderTop(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
             }
             Custom(".group-label") {
                 Display(.block)
@@ -82,7 +82,7 @@ public struct NewAdminSidebar: Leaf {
                 FontWeight(.number(700))
                 Padding(16.px)
                 PaddingBottom(8.px)
-                Color(.variable(TokenKey.Colors.Text.primary))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
             }
             Custom(".menu li a") {
                 Display(.flex)
@@ -125,8 +125,8 @@ public struct NewAdminSidebar: Leaf {
                 Top(50.percent)
                 Width(7.px)
                 Height(7.px)
-                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Accent.Primary.default))
-                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Accent.Primary.default))
+                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Accents.Primary.border))
+                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Accents.Primary.border))
                 UnsafeRawProperty(
                     name: "transform",
                     value: "translateY(-50%) rotate(-45deg)"
@@ -165,7 +165,7 @@ public struct NewAdminSidebar: Leaf {
                 MaxHeight(0)
                 Overflow(.hidden)
                 UnsafeRawProperty(name: "transition", value: "max-height 0.22s ease-out")
-                Background(.variable(TokenKey.Colors.Background.primary))
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
             }
             Custom("#menuToggle:checked ~ .menu") {
                 MaxHeight(.none)
@@ -200,8 +200,8 @@ public struct NewAdminSidebar: Leaf {
                 Width(250.px)
                 MaxHeight(.none)
                 Overflow(.hidden)
-                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
-                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
+                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
             }
             Custom(".menu .group-label") {
                 Overflow(.hidden)
@@ -264,23 +264,23 @@ public struct NewAdminSidebar: Leaf {
         }
         Media {
             Custom(".menu a") {
-                Color(.variable(TokenKey.Colors.Text.primary))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
             }
             Custom(".menu svg") {
-                Color(.variable(TokenKey.Colors.Accent.Primary.default))
+                Color(.variable(TokenKey.Colors.Accents.Primary.tint))
             }
             Custom(".menu .sub-menu svg") {
-                Color(.variable(TokenKey.Colors.Accent.Secondary.default))
+                Color(.variable(TokenKey.Colors.Accents.Secondary.tint))
             }
             Custom(".menu .sub-menu") {
-                Background(.variable(TokenKey.Colors.Selection.primary))
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
             Custom(".isCurrent") {
-                Color(.variable(TokenKey.Colors.Selection.text))
-                Background(.variable(TokenKey.Colors.Selection.secondary))
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
             }
             Custom(".menu a:hover, .menu .submenu-label:hover") {
-                Background(.variable(TokenKey.Colors.Selection.tertiary))
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
             }
         }
     }

@@ -23,8 +23,8 @@ public struct NewAdminTopBar: Leaf {
                 AlignItems(.center)
                 JustifyContent(.spaceBetween)
                 Padding(vertical: 8.px, horizontal: 16.px)
-                Background(.variable(TokenKey.Colors.Background.primary))
-                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Border.primary))
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
             }
             Class("top-bar-brand") {
                 Display(.flex)
@@ -57,8 +57,8 @@ public struct NewAdminTopBar: Leaf {
                         LinearGradient(
                             direction: .angle(120.deg),
                             stops: [
-                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accent.Primary.default.propertyName))"), 0.percent),
-                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accent.Secondary.default.propertyName))"), 100.percent)
+                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accents.Primary.tint.propertyName))"), 0.percent),
+                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accents.Secondary.tint.propertyName))"), 100.percent)
                             ]
                         )
                     )
@@ -111,7 +111,7 @@ public struct NewAdminTopBar: Leaf {
                 Width(28.px)
                 Height(28.px)
                 BorderRadius(999.px)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
+                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
                 BoxSizing(.borderBox)
             }
             Custom(".account-trigger .account-profile-icon") {
@@ -127,27 +127,27 @@ public struct NewAdminTopBar: Leaf {
                 Margin(0)
                 Display(.none)
                 ZIndex(.number(20))
-                Background(.variable(TokenKey.Colors.Background.primary))
-                Border(1.px, .solid, .variable(TokenKey.Colors.Border.secondary))
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
                 BorderRadius(10.px)
                 BoxShadow(
                     0.px,
                     10.px,
                     blur: 24.px,
-                    color: CSSColor(stringLiteral: "var(--\(TokenKey.Colors.BoxShadow.default.propertyName))")
+                    color: CSSColor(stringLiteral: "var(--\(TokenKey.Colors.BoxShadow.tint.propertyName))")
                 )
             }
             Custom(".account-menu li a") {
                 Display(.block)
                 Padding(vertical: 8.px, horizontal: 12.px)
-                Color(.variable(TokenKey.Colors.Text.primary))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 TextDecoration(.none)
             }
             Custom("#accountToggle:checked + .account-trigger + .account-menu") {
                 Display(.block)
             }
             Custom(".account-menu li a:hover, .account-menu li a:focus-visible") {
-                Background(.variable(TokenKey.Colors.Background.secondary))
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
             Custom(".menu-trigger-mobile line") {
                 UnsafeRawProperty(
