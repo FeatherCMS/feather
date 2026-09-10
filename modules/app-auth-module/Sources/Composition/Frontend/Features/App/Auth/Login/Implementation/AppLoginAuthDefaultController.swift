@@ -73,10 +73,18 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 sameSite: .lax
             )
 
+            let redirectPath = request.queryString("redirect")
+                .flatMap { path in
+                    guard path.hasPrefix("/"), !path.hasPrefix("//") else {
+                        return nil
+                    }
+                    return path
+                } ?? "/"
+
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: "/",
+                    .location: redirectPath,
                     .setCookie: cookie.description,
                 ]
             )
