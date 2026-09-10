@@ -28,11 +28,13 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
+        let redirectPath = request.queryString("redirect") ?? "/"
         return presenter.renderPage(
             form: presenter.formState(
                 email: "mail.tib@gmail.com",
                 password: "root",
-                isPersistent: true
+                isPersistent: true,
+                redirectPath: redirectPath
             ),
             message: nil
         )
@@ -73,10 +75,18 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 sameSite: .lax
             )
 
+            let redirectPath = request.queryString("redirect")
+                .flatMap { path in
+                    guard path.hasPrefix("/"), !path.hasPrefix("//") else {
+                        return nil
+                    }
+                    return path
+                } ?? "/"
+
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: "/",
+                    .location: redirectPath,
                     .setCookie: cookie.description,
                 ]
             )
@@ -90,7 +100,8 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
             var state = presenter.formState(
                 email: lastPayload?.email ?? "mail.tib@gmail.com",
                 password: lastPayload?.password ?? "root",
-                isPersistent: lastPayload?.isPersistent.value ?? true
+                isPersistent: lastPayload?.isPersistent.value ?? true,
+                redirectPath: request.queryString("redirect") ?? "/"
             )
             state.apply(errors: errors)
 
@@ -109,7 +120,8 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 state: presenter.formState(
                     email: lastPayload?.email ?? "mail.tib@gmail.com",
                     password: lastPayload?.password ?? "root",
-                    isPersistent: lastPayload?.isPersistent.value ?? true
+                    isPersistent: lastPayload?.isPersistent.value ?? true,
+                    redirectPath: request.queryString("redirect") ?? "/"
                 ),
                 message: error.displayMessage
             )
