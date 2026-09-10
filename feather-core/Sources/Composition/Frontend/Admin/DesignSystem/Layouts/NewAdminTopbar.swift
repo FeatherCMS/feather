@@ -22,7 +22,7 @@ public struct NewAdminTopBar: Leaf {
                 Display(.flex)
                 AlignItems(.center)
                 JustifyContent(.spaceBetween)
-                Padding(vertical: 10.px, horizontal: 16.px)
+                Padding(vertical: 12.px, horizontal: 16.px)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
             }

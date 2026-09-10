@@ -96,7 +96,7 @@ struct HTMLDesignSystem: Component {
                 Variable(TokenKey.Colors.Materials.Secondary.hover, "#28282b")
 
                 Variable(TokenKey.Colors.Materials.Tertiary.tint, "#28282b")
-                Variable(TokenKey.Colors.Materials.Tertiary.text, "#cbc8d0")
+                Variable(TokenKey.Colors.Materials.Tertiary.text, "#e0dde5")
                 Variable(TokenKey.Colors.Materials.Tertiary.border, "#38383e")
                 Variable(TokenKey.Colors.Materials.Tertiary.hover, "#2f2f34")
 
