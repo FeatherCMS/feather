@@ -48,6 +48,7 @@ struct AdminGetDesignSystemComponent: Leaf {
                 Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                FontWeight(.number(700))
                 BorderRadius(999.px)
                 Padding(vertical: 10.px, horizontal: 16.px)
                 Cursor(.pointer)
@@ -109,6 +110,8 @@ struct AdminGetDesignSystemComponent: Leaf {
             Custom(".button-row .feather-button--action") {
                 BorderRadius(6.px)
                 Padding(vertical: 7.px, horizontal: 10.px)
+                FontSize(0.875.rem)
+                FontWeight(.normal)
             }
         }
     }
