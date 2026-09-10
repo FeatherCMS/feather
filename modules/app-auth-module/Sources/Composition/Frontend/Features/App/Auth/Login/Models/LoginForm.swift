@@ -28,6 +28,7 @@ struct LoginForm: Component, FlowContent {
         var email: EmailField.State
         var password: PasswordField.State
         var isPersistent: CheckboxField.State
+        var redirectPath: String
 
         mutating func apply(
             errors: [String: String]
@@ -46,6 +47,10 @@ struct LoginForm: Component, FlowContent {
 
     func content() -> some BasicTag {
         Form {
+            Input()
+                .type(.hidden)
+                .name("redirect")
+                .value(state.redirectPath)
             Section {
                 EmailField(state: state.email)
             }
