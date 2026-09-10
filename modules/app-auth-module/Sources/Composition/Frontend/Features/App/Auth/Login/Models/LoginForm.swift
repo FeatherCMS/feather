@@ -76,7 +76,11 @@ struct LoginForm: Component, FlowContent {
         }
         .encType(.urlencoded)
         .method(.post)
-        .action("/login/")
+        .action(
+            state.redirectPath == "/"
+                ? "/login/"
+                : "/login/?redirect=\(state.redirectPath.queryEncoded())"
+        )
         .class("cms-form")
         .class("login-form")
     }
