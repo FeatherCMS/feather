@@ -22,7 +22,7 @@ public struct NewAdminTopBar: Leaf {
                 Display(.flex)
                 AlignItems(.center)
                 JustifyContent(.spaceBetween)
-                Padding(vertical: 8.px, horizontal: 16.px)
+                Padding(vertical: 10.px, horizontal: 16.px)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
             }
@@ -106,7 +106,7 @@ public struct NewAdminTopBar: Leaf {
                 JustifyContent(.center)
                 Padding(2.px)
             }
-            Custom(".account-trigger img, .account-trigger .account-profile-icon") {
+            Custom(".account-trigger img") {
                 Display(.block)
                 Width(28.px)
                 Height(28.px)
@@ -114,8 +114,12 @@ public struct NewAdminTopBar: Leaf {
                 Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
                 BoxSizing(.borderBox)
             }
-            Custom(".account-trigger .account-profile-icon") {
-                Color(.variable(TokenKey.Colors.Link.visited))
+            Custom(".menu-trigger-icon, .account-trigger .account-profile-icon") {
+                Display(.block)
+                Width(24.px)
+                Height(24.px)
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                UnsafeRawProperty(name: "stroke-width", value: "2")
             }
             Class("account-menu") {
                 Position(.absolute)

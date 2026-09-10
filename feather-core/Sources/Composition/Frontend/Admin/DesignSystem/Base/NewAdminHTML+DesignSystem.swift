@@ -86,17 +86,17 @@ struct HTMLDesignSystem: Component {
                 Variable(TokenKey.Colors.Link.active, "#ff86aa")
 
                 Variable(TokenKey.Colors.Materials.Primary.tint, "#19191b")
-                Variable(TokenKey.Colors.Materials.Primary.text, "#d6d1dc")
+                Variable(TokenKey.Colors.Materials.Primary.text, "#f7fbff")
                 Variable(TokenKey.Colors.Materials.Primary.border, "#2b2b2e")
                 Variable(TokenKey.Colors.Materials.Primary.hover, "#202023")
 
                 Variable(TokenKey.Colors.Materials.Secondary.tint, "#202023")
-                Variable(TokenKey.Colors.Materials.Secondary.text, "#f5f0f7")
+                Variable(TokenKey.Colors.Materials.Secondary.text, "#e9edf2")
                 Variable(TokenKey.Colors.Materials.Secondary.border, "#303036")
                 Variable(TokenKey.Colors.Materials.Secondary.hover, "#28282b")
 
                 Variable(TokenKey.Colors.Materials.Tertiary.tint, "#28282b")
-                Variable(TokenKey.Colors.Materials.Tertiary.text, "#c4c1c9")
+                Variable(TokenKey.Colors.Materials.Tertiary.text, "#cbc8d0")
                 Variable(TokenKey.Colors.Materials.Tertiary.border, "#38383e")
                 Variable(TokenKey.Colors.Materials.Tertiary.hover, "#2f2f34")
 
