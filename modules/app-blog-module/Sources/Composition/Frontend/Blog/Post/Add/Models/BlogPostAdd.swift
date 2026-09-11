@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogPostAdd: Leaf {
+struct BlogPostAdd: Component {
 
     struct State {
         let form: BlogPostForm.State
@@ -20,9 +20,9 @@ struct BlogPostAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add post")
             BlogPostForm(

@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminNewsletterCampaignTabs: Leaf {
+struct AdminNewsletterCampaignTabs: Component {
     enum Tab: String {
         case details
         case subscribers
@@ -17,8 +17,8 @@ struct AdminNewsletterCampaignTabs: Leaf {
     let campaignId: String
     let active: Tab
 
-    func html() -> Div {
-        AdminPillTabs(links: [
+    func html(context: inout RenderContext) -> Div {
+        context.render(AdminPillTabs(links: [
             .init(
                 label: "Details",
                 href: "/admin/newsletters/\(campaignId)/details/",
@@ -34,6 +34,6 @@ struct AdminNewsletterCampaignTabs: Leaf {
                 href: "/admin/newsletters/\(campaignId)/issues/",
                 isCurrent: active == .issues
             ),
-        ]).html()
+        ]))
     }
 }

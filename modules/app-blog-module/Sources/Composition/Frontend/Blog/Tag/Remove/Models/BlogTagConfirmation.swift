@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogTagConfirmation: Leaf {
+struct BlogTagConfirmation: Component {
 
     struct State {
         let id: String
@@ -21,8 +21,8 @@ struct BlogTagConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove tag",
@@ -35,6 +35,6 @@ struct BlogTagConfirmation: Leaf {
                 actionURL: "/admin/blog/tags/\(state.id)/remove/",
                 cancelURL: "/admin/blog/tags/"
             )
-        ).renderHTML()
+        ))
     }
 }

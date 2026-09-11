@@ -108,7 +108,7 @@ let package = Package(
             name: "AccountDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                
+
                 .target(name: "AccountContracts"),
             ],
             path: "Sources/Layers/Domain",
@@ -121,7 +121,7 @@ let package = Package(
 
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "UserApplication", package: "app-user-module"),
-                
+
                 .target(name: "AccountDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -132,7 +132,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
 
-                .target(name: "AccountApplication"),            
+                .target(name: "AccountApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: defaultSwiftSettings
@@ -157,7 +157,7 @@ let package = Package(
             name: "AccountSharedOpenAPIGenerator",
             dependencies: [
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
-                
+
                 .product(name: "UserSharedOpenAPIGenerator", package: "app-user-module"),
             ],
             path: "Sources/Generators/Shared",
@@ -179,7 +179,7 @@ let package = Package(
             dependencies: [
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-                
+
                 .target(name: "AccountSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/App",
@@ -189,14 +189,14 @@ let package = Package(
             name: "AccountBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
-                
+
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
 
                 .target(name: "AccountInfrastructure"),
                 .target(name: "AccountAdminAPI"),
-                .target(name: "AccountAppAPI"),                
+                .target(name: "AccountAppAPI"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings
@@ -209,10 +209,10 @@ let package = Package(
                 .product(name: "SystemContracts", package: "app-system-module"),
                 .product(name: "UserContracts", package: "app-user-module"),
                 .product(name: "UserFrontend", package: "app-user-module"),
-                
+
                 .target(name: "AccountContracts"),
                 .target(name: "AccountAdminAPI"),
-                .target(name: "AccountAppAPI"),    
+                .target(name: "AccountAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings

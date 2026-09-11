@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogTagAdd: Leaf {
+struct BlogTagAdd: Component {
 
     struct State {
         let form: BlogTagForm.State
@@ -20,9 +20,9 @@ struct BlogTagAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add tag")
             BlogTagForm(

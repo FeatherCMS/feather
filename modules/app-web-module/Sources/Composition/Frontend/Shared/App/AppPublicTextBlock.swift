@@ -5,10 +5,10 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AppPublicTextBlock: Leaf {
+struct AppPublicTextBlock: Component {
     let text: String
 
-    func html() -> Div {
+    func html(context: inout RenderContext) -> Div {
         Div {
             text
         }

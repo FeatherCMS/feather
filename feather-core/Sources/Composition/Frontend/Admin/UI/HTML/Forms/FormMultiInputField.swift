@@ -8,7 +8,7 @@ import WebBuilders
 
 private typealias HTMLButton = HTML.Button
 
-public struct FormMultiInputField: Leaf {
+public struct FormMultiInputField: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -143,7 +143,7 @@ public struct FormMultiInputField: Leaf {
         }
     }
 
-    public func html() -> Section {
+    public func html(context: inout RenderContext) -> Section {
         Section {
             Label {
                 fieldLabel()

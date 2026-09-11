@@ -11,7 +11,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminHead: Leaf {
+public struct NewAdminHead: Component {
 
     let title: String
     let stylesheet: String
@@ -27,11 +27,11 @@ public struct NewAdminHead: Leaf {
         self.scripts = scripts
     }
 
-    public func html() -> Head {
+    public func html(context: inout RenderContext) -> Head {
         Head {
             Meta().charset("utf-8")
             Meta().name(.viewport).content("width=device-width, initial-scale=1")
-            
+
             Title(title)
 
             Link(rel: .stylesheet).href("/admin/style.css")

@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthCredentialConfirmation: Leaf {
+struct AuthCredentialConfirmation: Component {
     struct State {
         let id: String
         let identityId: String
@@ -26,8 +26,8 @@ struct AuthCredentialConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove user credential",
@@ -38,6 +38,6 @@ struct AuthCredentialConfirmation: Leaf {
                 actionURL: "/admin/auth/credentials/\(state.id)/remove/",
                 cancelURL: "/admin/auth/credentials/"
             )
-        ).html()
+        ))
     }
 }

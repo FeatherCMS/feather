@@ -12,19 +12,20 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct NewAdminTopBar: Leaf {
+public struct NewAdminTopBar: Component {
 
-    private func renderMenuTrigger() -> Div {
+    private func renderMenuTrigger(context: inout RenderContext) -> Div {
+
         Div {
             Label {
-                Icon(
+                context.render(Icon(
                     svg: FeatherIcons.sidebar(),
                     class: "menu-trigger-icon menu-trigger-desktop"
-                ).html()
-                Icon(
+                ))
+                context.render(Icon(
                     svg: FeatherIcons.menu(),
                     class: "menu-trigger-icon menu-trigger-mobile"
-                ).html()
+                ))
                 Span("Menu").class("sr-only")
             }
             .for("menuToggle")
@@ -48,17 +49,18 @@ public struct NewAdminTopBar: Leaf {
         .class("top-bar-title")
     }
 
-    private func renderAccountActions() -> Div {
+    private func renderAccountActions(context: inout RenderContext) -> Div {
+
         return Div {
             Input()
                 .type(.checkbox)
                 .id("accountToggle")
                 .name("accountToggle")
             Label {
-                Icon(
+                context.render(Icon(
                     svg: FeatherIcons.user(),
                     class: "account-profile-icon"
-                ).html()
+                ))
                 Span("My profile")
                     .class("sr-only")
             }
@@ -76,11 +78,11 @@ public struct NewAdminTopBar: Leaf {
         .class("top-bar-actions")
     }
 
-    public func html() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         Div {
-            renderMenuTrigger()
+            renderMenuTrigger(context: &context)
             renderTitle()
-            renderAccountActions()
+            renderAccountActions(context: &context)
         }
         .class("top-bar")
     }

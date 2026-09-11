@@ -7,7 +7,7 @@ import UserAdminAPI
 import WebComponents
 import WebBuilders
 
-struct UserRoleTable: Leaf {
+struct UserRoleTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -28,14 +28,14 @@ struct UserRoleTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("User roles")
 
                 if state.isAdded { P("User role added successfully.") }
@@ -44,23 +44,23 @@ struct UserRoleTable: Leaf {
                 if state.canAdd {
                     Div {
                         if state.canAdd {
-                            AdminNavigationButton(
+                            context.render(AdminNavigationButton(
                                 "Add role",
                                 href: "/admin/user/roles/add/"
-                            ).html()
+                            ))
                         }
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/user/roles/",
                         placeholder: "Quick search user roles",
                         search: state.search
                     )
-                ).html()
+                ))
 
                 if state.roles.isEmpty {
                     let totalPages = max(
@@ -90,7 +90,7 @@ struct UserRoleTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "user:roles:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/user/roles/remove/",
                             page: state.page,
@@ -98,12 +98,12 @@ struct UserRoleTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Name")
                                         Th("Actions")
@@ -113,16 +113,16 @@ struct UserRoleTable: Leaf {
                                     for role in state.roles {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(id: role.id)
-                                                ).html()
+                                                ))
                                             }
                                             Td(role.name ?? "")
                                                 .data(
                                                     "label",
                                                     "Name"
                                                 )
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -154,16 +154,16 @@ struct UserRoleTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/user/roles/",
                             page: state.page,
@@ -171,7 +171,7 @@ struct UserRoleTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).html()
+                    ))
                 }
             }
         }

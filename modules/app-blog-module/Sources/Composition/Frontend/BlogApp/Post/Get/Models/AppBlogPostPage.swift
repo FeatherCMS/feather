@@ -11,10 +11,10 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct AppBlogPostPage: Leaf {
+struct AppBlogPostPage: Component {
     let state: AppGetBlogPostModel
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Main {
             AppPublicStyleAnchor()
             Div {

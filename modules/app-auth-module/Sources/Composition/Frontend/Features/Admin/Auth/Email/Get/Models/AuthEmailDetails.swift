@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthEmailDetails: Leaf {
+struct AuthEmailDetails: Component {
     struct State {
         let link: AuthEmailDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -24,25 +24,25 @@ struct AuthEmailDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("User email details")
-            AdminDetailsField(label: "ID", value: state.link.id).html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.link.id))
+            context.render(AdminDetailsField(
                 label: "Identity ID",
                 value: state.link.identityId
-            ).html()
+            ))
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit email",
                     href: "/admin/auth/emails/\(state.link.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove email",
                     href: "/admin/auth/emails/\(state.link.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

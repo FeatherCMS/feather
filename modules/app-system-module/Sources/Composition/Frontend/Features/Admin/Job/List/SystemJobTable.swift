@@ -5,7 +5,7 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemJobTable: Leaf {
+struct SystemJobTable: Component {
     struct State {
         let jobs: [Components.Schemas.SystemJobSchema]
         let page: Int
@@ -18,17 +18,17 @@ struct SystemJobTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Worker jobs")
-            ListTableSearchForm(
+            context.render(ListTableSearchForm(
                 state: .init(
                     action: "/admin/system/jobs/",
                     placeholder: "Quick search worker jobs",
                     search: state.search
                 )
-            ).html()
+            ))
 
             if state.jobs.isEmpty {
                 let totalPages = max(
@@ -55,7 +55,7 @@ struct SystemJobTable: Leaf {
                 }
             }
             else {
-                ListTableShell(
+                context.render(ListTableShell(
                     table: Table {
                         Thead {
                             Tr {
@@ -77,7 +77,7 @@ struct SystemJobTable: Leaf {
                                     .data("label", "Parameters")
                                     Td(statusLabel(job.status))
                                         .data("label", "Status")
-                                    ListTableRowActions(
+                                    context.render(ListTableRowActions(
                                         state: .init(
                                             label: "Actions",
                                             actions: [
@@ -92,14 +92,14 @@ struct SystemJobTable: Leaf {
                                             ],
                                             permissions: state.permissions
                                         )
-                                    ).html()
+                                    ))
                                 }
                             }
                         }
                     }
                     .class("cms-table", "action-table")
-                ).html()
-                ListTablePagination(
+                ))
+                context.render(ListTablePagination(
                     state: .init(
                         path: "/admin/system/jobs/",
                         page: state.page,
@@ -107,7 +107,7 @@ struct SystemJobTable: Leaf {
                         total: state.total,
                         search: state.search
                     )
-                ).html()
+                ))
             }
         }
         .class("cms-section")

@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct NewsletterTable: Leaf {
+struct NewsletterTable: Component {
     struct State {
         let isAdded: Bool
         let isEdited: Bool
@@ -21,29 +21,29 @@ struct NewsletterTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1(state.isPicker ? "Select newsletter campaign" : "Campaigns")
             if state.isAdded { P("Campaign added successfully.") }
             if state.isEdited { P("Campaign edited successfully.") }
             if state.isRemoved { P("Campaign removed successfully.") }
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Add campaign",
                     href: "/admin/newsletters/add/"
-                ).html()
+                ))
             }
             .class("button-row")
             Br()
             Br()
-            ListTableSearchForm(
+            context.render(ListTableSearchForm(
                 state: .init(
                     action: "/admin/newsletters/",
                     placeholder: "Quick search campaigns",
                     search: state.search
                 )
-            ).html()
+            ))
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -55,7 +55,7 @@ struct NewsletterTable: Leaf {
                 let canRemove = state.permissions.contains(
                     "newsletter:campaigns:delete"
                 )
-                ListTableRemoveForm(
+                context.render(ListTableRemoveForm(
                     state: .init(
                         action: "/admin/newsletters/remove/",
                         page: 1,
@@ -63,12 +63,12 @@ struct NewsletterTable: Leaf {
                         canRemove: canRemove,
                         buttonTitle: "Remove selected"
                     ),
-                    table: ListTableShell(
+                    table: context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox().html()
+                                        context.render(ListTableSelectAllCheckbox())
                                     }
                                     Th("Name")
                                     Th("Actions")
@@ -78,9 +78,9 @@ struct NewsletterTable: Leaf {
                                 for item in state.items {
                                     Tr {
                                         if canRemove {
-                                            ListTableRowSelectCheckbox(
+                                            context.render(ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).html()
+                                            ))
                                         }
                                         if state.isPicker {
                                             Td {
@@ -100,7 +100,7 @@ struct NewsletterTable: Leaf {
                                         else {
                                             Td(item.name).data("label", "Name")
                                         }
-                                        ListTableRowActions(
+                                        context.render(ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",
                                                 actions: [
@@ -135,15 +135,15 @@ struct NewsletterTable: Leaf {
                                                     "newsletter:campaigns:delete",
                                                 ]
                                             )
-                                        ).html()
+                                        ))
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    ).html()
-                ).html()
+                    ))
+                ))
             }
         }
         .class("cms-section")

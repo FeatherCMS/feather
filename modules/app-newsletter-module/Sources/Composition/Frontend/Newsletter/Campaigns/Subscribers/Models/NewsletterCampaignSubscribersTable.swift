@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct NewsletterCampaignSubscribersTable: Leaf {
+struct NewsletterCampaignSubscribersTable: Component {
     struct State {
         let newsletterId: String
         let isAdded: Bool
@@ -21,36 +21,36 @@ struct NewsletterCampaignSubscribersTable: Leaf {
     }
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminNewsletterCampaignTabs(
+            context.render(AdminNewsletterCampaignTabs(
                 campaignId: state.newsletterId,
                 active: .subscribers
-            ).html()
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            ))
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Campaign subscribers")
             if let error = state.error { P(error).class("error") }
             if state.isAdded { P("Subscriber added successfully.") }
             if state.isEdited { P("Subscriber edited successfully.") }
             if state.isRemoved { P("Subscriber removed successfully.") }
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Add subscriber",
                     href:
                         "/admin/newsletters/\(state.newsletterId)/subscribers/add/"
-                ).html()
+                ))
             }
             .class("button-row")
             Br()
             Br()
-            ListTableSearchForm(
+            context.render(ListTableSearchForm(
                 state: .init(
                     action:
                         "/admin/newsletters/\(state.newsletterId)/subscribers/",
                     placeholder: "Quick search subscribers",
                     search: state.search
                 )
-            ).html()
+            ))
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -59,7 +59,7 @@ struct NewsletterCampaignSubscribersTable: Leaf {
                 )
             }
             else {
-                ListTableRemoveForm(
+                context.render(ListTableRemoveForm(
                     state: .init(
                         action:
                             "/admin/newsletters/\(state.newsletterId)/subscribers/remove/",
@@ -68,12 +68,12 @@ struct NewsletterCampaignSubscribersTable: Leaf {
                         canRemove: state.canRemove,
                         buttonTitle: "Remove selected"
                     ),
-                    table: ListTableShell(
+                    table: context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox().html()
+                                        context.render(ListTableSelectAllCheckbox())
                                     }
                                     Th("Email")
                                     Th("Name")
@@ -85,15 +85,15 @@ struct NewsletterCampaignSubscribersTable: Leaf {
                                 for item in state.items {
                                     Tr {
                                         if state.canRemove {
-                                            ListTableRowSelectCheckbox(
+                                            context.render(ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).html()
+                                            ))
                                         }
                                         Td(item.email).data("label", "Email")
                                         Td("\(item.firstName) \(item.lastName)")
                                             .data("label", "Name")
                                         Td(item.status).data("label", "Status")
-                                        ListTableRowActions(
+                                        context.render(ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",
                                                 actions: [
@@ -119,15 +119,15 @@ struct NewsletterCampaignSubscribersTable: Leaf {
                                                     "newsletter:subscribers:delete",
                                                 ]
                                             )
-                                        ).html()
+                                        ))
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    ).html()
-                ).html()
+                    ))
+                ))
             }
         }
         .class("cms-section")

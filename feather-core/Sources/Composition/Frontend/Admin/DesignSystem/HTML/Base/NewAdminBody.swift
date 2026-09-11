@@ -10,7 +10,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminBody<T: Renderable>: Branch where T.HTML: FlowContent {
+public struct NewAdminBody<T: Component>: Component where T.HTML: FlowContent {
 
     public let content: T
 
@@ -18,15 +18,9 @@ public struct NewAdminBody<T: Renderable>: Branch where T.HTML: FlowContent {
         self.content = content
     }
 
-    // MARK: -
-
-    public var children: [any Component] {
-        content
-    }
-
-    public func html() -> Body {
+    public func html(context: inout RenderContext) -> Body {
         Body {
-            content.html()
+            context.render(content)
 
             Div {
                 P("Powered by Feather CMS")

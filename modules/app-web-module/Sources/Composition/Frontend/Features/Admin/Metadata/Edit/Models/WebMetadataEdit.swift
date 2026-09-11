@@ -8,7 +8,7 @@ import WebAdminAPI
 import WebComponents
 import WebBuilders
 
-struct WebMetadataEdit: Leaf {
+struct WebMetadataEdit: Component {
 
     struct State {
         let id: String
@@ -22,24 +22,24 @@ struct WebMetadataEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1 {
                 Span(state.title)
-                AdminPreviewLink(
+                context.render(AdminPreviewLink(
                     slug: state.form.slug.value,
                     label: "Preview page"
-                ).html()
+                ))
             }
             if state.isEdited { P("Web metadata edited successfully.") }
-            AdminPillTabs(links: state.navigationTabs).html()
-            WebMetadataForm(
+            context.render(AdminPillTabs(links: state.navigationTabs))
+            context.render(WebMetadataForm(
                 state: state.form,
                 action: state.action,
                 submitLabel: "Edit entry"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

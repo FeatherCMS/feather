@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorLinkError: Leaf {
+struct BlogAuthorLinkError: Component {
 
     struct State {
         let info: String
@@ -21,9 +21,9 @@ struct BlogAuthorLinkError: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1(state.info)
             P(state.message)

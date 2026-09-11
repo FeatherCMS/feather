@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthCredentialForm: Leaf {
+struct AuthCredentialForm: Component {
     struct FieldState: FeatherAdmin.Object {
         var key: String
         var label: String
@@ -45,7 +45,7 @@ struct AuthCredentialForm: Leaf {
     var submitLabel: String
     var removeHref: String?
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
@@ -53,7 +53,7 @@ struct AuthCredentialForm: Leaf {
                 .type(.hidden)
                 .name("userId")
                 .value(state.identity.value)
-            AdminAutocompleteField(
+            context.render(AdminAutocompleteField(
                 state: .init(
                     key: state.email.key,
                     label: "Auth email",
@@ -63,13 +63,13 @@ struct AuthCredentialForm: Leaf {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            ).html()
+            ))
             Section {
                 Label {
-                    AdminFieldLabel(
+                    context.render(AdminFieldLabel(
                         label: state.password.label,
                         required: state.passwordRequired
-                    ).html()
+                    ))
                     Input()
                         .type(.password)
                         .id(state.password.key)
@@ -85,11 +85,11 @@ struct AuthCredentialForm: Leaf {
                 Div {
                     Button(submitLabel).type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Remove credential",
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")

@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AccountProfileForm: Leaf {
+struct AccountProfileForm: Component {
     struct State {
         let firstName: String?
         let lastName: String?
@@ -15,9 +15,9 @@ struct AccountProfileForm: Leaf {
 
     let state: State
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
-            FormInputField(
+            context.render(FormInputField(
                 name: "firstName",
                 label: "First name",
                 value: state.firstName,
@@ -26,8 +26,8 @@ struct AccountProfileForm: Leaf {
                 isRequired: false,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: "lastName",
                 label: "Last name",
                 value: state.lastName,
@@ -36,9 +36,9 @@ struct AccountProfileForm: Leaf {
                 isRequired: false,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
+            ))
             if state.canEdit {
-                AdminMediaAssetPicker(
+                context.render(AdminMediaAssetPicker(
                     state: .init(
                         field: .init(
                             key: "profileImageAssetId",
@@ -52,10 +52,10 @@ struct AccountProfileForm: Leaf {
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                         outputMode: .assetId
                     )
-                ).html()
+                ))
             }
             else {
-                FormInputField(
+                context.render(FormInputField(
                     name: "profileImageAssetId",
                     label: "Profile image asset ID",
                     value: state.profileImageAssetId,
@@ -64,7 +64,7 @@ struct AccountProfileForm: Leaf {
                     isRequired: false,
                     isDisabled: true,
                     inputClass: "text-input"
-                ).html()
+                ))
             }
             if state.canEdit {
                 Div {

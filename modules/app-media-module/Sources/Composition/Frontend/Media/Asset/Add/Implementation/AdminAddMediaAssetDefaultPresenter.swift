@@ -17,6 +17,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
         model: AdminAddMediaAssetModel,
         permissions: Set<String>
     ) -> HTMLResponse {
+        var renderContext = RenderContext()
         let content = AssetAddView(
             state: .init(
                 form: .init(
@@ -42,7 +43,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                 description: "Upload media asset",
                 imagePath: "images/logos/logo.png",
                 content: Div {
-                    content.html()
+                    renderContext.render(content)
                 }
             )
         }

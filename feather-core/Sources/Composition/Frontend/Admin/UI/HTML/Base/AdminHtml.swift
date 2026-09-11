@@ -12,7 +12,7 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct AdminHtml<T: Leaf>: Leaf {
+public struct AdminHtml<T: Component>: Component {
 
     struct State {
         let head: AdminHeadElements.State
@@ -21,11 +21,14 @@ public struct AdminHtml<T: Leaf>: Leaf {
 
     let state: State
 
-    public func html() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         Html {
-            AdminHeadElements(state: state.head).html()
+            let renderedHead: Head = context.render(
+                AdminHeadElements(state: state.head)
+            )
+            renderedHead
             Body {
-                AdminBody<T>(state: state.body).html()
+                context.render(AdminBody<T>(state: state.body))
             }
         }
         .lang("en-US")

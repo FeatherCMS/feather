@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct SystemVariableForm: Leaf {
+struct SystemVariableForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -38,7 +38,7 @@ struct SystemVariableForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -47,47 +47,47 @@ struct SystemVariableForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.id.key,
                 label: state.id.label,
                 value: state.id.value,
                 error: state.id.error,
                 isRequired: true
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.name.key,
                 label: state.name.label,
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: true
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.value.key,
                 label: state.value.label,
                 value: state.value.value,
                 error: state.value.error,
                 isRequired: true
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.notes.key,
                 label: state.notes.label,
                 value: state.notes.value,
                 error: state.notes.error
-            ).html()
+            ))
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")

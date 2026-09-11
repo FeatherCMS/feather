@@ -7,24 +7,24 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct ContactFormEmails: Leaf {
+struct ContactFormEmails: Component {
     let id: String
     let mails: [AdminContactFormEmail]
     let canRemove: Bool
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: id, active: .emails).html()
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminContactFormTabs(formId: id, active: .emails))
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Contact form emails")
             if let error { P(error).class("error") }
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Add email",
                     href: "/admin/contact/forms/\(id)/emails/add/"
-                ).html()
+                ))
             }
             .class("button-row")
             Br()
@@ -33,7 +33,7 @@ struct ContactFormEmails: Leaf {
                 P("No emails configured yet.")
             }
             else {
-                ListTableRemoveForm(
+                context.render(ListTableRemoveForm(
                     state: .init(
                         action: "/admin/contact/forms/\(id)/emails/remove/",
                         page: 1,
@@ -41,12 +41,12 @@ struct ContactFormEmails: Leaf {
                         canRemove: canRemove,
                         buttonTitle: "Remove selected"
                     ),
-                    table: ListTableShell(
+                    table: context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox().html()
+                                        context.render(ListTableSelectAllCheckbox())
                                     }
                                     Th("From")
                                     Th("To")
@@ -58,15 +58,15 @@ struct ContactFormEmails: Leaf {
                                 for mail in mails {
                                     Tr {
                                         if canRemove {
-                                            ListTableRowSelectCheckbox(
+                                            context.render(ListTableRowSelectCheckbox(
                                                 state: .init(id: mail.id)
-                                            ).html()
+                                            ))
                                         }
                                         Td(mail.mailFrom).data("label", "From")
                                         Td(mail.mailTo).data("label", "To")
                                         Td(mail.subject)
                                             .data("label", "Subject")
-                                        ListTableRowActions(
+                                        context.render(ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",
                                                 actions: [
@@ -91,15 +91,15 @@ struct ContactFormEmails: Leaf {
                                                     "contact:forms:update"
                                                 ]
                                             )
-                                        ).html()
+                                        ))
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    ).html()
-                ).html()
+                    ))
+                ))
             }
         }
         .class("cms-section")

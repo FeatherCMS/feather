@@ -6,7 +6,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct RedirectRuleForm: Leaf {
+struct RedirectRuleForm: Component {
 
     private static let statusOptions = [
         ("301", "301 Moved Permanently"),
@@ -46,7 +46,7 @@ struct RedirectRuleForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -55,23 +55,23 @@ struct RedirectRuleForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.source.key,
                 label: state.source.label,
                 value: state.source.value,
                 error: state.source.error,
                 isRequired: true
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.destination.key,
                 label: state.destination.label,
                 value: state.destination.value,
                 error: state.destination.error,
                 isRequired: true
-            ).html()
+            ))
 
-            FormSelectField(
+            context.render(FormSelectField(
                 name: state.statusCode.key,
                 label: state.statusCode.label,
                 options: Self.statusOptions.map {
@@ -80,25 +80,25 @@ struct RedirectRuleForm: Leaf {
                 selectedValue: state.statusCode.value ?? "301",
                 error: state.statusCode.error,
                 isRequired: true
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.notes.key,
                 label: state.notes.label,
                 value: state.notes.value,
                 error: state.notes.error
-            ).html()
+            ))
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")

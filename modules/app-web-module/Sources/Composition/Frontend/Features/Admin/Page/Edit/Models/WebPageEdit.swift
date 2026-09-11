@@ -9,7 +9,7 @@ import WebAdminAPI
 import WebComponents
 import WebBuilders
 
-struct WebPageEdit: Leaf {
+struct WebPageEdit: Component {
 
     struct State {
         let id: String
@@ -20,9 +20,9 @@ struct WebPageEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1 {
                 Span("Edit page")
@@ -31,7 +31,7 @@ struct WebPageEdit: Leaf {
                         .isEmpty
                 {
                     A {
-                        Icon(svg: FeatherIcons.externalLink()).html()
+                        context.render(Icon(svg: FeatherIcons.externalLink()))
                     }
                     .href(
                         "/\(slug.trimmingCharacters(in: .whitespacesAndNewlines))/"
@@ -44,7 +44,7 @@ struct WebPageEdit: Leaf {
                 }
             }
             if state.isEdited { P("Page edited successfully.") }
-            WebPageForm(
+            context.render(WebPageForm(
                 state: state.form,
                 metadataHref:
                     "/admin/web/pages/\(state.id)/edit/metadata/\(state.id)/",
@@ -52,7 +52,7 @@ struct WebPageEdit: Leaf {
                 submitLabel: "Edit page",
                 removeHref: "/admin/web/pages/\(state.id)/remove/",
                 removeLabel: "Remove page"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

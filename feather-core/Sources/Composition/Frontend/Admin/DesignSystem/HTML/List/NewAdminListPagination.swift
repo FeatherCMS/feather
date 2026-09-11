@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminListPagination: Leaf {
+public struct NewAdminListPagination: Component {
 
     public func rules(
     ) -> [any Rule] {
@@ -122,8 +122,7 @@ public struct NewAdminListPagination: Leaf {
         self.state = state
     }
 
-    public func html(
-    ) -> Div {
+    public func html(context: inout RenderContext) -> Div {
         let extraQuerySuffix =
             state.queryItems
             .filter { !$0.value.isEmpty }

@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AccountInvitationTable: Leaf {
+struct AccountInvitationTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -28,14 +28,14 @@ struct AccountInvitationTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("User invitations")
 
                 if state.isAdded {
@@ -49,22 +49,22 @@ struct AccountInvitationTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add invitation",
                             href: "/admin/account/invitations/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/account/invitations/",
                         placeholder: "Quick search invitations",
                         search: state.search
                     )
-                ).html()
+                ))
 
                 if state.invitations.isEmpty {
                     let totalPages = max(
@@ -97,7 +97,7 @@ struct AccountInvitationTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "account:invitations:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/account/invitations/remove/",
                             page: state.page,
@@ -105,12 +105,12 @@ struct AccountInvitationTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Email")
                                             .columnWidth(percent: 62)
@@ -123,11 +123,11 @@ struct AccountInvitationTable: Leaf {
                                     for invitation in state.invitations {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: invitation.id
                                                     )
-                                                ).html()
+                                                ))
                                             }
                                             Td(invitation.email)
                                                 .data(
@@ -146,7 +146,7 @@ struct AccountInvitationTable: Leaf {
                                                 "Expires At"
                                             )
                                             .columnWidth(percent: 28)
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -178,16 +178,16 @@ struct AccountInvitationTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/account/invitations/",
                             page: state.page,
@@ -195,7 +195,7 @@ struct AccountInvitationTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).html()
+                    ))
                 }
             }
         }

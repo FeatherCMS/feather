@@ -13,7 +13,7 @@ public protocol RenderingEngine: Sendable {
         content: T
     ) -> HTMLResponse
 
-    func renderAdminPage<T: Leaf>(
+    func renderAdminPage<T: Component>(
         request: Request,
         title: String,
         description: String,

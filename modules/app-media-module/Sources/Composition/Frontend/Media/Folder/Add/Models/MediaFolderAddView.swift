@@ -9,7 +9,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct MediaFolderAddView: Leaf {
+struct MediaFolderAddView: Component {
     struct State {
         let form: FormState
         let breadcrumb: AdminBreadcrumb.State
@@ -24,9 +24,9 @@ struct MediaFolderAddView: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Add media folder")
             if let error = state.form.error {
                 P(error).class("error")
@@ -37,13 +37,13 @@ struct MediaFolderAddView: Leaf {
                 Input().type(.hidden).name("view")
                     .value(state.form.view).id("view")
 
-                FormInputField(
+                context.render(FormInputField(
                     name: "name",
                     label: "Folder name",
                     value: state.form.name,
                     isRequired: true,
                     inputClass: "text-input"
-                ).html()
+                ))
 
                 Section {
                     Div { Button("Add").type(.submit) }.class("button-row")

@@ -6,7 +6,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct WebMenuItemForm: Leaf {
+struct WebMenuItemForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -53,7 +53,7 @@ struct WebMenuItemForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -62,29 +62,29 @@ struct WebMenuItemForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.label.key,
                 label: state.label.label,
                 value: state.label.value,
                 error: state.label.error,
                 isRequired: true
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.url.key,
                 label: state.url.label,
                 value: state.url.value,
                 error: state.url.error,
                 isRequired: true
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.priority.key,
                 label: state.priority.label,
                 value: state.priority.value,
                 error: state.priority.error,
                 isRequired: true
-            ).html()
-            checkbox(state.isBlank)
-            AdminAutocompleteField(
+            ))
+            checkbox(state.isBlank, context: &context)
+            context.render(AdminAutocompleteField(
                 state: .init(
                     key: state.permission.key,
                     label: state.permission.label,
@@ -94,8 +94,8 @@ struct WebMenuItemForm: Leaf {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            ).html()
-            FormSelectField(
+            ))
+            context.render(FormSelectField(
                 name: state.authentication.key,
                 label: state.authentication.label,
                 options: [
@@ -106,19 +106,19 @@ struct WebMenuItemForm: Leaf {
                 selectedValue: state.authentication.value,
                 error: state.authentication.error,
                 isRequired: true
-            ).html()
-            textarea(state.notes).html()
+            ))
+            context.render(textarea(state.notes))
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")
@@ -143,17 +143,19 @@ struct WebMenuItemForm: Leaf {
     }
 
     private func checkbox(
-        _ field: CheckboxState
+        _ field: CheckboxState,
+        context: inout RenderContext
     ) -> Section {
+
         Section {
-            CheckboxField(
+            context.render(CheckboxField(
                 state: .init(
                     key: field.key,
                     label: field.label,
                     value: field.value,
                     error: field.error
                 )
-            ).html()
+            ))
         }
     }
 

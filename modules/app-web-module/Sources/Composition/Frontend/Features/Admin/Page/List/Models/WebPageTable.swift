@@ -10,7 +10,7 @@ import WebContracts
 import WebComponents
 import WebBuilders
 
-struct WebPageTable: Leaf {
+struct WebPageTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -34,16 +34,16 @@ struct WebPageTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Web pages")
-                statusFormDefinitions()
+                statusFormDefinitions(context: &context)
 
                 if state.isAdded {
                     P("Web page added successfully.")
@@ -62,22 +62,22 @@ struct WebPageTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add page",
                             href: "/admin/web/pages/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/web/pages/",
                         placeholder: "Quick search web pages",
                         search: state.search
                     )
-                ).html()
+                ))
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -109,7 +109,7 @@ struct WebPageTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "web:pages:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/web/pages/remove/",
                             page: state.page,
@@ -117,12 +117,12 @@ struct WebPageTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Title")
                                         Th("Status")
@@ -135,14 +135,14 @@ struct WebPageTable: Leaf {
                                     for item in state.rules {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                ).html()
+                                                ))
                                             }
-                                            titleCell(for: item)
-                                            statusCell(for: item)
+                                            titleCell(for: item, context: &context)
+                                            statusCell(for: item, context: &context)
                                             Td(
                                                 format(
                                                     item.metadata
@@ -169,9 +169,9 @@ struct WebPageTable: Leaf {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/web/pages/",
                             page: state.page,
@@ -179,7 +179,7 @@ struct WebPageTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).html()
+                    ))
                 }
             }
         }
@@ -219,14 +219,16 @@ struct WebPageTable: Leaf {
     }
 
     private func titleCell(
-        for item: AdminListWebPageItemModel
+        for item: AdminListWebPageItemModel,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Td {
             Span {
                 Span(item.title)
                 if let previewPath = previewPath(for: item.metadata) {
                     A {
-                        Icon(svg: FeatherIcons.externalLink()).html()
+                        context.render(Icon(svg: FeatherIcons.externalLink()))
                     }
                     .href(previewPath)
                     .target(.blank)
@@ -244,14 +246,16 @@ struct WebPageTable: Leaf {
     }
 
     private func statusCell(
-        for item: AdminListWebPageItemModel
+        for item: AdminListWebPageItemModel,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Td {
             if state.canEdit {
-                AdminStatusSelectField(
+                context.render(AdminStatusSelectField(
                     formID: statusFormID(for: item.id),
                     selectedStatus: item.metadata.normalizedStatus
-                ).html()
+                ))
             }
             else {
                 Span(item.metadata.status.capitalized)
@@ -260,15 +264,18 @@ struct WebPageTable: Leaf {
         .data("label", "Status")
     }
 
-    private func statusFormDefinitions() -> some FlowContent {
+    private func statusFormDefinitions(
+        context: inout RenderContext
+    ) -> some FlowContent {
+
         Div {
             if state.canEdit {
                 for item in state.rules {
-                    AdminStatusSelectFormDefinition(
+                    context.render(AdminStatusSelectFormDefinition(
                         id: statusFormID(for: item.id),
                         action: "/admin/web/pages/\(item.id)/status/",
                         returnTo: "/admin/web/pages/"
-                    ).html()
+                    ))
                 }
             }
         }

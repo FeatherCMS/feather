@@ -8,15 +8,15 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct ContactFormFieldForm: Leaf {
+struct ContactFormFieldForm: Component {
     let field: AdminContactFormFieldRow
     let action: String
     let submitLabel: String
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             Label {
-                AdminFieldLabel(label: "Type", required: true).html()
+                context.render(AdminFieldLabel(label: "Type", required: true))
                 Select {
                     for type in [
                         "text", "textarea", "select", "radio", "toggle",
@@ -28,17 +28,17 @@ struct ContactFormFieldForm: Leaf {
                 .name("type").class("text-input")
             }
             Label {
-                AdminFieldLabel(label: "Key", required: true).html()
+                context.render(AdminFieldLabel(label: "Key", required: true))
                 Input().type(.text).class("text-input").name("key")
                     .value(field.key).required()
             }
             Label {
-                AdminFieldLabel(label: "Label", required: true).html()
+                context.render(AdminFieldLabel(label: "Label", required: true))
                 Input().type(.text).class("text-input").name("label")
                     .value(field.label).required()
             }
             Label {
-                AdminFieldLabel(label: "Allowed values", required: false).html()
+                context.render(AdminFieldLabel(label: "Allowed values", required: false))
                 Textarea(field.allowedValues).class("text-input")
                     .name("allowedValues")
             }

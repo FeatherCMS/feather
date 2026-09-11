@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminWebMenuTabs: Leaf {
+struct AdminWebMenuTabs: Component {
     enum Tab: Equatable {
         case details
         case items
@@ -29,7 +29,7 @@ struct AdminWebMenuTabs: Leaf {
         ]
     }
 
-    func html() -> Div {
-        return AdminPillTabs(links: links).html()
+    func html(context: inout RenderContext) -> Div {
+        return context.render(AdminPillTabs(links: links))
     }
 }

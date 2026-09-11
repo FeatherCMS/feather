@@ -9,14 +9,14 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct MediaAssetErrorView: Leaf {
+struct MediaAssetErrorView: Component {
     let info: String
     let message: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Error")
             P { Strong(info) }
             P(message)

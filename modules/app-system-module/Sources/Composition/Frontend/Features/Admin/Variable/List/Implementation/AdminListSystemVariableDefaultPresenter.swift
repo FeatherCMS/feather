@@ -24,6 +24,7 @@ struct AdminListSystemVariableDefaultPresenter:
         search: String?,
         error: String?
     ) async throws -> HTMLResponse {
+        var renderContext = RenderContext()
         let canAccess = permissions.contains(
             SystemPermissions.Variables.list.rawValue
         )
@@ -78,7 +79,7 @@ struct AdminListSystemVariableDefaultPresenter:
             title: "Manage system variables",
             body: .init(content: layout)
         )
-        return .init(component.html())
+        return .init(renderContext.render(component))
     }
 
     func renderRemoveConfirmation(

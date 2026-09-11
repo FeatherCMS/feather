@@ -12,7 +12,7 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct AdminHeadElements: Leaf {
+public struct AdminHeadElements: Component {
 
     struct State {
         let canonicalUrl: String
@@ -25,14 +25,14 @@ public struct AdminHeadElements: Leaf {
 
     let state: State
 
-    public func html() -> Head {
-        let metadata = Metadata(
+    public func html(context: inout RenderContext) -> Head {
+        let metadata = context.render(Metadata(
             canonicalUrl: state.canonicalUrl,
             title: state.title,
             description: state.description,
             imageUrl: state.imageUrl,
             noIndex: false
-        ).html()
+        ))
 
         return Head(elements: metadata.children.compactMap { $0 as? any MetadataContent } + state.externalCSSUrls.map {
             Link(rel: .stylesheet).href($0)

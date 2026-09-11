@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AccountInvitationConfirmation: Leaf {
+struct AccountInvitationConfirmation: Component {
 
     struct State {
         let id: String
@@ -17,8 +17,8 @@ struct AccountInvitationConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove user invitation",
@@ -31,6 +31,6 @@ struct AccountInvitationConfirmation: Leaf {
                 actionURL: "/admin/account/invitations/\(state.id)/remove/",
                 cancelURL: "/admin/account/invitations/"
             )
-        ).html()
+        ))
     }
 }

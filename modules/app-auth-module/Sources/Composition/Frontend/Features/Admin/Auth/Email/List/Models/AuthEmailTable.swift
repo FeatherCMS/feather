@@ -18,7 +18,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthEmailTable: Leaf {
+struct AuthEmailTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -41,18 +41,18 @@ struct AuthEmailTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("User emails")
 
                 if let userID = state.userID {
-                    AdminPillTabs(links: [
+                    context.render(AdminPillTabs(links: [
                         .init(
                             label: "Details",
                             href: "/admin/user/identities/\(userID)/",
@@ -78,7 +78,7 @@ struct AuthEmailTable: Leaf {
                             href: "/admin/auth/emails/?userId=\(userID)",
                             isCurrent: true
                         ),
-                    ]).html()
+                    ]))
                 }
 
                 if state.isAdded {
@@ -92,23 +92,23 @@ struct AuthEmailTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add email",
                             href: "/admin/auth/emails/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/auth/emails/",
                         placeholder: "Quick search emails",
                         search: state.search,
                         queryItems: state.userID.map { [("userId", $0)] } ?? []
                     )
-                ).html()
+                ))
 
                 if state.links.isEmpty {
                     let totalPages = max(
@@ -143,7 +143,7 @@ struct AuthEmailTable: Leaf {
                     let canRemove = state.permissions.contains(
                         AuthPermissions.Emails.delete.rawValue
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/auth/emails/remove/",
                             page: state.page,
@@ -153,12 +153,12 @@ struct AuthEmailTable: Leaf {
                             queryItems: state.userID.map { [("userId", $0)] }
                                 ?? []
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("User name")
                                             .columnWidth(percent: 30)
@@ -171,9 +171,9 @@ struct AuthEmailTable: Leaf {
                                     for link in state.links {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(id: link.id)
-                                                ).html()
+                                                ))
                                             }
                                             Td(
                                                 state.identityNames[
@@ -186,7 +186,7 @@ struct AuthEmailTable: Leaf {
                                             Td(link.email)
                                                 .data("label", "Email")
                                                 .columnWidth(percent: 30)
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -224,16 +224,16 @@ struct AuthEmailTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/auth/emails/",
                             page: state.page,
@@ -243,7 +243,7 @@ struct AuthEmailTable: Leaf {
                             queryItems: state.userID.map { [("userId", $0)] }
                                 ?? []
                         )
-                    ).html()
+                    ))
                 }
             }
         }

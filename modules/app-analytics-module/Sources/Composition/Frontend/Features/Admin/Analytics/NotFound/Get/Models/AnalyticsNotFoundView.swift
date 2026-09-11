@@ -8,15 +8,15 @@ import SVG
 import WebComponents
 import WebBuilders
 
-struct AnalyticsNotFoundView: Leaf {
+struct AnalyticsNotFoundView: Component {
 
     private let chartPrimaryColor = "var(--cms-primary-hover)"
 
     let model: AdminGetAnalyticsNotFoundModel
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(
+            context.render(AdminBreadcrumb(
                 state: .init(
                     links: [
                         .init(label: "Redirect", link: "/admin/analytics/"),
@@ -26,7 +26,7 @@ struct AnalyticsNotFoundView: Leaf {
                         ),
                     ]
                 )
-            ).html()
+            ))
             H1("404s")
             filters
             dailyChart

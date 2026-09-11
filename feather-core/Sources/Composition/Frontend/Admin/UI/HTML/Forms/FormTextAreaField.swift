@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct FormTextAreaField: Leaf {
+public struct FormTextAreaField: Component {
     public struct State: Sendable {
         var name: String
         var label: String
@@ -99,7 +99,7 @@ public struct FormTextAreaField: Leaf {
         }
     }
 
-    public func html() -> Section {
+    public func html(context: inout RenderContext) -> Section {
         Section {
             Label {
                 fieldLabel()

@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct AdminBreadcrumb: Leaf {
+public struct AdminBreadcrumb: Component {
 
     public struct State: Sendable {
 
@@ -32,7 +32,7 @@ public struct AdminBreadcrumb: Leaf {
         self.state = state
     }
 
-    public func html() -> Nav {
+    public func html(context: inout RenderContext) -> Nav {
         Nav {
             Ol {
                 for (idx, breadcrumb) in state.links.enumerated() {

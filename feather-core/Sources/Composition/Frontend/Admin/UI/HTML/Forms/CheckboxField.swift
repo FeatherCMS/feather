@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct CheckboxField: Leaf {
+public struct CheckboxField: Component {
 
     public enum LabelPosition: String, Codable, Sendable {
         case before
@@ -131,7 +131,7 @@ public struct CheckboxField: Leaf {
         }
     }
 
-    public func html() -> Section {
+    public func html(context: inout RenderContext) -> Section {
         Section {
             Label {
                 if state.labelPosition == .before {

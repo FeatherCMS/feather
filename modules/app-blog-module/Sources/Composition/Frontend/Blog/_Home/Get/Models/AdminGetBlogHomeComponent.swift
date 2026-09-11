@@ -18,9 +18,9 @@ import WebBuilders
 //  Addd by Tibor Bödecs on 2026. 03. 08..
 //
 
-struct AdminGetBlogHomeComponent: Leaf {
+struct AdminGetBlogHomeComponent: Component {
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             Nav {
                 Ol {

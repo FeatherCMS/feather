@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct SystemVariableDetails: Leaf {
+struct SystemVariableDetails: Component {
     struct State {
         let variable: SystemVariableDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -12,25 +12,25 @@ struct SystemVariableDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("System variable details")
-            AdminDetailsField(label: "ID", value: state.variable.id).html()
-            AdminDetailsField(label: "Value", value: state.variable.value).html()
-            AdminDetailsField(label: "Name", value: state.variable.name ?? "").html()
-            AdminDetailsField(label: "Notes", value: state.variable.notes ?? "").html()
+            context.render(AdminDetailsField(label: "ID", value: state.variable.id))
+            context.render(AdminDetailsField(label: "Value", value: state.variable.value))
+            context.render(AdminDetailsField(label: "Name", value: state.variable.name ?? ""))
+            context.render(AdminDetailsField(label: "Notes", value: state.variable.notes ?? ""))
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit variable",
                     href: "/admin/system/variables/\(state.variable.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove variable",
                     href:
                         "/admin/system/variables/\(state.variable.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct UserRoleDetails: Leaf {
+struct UserRoleDetails: Component {
     struct State {
         let role: UserRoleDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -12,23 +12,23 @@ struct UserRoleDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("User role details")
-            AdminDetailsField(label: "ID", value: state.role.id).html()
-            AdminDetailsField(label: "Name", value: state.role.name).html()
-            AdminDetailsField(label: "Notes", value: state.role.notes).html()
+            context.render(AdminDetailsField(label: "ID", value: state.role.id))
+            context.render(AdminDetailsField(label: "Name", value: state.role.name))
+            context.render(AdminDetailsField(label: "Notes", value: state.role.notes))
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit role",
                     href: "/admin/user/roles/\(state.role.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove role",
                     href: "/admin/user/roles/\(state.role.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

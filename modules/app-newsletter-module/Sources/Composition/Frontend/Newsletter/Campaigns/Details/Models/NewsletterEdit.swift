@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct NewsletterEdit: Leaf {
+struct NewsletterEdit: Component {
     struct State {
         let id: String
         let isEdited: Bool
@@ -17,17 +17,17 @@ struct NewsletterEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminNewsletterCampaignTabs(campaignId: state.id, active: .details).html()
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminNewsletterCampaignTabs(campaignId: state.id, active: .details))
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Edit campaign")
             if state.isEdited { P("Campaign edited successfully.") }
-            NewsletterForm(
+            context.render(NewsletterForm(
                 state: state.form,
                 action: "/admin/newsletters/\(state.id)/edit/",
                 submitLabel: "Save"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

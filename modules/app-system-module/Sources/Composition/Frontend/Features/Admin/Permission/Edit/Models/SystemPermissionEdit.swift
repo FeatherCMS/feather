@@ -7,7 +7,7 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemPermissionEdit: Leaf {
+struct SystemPermissionEdit: Component {
 
     struct State {
         let id: String
@@ -18,19 +18,19 @@ struct SystemPermissionEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit system permission")
             if state.isEdited { P("System permission edited successfully.") }
-            SystemPermissionForm(
+            context.render(SystemPermissionForm(
                 state: state.form,
                 action: "/admin/system/permissions/\(state.id)/edit/",
                 submitLabel: "Edit permission",
                 removeHref: "/admin/system/permissions/\(state.id)/remove/",
                 removeLabel: "Remove permission"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

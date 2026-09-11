@@ -75,7 +75,7 @@ let package = Package(
             name: "ContactDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                
+
                 .target(name: "ContactContracts"),
             ],
             path: "Sources/Layers/Domain",
@@ -86,8 +86,8 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
-                
-                .target(name: "ContactDomain"),    
+
+                .target(name: "ContactDomain"),
             ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
@@ -96,7 +96,7 @@ let package = Package(
             name: "ContactInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
-                
+
                 .target(name: "ContactApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -142,11 +142,11 @@ let package = Package(
             name: "ContactBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
-                
+
                 .target(name: "ContactInfrastructure"),
                 .target(name: "ContactAdminAPI"),
                 .target(name: "ContactAppAPI"),
-                
+
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings

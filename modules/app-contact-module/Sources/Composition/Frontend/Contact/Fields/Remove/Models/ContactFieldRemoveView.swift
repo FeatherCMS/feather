@@ -7,13 +7,13 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct ContactFieldRemoveView: Leaf {
+struct ContactFieldRemoveView: Component {
     let fieldId: String
     let label: String
     let breadcrumb: AdminBreadcrumb.State
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         let basePath = "/admin/contact/fields"
-        return AdminConfirmationDialog(
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
                 title: "Remove contact form field",
@@ -24,6 +24,6 @@ struct ContactFieldRemoveView: Leaf {
                 actionURL: "\(basePath)/\(fieldId)/remove/",
                 cancelURL: "\(basePath)/"
             )
-        ).html()
+        ))
     }
 }

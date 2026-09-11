@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct SystemPermissionForm: Leaf {
+struct SystemPermissionForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -34,7 +34,7 @@ struct SystemPermissionForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -43,31 +43,31 @@ struct SystemPermissionForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.name.key,
                 label: state.name.label,
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: true
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.notes.key,
                 label: state.notes.label,
                 value: state.notes.value,
                 error: state.notes.error
-            ).html()
+            ))
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")

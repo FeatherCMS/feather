@@ -8,7 +8,7 @@ import WebAdminAPI
 import WebComponents
 import WebBuilders
 
-struct WebPageConfirmation: Leaf {
+struct WebPageConfirmation: Component {
 
     struct State {
         let id: String
@@ -18,8 +18,8 @@ struct WebPageConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove page",
@@ -32,6 +32,6 @@ struct WebPageConfirmation: Leaf {
                 actionURL: "/admin/web/pages/\(state.id)/remove/",
                 cancelURL: "/admin/web/pages/"
             )
-        ).html()
+        ))
     }
 }

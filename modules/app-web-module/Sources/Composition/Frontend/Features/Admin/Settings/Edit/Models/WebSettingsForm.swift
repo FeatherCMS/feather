@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct WebSettingsForm: Leaf {
+struct WebSettingsForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -76,7 +76,7 @@ struct WebSettingsForm: Leaf {
     var action: String = "/admin/web/settings/"
     var submitLabel: String = "Save settings"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -86,84 +86,84 @@ struct WebSettingsForm: Leaf {
             }
 
             H2("Branding")
-            imagePicker(state.logo)
-            imagePicker(state.logoDark)
+            imagePicker(state.logo, context: &context)
+            imagePicker(state.logoDark, context: &context)
 
             H2("SEO")
-            checkbox(state.noIndex)
-            FormInputField(
+            checkbox(state.noIndex, context: &context)
+            context.render(FormInputField(
                 name: state.title.key,
                 label: state.title.label,
                 value: state.title.value,
                 error: state.title.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
-            textarea(state.excerpt, rows: 4).html()
-            imagePicker(state.metaImage)
-            homePagePicker(state.homePage)
-            FormInputField(
+            ))
+            context.render(textarea(state.excerpt, rows: 4))
+            imagePicker(state.metaImage, context: &context)
+            homePagePicker(state.homePage, context: &context)
+            context.render(FormInputField(
                 name: state.locale.key,
                 label: state.locale.label,
                 value: state.locale.value,
                 error: state.locale.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.timezone.key,
                 label: state.timezone.label,
                 value: state.timezone.value,
                 error: state.timezone.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
+            ))
 
             H2("Theme")
-            FormInputField(
+            context.render(FormInputField(
                 name: state.primaryColor.key,
                 label: state.primaryColor.label,
                 value: state.primaryColor.value,
                 error: state.primaryColor.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.secondaryColor.key,
                 label: state.secondaryColor.label,
                 value: state.secondaryColor.value,
                 error: state.secondaryColor.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.tertiaryColor.key,
                 label: state.tertiaryColor.label,
                 value: state.tertiaryColor.value,
                 error: state.tertiaryColor.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.primaryFont.key,
                 label: state.primaryFont.label,
                 value: state.primaryFont.value,
                 error: state.primaryFont.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.secondaryFont.key,
                 label: state.secondaryFont.label,
                 value: state.secondaryFont.value,
                 error: state.secondaryFont.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
+            ))
 
             H2("Code injection")
-            textarea(state.css, rows: 10).html()
-            textarea(state.js, rows: 10).html()
+            context.render(textarea(state.css, rows: 10))
+            context.render(textarea(state.js, rows: 10))
 
             if state.canEdit {
                 Section {
@@ -182,25 +182,29 @@ struct WebSettingsForm: Leaf {
     }
 
     private func checkbox(
-        _ field: CheckboxState
+        _ field: CheckboxState,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Section {
-            CheckboxField(
+            context.render(CheckboxField(
                 state: .init(
                     key: field.key,
                     label: field.label,
                     value: field.value,
                     error: field.error
                 )
-            ).html()
+            ))
         }
         .if(field.error != nil) { $0.class("has-error") }
     }
 
     private func homePagePicker(
-        _ field: HomePageState
+        _ field: HomePageState,
+        context: inout RenderContext
     ) -> Section {
-        AdminAutocompleteField(
+
+        context.render(AdminAutocompleteField(
             state: .init(
                 key: field.key,
                 label: field.label,
@@ -210,15 +214,17 @@ struct WebSettingsForm: Leaf {
                 selectionMode: .single,
                 isEnabled: state.canEdit
             )
-        ).html()
+        ))
     }
 
     private func imagePicker(
-        _ field: FieldState
+        _ field: FieldState,
+        context: inout RenderContext
     ) -> Section {
+
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
-        return AdminMediaAssetPicker(
+        return context.render(AdminMediaAssetPicker(
             state: .init(
                 field: .init(
                     key: field.key,
@@ -233,7 +239,7 @@ struct WebSettingsForm: Leaf {
                 allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                 outputMode: .originalURL
             )
-        ).html()
+        ))
     }
 
     private func textarea(

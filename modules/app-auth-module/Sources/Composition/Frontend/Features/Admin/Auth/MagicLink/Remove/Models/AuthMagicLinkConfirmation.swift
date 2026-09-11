@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthMagicLinkConfirmation: Leaf {
+struct AuthMagicLinkConfirmation: Component {
 
     struct State {
         let id: String
@@ -26,8 +26,8 @@ struct AuthMagicLinkConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove user magic link",
@@ -43,6 +43,6 @@ struct AuthMagicLinkConfirmation: Leaf {
                 actionURL: "/admin/auth/magic-links/\(state.id)/remove/",
                 cancelURL: "/admin/auth/magic-links/"
             )
-        ).html()
+        ))
     }
 }

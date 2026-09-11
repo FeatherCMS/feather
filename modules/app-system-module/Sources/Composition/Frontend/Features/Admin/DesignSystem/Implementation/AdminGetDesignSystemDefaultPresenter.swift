@@ -1,6 +1,7 @@
 import FeatherAdmin
 import Hummingbird
 import FeatherContracts
+import WebComponents
 
 struct AdminGetDesignSystemDefaultPresenter: AdminGetDesignSystemPresenter {
 
@@ -12,6 +13,7 @@ struct AdminGetDesignSystemDefaultPresenter: AdminGetDesignSystemPresenter {
     func renderPage(
         model: AdminGetDesignSystemModel
     ) async throws -> HTMLResponse {
+        var renderContext = RenderContext()
         let menuGroups = try await context.adminMenuGroups(
             request: request,
             events: events
@@ -24,6 +26,6 @@ struct AdminGetDesignSystemDefaultPresenter: AdminGetDesignSystemPresenter {
             title: model.title,
             body: .init(content: layout)
         )
-        return .init(component.html())
+        return .init(renderContext.render(component))
     }
 }

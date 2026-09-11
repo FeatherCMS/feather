@@ -9,14 +9,14 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct MediaProcessorRemoveView: Leaf {
+struct MediaProcessorRemoveView: Component {
     let id: String
     let cancelURL: String
     let formURL: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
                 title: "Remove processor",
@@ -29,6 +29,6 @@ struct MediaProcessorRemoveView: Leaf {
                 actionURL: formURL,
                 cancelURL: cancelURL
             )
-        ).html()
+        ))
     }
 }

@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct AdminDetailFieldStyleAnchor: Leaf {
+public struct AdminDetailFieldStyleAnchor: Component {
 
     public init() {}
 
@@ -14,7 +14,7 @@ public struct AdminDetailFieldStyleAnchor: Leaf {
         }
     }
 
-    public func html() -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {}.hidden()
     }
 }

@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminListAuthSessionView: Leaf {
+struct AdminListAuthSessionView: Component {
     struct State {
         let identityID: String
         let items: [AdminListAuthSessionModel.Item]
@@ -13,9 +13,9 @@ struct AdminListAuthSessionView: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(
+            context.render(AdminBreadcrumb(
                 state: .init(
                     links: [
                         .init(label: "Admin", link: "/admin/"),
@@ -31,9 +31,9 @@ struct AdminListAuthSessionView: Leaf {
                         ),
                     ]
                 )
-            ).html()
+            ))
             H1("Sessions")
-            AdminPillTabs(links: [
+            context.render(AdminPillTabs(links: [
                 .init(
                     label: "Details",
                     href: "/admin/user/identities/\(state.identityID)/",
@@ -60,7 +60,7 @@ struct AdminListAuthSessionView: Leaf {
                     href: "/admin/auth/magic-links/?userId=\(state.identityID)",
                     isCurrent: false
                 ),
-            ]).html()
+            ]))
             if state.items.isEmpty {
                 P("No active sessions.")
             }
@@ -82,12 +82,12 @@ struct AdminListAuthSessionView: Leaf {
                                 Td(item.isPersistent ? "Yes" : "No")
                                 Td {
                                     if state.canRemove {
-                                        AdminNavigationButton(
+                                        context.render(AdminNavigationButton(
                                             "Remove",
                                             href:
                                                 "/admin/user/identities/\(state.identityID)/sessions/\(item.id)/remove/",
                                             classes: ["danger"]
-                                        ).html()
+                                        ))
                                     }
                                 }
                             }

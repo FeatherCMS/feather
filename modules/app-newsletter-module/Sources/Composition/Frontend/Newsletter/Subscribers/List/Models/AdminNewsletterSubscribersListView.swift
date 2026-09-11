@@ -7,21 +7,21 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminNewsletterSubscribersListView: Leaf {
+struct AdminNewsletterSubscribersListView: Component {
     let model: AdminNewsletterSubscribersListModel
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
     let canRemove: Bool
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Subscribers")
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Add subscriber",
                     href: "/admin/newsletters/subscribers/add/"
-                ).html()
+                ))
             }
             .class("button-row")
             Br()
@@ -56,7 +56,7 @@ struct AdminNewsletterSubscribersListView: Leaf {
                 )
             }
             else {
-                ListTableRemoveForm(
+                context.render(ListTableRemoveForm(
                     state: .init(
                         action: "/admin/newsletters/subscribers/remove/",
                         page: 1,
@@ -66,12 +66,12 @@ struct AdminNewsletterSubscribersListView: Leaf {
                         queryItems: model.campaignId.isEmpty
                             ? [] : [("campaignId", model.campaignId)]
                     ),
-                    table: ListTableShell(
+                    table: context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox().html()
+                                        context.render(ListTableSelectAllCheckbox())
                                     }
                                     Th("Email")
                                     Th("Name")
@@ -83,9 +83,9 @@ struct AdminNewsletterSubscribersListView: Leaf {
                                 for item in model.items {
                                     Tr {
                                         if canRemove {
-                                            ListTableRowSelectCheckbox(
+                                            context.render(ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).html()
+                                            ))
                                         }
                                         Td(item.email).data("label", "Email")
                                         Td(item.name).data("label", "Name")
@@ -104,7 +104,7 @@ struct AdminNewsletterSubscribersListView: Leaf {
                                         if let newsletter = item.newsletters
                                             .first
                                         {
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -138,7 +138,7 @@ struct AdminNewsletterSubscribersListView: Leaf {
                                                         "newsletter:subscribers:delete",
                                                     ]
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
@@ -146,8 +146,8 @@ struct AdminNewsletterSubscribersListView: Leaf {
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    ).html()
-                ).html()
+                    ))
+                ))
             }
         }
         .class("cms-section")

@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct NewsletterForm: Leaf {
+struct NewsletterForm: Component {
     struct State: FeatherAdmin.Object {
         var name: String
         var fromEmail: String
@@ -19,18 +19,18 @@ struct NewsletterForm: Leaf {
     var action: String
     var submitLabel: String
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
             Section {
                 Label {
-                    AdminFieldLabel(label: "Name", required: true).html()
+                    context.render(AdminFieldLabel(label: "Name", required: true))
                     Input().type(.text).id("name").name("name")
                         .value(state.name).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "From email", required: true).html()
+                    context.render(AdminFieldLabel(label: "From email", required: true))
                     Input().type(.email).id("fromEmail").name("fromEmail")
                         .value(state.fromEmail).required()
                 }

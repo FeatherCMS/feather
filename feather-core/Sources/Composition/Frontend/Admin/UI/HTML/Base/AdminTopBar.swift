@@ -13,23 +13,23 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct AdminTopBar: Leaf {
+public struct AdminTopBar: Component {
 
-    public func html() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         let fallbackProfileImageURL =
             "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/images/tiborbodecs-2026-512.png"
 
         return Div {
             Div {
                 Label {
-                    Icon(
+                    context.render(Icon(
                         svg: FeatherIcons.sidebar(),
                         class: "menu-trigger-icon menu-trigger-desktop"
-                    ).html()
-                    Icon(
+                    ))
+                    context.render(Icon(
                         svg: FeatherIcons.menu(),
                         class: "menu-trigger-icon menu-trigger-mobile"
-                    ).html()
+                    ))
                     Span("Menu").class("sr-only")
                 }
                 .for("menuToggle")

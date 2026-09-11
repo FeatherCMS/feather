@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthEmailForm: Leaf {
+struct AuthEmailForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -65,7 +65,7 @@ struct AuthEmailForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -74,7 +74,7 @@ struct AuthEmailForm: Leaf {
                 P(error).class("error")
             }
 
-            AdminAutocompleteField(
+            context.render(AdminAutocompleteField(
                 state: .init(
                     key: state.identityId.key,
                     label: state.identityId.label,
@@ -84,27 +84,27 @@ struct AuthEmailForm: Leaf {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.email.key,
                 label: state.email.label,
                 value: state.email.value,
                 error: state.email.error,
                 type: .email,
                 isRequired: true
-            ).html()
+            ))
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")

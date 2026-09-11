@@ -4,13 +4,13 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct SystemJobError: Leaf {
+struct SystemJobError: Component {
     let message: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Unable to load worker jobs")
             P(message)
         }

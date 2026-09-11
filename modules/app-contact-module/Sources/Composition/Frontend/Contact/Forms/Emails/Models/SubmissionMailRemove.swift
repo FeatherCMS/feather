@@ -7,13 +7,13 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct SubmissionMailRemove: Leaf {
+struct SubmissionMailRemove: Component {
     let formId: String
     let mail: AdminContactFormEmail
     let breadcrumb: AdminBreadcrumb.State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
                 title: "Remove contact form email",
@@ -26,6 +26,6 @@ struct SubmissionMailRemove: Leaf {
                 cancelURL: "/admin/contact/forms/\(formId)/emails/",
                 hiddenFields: [.init(name: "selectedIds[]", value: mail.id)]
             )
-        ).html()
+        ))
     }
 }

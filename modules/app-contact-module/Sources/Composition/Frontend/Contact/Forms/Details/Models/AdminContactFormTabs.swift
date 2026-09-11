@@ -7,14 +7,14 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminContactFormTabs: Leaf {
+struct AdminContactFormTabs: Component {
     enum Tab { case details, emails, submissions }
 
     let formId: String
     let active: Tab
 
-    func html() -> Div {
-        AdminPillTabs(links: [
+    func html(context: inout RenderContext) -> Div {
+        context.render(AdminPillTabs(links: [
             .init(
                 label: "Details",
                 href: "/admin/contact/forms/\(formId)/details/",
@@ -30,6 +30,6 @@ struct AdminContactFormTabs: Leaf {
                 href: "/admin/contact/forms/\(formId)/submissions/",
                 isCurrent: active == .submissions
             ),
-        ]).html()
+        ]))
     }
 }

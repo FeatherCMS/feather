@@ -52,11 +52,12 @@ public struct DefaultRenderingEngine: RenderingEngine {
         imagePath: String,
         content: T
     ) -> HTMLResponse {
+        var context = RenderContext()
         let body = Body {
             content
         }
 
-        let metadata = Metadata(
+        let metadata = context.render(Metadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -68,7 +69,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     path: imagePath
                 ),
                 noIndex: false
-            ).html()
+            ))
         var headElements = metadata.children + assets.publicStylesheetPaths.map {
             Link(rel: .stylesheet).href(stylesheetURL(path: $0))
         }
@@ -86,7 +87,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         return .init(html)
     }
 
-    public func renderAdminPage<T: Leaf>(
+    public func renderAdminPage<T: Component>(
         request: Request,
         title: String,
         description: String,
@@ -94,18 +95,19 @@ public struct DefaultRenderingEngine: RenderingEngine {
         sidebarState: AdminSidebar.State,
         content: T
     ) -> HTMLResponse {
+        var context = RenderContext()
         let toast = AdminToastRedirect.payload(from: request)
         let body = Body {
-            AdminBody(
+            context.render(AdminBody(
                 state: .init(
                     sidebar: sidebarState,
                     toast: toast,
                     content: content
                 )
-            ).html()
+            ))
         }
 
-        let metadata = Metadata(
+        let metadata = context.render(Metadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -117,7 +119,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     path: imagePath
                 ),
                 noIndex: false
-            ).html()
+            ))
         var headElements = metadata.children + assets.adminStylesheetPaths.map {
             Link(rel: .stylesheet).href(stylesheetURL(path: $0))
         }

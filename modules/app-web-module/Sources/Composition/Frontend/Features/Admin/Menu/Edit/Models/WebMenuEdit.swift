@@ -8,7 +8,7 @@ import WebAdminAPI
 import WebComponents
 import WebBuilders
 
-struct WebMenuEdit: Leaf {
+struct WebMenuEdit: Component {
 
     struct State {
         let id: String
@@ -19,20 +19,20 @@ struct WebMenuEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit menu")
-            AdminWebMenuTabs(menuID: state.id, active: .details).html()
+            context.render(AdminWebMenuTabs(menuID: state.id, active: .details))
             if state.isEdited { P("Menu edited successfully.") }
-            WebMenuForm(
+            context.render(WebMenuForm(
                 state: state.form,
                 action: "/admin/web/menus/\(state.id)/edit/",
                 submitLabel: "Edit menu",
                 removeHref: "/admin/web/menus/\(state.id)/remove/",
                 removeLabel: "Remove menu"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

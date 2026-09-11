@@ -16,7 +16,7 @@ import WebBuilders
 
 import struct Foundation.CharacterSet
 
-struct BlogAuthorTable: Leaf {
+struct BlogAuthorTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -77,14 +77,14 @@ struct BlogAuthorTable: Leaf {
         }
     }
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Blog authors")
                 statusFormDefinitions()
 
@@ -105,22 +105,22 @@ struct BlogAuthorTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add author",
                             href: "/admin/blog/authors/add/"
-                        ).renderHTML()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/blog/authors/",
                         placeholder: "Quick search blog authors",
                         search: state.search
                     )
-                ).renderHTML()
+                ))
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -152,7 +152,7 @@ struct BlogAuthorTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "blog:authors:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/blog/authors/remove/",
                             page: state.page,
@@ -160,12 +160,12 @@ struct BlogAuthorTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Profile")
                                         Th("Name")
@@ -179,11 +179,11 @@ struct BlogAuthorTable: Leaf {
                                     for rule in state.rules {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: rule.id
                                                     )
-                                                ).renderHTML()
+                                                ))
                                             }
                                             Td {
                                                 if let profileImage = rule
@@ -217,7 +217,7 @@ struct BlogAuthorTable: Leaf {
                                                 "label",
                                                 "Profile"
                                             )
-                                            titleCell(for: rule)
+                                            titleCell(for: rule, context: &context)
                                             statusCell(for: rule)
                                             Td(
                                                 format(
@@ -245,9 +245,9 @@ struct BlogAuthorTable: Leaf {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/blog/authors/",
                             page: state.page,
@@ -255,7 +255,7 @@ struct BlogAuthorTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ))
                 }
             }
         }
@@ -314,14 +314,16 @@ struct BlogAuthorTable: Leaf {
     }
 
     private func titleCell(
-        for item: AdminListBlogAuthorItemModel
+        for item: AdminListBlogAuthorItemModel,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Td {
             Span {
                 Span(item.name)
                 if let previewPath = previewPath(for: item.metadata) {
                     A {
-                        Icon(svg: FeatherIcons.externalLink()).renderHTML()
+                        context.render(Icon(svg: FeatherIcons.externalLink()))
                     }
                     .href(previewPath)
                     .target(.blank)

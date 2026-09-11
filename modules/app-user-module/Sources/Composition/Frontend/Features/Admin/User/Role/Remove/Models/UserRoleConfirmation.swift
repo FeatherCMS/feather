@@ -7,7 +7,7 @@ import UserAdminAPI
 import WebComponents
 import WebBuilders
 
-struct UserRoleConfirmation: Leaf {
+struct UserRoleConfirmation: Component {
 
     struct State {
         let id: String
@@ -17,8 +17,8 @@ struct UserRoleConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove user role",
@@ -31,6 +31,6 @@ struct UserRoleConfirmation: Leaf {
                 actionURL: "/admin/user/roles/\(state.id)/remove/",
                 cancelURL: "/admin/user/roles/"
             )
-        ).html()
+        ))
     }
 }

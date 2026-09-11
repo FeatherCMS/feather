@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct NewsletterCampaignAddView: Leaf {
+struct NewsletterCampaignAddView: Component {
     struct State {
         let name: String
         let fromEmail: String
@@ -16,22 +16,22 @@ struct NewsletterCampaignAddView: Leaf {
     }
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Add campaign")
             if let error = state.error { P(error).class("error") }
             Form {
                 Section {
                     Label {
-                        AdminFieldLabel(label: "Name", required: true).html()
+                        context.render(AdminFieldLabel(label: "Name", required: true))
                         Input().type(.text).class("text-input").name("name")
                             .value(state.name).id("name").required()
                     }
                 }
                 Section {
                     Label {
-                        AdminFieldLabel(label: "From email", required: true).html()
+                        context.render(AdminFieldLabel(label: "From email", required: true))
                         Input().type(.email).class("text-input")
                             .name("fromEmail").value(state.fromEmail)
                             .id("fromEmail").required()

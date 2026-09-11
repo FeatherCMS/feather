@@ -6,7 +6,7 @@ import WebAdminAPI
 import WebComponents
 import WebBuilders
 
-struct WebMenuDetails: Leaf {
+struct WebMenuDetails: Component {
     struct State {
         let menu: WebMenuDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -17,25 +17,25 @@ struct WebMenuDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Menu details")
-            AdminDetailsField(label: "ID", value: state.menu.id).html()
-            AdminDetailsField(label: "Key", value: state.menu.key).html()
-            AdminDetailsField(label: "Name", value: state.menu.name).html()
-            AdminDetailsField(label: "Notes", value: state.menu.notes ?? "").html()
+            context.render(AdminDetailsField(label: "ID", value: state.menu.id))
+            context.render(AdminDetailsField(label: "Key", value: state.menu.key))
+            context.render(AdminDetailsField(label: "Name", value: state.menu.name))
+            context.render(AdminDetailsField(label: "Notes", value: state.menu.notes ?? ""))
 
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit menu",
                     href: "/admin/web/menus/\(state.menu.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove menu",
                     href: "/admin/web/menus/\(state.menu.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class(
                 "button-row",

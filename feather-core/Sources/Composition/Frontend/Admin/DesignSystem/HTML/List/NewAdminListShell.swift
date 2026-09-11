@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminListShell<Table: FlowContent>: Leaf {
+public struct NewAdminListShell<Table: FlowContent>: Component {
 
     public let table: Table
 
@@ -113,8 +113,7 @@ public struct NewAdminListShell<Table: FlowContent>: Leaf {
         self.table = table
     }
 
-    public func html(
-    ) -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
             Div {
                 table

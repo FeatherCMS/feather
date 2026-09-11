@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthMagicLinkForm: Leaf {
+struct AuthMagicLinkForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -66,7 +66,7 @@ struct AuthMagicLinkForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -75,7 +75,7 @@ struct AuthMagicLinkForm: Leaf {
                 P(error).class("error")
             }
 
-            AdminAutocompleteField(
+            context.render(AdminAutocompleteField(
                 state: .init(
                     key: state.credentialId.key,
                     label: "Email",
@@ -85,9 +85,9 @@ struct AuthMagicLinkForm: Leaf {
                     selectionMode: .single,
                     isEnabled: true
                 )
-            ).html()
+            ))
 
-            CheckboxField(
+            context.render(CheckboxField(
                 state: .init(
                     key: state.isPersistent.key,
                     label: state.isPersistent.label,
@@ -96,18 +96,18 @@ struct AuthMagicLinkForm: Leaf {
                     labelPosition: .before,
 
                 )
-            ).html()
+            ))
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")

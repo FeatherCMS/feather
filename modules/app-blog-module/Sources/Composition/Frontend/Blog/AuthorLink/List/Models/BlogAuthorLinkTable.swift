@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorLinkTable: Leaf {
+struct BlogAuthorLinkTable: Component {
 
     struct State {
         let menuId: String
@@ -34,14 +34,14 @@ struct BlogAuthorLinkTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Blog author links")
 
                 if state.isAdded {
@@ -55,23 +55,23 @@ struct BlogAuthorLinkTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add link",
                             href:
                                 "/admin/blog/authors/\(state.menuId)/links/add/"
-                        ).renderHTML()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/blog/authors/\(state.menuId)/links/",
                         placeholder: "Quick search blog author links",
                         search: state.search
                     )
-                ).renderHTML()
+                ))
 
                 if state.items.isEmpty {
                     let totalPages = max(
@@ -106,7 +106,7 @@ struct BlogAuthorLinkTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "blog:author-links:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action:
                                 "/admin/blog/authors/\(state.menuId)/links/remove/",
@@ -115,12 +115,12 @@ struct BlogAuthorLinkTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Label")
                                         Th("URL")
@@ -134,11 +134,11 @@ struct BlogAuthorLinkTable: Leaf {
                                     for item in state.items {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                ).renderHTML()
+                                                ))
                                             }
                                             Td(item.label)
                                                 .data(
@@ -165,7 +165,7 @@ struct BlogAuthorLinkTable: Leaf {
                                                     "label",
                                                     "Permission"
                                                 )
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -197,16 +197,16 @@ struct BlogAuthorLinkTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).renderHTML()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/blog/authors/\(state.menuId)/links/",
                             page: state.page,
@@ -214,7 +214,7 @@ struct BlogAuthorLinkTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ))
                 }
             }
         }

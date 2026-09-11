@@ -7,14 +7,14 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct NewsletterCampaignSubscriberRemoveView: Leaf {
+struct NewsletterCampaignSubscriberRemoveView: Component {
     let email: String
     let subscriberId: String
     let newsletterId: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: breadcrumb,
                 title: "Remove subscriber",
@@ -26,6 +26,6 @@ struct NewsletterCampaignSubscriberRemoveView: Leaf {
                     "/admin/newsletters/\(newsletterId)/subscribers/\(subscriberId)/remove/",
                 cancelURL: "/admin/newsletters/\(newsletterId)/subscribers/"
             )
-        ).html()
+        ))
     }
 }

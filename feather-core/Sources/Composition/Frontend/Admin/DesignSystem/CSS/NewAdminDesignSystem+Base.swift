@@ -19,7 +19,7 @@ extension NewAdminDesignSystem {
                 Margin(0)
                 Padding(0)
             }
-            
+
             Custom("ul.inline") {
                 Display(.flex)
                 FlexWrap(.wrap)
@@ -122,7 +122,7 @@ extension NewAdminDesignSystem {
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
 
-            
+
             Custom("body") {
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))

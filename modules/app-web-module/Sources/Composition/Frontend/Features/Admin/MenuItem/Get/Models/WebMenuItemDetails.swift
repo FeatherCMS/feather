@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct WebMenuItemDetails: Leaf {
+struct WebMenuItemDetails: Component {
     struct State {
         let item: WebMenuItemDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -13,40 +13,40 @@ struct WebMenuItemDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Item details")
-            AdminDetailsField(label: "ID", value: state.item.id).html()
-            AdminDetailsField(label: "Label", value: state.item.label).html()
-            AdminDetailsField(label: "URL", value: state.item.url).html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.item.id))
+            context.render(AdminDetailsField(label: "Label", value: state.item.label))
+            context.render(AdminDetailsField(label: "URL", value: state.item.url))
+            context.render(AdminDetailsField(
                 label: "Priority",
                 value: "\(state.item.priority)"
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Blank target",
                 value: state.item.isBlank ? "Yes" : "No"
-            ).html()
-            AdminDetailsField(label: "Permission", value: state.item.permission).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(label: "Permission", value: state.item.permission))
+            context.render(AdminDetailsField(
                 label: "Authentication",
                 value: state.item.authentication
-            ).html()
-            AdminDetailsField(label: "Notes", value: state.item.notes ?? "").html()
+            ))
+            context.render(AdminDetailsField(label: "Notes", value: state.item.notes ?? ""))
 
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit item",
                     href:
                         "/admin/web/menus/\(state.item.menuId)/items/\(state.item.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove item",
                     href:
                         "/admin/web/menus/\(state.item.menuId)/items/\(state.item.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

@@ -8,7 +8,7 @@ import WebContracts
 import WebComponents
 import WebBuilders
 
-struct WebPageDetails: Leaf {
+struct WebPageDetails: Component {
     struct State {
         let rule: WebPageDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -19,9 +19,9 @@ struct WebPageDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Web page details")
             if state.isPublished {
                 P("Web page published successfully.")
@@ -29,20 +29,20 @@ struct WebPageDetails: Leaf {
             if state.isUnpublished {
                 P("Web page unpublished successfully.")
             }
-            AdminDetailsField(label: "ID", value: state.rule.id).html()
-            AdminDetailsField(label: "Title", value: state.rule.title).html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.rule.id))
+            context.render(AdminDetailsField(label: "Title", value: state.rule.title))
+            context.render(AdminDetailsField(
                 label: "Status",
                 value: state.rule.metadata.status.capitalized
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Published date",
                 value: format(state.rule.metadata.publicationDate)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Expiration date",
                 value: format(state.rule.metadata.expirationDate)
-            ).html()
+            ))
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -55,26 +55,26 @@ struct WebPageDetails: Leaf {
                 if state.permissions.contains(
                     WebPermissions.Pages.update.rawValue
                 ) {
-                    AdminStatusActionForm(
+                    context.render(AdminStatusActionForm(
                         action: "/admin/web/pages/\(state.rule.id)/status/",
                         returnTo: "/admin/web/pages/\(state.rule.id)/",
                         status: isPublished ? "draft" : "published",
                         label: isPublished ? "Unpublish" : "Publish",
                         classes: ["secondary"]
-                    ).html()
-                    AdminNavigationButton(
+                    ))
+                    context.render(AdminNavigationButton(
                         "Edit page",
                         href: "/admin/web/pages/\(state.rule.id)/edit/"
-                    ).html()
+                    ))
                 }
                 if state.permissions.contains(
                     WebPermissions.Pages.delete.rawValue
                 ) {
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Remove page",
                         href: "/admin/web/pages/\(state.rule.id)/remove/",
                         classes: ["danger"]
-                    ).html()
+                    ))
                 }
             }
             .class("button-row", "admin-detail-actions")

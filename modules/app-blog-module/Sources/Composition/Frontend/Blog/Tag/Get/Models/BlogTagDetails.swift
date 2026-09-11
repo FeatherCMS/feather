@@ -14,7 +14,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogTagDetails: Leaf {
+struct BlogTagDetails: Component {
     struct State {
         let rule: BlogTagDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -25,9 +25,9 @@ struct BlogTagDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Blog tag details")
             if state.isPublished {
                 P("Blog tag published successfully.")
@@ -35,20 +35,20 @@ struct BlogTagDetails: Leaf {
             if state.isUnpublished {
                 P("Blog tag unpublished successfully.")
             }
-            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
-            AdminDetailsField(label: "Title", value: state.rule.title).renderHTML()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.rule.id))
+            context.render(AdminDetailsField(label: "Title", value: state.rule.title))
+            context.render(AdminDetailsField(
                 label: "Status",
                 value: state.rule.metadata.status.capitalized
-            ).renderHTML()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Published date",
                 value: format(state.rule.metadata.publicationDate)
-            ).renderHTML()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Expiration date",
                 value: format(state.rule.metadata.expirationDate)
-            ).renderHTML()
+            ))
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -68,19 +68,19 @@ struct BlogTagDetails: Leaf {
                         label: isPublished ? "Unpublish" : "Publish",
                         classes: ["secondary"]
                     )
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Edit tag",
                         href: "/admin/blog/tags/\(state.rule.id)/edit/"
-                    ).renderHTML()
+                    ))
                 }
                 if state.permissions.contains(
                     BlogPermissions.Tags.delete.rawValue
                 ) {
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Remove tag",
                         href: "/admin/blog/tags/\(state.rule.id)/remove/",
                         classes: ["danger"]
-                    ).renderHTML()
+                    ))
                 }
             }
             .class("button-row", "admin-detail-actions")

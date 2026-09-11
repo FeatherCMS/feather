@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminListToolbar: Leaf {
+public struct NewAdminListToolbar: Component {
 
     public func rules(
     ) -> [any Rule] {
@@ -28,8 +28,7 @@ public struct NewAdminListToolbar: Leaf {
         self.content = content()
     }
 
-    public func html(
-    ) -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
             for item in content {
                 item

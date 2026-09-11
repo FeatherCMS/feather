@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct NewsletterCampaignSubscriberFormView: Leaf {
+struct NewsletterCampaignSubscriberFormView: Component {
     struct State {
         let newsletterId: String
         let email: String
@@ -21,9 +21,9 @@ struct NewsletterCampaignSubscriberFormView: Leaf {
     }
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1(
                 state.isEdit
                     ? "Edit campaign subscriber" : "Add campaign subscriber"
@@ -31,20 +31,20 @@ struct NewsletterCampaignSubscriberFormView: Leaf {
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Email", required: true).html()
+                    context.render(AdminFieldLabel(label: "Email", required: true))
                     Input().type(.email).name("email").value(state.email)
                         .required().if(state.isEdit) { $0.readOnly() }
                 }
                 Label {
-                    AdminFieldLabel(label: "First name", required: false).html()
+                    context.render(AdminFieldLabel(label: "First name", required: false))
                     Input().type(.text).name("firstName").value(state.firstName)
                 }
                 Label {
-                    AdminFieldLabel(label: "Last name", required: false).html()
+                    context.render(AdminFieldLabel(label: "Last name", required: false))
                     Input().type(.text).name("lastName").value(state.lastName)
                 }
                 Label {
-                    AdminFieldLabel(label: "Status", required: true).html()
+                    context.render(AdminFieldLabel(label: "Status", required: true))
                     Select {
                         Option("Subscribed").value("subscribed")
                             .if(state.status == "subscribed") { $0.selected() }

@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthProfileEdit: Leaf {
+struct AuthProfileEdit: Component {
 
     struct State {
         let id: String
@@ -27,20 +27,20 @@ struct AuthProfileEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit profile")
             if state.isEdited {
                 P("Profile edited successfully.").class("success")
             }
 
-            AuthProfileForm(
+            context.render(AuthProfileForm(
                 state: state.form,
                 action: "/admin/auth/profile/edit/",
                 submitLabel: "Edit profile"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

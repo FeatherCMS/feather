@@ -8,7 +8,7 @@ import WebAdminAPI
 import WebComponents
 import WebBuilders
 
-struct WebMenuTable: Leaf {
+struct WebMenuTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -29,14 +29,14 @@ struct WebMenuTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Menus")
 
                 if state.isAdded {
@@ -50,22 +50,22 @@ struct WebMenuTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add menu",
                             href: "/admin/web/menus/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/web/menus/",
                         placeholder: "Quick search menus",
                         search: state.search
                     )
-                ).html()
+                ))
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -97,7 +97,7 @@ struct WebMenuTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "web:menus:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/web/menus/remove/",
                             page: state.page,
@@ -105,12 +105,12 @@ struct WebMenuTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Key")
                                         Th("Name")
@@ -121,11 +121,11 @@ struct WebMenuTable: Leaf {
                                     for rule in state.rules {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: rule.id
                                                     )
-                                                ).html()
+                                                ))
                                             }
                                             Td(rule.key)
                                                 .data(
@@ -137,7 +137,7 @@ struct WebMenuTable: Leaf {
                                                     "label",
                                                     "Name"
                                                 )
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -169,16 +169,16 @@ struct WebMenuTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/web/menus/",
                             page: state.page,
@@ -186,7 +186,7 @@ struct WebMenuTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).html()
+                    ))
                 }
             }
         }

@@ -5,7 +5,7 @@ import WebBuilders
 
 private typealias HTMLButton = HTML.Button
 
-public struct AdminStatusActionForm: Leaf {
+public struct AdminStatusActionForm: Component {
     let action: String
     let returnTo: String
     let status: String
@@ -26,7 +26,7 @@ public struct AdminStatusActionForm: Leaf {
         self.classes = classes
     }
 
-    public func html() -> Form {
+    public func html(context: inout RenderContext) -> Form {
         Form {
             Input()
                 .type(.hidden)

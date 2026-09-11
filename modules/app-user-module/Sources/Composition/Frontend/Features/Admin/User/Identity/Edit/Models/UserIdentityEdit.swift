@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct UserIdentityEdit: Leaf {
+struct UserIdentityEdit: Component {
 
     struct State {
         let id: String
@@ -15,21 +15,21 @@ struct UserIdentityEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit identity")
             if state.isEdited {
                 P("User identity edited successfully.").class("success")
             }
-            UserIdentityForm(
+            context.render(UserIdentityForm(
                 state: state.form,
                 action: "/admin/user/identities/\(state.id)/edit/",
                 submitLabel: "Edit identity",
                 removeHref: "/admin/user/identities/\(state.id)/remove/",
                 removeLabel: "Remove identity"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

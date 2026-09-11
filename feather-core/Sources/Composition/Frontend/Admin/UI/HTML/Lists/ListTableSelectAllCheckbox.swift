@@ -3,11 +3,11 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct ListTableSelectAllCheckbox: Leaf {
+public struct ListTableSelectAllCheckbox: Component {
 
     public init() {}
 
-    public func html() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         Th {
             Input()
                 .type(.checkbox)

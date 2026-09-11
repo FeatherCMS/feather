@@ -126,7 +126,7 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
-                
+
                 .target(name: "WebDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -136,7 +136,7 @@ let package = Package(
             name: "WebInfrastructure",
             dependencies: [
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
-                
+
                 .target(name: "WebApplication"),
             ],
             path: "Sources/Layers/Infrastructure",

@@ -5,57 +5,57 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemJobDetails: Leaf {
+struct SystemJobDetails: Component {
     let job: Components.Schemas.SystemJobSchema
     let breadcrumb: AdminBreadcrumb.State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Worker job details")
             let payload = SystemJobPayload(job: job)
-            AdminDetailsField(label: "Job", value: payload.name).html()
-            AdminDetailsField(label: "ID", value: job.id).html()
-            AdminDetailsField(label: "Queue", value: job.queueName).html()
-            AdminDetailsField(label: "Status", value: statusLabel(job.status)).html()
-            AdminDetailsField(label: "Worker", value: job.workerId ?? "—").html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "Job", value: payload.name))
+            context.render(AdminDetailsField(label: "ID", value: job.id))
+            context.render(AdminDetailsField(label: "Queue", value: job.queueName))
+            context.render(AdminDetailsField(label: "Status", value: statusLabel(job.status)))
+            context.render(AdminDetailsField(label: "Worker", value: job.workerId ?? "—"))
+            context.render(AdminDetailsField(
                 label: "Last modified",
                 value: String(describing: job.lastModified)
-            ).html()
+            ))
             if let queuedAt = payload.queuedAt {
-                AdminDetailsField(label: "Queued at", value: queuedAt).html()
+                context.render(AdminDetailsField(label: "Queued at", value: queuedAt))
             }
             if let attempt = payload.attempt {
-                AdminDetailsField(label: "Attempt", value: attempt).html()
+                context.render(AdminDetailsField(label: "Attempt", value: attempt))
             }
             if let nextScheduledAt = payload.nextScheduledAt {
-                AdminDetailsField(
+                context.render(AdminDetailsField(
                     label: "Next scheduled at",
                     value: nextScheduledAt
-                ).html()
+                ))
             }
             if let traceContext = payload.traceContext {
-                AdminDetailsField(label: "Trace context", value: traceContext).html()
+                context.render(AdminDetailsField(label: "Trace context", value: traceContext))
             }
             if let sender = payload.sender {
-                AdminDetailsField(label: "From", value: sender).html()
+                context.render(AdminDetailsField(label: "From", value: sender))
             }
             if let recipient = payload.recipient {
-                AdminDetailsField(label: "To", value: recipient).html()
+                context.render(AdminDetailsField(label: "To", value: recipient))
             }
             if let subject = payload.subject {
-                AdminDetailsField(label: "Subject", value: subject).html()
+                context.render(AdminDetailsField(label: "Subject", value: subject))
             }
             if let message = payload.message {
-                AdminDetailsField(label: "Message", value: message).html()
+                context.render(AdminDetailsField(label: "Message", value: message))
             }
-            AdminDetailsField(label: "Payload", value: job.payload).html()
+            context.render(AdminDetailsField(label: "Payload", value: job.payload))
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Back to worker jobs",
                     href: "/admin/system/jobs/"
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

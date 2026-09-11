@@ -26,6 +26,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         permissions: Set<String>,
         error: String?
     ) -> HTMLResponse {
+        var renderContext = RenderContext()
         let canAccess = permissions.contains(
             MediaPermissions.Assets.list.rawValue
         )
@@ -63,11 +64,11 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                     description: "Select media asset",
                     imagePath: "images/logos/logo.png",
                     content: Div {
-                        MediaAssetErrorView(
+                        renderContext.render(MediaAssetErrorView(
                             info: "Unable to load media assets.",
                             message: error,
                             breadcrumb: mediaAssetsBreadcrumb()
-                        ).html()
+                        ))
                     }
                 )
             }
@@ -94,7 +95,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 description: "Select media asset",
                 imagePath: "images/logos/logo.png",
                 content: Div {
-                    content.html()
+                    renderContext.render(content)
                 }
             )
         }

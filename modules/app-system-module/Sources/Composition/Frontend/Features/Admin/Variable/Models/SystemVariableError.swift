@@ -7,7 +7,7 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemVariableError: Leaf {
+struct SystemVariableError: Component {
 
     struct State {
         let info: String
@@ -17,9 +17,9 @@ struct SystemVariableError: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1(state.info)
             P(state.message)

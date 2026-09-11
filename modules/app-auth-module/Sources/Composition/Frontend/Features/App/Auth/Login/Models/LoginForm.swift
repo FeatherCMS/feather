@@ -23,7 +23,7 @@ import WebBuilders
 //  Addd by Tibor Bödecs on 2026. 03. 01..
 //
 
-struct LoginForm: Leaf {
+struct LoginForm: Component {
 
     struct State: FeatherAdmin.Object {
         var email: EmailField.State
@@ -45,20 +45,20 @@ struct LoginForm: Leaf {
         }
     }
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             Section {
-                EmailField(state: state.email).html()
+                context.render(EmailField(state: state.email))
             }
             .class("login-field")
 
             Section {
-                PasswordField(state: state.password).html()
+                context.render(PasswordField(state: state.password))
             }
             .class("login-field")
 
             Section {
-                CheckboxField(state: state.isPersistent).html()
+                context.render(CheckboxField(state: state.isPersistent))
             }
             .class("login-checkbox-field")
 

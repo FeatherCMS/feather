@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthMagicLinkDetails: Leaf {
+struct AuthMagicLinkDetails: Component {
     struct State {
         let link: AuthMagicLinkDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -24,29 +24,29 @@ struct AuthMagicLinkDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("User magic link details")
-            AdminDetailsField(label: "ID", value: state.link.id).html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.link.id))
+            context.render(AdminDetailsField(
                 label: "Credential ID",
                 value: state.link.credentialId
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Persistent",
                 value: state.link.isPersistent ? "Yes" : "No"
-            ).html()
+            ))
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit magic link",
                     href: "/admin/auth/magic-links/\(state.link.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove magic link",
                     href: "/admin/auth/magic-links/\(state.link.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

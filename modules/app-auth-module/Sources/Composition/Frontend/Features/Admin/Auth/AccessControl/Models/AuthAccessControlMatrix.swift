@@ -17,7 +17,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthAccessControlMatrix: Leaf {
+struct AuthAccessControlMatrix: Component {
 
     struct State {
         let isEdited: Bool
@@ -33,7 +33,7 @@ struct AuthAccessControlMatrix: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         let visiblePermissions = state.permissions.filter {
             state.search.isEmpty
                 || ($0.name ?? "")
@@ -43,7 +43,7 @@ struct AuthAccessControlMatrix: Leaf {
         let table = matrixTable(groups: groupedPermissions)
 
         return Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Access Control")
             P("Rows are permissions, columns are roles.")
 
@@ -55,13 +55,13 @@ struct AuthAccessControlMatrix: Leaf {
             }
 
             Div {
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/auth/access-control/",
                         placeholder: "Quick search access control",
                         search: state.search
                     )
-                ).html()
+                ))
             }
             .style(
                 "margin: 1.5rem 0 0.75rem;"
@@ -75,7 +75,7 @@ struct AuthAccessControlMatrix: Leaf {
             }
             else if state.canEdit {
                 Form {
-                    ListTableShell(table: table).html()
+                    context.render(ListTableShell(table: table))
 
                     Div {
                         Button("Save access control")
@@ -97,7 +97,7 @@ struct AuthAccessControlMatrix: Leaf {
                 P(
                     "You can view the access control matrix, but you need update permission to save changes."
                 )
-                ListTableShell(table: table).html()
+                context.render(ListTableShell(table: table))
             }
         }
         .class("cms-section")

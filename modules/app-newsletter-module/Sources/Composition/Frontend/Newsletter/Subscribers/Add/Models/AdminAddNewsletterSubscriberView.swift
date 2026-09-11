@@ -7,34 +7,34 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminAddNewsletterSubscriberView: Leaf {
+struct AdminAddNewsletterSubscriberView: Component {
     let model: AdminAddNewsletterSubscriberModel
     let isAdded: Bool
     let breadcrumb: AdminBreadcrumb.State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Add subscriber")
             if isAdded { P("Subscriber added successfully.") }
             if let error = model.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Email", required: true).html()
+                    context.render(AdminFieldLabel(label: "Email", required: true))
                     Input().type(.email).class("text-input").name("email")
                         .value(model.email).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "First name", required: false).html()
+                    context.render(AdminFieldLabel(label: "First name", required: false))
                     Input().type(.text).class("text-input").name("firstName")
                         .value(model.firstName)
                 }
                 Label {
-                    AdminFieldLabel(label: "Last name", required: false).html()
+                    context.render(AdminFieldLabel(label: "Last name", required: false))
                     Input().type(.text).class("text-input").name("lastName")
                         .value(model.lastName)
                 }
-                AdminAutocompleteField(
+                context.render(AdminAutocompleteField(
                     state: .init(
                         key: "campaignIds",
                         label: "Campaigns",
@@ -52,7 +52,7 @@ struct AdminAddNewsletterSubscriberView: Leaf {
                         selectionMode: .multiple,
                         isEnabled: true
                     )
-                ).html()
+                ))
                 Div { Button("Add subscriber").type(.submit) }
                     .class("button-row")
             }

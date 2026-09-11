@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct ListTablePagination: Leaf {
+public struct ListTablePagination: Component {
 
     public struct State: Sendable {
         public let path: String
@@ -37,7 +37,7 @@ public struct ListTablePagination: Leaf {
         self.state = state
     }
 
-    public func html() -> Div {
+    public func html(context: inout RenderContext) -> Div {
         let extraQuerySuffix =
             state.queryItems
             .filter { !$0.1.isEmpty }

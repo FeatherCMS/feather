@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthMagicLinkTable: Leaf {
+struct AuthMagicLinkTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -39,18 +39,18 @@ struct AuthMagicLinkTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("User magic links")
 
                 if let userID = state.userID {
-                    AdminPillTabs(links: [
+                    context.render(AdminPillTabs(links: [
                         .init(
                             label: "Details",
                             href: "/admin/user/identities/\(userID)/",
@@ -76,7 +76,7 @@ struct AuthMagicLinkTable: Leaf {
                             href: "/admin/auth/magic-links/?userId=\(userID)",
                             isCurrent: true
                         ),
-                    ]).html()
+                    ]))
                 }
 
                 if state.isAdded {
@@ -90,23 +90,23 @@ struct AuthMagicLinkTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add magic link",
                             href: "/admin/auth/magic-links/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/auth/magic-links/",
                         placeholder: "Quick search magic links",
                         search: state.search,
                         queryItems: state.userID.map { [("userId", $0)] } ?? []
                     )
-                ).html()
+                ))
 
                 if state.links.isEmpty {
                     let totalPages = max(
@@ -141,7 +141,7 @@ struct AuthMagicLinkTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "auth:magic-links:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/auth/magic-links/remove/",
                             page: state.page,
@@ -151,12 +151,12 @@ struct AuthMagicLinkTable: Leaf {
                             queryItems: state.userID.map { [("userId", $0)] }
                                 ?? []
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Email")
                                             .columnWidth(percent: 50)
@@ -173,9 +173,9 @@ struct AuthMagicLinkTable: Leaf {
                                     for link in state.links {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(id: link.id)
-                                                ).html()
+                                                ))
                                             }
                                             Td(
                                                 state.emailByAuthEmailId[
@@ -198,7 +198,7 @@ struct AuthMagicLinkTable: Leaf {
                                             Td(link.isUsed ? "Yes" : "No")
                                                 .data("label", "Used")
                                                 .columnWidth(percent: 10)
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -230,16 +230,16 @@ struct AuthMagicLinkTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/auth/magic-links/",
                             page: state.page,
@@ -249,7 +249,7 @@ struct AuthMagicLinkTable: Leaf {
                             queryItems: state.userID.map { [("userId", $0)] }
                                 ?? []
                         )
-                    ).html()
+                    ))
                 }
             }
         }

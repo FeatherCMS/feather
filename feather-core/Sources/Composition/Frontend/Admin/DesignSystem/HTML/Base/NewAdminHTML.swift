@@ -11,16 +11,13 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
+public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
 
     let title: String
     let language: String
     let body: NewAdminBody<T>
 
     private let cssRenderer: CSSRenderer
-    private let styleCollector: ComponentStyleCollector
-    private let scriptCollector: ComponentScriptCollector
-
     public init(
         title: String,
         language: String = "en-US",
@@ -35,26 +32,23 @@ public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
         #else
         self.cssRenderer = .init(minify: true)
         #endif
-        self.styleCollector = .init()
-        self.scriptCollector = .init()
     }
 
-    public var children: [any Component] {
-        body
-    }
+    public func html(context: inout RenderContext) -> Html {
 
-    public func html() -> Html {
-        let style = styleCollector.getStylesheet(from: self)
+        let style = context.stylesheet()
         let css = cssRenderer.render(style)
-        let scripts = scriptCollector.getScripts(from: self)
+        let scripts = context.scripts()
+        let renderedHead: Head = context.render(NewAdminHead(
+            title: title,
+            stylesheet: css,
+            scripts: scripts
+        ))
+        let renderedBody = context.render(body)
 
         return Html {
-            NewAdminHead(
-                title: title,
-                stylesheet: css,
-                scripts: scripts
-            ).html()
-            body.html()
+            renderedHead
+            renderedBody
         }
         .lang(language)
     }

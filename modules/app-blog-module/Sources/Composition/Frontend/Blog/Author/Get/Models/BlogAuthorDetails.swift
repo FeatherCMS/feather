@@ -14,7 +14,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorDetails: Leaf {
+struct BlogAuthorDetails: Component {
     struct State {
         let author: BlogAuthorDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -27,10 +27,10 @@ struct BlogAuthorDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor().renderHTML()
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminDetailFieldStyleAnchor())
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Blog author details")
             if state.isPublished {
                 P("Blog author published successfully.")
@@ -63,26 +63,26 @@ struct BlogAuthorDetails: Leaf {
                 )
             }
             else if let profileImageAssetId = state.author.profileImageAssetId {
-                AdminDetailsField(
+                context.render(AdminDetailsField(
                     label: "Profile picture asset ID",
                     value: profileImageAssetId
-                ).renderHTML()
+                ))
             }
-            AdminDetailsField(label: "ID", value: state.author.id).renderHTML()
-            AdminDetailsField(label: "Name", value: state.author.name).renderHTML()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.author.id))
+            context.render(AdminDetailsField(label: "Name", value: state.author.name))
+            context.render(AdminDetailsField(
                 label: "Status",
                 value: state.author.metadata.status.capitalized
-            ).renderHTML()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Published date",
                 value: format(state.author.metadata.publicationDate)
-            ).renderHTML()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Expiration date",
                 value: format(state.author.metadata.expirationDate)
-            ).renderHTML()
-            AdminDetailsField(label: "Content", value: state.author.content).renderHTML()
+            ))
+            context.render(AdminDetailsField(label: "Content", value: state.author.content))
 
             Div {
                 if let previewPath = previewPath {
@@ -108,19 +108,19 @@ struct BlogAuthorDetails: Leaf {
                             : "Publish",
                         classes: ["secondary"]
                     )
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Edit author",
                         href: "/admin/blog/authors/\(state.author.id)/edit/"
-                    ).renderHTML()
+                    ))
                 }
                 if state.permissions.contains(
                     BlogPermissions.Authors.delete.rawValue
                 ) {
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Remove author",
                         href: "/admin/blog/authors/\(state.author.id)/remove/",
                         classes: ["danger"]
-                    ).renderHTML()
+                    ))
                 }
             }
             .class(
@@ -140,11 +140,11 @@ struct BlogAuthorDetails: Leaf {
                 BlogPermissions.AuthorLinks.create.rawValue
             ) {
                 Div {
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Add link",
                         href:
                             "/admin/blog/authors/\(state.author.id)/links/add/"
-                    ).renderHTML()
+                    ))
                 }
                 .class("button-row", "blog-author-details-link-add")
             }
@@ -155,7 +155,7 @@ struct BlogAuthorDetails: Leaf {
                 let canRemove = state.permissions.contains(
                     "blog:author-links:delete"
                 )
-                ListTableRemoveForm(
+                context.render(ListTableRemoveForm(
                     state: .init(
                         action:
                             "/admin/blog/authors/\(state.author.id)/links/remove/",
@@ -164,12 +164,12 @@ struct BlogAuthorDetails: Leaf {
                         canRemove: canRemove,
                         buttonTitle: "Remove selected"
                     ),
-                    table: ListTableShell(
+                    table: context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox().renderHTML()
+                                        context.render(ListTableSelectAllCheckbox())
                                     }
                                     Th("Label")
                                     Th("URL")
@@ -183,9 +183,9 @@ struct BlogAuthorDetails: Leaf {
                                 for item in state.author.items {
                                     Tr {
                                         if canRemove {
-                                            ListTableRowSelectCheckbox(
+                                            context.render(ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).renderHTML()
+                                            ))
                                         }
                                         Td(item.label)
                                             .data("label", "Label")
@@ -197,7 +197,7 @@ struct BlogAuthorDetails: Leaf {
                                             .data("label", "Blank")
                                         Td(item.permission)
                                             .data("label", "Permission")
-                                        ListTableRowActions(
+                                        context.render(ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",
                                                 actions: [
@@ -228,15 +228,15 @@ struct BlogAuthorDetails: Leaf {
                                                 ],
                                                 permissions: state.permissions
                                             )
-                                        ).renderHTML()
+                                        ))
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    ).renderHTML()
-                ).renderHTML()
+                    ))
+                ))
             }
         }
         .class("cms-section")

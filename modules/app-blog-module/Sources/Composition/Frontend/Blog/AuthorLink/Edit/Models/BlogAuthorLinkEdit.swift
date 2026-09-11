@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorLinkEdit: Leaf {
+struct BlogAuthorLinkEdit: Component {
 
     struct State {
         let menuId: String
@@ -23,9 +23,9 @@ struct BlogAuthorLinkEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit blog author link")
             if state.isEdited { P("Blog author link edited successfully.") }

@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthCredentialEdit: Leaf {
+struct AuthCredentialEdit: Component {
     struct State {
         let id: String
         let form: AuthCredentialForm.State
@@ -25,16 +25,16 @@ struct AuthCredentialEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Edit user credential")
-            AuthCredentialForm(
+            context.render(AuthCredentialForm(
                 state: state.form,
                 action: "/admin/auth/credentials/\(state.id)/edit/",
                 submitLabel: "Edit credential",
                 removeHref: "/admin/auth/credentials/\(state.id)/remove/"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

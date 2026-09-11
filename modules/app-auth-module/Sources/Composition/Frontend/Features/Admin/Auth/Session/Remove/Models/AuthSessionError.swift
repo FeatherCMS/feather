@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AuthSessionError: Leaf {
+struct AuthSessionError: Component {
 
     struct State {
         let info: String
@@ -14,9 +14,9 @@ struct AuthSessionError: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1(state.info)
             P(state.message)

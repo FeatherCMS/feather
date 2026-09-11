@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct LoginPage: Leaf {
+struct LoginPage: Component {
 
     struct State {
         var form: LoginForm.State
@@ -135,7 +135,7 @@ struct LoginPage: Leaf {
         }
     }
 
-    func html() -> Main {
+    func html(context: inout RenderContext) -> Main {
         Main {
             Div {
                 Div {
@@ -145,7 +145,7 @@ struct LoginPage: Leaf {
                 }
                 .class("login-copy")
 
-                LoginForm(state: state.form).html()
+                context.render(LoginForm(state: state.form))
 
                 A("Sign in with a magic link")
                     .href("/magic-link/")

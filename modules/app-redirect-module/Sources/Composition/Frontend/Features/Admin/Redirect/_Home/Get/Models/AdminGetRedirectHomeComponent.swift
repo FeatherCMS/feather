@@ -13,9 +13,9 @@ import WebBuilders
 //  Addd by Tibor Bödecs on 2026. 03. 08..
 //
 
-struct AdminGetRedirectHomeComponent: Leaf {
+struct AdminGetRedirectHomeComponent: Component {
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             Nav {
                 Ol {

@@ -9,7 +9,7 @@ import WebAdminAPI
 import WebComponents
 import WebBuilders
 
-struct WebMenuItemTable: Leaf {
+struct WebMenuItemTable: Component {
 
     struct State {
         let menuId: String
@@ -72,16 +72,16 @@ struct WebMenuItemTable: Leaf {
         }
     }
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Edit menu")
-                AdminWebMenuTabs(menuID: state.menuId, active: .items).html()
+                context.render(AdminWebMenuTabs(menuID: state.menuId, active: .items))
 
                 if state.isAdded {
                     P("Item added successfully.")
@@ -94,22 +94,22 @@ struct WebMenuItemTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add item",
                             href: "/admin/web/menus/\(state.menuId)/items/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/web/menus/\(state.menuId)/items/",
                         placeholder: "Quick search items",
                         search: state.search
                     )
-                ).html()
+                ))
 
                 if state.items.isEmpty {
                     let totalPages = max(
@@ -144,7 +144,7 @@ struct WebMenuItemTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "web:menu-items:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action:
                                 "/admin/web/menus/\(state.menuId)/items/remove/",
@@ -153,12 +153,12 @@ struct WebMenuItemTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         if state.canReorder { Th("Order") }
                                         Th("Label")
@@ -172,11 +172,11 @@ struct WebMenuItemTable: Leaf {
                                     for item in state.items {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                ).html()
+                                                ))
                                             }
                                             if state.canReorder {
                                                 Td {
@@ -242,7 +242,7 @@ struct WebMenuItemTable: Leaf {
                                                     "label",
                                                     "Permission"
                                                 )
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -274,7 +274,7 @@ struct WebMenuItemTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                         .class("web-menu-item-row")
                                         .data("web-menu-item", item.id)
@@ -287,12 +287,12 @@ struct WebMenuItemTable: Leaf {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
+                        ))
+                    ))
                     if state.canReorder {
                         Script(reorderScript())
                     }
-                    ListTablePagination(
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/web/menus/\(state.menuId)/items/",
                             page: state.page,
@@ -300,7 +300,7 @@ struct WebMenuItemTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).html()
+                    ))
                 }
             }
         }

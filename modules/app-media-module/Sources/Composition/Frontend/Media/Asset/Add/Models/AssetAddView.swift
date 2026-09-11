@@ -9,7 +9,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AssetAddView: Leaf {
+struct AssetAddView: Component {
     struct State {
         let form: FormState
         let breadcrumb: AdminBreadcrumb.State
@@ -31,10 +31,10 @@ struct AssetAddView: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.form.isPicker {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Add media asset")
             }
             if let error = state.form.error { P(error).class("error") }
@@ -71,10 +71,10 @@ struct AssetAddView: Leaf {
                     .hidden()
             }
             if state.form.isPicker {
-                pickerUploadContainer()
+                pickerUploadContainer(context: &context)
             }
             else {
-                uploadForm()
+                uploadForm(context: &context)
             }
             Script(
                 """
@@ -165,7 +165,9 @@ struct AssetAddView: Leaf {
         }
     }
 
-    func uploadForm() -> some FlowContent {
+    func uploadForm(
+        context: inout RenderContext
+    ) -> some FlowContent {
         Form {
             Input().type(.hidden).name("parentId")
                 .value(state.form.parentId).id("parentId")
@@ -176,30 +178,30 @@ struct AssetAddView: Leaf {
             Input().type(.hidden).name("view").value(state.form.view)
                 .id("view")
 
-            FormInputField(
+            context.render(FormInputField(
                 name: "title",
                 label: "Title",
                 value: state.form.title,
                 id: "title",
                 inputClass: "text-input"
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: "altText",
                 label: "Alt text",
                 value: state.form.altText,
                 id: "altText",
                 inputClass: "text-input"
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: "file",
                 label: "File",
                 id: "file",
                 type: .file,
                 isRequired: true,
                 inputClass: "text-input"
-            ).html()
+            ))
             Input().type(.hidden).name("data").id("data")
                 .value(state.form.data)
 
@@ -213,7 +215,9 @@ struct AssetAddView: Leaf {
         .class("cms-form")
     }
 
-    func pickerUploadContainer() -> some FlowContent {
+    func pickerUploadContainer(
+        context: inout RenderContext
+    ) -> some FlowContent {
         Div {
             Input().type(.hidden).name("parentId")
                 .value(state.form.parentId).id("parentId")
@@ -224,30 +228,30 @@ struct AssetAddView: Leaf {
             Input().type(.hidden).name("view").value(state.form.view)
                 .id("view")
 
-            FormInputField(
+            context.render(FormInputField(
                 name: "title",
                 label: "Title",
                 value: state.form.title,
                 id: "title",
                 inputClass: "text-input"
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: "altText",
                 label: "Alt text",
                 value: state.form.altText,
                 id: "altText",
                 inputClass: "text-input"
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: "file",
                 label: "File",
                 id: "file",
                 type: .file,
                 isRequired: true,
                 inputClass: "text-input"
-            ).html()
+            ))
             Input().type(.hidden).name("data").id("data")
                 .value(state.form.data)
 

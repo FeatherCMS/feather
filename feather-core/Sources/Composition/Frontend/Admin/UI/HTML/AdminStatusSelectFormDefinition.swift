@@ -3,7 +3,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct AdminStatusSelectFormDefinition: Leaf {
+public struct AdminStatusSelectFormDefinition: Component {
     public let id: String
     public let action: String
     public let returnTo: String
@@ -14,7 +14,7 @@ public struct AdminStatusSelectFormDefinition: Leaf {
         self.returnTo = returnTo
     }
 
-    public func html() -> Form {
+    public func html(context: inout RenderContext) -> Form {
         Form {
             Input()
                 .type(.hidden)

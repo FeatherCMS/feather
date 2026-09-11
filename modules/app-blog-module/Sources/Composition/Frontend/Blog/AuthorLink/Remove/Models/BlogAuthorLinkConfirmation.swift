@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorLinkConfirmation: Leaf {
+struct BlogAuthorLinkConfirmation: Component {
 
     struct State {
         let menuId: String
@@ -22,8 +22,8 @@ struct BlogAuthorLinkConfirmation: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove blog author link",
@@ -37,6 +37,6 @@ struct BlogAuthorLinkConfirmation: Leaf {
                     "/admin/blog/authors/\(state.menuId)/links/\(state.id)/remove/",
                 cancelURL: "/admin/blog/authors/\(state.menuId)/links/"
             )
-        ).renderHTML()
+        ))
     }
 }

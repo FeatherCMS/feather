@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct SettingsEdit: Leaf {
+struct SettingsEdit: Component {
 
     struct State {
         let userID: String?
@@ -16,14 +16,14 @@ struct SettingsEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Settings")
 
             if let userID = state.userID {
-                AdminPillTabs(links: [
+                context.render(AdminPillTabs(links: [
                     .init(
                         label: "Details",
                         href: "/admin/user/identities/\(userID)/",
@@ -49,7 +49,7 @@ struct SettingsEdit: Leaf {
                         href: "/admin/auth/magic-links/?userId=\(userID)",
                         isCurrent: false
                     ),
-                ]).html()
+                ]))
             }
 
             if !state.canEdit {
@@ -62,7 +62,7 @@ struct SettingsEdit: Leaf {
                 P("Settings edited successfully.").class("success")
             }
 
-            SettingsForm(state: state.form).html()
+            context.render(SettingsForm(state: state.form))
         }
         .class("cms-section")
     }

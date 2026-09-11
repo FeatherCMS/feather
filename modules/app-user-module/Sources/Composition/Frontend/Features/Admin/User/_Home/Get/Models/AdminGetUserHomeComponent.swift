@@ -12,9 +12,9 @@ import WebBuilders
 //  Addd by Tibor Bödecs on 2026. 03. 08..
 //
 
-struct AdminGetUserHomeComponent: Leaf {
+struct AdminGetUserHomeComponent: Component {
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             Nav {
                 Ol {

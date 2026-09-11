@@ -13,7 +13,7 @@ struct AdminGetDesignSystem {
             buildRuntime: { request, context in
                 (
                     interactor: AdminGetDesignSystemDefaultInteractor(
-                        
+
                     ),
                     presenter: AdminGetDesignSystemDefaultPresenter(
                         request: request,

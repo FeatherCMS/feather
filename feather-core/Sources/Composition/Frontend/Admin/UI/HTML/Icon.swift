@@ -12,7 +12,7 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct Icon: Leaf {
+public struct Icon: Component {
 
     public let svg: SVG
     public let `class`: String?
@@ -25,7 +25,7 @@ public struct Icon: Leaf {
         self.class = `class`
     }
 
-    public func html() -> SVG {
+    public func html(context: inout RenderContext) -> SVG {
         svg.if(`class` != nil) {
             $0.addAttribute(name: "class", value: `class`)
         }

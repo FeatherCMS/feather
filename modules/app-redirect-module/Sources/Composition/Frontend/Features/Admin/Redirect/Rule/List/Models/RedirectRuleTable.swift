@@ -8,7 +8,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct RedirectRuleTable: Leaf {
+struct RedirectRuleTable: Component {
 
     private static let statusOptions = [
         ("", "All statuses"),
@@ -39,14 +39,14 @@ struct RedirectRuleTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Redirect rules")
 
                 if state.isAdded {
@@ -60,10 +60,10 @@ struct RedirectRuleTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add rule",
                             href: "/admin/redirect/rules/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
@@ -129,7 +129,7 @@ struct RedirectRuleTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "redirect:rules:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/redirect/rules/remove/",
                             page: state.page,
@@ -137,12 +137,12 @@ struct RedirectRuleTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Source")
                                         Th("Destination")
@@ -154,11 +154,11 @@ struct RedirectRuleTable: Leaf {
                                     for rule in state.rules {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: rule.id
                                                     )
-                                                ).html()
+                                                ))
                                             }
                                             Td(rule.source)
                                                 .data(
@@ -175,7 +175,7 @@ struct RedirectRuleTable: Leaf {
                                                     "label",
                                                     "Status"
                                                 )
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -207,16 +207,16 @@ struct RedirectRuleTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/redirect/rules/",
                             page: state.page,
@@ -225,7 +225,7 @@ struct RedirectRuleTable: Leaf {
                             search: state.search,
                             queryItems: [("statusCode", state.statusCode)]
                         )
-                    ).html()
+                    ))
                 }
             }
         }

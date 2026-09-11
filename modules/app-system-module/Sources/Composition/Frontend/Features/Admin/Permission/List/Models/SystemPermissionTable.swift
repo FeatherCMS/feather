@@ -7,7 +7,7 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemPermissionTable: Leaf {
+struct SystemPermissionTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -28,14 +28,14 @@ struct SystemPermissionTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("System permissions")
 
                 if state.isAdded {
@@ -49,22 +49,22 @@ struct SystemPermissionTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add permission",
                             href: "/admin/system/permissions/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/system/permissions/",
                         placeholder: "Quick search system permissions",
                         search: state.search
                     )
-                ).html()
+                ))
 
                 if state.items.isEmpty {
                     let totalPages = max(
@@ -97,7 +97,7 @@ struct SystemPermissionTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "system:permissions:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/system/permissions/remove/",
                             page: state.page,
@@ -105,12 +105,12 @@ struct SystemPermissionTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Name")
                                         Th("Actions")
@@ -120,18 +120,18 @@ struct SystemPermissionTable: Leaf {
                                     for permission in state.items {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: permission.id
                                                     )
-                                                ).html()
+                                                ))
                                             }
                                             Td(permission.name ?? "")
                                                 .data(
                                                     "label",
                                                     "Name"
                                                 )
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -163,16 +163,16 @@ struct SystemPermissionTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/system/permissions/",
                             page: state.page,
@@ -180,7 +180,7 @@ struct SystemPermissionTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).html()
+                    ))
                 }
             }
         }

@@ -8,7 +8,7 @@ private typealias HTMLButton = HTML.Button
 
 import class Foundation.JSONEncoder
 
-public struct AdminAutocompleteField: Leaf {
+public struct AdminAutocompleteField: Component {
 
     public enum SelectionMode: String, Codable, Sendable {
         case single
@@ -230,7 +230,7 @@ public struct AdminAutocompleteField: Leaf {
         }
     }
 
-    public func html() -> Section {
+    public func html(context: inout RenderContext) -> Section {
         let selectedOptions = state.options.filter(\.isSelected)
 
         return Section {
@@ -302,7 +302,7 @@ public struct AdminAutocompleteField: Leaf {
             }
             else {
                 Label {
-                    AdminFieldLabel(label: state.label, required: false).html()
+                    context.render(AdminFieldLabel(label: state.label, required: false))
                     Input()
                         .type(.text)
                         .class("text-input")

@@ -8,7 +8,7 @@ import WebAdminAPI
 import WebComponents
 import WebBuilders
 
-struct WebMenuAdd: Leaf {
+struct WebMenuAdd: Component {
 
     struct State {
         let form: WebMenuForm.State
@@ -17,16 +17,16 @@ struct WebMenuAdd: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add menu")
-            WebMenuForm(
+            context.render(WebMenuForm(
                 state: state.form,
                 action: "/admin/web/menus/add/",
                 submitLabel: "Add menu"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

@@ -9,7 +9,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct MediaProcessorsListView: Leaf {
+struct MediaProcessorsListView: Component {
     let items: [Components.Schemas.MediaProcessorListItemSchema]
     let page: Int
     let pageSize: Int
@@ -24,14 +24,14 @@ struct MediaProcessorsListView: Leaf {
     let deniedMessage: String
     let breadcrumb: AdminBreadcrumb.State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !canAccess {
                 H1(deniedInfo)
                 P(deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: breadcrumb).html()
+                context.render(AdminBreadcrumb(state: breadcrumb))
                 H1("Processors")
 
                 if isAdded { P("Processor added successfully.") }
@@ -39,10 +39,10 @@ struct MediaProcessorsListView: Leaf {
                 if isRemoved { P("Processor removed successfully.") }
                 if canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add processor",
                             href: "/admin/media/processors/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
@@ -71,7 +71,7 @@ struct MediaProcessorsListView: Leaf {
                     let canRemove = permissions.contains(
                         "media:processors:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/media/processors/remove/",
                             page: page,
@@ -79,12 +79,12 @@ struct MediaProcessorsListView: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("File suffix")
                                             .columnWidth(percent: 50)
@@ -97,9 +97,9 @@ struct MediaProcessorsListView: Leaf {
                                     for item in items {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(id: item.id)
-                                                ).html()
+                                                ))
                                             }
                                             Td(item.name)
                                                 .data(
@@ -113,7 +113,7 @@ struct MediaProcessorsListView: Leaf {
                                                     "Match extensions"
                                                 )
                                                 .columnWidth(percent: 50)
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -144,17 +144,17 @@ struct MediaProcessorsListView: Leaf {
                                                     ],
                                                     permissions: permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
+                        ))
+                    ))
                 }
-                ListTablePagination(
+                context.render(ListTablePagination(
                     state: .init(
                         path: "/admin/media/processors/",
                         page: page,
@@ -162,7 +162,7 @@ struct MediaProcessorsListView: Leaf {
                         total: total,
                         search: ""
                     )
-                ).html()
+                ))
             }
         }
         .class("cms-section")

@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminList: Leaf {
+public struct NewAdminList: Component {
 
     public func rules(
     ) -> [any Rule] {
@@ -45,8 +45,7 @@ public struct NewAdminList: Leaf {
         self.pagination = pagination()
     }
 
-    public func html(
-    ) -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
             for item in search {
                 item

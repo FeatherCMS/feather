@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthMagicLinkEdit: Leaf {
+struct AuthMagicLinkEdit: Component {
 
     struct State {
         let id: String
@@ -27,19 +27,19 @@ struct AuthMagicLinkEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit user magic link")
             if state.isEdited { P("User magic link edited successfully.") }
-            AuthMagicLinkForm(
+            context.render(AuthMagicLinkForm(
                 state: state.form,
                 action: "/admin/auth/magic-links/\(state.id)/edit/",
                 submitLabel: "Edit magic link",
                 removeHref: "/admin/auth/magic-links/\(state.id)/remove/",
                 removeLabel: "Remove magic link"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

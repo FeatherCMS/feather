@@ -8,7 +8,7 @@ import WebContracts
 import WebComponents
 import WebBuilders
 
-struct WebMetadataForm: Leaf {
+struct WebMetadataForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -73,7 +73,7 @@ struct WebMetadataForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -82,62 +82,62 @@ struct WebMetadataForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.slug.key,
                 label: state.slug.label,
                 value: state.slug.value,
                 error: state.slug.error,
                 isRequired: true
-            ).html()
-            templateField(state.template).html()
-            FormDateTimeField(
+            ))
+            context.render(templateField(state.template))
+            context.render(FormDateTimeField(
                 name: state.publicationDate.key,
                 label: state.publicationDate.label,
                 value: state.publicationDate.value,
                 error: state.publicationDate.error
-            ).html()
-            FormDateTimeField(
+            ))
+            context.render(FormDateTimeField(
                 name: state.expirationDate.key,
                 label: state.expirationDate.label,
                 value: state.expirationDate.value,
                 error: state.expirationDate.error
-            ).html()
-            statusField(state.status).html()
-            FormInputField(
+            ))
+            context.render(statusField(state.status))
+            context.render(FormInputField(
                 name: state.title.key,
                 label: state.title.label,
                 value: state.title.value,
                 error: state.title.error
-            ).html()
-            textarea(state.excerpt, rows: 4).html()
-            imagePicker(state.imageUrl, selectedAsset: state.selectedImageAsset)
-            FormInputField(
+            ))
+            context.render(textarea(state.excerpt, rows: 4))
+            imagePicker(state.imageUrl, selectedAsset: state.selectedImageAsset, context: &context)
+            context.render(FormInputField(
                 name: state.canonicalUrl.key,
                 label: state.canonicalUrl.label,
                 value: state.canonicalUrl.value,
                 error: state.canonicalUrl.error
-            ).html()
-            checkbox(state.noIndex)
-            FormInputField(
+            ))
+            checkbox(state.noIndex, context: &context)
+            context.render(FormInputField(
                 name: state.primaryKeyword.key,
                 label: state.primaryKeyword.label,
                 value: state.primaryKeyword.value,
                 error: state.primaryKeyword.error
-            ).html()
-            textarea(state.cssCodeInjection, rows: 10).html()
-            textarea(state.javascriptCodeInjection, rows: 10).html()
-            textarea(state.structuredDataCodeInjection, rows: 10).html()
+            ))
+            context.render(textarea(state.cssCodeInjection, rows: 10))
+            context.render(textarea(state.javascriptCodeInjection, rows: 10))
+            context.render(textarea(state.structuredDataCodeInjection, rows: 10))
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")
@@ -150,11 +150,13 @@ struct WebMetadataForm: Leaf {
     }
 
     private func readonlyField(
-        _ field: FieldState
+        _ field: FieldState,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Section {
             Label {
-                AdminFieldLabel(label: field.label, required: false).html()
+                context.render(AdminFieldLabel(label: field.label, required: false))
                 Input()
                     .type(.text)
                     .id(field.key)
@@ -208,11 +210,13 @@ struct WebMetadataForm: Leaf {
 
     private func imagePicker(
         _ field: FieldState,
-        selectedAsset: AdminMediaAssetReferenceModel?
+        selectedAsset: AdminMediaAssetReferenceModel?,
+        context: inout RenderContext
     ) -> Section {
+
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
-        return AdminMediaAssetPicker(
+        return context.render(AdminMediaAssetPicker(
             state: .init(
                 field: .init(
                     key: field.key,
@@ -225,21 +229,23 @@ struct WebMetadataForm: Leaf {
                 allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                 outputMode: .originalURL
             )
-        ).html()
+        ))
     }
 
     private func checkbox(
-        _ field: CheckboxState
+        _ field: CheckboxState,
+        context: inout RenderContext
     ) -> Section {
+
         Section {
-            CheckboxField(
+            context.render(CheckboxField(
                 state: .init(
                     key: field.key,
                     label: field.label,
                     value: field.value,
                     error: field.error
                 )
-            ).html()
+            ))
         }
         .if(field.error != nil) { $0.class("has-error") }
     }

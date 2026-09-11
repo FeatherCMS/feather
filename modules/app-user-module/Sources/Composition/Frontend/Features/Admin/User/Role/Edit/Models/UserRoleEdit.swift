@@ -7,7 +7,7 @@ import UserAdminAPI
 import WebComponents
 import WebBuilders
 
-struct UserRoleEdit: Leaf {
+struct UserRoleEdit: Component {
 
     struct State {
         let id: String
@@ -18,19 +18,19 @@ struct UserRoleEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit user role")
             if state.isEdited { P("User role edited successfully.") }
-            UserRoleForm(
+            context.render(UserRoleForm(
                 state: state.form,
                 action: "/admin/user/roles/\(state.id)/edit/",
                 submitLabel: "Edit role",
                 removeHref: "/admin/user/roles/\(state.id)/remove/",
                 removeLabel: "Remove role"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

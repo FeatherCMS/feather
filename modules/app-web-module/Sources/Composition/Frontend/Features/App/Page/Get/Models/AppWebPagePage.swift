@@ -5,12 +5,12 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AppWebPagePage: Leaf {
+struct AppWebPagePage: Component {
     let state: AppGetWebPageModel
 
-    func html() -> Main {
+    func html(context: inout RenderContext) -> Main {
         Main {
-            AppPublicStyleAnchor().html()
+            context.render(AppPublicStyleAnchor())
             Div {
                 Article {
                     Div {
@@ -29,7 +29,7 @@ struct AppWebPagePage: Leaf {
                         .class("public-image")
                     }
 
-                    AppPublicTextBlock(text: state.content).html()
+                    context.render(AppPublicTextBlock(text: state.content))
                 }
                 .class("public-panel")
             }

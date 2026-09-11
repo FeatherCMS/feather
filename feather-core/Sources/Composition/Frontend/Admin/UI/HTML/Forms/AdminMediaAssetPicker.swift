@@ -8,7 +8,7 @@ private typealias HTMLButton = HTML.Button
 
 import struct Foundation.CharacterSet
 
-public struct AdminMediaAssetPicker: Leaf {
+public struct AdminMediaAssetPicker: Component {
     public enum OutputMode: String, Sendable {
         case assetId
         case originalURL = "original_url"
@@ -247,7 +247,7 @@ public struct AdminMediaAssetPicker: Leaf {
         }
     }
 
-    public func html() -> Section {
+    public func html(context: inout RenderContext) -> Section {
         Section {
             Div {
                 Input()
@@ -258,12 +258,12 @@ public struct AdminMediaAssetPicker: Leaf {
 
                 if state.showsCurrentCard {
                     Label {
-                        AdminFieldLabel(
+                        context.render(AdminFieldLabel(
                             label: state.field.label,
                             required: false
-                        ).html()
+                        ))
                     }
-                    currentCard()
+                    currentCard(context: &context)
                 }
                 else {
                     HTMLButton("")
@@ -285,9 +285,9 @@ public struct AdminMediaAssetPicker: Leaf {
 }
 
 extension AdminMediaAssetPicker {
-    fileprivate func currentCard() -> some FlowContent {
+    fileprivate func currentCard(context: inout RenderContext) -> some FlowContent {
         Div {
-            previewBlock(selectedAsset: state.selectedAsset)
+            previewBlock(selectedAsset: state.selectedAsset, context: &context)
 
             Div {
                 if state.selectedAsset == nil {
@@ -329,8 +329,10 @@ extension AdminMediaAssetPicker {
     }
 
     fileprivate func previewBlock(
-        selectedAsset: AdminMediaAssetReferenceModel?
+        selectedAsset: AdminMediaAssetReferenceModel?,
+        context: inout RenderContext
     ) -> some FlowContent {
+
         Div {
             if let selectedAsset {
                 if isImage(selectedAsset.type) {
@@ -340,11 +342,11 @@ extension AdminMediaAssetPicker {
                     )
                 }
                 else {
-                    Icon(svg: FeatherIcons.file()).html()
+                    context.render(Icon(svg: FeatherIcons.file()))
                 }
             }
             else {
-                Icon(svg: FeatherIcons.image()).html()
+                context.render(Icon(svg: FeatherIcons.image()))
             }
         }
         .class("admin-media-asset-picker-preview")

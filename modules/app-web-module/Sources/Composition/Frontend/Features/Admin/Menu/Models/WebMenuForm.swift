@@ -6,7 +6,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct WebMenuForm: Leaf {
+struct WebMenuForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -37,7 +37,7 @@ struct WebMenuForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -46,32 +46,32 @@ struct WebMenuForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.key.key,
                 label: state.key.label,
                 value: state.key.value,
                 error: state.key.error,
                 isRequired: true
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.name.key,
                 label: state.name.label,
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: true
-            ).html()
-            textarea(state.notes).html()
+            ))
+            context.render(textarea(state.notes))
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")

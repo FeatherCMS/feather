@@ -5,7 +5,7 @@ import WebBuilders
 
 private typealias HTMLButton = HTML.Button
 
-public struct ListTableRemoveForm<Table: FlowContent>: Leaf
+public struct ListTableRemoveForm<Table: FlowContent>: Component
 {
 
     public struct State: Sendable {
@@ -41,7 +41,7 @@ public struct ListTableRemoveForm<Table: FlowContent>: Leaf
         self.table = table
     }
 
-    public func html() -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
             if state.canRemove {
                 Form {

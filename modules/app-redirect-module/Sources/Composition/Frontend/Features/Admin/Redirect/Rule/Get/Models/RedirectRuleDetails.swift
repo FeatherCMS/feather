@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct RedirectRuleDetails: Leaf {
+struct RedirectRuleDetails: Component {
     struct State {
         let rule: RedirectRuleDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -13,31 +13,31 @@ struct RedirectRuleDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Redirect rule details")
-            AdminDetailsField(label: "ID", value: state.rule.id).html()
-            AdminDetailsField(label: "Source", value: state.rule.source).html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.rule.id))
+            context.render(AdminDetailsField(label: "Source", value: state.rule.source))
+            context.render(AdminDetailsField(
                 label: "Destination",
                 value: state.rule.destination
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Status code",
                 value: "\(state.rule.statusCode)"
-            ).html()
-            AdminDetailsField(label: "Notes", value: state.rule.notes ?? "").html()
+            ))
+            context.render(AdminDetailsField(label: "Notes", value: state.rule.notes ?? ""))
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit rule",
                     href: "/admin/redirect/rules/\(state.rule.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove rule",
                     href: "/admin/redirect/rules/\(state.rule.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

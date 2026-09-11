@@ -9,7 +9,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct MediaProcessorFormView: Leaf {
+struct MediaProcessorFormView: Component {
     struct FormState {
         var fileSuffix: String = ""
         var matchExtensions: String = ""
@@ -23,36 +23,36 @@ struct MediaProcessorFormView: Leaf {
     let form: FormState
     let breadcrumb: AdminBreadcrumb.State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1(title)
             if let error = form.error { P(error).class("error") }
             Form {
-                FormInputField(
+                context.render(FormInputField(
                     name: "fileSuffix",
                     label: "File suffix",
                     value: form.fileSuffix,
                     isRequired: true,
                     inputClass: "text-input"
-                ).html()
+                ))
 
-                FormInputField(
+                context.render(FormInputField(
                     name: "matchExtensions",
                     label: "Match extensions",
                     value: form.matchExtensions,
                     isRequired: true,
                     inputClass: "text-input"
-                ).html()
+                ))
 
-                FormTextAreaField(
+                context.render(FormTextAreaField(
                     name: "commandTemplate",
                     label: "Command template",
                     value: form.commandTemplate,
                     rows: 4,
                     isRequired: true,
                     textareaClass: "text-input"
-                ).html()
+                ))
 
                 Section {
                     P(

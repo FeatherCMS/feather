@@ -8,7 +8,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct RedirectRuleConfirmation: Leaf {
+struct RedirectRuleConfirmation: Component {
 
     struct State {
         let id: String
@@ -18,8 +18,8 @@ struct RedirectRuleConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove redirect rule",
@@ -32,6 +32,6 @@ struct RedirectRuleConfirmation: Leaf {
                 actionURL: "/admin/redirect/rules/\(state.id)/remove/",
                 cancelURL: "/admin/redirect/rules/"
             )
-        ).html()
+        ))
     }
 }

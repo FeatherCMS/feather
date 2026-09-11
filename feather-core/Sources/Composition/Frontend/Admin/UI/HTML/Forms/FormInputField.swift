@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct FormInputField: Leaf {
+public struct FormInputField: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -111,7 +111,7 @@ public struct FormInputField: Leaf {
         }
     }
 
-    public func html() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         Section {
             Label {
                 fieldLabel()

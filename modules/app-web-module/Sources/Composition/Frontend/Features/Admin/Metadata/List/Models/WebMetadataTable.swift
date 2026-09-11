@@ -10,7 +10,7 @@ import WebContracts
 import WebComponents
 import WebBuilders
 
-struct WebMetadataTable: Leaf {
+struct WebMetadataTable: Component {
 
     struct State {
         let isEdited: Bool
@@ -30,14 +30,14 @@ struct WebMetadataTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Metadata")
 
                 if state.isEdited { P("Web metadata edited successfully.") }
@@ -80,7 +80,7 @@ struct WebMetadataTable: Leaf {
                     )
                 }
                 else {
-                    ListTableShell(
+                    context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
@@ -116,7 +116,7 @@ struct WebMetadataTable: Leaf {
                                             .style("white-space:nowrap;")
                                         Td(format(rule.expirationDate))
                                             .style("white-space:nowrap;")
-                                        ListTableRowActions(
+                                        context.render(ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",
                                                 actions: [
@@ -139,14 +139,14 @@ struct WebMetadataTable: Leaf {
                                                 ],
                                                 permissions: state.permissions
                                             )
-                                        ).html()
+                                        ))
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
-                    ).html()
-                    ListTablePagination(
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/web/metadata/",
                             page: state.page,
@@ -155,7 +155,7 @@ struct WebMetadataTable: Leaf {
                             search: state.search,
                             queryItems: [("referenceType", state.referenceType)]
                         )
-                    ).html()
+                    ))
                 }
             }
         }

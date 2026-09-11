@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogSettingsEdit: Leaf {
+struct BlogSettingsEdit: Component {
 
     struct State {
         let isEdited: Bool
@@ -22,9 +22,9 @@ struct BlogSettingsEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Settings")
             P(

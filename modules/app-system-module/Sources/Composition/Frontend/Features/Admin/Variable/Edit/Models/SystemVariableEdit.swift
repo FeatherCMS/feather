@@ -7,7 +7,7 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemVariableEdit: Leaf {
+struct SystemVariableEdit: Component {
 
     struct State {
         let id: String
@@ -18,19 +18,19 @@ struct SystemVariableEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit system variable")
             if state.isEdited { P("System variable edited successfully.") }
-            SystemVariableForm(
+            context.render(SystemVariableForm(
                 state: state.form,
                 action: "/admin/system/variables/\(state.id)/edit/",
                 submitLabel: "Edit variable",
                 removeHref: "/admin/system/variables/\(state.id)/remove/",
                 removeLabel: "Remove variable"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

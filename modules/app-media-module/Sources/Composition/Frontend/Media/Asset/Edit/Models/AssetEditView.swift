@@ -9,7 +9,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AssetEditView: Leaf {
+struct AssetEditView: Component {
     struct State {
         let model: AdminEditMediaAssetModel
         let isEdited: Bool
@@ -19,14 +19,14 @@ struct AssetEditView: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your account cannot edit media assets.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Edit media asset")
                 if state.isEdited {
                     P("Media asset updated successfully.")
@@ -35,31 +35,31 @@ struct AssetEditView: Leaf {
                     P(error).class("error")
                 }
 
-                AdminDetailsField(
+                context.render(AdminDetailsField(
                     label: "Storage key",
                     value: state.model.storageKey
-                ).html()
-                AdminDetailsField(label: "Type", value: state.model.type).html()
-                AdminDetailsField(label: "Status", value: state.model.status).html()
-                AdminDetailsField(
+                ))
+                context.render(AdminDetailsField(label: "Type", value: state.model.type))
+                context.render(AdminDetailsField(label: "Status", value: state.model.status))
+                context.render(AdminDetailsField(
                     label: "Size bytes",
                     value: "\(state.model.sizeBytes)"
-                ).html()
+                ))
 
                 Form {
-                    FormInputField(
+                    context.render(FormInputField(
                         name: "title",
                         label: "Title",
                         value: state.model.title,
                         inputClass: "text-input"
-                    ).html()
+                    ))
 
-                    FormInputField(
+                    context.render(FormInputField(
                         name: "altText",
                         label: "Alt text",
                         value: state.model.altText,
                         inputClass: "text-input"
-                    ).html()
+                    ))
 
                     Section {
                         Div { Button("Save").type(.submit) }.class("button-row")

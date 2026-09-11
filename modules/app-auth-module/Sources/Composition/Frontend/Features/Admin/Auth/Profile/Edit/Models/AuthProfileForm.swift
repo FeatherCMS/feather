@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthProfileForm: Leaf {
+struct AuthProfileForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -46,7 +46,7 @@ struct AuthProfileForm: Leaf {
     var action: String = "/admin/auth/profile/edit/"
     var submitLabel: String = "Edit profile"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -55,7 +55,7 @@ struct AuthProfileForm: Leaf {
                 P(error).class("error")
             }
 
-            AdminMediaAssetPicker(
+            context.render(AdminMediaAssetPicker(
                 state: .init(
                     field: .init(
                         key: state.profileImageAssetId.key,
@@ -69,24 +69,24 @@ struct AuthProfileForm: Leaf {
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                     outputMode: .assetId
                 )
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.firstName.key,
                 label: state.firstName.label,
                 value: state.firstName.value,
                 error: state.firstName.error,
                 isRequired: false,
                 inputClass: "text-input"
-            ).html()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.lastName.key,
                 label: state.lastName.label,
                 value: state.lastName.value,
                 error: state.lastName.error,
                 isRequired: false,
                 inputClass: "text-input"
-            ).html()
+            ))
 
             Section {
                 Div {

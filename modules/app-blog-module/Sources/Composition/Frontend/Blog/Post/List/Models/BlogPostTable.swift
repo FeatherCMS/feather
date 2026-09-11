@@ -14,7 +14,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogPostTable: Leaf {
+struct BlogPostTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -38,14 +38,14 @@ struct BlogPostTable: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Blog posts")
                 statusFormDefinitions()
 
@@ -66,22 +66,22 @@ struct BlogPostTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add post",
                             href: "/admin/blog/posts/add/"
-                        ).renderHTML()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/blog/posts/",
                         placeholder: "Quick search blog posts",
                         search: state.search
                     )
-                ).renderHTML()
+                ))
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -113,7 +113,7 @@ struct BlogPostTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "blog:posts:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/blog/posts/remove/",
                             page: state.page,
@@ -121,12 +121,12 @@ struct BlogPostTable: Leaf {
                             canRemove: canRemove,
                             buttonTitle: "Remove selected"
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().renderHTML()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Title")
                                         Th("Status")
@@ -139,13 +139,13 @@ struct BlogPostTable: Leaf {
                                     for item in state.rules {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: item.id
                                                     )
-                                                ).renderHTML()
+                                                ))
                                             }
-                                            titleCell(for: item)
+                                            titleCell(for: item, context: &context)
                                             statusCell(for: item)
                                             Td(
                                                 format(
@@ -173,9 +173,9 @@ struct BlogPostTable: Leaf {
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).renderHTML()
-                    ).renderHTML()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/blog/posts/",
                             page: state.page,
@@ -183,7 +183,7 @@ struct BlogPostTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).renderHTML()
+                    ))
                 }
             }
         }
@@ -223,14 +223,16 @@ struct BlogPostTable: Leaf {
     }
 
     private func titleCell(
-        for item: AdminListBlogPostItemModel
+        for item: AdminListBlogPostItemModel,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Td {
             Span {
                 Span(item.title)
                 if let previewPath = previewPath(for: item.metadata) {
                     A {
-                        Icon(svg: FeatherIcons.externalLink()).renderHTML()
+                        context.render(Icon(svg: FeatherIcons.externalLink()))
                     }
                     .href(previewPath)
                     .target(.blank)

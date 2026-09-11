@@ -7,7 +7,7 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemPermissionConfirmation: Leaf {
+struct SystemPermissionConfirmation: Component {
 
     struct State {
         let id: String
@@ -17,8 +17,8 @@ struct SystemPermissionConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove system permission",
@@ -31,6 +31,6 @@ struct SystemPermissionConfirmation: Leaf {
                 actionURL: "/admin/system/permissions/\(state.id)/remove/",
                 cancelURL: "/admin/system/permissions/"
             )
-        ).html()
+        ))
     }
 }

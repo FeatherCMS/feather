@@ -6,7 +6,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AppPublicStyleAnchor: Leaf {
+struct AppPublicStyleAnchor: Component {
     func selectors() -> [any Selector] {
         Class("public-shell") {
             MinHeight(100.vh)
@@ -145,7 +145,7 @@ struct AppPublicStyleAnchor: Leaf {
         }
     }
 
-    func html() -> Div {
+    func html(context: inout RenderContext) -> Div {
         Div {}
     }
 }

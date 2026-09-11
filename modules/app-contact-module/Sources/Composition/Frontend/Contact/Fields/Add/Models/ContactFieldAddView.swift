@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct ContactFieldAddView: Leaf {
+struct ContactFieldAddView: Component {
     struct State {
         let key: String
         let type: String
@@ -19,14 +19,14 @@ struct ContactFieldAddView: Leaf {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Add contact form field")
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Type", required: true).html()
+                    context.render(AdminFieldLabel(label: "Type", required: true))
                     Select {
                         if state.type == "text" {
                             Option("Text").value("text").selected()
@@ -62,17 +62,17 @@ struct ContactFieldAddView: Leaf {
                     .name("type").class("text-input")
                 }
                 Label {
-                    AdminFieldLabel(label: "Key", required: true).html()
+                    context.render(AdminFieldLabel(label: "Key", required: true))
                     Input().type(.text).class("text-input").name("key")
                         .value(state.key).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "Label", required: true).html()
+                    context.render(AdminFieldLabel(label: "Label", required: true))
                     Input().type(.text).class("text-input").name("label")
                         .value(state.label).required()
                 }
                 Label {
-                    AdminFieldLabel(label: "Allowed values", required: false).html()
+                    context.render(AdminFieldLabel(label: "Allowed values", required: false))
                     Textarea(state.allowedValues).class("text-input")
                         .name("allowedValues").placeholder("One value per line")
                 }

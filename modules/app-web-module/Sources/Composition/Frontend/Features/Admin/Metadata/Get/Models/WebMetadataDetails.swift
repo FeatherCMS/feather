@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct WebMetadataDetails: Leaf {
+struct WebMetadataDetails: Component {
     struct State {
         let rule: WebMetadataDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -13,63 +13,63 @@ struct WebMetadataDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Web metadata details")
-            AdminDetailsField(label: "ID", value: state.rule.id).html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.rule.id))
+            context.render(AdminDetailsField(
                 label: "Reference type",
                 value: state.rule.referenceType.isEmpty
                     ? "-" : state.rule.referenceType
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Reference ID",
                 value: state.rule.referenceId.isEmpty
                     ? "-" : state.rule.referenceId
-            ).html()
-            AdminDetailsField(label: "Slug", value: state.rule.slug).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(label: "Slug", value: state.rule.slug))
+            context.render(AdminDetailsField(
                 label: "Status",
                 value: state.rule.status.isEmpty ? "-" : state.rule.status
-            ).html()
-            AdminDetailsField(label: "Title", value: state.rule.title).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(label: "Title", value: state.rule.title))
+            context.render(AdminDetailsField(
                 label: "Publication date",
                 value: state.rule.publicationDate.isEmpty
                     ? "-" : state.rule.publicationDate
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Expiration date",
                 value: state.rule.expirationDate.isEmpty
                     ? "-" : state.rule.expirationDate
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Image URL",
                 value: state.rule.imageUrl.isEmpty ? "-" : state.rule.imageUrl
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Canonical URL",
                 value: state.rule.canonicalUrl.isEmpty
                     ? "-" : state.rule.canonicalUrl
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "No index",
                 value: state.rule.noIndex ? "Yes" : "No"
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Primary keyword",
                 value: state.rule.primaryKeyword.isEmpty
                     ? "-" : state.rule.primaryKeyword
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Created",
                 value: state.rule.createdAt.isEmpty ? "-" : state.rule.createdAt
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Updated",
                 value: state.rule.updatedAt.isEmpty ? "-" : state.rule.updatedAt
-            ).html()
+            ))
             Section {
                 H2("Excerpt")
                 if state.rule.excerpt.isEmpty {
@@ -108,10 +108,10 @@ struct WebMetadataDetails: Leaf {
             }
 
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit web metadata",
                     href: "/admin/web/metadata/\(state.rule.id)/edit/"
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

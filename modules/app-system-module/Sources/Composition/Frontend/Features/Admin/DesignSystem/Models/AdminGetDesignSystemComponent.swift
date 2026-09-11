@@ -5,7 +5,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AdminGetDesignSystemComponent: Branch {
+struct AdminGetDesignSystemComponent: Component {
 
     let breadcrumb: NewAdminBreadcrumb
     let primaryLink = NewAdminButton("Primary", href: "#primary", style: .primary)
@@ -31,22 +31,6 @@ struct AdminGetDesignSystemComponent: Branch {
                 .init(label: "Breadcrumb", link: "#breadcrumb")
             ]
         )
-    }
-
-    var children: [any Component] {
-        breadcrumb
-        primaryLink
-        secondaryLink
-        ghostPrimaryLink
-        ghostSecondaryLink
-        destructiveLink
-        disabledLink
-        primaryRowLink
-        secondaryRowLink
-        ghostPrimaryRowLink
-        ghostSecondaryRowLink
-        destructiveRowLink
-        disabledRowLink
     }
 
     func rules() -> [any Rule] {
@@ -90,9 +74,9 @@ struct AdminGetDesignSystemComponent: Branch {
 
 
 
-    func html() -> Section {
+    func html(context: inout RenderContext) -> Section {
         Section {
-            breadcrumb.html()
+            context.render(breadcrumb)
 
             H1("Design System")
             P("Available design-system materials, colors, and components.")
@@ -166,12 +150,12 @@ struct AdminGetDesignSystemComponent: Branch {
                 Div {
                     H3("Buttons")
                     Div {
-                        primaryLink.html()
-                        secondaryLink.html()
-                        ghostPrimaryLink.html()
-                        ghostSecondaryLink.html()
-                        destructiveLink.html()
-                        disabledLink.html()
+                        context.render(primaryLink)
+                        context.render(secondaryLink)
+                        context.render(ghostPrimaryLink)
+                        context.render(ghostSecondaryLink)
+                        context.render(destructiveLink)
+                        context.render(disabledLink)
                     }
                     .class("design-system-component-row")
                     A("Sample link")
@@ -183,12 +167,12 @@ struct AdminGetDesignSystemComponent: Branch {
                 Div {
                     H3("Row buttons")
                     Div {
-                        primaryRowLink.html()
-                        secondaryRowLink.html()
-                        ghostPrimaryRowLink.html()
-                        ghostSecondaryRowLink.html()
-                        destructiveRowLink.html()
-                        disabledRowLink.html()
+                        context.render(primaryRowLink)
+                        context.render(secondaryRowLink)
+                        context.render(ghostPrimaryRowLink)
+                        context.render(ghostSecondaryRowLink)
+                        context.render(destructiveRowLink)
+                        context.render(disabledRowLink)
                     }
                     .class("design-system-component-row")
                 }

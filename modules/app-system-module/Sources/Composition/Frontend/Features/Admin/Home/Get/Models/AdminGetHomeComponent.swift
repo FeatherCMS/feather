@@ -6,16 +6,16 @@ import SVG
 import WebComponents
 import WebBuilders
 
-struct AdminGetHomeComponent: Leaf {
+struct AdminGetHomeComponent: Component {
     private let chartPrimaryColor = "var(--cms-primary-hover)"
 
     let model: AdminGetHomeModel
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(
+            context.render(AdminBreadcrumb(
                 state: .init(links: [.init(label: "Admin", link: "/admin/")])
-            ).html()
+            ))
             H1("Dashboard")
             P(model.summary)
                 .style("margin:0 0 16px 0;")

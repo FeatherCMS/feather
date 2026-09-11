@@ -25,7 +25,7 @@ extension AdminMediaAssetOpenAPIRepository {
     }
 }
 
-struct AdminMetadataFields: Leaf {
+struct AdminMetadataFields: Component {
     struct FieldState: FeatherAdmin.Object {
         var key: String
         var label: String
@@ -82,29 +82,29 @@ struct AdminMetadataFields: Leaf {
     var showTemplate: Bool = false
     var titleRequired: Bool = false
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Div {
-            FormInputField(
+            context.render(FormInputField(
                 name: state.slug.key,
                 label: state.slug.label,
                 prefix: state.slugPrefix,
                 value: state.slug.value,
                 error: state.slug.error,
                 isRequired: true
-            ).renderHTML()
+            ))
             if showTemplate {
-                FormSelectField(
+                context.render(FormSelectField(
                     name: state.template.key,
                     label: state.template.label,
                     options: [.init(label: "Default", value: "default")],
                     selectedValue: state.template.value,
                     error: state.template.error,
                     isRequired: true
-                ).renderHTML()
+                ))
             }
             Div {
                 H3("Publishing")
-                FormSelectField(
+                context.render(FormSelectField(
                     name: state.status.key,
                     label: state.status.label,
                     options: ["draft", "published", "archived"]
@@ -114,7 +114,7 @@ struct AdminMetadataFields: Leaf {
                     selectedValue: state.status.value,
                     error: state.status.error,
                     isRequired: true
-                ).renderHTML()
+                ))
                 FormDateTimeField(
                     name: state.publicationDate.key,
                     label: state.publicationDate.label,
@@ -134,22 +134,22 @@ struct AdminMetadataFields: Leaf {
                 H3("Social")
                 Div {
                     if showTitle {
-                        FormInputField(
+                        context.render(FormInputField(
                             name: state.title.key,
                             label: state.title.label,
                             value: state.title.value,
                             error: state.title.error,
                             isRequired: titleRequired
-                        ).renderHTML()
+                        ))
                     }
-                    FormTextAreaField(
+                    context.render(FormTextAreaField(
                         name: state.excerpt.key,
                         label: state.excerpt.label,
                         value: state.excerpt.value,
                         error: state.excerpt.error,
                         rows: 4
-                    ).renderHTML()
-                    AdminMediaAssetPicker(
+                    ))
+                    context.render(AdminMediaAssetPicker(
                         state: .init(
                             field: .init(
                                 key: state.imageUrl.key,
@@ -163,7 +163,7 @@ struct AdminMetadataFields: Leaf {
                             allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                             outputMode: .originalURL
                         )
-                    ).renderHTML()
+                    ))
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -172,12 +172,12 @@ struct AdminMetadataFields: Leaf {
             Div {
                 H3("Advanced")
                 Div {
-                    FormInputField(
+                    context.render(FormInputField(
                         name: state.canonicalUrl.key,
                         label: state.canonicalUrl.label,
                         value: state.canonicalUrl.value,
                         error: state.canonicalUrl.error
-                    ).renderHTML()
+                    ))
                     CheckboxField(
                         state: .init(
                             key: state.noIndex.key,
@@ -186,33 +186,33 @@ struct AdminMetadataFields: Leaf {
                             error: state.noIndex.error
                         )
                     )
-                    FormInputField(
+                    context.render(FormInputField(
                         name: state.primaryKeyword.key,
                         label: state.primaryKeyword.label,
                         value: state.primaryKeyword.value,
                         error: state.primaryKeyword.error
-                    ).renderHTML()
-                    FormTextAreaField(
+                    ))
+                    context.render(FormTextAreaField(
                         name: state.cssCodeInjection.key,
                         label: state.cssCodeInjection.label,
                         value: state.cssCodeInjection.value,
                         error: state.cssCodeInjection.error,
                         rows: 10
-                    ).renderHTML()
-                    FormTextAreaField(
+                    ))
+                    context.render(FormTextAreaField(
                         name: state.javascriptCodeInjection.key,
                         label: state.javascriptCodeInjection.label,
                         value: state.javascriptCodeInjection.value,
                         error: state.javascriptCodeInjection.error,
                         rows: 10
-                    ).renderHTML()
-                    FormTextAreaField(
+                    ))
+                    context.render(FormTextAreaField(
                         name: state.structuredDataCodeInjection.key,
                         label: state.structuredDataCodeInjection.label,
                         value: state.structuredDataCodeInjection.value,
                         error: state.structuredDataCodeInjection.error,
                         rows: 10
-                    ).renderHTML()
+                    ))
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -401,14 +401,14 @@ public struct AppPublicTagSummaryModel: Sendable {
     }
 }
 
-public struct AppPublicStyleAnchor: Leaf {
-    public func renderHTML() -> some BasicTag { Div {} }
+public struct AppPublicStyleAnchor: Component {
+    public func html(context: inout RenderContext) -> some BasicTag { Div {} }
 }
 
-public struct AppPublicTextBlock: Leaf {
+public struct AppPublicTextBlock: Component {
     public let text: String
 
-    public func renderHTML() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         Div { text }.class("public-body")
     }
 }

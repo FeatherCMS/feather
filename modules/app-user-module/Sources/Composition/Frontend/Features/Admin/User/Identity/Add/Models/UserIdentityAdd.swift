@@ -7,7 +7,7 @@ import UserAdminAPI
 import WebComponents
 import WebBuilders
 
-struct UserIdentityAdd: Leaf {
+struct UserIdentityAdd: Component {
 
     struct State {
         let form: UserIdentityForm.State
@@ -16,17 +16,17 @@ struct UserIdentityAdd: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add identity")
 
-            UserIdentityForm(
+            context.render(UserIdentityForm(
                 state: state.form,
                 action: "/admin/user/identities/add/",
                 submitLabel: "Add identity"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

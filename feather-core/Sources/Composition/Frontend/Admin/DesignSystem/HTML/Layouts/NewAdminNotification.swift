@@ -10,10 +10,10 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminNotification: Leaf {
+public struct NewAdminNotification: Component {
     let payload: AdminToastRedirect.Payload
 
-    public func html() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         Div {
             // empty
         }

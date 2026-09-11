@@ -9,7 +9,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AssetDetailsView: Leaf {
+struct AssetDetailsView: Component {
     let item: Components.Schemas.MediaAssetDetailSchema
     let variants: [Components.Schemas.MediaAssetVariantListItemSchema]
     let breadcrumb: AdminBreadcrumb.State
@@ -41,16 +41,16 @@ struct AssetDetailsView: Leaf {
             "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)\(prefix)\(encoded)"
     }
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor().html()
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminDetailFieldStyleAnchor())
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Media asset details")
-            AdminDetailsField(label: "ID", value: item.id).html()
-            AdminDetailsField(label: "Storage key", value: item.storageKey).html()
-            AdminDetailsField(label: "Type", value: item._type).html()
-            AdminDetailsField(label: "Status", value: item.status).html()
-            AdminDetailsField(label: "Size bytes", value: "\(item.sizeBytes)").html()
+            context.render(AdminDetailsField(label: "ID", value: item.id))
+            context.render(AdminDetailsField(label: "Storage key", value: item.storageKey))
+            context.render(AdminDetailsField(label: "Type", value: item._type))
+            context.render(AdminDetailsField(label: "Status", value: item.status))
+            context.render(AdminDetailsField(label: "Size bytes", value: "\(item.sizeBytes)"))
             Div {
                 P("Preview original")
                     .class("admin-details-field__label")
@@ -65,17 +65,17 @@ struct AssetDetailsView: Leaf {
             }
             .class("admin-details-field")
             if let title = item.title {
-                AdminDetailsField(label: "Title", value: title).html()
+                context.render(AdminDetailsField(label: "Title", value: title))
             }
             if let altText = item.altText {
-                AdminDetailsField(label: "Alt text", value: altText).html()
+                context.render(AdminDetailsField(label: "Alt text", value: altText))
             }
             if variants.isEmpty {
                 P("No generated variants linked to this asset yet.")
             }
             else {
                 H2("Associated variants")
-                ListTableShell(
+                context.render(ListTableShell(
                     table: Table {
                         Thead {
                             Tr {
@@ -107,21 +107,21 @@ struct AssetDetailsView: Leaf {
                         }
                     }
                     .class("cms-table")
-                ).html()
+                ))
             }
             Div {
                 if canEdit {
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Edit asset",
                         href: "/admin/media/assets/\(item.id)/edit/"
-                    ).html()
+                    ))
                 }
                 if canRemove {
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Remove asset",
                         href: "/admin/media/assets/\(item.id)/remove/",
                         classes: ["danger"]
-                    ).html()
+                    ))
                 }
             }
             .class("button-row", "admin-detail-actions")

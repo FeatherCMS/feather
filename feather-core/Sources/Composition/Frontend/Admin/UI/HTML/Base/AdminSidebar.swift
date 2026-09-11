@@ -12,7 +12,7 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct AdminSidebar: Leaf {
+public struct AdminSidebar: Component {
 
     public struct State: Sendable {
         public struct Group: Sendable {
@@ -69,7 +69,7 @@ public struct AdminSidebar: Leaf {
         self.state = state
     }
 
-    public func html() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         Div {
             Input()
                 .id("menuToggle")
@@ -86,10 +86,10 @@ public struct AdminSidebar: Leaf {
                                         Li {
                                             if let link = menu.current.link {
                                                 A {
-                                                    Icon(
+                                                    context.render(Icon(
                                                         svg: menu.current.icon,
                                                         class: "menu-icon"
-                                                    ).html()
+                                                    ))
                                                     Span(menu.current.label)
                                                 }
                                                 .title(menu.current.label)
@@ -99,10 +99,10 @@ public struct AdminSidebar: Leaf {
                                                 }
                                             }
                                             else {
-                                                Icon(
+                                                context.render(Icon(
                                                     svg: menu.current.icon,
                                                     class: "menu-icon"
-                                                ).html()
+                                                ))
                                                 Span(menu.current.label)
                                             }
                                         }
@@ -124,21 +124,21 @@ public struct AdminSidebar: Leaf {
                                                 if let link = menu.current.link
                                                 {
                                                     A {
-                                                        Icon(
+                                                        context.render(Icon(
                                                             svg: menu.current
                                                                 .icon,
                                                             class: "menu-icon"
-                                                        ).html()
+                                                        ))
                                                         Span(menu.current.label)
                                                     }
                                                     .title(menu.current.label)
                                                     .href(link)
                                                 }
                                                 else {
-                                                    Icon(
+                                                    context.render(Icon(
                                                         svg: menu.current.icon,
                                                         class: "menu-icon"
-                                                    ).html()
+                                                    ))
                                                     Span(menu.current.label)
                                                 }
                                             }
@@ -152,11 +152,11 @@ public struct AdminSidebar: Leaf {
                                                 for child in menu.children {
                                                     Li {
                                                         A {
-                                                            Icon(
+                                                            context.render(Icon(
                                                                 svg: child.icon,
                                                                 class:
                                                                     "menu-icon"
-                                                            ).html()
+                                                            ))
                                                             Span(child.label)
                                                         }
                                                         .title(child.label)

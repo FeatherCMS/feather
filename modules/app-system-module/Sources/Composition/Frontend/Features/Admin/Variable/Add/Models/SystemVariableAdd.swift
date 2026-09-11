@@ -7,7 +7,7 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemVariableAdd: Leaf {
+struct SystemVariableAdd: Component {
 
     struct State {
         let form: SystemVariableForm.State
@@ -16,16 +16,16 @@ struct SystemVariableAdd: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add system variable")
-            SystemVariableForm(
+            context.render(SystemVariableForm(
                 state: state.form,
                 action: "/admin/system/variables/add/",
                 submitLabel: "Add variable"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

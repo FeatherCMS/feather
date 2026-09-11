@@ -5,7 +5,7 @@ import WebBuilders
 
 private typealias HTMLButton = HTML.Button
 
-public struct ListTableSearchForm: Leaf {
+public struct ListTableSearchForm: Component {
 
     public struct State: Sendable {
         public let action: String
@@ -35,7 +35,7 @@ public struct ListTableSearchForm: Leaf {
         self.state = state
     }
 
-    public func html() -> Form {
+    public func html(context: inout RenderContext) -> Form {
         Form {
             for item in state.queryItems {
                 Input().type(.hidden).name(item.0).value(item.1)

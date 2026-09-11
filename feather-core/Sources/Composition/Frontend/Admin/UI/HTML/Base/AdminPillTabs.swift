@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct AdminPillTabs: Leaf {
+public struct AdminPillTabs: Component {
 
     public struct Link: Sendable {
         public let label: String
@@ -79,7 +79,7 @@ public struct AdminPillTabs: Leaf {
         }
     }
 
-    public func html() -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
             for link in links {
                 A(link.label)

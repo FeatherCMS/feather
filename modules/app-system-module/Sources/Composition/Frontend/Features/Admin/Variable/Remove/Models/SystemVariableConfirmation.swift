@@ -7,7 +7,7 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemVariableConfirmation: Leaf {
+struct SystemVariableConfirmation: Component {
 
     struct State {
         let id: String
@@ -17,8 +17,8 @@ struct SystemVariableConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove system variable",
@@ -31,6 +31,6 @@ struct SystemVariableConfirmation: Leaf {
                 actionURL: "/admin/system/variables/\(state.id)/remove/",
                 cancelURL: "/admin/system/variables/"
             )
-        ).html()
+        ))
     }
 }

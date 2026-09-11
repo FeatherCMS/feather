@@ -9,8 +9,8 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminGetMediaHomeComponent: Leaf {
-    func html() -> some BasicTag {
+struct AdminGetMediaHomeComponent: Component {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             Nav {
                 Ol {

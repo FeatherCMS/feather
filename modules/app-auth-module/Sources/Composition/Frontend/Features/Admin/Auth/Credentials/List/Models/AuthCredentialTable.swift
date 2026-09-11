@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthCredentialTable: Leaf {
+struct AuthCredentialTable: Component {
     struct State {
         let canAccess: Bool
         let permissions: Set<String>
@@ -31,33 +31,33 @@ struct AuthCredentialTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your identity cannot access user credentials.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("User credentials")
                 if state.permissions.contains("auth:credential:create") {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add credential",
                             href: "/admin/auth/credentials/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/auth/credentials/",
                         placeholder: "Quick search credentials",
                         search: state.search
                     )
-                ).html()
+                ))
                 if state.credentials.isEmpty {
                     P(
                         state.search.isEmpty
@@ -66,7 +66,7 @@ struct AuthCredentialTable: Leaf {
                     )
                 }
                 else {
-                    ListTableShell(
+                    context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
@@ -82,7 +82,7 @@ struct AuthCredentialTable: Leaf {
                                             .data("label", "User")
                                         Td(credential.email)
                                             .data("label", "Email")
-                                        ListTableRowActions(
+                                        context.render(ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",
                                                 actions: [
@@ -105,14 +105,14 @@ struct AuthCredentialTable: Leaf {
                                                 ],
                                                 permissions: state.permissions
                                             )
-                                        ).html()
+                                        ))
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table", "credential-table")
-                    ).html()
-                    ListTablePagination(
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path:
                                 "/admin/auth/credentials/",
@@ -121,7 +121,7 @@ struct AuthCredentialTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).html()
+                    ))
                 }
             }
         }

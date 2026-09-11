@@ -56,7 +56,7 @@ let package = Package(
         .package(
             url: "https://github.com/apple/swift-log",
             from: "1.15.0"
-        ),        
+        ),
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "5.0.0"
@@ -175,7 +175,7 @@ let package = Package(
             name: "SystemBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
-                
+
                 .target(name: "SystemInfrastructure"),
                 .target(name: "SystemAdminAPI"),
                 .target(name: "SystemAppAPI"),
@@ -187,7 +187,7 @@ let package = Package(
             name: "SystemFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
-            
+
                 .target(name: "SystemContracts"),
                 .target(name: "SystemAdminAPI"),
                 .target(name: "SystemAppAPI"),

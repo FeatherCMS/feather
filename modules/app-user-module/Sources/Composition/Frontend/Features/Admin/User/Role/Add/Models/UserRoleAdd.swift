@@ -7,7 +7,7 @@ import UserAdminAPI
 import WebComponents
 import WebBuilders
 
-struct UserRoleAdd: Leaf {
+struct UserRoleAdd: Component {
 
     struct State {
         let form: UserRoleForm.State
@@ -16,16 +16,16 @@ struct UserRoleAdd: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add user role")
-            UserRoleForm(
+            context.render(UserRoleForm(
                 state: state.form,
                 action: "/admin/user/roles/add/",
                 submitLabel: "Add role"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

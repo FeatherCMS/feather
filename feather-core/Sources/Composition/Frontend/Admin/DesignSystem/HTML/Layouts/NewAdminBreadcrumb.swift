@@ -11,7 +11,7 @@ import WebComponents
 import WebBuilders
 
 
-public struct NewAdminBreadcrumb: Leaf {
+public struct NewAdminBreadcrumb: Component {
 
     public struct Link: Sendable {
         public let label: String
@@ -29,7 +29,7 @@ public struct NewAdminBreadcrumb: Leaf {
         self.links = links
     }
 
-    public func html() -> Nav {
+    public func html(context: inout RenderContext) -> Nav {
         Nav {
             Ol {
                 for (idx, breadcrumb) in links.enumerated() {

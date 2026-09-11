@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminListRowActions: Leaf {
+public struct NewAdminListRowActions: Component {
 
     public func rules(
     ) -> [any Rule] {
@@ -35,7 +35,7 @@ public struct NewAdminListRowActions: Leaf {
                     MarginRight(4.px)
                 }
             }
-        
+
     }
 
     public struct Action: Sendable {
@@ -74,8 +74,7 @@ public struct NewAdminListRowActions: Leaf {
         self.permissions = permissions
     }
 
-    public func html(
-    ) -> Td {
+    public func html(context: inout RenderContext) -> Td {
         let visibleActions = actions.filter {
             permissions.contains($0.permission)
         }
@@ -83,23 +82,21 @@ public struct NewAdminListRowActions: Leaf {
         return Td {
             for (index, action) in visibleActions.enumerated() {
                 if let copyText = action.copyText {
-                    NewAdminControlButton(
+                    context.render(NewAdminControlButton(
                         action.title,
                         style: action.style
-                    )
-                    .html()
+                    ))
                     .class("row-btn")
                     .onClick(
                         "navigator.clipboard.writeText('\(copyText)')"
                     )
                 }
                 else {
-                    NewAdminRowButton(
+                    context.render(NewAdminRowButton(
                         action.title,
                         href: action.href,
                         style: action.style
-                    )
-                    .html()
+                    ))
                     .class("row-btn")
                 }
 

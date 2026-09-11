@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthEmailConfirmation: Leaf {
+struct AuthEmailConfirmation: Component {
 
     struct State {
         let id: String
@@ -26,8 +26,8 @@ struct AuthEmailConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove user email",
@@ -43,6 +43,6 @@ struct AuthEmailConfirmation: Leaf {
                 actionURL: "/admin/auth/emails/\(state.id)/remove/",
                 cancelURL: "/admin/auth/emails/"
             )
-        ).html()
+        ))
     }
 }

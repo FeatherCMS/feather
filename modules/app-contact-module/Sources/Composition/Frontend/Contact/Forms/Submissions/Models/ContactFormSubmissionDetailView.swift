@@ -8,7 +8,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct ContactFormSubmissionDetailView: Leaf {
+struct ContactFormSubmissionDetailView: Component {
     struct State {
         let formId: String
         let item: AdminContactFormSubmissionItem
@@ -17,10 +17,10 @@ struct ContactFormSubmissionDetailView: Leaf {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: state.formId, active: .submissions).html()
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminContactFormTabs(formId: state.formId, active: .submissions))
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Contact form submission")
             if let error = state.error { P(error).class("error") }
             if state.isEdited { P("Submission status updated successfully.") }
@@ -46,7 +46,7 @@ struct ContactFormSubmissionDetailView: Leaf {
             }
             Form {
                 Label {
-                    AdminFieldLabel(label: "Status", required: true).html()
+                    context.render(AdminFieldLabel(label: "Status", required: true))
                     Select {
                         for status in [
                             "received", "processed", "spam", "failed",

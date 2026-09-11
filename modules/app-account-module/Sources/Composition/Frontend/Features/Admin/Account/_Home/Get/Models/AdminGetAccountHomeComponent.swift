@@ -4,8 +4,8 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminGetAccountHomeComponent: Leaf {
-    func html() -> some BasicTag {
+struct AdminGetAccountHomeComponent: Component {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             Nav {
                 Ol {

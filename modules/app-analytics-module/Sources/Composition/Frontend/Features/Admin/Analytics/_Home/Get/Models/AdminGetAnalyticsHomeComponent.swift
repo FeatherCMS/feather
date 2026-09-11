@@ -13,9 +13,9 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminGetAnalyticsHomeComponent: Leaf {
+struct AdminGetAnalyticsHomeComponent: Component {
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             Nav {
                 Ol {

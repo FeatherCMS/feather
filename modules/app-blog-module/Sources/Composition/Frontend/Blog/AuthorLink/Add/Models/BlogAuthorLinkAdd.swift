@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorLinkAdd: Leaf {
+struct BlogAuthorLinkAdd: Component {
 
     struct State {
         let menuId: String
@@ -21,9 +21,9 @@ struct BlogAuthorLinkAdd: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add blog author link")
             BlogAuthorLinkForm(

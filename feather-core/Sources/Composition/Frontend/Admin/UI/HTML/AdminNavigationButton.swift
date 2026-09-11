@@ -6,7 +6,7 @@ import WebBuilders
 private typealias HTMLButton = HTML.Button
 public typealias AdminNavigationRenderedButton = HTML.Button
 
-public struct AdminNavigationButton: Leaf {
+public struct AdminNavigationButton: Component {
     public let label: String
     public let href: String
     public let className: String?
@@ -21,7 +21,7 @@ public struct AdminNavigationButton: Leaf {
         self.className = classes.isEmpty ? nil : classes.joined(separator: " ")
     }
 
-    public func html() -> AdminNavigationRenderedButton {
+    public func html(context: inout RenderContext) -> AdminNavigationRenderedButton {
         var button = HTMLButton(label)
             .type(.button)
             .onClick(

@@ -16,8 +16,8 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AdminGetAuthHomeComponent: Leaf {
-    func html() -> some BasicTag {
+struct AdminGetAuthHomeComponent: Component {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             Nav {
                 Ol {

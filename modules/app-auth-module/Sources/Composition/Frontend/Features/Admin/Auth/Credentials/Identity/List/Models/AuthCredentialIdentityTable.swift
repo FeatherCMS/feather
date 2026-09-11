@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthCredentialIdentityTable: Leaf {
+struct AuthCredentialIdentityTable: Component {
     struct State {
         let canAccess: Bool
         let permissions: Set<String>
@@ -31,23 +31,23 @@ struct AuthCredentialIdentityTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1("Forbidden")
                 P("Your identity cannot access user credentials.")
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Credentials")
                 P("Select a user to manage their credentials.")
-                ListTableSearchForm(
+                context.render(ListTableSearchForm(
                     state: .init(
                         action: "/admin/auth/credentials/",
                         placeholder: "Quick search users",
                         search: state.search
                     )
-                ).html()
+                ))
                 if state.identities.isEmpty {
                     P(
                         state.search.isEmpty
@@ -56,7 +56,7 @@ struct AuthCredentialIdentityTable: Leaf {
                     )
                 }
                 else {
-                    ListTableShell(
+                    context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
@@ -80,8 +80,8 @@ struct AuthCredentialIdentityTable: Leaf {
                             }
                         }
                         .class("cms-table", "action-table")
-                    ).html()
-                    ListTablePagination(
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/auth/credentials/",
                             page: state.page,
@@ -89,7 +89,7 @@ struct AuthCredentialIdentityTable: Leaf {
                             total: state.total,
                             search: state.search
                         )
-                    ).html()
+                    ))
                 }
             }
         }

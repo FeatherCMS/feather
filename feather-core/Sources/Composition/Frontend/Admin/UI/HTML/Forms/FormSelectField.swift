@@ -7,7 +7,7 @@ import WebBuilders
 
 private typealias HTMLOption = HTML.Option
 
-public struct FormSelectField: Leaf {
+public struct FormSelectField: Component {
     public struct Option: Sendable {
         public var label: String
         public var value: String
@@ -107,7 +107,7 @@ public struct FormSelectField: Leaf {
         }
     }
 
-    public func html() -> Section {
+    public func html(context: inout RenderContext) -> Section {
         Section {
             Label {
                 fieldLabel()

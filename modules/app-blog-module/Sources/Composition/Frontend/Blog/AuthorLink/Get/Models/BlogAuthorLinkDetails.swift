@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorLinkDetails: Leaf {
+struct BlogAuthorLinkDetails: Component {
     struct State {
         let rule: BlogAuthorLinkDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -19,35 +19,35 @@ struct BlogAuthorLinkDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Blog author link details")
-            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
-            AdminDetailsField(label: "Label", value: state.rule.label).renderHTML()
-            AdminDetailsField(label: "URL", value: state.rule.url).renderHTML()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.rule.id))
+            context.render(AdminDetailsField(label: "Label", value: state.rule.label))
+            context.render(AdminDetailsField(label: "URL", value: state.rule.url))
+            context.render(AdminDetailsField(
                 label: "Priority",
                 value: "\(state.rule.priority)"
-            ).renderHTML()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Blank target",
                 value: state.rule.isBlank ? "Yes" : "No"
-            ).renderHTML()
-            AdminDetailsField(label: "Permission", value: state.rule.permission).renderHTML()
-            AdminDetailsField(label: "Notes", value: state.rule.notes).renderHTML()
+            ))
+            context.render(AdminDetailsField(label: "Permission", value: state.rule.permission))
+            context.render(AdminDetailsField(label: "Notes", value: state.rule.notes))
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit item",
                     href:
                         "/admin/blog/authors/\(state.rule.menuId)/links/\(state.rule.id)/edit/"
-                ).renderHTML()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove item",
                     href:
                         "/admin/blog/authors/\(state.rule.menuId)/links/\(state.rule.id)/remove/",
                     classes: ["danger"]
-                ).renderHTML()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

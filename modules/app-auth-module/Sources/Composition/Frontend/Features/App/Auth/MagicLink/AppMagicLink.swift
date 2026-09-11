@@ -19,28 +19,28 @@ struct AppMagicLink {
         }
     }
 
-    struct Page: Leaf {
+    struct Page: Component {
         let token: String?
         let email: String
         let isPersistent: Bool
         let error: String?
         let message: String?
 
-        func html() -> Section {
+        func html(context: inout RenderContext) -> Section {
             Section {
                 H1(token == nil ? "Request a magic link" : "Signing in")
                 if let message { P(message).class("success") }
                 if let error { P(error).class("error") }
                 if token == nil {
                     Form {
-                        EmailField(
+                        context.render(EmailField(
                             state: .init(
                                 key: "email",
                                 label: "Email address",
                                 value: email
                             )
-                        ).html()
-                        CheckboxField(
+                        ))
+                        context.render(CheckboxField(
                             state: .init(
                                 key: "is_persistent",
                                 label: "Permanent link",
@@ -48,7 +48,7 @@ struct AppMagicLink {
                                 error: nil,
                                 labelPosition: .before
                             )
-                        ).html()
+                        ))
                         Button("Send magic link").type(.submit)
                     }
                     .method(.post)
@@ -67,19 +67,21 @@ struct AppMagicLink {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        render(
+        var renderContext = RenderContext()
+        return render(
             request: request,
             email: "",
             isPersistent: true,
             error: nil,
             message: nil
-        )
+        , context: &renderContext)
     }
 
     func postRequest(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
+        var renderContext = RenderContext()
         let input = try await request.decode(
             as: RequestInput.self,
             context: context
@@ -105,7 +107,7 @@ struct AppMagicLink {
                     error: nil,
                     message:
                         "If the account exists, a magic link has been sent."
-                )
+                , context: &renderContext)
             case .undocumented(let statusCode, let response):
                 throw try await context.authAppAPI()
                     .failure(
@@ -121,7 +123,7 @@ struct AppMagicLink {
                 isPersistent: input.isPersistent.value,
                 error: error.errorDescription,
                 message: nil
-            )
+            , context: &renderContext)
         }
     }
 
@@ -129,6 +131,7 @@ struct AppMagicLink {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
+        var renderContext = RenderContext()
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         do {
             let response = try await context.authAppAPI()
@@ -165,7 +168,7 @@ struct AppMagicLink {
                     error:
                         "This magic link is invalid, expired, or has already been used.",
                     message: nil
-                )
+                , context: &renderContext)
                 .response(from: request, context: context)
             case .undocumented(let statusCode, let response):
                 throw try await context.authAppAPI()
@@ -182,7 +185,7 @@ struct AppMagicLink {
                 isPersistent: true,
                 error: error.errorDescription,
                 message: nil
-            )
+            , context: &renderContext)
             .response(from: request, context: context)
         }
     }
@@ -192,20 +195,22 @@ struct AppMagicLink {
         email: String,
         isPersistent: Bool,
         error: String?,
-        message: String?
+        message: String?,
+        context: inout RenderContext
     ) -> HTMLResponse {
+
         renderingEngine.renderPage(
             request: request,
             title: "Magic link",
             description: "Sign in without a password using a magic link.",
             imagePath: "images/puppy.png",
-            content: Page(
+            content: context.render(Page(
                 token: nil,
                 email: email,
                 isPersistent: isPersistent,
                 error: error,
                 message: message
-            ).html()
+            ))
         )
     }
 

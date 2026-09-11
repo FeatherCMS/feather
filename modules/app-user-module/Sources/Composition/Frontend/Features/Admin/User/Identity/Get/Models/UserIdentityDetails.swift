@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct UserIdentityDetails: Leaf {
+struct UserIdentityDetails: Component {
     struct State {
         let identity: AdminGetUserIdentityModel
         let breadcrumb: AdminBreadcrumb.State
@@ -13,12 +13,12 @@ struct UserIdentityDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor().html()
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminDetailFieldStyleAnchor())
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("User identity details")
-            AdminPillTabs(links: [
+            context.render(AdminPillTabs(links: [
                 .init(
                     label: "Details",
                     href: "/admin/user/identities/\(state.identity.id)/",
@@ -46,11 +46,11 @@ struct UserIdentityDetails: Leaf {
                         "/admin/auth/magic-links/?userId=\(state.identity.id)",
                     isCurrent: false
                 ),
-            ]).html()
+            ]))
 
-            AdminDetailsField(label: "Status", value: state.identity.status).html()
+            context.render(AdminDetailsField(label: "Status", value: state.identity.status))
             if state.identity.roleNames.isEmpty {
-                AdminDetailsField(label: "Roles", value: "No roles assigned").html()
+                context.render(AdminDetailsField(label: "Roles", value: "No roles assigned"))
             }
             else {
                 Div {
@@ -66,15 +66,15 @@ struct UserIdentityDetails: Leaf {
             }
 
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit identity",
                     href: "/admin/user/identities/\(state.identity.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove identity",
                     href: "/admin/user/identities/\(state.identity.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class(
                 "button-row",

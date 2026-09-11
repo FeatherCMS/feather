@@ -12,7 +12,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorLinkForm: Leaf {
+struct BlogAuthorLinkForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -56,7 +56,7 @@ struct BlogAuthorLinkForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -65,46 +65,46 @@ struct BlogAuthorLinkForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.label.key,
                 label: state.label.label,
                 value: state.label.value,
                 error: state.label.error,
                 isRequired: true
-            ).renderHTML()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.url.key,
                 label: state.url.label,
                 value: state.url.value,
                 error: state.url.error,
                 isRequired: true
-            ).renderHTML()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.priority.key,
                 label: state.priority.label,
                 value: state.priority.value,
                 error: state.priority.error,
                 isRequired: true
-            ).renderHTML()
+            ))
             checkbox(state.isBlank)
-            FormInputField(
+            context.render(FormInputField(
                 name: state.permission.key,
                 label: state.permission.label,
                 value: state.permission.value,
                 error: state.permission.error
-            ).renderHTML()
-            textarea(state.notes)
+            ))
+            textarea(state.notes, context: &context)
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ))
                     }
                 }
                 .class("button-row")
@@ -117,15 +117,17 @@ struct BlogAuthorLinkForm: Leaf {
     }
 
     private func textarea(
-        _ field: FieldState
+        _ field: FieldState,
+        context: inout RenderContext
     ) -> FormTextAreaField {
-        FormTextAreaField(
+
+        context.render(FormTextAreaField(
             name: field.key,
             label: field.label,
             value: field.value,
             error: field.error,
             rows: 6
-        ).renderHTML()
+        ))
     }
 
     private func checkbox(

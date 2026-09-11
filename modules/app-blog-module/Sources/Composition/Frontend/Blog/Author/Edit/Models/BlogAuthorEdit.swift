@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorEdit: Leaf {
+struct BlogAuthorEdit: Component {
 
     struct State {
         let id: String
@@ -22,16 +22,16 @@ struct BlogAuthorEdit: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1 {
                 Span("Edit author")
-                AdminPreviewLink(
+                context.render(AdminPreviewLink(
                     slug: state.form.metadata.slug.value,
                     label: "Preview author"
-                ).renderHTML()
+                ))
             }
             if state.isEdited { P("Author edited successfully.") }
             BlogAuthorForm(

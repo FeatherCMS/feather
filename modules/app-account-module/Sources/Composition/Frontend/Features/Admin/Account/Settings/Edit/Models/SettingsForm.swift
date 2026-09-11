@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct SettingsForm: Leaf {
+struct SettingsForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -27,7 +27,7 @@ struct SettingsForm: Leaf {
     var action: String = "/admin/account/settings/"
     var submitLabel: String = "Save settings"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -36,7 +36,7 @@ struct SettingsForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.language.key,
                 label: state.language.label,
                 value: state.language.value,
@@ -45,9 +45,9 @@ struct SettingsForm: Leaf {
                 isRequired: true,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
+            ))
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.timezone.key,
                 label: state.timezone.label,
                 value: state.timezone.value,
@@ -56,9 +56,9 @@ struct SettingsForm: Leaf {
                 isRequired: true,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).html()
+            ))
 
-            FormSelectField(
+            context.render(FormSelectField(
                 name: state.pageSize.key,
                 label: state.pageSize.label,
                 options: [10, 20, 50, 100]
@@ -71,7 +71,7 @@ struct SettingsForm: Leaf {
                 isRequired: true,
                 isDisabled: !state.canEdit,
                 selectClass: "text-input page-size-select"
-            ).html()
+            ))
 
             if state.canEdit {
                 Section {

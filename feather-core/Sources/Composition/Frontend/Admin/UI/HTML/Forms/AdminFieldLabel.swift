@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct AdminFieldLabel: Leaf {
+public struct AdminFieldLabel: Component {
     public let label: String
     public let required: Bool
 
@@ -28,7 +28,7 @@ public struct AdminFieldLabel: Leaf {
         }
     }
 
-    public func html() -> Span {
+    public func html(context: inout RenderContext) -> Span {
         Span {
             InlineText(label)
             if required {

@@ -5,7 +5,7 @@ import WebBuilders
 
 private typealias HTMLButton = HTML.Button
 
-public struct ListTableRowActions: Leaf {
+public struct ListTableRowActions: Component {
 
     public struct Action: Sendable {
         public let title: String
@@ -51,7 +51,7 @@ public struct ListTableRowActions: Leaf {
         self.state = state
     }
 
-    public func html() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         Td {
             let visibleActions = state.actions.filter {
                 state.permissions.contains($0.permission)

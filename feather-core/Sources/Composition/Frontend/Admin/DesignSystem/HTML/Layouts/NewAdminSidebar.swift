@@ -14,7 +14,7 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct NewAdminSidebar: Leaf {
+public struct NewAdminSidebar: Component {
 
     public struct Group: Sendable {
         public struct Menu: Sendable {
@@ -121,12 +121,14 @@ public struct NewAdminSidebar: Leaf {
     }
 
     private func renderListItem(
-        item: Group.Menu.Item
+        item: Group.Menu.Item,
+        context: inout RenderContext
     ) -> Li {
-        Li {
+
+        return Li {
             if let link = item.link {
                 A {
-                    Icon(svg: item.icon).html()
+                    context.render(Icon(svg: item.icon))
                     Span(item.label)
                 }
                 .title(item.label)
@@ -134,7 +136,7 @@ public struct NewAdminSidebar: Leaf {
                 .if(item.isCurrent) { $0.class("isCurrent") }
             }
             else {
-                Icon(svg: item.icon).html()
+                context.render(Icon(svg: item.icon))
                 Span(item.label)
             }
         }
@@ -142,12 +144,14 @@ public struct NewAdminSidebar: Leaf {
     }
 
     private func renderMenuParent(
-        item: Group.Menu.Item
+        item: Group.Menu.Item,
+        context: inout RenderContext
     ) -> [any FlowContent] {
+
         if let link = item.link {
             return [
                 A {
-                    Icon(svg: item.icon).html()
+                    context.render(Icon(svg: item.icon))
                     Span(item.label)
                 }
                 .title(item.label)
@@ -156,18 +160,20 @@ public struct NewAdminSidebar: Leaf {
         }
         else {
             return [
-                Icon(svg: item.icon).html(),
+                context.render(Icon(svg: item.icon)),
                 Span(item.label)
             ]
         }
     }
 
     private func renderSubmenuItem(
-        item: Group.Menu.Item
+        item: Group.Menu.Item,
+        context: inout RenderContext
     ) -> Li {
+
         Li {
             A {
-                Icon(svg: item.icon).html()
+                context.render(Icon(svg: item.icon))
                 Span(item.label)
             }
             .title(item.label)
@@ -178,11 +184,12 @@ public struct NewAdminSidebar: Leaf {
     }
 
     private func renderSubmenu(
-        items: [Group.Menu.Item]
+        items: [Group.Menu.Item],
+        context: inout RenderContext
     ) -> Ul {
         Ul {
             for item in items {
-                renderSubmenuItem(item: item)
+                renderSubmenuItem(item: item, context: &context)
             }
         }
         .class("sub-menu")
@@ -190,7 +197,8 @@ public struct NewAdminSidebar: Leaf {
 
     private func renderSubmenuMenu(
         menu: Group.Menu,
-        index: Int
+        index: Int,
+        context: inout RenderContext
     ) -> Li {
         let hasCurrentChild = menu.children.contains(where: { $0.isCurrent })
 
@@ -200,13 +208,13 @@ public struct NewAdminSidebar: Leaf {
                 .type(.checkbox)
                 .class("submenu-toggle")
             Label {
-                renderMenuParent(item: menu.parent)
+                renderMenuParent(item: menu.parent, context: &context)
             }
             .title(menu.parent.label)
             .for("applicationMenu\(index)Toggle")
             .class("submenu-label")
             .if(menu.parent.isCurrent) { $0.addClass("isCurrent") }
-            renderSubmenu(items: menu.children)
+            renderSubmenu(items: menu.children, context: &context)
         }
         .class("has-submenu", "plain")
         .if(hasCurrentChild) { $0.addClass("has-current") }
@@ -214,25 +222,27 @@ public struct NewAdminSidebar: Leaf {
 
     private func renderMenu(
         menu: Group.Menu,
-        index: Int
+        index: Int,
+        context: inout RenderContext
     ) -> [any Element] {
         if menu.children.isEmpty {
-            return [renderListItem(item: menu.parent)]
+            return [renderListItem(item: menu.parent, context: &context)]
         }
         else {
-            return [renderSubmenuMenu(menu: menu, index: index)]
+            return [renderSubmenuMenu(menu: menu, index: index, context: &context)]
         }
     }
 
     private func renderGroup(
-        group: Group
+        group: Group,
+        context: inout RenderContext
     ) -> Li {
         Li {
             Span(group.label)
                 .class("group-label")
             Ul {
                 for (index, menu) in group.menus.enumerated() {
-                    renderMenu(menu: menu, index: index)
+                    renderMenu(menu: menu, index: index, context: &context)
                 }
             }
             .class("group")
@@ -240,11 +250,11 @@ public struct NewAdminSidebar: Leaf {
         .class("plain")
     }
 
-    private func renderNavigation() -> Nav {
+    private func renderNavigation(context: inout RenderContext) -> Nav {
         Nav {
             Ul {
                 for group in groups {
-                    renderGroup(group: group)
+                    renderGroup(group: group, context: &context)
                 }
             }
             .class("groups")
@@ -252,13 +262,15 @@ public struct NewAdminSidebar: Leaf {
         .class("menu")
     }
 
-    public func html() -> some BasicTag {
+    public func html(
+        context: inout RenderContext
+    ) -> some BasicTag {
         Div {
             Input()
                 .id("menuToggle")
                 .name("menuToggle")
                 .type(.checkbox)
-            renderNavigation()
+            renderNavigation(context: &context)
         }
     }
 }

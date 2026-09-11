@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AccountInvitationForm: Leaf {
+struct AccountInvitationForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -41,7 +41,7 @@ struct AccountInvitationForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -50,19 +50,19 @@ struct AccountInvitationForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.email.key,
                 label: state.email.label,
                 value: state.email.value,
                 error: state.email.error,
                 isRequired: true
-            ).html()
+            ))
             Section {
                 if state.roleOptions.isEmpty {
                     P("No roles available.")
                 }
                 else {
-                    AdminFieldLabel(label: "Roles", required: false).html()
+                    context.render(AdminFieldLabel(label: "Roles", required: false))
                     Div {
                         for option in state.roleOptions {
                             Label {
@@ -88,11 +88,11 @@ struct AccountInvitationForm: Leaf {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")

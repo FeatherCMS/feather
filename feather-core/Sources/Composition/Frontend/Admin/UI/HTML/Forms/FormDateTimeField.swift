@@ -7,7 +7,7 @@ import WebBuilders
 
 private typealias HTMLButton = HTML.Button
 
-public struct FormDateTimeField: Leaf {
+public struct FormDateTimeField: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -221,7 +221,7 @@ public struct FormDateTimeField: Leaf {
         }
     }
 
-    public func html() -> Section {
+    public func html(context: inout RenderContext) -> Section {
         Section {
             Label {
                 fieldLabel()

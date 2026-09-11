@@ -7,7 +7,7 @@ import UserAdminAPI
 import WebComponents
 import WebBuilders
 
-struct UserIdentityConfirmation: Leaf {
+struct UserIdentityConfirmation: Component {
 
     struct State {
         let id: String
@@ -16,8 +16,8 @@ struct UserIdentityConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove identity",
@@ -28,6 +28,6 @@ struct UserIdentityConfirmation: Leaf {
                 actionURL: "/admin/user/identities/\(state.id)/remove/",
                 cancelURL: "/admin/user/identities/"
             )
-        ).html()
+        ))
     }
 }

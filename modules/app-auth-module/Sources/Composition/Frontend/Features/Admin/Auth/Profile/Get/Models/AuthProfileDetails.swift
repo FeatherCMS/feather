@@ -16,7 +16,7 @@ import UserFrontend
 import WebComponents
 import WebBuilders
 
-struct AuthProfileDetails: Leaf {
+struct AuthProfileDetails: Component {
 
     struct State {
         let profile: AdminGetAuthProfileModel
@@ -26,13 +26,13 @@ struct AuthProfileDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor().html()
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminDetailFieldStyleAnchor())
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Profile")
 
-            AdminDetailsField(label: "ID", value: state.profile.id).html()
+            context.render(AdminDetailsField(label: "ID", value: state.profile.id))
             Div {
                 P("Profile image")
                     .class("admin-details-field__label")
@@ -53,14 +53,14 @@ struct AuthProfileDetails: Leaf {
                 }
             }
             .class("admin-details-field")
-            AdminDetailsField(
+            context.render(AdminDetailsField(
                 label: "First name",
                 value: state.profile.firstName ?? ""
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Last name",
                 value: state.profile.lastName ?? ""
-            ).html()
+            ))
             Div {
                 P("Roles")
                     .class("admin-details-field__label")
@@ -95,10 +95,10 @@ struct AuthProfileDetails: Leaf {
 
             if state.canEdit {
                 Div {
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Edit profile",
                         href: "/admin/auth/profile/edit/"
-                    ).html()
+                    ))
                 }
                 .class("button-row", "admin-detail-actions")
             }

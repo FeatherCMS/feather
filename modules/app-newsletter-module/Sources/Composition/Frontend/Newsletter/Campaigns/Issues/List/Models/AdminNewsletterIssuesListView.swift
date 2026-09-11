@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminNewsletterIssuesListView: Leaf {
+struct AdminNewsletterIssuesListView: Component {
     struct State {
         let newsletterId: String
         let items: [AdminNewsletterIssueItem]
@@ -18,20 +18,20 @@ struct AdminNewsletterIssuesListView: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminNewsletterCampaignTabs(
+            context.render(AdminNewsletterCampaignTabs(
                 campaignId: state.newsletterId,
                 active: .issues
-            ).html()
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            ))
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Campaign issues")
             if let error = state.error { P(error).class("error") }
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Add issue",
                     href: "/admin/newsletters/\(state.newsletterId)/issues/add/"
-                ).html()
+                ))
             }
             .class("button-row")
             Br()
@@ -40,7 +40,7 @@ struct AdminNewsletterIssuesListView: Leaf {
                 P("No issues yet.")
             }
             else {
-                ListTableShell(
+                context.render(ListTableShell(
                     table: Table {
                         Thead {
                             Tr {
@@ -59,7 +59,7 @@ struct AdminNewsletterIssuesListView: Leaf {
                                     Td(item.scheduledAt)
                                         .data("label", "Scheduled")
                                     Td(item.createdAt).data("label", "Created")
-                                    ListTableRowActions(
+                                    context.render(ListTableRowActions(
                                         state: .init(
                                             label: "Actions",
                                             actions: [
@@ -85,17 +85,17 @@ struct AdminNewsletterIssuesListView: Leaf {
                                                 "newsletter:issues:delete",
                                             ]
                                         )
-                                    ).html()
+                                    ))
                                 }
                             }
                         }
                     }
                     .class("cms-table", "action-table")
-                ).html()
+                ))
                 let deliveries = state.items.flatMap(\.deliveries)
                 if !deliveries.isEmpty {
                     H2("Delivery status")
-                    ListTableShell(
+                    context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
@@ -124,7 +124,7 @@ struct AdminNewsletterIssuesListView: Leaf {
                             }
                         }
                         .class("cms-table")
-                    ).html()
+                    ))
                 }
             }
         }

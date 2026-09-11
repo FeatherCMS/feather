@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AccountInvitationAdd: Leaf {
+struct AccountInvitationAdd: Component {
 
     struct State {
         let form: AccountInvitationForm.State
@@ -16,16 +16,16 @@ struct AccountInvitationAdd: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add user invitation")
-            AccountInvitationForm(
+            context.render(AccountInvitationForm(
                 state: state.form,
                 action: "/admin/account/invitations/add/",
                 submitLabel: "Add invitation"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

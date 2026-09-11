@@ -7,7 +7,7 @@ import SystemAdminAPI
 import WebComponents
 import WebBuilders
 
-struct SystemPermissionAdd: Leaf {
+struct SystemPermissionAdd: Component {
 
     struct State {
         let form: SystemPermissionForm.State
@@ -16,16 +16,16 @@ struct SystemPermissionAdd: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add system permission")
-            SystemPermissionForm(
+            context.render(SystemPermissionForm(
                 state: state.form,
                 action: "/admin/system/permissions/add/",
                 submitLabel: "Add permission"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

@@ -3,7 +3,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminListRowCheckbox: Leaf {
+public struct NewAdminListRowCheckbox: Component {
 
     public let id: String
 
@@ -13,8 +13,7 @@ public struct NewAdminListRowCheckbox: Leaf {
         self.id = id
     }
 
-    public func html(
-    ) -> Td {
+    public func html(context: inout RenderContext) -> Td {
         Td {
             Input()
                 .type(.checkbox)

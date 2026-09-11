@@ -12,7 +12,7 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct NewAdminBaseLayout<T: Renderable>: Branch {
+public struct NewAdminBaseLayout<T: Component>: Component {
 
     public let content: T
 
@@ -36,28 +36,19 @@ public struct NewAdminBaseLayout<T: Renderable>: Branch {
         self.content = content
     }
 
-    public var children: [any Component] {
-        topbar
-        if let toast {
-            toast
-        }
-        sidebar
-        content
-    }
-
-    public func html() -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
-            topbar.html()
+            context.render(topbar)
             if let toast {
-                toast.html()
+                context.render(toast)
             }
 
             Div {
-                sidebar.html()
+                context.render(sidebar)
 
                 Main {
                     Div {
-                        content.html()
+                        context.render(content)
                     }
                 }
             }

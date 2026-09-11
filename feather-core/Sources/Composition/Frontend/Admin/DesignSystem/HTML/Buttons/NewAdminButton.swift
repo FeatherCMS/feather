@@ -3,7 +3,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-public struct NewAdminButton: Leaf {
+public struct NewAdminButton: Component {
 
     public let label: String
     public let href: String?
@@ -19,8 +19,7 @@ public struct NewAdminButton: Leaf {
         self.style = style
     }
 
-    public func html(
-    ) -> A {
+    public func html(context: inout RenderContext) -> A {
         var link = A(label)
         if let href, style != .disabled {
             link = link.href(href)

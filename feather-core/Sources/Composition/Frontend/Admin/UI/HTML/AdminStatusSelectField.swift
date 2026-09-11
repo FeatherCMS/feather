@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct AdminStatusSelectField: Leaf {
+public struct AdminStatusSelectField: Component {
     public let formID: String
     public let selectedStatus: String
     public let options: [String]
@@ -19,7 +19,7 @@ public struct AdminStatusSelectField: Leaf {
         self.options = options
     }
 
-    public func html() -> Select {
+    public func html(context: inout RenderContext) -> Select {
         Select {
             for option in options {
                 Option(option.capitalized)

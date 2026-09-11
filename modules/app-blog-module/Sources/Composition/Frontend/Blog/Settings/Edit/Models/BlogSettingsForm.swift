@@ -11,7 +11,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogSettingsForm: Leaf {
+struct BlogSettingsForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -47,7 +47,7 @@ struct BlogSettingsForm: Leaf {
     var action: String = "/admin/blog/settings/"
     var submitLabel: String = "Save settings"
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -57,56 +57,56 @@ struct BlogSettingsForm: Leaf {
             }
 
             H2("List paths")
-            FormInputField(
+            context.render(FormInputField(
                 name: state.postListPath.key,
                 label: state.postListPath.label,
                 value: state.postListPath.value,
                 error: state.postListPath.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.authorListPath.key,
                 label: state.authorListPath.label,
                 value: state.authorListPath.value,
                 error: state.authorListPath.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.tagListPath.key,
                 label: state.tagListPath.label,
                 value: state.tagListPath.value,
                 error: state.tagListPath.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ))
 
             H2("Prefixes")
-            FormInputField(
+            context.render(FormInputField(
                 name: state.postPathPrefix.key,
                 label: state.postPathPrefix.label,
                 value: state.postPathPrefix.value,
                 error: state.postPathPrefix.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.authorPathPrefix.key,
                 label: state.authorPathPrefix.label,
                 value: state.authorPathPrefix.value,
                 error: state.authorPathPrefix.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
-            FormInputField(
+            ))
+            context.render(FormInputField(
                 name: state.tagPathPrefix.key,
                 label: state.tagPathPrefix.label,
                 value: state.tagPathPrefix.value,
                 error: state.tagPathPrefix.error,
                 isDisabled: !state.canEdit,
                 inputClass: "text-input"
-            ).renderHTML()
+            ))
 
             if state.canEdit {
                 Section {

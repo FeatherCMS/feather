@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct AdminPreviewLink: Leaf {
+public struct AdminPreviewLink: Component {
     public let slug: String?
     public let label: String
 
@@ -26,9 +26,9 @@ public struct AdminPreviewLink: Leaf {
         }]
     }
 
-    public func html() -> A {
+    public func html(context: inout RenderContext) -> A {
         var link = A {
-            Icon(svg: FeatherIcons.externalLink()).html()
+            context.render(Icon(svg: FeatherIcons.externalLink()))
         }
         if let slug = normalizedSlug {
             link = link

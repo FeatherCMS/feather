@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct NewAdminListSearch: Leaf {
+public struct NewAdminListSearch: Component {
 
     public func rules(
     ) -> [any Rule] {
@@ -105,8 +105,7 @@ public struct NewAdminListSearch: Leaf {
         self.additionalFields = additionalFields()
     }
 
-    public func html(
-    ) -> Form {
+    public func html(context: inout RenderContext) -> Form {
         Form {
             for item in state.queryItems {
                 Input().type(.hidden).name(item.name).value(item.value)
@@ -119,7 +118,7 @@ public struct NewAdminListSearch: Leaf {
             for field in additionalFields {
                 field
             }
-            NewAdminSubmitButton("Search", style: .primary).html()
+            context.render(NewAdminSubmitButton("Search", style: .ghost(.primary)))
             A("Reset")
                 .href(state.resetPath)
                 .class("table-search-reset")

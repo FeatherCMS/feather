@@ -3,7 +3,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-public struct NewAdminSubmitButton: Leaf {
+public struct NewAdminSubmitButton: Component {
 
     public let label: String
     public let style: NewAdminButtonStyle
@@ -16,8 +16,7 @@ public struct NewAdminSubmitButton: Leaf {
         self.style = style
     }
 
-    public func html(
-    ) -> Button {
+    public func html(context: inout RenderContext) -> Button {
         var button = Button(label)
             .type(.submit)
             .class("button", style.className)

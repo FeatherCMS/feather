@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct ListRemoveConfirmation: Leaf {
+public struct ListRemoveConfirmation: Component {
 
     public struct State: Sendable {
         public let breadcrumb: AdminBreadcrumb.State
@@ -41,11 +41,11 @@ public struct ListRemoveConfirmation: Leaf {
         self.state = state
     }
 
-    public func html() -> some BasicTag {
+    public func html(context: inout RenderContext) -> some BasicTag {
         let previewIds = state.selectedIds.prefix(10)
         let remainingIds = state.selectedIds.count - previewIds.count
 
-        return AdminConfirmationDialog(
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: state.title,
@@ -70,6 +70,6 @@ public struct ListRemoveConfirmation: Leaf {
                     .init(name: "selectedIds", value: $0)
                 } + state.hiddenFields
             )
-        ).html()
+        ))
     }
 }

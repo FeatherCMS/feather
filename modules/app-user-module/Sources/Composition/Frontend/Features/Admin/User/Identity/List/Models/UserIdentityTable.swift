@@ -8,7 +8,7 @@ import UserAdminAPI
 import WebComponents
 import WebBuilders
 
-struct UserIdentityTable: Leaf {
+struct UserIdentityTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -31,14 +31,14 @@ struct UserIdentityTable: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("User identities")
 
                 if state.isAdded {
@@ -52,10 +52,10 @@ struct UserIdentityTable: Leaf {
                 }
                 if state.canAdd {
                     Div {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             "Add identity",
                             href: "/admin/user/identities/add/"
-                        ).html()
+                        ))
                     }
                     .class("button-row")
                     Br()
@@ -119,7 +119,7 @@ struct UserIdentityTable: Leaf {
                     let canRemove = state.permissions.contains(
                         "user:identities:delete"
                     )
-                    ListTableRemoveForm(
+                    context.render(ListTableRemoveForm(
                         state: .init(
                             action: "/admin/user/identities/remove/",
                             page: state.page,
@@ -130,12 +130,12 @@ struct UserIdentityTable: Leaf {
                                 ? []
                                 : [("role", state.role)]
                         ),
-                        table: ListTableShell(
+                        table: context.render(ListTableShell(
                             table: Table {
                                 Thead {
                                     Tr {
                                         if canRemove {
-                                            ListTableSelectAllCheckbox().html()
+                                            context.render(ListTableSelectAllCheckbox())
                                         }
                                         Th("Name")
                                         Th("Id")
@@ -148,11 +148,11 @@ struct UserIdentityTable: Leaf {
                                     for identity in state.identities {
                                         Tr {
                                             if canRemove {
-                                                ListTableRowSelectCheckbox(
+                                                context.render(ListTableRowSelectCheckbox(
                                                     state: .init(
                                                         id: identity.id
                                                     )
-                                                ).html()
+                                                ))
                                             }
                                             Td(identity.name)
                                                 .data("label", "Name")
@@ -171,7 +171,7 @@ struct UserIdentityTable: Leaf {
                                                     )
                                             )
                                             .data("label", "Roles")
-                                            ListTableRowActions(
+                                            context.render(ListTableRowActions(
                                                 state: .init(
                                                     label: "Actions",
                                                     actions: [
@@ -203,16 +203,16 @@ struct UserIdentityTable: Leaf {
                                                     permissions: state
                                                         .permissions
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                     }
                                 }
                             }
                             .class("cms-table", "action-table")
                             .if(canRemove) { $0.class("select-table") }
-                        ).html()
-                    ).html()
-                    ListTablePagination(
+                        ))
+                    ))
+                    context.render(ListTablePagination(
                         state: .init(
                             path: "/admin/user/identities/",
                             page: state.page,
@@ -223,7 +223,7 @@ struct UserIdentityTable: Leaf {
                                 ? []
                                 : [("role", state.role)]
                         )
-                    ).html()
+                    ))
                 }
             }
         }

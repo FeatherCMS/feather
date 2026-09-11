@@ -7,26 +7,26 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminContactSubmissionsDirectoryView: Leaf {
+struct AdminContactSubmissionsDirectoryView: Component {
     let items: [AdminContactSubmissionDirectoryItem]
     let search: String
     let canRemove: Bool
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Submissions")
             P("All contact form submissions.")
             if let error { P(error).class("error") }
-            ListTableSearchForm(
+            context.render(ListTableSearchForm(
                 state: .init(
                     action: "/admin/contact/submissions/",
                     placeholder: "Quick search contact submissions",
                     search: search
                 )
-            ).html()
+            ))
             if items.isEmpty {
                 P(
                     search.isEmpty
@@ -35,7 +35,7 @@ struct AdminContactSubmissionsDirectoryView: Leaf {
                 )
             }
             else {
-                ListTableRemoveForm(
+                context.render(ListTableRemoveForm(
                     state: .init(
                         action: "/admin/contact/submissions/remove/",
                         page: 1,
@@ -43,12 +43,12 @@ struct AdminContactSubmissionsDirectoryView: Leaf {
                         canRemove: canRemove,
                         buttonTitle: "Remove selected"
                     ),
-                    table: ListTableShell(
+                    table: context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        ListTableSelectAllCheckbox().html()
+                                        context.render(ListTableSelectAllCheckbox())
                                     }
                                     Th("Form")
                                     Th("Submitted")
@@ -61,12 +61,12 @@ struct AdminContactSubmissionsDirectoryView: Leaf {
                                 for item in items {
                                     Tr {
                                         if canRemove {
-                                            ListTableRowSelectCheckbox(
+                                            context.render(ListTableRowSelectCheckbox(
                                                 state: .init(
                                                     id:
                                                         "\(item.formId):\(item.id)"
                                                 )
-                                            ).html()
+                                            ))
                                         }
                                         Td(item.formName).data("label", "Form")
                                         Td(item.createdAt)
@@ -76,7 +76,7 @@ struct AdminContactSubmissionsDirectoryView: Leaf {
                                                 .data("label", "Email")
                                         }
                                         Td(item.status).data("label", "Status")
-                                        ListTableRowActions(
+                                        context.render(ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",
                                                 actions: [
@@ -102,15 +102,15 @@ struct AdminContactSubmissionsDirectoryView: Leaf {
                                                     "contact:form-submissions:delete",
                                                 ]
                                             )
-                                        ).html()
+                                        ))
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(canRemove) { $0.class("select-table") }
-                    ).html()
-                ).html()
+                    ))
+                ))
             }
         }
         .class("cms-section")

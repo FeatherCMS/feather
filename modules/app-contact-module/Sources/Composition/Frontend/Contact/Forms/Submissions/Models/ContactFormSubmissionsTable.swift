@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct ContactFormSubmissionsTable: Leaf {
+struct ContactFormSubmissionsTable: Component {
     struct State {
         let formId: String
         let items: [AdminContactFormSubmissionItem]
@@ -17,19 +17,19 @@ struct ContactFormSubmissionsTable: Leaf {
         let canRemove: Bool
     }
     let state: State
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: state.formId, active: .submissions).html()
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminContactFormTabs(formId: state.formId, active: .submissions))
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Contact form submissions")
             if let error = state.error { P(error).class("error") }
-            ListTableSearchForm(
+            context.render(ListTableSearchForm(
                 state: .init(
                     action: "/admin/contact/forms/\(state.formId)/submissions/",
                     placeholder: "Quick search submissions",
                     search: state.search
                 )
-            ).html()
+            ))
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -38,7 +38,7 @@ struct ContactFormSubmissionsTable: Leaf {
                 )
             }
             else {
-                ListTableRemoveForm(
+                context.render(ListTableRemoveForm(
                     state: .init(
                         action:
                             "/admin/contact/forms/\(state.formId)/submissions/remove/",
@@ -47,12 +47,12 @@ struct ContactFormSubmissionsTable: Leaf {
                         canRemove: state.canRemove,
                         buttonTitle: "Remove selected"
                     ),
-                    table: ListTableShell(
+                    table: context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox().html()
+                                        context.render(ListTableSelectAllCheckbox())
                                     }
                                     Th("Submitted")
                                     if hasEmailColumn { Th("Email") }
@@ -64,9 +64,9 @@ struct ContactFormSubmissionsTable: Leaf {
                                 for item in state.items {
                                     Tr {
                                         if state.canRemove {
-                                            ListTableRowSelectCheckbox(
+                                            context.render(ListTableRowSelectCheckbox(
                                                 state: .init(id: item.id)
-                                            ).html()
+                                            ))
                                         }
                                         Td(item.createdAt)
                                             .data("label", "Submitted")
@@ -75,7 +75,7 @@ struct ContactFormSubmissionsTable: Leaf {
                                                 .data("label", "Email")
                                         }
                                         Td(item.status).data("label", "Status")
-                                        ListTableRowActions(
+                                        context.render(ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",
                                                 actions: [
@@ -101,15 +101,15 @@ struct ContactFormSubmissionsTable: Leaf {
                                                     "contact:form-submissions:delete",
                                                 ]
                                             )
-                                        ).html()
+                                        ))
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    ).html()
-                ).html()
+                    ))
+                ))
             }
         }
         .class("cms-section")

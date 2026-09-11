@@ -11,7 +11,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct Metadata: Leaf {
+public struct Metadata: Component {
 
     let canonicalUrl: String
     let title: String
@@ -33,7 +33,7 @@ public struct Metadata: Leaf {
         self.noIndex = noIndex
     }
 
-    public func html() -> Head {
+    public func html(context: inout RenderContext) -> Head {
         Head {
             Meta().charset("utf-8")
             Meta().name(.viewport).content("width=device-width, initial-scale=1")

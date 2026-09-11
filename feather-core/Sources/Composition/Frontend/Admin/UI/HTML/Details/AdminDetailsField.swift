@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct AdminDetailsField: Leaf {
+public struct AdminDetailsField: Component {
     public let label: String
     public let value: String
 
@@ -19,7 +19,7 @@ public struct AdminDetailsField: Leaf {
         }
     }
 
-    public func html() -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
             P(label)
                 .class("admin-details-field__label")

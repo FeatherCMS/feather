@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct WebSettingsEdit: Leaf {
+struct WebSettingsEdit: Component {
 
     struct State {
         let isEdited: Bool
@@ -16,9 +16,9 @@ struct WebSettingsEdit: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Settings")
             P(
@@ -34,7 +34,7 @@ struct WebSettingsEdit: Leaf {
                 P("Settings edited successfully.").class("success")
             }
 
-            WebSettingsForm(state: state.form).html()
+            context.render(WebSettingsForm(state: state.form))
         }
         .class("cms-section")
     }

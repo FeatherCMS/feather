@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct ContactFormFieldsTable: Leaf {
+struct ContactFormFieldsTable: Component {
     struct State {
         let formId: String
         let fields: [AdminContactFormFieldRow]
@@ -19,30 +19,30 @@ struct ContactFormFieldsTable: Leaf {
         let breadcrumb: AdminBreadcrumb.State
     }
     let state: State
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         let basePath = "/admin/contact/forms/\(state.formId)/fields"
         return Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Contact form fields")
             if let error = state.error { P(error).class("error") }
             if state.isEdited { P("Contact form field edited successfully.") }
             if state.isRemoved { P("Contact form field removed successfully.") }
-            Div { AdminNavigationButton("Add field", href: "\(basePath)/add/").html() }
+            Div { context.render(AdminNavigationButton("Add field", href: "\(basePath)/add/")) }
                 .class("button-row")
             Br()
             Br()
-            ListTableSearchForm(
+            context.render(ListTableSearchForm(
                 state: .init(
                     action: "\(basePath)/",
                     placeholder: "Quick search contact fields",
                     search: state.search
                 )
-            ).html()
+            ))
             if state.fields.isEmpty {
                 P("No fields yet.")
             }
             else {
-                ListTableRemoveForm(
+                context.render(ListTableRemoveForm(
                     state: .init(
                         action: "\(basePath)/remove/",
                         page: 1,
@@ -50,12 +50,12 @@ struct ContactFormFieldsTable: Leaf {
                         canRemove: state.canRemove,
                         buttonTitle: "Remove selected"
                     ),
-                    table: ListTableShell(
+                    table: context.render(ListTableShell(
                         table: Table {
                             Thead {
                                 Tr {
                                     if state.canRemove {
-                                        ListTableSelectAllCheckbox().html()
+                                        context.render(ListTableSelectAllCheckbox())
                                     }
                                     Th("Key")
                                     Th("Label")
@@ -68,16 +68,16 @@ struct ContactFormFieldsTable: Leaf {
                                 for field in state.fields {
                                     Tr {
                                         if state.canRemove {
-                                            ListTableRowSelectCheckbox(
+                                            context.render(ListTableRowSelectCheckbox(
                                                 state: .init(id: field.id)
-                                            ).html()
+                                            ))
                                         }
                                         Td(field.key).data("label", "Key")
                                         Td(field.label).data("label", "Label")
                                         Td(field.type).data("label", "Type")
                                         Td(field.isRequired ? "Yes" : "No")
                                             .data("label", "Required")
-                                        ListTableRowActions(
+                                        context.render(ListTableRowActions(
                                             state: .init(
                                                 label: "Actions",
                                                 actions: [
@@ -103,15 +103,15 @@ struct ContactFormFieldsTable: Leaf {
                                                     "contact:form-fields:delete",
                                                 ]
                                             )
-                                        ).html()
+                                        ))
                                     }
                                 }
                             }
                         }
                         .class("cms-table", "action-table")
                         .if(state.canRemove) { $0.class("select-table") }
-                    ).html()
-                ).html()
+                    ))
+                ))
             }
         }
         .class("cms-section")

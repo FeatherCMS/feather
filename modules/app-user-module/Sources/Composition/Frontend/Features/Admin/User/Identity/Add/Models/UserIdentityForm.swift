@@ -7,7 +7,7 @@ import UserAdminAPI
 import WebComponents
 import WebBuilders
 
-struct UserIdentityForm: Leaf {
+struct UserIdentityForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -47,7 +47,7 @@ struct UserIdentityForm: Leaf {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -56,15 +56,15 @@ struct UserIdentityForm: Leaf {
                 P(error).class("error")
             }
 
-            FormInputField(
+            context.render(FormInputField(
                 name: state.name.key,
                 label: state.name.label,
                 value: state.name.value,
                 error: state.name.error,
                 isRequired: state.name.isRequired
-            ).html()
+            ))
 
-            FormSelectField(
+            context.render(FormSelectField(
                 name: state.status.key,
                 label: state.status.label,
                 options: UserAdminAPI.Components.Schemas
@@ -79,11 +79,11 @@ struct UserIdentityForm: Leaf {
                 error: state.status.error,
                 isRequired: state.status.isRequired,
                 selectClass: "text-input"
-            ).html()
+            ))
 
             if !state.roleOptions.isEmpty {
                 Section {
-                    AdminFieldLabel(label: "Roles", required: false).html()
+                    context.render(AdminFieldLabel(label: "Roles", required: false))
                     Div {
                         for option in state.roleOptions {
                             Label {
@@ -110,11 +110,11 @@ struct UserIdentityForm: Leaf {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")

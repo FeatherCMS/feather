@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AdminMetadataFields: Leaf {
+struct AdminMetadataFields: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -128,35 +128,35 @@ struct AdminMetadataFields: Leaf {
         }
     }
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Div {
-            FormInputField(
+            context.render(FormInputField(
                 name: state.slug.key,
                 label: state.slug.label,
                 prefix: state.slugPrefix,
                 value: state.slug.value,
                 error: state.slug.error,
                 isRequired: true
-            ).html()
+            ))
             if showTemplate {
-                templateField(state.template).html()
+                context.render(templateField(state.template))
             }
 
             Div {
                 H3("Publishing")
-                statusField(state.status).html()
-                FormDateTimeField(
+                context.render(statusField(state.status))
+                context.render(FormDateTimeField(
                     name: state.publicationDate.key,
                     label: state.publicationDate.label,
                     value: state.publicationDate.value,
                     error: state.publicationDate.error
-                ).html()
-                FormDateTimeField(
+                ))
+                context.render(FormDateTimeField(
                     name: state.expirationDate.key,
                     label: state.expirationDate.label,
                     value: state.expirationDate.value,
                     error: state.expirationDate.error
-                ).html()
+                ))
             }
             .class("admin-metadata-fields__group")
 
@@ -164,19 +164,19 @@ struct AdminMetadataFields: Leaf {
                 H3("Social")
                 Div {
                     if showTitle {
-                        FormInputField(
+                        context.render(FormInputField(
                             name: state.title.key,
                             label: state.title.label,
                             value: state.title.value,
                             error: state.title.error,
                             isRequired: titleRequired
-                        ).html()
+                        ))
                     }
-                    textarea(state.excerpt, rows: 4).html()
+                    context.render(textarea(state.excerpt, rows: 4))
                     imagePicker(
                         state.imageUrl,
                         selectedAsset: state.selectedImageAsset
-                    )
+                    , context: &context)
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -185,22 +185,22 @@ struct AdminMetadataFields: Leaf {
             Div {
                 H3("Advanced")
                 Div {
-                    FormInputField(
+                    context.render(FormInputField(
                         name: state.canonicalUrl.key,
                         label: state.canonicalUrl.label,
                         value: state.canonicalUrl.value,
                         error: state.canonicalUrl.error
-                    ).html()
-                    checkbox(state.noIndex)
-                    FormInputField(
+                    ))
+                    checkbox(state.noIndex, context: &context)
+                    context.render(FormInputField(
                         name: state.primaryKeyword.key,
                         label: state.primaryKeyword.label,
                         value: state.primaryKeyword.value,
                         error: state.primaryKeyword.error
-                    ).html()
-                    textarea(state.cssCodeInjection, rows: 10).html()
-                    textarea(state.javascriptCodeInjection, rows: 10).html()
-                    textarea(state.structuredDataCodeInjection, rows: 10).html()
+                    ))
+                    context.render(textarea(state.cssCodeInjection, rows: 10))
+                    context.render(textarea(state.javascriptCodeInjection, rows: 10))
+                    context.render(textarea(state.structuredDataCodeInjection, rows: 10))
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -240,11 +240,13 @@ struct AdminMetadataFields: Leaf {
 
     private func imagePicker(
         _ field: FieldState,
-        selectedAsset: AdminMediaAssetReferenceModel?
+        selectedAsset: AdminMediaAssetReferenceModel?,
+        context: inout RenderContext
     ) -> Section {
+
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
-        return AdminMediaAssetPicker(
+        return context.render(AdminMediaAssetPicker(
             state: .init(
                 field: .init(
                     key: field.key,
@@ -257,7 +259,7 @@ struct AdminMetadataFields: Leaf {
                 allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                 outputMode: .originalURL
             )
-        ).html()
+        ))
     }
 
     private func textarea(
@@ -274,17 +276,19 @@ struct AdminMetadataFields: Leaf {
     }
 
     private func checkbox(
-        _ field: CheckboxState
+        _ field: CheckboxState,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Section {
-            CheckboxField(
+            context.render(CheckboxField(
                 state: .init(
                     key: field.key,
                     label: field.label,
                     value: field.value,
                     error: field.error
                 )
-            ).html()
+            ))
         }
         .if(field.error != nil) { $0.class("has-error") }
     }

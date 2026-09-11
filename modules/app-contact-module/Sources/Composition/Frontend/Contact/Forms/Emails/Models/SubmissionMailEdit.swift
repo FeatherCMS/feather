@@ -7,26 +7,26 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct SubmissionMailEdit: Leaf {
+struct SubmissionMailEdit: Component {
     let formId: String
     let mail: AdminContactFormEmail
     let availableFields: [AdminContactFormFieldOption]
     let breadcrumb: AdminBreadcrumb.State
     let error: String?
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminContactFormTabs(formId: formId, active: .emails).html()
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminContactFormTabs(formId: formId, active: .emails))
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Edit contact form email")
             replacementVariables
-            SubmissionMailForm(
+            context.render(SubmissionMailForm(
                 mail: mail,
                 action:
                     "/admin/contact/forms/\(formId)/emails/\(mail.id)/edit/",
                 submitLabel: "Save",
                 error: error
-            ).html()
+            ))
         }
         .class("cms-section")
     }

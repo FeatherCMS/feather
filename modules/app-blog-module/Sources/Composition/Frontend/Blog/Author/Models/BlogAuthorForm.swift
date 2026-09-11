@@ -12,7 +12,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogAuthorForm: Leaf {
+struct BlogAuthorForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -68,7 +68,7 @@ struct BlogAuthorForm: Leaf {
         return links
     }
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -77,11 +77,11 @@ struct BlogAuthorForm: Leaf {
                 P(error).class("error")
             }
 
-            AdminPillTabs(links: metadataTabLinks()).renderHTML()
+            context.render(AdminPillTabs(links: metadataTabLinks()))
 
             Div {
 
-                AdminMediaAssetPicker(
+                context.render(AdminMediaAssetPicker(
                     state: .init(
                         field: .init(
                             key: state.profileImageAssetId.key,
@@ -94,16 +94,16 @@ struct BlogAuthorForm: Leaf {
                             "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                     )
-                ).renderHTML()
-                FormInputField(
+                ))
+                context.render(FormInputField(
                     name: state.name.key,
                     label: state.name.label,
                     value: state.name.value,
                     error: state.name.error,
                     isRequired: true
-                ).renderHTML()
-                textarea(state.excerpt, required: true, rows: 4)
-                textarea(state.content, required: true)
+                ))
+                textarea(state.excerpt, required: true, rows: 4, context: &context)
+                textarea(state.content, required: true, context: &context)
             }
             Section {
                 Div {
@@ -117,11 +117,11 @@ struct BlogAuthorForm: Leaf {
                             .class("secondary")
                     }
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).renderHTML()
+                        ))
                     }
                 }
                 .class("button-row")
@@ -136,15 +136,17 @@ struct BlogAuthorForm: Leaf {
     private func textarea(
         _ field: FieldState,
         required: Bool = false,
-        rows: Int = 8
+        rows: Int = 8,
+        context: inout RenderContext
     ) -> FormTextAreaField {
-        FormTextAreaField(
+
+        context.render(FormTextAreaField(
             name: field.key,
             label: field.label,
             value: field.value,
             error: field.error,
             rows: rows,
             isRequired: required
-        ).renderHTML()
+        ))
     }
 }

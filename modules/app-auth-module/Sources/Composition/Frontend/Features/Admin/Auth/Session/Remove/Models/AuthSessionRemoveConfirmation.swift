@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AuthSessionRemoveConfirmation: Leaf {
+struct AuthSessionRemoveConfirmation: Component {
 
     struct State {
         let model: AdminRemoveAuthSessionModel
@@ -13,8 +13,8 @@ struct AuthSessionRemoveConfirmation: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
-        return AdminConfirmationDialog(
+    func html(context: inout RenderContext) -> some BasicTag {
+        return context.render(AdminConfirmationDialog(
             state: .init(
                 breadcrumb: state.breadcrumb,
                 title: "Remove session",
@@ -42,6 +42,6 @@ struct AuthSessionRemoveConfirmation: Leaf {
                     "/admin/user/identities/\(state.model.identityId)/sessions/\(state.model.sessionId)/remove/",
                 cancelURL: "/admin/user/identities/\(state.model.identityId)/"
             )
-        ).html()
+        ))
     }
 }

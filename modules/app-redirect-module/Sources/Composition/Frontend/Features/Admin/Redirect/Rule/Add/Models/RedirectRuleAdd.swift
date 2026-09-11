@@ -8,7 +8,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct RedirectRuleAdd: Leaf {
+struct RedirectRuleAdd: Component {
 
     struct State {
         let form: RedirectRuleForm.State
@@ -17,16 +17,16 @@ struct RedirectRuleAdd: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add redirect rule")
-            RedirectRuleForm(
+            context.render(RedirectRuleForm(
                 state: state.form,
                 action: "/admin/redirect/rules/add/",
                 submitLabel: "Add rule"
-            ).html()
+            ))
         }
         .class("cms-section")
     }

@@ -15,7 +15,7 @@ import WebBuilders
 import class Foundation.ByteCountFormatter
 import struct Foundation.CharacterSet
 
-struct AssetListView: Leaf {
+struct AssetListView: Component {
     struct State {
         let folders: [Components.Schemas.MediaFolderListItemSchema]
         let items: [AdminListMediaAssetModel.AssetItem]
@@ -239,7 +239,7 @@ struct AssetListView: Leaf {
         }
     }
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
@@ -247,28 +247,28 @@ struct AssetListView: Leaf {
             }
             else {
                 if !state.picker.isEnabled {
-                    AdminBreadcrumb(state: state.breadcrumb).html()
+                    context.render(AdminBreadcrumb(state: state.breadcrumb))
                     H1("Media assets")
 
                     if state.isAdded { P("Item added successfully.") }
                     if state.isRemoved { P("Item removed successfully.") }
                 }
 
-                toolbar()
+                toolbar(context: &context)
 
                 if hasAnyResults {
                     switch state.view {
                     case .grid:
-                        gridContent()
+                        gridContent(context: &context)
                     case .list:
-                        listContent()
+                        listContent(context: &context)
                     }
                 }
                 else {
                     emptyState()
                 }
 
-                ListTablePagination(
+                context.render(ListTablePagination(
                     state: .init(
                         path: "/admin/media/assets/",
                         page: state.page,
@@ -277,7 +277,7 @@ struct AssetListView: Leaf {
                         search: state.search,
                         queryItems: queryItems()
                     )
-                ).html()
+                ))
                 if state.picker.isEnabled {
                     Script(pickerScript())
                 }
@@ -497,11 +497,12 @@ extension AssetListView {
         "/admin/media/folders/\(folder.id)/edit/"
     }
 
-    fileprivate func toolbar() -> some FlowContent {
+    fileprivate func toolbar(context: inout RenderContext) -> some FlowContent {
+
         Div {
             Div {
                 if state.canAdd && !state.picker.isEnabled {
-                    AdminNavigationButton("Add asset", href: addAssetPath()).html()
+                    context.render(AdminNavigationButton("Add asset", href: addAssetPath()))
                 }
                 if state.canAdd && !state.picker.isEnabled {
                     A("Add folder")
@@ -516,7 +517,7 @@ extension AssetListView {
                     pickerSearchControls()
                 }
                 else {
-                    ListTableSearchForm(
+                    context.render(ListTableSearchForm(
                         state: .init(
                             action: "/admin/media/assets/",
                             placeholder: "Quick search assets",
@@ -524,7 +525,7 @@ extension AssetListView {
                             resetPath: browsePath(parentId: state.parentId),
                             queryItems: queryItems()
                         )
-                    ).html()
+                    ))
                 }
                 Div {
                     A("Grid")
@@ -626,28 +627,29 @@ extension AssetListView {
         }
     }
 
-    fileprivate func gridContent() -> some FlowContent {
+    fileprivate func gridContent(context: inout RenderContext) -> some FlowContent {
         Div {
             if let currentFolder = state.currentFolder {
-                upCard(parentId: currentFolder.parentId)
+                upCard(parentId: currentFolder.parentId, context: &context)
             }
             for folder in state.folders {
-                folderCard(folder)
+                folderCard(folder, context: &context)
             }
             for item in state.items {
-                assetCard(item)
+                assetCard(item, context: &context)
             }
         }
         .class("grid", "grid-421", "media-assets-grid")
     }
 
-    fileprivate func listContent() -> some FlowContent {
+    fileprivate func listContent(context: inout RenderContext) -> some FlowContent {
+
         let canRemove =
             state.permissions.contains(
                 MediaPermissions.Assets.delete.rawValue
             )
             && !state.picker.isEnabled
-        return ListTableRemoveForm(
+        return context.render(ListTableRemoveForm(
             state: .init(
                 action: "/admin/media/assets/remove/",
                 page: state.page,
@@ -656,12 +658,12 @@ extension AssetListView {
                 buttonTitle: "Remove selected",
                 queryItems: queryItems()
             ),
-            table: ListTableShell(
+            table: context.render(ListTableShell(
                 table: Table {
                     Thead {
                         Tr {
                             if canRemove {
-                                ListTableSelectAllCheckbox().html()
+                                context.render(ListTableSelectAllCheckbox())
                             }
                             Th("Preview").columnWidth(percent: 10)
                             Th("File name")
@@ -675,29 +677,31 @@ extension AssetListView {
                             upRow(
                                 parentId: currentFolder.parentId,
                                 canRemove: canRemove
-                            )
+                            , context: &context)
                         }
                         for folder in state.folders {
-                            folderRow(folder, canRemove: canRemove)
+                            folderRow(folder, canRemove: canRemove, context: &context)
                         }
                         for item in state.items {
-                            assetRow(item, canRemove: canRemove)
+                            assetRow(item, canRemove: canRemove, context: &context)
                         }
                     }
                 }
                 .class("cms-table", "action-table")
                 .if(canRemove) { $0.class("select-table") }
-            ).html()
-        ).html()
+            ))
+        ))
     }
 
     fileprivate func upCard(
-        parentId: String?
+        parentId: String?,
+        context: inout RenderContext
     ) -> some FlowContent {
+
         Div {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.cornerUpLeft()).html()
+                    context.render(Icon(svg: FeatherIcons.cornerUpLeft()))
                 }
                 .class("media-assets-card-preview", "media-assets-folder-icon")
             }
@@ -718,12 +722,14 @@ extension AssetListView {
     }
 
     fileprivate func folderCard(
-        _ folder: Components.Schemas.MediaFolderListItemSchema
+        _ folder: Components.Schemas.MediaFolderListItemSchema,
+        context: inout RenderContext
     ) -> some FlowContent {
+
         Div {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.folder()).html()
+                    context.render(Icon(svg: FeatherIcons.folder()))
                 }
                 .class("media-assets-card-preview", "media-assets-folder-icon")
             }
@@ -758,8 +764,10 @@ extension AssetListView {
     }
 
     fileprivate func assetCard(
-        _ item: AdminListMediaAssetModel.AssetItem
+        _ item: AdminListMediaAssetModel.AssetItem,
+        context: inout RenderContext
     ) -> some FlowContent {
+
         let actionSuffix = assetActionSuffix()
         let detailsURL = "/admin/media/assets/\(item.asset.id)/\(actionSuffix)"
         let previewURL = previewLink(
@@ -779,7 +787,7 @@ extension AssetListView {
                         }
                         else {
                             Div {
-                                Icon(svg: FeatherIcons.file()).html()
+                                context.render(Icon(svg: FeatherIcons.file()))
                             }
                             .class("media-assets-folder-icon")
                         }
@@ -808,7 +816,7 @@ extension AssetListView {
                         }
                         else {
                             Div {
-                                Icon(svg: FeatherIcons.file()).html()
+                                context.render(Icon(svg: FeatherIcons.file()))
                             }
                             .class("media-assets-folder-icon")
                         }
@@ -870,13 +878,14 @@ extension AssetListView {
 
     fileprivate func upRow(
         parentId: String?,
-        canRemove: Bool
+        canRemove: Bool,
+        context: inout RenderContext
     ) -> some BasicTag {
         Tr {
             if canRemove {
                 Td("")
             }
-            parentPreviewCell(href: browsePath(parentId: parentId))
+            parentPreviewCell(href: browsePath(parentId: parentId), context: &context)
             Td {
                 A("Up to parent").href(browsePath(parentId: parentId))
             }
@@ -895,7 +904,8 @@ extension AssetListView {
 
     fileprivate func folderRow(
         _ folder: Components.Schemas.MediaFolderListItemSchema,
-        canRemove: Bool
+        canRemove: Bool,
+        context: inout RenderContext
     ) -> some BasicTag {
         Tr {
             if canRemove {
@@ -904,7 +914,7 @@ extension AssetListView {
             folderPreviewCell(
                 label: folder.name,
                 href: browsePath(parentId: folder.id)
-            )
+            , context: &context)
             folderTitleCell(for: folder)
             Td("Folder")
                 .data("label", "Type")
@@ -934,8 +944,10 @@ extension AssetListView {
 
     fileprivate func assetRow(
         _ item: AdminListMediaAssetModel.AssetItem,
-        canRemove: Bool
+        canRemove: Bool,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         let actionSuffix = assetActionSuffix()
         let previewURL = previewLink(
             for: item.preview?.storageKey ?? item.asset.storageKey,
@@ -944,14 +956,14 @@ extension AssetListView {
         let originalURL = assetOriginalLink(for: item.asset)
         return Tr {
             if canRemove {
-                ListTableRowSelectCheckbox(state: .init(id: item.asset.id)).html()
+                context.render(ListTableRowSelectCheckbox(state: .init(id: item.asset.id)))
             }
             assetPreviewCell(
                 for: item,
                 previewURL: previewURL,
                 originalURL: originalURL
-            )
-            assetTitleCell(for: item, originalURL: originalURL)
+            , context: &context)
+            assetTitleCell(for: item, originalURL: originalURL, context: &context)
             Td(item.asset._type)
                 .data("label", "Type")
             Td(fileSizeLabel(bytes: item.asset.sizeBytes))
@@ -1079,12 +1091,14 @@ extension AssetListView {
     }
 
     fileprivate func parentPreviewCell(
-        href: String
+        href: String,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Td {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.cornerUpLeft()).html()
+                    context.render(Icon(svg: FeatherIcons.cornerUpLeft()))
                 }
                 .class("media-assets-folder-icon")
             }
@@ -1098,12 +1112,14 @@ extension AssetListView {
 
     fileprivate func folderPreviewCell(
         label: String,
-        href: String
+        href: String,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Td {
             A {
                 Div {
-                    Icon(svg: FeatherIcons.folder()).html()
+                    context.render(Icon(svg: FeatherIcons.folder()))
                 }
                 .class("media-assets-folder-icon")
             }
@@ -1118,8 +1134,10 @@ extension AssetListView {
     fileprivate func assetPreviewCell(
         for item: AdminListMediaAssetModel.AssetItem,
         previewURL: String,
-        originalURL: String
+        originalURL: String,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Td {
             A {
                 if item.preview != nil {
@@ -1127,7 +1145,7 @@ extension AssetListView {
                 }
                 else {
                     Div {
-                        Icon(svg: FeatherIcons.file()).html()
+                        context.render(Icon(svg: FeatherIcons.file()))
                     }
                     .class("media-assets-folder-icon")
                 }
@@ -1152,8 +1170,10 @@ extension AssetListView {
 
     fileprivate func assetTitleCell(
         for item: AdminListMediaAssetModel.AssetItem,
-        originalURL: String
+        originalURL: String,
+        context: inout RenderContext
     ) -> some BasicTag {
+
         Td {
             Span {
                 A(fileName(for: item.asset))
@@ -1161,7 +1181,7 @@ extension AssetListView {
                     .target(.blank)
                     .ariaLabel("Open \(displayTitle(for: item.asset))")
                 A {
-                    Icon(svg: FeatherIcons.externalLink()).html()
+                    context.render(Icon(svg: FeatherIcons.externalLink()))
                 }
                 .href(originalURL)
                 .target(.blank)

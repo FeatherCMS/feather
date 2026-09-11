@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AccountInvitationDetails: Leaf {
+struct AccountInvitationDetails: Component {
     struct State {
         let invitation: AccountInvitationDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -12,35 +12,35 @@ struct AccountInvitationDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("User invitation details")
-            AdminDetailsField(label: "ID", value: state.invitation.id).html()
-            AdminDetailsField(label: "Email", value: state.invitation.email).html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.invitation.id))
+            context.render(AdminDetailsField(label: "Email", value: state.invitation.email))
+            context.render(AdminDetailsField(
                 label: "Roles",
                 value: state.invitation.roleNames.isEmpty
                     ? "No roles assigned"
                     : state.invitation.roleNames.joined(separator: ", ")
-            ).html()
+            ))
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Resend invitation",
                     href:
                         "/admin/account/invitations/\(state.invitation.id)/resend/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Edit invitation",
                     href:
                         "/admin/account/invitations/\(state.invitation.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove invitation",
                     href:
                         "/admin/account/invitations/\(state.invitation.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

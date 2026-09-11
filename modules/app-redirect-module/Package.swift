@@ -106,7 +106,7 @@ let package = Package(
             name: "RedirectDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                
+
                 .target(name: "RedirectContracts"),
             ],
             path: "Sources/Layers/Domain",
@@ -118,7 +118,7 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
 
-                .target(name: "RedirectDomain"),    
+                .target(name: "RedirectDomain"),
             ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
@@ -181,7 +181,7 @@ let package = Package(
         ),
         .target(
             name: "RedirectBackend",
-            dependencies: [                
+            dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
 
                 .target(name: "RedirectInfrastructure"),
@@ -200,7 +200,7 @@ let package = Package(
 
                 .target(name: "RedirectContracts"),
                 .target(name: "RedirectAdminAPI"),
-                .target(name: "RedirectAppAPI"),    
+                .target(name: "RedirectAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
             swiftSettings: defaultSwiftSettings

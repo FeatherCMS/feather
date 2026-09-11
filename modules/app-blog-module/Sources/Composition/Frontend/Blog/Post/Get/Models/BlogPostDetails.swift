@@ -14,7 +14,7 @@ import WebFrontend
 import WebComponents
 import WebBuilders
 
-struct BlogPostDetails: Leaf {
+struct BlogPostDetails: Component {
     struct State {
         let rule: BlogPostDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -25,9 +25,9 @@ struct BlogPostDetails: Leaf {
 
     let state: State
 
-    func renderHTML() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).renderHTML()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Blog post details")
             if state.isPublished {
                 P("Blog post published successfully.")
@@ -35,30 +35,30 @@ struct BlogPostDetails: Leaf {
             if state.isUnpublished {
                 P("Blog post unpublished successfully.")
             }
-            AdminDetailsField(label: "ID", value: state.rule.id).renderHTML()
-            AdminDetailsField(label: "Title", value: state.rule.title).renderHTML()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.rule.id))
+            context.render(AdminDetailsField(label: "Title", value: state.rule.title))
+            context.render(AdminDetailsField(
                 label: "Status",
                 value: state.rule.metadata.status.capitalized
-            ).renderHTML()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Published date",
                 value: format(state.rule.metadata.publicationDate)
-            ).renderHTML()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Expiration date",
                 value: format(state.rule.metadata.expirationDate)
-            ).renderHTML()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Authors",
                 value: state.rule.authorIds.isEmpty
                     ? "None" : state.rule.authorIds.joined(separator: ", ")
-            ).renderHTML()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Tags",
                 value: state.rule.tagIds.isEmpty
                     ? "None" : state.rule.tagIds.joined(separator: ", ")
-            ).renderHTML()
+            ))
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -78,19 +78,19 @@ struct BlogPostDetails: Leaf {
                         label: isPublished ? "Unpublish" : "Publish",
                         classes: ["secondary"]
                     )
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Edit post",
                         href: "/admin/blog/posts/\(state.rule.id)/edit/"
-                    ).renderHTML()
+                    ))
                 }
                 if state.permissions.contains(
                     BlogPermissions.Posts.delete.rawValue
                 ) {
-                    AdminNavigationButton(
+                    context.render(AdminNavigationButton(
                         "Remove post",
                         href: "/admin/blog/posts/\(state.rule.id)/remove/",
                         classes: ["danger"]
-                    ).renderHTML()
+                    ))
                 }
             }
             .class("button-row", "admin-detail-actions")

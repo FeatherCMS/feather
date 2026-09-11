@@ -3,7 +3,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct ListTableShell<Table: FlowContent>: Leaf {
+public struct ListTableShell<Table: FlowContent>: Component {
 
     public let table: Table
 
@@ -11,7 +11,7 @@ public struct ListTableShell<Table: FlowContent>: Leaf {
         self.table = table
     }
 
-    public func html() -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
             Div {
                 table

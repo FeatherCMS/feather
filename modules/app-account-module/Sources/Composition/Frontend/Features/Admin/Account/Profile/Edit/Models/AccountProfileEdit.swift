@@ -4,14 +4,14 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AccountProfileEdit: Leaf {
+struct AccountProfileEdit: Component {
     let userID: String
     let state: AccountProfileForm.State
     let isEdited: Bool
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(
+            context.render(AdminBreadcrumb(
                 state: .init(
                     links: [
                         .init(label: "Admin", link: "/admin/"),
@@ -20,9 +20,9 @@ struct AccountProfileEdit: Leaf {
                         .init(label: "Profile", link: state.action),
                     ]
                 )
-            ).html()
+            ))
             H1("Profile")
-            AdminPillTabs(links: [
+            context.render(AdminPillTabs(links: [
                 .init(
                     label: "Details",
                     href: "/admin/user/identities/\(userID)/",
@@ -44,11 +44,11 @@ struct AccountProfileEdit: Leaf {
                     href: "/admin/auth/magic-links/?userId=\(userID)",
                     isCurrent: false
                 ),
-            ]).html()
+            ]))
             if isEdited {
                 P("Profile edited successfully.").class("success")
             }
-            AccountProfileForm(state: state).html()
+            context.render(AccountProfileForm(state: state))
         }
         .class("cms-section")
     }

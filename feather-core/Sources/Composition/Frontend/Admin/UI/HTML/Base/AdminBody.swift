@@ -13,7 +13,7 @@ import SVG
 import WebComponents
 import WebBuilders
 
-public struct AdminBody<T: Leaf>: Leaf {
+public struct AdminBody<T: Component>: Component {
 
     public struct State: Sendable {
         public let sidebar: AdminSidebar.State
@@ -37,19 +37,19 @@ public struct AdminBody<T: Leaf>: Leaf {
         self.state = state
     }
 
-    public func html() -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
-            AdminTopBar().html()
+            context.render(AdminTopBar())
             if let toast = state.toast {
-                AdminToastBootstrap(payload: toast).html()
+                context.render(AdminToastBootstrap(payload: toast))
             }
 
             Div {
-                AdminSidebar(state: state.sidebar).html()
+                context.render(AdminSidebar(state: state.sidebar))
 
                 Main {
                     Div {
-                        state.content.html()
+                        context.render(state.content)
                     }
                     .class("panel", "cms-content")
                 }

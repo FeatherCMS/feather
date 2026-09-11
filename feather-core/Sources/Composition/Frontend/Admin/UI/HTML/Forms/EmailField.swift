@@ -11,7 +11,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct EmailField: Leaf {
+public struct EmailField: Component {
 
     public struct State: Object {
         public var key: String
@@ -44,7 +44,7 @@ public struct EmailField: Leaf {
         }
     }
 
-    public func html() -> Div {
+    public func html(context: inout RenderContext) -> Div {
         Div {
             Span(state.label)
 

@@ -8,16 +8,16 @@ import SVG
 import WebComponents
 import WebBuilders
 
-struct AnalyticsInsightsView: Leaf {
+struct AnalyticsInsightsView: Component {
 
     private let chartPrimaryColor = "var(--cms-primary-hover)"
 
     let page: AdminAnalyticsInsightsPage
     let permissions: Set<String>
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: breadcrumb).html()
+            context.render(AdminBreadcrumb(state: breadcrumb))
             H1(page.source.pageTitle)
             P(page.source.summary)
                 .style(

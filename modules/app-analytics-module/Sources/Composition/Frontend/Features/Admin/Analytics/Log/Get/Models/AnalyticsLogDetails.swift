@@ -5,7 +5,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct AnalyticsLogDetails: Leaf {
+struct AnalyticsLogDetails: Component {
 
     struct State {
         let log: Components.Schemas.AnalyticsLogDetailSchema
@@ -14,88 +14,88 @@ struct AnalyticsLogDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminDetailFieldStyleAnchor().html()
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminDetailFieldStyleAnchor())
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Analytics log details")
-            AdminDetailsField(label: "ID", value: state.log.id).html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.log.id))
+            context.render(AdminDetailsField(
                 label: "Account ID",
                 value: display(state.log.accountId)
-            ).html()
-            AdminDetailsField(label: "Source", value: state.log.source).html()
-            AdminDetailsField(label: "Method", value: state.log.method).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(label: "Source", value: state.log.source))
+            context.render(AdminDetailsField(label: "Method", value: state.log.method))
+            context.render(AdminDetailsField(
                 label: "Status",
                 value: "\(state.log.responseCode)"
-            ).html()
-            AdminDetailsField(label: "Path", value: state.log.path).html()
-            AdminDetailsField(label: "URL", value: state.log.url).html()
-            AdminDetailsField(label: "IP", value: display(state.log.ip)).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(label: "Path", value: state.log.path))
+            context.render(AdminDetailsField(label: "URL", value: state.log.url))
+            context.render(AdminDetailsField(label: "IP", value: display(state.log.ip)))
+            context.render(AdminDetailsField(
                 label: "Referer",
                 value: display(state.log.referer)
-            ).html()
-            AdminDetailsField(label: "Origin", value: display(state.log.origin)).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(label: "Origin", value: display(state.log.origin)))
+            context.render(AdminDetailsField(
                 label: "Accept-Language",
                 value: display(state.log.acceptLanguage)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "User-Agent",
                 value: display(state.log.userAgent)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Language",
                 value: display(state.log.language)
-            ).html()
-            AdminDetailsField(label: "Region", value: display(state.log.region)).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(label: "Region", value: display(state.log.region)))
+            context.render(AdminDetailsField(
                 label: "OS Name",
                 value: display(state.log.osName)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "OS Version",
                 value: display(state.log.osVersion)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Browser Name",
                 value: display(state.log.browserName)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Browser Version",
                 value: display(state.log.browserVersion)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Engine Name",
                 value: display(state.log.engineName)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Engine Version",
                 value: display(state.log.engineVersion)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Device Vendor",
                 value: display(state.log.deviceVendor)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Device Type",
                 value: display(state.log.deviceType)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Device Model",
                 value: display(state.log.deviceModel)
-            ).html()
-            AdminDetailsField(label: "CPU", value: display(state.log.cpu)).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(label: "CPU", value: display(state.log.cpu)))
+            context.render(AdminDetailsField(
                 label: "Created",
                 value: DateFormatting.formatUnixTimestamp(state.log.createdAt)
-            ).html()
-            AdminDetailsField(
+            ))
+            context.render(AdminDetailsField(
                 label: "Updated",
                 value: DateFormatting.formatUnixTimestamp(state.log.updatedAt)
-            ).html()
+            ))
             Div {
                 P("Headers")
                     .class("admin-details-field__label")

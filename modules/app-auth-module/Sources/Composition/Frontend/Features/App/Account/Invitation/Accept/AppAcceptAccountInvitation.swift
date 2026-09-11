@@ -16,7 +16,7 @@ struct AppAcceptAccountInvitation {
         let confirmation: String
     }
 
-    struct Page: Leaf {
+    struct Page: Component {
         let token: String
         let email: String?
         let password: String
@@ -24,12 +24,12 @@ struct AppAcceptAccountInvitation {
         let error: String?
         let success: String?
 
-        func html() -> Section {
+        func html(context: inout RenderContext) -> Section {
             Section {
                 H1("Create your account")
                 if let success {
                     P(success).class("success")
-                    AdminNavigationButton("Go to login", href: "/login/").html()
+                    context.render(AdminNavigationButton("Go to login", href: "/login/"))
                 }
                 else {
                     P("Complete your registration using the invitation.")
@@ -37,20 +37,20 @@ struct AppAcceptAccountInvitation {
                     if let error { P(error).class("error") }
                     Form {
                         Input().type(.hidden).name("token").value(token)
-                        PasswordField(
+                        context.render(PasswordField(
                             state: .init(
                                 key: "password",
                                 label: "Password",
                                 value: password
                             )
-                        ).html()
-                        PasswordField(
+                        ))
+                        context.render(PasswordField(
                             state: .init(
                                 key: "confirmation",
                                 label: "Confirm password",
                                 value: confirmation
                             )
-                        ).html()
+                        ))
                         Button("Create account").type(.submit)
                     }
                     .method(.post)
@@ -69,6 +69,7 @@ struct AppAcceptAccountInvitation {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
+        var renderContext = RenderContext()
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         guard !token.isEmpty else {
             return render(
@@ -79,7 +80,7 @@ struct AppAcceptAccountInvitation {
                 confirmation: "",
                 error: "Invitation token is missing.",
                 success: nil
-            )
+            , context: &renderContext)
         }
         do {
             let response = try await context.accountAppAPI()
@@ -100,7 +101,7 @@ struct AppAcceptAccountInvitation {
                     confirmation: "",
                     error: nil,
                     success: nil
-                )
+                , context: &renderContext)
             case .undocumented(let statusCode, let response):
                 throw try await context.accountAppAPI()
                     .failure(
@@ -118,7 +119,7 @@ struct AppAcceptAccountInvitation {
                 confirmation: "",
                 error: error.errorDescription,
                 success: nil
-            )
+            , context: &renderContext)
         }
     }
 
@@ -126,6 +127,7 @@ struct AppAcceptAccountInvitation {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
+        var renderContext = RenderContext()
         let payload = try await request.decode(
             as: FormInput.self,
             context: context
@@ -140,7 +142,7 @@ struct AppAcceptAccountInvitation {
                 confirmation: payload.confirmation,
                 error: "Password must contain at least 8 characters.",
                 success: nil
-            )
+            , context: &renderContext)
         }
         guard payload.password == payload.confirmation else {
             return render(
@@ -152,7 +154,7 @@ struct AppAcceptAccountInvitation {
                 confirmation: payload.confirmation,
                 error: "Passwords do not match.",
                 success: nil
-            )
+            , context: &renderContext)
         }
         do {
             let response = try await context.accountAppAPI()
@@ -180,7 +182,7 @@ struct AppAcceptAccountInvitation {
                     error: nil,
                     success:
                         "Your account was created successfully. You can now sign in."
-                )
+                , context: &renderContext)
             case .undocumented(let statusCode, let response):
                 throw try await context.accountAppAPI()
                     .failure(
@@ -198,7 +200,7 @@ struct AppAcceptAccountInvitation {
                 confirmation: payload.confirmation,
                 error: error.errorDescription,
                 success: nil
-            )
+            , context: &renderContext)
         }
     }
 
@@ -209,21 +211,23 @@ struct AppAcceptAccountInvitation {
         password: String,
         confirmation: String,
         error: String?,
-        success: String?
+        success: String?,
+        context: inout RenderContext
     ) -> HTMLResponse {
+
         renderingEngine.renderPage(
             request: request,
             title: "Create account",
             description: "Complete your invited account registration.",
             imagePath: "images/puppy.png",
-            content: Page(
+            content: context.render(Page(
                 token: token,
                 email: email,
                 password: password,
                 confirmation: confirmation,
                 error: error,
                 success: success
-            ).html()
+            ))
         )
     }
 

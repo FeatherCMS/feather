@@ -4,7 +4,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct SystemPermissionDetails: Leaf {
+struct SystemPermissionDetails: Component {
     struct State {
         let permission: SystemPermissionDetailsModel
         let breadcrumb: AdminBreadcrumb.State
@@ -12,28 +12,28 @@ struct SystemPermissionDetails: Leaf {
 
     let state: State
 
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb).html()
+            context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("System permission details")
-            AdminDetailsField(label: "ID", value: state.permission.id).html()
-            AdminDetailsField(label: "Name", value: state.permission.name ?? "").html()
-            AdminDetailsField(
+            context.render(AdminDetailsField(label: "ID", value: state.permission.id))
+            context.render(AdminDetailsField(label: "Name", value: state.permission.name ?? ""))
+            context.render(AdminDetailsField(
                 label: "Notes",
                 value: state.permission.notes ?? ""
-            ).html()
+            ))
             Div {
-                AdminNavigationButton(
+                context.render(AdminNavigationButton(
                     "Edit permission",
                     href:
                         "/admin/system/permissions/\(state.permission.id)/edit/"
-                ).html()
-                AdminNavigationButton(
+                ))
+                context.render(AdminNavigationButton(
                     "Remove permission",
                     href:
                         "/admin/system/permissions/\(state.permission.id)/remove/",
                     classes: ["danger"]
-                ).html()
+                ))
             }
             .class("button-row", "admin-detail-actions")
         }

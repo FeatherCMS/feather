@@ -5,7 +5,7 @@ import SystemAdminAPI
 import WebBuilders
 import WebComponents
 
-struct SystemVariableTable: Branch {
+struct SystemVariableTable: Component {
 
     struct State {
         let isAdded: Bool
@@ -26,63 +26,27 @@ struct SystemVariableTable: Branch {
 
     let state: State
 
-    var children: [any Component] {
-        state.breadcrumb
-        NewAdminList(
-            table: {
-                Div {}
-            }
-        )
-        NewAdminListSearch(
-            state: .init(
-                action: "/admin/system/variables/",
-                placeholder: "Quick search system variables",
-                search: state.search
-            )
-        )
-        NewAdminListToolbar {
-            Div {}
-        }
-        NewAdminListShell(table: Table {})
-        NewAdminListRowActions(
-            label: "Actions",
-            actions: [],
-            permissions: []
-        )
-        NewAdminListSelectAllCheckbox()
-        NewAdminListRowCheckbox(id: "")
-        NewAdminListPagination(
-            state: .init(
-                path: "/admin/system/variables/",
-                page: state.page,
-                pageSize: state.pageSize,
-                total: state.total,
-                search: state.search
-            )
-        )
-    }
-
-    func html() -> some BasicTag {
+    func html(context: inout RenderContext) -> some BasicTag {
         Section {
             if !state.canAccess {
                 H1(state.deniedInfo)
                 P(state.deniedMessage)
             }
             else {
-                state.breadcrumb.html()
+                context.render(state.breadcrumb)
                 H1("System variables")
 
                 if state.isAdded { P("System variable added successfully.") }
                 if state.isEdited { P("System variable edited successfully.") }
                 if state.isRemoved { P("System variable removed successfully.") }
 
-                NewAdminListSearch(
+                context.render(NewAdminListSearch(
                     state: .init(
                         action: "/admin/system/variables/",
                         placeholder: "Quick search system variables",
                         search: state.search
                     )
-                ).html()
+                ))
 
                 if state.variables.isEmpty {
                     let totalPages = max(
@@ -110,9 +74,9 @@ struct SystemVariableTable: Branch {
                 }
                 else {
                     let canRemove = state.permissions.contains("system:variables:delete")
-                    NewAdminList(
+                    context.render(NewAdminList(
                     table: {
-                        ListTableRemoveForm(
+                        context.render(ListTableRemoveForm(
                             state: .init(
                                 action: "/admin/system/variables/remove/",
                                 page: state.page,
@@ -120,11 +84,11 @@ struct SystemVariableTable: Branch {
                                 canRemove: canRemove,
                                 buttonTitle: "Remove selected"
                             ),
-                            table: NewAdminListShell(
+                            table: context.render(NewAdminListShell(
                                 table: Table {
                                     Thead {
                                         Tr {
-                                            if canRemove { NewAdminListSelectAllCheckbox().html() }
+                                            if canRemove { context.render(NewAdminListSelectAllCheckbox()) }
                                             Th("Name").columnWidth(percent: 50)
                                             Th("Value").columnWidth(percent: 50)
                                             Th("Actions")
@@ -134,7 +98,7 @@ struct SystemVariableTable: Branch {
                                         for variable in state.variables {
                                             Tr {
                                                 if canRemove {
-                                                    NewAdminListRowCheckbox(id: variable.id).html()
+                                                    context.render(NewAdminListRowCheckbox(id: variable.id))
                                                 }
                                                 Td(variable.name ?? "")
                                                     .data("label", "Name")
@@ -142,7 +106,7 @@ struct SystemVariableTable: Branch {
                                                 Td(variable.value)
                                                     .data("label", "Value")
                                                     .columnWidth(percent: 50)
-                                                NewAdminListRowActions(
+                                                context.render(NewAdminListRowActions(
                                                     label: "Actions",
                                                     actions: [
                                                         .init(
@@ -165,28 +129,28 @@ struct SystemVariableTable: Branch {
                                                         )
                                                     ],
                                                     permissions: state.permissions
-                                                ).html()
+                                                ))
                                             }
                                         }
                                     }
                                 }
                                 .class("cms-table", "action-table")
                                 .if(canRemove) { $0.class("select-table") }
-                            ).html()
-                        ).html()
+                            ))
+                        ))
                     },
                     toolbar: {
                         if state.canAdd {
-                            NewAdminListToolbar {
-                                NewAdminButton(
+                            context.render(NewAdminListToolbar {
+                                context.render(NewAdminButton(
                                     "Add variable",
                                     href: "/admin/system/variables/add/"
-                                ).html()
-                            }.html()
+                                ))
+                            })
                         }
                     },
                     pagination: {
-                        NewAdminListPagination(
+                        context.render(NewAdminListPagination(
                             state: .init(
                                 path: "/admin/system/variables/",
                                 page: state.page,
@@ -194,9 +158,9 @@ struct SystemVariableTable: Branch {
                                 total: state.total,
                                 search: state.search
                             )
-                        ).html()
+                        ))
                     }
-                    ).html()
+                    ))
                 }
             }
         }

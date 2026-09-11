@@ -7,7 +7,7 @@ import SGML
 import WebComponents
 import WebBuilders
 
-struct WebPageForm: Leaf {
+struct WebPageForm: Component {
 
     struct FieldState: FeatherAdmin.Object {
         var key: String
@@ -61,7 +61,7 @@ struct WebPageForm: Leaf {
         return links
     }
 
-    func html() -> Form {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -70,11 +70,11 @@ struct WebPageForm: Leaf {
                 P(error).class("error")
             }
 
-            AdminPillTabs(links: metadataTabLinks()).html()
+            context.render(AdminPillTabs(links: metadataTabLinks()))
 
             Div {
 
-                AdminMediaAssetPicker(
+                context.render(AdminMediaAssetPicker(
                     state: .init(
                         field: .init(
                             key: state.imageAssetId.key,
@@ -87,17 +87,17 @@ struct WebPageForm: Leaf {
                             "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                     )
-                ).html()
+                ))
 
-                FormInputField(
+                context.render(FormInputField(
                     name: state.title.key,
                     label: state.title.label,
                     value: state.title.value,
                     error: state.title.error,
                     isRequired: true
-                ).html()
-                textarea(state.excerpt, rows: 4).html()
-                markdownEditor(state.content)
+                ))
+                context.render(textarea(state.excerpt, rows: 4))
+                markdownEditor(state.content, context: &context)
             }
             Section {
                 Div {
@@ -111,11 +111,11 @@ struct WebPageForm: Leaf {
                             .class("secondary")
                     }
                     if let removeHref {
-                        AdminNavigationButton(
+                        context.render(AdminNavigationButton(
                             removeLabel,
                             href: removeHref,
                             classes: ["danger"]
-                        ).html()
+                        ))
                     }
                 }
                 .class("button-row")
@@ -143,10 +143,12 @@ struct WebPageForm: Leaf {
     }
 
     private func markdownEditor(
-        _ field: FieldState
+        _ field: FieldState,
+        context: inout RenderContext
     ) -> some FlowContent {
+
         Section {
-            AdminFieldLabel(label: field.label, required: true).html()
+            context.render(AdminFieldLabel(label: field.label, required: true))
             Link(rel: .stylesheet)
                 .href(
                     "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.css"
@@ -263,7 +265,7 @@ struct WebPageForm: Leaf {
                 AppEnvironmentStore.current.publicOrigins.mediaBaseURL
                     .absoluteString
             )
-            AdminMediaAssetPicker(
+            context.render(AdminMediaAssetPicker(
                 state: .init(
                     field: .init(
                         key: "markdown-image-url",
@@ -278,8 +280,8 @@ struct WebPageForm: Leaf {
                     outputMode: .relativeURL,
                     showsCurrentCard: false
                 )
-            ).html()
-            AdminMediaAssetPicker(
+            ))
+            context.render(AdminMediaAssetPicker(
                 state: .init(
                     field: .init(
                         key: "markdown-video-url",
@@ -294,7 +296,7 @@ struct WebPageForm: Leaf {
                     outputMode: .relativeURL,
                     showsCurrentCard: false
                 )
-            ).html()
+            ))
             if let error = field.error {
                 Span(error).class("field-error")
             }
