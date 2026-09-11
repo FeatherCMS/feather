@@ -44,8 +44,9 @@ public struct NewAdminForm: Component {
             Class("new-admin-form") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(16.px)
-                MaxWidth(640.px)
+                Gap(32.px)
+                Width(100.percent)
+                MarginTop(24.px)
             },
             Custom(".new-admin-form > .new-admin-form__messages") {
                 Display(.flex)

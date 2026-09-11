@@ -16,19 +16,24 @@ public struct NewAdminNotification: Component {
         [
             Class("admin-notification") {
                 Position(.fixed)
-                Top(12.px)
+                Top(0.px)
                 Left(50.percent)
-                Transform(.translate((-50).percent, (-24).px))
+                Transform(.translate((-50).percent, (-80).px))
                 ZIndex(.number(20))
                 Display(.flex)
                 AlignItems(.center)
-                Gap(8.px)
+                Gap(12.px)
                 Width(560.px)
                 MinWidth(360.px)
                 MaxWidth(92.percent)
                 BoxSizing(.borderBox)
-                Padding(vertical: 12.px, horizontal: 16.px)
+                Padding(top: 12.px, right: 48.px, bottom: 12.px, left: 22.px)
                 BorderRadius(999.px)
+                Border(
+                    1.px,
+                    .solid,
+                    CSSColorValue(CSSColor(stringLiteral: "#252525"))
+                )
                 TextAlign(.left)
                 Background(CSSColor(stringLiteral: "#111111"))
                 Color(CSSColor(stringLiteral: "#ffffff"))
@@ -59,6 +64,7 @@ public struct NewAdminNotification: Component {
             },
             Class("admin-notification__title") {
                 FontWeight(.bold)
+                FontSize(0.9.rem)
                 Display(.block)
             },
             Class("admin-notification__message") {
@@ -68,8 +74,23 @@ public struct NewAdminNotification: Component {
                 Display(.block)
                 Width(100.percent)
                 LineHeight(1.35)
+                FontSize(0.88.rem)
+            },
+            Custom(".admin-notification__icon--success") {
+                Color(CSSColor(stringLiteral: "#4ade80"))
+            },
+            Custom(".admin-notification__icon--info") {
+                Color(CSSColor(stringLiteral: "#60a5fa"))
+            },
+            Custom(".admin-notification__icon--warning") {
+                Color(CSSColor(stringLiteral: "#fbbf24"))
+            },
+            Custom(".admin-notification__icon--error") {
+                Color(CSSColor(stringLiteral: "#f87171"))
             },
             Class("admin-notification__close") {
+                Position(.absolute)
+                Right(20.px)
                 Display(.inlineFlex)
                 AlignItems(.center)
                 JustifyContent(.center)
@@ -94,11 +115,15 @@ public struct NewAdminNotification: Component {
                 Transform(.translate((-50).percent, 0.px))
                 Opacity(1)
             },
+            Class("admin-notification.is-hidden") {
+                Transform(.translate((-50).percent, (-80).px))
+                Opacity(0)
+            },
             Custom(
                 ".admin-notification__icon svg, .admin-notification__close svg"
             ) {
-                Width(16.px)
-                Height(16.px)
+                Width(20.px)
+                Height(20.px)
             },
         ]
     }
@@ -108,7 +133,7 @@ public struct NewAdminNotification: Component {
             Span {
                 icon
             }
-            .class("admin-notification__icon")
+            .class("admin-notification__icon admin-notification__icon--\(notification.kind.rawValue)")
             Span {
                 Span(notification.title).class("admin-notification__title")
                 if !notification.message.isEmpty {
@@ -123,7 +148,7 @@ public struct NewAdminNotification: Component {
             .type(.button)
             .class("admin-notification__close")
             .ariaLabel("Dismiss notification")
-            .onClick("document.cookie='admin_notification=; Max-Age=0; path=/admin';this.closest('#admin-toast').remove()")
+            .onClick("document.cookie='admin_notification=; Max-Age=0; path=/admin';var n=this.closest('#admin-toast');if(n){n.classList.remove('is-visible');n.classList.add('is-hidden');setTimeout(function(){n.remove()},220)}")
         }
         .id("admin-toast")
         .class("admin-notification")
@@ -145,7 +170,7 @@ public struct NewAdminNotification: Component {
 
     public func scripts() -> [String] {
         [
-            "requestAnimationFrame(function(){var n=document.getElementById('admin-toast');if(n){n.classList.add('is-visible');}});setTimeout(function(){var n=document.getElementById('admin-toast');if(n){n.remove();}},3000);"
+            "document.addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){var n=document.getElementById('admin-toast');if(n){n.classList.add('is-visible');setTimeout(function(){if(n){n.classList.remove('is-visible');n.classList.add('is-hidden');setTimeout(function(){n.remove()},220)}},3000);}});});"
         ]
     }
 }

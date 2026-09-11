@@ -53,21 +53,29 @@ public struct NewAdminFormFieldInput: Component {
                 Gap(6.px)
             },
             Custom(".new-admin-form-field label") {
-                FontWeight(.number(600))
-                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(5.px)
+                FontWeight(.normal)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Opacity(0.8)
             },
             Custom(".new-admin-form-field input") {
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(vertical: 9.px, horizontal: 11.px)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
                 BorderRadius(9.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
             },
             Custom(".new-admin-form-field input:focus") {
-                BorderColor(.variable(TokenKey.Colors.Materials.Tertiary.hover))
-                Outline(0.px, .none)
+                BorderColor(.variable(TokenKey.Colors.Materials.Secondary.border))
+                Outline(
+                    2.px,
+                    .solid,
+                    .color(.variable(TokenKey.Colors.Link.hover))
+                )
             },
             Custom(".new-admin-form-field .field-error") {
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
@@ -82,7 +90,12 @@ public struct NewAdminFormFieldInput: Component {
     public func html(context: inout RenderContext) -> Section {
         Section {
             Label {
-                Span(state.label)
+                Span {
+                    Span(state.label)
+                    if !state.isRequired {
+                        Span("(optional)").class("field-optional")
+                    }
+                }
                 Input()
                     .type(state.type)
                     .name(state.name)
