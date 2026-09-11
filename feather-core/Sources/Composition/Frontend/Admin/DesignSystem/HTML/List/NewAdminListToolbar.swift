@@ -14,6 +14,7 @@ public struct NewAdminListToolbar: Component {
                 JustifyContent(.spaceBetween)
                 Gap(12.px)
                 FlexWrap(.wrap)
+                MarginTop(12.px)
                 MarginBottom(10.px)
             }
         }

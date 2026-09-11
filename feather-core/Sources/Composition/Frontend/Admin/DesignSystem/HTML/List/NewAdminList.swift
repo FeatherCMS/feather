@@ -46,10 +46,10 @@ public struct NewAdminList: Component {
 
     public func html(context: inout RenderContext) -> Div {
         Div {
-            for item in search {
+            for item in toolbar {
                 item
             }
-            for item in toolbar {
+            for item in search {
                 item
             }
             for item in table {

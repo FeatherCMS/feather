@@ -44,7 +44,7 @@ public struct NewAdminForm: Component {
             Class("new-admin-form") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(32.px)
+                Gap(26.px)
                 Width(100.percent)
                 MarginTop(24.px)
             },

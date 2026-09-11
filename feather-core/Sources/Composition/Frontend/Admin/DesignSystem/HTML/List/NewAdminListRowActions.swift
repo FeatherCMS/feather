@@ -13,6 +13,9 @@ public struct NewAdminListRowActions: Component {
                 WhiteSpace(.nowrap)
                 TextAlign(.right)
             }
+            Custom(".action-cell .button ~ .button") {
+                MarginLeft(4.px)
+            }
         }
         Media(.maxWidth(768.px)) {
             Custom(".action-table td.action-cell") {

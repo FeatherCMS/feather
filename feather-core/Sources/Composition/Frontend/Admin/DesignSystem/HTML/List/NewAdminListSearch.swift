@@ -12,8 +12,8 @@ public struct NewAdminListSearch: Component {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(8.px)
-                FlexWrap(.wrap)
-                MarginBottom(12.px)
+                FlexWrap(.nowrap)
+                MarginBottom(0.px)
             }
             Custom(
                 ".table-search-form input[type='search'], .table-search-form select"
@@ -21,11 +21,11 @@ public struct NewAdminListSearch: Component {
                 Border(
                     1.px,
                     .solid,
-                    .variable(TokenKey.Colors.Materials.Primary.border)
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
                 )
                 BorderRadius(9.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 Padding(vertical: 8.px, horizontal: 10.px)
                 FontSize(0.9.rem)
             }
@@ -45,18 +45,13 @@ public struct NewAdminListSearch: Component {
             Custom(
                 ".table-search-form input[type='search']:focus, .table-search-form input[type='search']:focus-visible, .table-search-form select:focus, .table-search-form select:focus-visible"
             ) {
-                BorderColor(.variable(TokenKey.Colors.Materials.Primary.border))
-                BoxShadow(
-                    0.px,
-                    0.px,
-                    blur: 0.px,
-                    spread: 2.px,
-                    color: CSSColor(
-                        stringLiteral:
-                            "var(--\(TokenKey.Colors.Materials.Tertiary.hover.propertyName))"
-                    )
+                BorderColor(.variable(TokenKey.Colors.Materials.Tertiary.border))
+                Outline(
+                    2.px,
+                    .solid,
+                    .color(.variable(TokenKey.Colors.Link.hover))
                 )
-                Outline(0.px, .none)
+                OutlineOffset(2.px)
             }
             Custom(".table-search-form .table-search-reset") {
                 Display(.inlineFlex)
@@ -69,8 +64,8 @@ public struct NewAdminListSearch: Component {
         }
         Media(.minWidth(769.px)) {
             Class("table-search-form") {
-                Width(50.percent)
-                MaxWidth(50.percent)
+                Width(40.percent)
+                MaxWidth(40.percent)
             }
         }
     }
@@ -135,7 +130,11 @@ public struct NewAdminListSearch: Component {
                 field
             }
             context.render(
-                NewAdminSubmitButton("Search", style: .ghost(.primary))
+                NewAdminSubmitButton(
+                    "Search",
+                    style: .ghost(.primary),
+                    isRowButton: true
+                )
             )
             A("Reset")
                 .href(state.resetPath)
