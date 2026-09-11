@@ -1,13 +1,23 @@
 import FeatherAdmin
+import FeatherValidation
 import Foundation
+import SystemAdminAPI
 
 struct AdminAddSystemVariableDefaultInteractor: AdminAddSystemVariableInteractor
 {
     let repository: any AdminAddSystemVariableRepository
 
-    func execute(
-        input: SystemVariableFormInput
+    func add(
+        input: SystemVariableAddFormInput
     ) async throws {
-        try await repository.create(input: input)
+        try await input.validate()
+        try await repository.create(
+            input: .init(
+                id: input.normalizedID,
+                value: input.normalizedValue,
+                name: input.normalizedName,
+                notes: input.normalizedNotes
+            )
+        )
     }
 }

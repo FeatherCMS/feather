@@ -1,5 +1,6 @@
 import FeatherAdmin
 import Foundation
+import SystemAdminAPI
 
 protocol AdminEditSystemVariableRepository: Sendable {
 
@@ -9,6 +10,6 @@ protocol AdminEditSystemVariableRepository: Sendable {
 
     func update(
         id: String,
-        input: SystemVariableFormInput
+        input: Components.Schemas.SystemVariableCreateSchema
     ) async throws
 }

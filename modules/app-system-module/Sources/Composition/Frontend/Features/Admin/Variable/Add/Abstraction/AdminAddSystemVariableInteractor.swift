@@ -3,7 +3,7 @@ import Foundation
 
 protocol AdminAddSystemVariableInteractor: Sendable {
 
-    func execute(
-        input: SystemVariableFormInput
+    func add(
+        input: SystemVariableAddFormInput
     ) async throws
 }

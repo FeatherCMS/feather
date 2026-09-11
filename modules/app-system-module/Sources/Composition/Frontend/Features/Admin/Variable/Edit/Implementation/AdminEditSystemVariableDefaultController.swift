@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -24,26 +25,25 @@ struct AdminEditSystemVariableDefaultController:
         }
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
+        let permissions = permissionKeys(context.currentUserPermissions)
         do {
             let variable = try await runtime.interactor.load(id: id)
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 id: id,
-                state: formState(
-                    id: id,
-                    name: variable.name ?? "",
-                    value: variable.value,
-                    notes: variable.notes ?? ""
-                ),
+                state: .from(variable: variable),
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
-                id: id,
+            return try await runtime.presenter.renderErrorPage(
                 info: error.errorTitle,
-                message: error.errorDescription,
-                permissions: permissions
+                message: error.errorDescription
+            )
+        }
+        catch {
+            return try await runtime.presenter.renderErrorPage(
+                info: "Unable to load system variable.",
+                message: error.displayMessage
             )
         }
     }
@@ -59,20 +59,19 @@ struct AdminEditSystemVariableDefaultController:
         }
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
-        var lastPayload: SystemVariableFormInput?
+        let permissions = permissionKeys(context.currentUserPermissions)
+        var lastPayload: SystemVariableEditFormInput?
 
         do {
             let payload = try await request.decode(
-                as: SystemVariableFormInput.self,
+                as: SystemVariableEditFormInput.self,
                 context: context
             )
             lastPayload = payload
-            try await payload.validate()
-            try await runtime.interactor.update(id: id, input: payload)
+            try await runtime.interactor.edit(id: id, input: payload)
 
             return AdminNotificationFlash.redirect(
-                to: SystemVariableRoutes.edit(RouterPath(id)).description,
+                to: SystemVariableRoutes.edit(RouterPath(payload.normalizedID)).description,
                 notification: .init(
                     title: "Saved",
                     message: "System variable edited successfully."
@@ -84,14 +83,9 @@ struct AdminEditSystemVariableDefaultController:
             for failure in error.failures {
                 errors[failure.key] = failure.message
             }
-            var state = formState(
-                id: lastPayload?.normalizedID ?? id,
-                name: lastPayload?.normalizedName ?? "",
-                value: lastPayload?.normalizedValue ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
+            var state = formState(input: lastPayload)
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
@@ -100,14 +94,9 @@ struct AdminEditSystemVariableDefaultController:
                 .response(from: request, context: context)
         }
         catch let error as OpenAPIRepositoryError {
-            var state = formState(
-                id: lastPayload?.normalizedID ?? id,
-                name: lastPayload?.normalizedName ?? "",
-                value: lastPayload?.normalizedValue ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.errorDescription
-            return try runtime.presenter
+            var state = formState(input: lastPayload)
+            state.apply(error: error.errorDescription)
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
@@ -116,14 +105,9 @@ struct AdminEditSystemVariableDefaultController:
                 .response(from: request, context: context)
         }
         catch {
-            var state = formState(
-                id: lastPayload?.normalizedID ?? id,
-                name: lastPayload?.normalizedName ?? "",
-                value: lastPayload?.normalizedValue ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.displayMessage
-            return try runtime.presenter
+            var state = formState(input: lastPayload)
+            state.apply(error: error.displayMessage)
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
@@ -134,28 +118,12 @@ struct AdminEditSystemVariableDefaultController:
     }
 
     private func formState(
-        id: String,
-        name: String = "",
-        value: String = "",
-        notes: String = ""
-    ) -> SystemVariableForm.State {
-        .init(
-            id: .init(key: "id", label: "ID", value: id, error: nil),
-            name: .init(key: "name", label: "Name", value: name, error: nil),
-            value: .init(
-                key: "value",
-                label: "Value",
-                value: value,
-                error: nil
-            ),
-            notes: .init(
-                key: "notes",
-                label: "Notes",
-                value: notes,
-                error: nil
-            ),
-            error: nil,
-            success: nil
-        )
+        input: SystemVariableEditFormInput?
+    ) -> SystemVariableEditForm.State {
+        input.map { SystemVariableEditForm.State.from(input: $0) } ?? .empty()
+    }
+
+    private func permissionKeys(_ permissions: Set<String>) -> Set<PermissionKey> {
+        Set(permissions.map(PermissionKey.init))
     }
 }

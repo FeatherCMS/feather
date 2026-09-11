@@ -7,8 +7,8 @@ protocol AdminEditSystemVariableInteractor: Sendable {
         id: String
     ) async throws -> SystemVariableDetailsModel
 
-    func update(
+    func edit(
         id: String,
-        input: SystemVariableFormInput
+        input: SystemVariableEditFormInput
     ) async throws
 }

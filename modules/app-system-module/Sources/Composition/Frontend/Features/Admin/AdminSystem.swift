@@ -68,12 +68,12 @@ public struct AdminSystem {
         .controller.route(on: router)
 
         AdminAddSystemVariable(
-            renderingEngine: renderingEngine
+            events: adminEvents
         )
         .controller.route(on: router)
 
         AdminEditSystemVariable(
-            renderingEngine: renderingEngine
+            events: adminEvents
         )
         .controller.route(on: router)
 

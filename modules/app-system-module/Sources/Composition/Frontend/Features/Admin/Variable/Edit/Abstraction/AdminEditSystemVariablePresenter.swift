@@ -1,22 +1,17 @@
 import FeatherAdmin
-import HTML
+import FeatherContracts
+import Hummingbird
 
 protocol AdminEditSystemVariablePresenter: Sendable {
 
     func renderEditPage(
         id: String,
-        state: SystemVariableForm.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        state: SystemVariableEditForm.State,
+        permissions: Set<PermissionKey>
+    ) async throws -> HTMLResponse
 
     func renderErrorPage(
-        id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State
+        message: String
+    ) async throws -> HTMLResponse
 }

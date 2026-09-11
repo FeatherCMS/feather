@@ -51,20 +51,13 @@ struct AdminEditSystemVariableOpenAPIRepository:
 
     func update(
         id: String,
-        input: SystemVariableFormInput
+        input: Components.Schemas.SystemVariableCreateSchema
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.systemVariableUpdate(
                 path: .init(systemVariableId: id),
                 headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(
-                    .init(
-                        id: id,
-                        value: input.normalizedValue,
-                        name: input.normalizedName,
-                        notes: input.normalizedNotes
-                    )
-                )
+                body: .json(input)
             )
             switch response {
             case .ok:

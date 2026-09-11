@@ -1,76 +1,65 @@
 import FeatherAdmin
-import HTML
+import FeatherContracts
 import Hummingbird
-import SGML
-import WebBuilders
+import SystemAdminAPI
+import SystemContracts
 import WebComponents
 
-struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
+struct AdminEditSystemVariableDefaultPresenter:
+    AdminEditSystemVariablePresenter
 {
     let request: Request
-    let renderingEngine: any RenderingEngine
+    let context: DefaultRequestContext
+    let events: any EventPublisher
 
     func renderEditPage(
         id: String,
-        state: SystemVariableForm.State,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
-            request: request,
-            title: "Edit system variable",
-            description: "Edit a management system variable",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: SystemVariableEdit(
-                state: .init(
-                    id: id,
-                    form: state,
-                    breadcrumb: breadcrumb(id: id)
+        state: SystemVariableEditForm.State,
+        permissions: Set<PermissionKey>
+    ) async throws -> HTMLResponse {
+        let actions = ListActions(permissions)
+        return try await renderPage(
+            content: SystemVariableEditPage(
+                breadcrumb: breadcrumb(),
+                form: SystemVariableEditForm(
+                    state: state,
+                    action: SystemVariableRoutes.edit(RouterPath(id)).description,
+                    submitLabel: "Save changes",
+                    removeHref: actions.allows(SystemPermissions.Variables.delete) ? SystemVariableRoutes.remove(id) : nil
                 )
             )
         )
     }
 
     func renderErrorPage(
-        id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
-            request: request,
-            title: "Edit system variable",
-            description: "Edit a management system variable",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: SystemVariableError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb(id: id)
-                )
+        message: String
+    ) async throws -> HTMLResponse {
+        return try await renderPage(
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-                .init(
-                    label: "Variables",
-                    link: SystemVariableRoutes.list.description
-                ),
-            ]
-        )
+    private func renderPage<T: Component>(content: T) async throws -> HTMLResponse {
+        try await SystemVariableAdminPageRenderer(
+            request: request,
+            context: context,
+            events: events
+        ).render(content: content)
     }
+
+    private func breadcrumb() -> NewAdminBreadcrumb.State {
+        .init(links: [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "System", link: "/admin/system/"),
+            .init(
+                label: "Variables",
+                link: SystemVariableRoutes.list.description
+            ),
+        ])
+    }
+
 }

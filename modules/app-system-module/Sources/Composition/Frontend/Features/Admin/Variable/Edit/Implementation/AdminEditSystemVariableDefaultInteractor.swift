@@ -1,5 +1,7 @@
 import FeatherAdmin
+import FeatherValidation
 import Foundation
+import SystemAdminAPI
 
 struct AdminEditSystemVariableDefaultInteractor:
     AdminEditSystemVariableInteractor
@@ -12,10 +14,19 @@ struct AdminEditSystemVariableDefaultInteractor:
         try await repository.load(id: id)
     }
 
-    func update(
+    func edit(
         id: String,
-        input: SystemVariableFormInput
+        input: SystemVariableEditFormInput
     ) async throws {
-        try await repository.update(id: id, input: input)
+        try await input.validate()
+        try await repository.update(
+            id: id,
+            input: .init(
+                id: input.normalizedID,
+                value: input.normalizedValue,
+                name: input.normalizedName,
+                notes: input.normalizedNotes
+            )
+        )
     }
 }

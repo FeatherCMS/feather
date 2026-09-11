@@ -4,9 +4,7 @@ import Hummingbird
 protocol AdminAddSystemVariablePresenter: Sendable {
 
     func renderAddPage(
-        state: SystemVariableForm.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        state: SystemVariableAddForm.State
+    ) async throws -> HTMLResponse
 
-    func breadcrumb() -> AdminBreadcrumb.State
 }

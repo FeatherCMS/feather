@@ -1,4 +1,5 @@
 import FeatherAdmin
+import Foundation
 import Hummingbird
 import OpenAPIRuntime
 import SystemAdminAPI
@@ -8,19 +9,12 @@ struct AdminAddSystemVariableOpenAPIRepository: AdminAddSystemVariableRepository
     let api: SystemAdminAPIClient
 
     func create(
-        input: SystemVariableFormInput
+        input: Components.Schemas.SystemVariableCreateSchema
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.systemVariableCreate(
                 headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(
-                    .init(
-                        id: input.normalizedID,
-                        value: input.normalizedValue,
-                        name: input.normalizedName,
-                        notes: input.normalizedNotes
-                    )
-                )
+                body: .json(input)
             )
 
             switch response {

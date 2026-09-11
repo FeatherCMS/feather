@@ -15,10 +15,10 @@ public struct NewAdminNotification: Component {
     public func selectors() -> [any CSS.Selector] {
         [
             Class("admin-notification") {
-                Position(.absolute)
-                Top(8.px)
+                Position(.fixed)
+                Top(12.px)
                 Left(50.percent)
-                Transform(.translateX((-50).percent))
+                Transform(.translate((-50).percent, (-24).px))
                 ZIndex(.number(20))
                 Display(.flex)
                 AlignItems(.center)
@@ -35,6 +35,10 @@ public struct NewAdminNotification: Component {
                     spread: 0.px,
                     color: CSSColor(stringLiteral: "rgba(0, 0, 0, 0.28)")
                 )
+                UnsafeRawProperty(
+                    name: "transition",
+                    value: "transform 220ms ease-out, opacity 220ms ease-out"
+                )
             },
             Class("admin-notification__icon") {
                 Display(.inlineFlex)
@@ -42,19 +46,21 @@ public struct NewAdminNotification: Component {
             },
             Class("admin-notification__content") {
                 Display(.flex)
-                AlignItems(.baseline)
-                Gap(6.px)
+                FlexDirection(.column)
+                AlignItems(.flexStart)
+                Gap(2.px)
                 MinWidth(0.px)
             },
             Class("admin-notification__title") {
                 FontWeight(.bold)
-                WhiteSpace(.nowrap)
+                Display(.block)
             },
             Class("admin-notification__message") {
                 Color(CSSColor(stringLiteral: "#d1d5db"))
                 Overflow(.hidden)
                 TextOverflow(.ellipsis)
-                WhiteSpace(.nowrap)
+                Display(.block)
+                MaxWidth(60.ch)
             },
             Class("admin-notification__close") {
                 Display(.inlineFlex)
@@ -64,7 +70,7 @@ public struct NewAdminNotification: Component {
                 Width(24.px)
                 Height(24.px)
                 Padding(0.px)
-                Border(0.px, .none)
+                Border(0.px, BorderStyle.Value.none)
                 BorderRadius(999.px)
                 Background(.transparent)
                 Color(CSSColor(stringLiteral: "#9ca3af"))
@@ -76,6 +82,10 @@ public struct NewAdminNotification: Component {
                 Background(CSSColor(stringLiteral: "#2d2d2d"))
                 Color(CSSColor(stringLiteral: "#ffffff"))
                 Outline(0.px, .none)
+            },
+            Class("admin-notification.is-visible") {
+                Transform(.translate((-50).percent, 0.px))
+                Opacity(1)
             },
             Custom(
                 ".admin-notification__icon svg, .admin-notification__close svg"
@@ -113,9 +123,9 @@ public struct NewAdminNotification: Component {
         .data("notification-inline", "true")
         .data("toast-type", notification.kind.rawValue)
         .data("toast-title", notification.title)
-        .data("toast-message", notification.message)
-        .data("toast-position", notification.position)
-    }
+            .data("toast-message", notification.message)
+            .data("toast-position", notification.position)
+        }
 
     private var icon: SVG {
         switch notification.kind {
@@ -124,5 +134,11 @@ public struct NewAdminNotification: Component {
         case .warning: return FeatherIcons.alertTriangle()
         case .error: return FeatherIcons.alertCircle()
         }
+    }
+
+    public func scripts() -> [String] {
+        [
+            "requestAnimationFrame(function(){var n=document.getElementById('admin-toast');if(n){n.classList.add('is-visible');}});setTimeout(function(){var n=document.getElementById('admin-toast');if(n){n.remove();}},3000);"
+        ]
     }
 }

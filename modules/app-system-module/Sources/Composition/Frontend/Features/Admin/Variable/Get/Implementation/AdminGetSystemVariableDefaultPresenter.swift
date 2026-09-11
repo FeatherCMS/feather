@@ -47,12 +47,9 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
                 request: request,
                 permissions: permissions
             ),
-            content: SystemVariableError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb
-                )
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
