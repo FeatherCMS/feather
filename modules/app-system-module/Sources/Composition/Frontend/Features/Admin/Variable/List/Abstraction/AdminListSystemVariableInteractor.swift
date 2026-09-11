@@ -9,7 +9,4 @@ protocol AdminListSystemVariableInteractor: Sendable {
         search: String?
     ) async throws -> AdminListModel<Components.Schemas.SystemVariableListItemSchema>
 
-    func remove(
-        ids: [String]
-    ) async throws
 }

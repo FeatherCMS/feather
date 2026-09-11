@@ -24,29 +24,25 @@ struct AdminListSystemVariableDefaultPresenter:
         error: String?
     ) async throws -> HTMLResponse {
         var renderContext = RenderContext()
-        if let error {
-            return renderEngine.renderAdminPage(
-                request: request,
-                title: "Manage system variables",
-                description: "Management system variable list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
-                content: SystemVariableError(
-                    state: .init(
-                        info: "Unable to load system variables.",
-                        message: error,
-                        breadcrumb: legacySystemVariableBreadcrumbState()
-                    )
-                )
-            )
-        }
         let menuGroups = try await context.adminMenuGroups(
             request: request,
             events: events
         )
+        if let error {
+            let layout = NewAdminBaseLayout(
+                content: SystemVariableListError(
+                    breadcrumb: systemVariableBreadcrumb(),
+                    message: error
+                ),
+                menuGroups: menuGroups,
+                notification: notification
+            )
+            let component = NewAdminHTML(
+                title: "Manage system variables",
+                body: .init(content: layout)
+            )
+            return .init(renderContext.render(component))
+        }
         let layout = NewAdminBaseLayout(
             content: SystemVariableTable(
                 state: .init(
@@ -75,11 +71,23 @@ struct AdminListSystemVariableDefaultPresenter:
         )
     }
 
-    private func legacySystemVariableBreadcrumbState() -> AdminBreadcrumb.State {
-        .init(
-            links: systemVariableBreadcrumb().links.map {
-                .init(label: $0.label, link: $0.link)
-            }
-        )
+}
+
+private struct SystemVariableListError: Component {
+    let breadcrumb: NewAdminBreadcrumb.State
+    let message: String
+
+    func html(context: inout RenderContext) -> some BasicTag {
+        Section {
+            context.render(NewAdminBreadcrumb(state: breadcrumb))
+            context.render(NewAdminStatusView(
+                state: .init(
+                    title: "Unable to load system variables.",
+                    message: message
+                ),
+                icon: FeatherIcons.alertCircle()
+            ))
+        }
+        .class("cms-section")
     }
 }

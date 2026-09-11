@@ -14,7 +14,6 @@ private struct SystemVariableRow: Component {
         let id: String
         let name: String
         let value: String
-        let canDelete: Bool
         let actions: [NewAdminListRowActions.Action]
 
         init(
@@ -24,7 +23,6 @@ private struct SystemVariableRow: Component {
             self.id = variable.id
             self.name = variable.name ?? ""
             self.value = variable.value
-            self.canDelete = permissions.allows(SystemPermissions.Variables.delete)
             self.actions = [
                 .init(
                     "Details",
@@ -53,7 +51,7 @@ private struct SystemVariableRow: Component {
 
     func html(context: inout RenderContext) -> Tr {
         Tr {
-            if state.canDelete {
+            if permissions.allows(SystemPermissions.Variables.delete) {
                 context.render(NewAdminListRowCheckbox(id: state.id))
             }
             Td(state.name)

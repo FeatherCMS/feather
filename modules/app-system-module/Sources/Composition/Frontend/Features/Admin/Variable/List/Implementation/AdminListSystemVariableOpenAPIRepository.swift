@@ -11,13 +11,6 @@ struct AdminListSystemVariableOpenAPIRepository:
         "Please sign in again to view system variables."
     private let listForbiddenMessage =
         "Your account cannot access system variables."
-    private let deleteUnauthorizedMessage =
-        "Please sign in again to delete this system variable."
-    private let deleteForbiddenMessage =
-        "Your account cannot delete this system variable."
-    private let deleteNotFoundMessage =
-        "This system variable could not be found."
-
     init(api: SystemAdminAPIClient) {
         self.api = api
     }
@@ -56,16 +49,6 @@ struct AdminListSystemVariableOpenAPIRepository:
                     responseBody: response.body
                 )
             }
-        }
-    }
-
-    func delete(
-        id: String
-    ) async throws {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.systemVariableDelete(
-                body: .json(.init(ids: [id], results: false, summary: true))
-            )
         }
     }
 

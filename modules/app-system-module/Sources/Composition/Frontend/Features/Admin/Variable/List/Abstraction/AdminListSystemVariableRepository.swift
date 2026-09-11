@@ -9,7 +9,4 @@ protocol AdminListSystemVariableRepository: Sendable {
         search: String?
     ) async throws -> SystemAdminAPI.Components.Responses.SystemVariableListItemSearchSchemaSearchResponse
 
-    func delete(
-        id: String
-    ) async throws
 }
