@@ -13,13 +13,6 @@ public struct NewAdminListRowActions: Component {
                 WhiteSpace(.nowrap)
                 TextAlign(.right)
             }
-            Custom(".action-cell .row-btn") {
-                MarginRight(6.px)
-                TextDecoration(.none)
-            }
-            Custom(".action-cell .row-btn:last-child") {
-                MarginRight(0)
-            }
         }
             Media(.maxWidth(768.px)) {
                 Custom(".action-table td.action-cell") {
@@ -28,11 +21,6 @@ public struct NewAdminListRowActions: Component {
                 }
                 Custom(".action-table td.action-cell::before") {
                     MarginBottom(8.px)
-                }
-                Custom(".action-table td.action-cell .row-btn") {
-                    Display(.inlineBlock)
-                    MarginTop(0.px)
-                    MarginRight(4.px)
                 }
             }
 
@@ -86,7 +74,6 @@ public struct NewAdminListRowActions: Component {
                         action.title,
                         style: action.style
                     ))
-                    .class("row-btn")
                     .onClick(
                         "navigator.clipboard.writeText('\(copyText)')"
                     )
@@ -97,7 +84,6 @@ public struct NewAdminListRowActions: Component {
                         href: action.href,
                         style: action.style
                     ))
-                    .class("row-btn")
                 }
 
                 if index < visibleActions.count - 1 {

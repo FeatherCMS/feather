@@ -36,6 +36,7 @@ public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
 
     public func html(context: inout RenderContext) -> Html {
 
+        let renderedBody = context.render(body)
         let style = context.stylesheet()
         let css = cssRenderer.render(style)
         let scripts = context.scripts()
@@ -44,7 +45,6 @@ public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
             stylesheet: css,
             scripts: scripts
         ))
-        let renderedBody = context.render(body)
 
         return Html {
             renderedHead

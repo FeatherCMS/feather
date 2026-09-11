@@ -3,34 +3,27 @@ import SGML
 import WebComponents
 import WebBuilders
 
-public struct ListTableRemoveForm<Table: FlowContent>: Component
-{
+public struct NewAdminListSelectionForm<Table: FlowContent>: Component {
 
     public struct State: Sendable {
         public let action: String
         public let page: Int
         public let search: String
-        public let canRemove: Bool
-        public let buttonTitle: String
-        public let buttonStyle: NewAdminButtonStyle
-        public let queryItems: [(String, String)]
+        public let button: NewAdminSubmitButton
+        public let isEnabled: Bool
 
         public init(
             action: String,
             page: Int,
             search: String,
-            canRemove: Bool,
-            buttonTitle: String,
-            buttonStyle: NewAdminButtonStyle = .primary,
-            queryItems: [(String, String)] = []
+            button: NewAdminSubmitButton,
+            isEnabled: Bool = true
         ) {
             self.action = action
             self.page = page
             self.search = search
-            self.canRemove = canRemove
-            self.buttonTitle = buttonTitle
-            self.buttonStyle = buttonStyle
-            self.queryItems = queryItems
+            self.button = button
+            self.isEnabled = isEnabled
         }
     }
 
@@ -44,40 +37,30 @@ public struct ListTableRemoveForm<Table: FlowContent>: Component
 
     public func html(context: inout RenderContext) -> Div {
         Div {
-            if state.canRemove {
+            if state.isEnabled {
                 Form {
                     table
 
-                Div {
-                    context.render(NewAdminSubmitButton(
-                        state.buttonTitle,
-                        style: state.buttonStyle
-                    ))
-                    .disabled()
-                    .class("remove-submit")
-                }
-                .class("table-actions")
+                    Div {
+                        context.render(state.button)
+                            .disabled()
+                            .class("remove-submit")
+                    }
+                    .class("table-actions")
 
-                Input()
-                    .type(.hidden)
-                    .name("page")
-                    .value("\(state.page)")
-
-                if !state.search.isEmpty {
                     Input()
                         .type(.hidden)
-                        .name("search")
-                        .value(state.search)
-                }
+                        .name("page")
+                        .value("\(state.page)")
 
-                for item in state.queryItems {
-                    Input()
-                        .type(.hidden)
-                        .name(item.0)
-                        .value(item.1)
-                }
+                    if !state.search.isEmpty {
+                        Input()
+                            .type(.hidden)
+                            .name("search")
+                            .value(state.search)
+                    }
 
-                Script(script())
+                    Script(script())
                 }
                 .method(.get)
                 .action(state.action)
@@ -99,9 +82,7 @@ public struct ListTableRemoveForm<Table: FlowContent>: Component
                 if (!button) { return; }
                 var checkedCount = 0;
                 rows.forEach(function (input) {
-                    if (input.checked) {
-                        checkedCount += 1;
-                    }
+                    if (input.checked) { checkedCount += 1; }
                 });
                 button.disabled = checkedCount === 0;
                 if (selectAll) {
@@ -114,9 +95,7 @@ public struct ListTableRemoveForm<Table: FlowContent>: Component
                 if (!form || form.dataset.removeInitialized === "true") { return; }
                 form.dataset.removeInitialized = "true";
                 form.querySelectorAll("input.select-row, input.select-all").forEach(function (input) {
-                    input.addEventListener("change", function () {
-                        updateFormState(form);
-                    });
+                    input.addEventListener("change", function () { updateFormState(form); });
                 });
                 updateFormState(form);
             }

@@ -61,13 +61,6 @@ public struct NewAdminListShell<Table: FlowContent>: Component {
                 WhiteSpace(.nowrap)
                 TextAlign(.right)
             }
-            Custom(".row-btn") {
-                MarginRight(6.px)
-                TextDecoration(.none)
-            }
-            Custom(".row-btn:last-child") {
-                MarginRight(0)
-            }
         }
             Media(.maxWidth(768.px)) {
                 Custom(".cms-table, .cms-table thead, .cms-table tbody, .cms-table tr, .cms-table th, .cms-table td") {
