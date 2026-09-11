@@ -22,14 +22,8 @@ public struct AdminTopBar: Component {
         return Div {
             Div {
                 Label {
-                    context.render(Icon(
-                        svg: FeatherIcons.sidebar(),
-                        class: "menu-trigger-icon menu-trigger-desktop"
-                    ))
-                    context.render(Icon(
-                        svg: FeatherIcons.menu(),
-                        class: "menu-trigger-icon menu-trigger-mobile"
-                    ))
+                    FeatherIcons.sidebar().class("menu-trigger-icon menu-trigger-desktop")
+                    FeatherIcons.menu().class("menu-trigger-icon menu-trigger-mobile")
                     Span("Menu").class("sr-only")
                 }
                 .for("menuToggle")

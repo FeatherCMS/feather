@@ -342,11 +342,11 @@ extension AdminMediaAssetPicker {
                     )
                 }
                 else {
-                    context.render(Icon(svg: FeatherIcons.file()))
+                    FeatherIcons.file()
                 }
             }
             else {
-                context.render(Icon(svg: FeatherIcons.image()))
+                FeatherIcons.image()
             }
         }
         .class("admin-media-asset-picker-preview")

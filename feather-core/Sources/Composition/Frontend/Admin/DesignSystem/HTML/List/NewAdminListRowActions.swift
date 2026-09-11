@@ -1,5 +1,6 @@
 import HTML
 import CSS
+import FeatherContracts
 import SGML
 import WebComponents
 import WebBuilders
@@ -30,14 +31,14 @@ public struct NewAdminListRowActions: Component {
         public let title: String
         public let href: String?
         public let style: NewAdminButtonStyle
-        public let permission: String
+        public let permission: PermissionKey
         public let copyText: String?
 
         public init(
             _ title: String,
             href: String? = nil,
             style: NewAdminButtonStyle = .secondary,
-            permission: String,
+            permission: PermissionKey,
             copyText: String? = nil
         ) {
             self.title = title
@@ -50,12 +51,12 @@ public struct NewAdminListRowActions: Component {
 
     public let label: String
     public let actions: [Action]
-    public let permissions: Set<String>
+    public let permissions: ListActions
 
     public init(
         label: String,
         actions: [Action],
-        permissions: Set<String>
+        permissions: ListActions
     ) {
         self.label = label
         self.actions = actions
@@ -64,7 +65,7 @@ public struct NewAdminListRowActions: Component {
 
     public func html(context: inout RenderContext) -> Td {
         let visibleActions = actions.filter {
-            permissions.contains($0.permission)
+            permissions.allows($0.permission)
         }
 
         return Td {

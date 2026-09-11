@@ -31,7 +31,7 @@ struct WebPageEdit: Component {
                         .isEmpty
                 {
                     A {
-                        context.render(Icon(svg: FeatherIcons.externalLink()))
+                        FeatherIcons.externalLink()
                     }
                     .href(
                         "/\(slug.trimmingCharacters(in: .whitespacesAndNewlines))/"

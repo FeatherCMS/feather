@@ -7,20 +7,20 @@ public struct NewAdminListSelectionForm<Table: FlowContent>: Component {
 
     public struct State: Sendable {
         public let action: String
-        public let page: Int
+        public let pageState: ListPageState
         public let search: String
         public let button: NewAdminSubmitButton
         public let isEnabled: Bool
 
         public init(
             action: String,
-            page: Int,
+            pageState: ListPageState,
             search: String,
             button: NewAdminSubmitButton,
             isEnabled: Bool = true
         ) {
             self.action = action
-            self.page = page
+            self.pageState = pageState
             self.search = search
             self.button = button
             self.isEnabled = isEnabled
@@ -51,7 +51,7 @@ public struct NewAdminListSelectionForm<Table: FlowContent>: Component {
                     Input()
                         .type(.hidden)
                         .name("page")
-                        .value("\(state.page)")
+                        .value("\(state.pageState.page)")
 
                     if !state.search.isEmpty {
                         Input()

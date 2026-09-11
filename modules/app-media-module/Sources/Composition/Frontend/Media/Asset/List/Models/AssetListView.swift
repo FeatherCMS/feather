@@ -701,7 +701,7 @@ extension AssetListView {
         Div {
             A {
                 Div {
-                    context.render(Icon(svg: FeatherIcons.cornerUpLeft()))
+                    FeatherIcons.cornerUpLeft()
                 }
                 .class("media-assets-card-preview", "media-assets-folder-icon")
             }
@@ -729,7 +729,7 @@ extension AssetListView {
         Div {
             A {
                 Div {
-                    context.render(Icon(svg: FeatherIcons.folder()))
+                    FeatherIcons.folder()
                 }
                 .class("media-assets-card-preview", "media-assets-folder-icon")
             }
@@ -787,7 +787,7 @@ extension AssetListView {
                         }
                         else {
                             Div {
-                                context.render(Icon(svg: FeatherIcons.file()))
+                                FeatherIcons.file()
                             }
                             .class("media-assets-folder-icon")
                         }
@@ -816,7 +816,7 @@ extension AssetListView {
                         }
                         else {
                             Div {
-                                context.render(Icon(svg: FeatherIcons.file()))
+                                FeatherIcons.file()
                             }
                             .class("media-assets-folder-icon")
                         }
@@ -1098,7 +1098,7 @@ extension AssetListView {
         Td {
             A {
                 Div {
-                    context.render(Icon(svg: FeatherIcons.cornerUpLeft()))
+                    FeatherIcons.cornerUpLeft()
                 }
                 .class("media-assets-folder-icon")
             }
@@ -1119,7 +1119,7 @@ extension AssetListView {
         Td {
             A {
                 Div {
-                    context.render(Icon(svg: FeatherIcons.folder()))
+                    FeatherIcons.folder()
                 }
                 .class("media-assets-folder-icon")
             }
@@ -1145,7 +1145,7 @@ extension AssetListView {
                 }
                 else {
                     Div {
-                        context.render(Icon(svg: FeatherIcons.file()))
+                        FeatherIcons.file()
                     }
                     .class("media-assets-folder-icon")
                 }
@@ -1181,7 +1181,7 @@ extension AssetListView {
                     .target(.blank)
                     .ariaLabel("Open \(displayTitle(for: item.asset))")
                 A {
-                    context.render(Icon(svg: FeatherIcons.externalLink()))
+                    FeatherIcons.externalLink()
                 }
                 .href(originalURL)
                 .target(.blank)

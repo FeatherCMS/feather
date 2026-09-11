@@ -18,14 +18,8 @@ public struct NewAdminTopBar: Component {
 
         Div {
             Label {
-                context.render(Icon(
-                    svg: FeatherIcons.sidebar(),
-                    class: "menu-trigger-icon menu-trigger-desktop"
-                ))
-                context.render(Icon(
-                    svg: FeatherIcons.menu(),
-                    class: "menu-trigger-icon menu-trigger-mobile"
-                ))
+                FeatherIcons.sidebar().class("menu-trigger-icon menu-trigger-desktop")
+                FeatherIcons.menu().class("menu-trigger-icon menu-trigger-mobile")
                 Span("Menu").class("sr-only")
             }
             .for("menuToggle")
@@ -57,10 +51,7 @@ public struct NewAdminTopBar: Component {
                 .id("accountToggle")
                 .name("accountToggle")
             Label {
-                context.render(Icon(
-                    svg: FeatherIcons.user(),
-                    class: "account-profile-icon"
-                ))
+                FeatherIcons.user().class("account-profile-icon")
                 Span("My profile")
                     .class("sr-only")
             }

@@ -28,7 +28,7 @@ public struct AdminPreviewLink: Component {
 
     public func html(context: inout RenderContext) -> A {
         var link = A {
-            context.render(Icon(svg: FeatherIcons.externalLink()))
+            FeatherIcons.externalLink()
         }
         if let slug = normalizedSlug {
             link = link

@@ -128,7 +128,7 @@ public struct NewAdminSidebar: Component {
         return Li {
             if let link = item.link {
                 A {
-                    context.render(Icon(svg: item.icon))
+                    item.icon
                     Span(item.label)
                 }
                 .title(item.label)
@@ -136,7 +136,7 @@ public struct NewAdminSidebar: Component {
                 .if(item.isCurrent) { $0.class("isCurrent") }
             }
             else {
-                context.render(Icon(svg: item.icon))
+                item.icon
                 Span(item.label)
             }
         }
@@ -151,7 +151,7 @@ public struct NewAdminSidebar: Component {
         if let link = item.link {
             return [
                 A {
-                    context.render(Icon(svg: item.icon))
+                    item.icon
                     Span(item.label)
                 }
                 .title(item.label)
@@ -160,7 +160,7 @@ public struct NewAdminSidebar: Component {
         }
         else {
             return [
-                context.render(Icon(svg: item.icon)),
+                item.icon,
                 Span(item.label)
             ]
         }
@@ -173,7 +173,7 @@ public struct NewAdminSidebar: Component {
 
         Li {
             A {
-                context.render(Icon(svg: item.icon))
+                item.icon
                 Span(item.label)
             }
             .title(item.label)

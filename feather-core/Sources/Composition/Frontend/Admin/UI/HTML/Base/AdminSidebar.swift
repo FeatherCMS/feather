@@ -86,10 +86,7 @@ public struct AdminSidebar: Component {
                                         Li {
                                             if let link = menu.current.link {
                                                 A {
-                                                    context.render(Icon(
-                                                        svg: menu.current.icon,
-                                                        class: "menu-icon"
-                                                    ))
+                                                    menu.current.icon.class("menu-icon")
                                                     Span(menu.current.label)
                                                 }
                                                 .title(menu.current.label)
@@ -99,10 +96,7 @@ public struct AdminSidebar: Component {
                                                 }
                                             }
                                             else {
-                                                context.render(Icon(
-                                                    svg: menu.current.icon,
-                                                    class: "menu-icon"
-                                                ))
+                                                menu.current.icon.class("menu-icon")
                                                 Span(menu.current.label)
                                             }
                                         }
@@ -124,21 +118,15 @@ public struct AdminSidebar: Component {
                                                 if let link = menu.current.link
                                                 {
                                                     A {
-                                                        context.render(Icon(
-                                                            svg: menu.current
-                                                                .icon,
-                                                            class: "menu-icon"
-                                                        ))
+                                                        menu.current.icon
+                                                            .class("menu-icon")
                                                         Span(menu.current.label)
                                                     }
                                                     .title(menu.current.label)
                                                     .href(link)
                                                 }
                                                 else {
-                                                    context.render(Icon(
-                                                        svg: menu.current.icon,
-                                                        class: "menu-icon"
-                                                    ))
+                                                    menu.current.icon.class("menu-icon")
                                                     Span(menu.current.label)
                                                 }
                                             }
@@ -152,11 +140,7 @@ public struct AdminSidebar: Component {
                                                 for child in menu.children {
                                                     Li {
                                                         A {
-                                                            context.render(Icon(
-                                                                svg: child.icon,
-                                                                class:
-                                                                    "menu-icon"
-                                                            ))
+                                                            child.icon.class("menu-icon")
                                                             Span(child.label)
                                                         }
                                                         .title(child.label)

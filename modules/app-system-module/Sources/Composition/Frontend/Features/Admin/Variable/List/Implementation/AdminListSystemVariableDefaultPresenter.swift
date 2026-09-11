@@ -25,9 +25,6 @@ struct AdminListSystemVariableDefaultPresenter:
         error: String?
     ) async throws -> HTMLResponse {
         var renderContext = RenderContext()
-        let canAccess = permissions.contains(
-            SystemPermissions.Variables.list.rawValue
-        )
         if let error {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -57,19 +54,14 @@ struct AdminListSystemVariableDefaultPresenter:
                     isAdded: isAdded,
                     isEdited: isEdited,
                     isRemoved: isRemoved,
-                    canAccess: canAccess,
-                    permissions: permissions,
-                    canAdd: permissions.contains(
-                        SystemPermissions.Variables.create.rawValue
-                    ),
+                    permissions: Set(permissions.map(PermissionKey.init)),
                     variables: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
+                    pageState: .init(
+                        page: model.page,
+                        pageSize: model.pageSize,
+                        total: model.total
+                    ),
                     search: search ?? "",
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your account cannot access system variables.",
                     breadcrumb: systemVariableBreadcrumb()
                 )
             ),

@@ -26,14 +26,15 @@ extension NewAdminDesignSystem {
                 LineHeight(1.2)
             }
             Custom(".breadcrumb li:not(:last-child)::after") {
-                Content(.string("\"/\""))
+                Content(.string("\"›\""))
                 MarginLeft(5.px)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
             }
             Custom(".breadcrumb li a") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 Padding(vertical: 5.px, horizontal: 10.px)
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Color(.variable(TokenKey.Colors.Link.default))
                 TextDecoration(.none)
                 BorderRadius(10.px)
@@ -43,12 +44,14 @@ extension NewAdminDesignSystem {
                 )
             }
             Custom(".breadcrumb li a:hover") {
-                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
                 Color(.variable(TokenKey.Colors.Link.hover))
             }
             Custom(".breadcrumb li[aria-current='page']") {
                 Padding(vertical: 5.px, horizontal: 10.px)
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                BorderRadius(10.px)
                 FontWeight(.number(600))
             }
         }

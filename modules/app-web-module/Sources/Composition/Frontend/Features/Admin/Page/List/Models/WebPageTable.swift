@@ -228,7 +228,7 @@ struct WebPageTable: Component {
                 Span(item.title)
                 if let previewPath = previewPath(for: item.metadata) {
                     A {
-                        context.render(Icon(svg: FeatherIcons.externalLink()))
+                        FeatherIcons.externalLink()
                     }
                     .href(previewPath)
                     .target(.blank)

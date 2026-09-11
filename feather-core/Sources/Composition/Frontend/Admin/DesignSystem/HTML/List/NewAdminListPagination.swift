@@ -91,24 +91,18 @@ public struct NewAdminListPagination: Component {
 
     public struct State: Sendable {
         public let path: String
-        public let page: Int
-        public let pageSize: Int
-        public let total: Int
+        public let pageState: ListPageState
         public let search: String
         public let queryItems: [QueryItem]
 
         public init(
             path: String,
-            page: Int,
-            pageSize: Int,
-            total: Int,
+            pageState: ListPageState,
             search: String,
             queryItems: [QueryItem] = []
         ) {
             self.path = path
-            self.page = page
-            self.pageSize = pageSize
-            self.total = total
+            self.pageState = pageState
             self.search = search
             self.queryItems = queryItems
         }
@@ -132,26 +126,28 @@ public struct NewAdminListPagination: Component {
             state.search.isEmpty ? "" : "&search=\(state.search.queryEncoded())"
         let filterSuffix = "\(searchSuffix)\(extraQuerySuffix)"
         let from =
-            state.total == 0 ? 0 : ((state.page - 1) * state.pageSize) + 1
-        let to = min(state.page * state.pageSize, state.total)
-        let totalPages = max(
-            1,
-            (state.total + state.pageSize - 1) / state.pageSize
+            state.pageState.total == 0
+                ? 0
+                : ((state.pageState.page - 1) * state.pageState.pageSize) + 1
+        let to = min(
+            state.pageState.page * state.pageState.pageSize,
+            state.pageState.total
         )
+        let totalPages = state.pageState.totalPages
 
         return Div {
             Div {
-                if state.page > 1 {
+                if state.pageState.page > 1 {
                     A("First")
                         .href("\(state.path)?page=1\(filterSuffix)")
                 }
                 else {
                     A("First").href("#").class("disabled")
                 }
-                if state.page > 1 {
+                if state.pageState.page > 1 {
                     A("Prev")
                         .href(
-                            "\(state.path)?page=\(state.page - 1)\(filterSuffix)"
+                            "\(state.path)?page=\(state.pageState.page - 1)\(filterSuffix)"
                         )
                 }
                 else {
@@ -161,7 +157,7 @@ public struct NewAdminListPagination: Component {
                 Form {
                     Select {
                         for pageNumber in 1...totalPages {
-                            if pageNumber == state.page {
+                            if pageNumber == state.pageState.page {
                                 Option("\(pageNumber)")
                                     .value("\(pageNumber)")
                                     .selected()
@@ -194,16 +190,16 @@ public struct NewAdminListPagination: Component {
                 .action(state.path)
                 .class("pagination-page-form")
 
-                if state.page < totalPages {
+                if state.pageState.page < totalPages {
                     A("Next")
                         .href(
-                            "\(state.path)?page=\(state.page + 1)\(filterSuffix)"
+                            "\(state.path)?page=\(state.pageState.page + 1)\(filterSuffix)"
                         )
                 }
                 else {
                     A("Next").href("#").class("disabled")
                 }
-                if state.page < totalPages {
+                if state.pageState.page < totalPages {
                     A("Last")
                         .href("\(state.path)?page=\(totalPages)\(filterSuffix)")
                 }
@@ -215,9 +211,9 @@ public struct NewAdminListPagination: Component {
 
             Div {
                 P(
-                    "Showing \(from)-\(to) of \(state.total) entries · \(state.pageSize) per page"
+                    "Showing \(from)-\(to) of \(state.pageState.total) entries · \(state.pageState.pageSize) per page"
                 )
-                P("Page \(state.page) of \(totalPages)")
+                P("Page \(state.pageState.page) of \(totalPages)")
             }
             .class("table-pagination-summary")
         }
