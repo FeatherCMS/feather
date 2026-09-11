@@ -89,7 +89,7 @@ struct SystemVariableEditForm: Component {
                 if let removeHref {
                     context.render(NewAdminButton("Remove variable", href: removeHref, style: .destructive))
                 }
-            }.class("button-row")
+            }.class("new-admin-form__actions")
         }
         context.register(form)
         return form.html(context: &context)

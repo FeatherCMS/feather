@@ -86,7 +86,7 @@ public struct NewAdminFormFieldTextArea: Component {
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(vertical: 9.px, horizontal: 11.px)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
+                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Tertiary.border))
                 BorderRadius(9.px)
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
@@ -102,12 +102,13 @@ public struct NewAdminFormFieldTextArea: Component {
                 UnsafeRawProperty(name: "min-height", value: "9lh")
             },
             Custom(".new-admin-form-textarea textarea:focus") {
-                BorderColor(.variable(TokenKey.Colors.Materials.Secondary.border))
+                BorderColor(.variable(TokenKey.Colors.Materials.Tertiary.border))
                 Outline(
                     2.px,
                     .solid,
                     .color(.variable(TokenKey.Colors.Link.hover))
                 )
+                OutlineOffset(2.px)
             },
             Custom(".new-admin-form-textarea .field-error") {
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))

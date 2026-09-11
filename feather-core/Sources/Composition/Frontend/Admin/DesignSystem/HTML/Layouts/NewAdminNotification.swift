@@ -29,14 +29,10 @@ public struct NewAdminNotification: Component {
                 BoxSizing(.borderBox)
                 Padding(top: 12.px, right: 48.px, bottom: 12.px, left: 22.px)
                 BorderRadius(999.px)
-                Border(
-                    1.px,
-                    .solid,
-                    CSSColorValue(CSSColor(stringLiteral: "#252525"))
-                )
+                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Tertiary.border))
                 TextAlign(.left)
-                Background(CSSColor(stringLiteral: "#111111"))
-                Color(CSSColor(stringLiteral: "#ffffff"))
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 BoxShadow(
                     0.px,
                     8.px,
@@ -68,7 +64,7 @@ public struct NewAdminNotification: Component {
                 Display(.block)
             },
             Class("admin-notification__message") {
-                Color(CSSColor(stringLiteral: "#d1d5db"))
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 Overflow(.hidden)
                 TextOverflow(.ellipsis)
                 Display(.block)
@@ -101,14 +97,14 @@ public struct NewAdminNotification: Component {
                 Border(0.px, BorderStyle.Value.none)
                 BorderRadius(999.px)
                 Background(.transparent)
-                Color(CSSColor(stringLiteral: "#9ca3af"))
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 Cursor(.pointer)
             },
             Custom(
                 ".admin-notification__close:hover, .admin-notification__close:focus-visible"
             ) {
-                Background(CSSColor(stringLiteral: "#2d2d2d"))
-                Color(CSSColor(stringLiteral: "#ffffff"))
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 Outline(0.px, .none)
             },
             Class("admin-notification.is-visible") {

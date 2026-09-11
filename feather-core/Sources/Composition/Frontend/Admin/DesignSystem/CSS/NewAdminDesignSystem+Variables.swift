@@ -31,7 +31,7 @@ extension NewAdminDesignSystem {
 
                 Variable(TokenKey.Colors.Materials.Tertiary.tint, "#eef0f3")
                 Variable(TokenKey.Colors.Materials.Tertiary.text, "#374151")
-                Variable(TokenKey.Colors.Materials.Tertiary.border, "#e5e7eb")
+                Variable(TokenKey.Colors.Materials.Tertiary.border, "#d9dce1")
                 Variable(TokenKey.Colors.Materials.Tertiary.hover, "#e6e8eb")
 
                 Variable(TokenKey.Colors.Accents.Primary.tint, "#6536ab")

@@ -69,6 +69,14 @@ extension NewAdminDesignSystem {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 TextDecoration(.none)
             }
+            Custom(".button:focus-visible") {
+                Outline(
+                    2.px,
+                    .solid,
+                    .color(.variable(TokenKey.Colors.Link.hover))
+                )
+                OutlineOffset(2.px)
+            }
             Custom(".button.row-button") {
                 BorderRadius(6.px)
                 Padding(vertical: 7.px, horizontal: 10.px)

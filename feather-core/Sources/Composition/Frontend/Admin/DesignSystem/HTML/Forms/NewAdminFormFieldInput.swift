@@ -64,18 +64,19 @@ public struct NewAdminFormFieldInput: Component {
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(vertical: 9.px, horizontal: 11.px)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
+                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Tertiary.border))
                 BorderRadius(9.px)
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
             },
             Custom(".new-admin-form-field input:focus") {
-                BorderColor(.variable(TokenKey.Colors.Materials.Secondary.border))
+                BorderColor(.variable(TokenKey.Colors.Materials.Tertiary.border))
                 Outline(
                     2.px,
                     .solid,
                     .color(.variable(TokenKey.Colors.Link.hover))
                 )
+                OutlineOffset(2.px)
             },
             Custom(".new-admin-form-field .field-error") {
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
