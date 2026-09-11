@@ -53,6 +53,17 @@ public enum AdminNotificationFlash {
         )
     }
 
+    public static func clearCookie() -> Cookie {
+        Cookie(
+            name: cookieName,
+            value: "",
+            maxAge: 0,
+            path: "/admin",
+            httpOnly: false,
+            sameSite: .lax
+        )
+    }
+
     public static func redirect(
         to location: String,
         notification: AdminNotification

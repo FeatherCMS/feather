@@ -5,6 +5,12 @@ public struct SystemVariableEditFormInput: Codable, Sendable, Equatable, Hashabl
     let value: String
     let name: String?
     let notes: String?
+    let nonce: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, value, name, notes
+        case nonce = "_nonce"
+    }
 
     var normalizedName: String? {
         let value = name?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""

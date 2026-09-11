@@ -18,6 +18,9 @@ struct AdminEditSystemVariableDefaultPresenter:
         permissions: Set<PermissionKey>
     ) async throws -> HTMLResponse {
         let actions = ListActions(permissions)
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
         return try await renderPage(
             content: SystemVariableEditPage(
                 breadcrumb: breadcrumb(),
@@ -25,7 +28,8 @@ struct AdminEditSystemVariableDefaultPresenter:
                     state: state,
                     action: SystemVariableRoutes.edit(RouterPath(id)).description,
                     submitLabel: "Save changes",
-                    removeHref: actions.allows(SystemPermissions.Variables.delete) ? SystemVariableRoutes.remove(id) : nil
+                    removeHref: actions.allows(SystemPermissions.Variables.delete) ? SystemVariableRoutes.remove(id) : nil,
+                    nonceToken: nonceToken
                 )
             )
         )

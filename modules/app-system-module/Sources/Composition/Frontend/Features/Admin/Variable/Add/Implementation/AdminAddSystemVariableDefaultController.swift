@@ -46,6 +46,12 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
                 context: context
             )
             lastPayload = payload
+            guard await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            ) else {
+                throw HTTPError(.forbidden)
+            }
             try await runtime.interactor.add(input: payload)
 
             return AdminNotificationFlash.redirect(
@@ -66,6 +72,9 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
             return try await runtime.presenter
                 .renderAddPage(state: state)
                 .response(from: request, context: context)
+        }
+        catch let error as HTTPError {
+            throw error
         }
         catch let error as OpenAPIRepositoryError {
             var state = formState(input: lastPayload)

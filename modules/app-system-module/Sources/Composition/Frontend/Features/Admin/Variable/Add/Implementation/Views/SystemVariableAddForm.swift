@@ -85,7 +85,19 @@ struct SystemVariableAddForm: Component {
     let state: State
     let action: String
     let submitLabel: String
-    let nonceToken: String? = nil
+    let nonceToken: String?
+
+    init(
+        state: State,
+        action: String,
+        submitLabel: String,
+        nonceToken: String? = nil
+    ) {
+        self.state = state
+        self.action = action
+        self.submitLabel = submitLabel
+        self.nonceToken = nonceToken
+    }
 
     func html(context: inout RenderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {

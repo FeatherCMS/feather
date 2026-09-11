@@ -68,6 +68,12 @@ struct AdminEditSystemVariableDefaultController:
                 context: context
             )
             lastPayload = payload
+            guard await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            ) else {
+                throw HTTPError(.forbidden)
+            }
             try await runtime.interactor.edit(id: id, input: payload)
 
             return AdminNotificationFlash.redirect(
@@ -92,6 +98,9 @@ struct AdminEditSystemVariableDefaultController:
                     permissions: permissions
                 )
                 .response(from: request, context: context)
+        }
+        catch let error as HTTPError {
+            throw error
         }
         catch let error as OpenAPIRepositoryError {
             var state = formState(input: lastPayload)

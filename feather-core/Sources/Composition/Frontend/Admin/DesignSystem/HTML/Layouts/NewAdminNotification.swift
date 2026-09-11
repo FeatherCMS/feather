@@ -23,9 +23,13 @@ public struct NewAdminNotification: Component {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(8.px)
-                Width(.auto)
-                Padding(vertical: 8.px, horizontal: 12.px)
+                Width(560.px)
+                MinWidth(360.px)
+                MaxWidth(92.percent)
+                BoxSizing(.borderBox)
+                Padding(vertical: 12.px, horizontal: 16.px)
                 BorderRadius(999.px)
+                TextAlign(.left)
                 Background(CSSColor(stringLiteral: "#111111"))
                 Color(CSSColor(stringLiteral: "#ffffff"))
                 BoxShadow(
@@ -39,6 +43,7 @@ public struct NewAdminNotification: Component {
                     name: "transition",
                     value: "transform 220ms ease-out, opacity 220ms ease-out"
                 )
+                Opacity(0)
             },
             Class("admin-notification__icon") {
                 Display(.inlineFlex)
@@ -50,6 +55,7 @@ public struct NewAdminNotification: Component {
                 AlignItems(.flexStart)
                 Gap(2.px)
                 MinWidth(0.px)
+                TextAlign(.left)
             },
             Class("admin-notification__title") {
                 FontWeight(.bold)
@@ -60,7 +66,8 @@ public struct NewAdminNotification: Component {
                 Overflow(.hidden)
                 TextOverflow(.ellipsis)
                 Display(.block)
-                MaxWidth(60.ch)
+                Width(100.percent)
+                LineHeight(1.35)
             },
             Class("admin-notification__close") {
                 Display(.inlineFlex)
@@ -116,7 +123,7 @@ public struct NewAdminNotification: Component {
             .type(.button)
             .class("admin-notification__close")
             .ariaLabel("Dismiss notification")
-            .onClick("this.closest('#admin-toast').remove()")
+            .onClick("document.cookie='admin_notification=; Max-Age=0; path=/admin';this.closest('#admin-toast').remove()")
         }
         .id("admin-toast")
         .class("admin-notification")

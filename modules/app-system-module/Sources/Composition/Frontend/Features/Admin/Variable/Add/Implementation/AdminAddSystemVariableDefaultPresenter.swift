@@ -14,13 +14,17 @@ struct AdminAddSystemVariableDefaultPresenter:
     func renderAddPage(
         state: SystemVariableAddForm.State
     ) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
         return try await renderPage(
             content: SystemVariableAddPage(
                 breadcrumb: breadcrumb(),
                 form: SystemVariableAddForm(
                     state: state,
                     action: SystemVariableRoutes.add.description,
-                    submitLabel: "Add variable"
+                    submitLabel: "Add variable",
+                    nonceToken: nonceToken
                 )
             )
         )

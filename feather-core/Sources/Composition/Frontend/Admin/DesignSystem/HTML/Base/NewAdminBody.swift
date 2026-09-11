@@ -27,5 +27,6 @@ public struct NewAdminBody<T: Component>: Component where T.HTML: FlowContent {
             }
             .id("footer")
         }
+        .setAttribute(name: "data-1p-ignore", value: "")
     }
 }

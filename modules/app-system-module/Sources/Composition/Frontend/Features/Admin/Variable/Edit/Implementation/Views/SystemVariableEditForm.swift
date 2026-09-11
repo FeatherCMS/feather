@@ -60,7 +60,21 @@ struct SystemVariableEditForm: Component {
     let action: String
     let submitLabel: String
     let removeHref: String?
-    let nonceToken: String? = nil
+    let nonceToken: String?
+
+    init(
+        state: State,
+        action: String,
+        submitLabel: String,
+        removeHref: String?,
+        nonceToken: String? = nil
+    ) {
+        self.state = state
+        self.action = action
+        self.submitLabel = submitLabel
+        self.removeHref = removeHref
+        self.nonceToken = nonceToken
+    }
 
     func html(context: inout RenderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
