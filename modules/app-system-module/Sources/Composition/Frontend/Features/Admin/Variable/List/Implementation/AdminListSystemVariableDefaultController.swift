@@ -24,34 +24,30 @@ struct AdminListSystemVariableDefaultController:
         let canAccess = context.isCurrentUserAllowed(
             to: SystemPermissions.Variables.list
         )
-        let model:
-            AdminListModel<Components.Schemas.SystemVariableListItemSchema>?
-        let error: String?
-        if canAccess {
-            do {
-                model = try await interactor.listSystemVariables(
-                    page: page,
-                    search: search
-                )
-                error = nil
-            }
-            catch let caughtError {
-                model = nil
-                error = caughtError.displayMessage
-            }
+        let notification = AdminNotificationFlash.notification(from: request)
+        guard canAccess else {
+            return try await presenter.renderErrorPage(
+                title: "Forbidden",
+                message: "Your account cannot access system variables.",
+                notification: notification
+            )
         }
-        else {
-            model = nil
-            error = nil
+        do {
+            let model = try await interactor.listSystemVariables(page: page, search: search)
+            return try await presenter.renderListPage(
+                model: model,
+                notification: notification,
+                permissions: permissions,
+                search: search
+            )
         }
-        return try await presenter.renderListPage(
-            model: model,
-            notification: AdminNotificationFlash.notification(from: request),
-            permissions: permissions,
-            search: search,
-            error: error,
-            accessDenied: !canAccess
-        )
+        catch {
+            return try await presenter.renderErrorPage(
+                title: "Unable to load system variables.",
+                message: error.displayMessage,
+                notification: notification
+            )
+        }
     }
 
 }

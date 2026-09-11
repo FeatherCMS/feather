@@ -22,29 +22,15 @@ struct SystemVariableTable: Component {
         let permissions = ListActions(state.permissions)
         return Section {
             context.render(NewAdminBreadcrumb(state: state.breadcrumb))
-            if !permissions.allows(SystemPermissions.Variables.list) {
-                context.render(
-                    NewAdminStatusView(
-                        state: .init(
-                            title: "Forbidden",
-                            message:
-                                "Your account cannot access system variables."
-                        ),
-                        icon: FeatherIcons.alertCircle()
-                    )
+            H1("System variables")
+            context.render(
+                SystemVariableTableContent(
+                    variables: state.variables,
+                    permissions: permissions,
+                    pageState: state.pageState,
+                    search: state.search
                 )
-            }
-            else {
-                H1("System variables")
-                context.render(
-                    SystemVariableTableContent(
-                        variables: state.variables,
-                        permissions: permissions,
-                        pageState: state.pageState,
-                        search: state.search
-                    )
-                )
-            }
+            )
         }
         .class("cms-section")
     }

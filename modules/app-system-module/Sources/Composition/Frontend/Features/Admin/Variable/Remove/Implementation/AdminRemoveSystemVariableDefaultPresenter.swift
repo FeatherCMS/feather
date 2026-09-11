@@ -1,9 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
-import HTML
 import Hummingbird
-import SGML
-import WebBuilders
 import WebComponents
 
 struct AdminRemoveSystemVariableDefaultPresenter:
@@ -45,10 +42,7 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 title: "Remove selected variables",
                 message:
                     "Are you sure you want to remove these selected variables? This action cannot be undone.",
-                details: [
-                    "Selected \(ids.count) items.",
-                    "IDs: \(ids.prefix(10).joined(separator: ", "))",
-                ],
+                selectedIDs: ids,
                 action: SystemVariableRoutes.removeRoute.description,
                 cancel: ListRemoveRedirect.location(
                     path: SystemVariableRoutes.list.description,
