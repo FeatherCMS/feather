@@ -4,6 +4,6 @@ import Foundation
 protocol AdminRemoveSystemVariableRepository: Sendable {
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws
 }

@@ -17,8 +17,7 @@ private struct SystemVariableRow: Component {
         let actions: [NewAdminListRowActions.Action]
 
         init(
-            variable: Components.Schemas.SystemVariableListItemSchema,
-            permissions: ListActions
+            variable: Components.Schemas.SystemVariableListItemSchema
         ) {
             self.id = variable.id
             self.name = variable.name ?? ""
@@ -129,8 +128,7 @@ private struct SystemVariableTableContent: Component {
                                     for variable in variables {
                                         context.render(SystemVariableRow(
                                             state: .init(
-                                                variable: variable,
-                                                permissions: permissions
+                                                variable: variable
                                             ),
                                             permissions: permissions
                                         ))
@@ -191,6 +189,7 @@ struct SystemVariableTable: Component {
         let permissions = ListActions(state.permissions)
 
         return Section {
+            context.render(NewAdminBreadcrumb(state: state.breadcrumb))
             if !permissions.allows(SystemPermissions.Variables.list) {
                 context.render(NewAdminStatusView(
                     state: .init(
@@ -201,7 +200,6 @@ struct SystemVariableTable: Component {
                 ))
             }
             else {
-                context.render(NewAdminBreadcrumb(state: state.breadcrumb))
                 H1("System variables")
 
 

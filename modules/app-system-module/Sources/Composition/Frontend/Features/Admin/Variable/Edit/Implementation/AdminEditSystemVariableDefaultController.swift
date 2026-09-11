@@ -2,6 +2,7 @@ import FeatherAdmin
 import FeatherValidation
 import HTML
 import Hummingbird
+import SystemContracts
 
 struct AdminEditSystemVariableDefaultController:
     AdminEditSystemVariableController
@@ -16,6 +17,9 @@ struct AdminEditSystemVariableDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.update) else {
+            throw HTTPError(.forbidden)
+        }
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
@@ -46,6 +50,9 @@ struct AdminEditSystemVariableDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.update) else {
+            throw HTTPError(.forbidden)
+        }
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions

@@ -63,7 +63,6 @@ public struct AdminSystem {
         .controller.route(on: router)
 
         AdminListSystemVariable(
-            renderingEngine: renderingEngine,
             events: adminEvents
         )
         .controller.route(on: router)

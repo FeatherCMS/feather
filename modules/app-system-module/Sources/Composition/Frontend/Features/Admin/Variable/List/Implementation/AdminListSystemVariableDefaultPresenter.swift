@@ -14,7 +14,6 @@ struct AdminListSystemVariableDefaultPresenter:
     let request: Request
     let context: DefaultRequestContext
     let events: any EventPublisher
-    let renderEngine: any RenderingEngine
 
     func renderListPage(
         model: AdminListModel<Components.Schemas.SystemVariableListItemSchema>,

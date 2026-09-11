@@ -2,6 +2,7 @@ import FeatherAdmin
 import FeatherValidation
 import HTML
 import Hummingbird
+import SystemContracts
 
 struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
 {
@@ -15,6 +16,9 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.create) else {
+            throw HTTPError(.forbidden)
+        }
         let runtime = buildRuntime(request, context)
         return runtime.presenter.renderAddPage(
             state: formState(),
@@ -26,6 +30,9 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.create) else {
+            throw HTTPError(.forbidden)
+        }
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         var lastPayload: SystemVariableFormInput?

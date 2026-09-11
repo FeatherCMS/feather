@@ -8,5 +8,4 @@ protocol AdminListSystemVariableRepository: Sendable {
         page: Int,
         search: String?
     ) async throws -> SystemAdminAPI.Components.Responses.SystemVariableListItemSearchSchemaSearchResponse
-
 }

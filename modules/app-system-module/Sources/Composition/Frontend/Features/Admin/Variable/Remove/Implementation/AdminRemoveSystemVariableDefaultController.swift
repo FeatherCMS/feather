@@ -1,6 +1,7 @@
 import FeatherAdmin
 import HTML
 import Hummingbird
+import SystemContracts
 
 struct AdminRemoveSystemVariableDefaultController:
     AdminRemoveSystemVariableController
@@ -15,6 +16,9 @@ struct AdminRemoveSystemVariableDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete) else {
+            throw HTTPError(.forbidden)
+        }
         let (_, presenter) = buildRuntime(request, context)
         let ids = request.queryStrings("ids")
         let page = request.queryPage()
@@ -45,6 +49,9 @@ struct AdminRemoveSystemVariableDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete) else {
+            throw HTTPError(.forbidden)
+        }
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
             as: ListRemoveFormInput.self,

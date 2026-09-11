@@ -1,6 +1,7 @@
 import FeatherAdmin
 import HTML
 import Hummingbird
+import SystemContracts
 
 struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
 {
@@ -14,6 +15,9 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.read) else {
+            throw HTTPError(.forbidden)
+        }
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions

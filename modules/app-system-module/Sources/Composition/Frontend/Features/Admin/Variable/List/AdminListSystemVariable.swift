@@ -6,7 +6,6 @@ struct AdminListSystemVariable {
     let controller: any AdminListSystemVariableController
 
     init(
-        renderingEngine: any RenderingEngine,
         events: any EventPublisher
     ) {
         self.controller = AdminListSystemVariableDefaultController(
@@ -20,8 +19,7 @@ struct AdminListSystemVariable {
                     presenter: AdminListSystemVariableDefaultPresenter(
                         request: request,
                         context: context,
-                        events: events,
-                        renderEngine: renderingEngine
+                        events: events
                     )
                 )
             }

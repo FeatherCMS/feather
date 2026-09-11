@@ -9,8 +9,6 @@ struct AdminRemoveSystemVariableDefaultInteractor:
     func delete(
         ids: [String]
     ) async throws {
-        for id in ids {
-            try await repository.delete(id: id)
-        }
+        try await repository.delete(ids: ids)
     }
 }
