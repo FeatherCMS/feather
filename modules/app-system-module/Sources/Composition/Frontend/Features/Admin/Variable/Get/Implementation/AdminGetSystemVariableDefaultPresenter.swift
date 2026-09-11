@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     let request: Request
@@ -63,6 +63,10 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "System", link: "/admin/system/"),
-            .init(label: "Variables", link: SystemVariableRoutes.list.description)])
+            .init(
+                label: "Variables",
+                link: SystemVariableRoutes.list.description
+            ),
+        ])
     }
 }

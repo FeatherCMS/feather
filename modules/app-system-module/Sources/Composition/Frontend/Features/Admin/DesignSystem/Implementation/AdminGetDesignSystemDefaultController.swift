@@ -3,10 +3,11 @@ import Hummingbird
 
 struct AdminGetDesignSystemDefaultController: AdminGetDesignSystemController {
 
-    let buildRuntime: @Sendable (Request, DefaultRequestContext) -> (
-        interactor: any AdminGetDesignSystemInteractor,
-        presenter: any AdminGetDesignSystemPresenter
-    )
+    let buildRuntime:
+        @Sendable (Request, DefaultRequestContext) -> (
+            interactor: any AdminGetDesignSystemInteractor,
+            presenter: any AdminGetDesignSystemPresenter
+        )
 
     func getDesignSystem(
         request: Request,

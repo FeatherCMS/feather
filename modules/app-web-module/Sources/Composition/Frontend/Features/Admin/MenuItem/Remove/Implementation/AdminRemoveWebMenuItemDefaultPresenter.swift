@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminRemoveWebMenuItemDefaultPresenter:
     AdminRemoveWebMenuItemPresenter
@@ -77,7 +77,8 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
                 .init(
                     label: "Items",
                     link: "/admin/web/menus/\(menuId)/items/"
-                )]
+                ),
+            ]
         )
     }
 }

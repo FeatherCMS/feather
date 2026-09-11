@@ -6,8 +6,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebMenuItemTable: Component {
 
@@ -81,7 +81,9 @@ struct WebMenuItemTable: Component {
             else {
                 context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Edit menu")
-                context.render(AdminWebMenuTabs(menuID: state.menuId, active: .items))
+                context.render(
+                    AdminWebMenuTabs(menuID: state.menuId, active: .items)
+                )
 
                 if state.isAdded {
                     P("Item added successfully.")
@@ -94,22 +96,27 @@ struct WebMenuItemTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add item",
-                            href: "/admin/web/menus/\(state.menuId)/items/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add item",
+                                href:
+                                    "/admin/web/menus/\(state.menuId)/items/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/web/menus/\(state.menuId)/items/",
-                        placeholder: "Quick search items",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/web/menus/\(state.menuId)/items/",
+                            placeholder: "Quick search items",
+                            search: state.search
+                        )
                     )
-                ))
+                )
 
                 if state.items.isEmpty {
                     let totalPages = max(
@@ -144,163 +151,192 @@ struct WebMenuItemTable: Component {
                     let canRemove = state.permissions.contains(
                         "web:menu-items:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action:
-                                "/admin/web/menus/\(state.menuId)/items/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        if state.canReorder { Th("Order") }
-                                        Th("Label")
-                                        Th("URL")
-                                        Th("Blank")
-                                        Th("Permission")
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for item in state.items {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: item.id
-                                                    )
-                                                ))
-                                            }
-                                            if state.canReorder {
-                                                Td {
-                                                    Div {
-                                                        Span("⠿")
-                                                            .class(
-                                                                "web-menu-item-drag"
-                                                            )
-                                                        Div {
-                                                            Button("↑")
-                                                                .type(.button)
-                                                                .class(
-                                                                    "row-btn",
-                                                                    "edit"
-                                                                )
-                                                                .data(
-                                                                    "web-menu-item-move",
-                                                                    "up"
-                                                                )
-                                                                .ariaLabel(
-                                                                    "Move \(item.label) up"
-                                                                )
-                                                            Button("↓")
-                                                                .type(.button)
-                                                                .class(
-                                                                    "row-btn",
-                                                                    "edit"
-                                                                )
-                                                                .data(
-                                                                    "web-menu-item-move",
-                                                                    "down"
-                                                                )
-                                                                .ariaLabel(
-                                                                    "Move \(item.label) down"
-                                                                )
-                                                        }
-                                                        .class(
-                                                            "web-menu-item-actions"
-                                                        )
-                                                    }
-                                                    .class(
-                                                        "web-menu-item-reorder-cell"
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action:
+                                    "/admin/web/menus/\(state.menuId)/items/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected"
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
                                                     )
                                                 }
+                                                if state.canReorder {
+                                                    Th("Order")
+                                                }
+                                                Th("Label")
+                                                Th("URL")
+                                                Th("Blank")
+                                                Th("Permission")
+                                                Th("Actions")
                                             }
-                                            Td(item.label)
-                                                .data(
-                                                    "label",
-                                                    "Label"
-                                                )
-                                            Td(item.url)
-                                                .data(
-                                                    "label",
-                                                    "URL"
-                                                )
-                                            Td(item.isBlank ? "Yes" : "No")
-                                                .data(
-                                                    "label",
-                                                    "Blank"
-                                                )
-                                            Td(item.permission)
-                                                .data(
-                                                    "label",
-                                                    "Permission"
-                                                )
-                                            context.render(ListTableRowActions(
-                                                state: .init(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/web/menus/\(state.menuId)/items/\(item.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                "web:menu-items:read"
-                                                        ),
-                                                        .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/web/menus/\(state.menuId)/items/\(item.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                "web:menu-items:update"
-                                                        ),
-                                                        .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/web/menus/\(state.menuId)/items/\(item.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                "web:menu-items:delete"
-                                                        ),
-                                                    ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            ))
                                         }
-                                        .class("web-menu-item-row")
-                                        .data("web-menu-item", item.id)
-                                        .data(
-                                            "web-menu-item-move-url",
-                                            "/admin/web/menus/\(state.menuId)/items/\(item.id)/move/"
-                                        )
+                                        Tbody {
+                                            for item in state.items {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: item.id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    if state.canReorder {
+                                                        Td {
+                                                            Div {
+                                                                Span("⠿")
+                                                                    .class(
+                                                                        "web-menu-item-drag"
+                                                                    )
+                                                                Div {
+                                                                    Button("↑")
+                                                                        .type(
+                                                                            .button
+                                                                        )
+                                                                        .class(
+                                                                            "row-btn",
+                                                                            "edit"
+                                                                        )
+                                                                        .data(
+                                                                            "web-menu-item-move",
+                                                                            "up"
+                                                                        )
+                                                                        .ariaLabel(
+                                                                            "Move \(item.label) up"
+                                                                        )
+                                                                    Button("↓")
+                                                                        .type(
+                                                                            .button
+                                                                        )
+                                                                        .class(
+                                                                            "row-btn",
+                                                                            "edit"
+                                                                        )
+                                                                        .data(
+                                                                            "web-menu-item-move",
+                                                                            "down"
+                                                                        )
+                                                                        .ariaLabel(
+                                                                            "Move \(item.label) down"
+                                                                        )
+                                                                }
+                                                                .class(
+                                                                    "web-menu-item-actions"
+                                                                )
+                                                            }
+                                                            .class(
+                                                                "web-menu-item-reorder-cell"
+                                                            )
+                                                        }
+                                                    }
+                                                    Td(item.label)
+                                                        .data(
+                                                            "label",
+                                                            "Label"
+                                                        )
+                                                    Td(item.url)
+                                                        .data(
+                                                            "label",
+                                                            "URL"
+                                                        )
+                                                    Td(
+                                                        item.isBlank
+                                                            ? "Yes" : "No"
+                                                    )
+                                                    .data(
+                                                        "label",
+                                                        "Blank"
+                                                    )
+                                                    Td(item.permission)
+                                                        .data(
+                                                            "label",
+                                                            "Permission"
+                                                        )
+                                                    context.render(
+                                                        ListTableRowActions(
+                                                            state: .init(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        title:
+                                                                            "Details",
+                                                                        href:
+                                                                            "/admin/web/menus/\(state.menuId)/items/\(item.id)/",
+                                                                        className:
+                                                                            nil,
+                                                                        permission:
+                                                                            "web:menu-items:read"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Edit",
+                                                                        href:
+                                                                            "/admin/web/menus/\(state.menuId)/items/\(item.id)/edit/",
+                                                                        className:
+                                                                            "edit",
+                                                                        permission:
+                                                                            "web:menu-items:update"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Remove",
+                                                                        href:
+                                                                            "/admin/web/menus/\(state.menuId)/items/\(item.id)/remove/",
+                                                                        className:
+                                                                            "delete",
+                                                                        permission:
+                                                                            "web:menu-items:delete"
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    state
+                                                                    .permissions
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                                .class("web-menu-item-row")
+                                                .data("web-menu-item", item.id)
+                                                .data(
+                                                    "web-menu-item-move-url",
+                                                    "/admin/web/menus/\(state.menuId)/items/\(item.id)/move/"
+                                                )
+                                            }
+                                        }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
+                        )
+                    )
                     if state.canReorder {
                         Script(reorderScript())
                     }
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/web/menus/\(state.menuId)/items/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/web/menus/\(state.menuId)/items/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
                         )
-                    ))
+                    )
                 }
             }
         }

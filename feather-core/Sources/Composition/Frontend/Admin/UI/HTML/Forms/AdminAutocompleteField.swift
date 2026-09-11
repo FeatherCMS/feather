@@ -1,12 +1,12 @@
 import CSS
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
-
-private typealias HTMLButton = HTML.Button
+import WebComponents
 
 import class Foundation.JSONEncoder
+
+private typealias HTMLButton = HTML.Button
 
 public struct AdminAutocompleteField: Component {
 
@@ -65,7 +65,7 @@ public struct AdminAutocompleteField: Component {
         Class("multiselect__label") {
             Display(.block)
             MarginBottom(6.px)
-//            Color(.variable(TokenKey.Background.primary))
+            //            Color(.variable(TokenKey.Background.primary))
             FontWeight(.number(600))
         }
         Class("multiselect__menu") {
@@ -79,13 +79,13 @@ public struct AdminAutocompleteField: Component {
             )
             Gap(6.px)
             Padding(top: 0.px, right: 10.px, bottom: 0.px, left: 10.px)
-//            Border(1.px, .solid, .variable(TokenKey.Background.primary))
+            //            Border(1.px, .solid, .variable(TokenKey.Background.primary))
             BorderRadius(10.px)
-//            Background(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
             UnsafeRawProperty(name: "align-items", value: "center")
         }
         Custom(".multiselect__control:focus-within") {
-//            BorderColor(.variable(TokenKey.Background.primary))
+            //            BorderColor(.variable(TokenKey.Background.primary))
             UnsafeRawProperty(
                 name: "outline",
                 value: "2px solid var(--cms-gray-5)"
@@ -103,8 +103,8 @@ public struct AdminAutocompleteField: Component {
             Display(.inlineFlex)
             AlignItems(.center)
             BorderRadius(999.px)
-//            Background(.variable(TokenKey.Background.primary))
-//            Color(.variable("cms-strong-font"))
+            //            Background(.variable(TokenKey.Background.primary))
+            //            Color(.variable("cms-strong-font"))
             FontSize(14.px)
             Overflow(.hidden)
         }
@@ -117,12 +117,12 @@ public struct AdminAutocompleteField: Component {
             Border(0.px)
             Background(color: .transparent)
             Cursor(.pointer)
-//            Color(.variable("cms-light-font"))
+            //            Color(.variable("cms-light-font"))
         }
         Custom(
             ".multiselect__chip-remove:hover, .multiselect__chip-remove:focus-visible"
         ) {
-//            Background(color: .variable("cms-gray-3"))
+            //            Background(color: .variable("cms-gray-3"))
             UnsafeRawProperty(name: "outline", value: "none")
         }
         Custom(".cms-form input.multiselect__input[type=\"text\"]") {
@@ -165,14 +165,14 @@ public struct AdminAutocompleteField: Component {
             UnsafeRawProperty(name: "box-shadow", value: "none")
         }
         Class("multiselect__toggle:hover") {
-//            Background(color: .variable("cms-gray-2"))
+            //            Background(color: .variable("cms-gray-2"))
         }
         Class("multiselect__chevron") {
             Display(.inlineBlock)
             Width(9.px)
             Height(9.px)
-//            BorderRight(2.px, .solid, .variable("cms-light-font"))
-//            BorderBottom(2.px, .solid, .variable("cms-light-font"))
+            //            BorderRight(2.px, .solid, .variable("cms-light-font"))
+            //            BorderBottom(2.px, .solid, .variable("cms-light-font"))
             UnsafeRawProperty(
                 name: "transform",
                 value: "translateY(-2px) rotate(45deg)"
@@ -194,9 +194,9 @@ public struct AdminAutocompleteField: Component {
             Display(.none)
             MarginTop(0.px)
             Padding(4.px)
-//            Border(1.px, .solid, .variable("cms-gray-3"))
+            //            Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(10.px)
-//            Background(color: .variable("cms-white"))
+            //            Background(color: .variable("cms-white"))
             MaxHeight(240.px)
             Overflow(.auto)
             ListStyle(.none)
@@ -214,12 +214,12 @@ public struct AdminAutocompleteField: Component {
             Cursor(.pointer)
         }
         Custom(".multiselect__option:hover, .multiselect__option--active") {
-//            Background(color: .variable("cms-gray-2"))
+            //            Background(color: .variable("cms-gray-2"))
         }
         Class("multiselect__empty") {
             Display(.block)
             Padding(top: 8.px, right: 10.px, bottom: 8.px, left: 10.px)
-//            Color(.variable("cms-light-font"))
+            //            Color(.variable("cms-light-font"))
         }
         Class("multiselect__status") {
             Position(.absolute)
@@ -302,7 +302,9 @@ public struct AdminAutocompleteField: Component {
             }
             else {
                 Label {
-                    context.render(AdminFieldLabel(label: state.label, required: false))
+                    context.render(
+                        AdminFieldLabel(label: state.label, required: false)
+                    )
                     Input()
                         .type(.text)
                         .class("text-input")

@@ -8,17 +8,57 @@ import WebComponents
 struct AdminGetDesignSystemComponent: Component {
 
     let breadcrumb: NewAdminBreadcrumb
-    let primaryLink = NewAdminButton("Primary", href: "#primary", style: .primary)
-    let secondaryLink = NewAdminButton("Secondary", href: "#secondary", style: .secondary)
-    let ghostPrimaryLink = NewAdminButton("Primary ghost", href: "#ghost-primary", style: .ghost(.primary))
-    let ghostSecondaryLink = NewAdminButton("Secondary ghost", href: "#ghost-secondary", style: .ghost(.secondary))
-    let destructiveLink = NewAdminButton("Destructive", href: "#destructive", style: .destructive)
+    let primaryLink = NewAdminButton(
+        "Primary",
+        href: "#primary",
+        style: .primary
+    )
+    let secondaryLink = NewAdminButton(
+        "Secondary",
+        href: "#secondary",
+        style: .secondary
+    )
+    let ghostPrimaryLink = NewAdminButton(
+        "Primary ghost",
+        href: "#ghost-primary",
+        style: .ghost(.primary)
+    )
+    let ghostSecondaryLink = NewAdminButton(
+        "Secondary ghost",
+        href: "#ghost-secondary",
+        style: .ghost(.secondary)
+    )
+    let destructiveLink = NewAdminButton(
+        "Destructive",
+        href: "#destructive",
+        style: .destructive
+    )
     let disabledLink = NewAdminButton("Disabled", style: .disabled)
-    let primaryRowLink = NewAdminRowButton("Primary", href: "#primary-action", style: .primary)
-    let secondaryRowLink = NewAdminRowButton("Secondary", href: "#secondary-action", style: .secondary)
-    let ghostPrimaryRowLink = NewAdminRowButton("Primary ghost", href: "#ghost-primary-action", style: .ghost(.primary))
-    let ghostSecondaryRowLink = NewAdminRowButton("Secondary ghost", href: "#ghost-secondary-action", style: .ghost(.secondary))
-    let destructiveRowLink = NewAdminRowButton("Destructive", href: "#destructive-action", style: .destructive)
+    let primaryRowLink = NewAdminRowButton(
+        "Primary",
+        href: "#primary-action",
+        style: .primary
+    )
+    let secondaryRowLink = NewAdminRowButton(
+        "Secondary",
+        href: "#secondary-action",
+        style: .secondary
+    )
+    let ghostPrimaryRowLink = NewAdminRowButton(
+        "Primary ghost",
+        href: "#ghost-primary-action",
+        style: .ghost(.primary)
+    )
+    let ghostSecondaryRowLink = NewAdminRowButton(
+        "Secondary ghost",
+        href: "#ghost-secondary-action",
+        style: .ghost(.secondary)
+    )
+    let destructiveRowLink = NewAdminRowButton(
+        "Destructive",
+        href: "#destructive-action",
+        style: .destructive
+    )
     let disabledRowLink = NewAdminRowButton("Disabled", style: .disabled)
 
     init() {
@@ -27,7 +67,8 @@ struct AdminGetDesignSystemComponent: Component {
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Lorem ipsum", link: "/admin/"),
                 .init(label: "Design System", link: "/admin/design-system/"),
-                .init(label: "Components", link: "#components")]
+                .init(label: "Components", link: "#components"),
+            ]
         )
     }
 
@@ -49,14 +90,20 @@ struct AdminGetDesignSystemComponent: Component {
             Custom(".design-system-color-swatch-preview") {
                 Width(100.percent)
                 Height(96.px)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
                 BorderRadius(8.px)
                 BoxSizing(.borderBox)
             }
             Custom(".design-system-color-swatch-label") {
                 FontSize(0.8.rem)
             }
-            Custom(".design-system-component-group + .design-system-component-group") {
+            Custom(
+                ".design-system-component-group + .design-system-component-group"
+            ) {
                 MarginTop(24.px)
             }
             Custom(".design-system-component-row") {
@@ -68,9 +115,6 @@ struct AdminGetDesignSystemComponent: Component {
 
         }
     }
-
-
-
 
     func html(context: inout RenderContext) -> Section {
         Section {

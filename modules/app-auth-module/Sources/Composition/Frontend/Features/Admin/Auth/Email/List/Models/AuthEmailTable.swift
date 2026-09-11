@@ -15,8 +15,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthEmailTable: Component {
 
@@ -52,33 +52,37 @@ struct AuthEmailTable: Component {
                 H1("User emails")
 
                 if let userID = state.userID {
-                    context.render(AdminPillTabs(links: [
-                        .init(
-                            label: "Details",
-                            href: "/admin/user/identities/\(userID)/",
-                            isCurrent: false
-                        ),
-                        .init(
-                            label: "Profile",
-                            href: "/admin/account/users/\(userID)/profile/",
-                            isCurrent: false
-                        ),
-                        .init(
-                            label: "Settings",
-                            href: "/admin/account/users/\(userID)/settings/",
-                            isCurrent: false
-                        ),
-                        .init(
-                            label: "Sessions",
-                            href: "/admin/user/identities/\(userID)/sessions/",
-                            isCurrent: false
-                        ),
-                        .init(
-                            label: "Emails",
-                            href: "/admin/auth/emails/?userId=\(userID)",
-                            isCurrent: true
-                        ),
-                    ]))
+                    context.render(
+                        AdminPillTabs(links: [
+                            .init(
+                                label: "Details",
+                                href: "/admin/user/identities/\(userID)/",
+                                isCurrent: false
+                            ),
+                            .init(
+                                label: "Profile",
+                                href: "/admin/account/users/\(userID)/profile/",
+                                isCurrent: false
+                            ),
+                            .init(
+                                label: "Settings",
+                                href:
+                                    "/admin/account/users/\(userID)/settings/",
+                                isCurrent: false
+                            ),
+                            .init(
+                                label: "Sessions",
+                                href:
+                                    "/admin/user/identities/\(userID)/sessions/",
+                                isCurrent: false
+                            ),
+                            .init(
+                                label: "Emails",
+                                href: "/admin/auth/emails/?userId=\(userID)",
+                                isCurrent: true
+                            ),
+                        ])
+                    )
                 }
 
                 if state.isAdded {
@@ -92,23 +96,28 @@ struct AuthEmailTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add email",
-                            href: "/admin/auth/emails/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add email",
+                                href: "/admin/auth/emails/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/auth/emails/",
-                        placeholder: "Quick search emails",
-                        search: state.search,
-                        queryItems: state.userID.map { [("userId", $0)] } ?? []
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/auth/emails/",
+                            placeholder: "Quick search emails",
+                            search: state.search,
+                            queryItems: state.userID.map { [("userId", $0)] }
+                                ?? []
+                        )
                     )
-                ))
+                )
 
                 if state.links.isEmpty {
                     let totalPages = max(
@@ -143,107 +152,138 @@ struct AuthEmailTable: Component {
                     let canRemove = state.permissions.contains(
                         AuthPermissions.Emails.delete.rawValue
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/auth/emails/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected",
-                            queryItems: state.userID.map { [("userId", $0)] }
-                                ?? []
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("User name")
-                                            .columnWidth(percent: 30)
-                                        Th("Email")
-                                            .columnWidth(percent: 30)
-                                        Th("Actions")
-                                    }
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/auth/emails/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected",
+                                queryItems: state.userID.map {
+                                    [("userId", $0)]
                                 }
-                                Tbody {
-                                    for link in state.links {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(id: link.id)
-                                                ))
+                                    ?? []
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
+                                                    )
+                                                }
+                                                Th("User name")
+                                                    .columnWidth(percent: 30)
+                                                Th("Email")
+                                                    .columnWidth(percent: 30)
+                                                Th("Actions")
                                             }
-                                            Td(
-                                                state.identityNames[
-                                                    link.identityId
-                                                ]
-                                                    ?? "Unknown user"
-                                            )
-                                            .data("label", "User name")
-                                            .columnWidth(percent: 30)
-                                            Td(link.email)
-                                                .data("label", "Email")
-                                                .columnWidth(percent: 30)
-                                            context.render(ListTableRowActions(
-                                                state: .init(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/auth/emails/\(link.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                AuthPermissions
-                                                                .Emails.read
-                                                                .rawValue
-                                                        ),
-                                                        .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/auth/emails/\(link.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                AuthPermissions
-                                                                .Emails.update
-                                                                .rawValue
-                                                        ),
-                                                        .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/auth/emails/\(link.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                AuthPermissions
-                                                                .Emails.delete
-                                                                .rawValue
-                                                        ),
-                                                    ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            ))
+                                        }
+                                        Tbody {
+                                            for link in state.links {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: link.id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    Td(
+                                                        state.identityNames[
+                                                            link.identityId
+                                                        ]
+                                                            ?? "Unknown user"
+                                                    )
+                                                    .data("label", "User name")
+                                                    .columnWidth(percent: 30)
+                                                    Td(link.email)
+                                                        .data("label", "Email")
+                                                        .columnWidth(
+                                                            percent: 30
+                                                        )
+                                                    context.render(
+                                                        ListTableRowActions(
+                                                            state: .init(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        title:
+                                                                            "Details",
+                                                                        href:
+                                                                            "/admin/auth/emails/\(link.id)/",
+                                                                        className:
+                                                                            nil,
+                                                                        permission:
+                                                                            AuthPermissions
+                                                                            .Emails
+                                                                            .read
+                                                                            .rawValue
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Edit",
+                                                                        href:
+                                                                            "/admin/auth/emails/\(link.id)/edit/",
+                                                                        className:
+                                                                            "edit",
+                                                                        permission:
+                                                                            AuthPermissions
+                                                                            .Emails
+                                                                            .update
+                                                                            .rawValue
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Remove",
+                                                                        href:
+                                                                            "/admin/auth/emails/\(link.id)/remove/",
+                                                                        className:
+                                                                            "delete",
+                                                                        permission:
+                                                                            AuthPermissions
+                                                                            .Emails
+                                                                            .delete
+                                                                            .rawValue
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    state
+                                                                    .permissions
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/auth/emails/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search,
-                            queryItems: state.userID.map { [("userId", $0)] }
-                                ?? []
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/auth/emails/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search,
+                                queryItems: state.userID.map {
+                                    [("userId", $0)]
+                                }
+                                    ?? []
+                            )
+                        )
+                    )
                 }
             }
         }

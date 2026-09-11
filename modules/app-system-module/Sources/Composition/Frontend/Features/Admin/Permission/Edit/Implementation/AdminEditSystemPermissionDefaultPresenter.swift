@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminEditSystemPermissionDefaultPresenter:
     AdminEditSystemPermissionPresenter
@@ -69,7 +69,8 @@ struct AdminEditSystemPermissionDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "System", link: "/admin/system/"),
-                .init(label: "Permissions", link: "/admin/system/permissions/")]
+                .init(label: "Permissions", link: "/admin/system/permissions/"),
+            ]
         )
     }
 }

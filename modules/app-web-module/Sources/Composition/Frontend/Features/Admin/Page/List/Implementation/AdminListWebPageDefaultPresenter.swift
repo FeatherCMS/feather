@@ -4,9 +4,9 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebContracts
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebContracts
 
 struct AdminListWebPageDefaultPresenter:
     AdminListWebPagePresenter
@@ -121,7 +121,8 @@ struct AdminListWebPageDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/")]
+                .init(label: "Web", link: "/admin/web/"),
+            ]
         )
     }
 }

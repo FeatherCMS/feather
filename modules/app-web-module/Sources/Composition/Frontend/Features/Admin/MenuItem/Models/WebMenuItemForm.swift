@@ -3,8 +3,8 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebMenuItemForm: Component {
 
@@ -62,51 +62,61 @@ struct WebMenuItemForm: Component {
                 P(error).class("error")
             }
 
-            context.render(FormInputField(
-                name: state.label.key,
-                label: state.label.label,
-                value: state.label.value,
-                error: state.label.error,
-                isRequired: true
-            ))
-            context.render(FormInputField(
-                name: state.url.key,
-                label: state.url.label,
-                value: state.url.value,
-                error: state.url.error,
-                isRequired: true
-            ))
-            context.render(FormInputField(
-                name: state.priority.key,
-                label: state.priority.label,
-                value: state.priority.value,
-                error: state.priority.error,
-                isRequired: true
-            ))
-            checkbox(state.isBlank, context: &context)
-            context.render(AdminAutocompleteField(
-                state: .init(
-                    key: state.permission.key,
-                    label: state.permission.label,
-                    placeholder: "Select a system permission...",
-                    options: permissionOptions,
-                    error: state.permission.error,
-                    selectionMode: .single,
-                    isEnabled: true
+            context.render(
+                FormInputField(
+                    name: state.label.key,
+                    label: state.label.label,
+                    value: state.label.value,
+                    error: state.label.error,
+                    isRequired: true
                 )
-            ))
-            context.render(FormSelectField(
-                name: state.authentication.key,
-                label: state.authentication.label,
-                options: [
-                    .init(label: "Everyone", value: "any"),
-                    .init(label: "Anonymous users", value: "anonymous"),
-                    .init(label: "Signed-in users", value: "authenticated"),
-                ],
-                selectedValue: state.authentication.value,
-                error: state.authentication.error,
-                isRequired: true
-            ))
+            )
+            context.render(
+                FormInputField(
+                    name: state.url.key,
+                    label: state.url.label,
+                    value: state.url.value,
+                    error: state.url.error,
+                    isRequired: true
+                )
+            )
+            context.render(
+                FormInputField(
+                    name: state.priority.key,
+                    label: state.priority.label,
+                    value: state.priority.value,
+                    error: state.priority.error,
+                    isRequired: true
+                )
+            )
+            checkbox(state.isBlank, context: &context)
+            context.render(
+                AdminAutocompleteField(
+                    state: .init(
+                        key: state.permission.key,
+                        label: state.permission.label,
+                        placeholder: "Select a system permission...",
+                        options: permissionOptions,
+                        error: state.permission.error,
+                        selectionMode: .single,
+                        isEnabled: true
+                    )
+                )
+            )
+            context.render(
+                FormSelectField(
+                    name: state.authentication.key,
+                    label: state.authentication.label,
+                    options: [
+                        .init(label: "Everyone", value: "any"),
+                        .init(label: "Anonymous users", value: "anonymous"),
+                        .init(label: "Signed-in users", value: "authenticated"),
+                    ],
+                    selectedValue: state.authentication.value,
+                    error: state.authentication.error,
+                    isRequired: true
+                )
+            )
             context.render(textarea(state.notes))
 
             Section {
@@ -114,11 +124,13 @@ struct WebMenuItemForm: Component {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")
@@ -148,14 +160,16 @@ struct WebMenuItemForm: Component {
     ) -> Section {
 
         Section {
-            context.render(CheckboxField(
-                state: .init(
-                    key: field.key,
-                    label: field.label,
-                    value: field.value,
-                    error: field.error
+            context.render(
+                CheckboxField(
+                    state: .init(
+                        key: field.key,
+                        label: field.label,
+                        value: field.value,
+                        error: field.error
+                    )
                 )
-            ))
+            )
         }
     }
 

@@ -4,8 +4,8 @@ import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListAuthSessionDefaultPresenter {
     let request: Request
@@ -61,7 +61,8 @@ struct AdminListAuthSessionDefaultPresenter {
                             .init(
                                 label: "Identity",
                                 link: "/admin/user/identities/\(identityID)/"
-                            )]
+                            ),
+                        ]
                     )
                 )
             )

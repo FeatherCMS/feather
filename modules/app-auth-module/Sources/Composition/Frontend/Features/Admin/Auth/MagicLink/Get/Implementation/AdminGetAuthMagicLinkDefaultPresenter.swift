@@ -14,8 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetAuthMagicLinkDefaultPresenter: AdminGetAuthMagicLinkPresenter {
     let request: Request
@@ -27,7 +27,8 @@ struct AdminGetAuthMagicLinkDefaultPresenter: AdminGetAuthMagicLinkPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Magic links", link: "/admin/auth/magic-links/")])
+            .init(label: "Magic links", link: "/admin/auth/magic-links/"),
+        ])
     }
 
     func renderPage(

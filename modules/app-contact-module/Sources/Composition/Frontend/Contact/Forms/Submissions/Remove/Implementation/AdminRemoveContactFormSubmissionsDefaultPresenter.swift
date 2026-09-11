@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminRemoveContactFormSubmissionsDefaultPresenter:
     AdminRemoveContactFormSubmissionsPresenter
@@ -84,6 +84,7 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
             .init(
                 label: "Submissions",
                 link: "/admin/contact/forms/\(formId)/submissions/"
-            )])
+            ),
+        ])
     }
 }

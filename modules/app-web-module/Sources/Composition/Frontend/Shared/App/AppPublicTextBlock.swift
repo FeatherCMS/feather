@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AppPublicTextBlock: Component {
     let text: String

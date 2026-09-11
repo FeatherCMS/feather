@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct ContactFormSubmissionsTable: Component {
     struct State {
@@ -19,17 +19,22 @@ struct ContactFormSubmissionsTable: Component {
     let state: State
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminContactFormTabs(formId: state.formId, active: .submissions))
+            context.render(
+                AdminContactFormTabs(formId: state.formId, active: .submissions)
+            )
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Contact form submissions")
             if let error = state.error { P(error).class("error") }
-            context.render(ListTableSearchForm(
-                state: .init(
-                    action: "/admin/contact/forms/\(state.formId)/submissions/",
-                    placeholder: "Quick search submissions",
-                    search: state.search
+            context.render(
+                ListTableSearchForm(
+                    state: .init(
+                        action:
+                            "/admin/contact/forms/\(state.formId)/submissions/",
+                        placeholder: "Quick search submissions",
+                        search: state.search
+                    )
                 )
-            ))
+            )
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -38,78 +43,97 @@ struct ContactFormSubmissionsTable: Component {
                 )
             }
             else {
-                context.render(ListTableRemoveForm(
-                    state: .init(
-                        action:
-                            "/admin/contact/forms/\(state.formId)/submissions/remove/",
-                        page: 1,
-                        search: state.search,
-                        canRemove: state.canRemove,
-                        buttonTitle: "Remove selected"
-                    ),
-                    table: context.render(ListTableShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    if state.canRemove {
-                                        context.render(ListTableSelectAllCheckbox())
-                                    }
-                                    Th("Submitted")
-                                    if hasEmailColumn { Th("Email") }
-                                    Th("Status")
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for item in state.items {
-                                    Tr {
-                                        if state.canRemove {
-                                            context.render(ListTableRowSelectCheckbox(
-                                                state: .init(id: item.id)
-                                            ))
+                context.render(
+                    ListTableRemoveForm(
+                        state: .init(
+                            action:
+                                "/admin/contact/forms/\(state.formId)/submissions/remove/",
+                            page: 1,
+                            search: state.search,
+                            canRemove: state.canRemove,
+                            buttonTitle: "Remove selected"
+                        ),
+                        table: context.render(
+                            ListTableShell(
+                                table: Table {
+                                    Thead {
+                                        Tr {
+                                            if state.canRemove {
+                                                context.render(
+                                                    ListTableSelectAllCheckbox()
+                                                )
+                                            }
+                                            Th("Submitted")
+                                            if hasEmailColumn { Th("Email") }
+                                            Th("Status")
+                                            Th("Actions")
                                         }
-                                        Td(item.createdAt)
-                                            .data("label", "Submitted")
-                                        if hasEmailColumn {
-                                            Td(item.email ?? "—")
-                                                .data("label", "Email")
+                                    }
+                                    Tbody {
+                                        for item in state.items {
+                                            Tr {
+                                                if state.canRemove {
+                                                    context.render(
+                                                        ListTableRowSelectCheckbox(
+                                                            state: .init(
+                                                                id: item.id
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                                Td(item.createdAt)
+                                                    .data("label", "Submitted")
+                                                if hasEmailColumn {
+                                                    Td(item.email ?? "—")
+                                                        .data("label", "Email")
+                                                }
+                                                Td(item.status)
+                                                    .data("label", "Status")
+                                                context.render(
+                                                    ListTableRowActions(
+                                                        state: .init(
+                                                            label: "Actions",
+                                                            actions: [
+                                                                .init(
+                                                                    title:
+                                                                        "Details",
+                                                                    href:
+                                                                        "/admin/contact/forms/\(state.formId)/submissions/\(item.id)/",
+                                                                    className:
+                                                                        nil,
+                                                                    permission:
+                                                                        "contact:form-submissions:read"
+                                                                ),
+                                                                .init(
+                                                                    title:
+                                                                        "Remove",
+                                                                    href:
+                                                                        "/admin/contact/forms/\(state.formId)/submissions/\(item.id)/remove/",
+                                                                    className:
+                                                                        "delete",
+                                                                    permission:
+                                                                        "contact:form-submissions:delete"
+                                                                ),
+                                                            ],
+                                                            permissions: [
+                                                                "contact:form-submissions:read",
+                                                                "contact:form-submissions:delete",
+                                                            ]
+                                                        )
+                                                    )
+                                                )
+                                            }
                                         }
-                                        Td(item.status).data("label", "Status")
-                                        context.render(ListTableRowActions(
-                                            state: .init(
-                                                label: "Actions",
-                                                actions: [
-                                                    .init(
-                                                        title: "Details",
-                                                        href:
-                                                            "/admin/contact/forms/\(state.formId)/submissions/\(item.id)/",
-                                                        className: nil,
-                                                        permission:
-                                                            "contact:form-submissions:read"
-                                                    ),
-                                                    .init(
-                                                        title: "Remove",
-                                                        href:
-                                                            "/admin/contact/forms/\(state.formId)/submissions/\(item.id)/remove/",
-                                                        className: "delete",
-                                                        permission:
-                                                            "contact:form-submissions:delete"
-                                                    ),
-                                                ],
-                                                permissions: [
-                                                    "contact:form-submissions:read",
-                                                    "contact:form-submissions:delete",
-                                                ]
-                                            )
-                                        ))
                                     }
                                 }
-                            }
-                        }
-                        .class("cms-table", "action-table")
-                        .if(state.canRemove) { $0.class("select-table") }
-                    ))
-                ))
+                                .class("cms-table", "action-table")
+                                .if(state.canRemove) {
+                                    $0.class("select-table")
+                                }
+                            )
+                        )
+                    )
+                )
             }
         }
         .class("cms-section")

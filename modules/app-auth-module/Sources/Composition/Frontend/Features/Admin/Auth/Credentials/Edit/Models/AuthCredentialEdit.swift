@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthCredentialEdit: Component {
     struct State {
@@ -29,12 +29,14 @@ struct AuthCredentialEdit: Component {
         Section {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Edit user credential")
-            context.render(AuthCredentialForm(
-                state: state.form,
-                action: "/admin/auth/credentials/\(state.id)/edit/",
-                submitLabel: "Edit credential",
-                removeHref: "/admin/auth/credentials/\(state.id)/remove/"
-            ))
+            context.render(
+                AuthCredentialForm(
+                    state: state.form,
+                    action: "/admin/auth/credentials/\(state.id)/edit/",
+                    submitLabel: "Edit credential",
+                    removeHref: "/admin/auth/credentials/\(state.id)/remove/"
+                )
+            )
         }
         .class("cms-section")
     }

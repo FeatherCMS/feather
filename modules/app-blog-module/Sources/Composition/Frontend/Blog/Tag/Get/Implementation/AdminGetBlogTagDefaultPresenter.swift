@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct AdminGetBlogTagDefaultPresenter: AdminGetBlogTagPresenter {
     let request: Request
@@ -74,6 +74,7 @@ struct AdminGetBlogTagDefaultPresenter: AdminGetBlogTagPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Blog", link: "/admin/blog/"),
-            .init(label: "Tags", link: "/admin/blog/tags/")])
+            .init(label: "Tags", link: "/admin/blog/tags/"),
+        ])
     }
 }

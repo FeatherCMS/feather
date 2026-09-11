@@ -63,7 +63,8 @@ struct AdminRemoveUserIdentityDefaultPresenter: AdminRemoveUserIdentityPresenter
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "User", link: "/admin/user/"),
-                .init(label: "Identities", link: "/admin/user/identities/")]
+                .init(label: "Identities", link: "/admin/user/identities/"),
+            ]
         )
     }
 

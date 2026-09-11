@@ -1,8 +1,8 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminWebMenuTabs: Component {
     enum Tab: Equatable {
@@ -30,6 +30,6 @@ struct AdminWebMenuTabs: Component {
     }
 
     func html(context: inout RenderContext) -> Div {
-        return context.render(AdminPillTabs(links: links))
+        context.render(AdminPillTabs(links: links))
     }
 }

@@ -4,8 +4,8 @@ import Foundation
 import HTML
 import SGML
 import UserAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserIdentityForm: Component {
 
@@ -56,34 +56,40 @@ struct UserIdentityForm: Component {
                 P(error).class("error")
             }
 
-            context.render(FormInputField(
-                name: state.name.key,
-                label: state.name.label,
-                value: state.name.value,
-                error: state.name.error,
-                isRequired: state.name.isRequired
-            ))
+            context.render(
+                FormInputField(
+                    name: state.name.key,
+                    label: state.name.label,
+                    value: state.name.value,
+                    error: state.name.error,
+                    isRequired: state.name.isRequired
+                )
+            )
 
-            context.render(FormSelectField(
-                name: state.status.key,
-                label: state.status.label,
-                options: UserAdminAPI.Components.Schemas
-                    .UserIdentityStatusField.allCases
-                    .map {
-                        .init(
-                            label: $0.rawValue.capitalized,
-                            value: $0.rawValue
-                        )
-                    },
-                selectedValue: state.status.value,
-                error: state.status.error,
-                isRequired: state.status.isRequired,
-                selectClass: "text-input"
-            ))
+            context.render(
+                FormSelectField(
+                    name: state.status.key,
+                    label: state.status.label,
+                    options: UserAdminAPI.Components.Schemas
+                        .UserIdentityStatusField.allCases
+                        .map {
+                            .init(
+                                label: $0.rawValue.capitalized,
+                                value: $0.rawValue
+                            )
+                        },
+                    selectedValue: state.status.value,
+                    error: state.status.error,
+                    isRequired: state.status.isRequired,
+                    selectClass: "text-input"
+                )
+            )
 
             if !state.roleOptions.isEmpty {
                 Section {
-                    context.render(AdminFieldLabel(label: "Roles", required: false))
+                    context.render(
+                        AdminFieldLabel(label: "Roles", required: false)
+                    )
                     Div {
                         for option in state.roleOptions {
                             Label {
@@ -110,11 +116,13 @@ struct UserIdentityForm: Component {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")

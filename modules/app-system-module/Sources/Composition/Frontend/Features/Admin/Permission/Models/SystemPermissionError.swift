@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SystemPermissionError: Component {
 

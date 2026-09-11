@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
 {
@@ -66,7 +66,11 @@ struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "System", link: "/admin/system/"),
-                .init(label: "Variables", link: SystemVariableRoutes.list.description)]
+                .init(
+                    label: "Variables",
+                    link: SystemVariableRoutes.list.description
+                ),
+            ]
         )
     }
 }

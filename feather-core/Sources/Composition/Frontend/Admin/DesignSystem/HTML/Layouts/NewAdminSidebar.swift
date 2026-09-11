@@ -11,8 +11,8 @@ import HTML
 import Hummingbird
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminSidebar: Component {
 
@@ -125,7 +125,7 @@ public struct NewAdminSidebar: Component {
         context: inout RenderContext
     ) -> Li {
 
-        return Li {
+        Li {
             if let link = item.link {
                 A {
                     item.icon
@@ -148,22 +148,20 @@ public struct NewAdminSidebar: Component {
         context: inout RenderContext
     ) -> [any FlowContent] {
 
-        if let link = item.link {
-            return [
-                A {
-                    item.icon
-                    Span(item.label)
-                }
-                .title(item.label)
-                .href(link)
-            ]
-        }
-        else {
+        guard let link = item.link else {
             return [
                 item.icon,
-                Span(item.label)
+                Span(item.label),
             ]
         }
+        return [
+            A {
+                item.icon
+                Span(item.label)
+            }
+            .title(item.label)
+            .href(link)
+        ]
     }
 
     private func renderSubmenuItem(
@@ -225,12 +223,12 @@ public struct NewAdminSidebar: Component {
         index: Int,
         context: inout RenderContext
     ) -> [any Element] {
-        if menu.children.isEmpty {
-            return [renderListItem(item: menu.parent, context: &context)]
+        guard menu.children.isEmpty else {
+            return [
+                renderSubmenuMenu(menu: menu, index: index, context: &context)
+            ]
         }
-        else {
-            return [renderSubmenuMenu(menu: menu, index: index, context: &context)]
-        }
+        return [renderListItem(item: menu.parent, context: &context)]
     }
 
     private func renderGroup(
@@ -295,7 +293,9 @@ extension DefaultRequestContext {
 
         var groups: [String: [NewAdminSidebar.Group.Menu]] = [:]
         for definition in menuDefinitions {
-            let parentIcon = FeatherIcons.get(named: definition.icon) ?? FeatherIcons.helpCircle()
+            let parentIcon =
+                FeatherIcons.get(named: definition.icon)
+                ?? FeatherIcons.helpCircle()
 
             let children = catalog.items
                 .filter { $0.menuKey == definition.key }
@@ -305,7 +305,9 @@ extension DefaultRequestContext {
                 }
                 .sorted { $0.priority < $1.priority }
                 .compactMap { item in
-                    let icon = FeatherIcons.get(named: item.icon) ?? FeatherIcons.helpCircle()
+                    let icon =
+                        FeatherIcons.get(named: item.icon)
+                        ?? FeatherIcons.helpCircle()
                     return NewAdminSidebar.Group.Menu.Item(
                         icon: icon,
                         label: item.label,
@@ -322,22 +324,25 @@ extension DefaultRequestContext {
                 icon: parentIcon,
                 label: definition.label,
                 link: definition.link,
-                isCurrent: definition.link.map { isCurrent($0, path: path) } ?? children.contains(where: { $0.isCurrent })
+                isCurrent: definition.link.map { isCurrent($0, path: path) }
+                    ?? children.contains(where: { $0.isCurrent })
             )
-            groups[definition.groupKey, default: []].append(
-                .init(parent: parent, children: children)
-            )
+            groups[definition.groupKey, default: []]
+                .append(
+                    .init(parent: parent, children: children)
+                )
         }
 
-        return ["site", "admin"].compactMap { key in
-            guard let menus = groups[key], !menus.isEmpty else {
-                return nil
+        return ["site", "admin"]
+            .compactMap { key in
+                guard let menus = groups[key], !menus.isEmpty else {
+                    return nil
+                }
+                return .init(
+                    label: key == "site" ? "Site" : "Admin",
+                    menus: menus
+                )
             }
-            return .init(
-                label: key == "site" ? "Site" : "Admin",
-                menus: menus
-            )
-        }
     }
 
     private func isCurrent(

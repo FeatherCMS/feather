@@ -9,8 +9,8 @@ import Foundation
 import HTML
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminTopBar: Component {
 
@@ -24,8 +24,10 @@ public struct NewAdminTopBar: Component {
 
         Div {
             Label {
-                FeatherIcons.sidebar().class("menu-trigger-icon menu-trigger-desktop")
-                FeatherIcons.menu().class("menu-trigger-icon menu-trigger-mobile")
+                FeatherIcons.sidebar()
+                    .class("menu-trigger-icon menu-trigger-desktop")
+                FeatherIcons.menu()
+                    .class("menu-trigger-icon menu-trigger-mobile")
                 Span("Menu").class("sr-only")
             }
             .for("menuToggle")
@@ -54,7 +56,7 @@ public struct NewAdminTopBar: Component {
 
     private func renderAccountActions(context: inout RenderContext) -> Div {
 
-        return Div {
+        Div {
             Input()
                 .type(.checkbox)
                 .id("accountToggle")

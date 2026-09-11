@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserIdentityAdd: Component {
 
@@ -22,11 +22,13 @@ struct UserIdentityAdd: Component {
 
             H1("Add identity")
 
-            context.render(UserIdentityForm(
-                state: state.form,
-                action: "/admin/user/identities/add/",
-                submitLabel: "Add identity"
-            ))
+            context.render(
+                UserIdentityForm(
+                    state: state.form,
+                    action: "/admin/user/identities/add/",
+                    submitLabel: "Add identity"
+                )
+            )
         }
         .class("cms-section")
     }

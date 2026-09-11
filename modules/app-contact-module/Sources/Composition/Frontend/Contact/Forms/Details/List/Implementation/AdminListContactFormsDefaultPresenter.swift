@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListContactFormsDefaultPresenter: AdminListContactFormsPresenter {
     let request: Request
@@ -48,6 +48,7 @@ struct AdminListContactFormsDefaultPresenter: AdminListContactFormsPresenter {
     private func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Contact", link: "/admin/contact/")])
+            .init(label: "Contact", link: "/admin/contact/"),
+        ])
     }
 }

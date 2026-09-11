@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 protocol AdminRemoveAuthCredentialRepository: Sendable {
     func get(id: String) async throws -> AuthCredentialDetailsModel

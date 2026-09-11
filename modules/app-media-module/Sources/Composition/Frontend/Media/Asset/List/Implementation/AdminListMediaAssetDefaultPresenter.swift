@@ -8,8 +8,8 @@ import MediaAdminAPI
 import MediaContracts
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
     let request: Request
@@ -64,11 +64,13 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                     description: "Select media asset",
                     imagePath: "images/logos/logo.png",
                     content: Div {
-                        renderContext.render(MediaAssetErrorView(
-                            info: "Unable to load media assets.",
-                            message: error,
-                            breadcrumb: mediaAssetsBreadcrumb()
-                        ))
+                        renderContext.render(
+                            MediaAssetErrorView(
+                                info: "Unable to load media assets.",
+                                message: error,
+                                breadcrumb: mediaAssetsBreadcrumb()
+                            )
+                        )
                     }
                 )
             }
@@ -151,7 +153,8 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
     private func mediaAssetsBreadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Media", link: "/admin/media/")])
+            .init(label: "Media", link: "/admin/media/"),
+        ])
     }
 
     private func mediaAssetsPath(

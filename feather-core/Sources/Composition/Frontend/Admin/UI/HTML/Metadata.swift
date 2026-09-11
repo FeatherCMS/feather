@@ -8,8 +8,8 @@
 import CSS
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct Metadata: Component {
 
@@ -36,7 +36,8 @@ public struct Metadata: Component {
     public func html(context: inout RenderContext) -> Head {
         Head {
             Meta().charset("utf-8")
-            Meta().name(.viewport).content("width=device-width, initial-scale=1")
+            Meta().name(.viewport)
+                .content("width=device-width, initial-scale=1")
             Link(rel: .canonical).href(canonicalUrl)
 
             Title(title)

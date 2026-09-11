@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct MediaFolderEditForm: Decodable {
     var name: String = ""

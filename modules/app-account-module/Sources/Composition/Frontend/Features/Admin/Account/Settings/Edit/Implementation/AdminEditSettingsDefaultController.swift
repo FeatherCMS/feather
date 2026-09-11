@@ -118,7 +118,8 @@ struct AdminEditSettingsDefaultController:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Account", link: "/admin/account/")]
+                .init(label: "Account", link: "/admin/account/"),
+            ]
         )
     }
 }

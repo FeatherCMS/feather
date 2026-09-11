@@ -2,8 +2,8 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct ListRemoveConfirmation: Component {
 
@@ -48,31 +48,35 @@ public struct ListRemoveConfirmation: Component {
         let previewIds = state.selectedIds.prefix(10)
         let remainingIds = state.selectedIds.count - previewIds.count
 
-        return context.render(AdminConfirmationDialog(
-            state: .init(
-                breadcrumb: state.breadcrumb,
-                title: state.title,
-                message: state.message,
-                details: [
-                    .init(prefix: "Selected \(state.selectedIds.count) items.")
-                ]
-                    + (previewIds.isEmpty
-                        ? []
-                        : [
-                            .init(
-                                prefix: "IDs: ",
-                                value: previewIds.joined(separator: ", "),
-                                suffix: remainingIds > 0
-                                    ? " and \(remainingIds) more" : nil
-                            )
-                        ]),
-                submitLabel: "Remove selected",
-                actionURL: state.action,
-                cancelURL: state.cancelLink,
-                hiddenFields: state.selectedIds.map {
-                    .init(name: state.idFieldName, value: $0)
-                } + state.hiddenFields
+        return context.render(
+            AdminConfirmationDialog(
+                state: .init(
+                    breadcrumb: state.breadcrumb,
+                    title: state.title,
+                    message: state.message,
+                    details: [
+                        .init(
+                            prefix: "Selected \(state.selectedIds.count) items."
+                        )
+                    ]
+                        + (previewIds.isEmpty
+                            ? []
+                            : [
+                                .init(
+                                    prefix: "IDs: ",
+                                    value: previewIds.joined(separator: ", "),
+                                    suffix: remainingIds > 0
+                                        ? " and \(remainingIds) more" : nil
+                                )
+                            ]),
+                    submitLabel: "Remove selected",
+                    actionURL: state.action,
+                    cancelURL: state.cancelLink,
+                    hiddenFields: state.selectedIds.map {
+                        .init(name: state.idFieldName, value: $0)
+                    } + state.hiddenFields
+                )
             )
-        ))
+        )
     }
 }

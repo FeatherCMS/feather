@@ -3,8 +3,8 @@ import FeatherAdmin
 import Foundation
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct RedirectRuleForm: Component {
 
@@ -55,50 +55,60 @@ struct RedirectRuleForm: Component {
                 P(error).class("error")
             }
 
-            context.render(FormInputField(
-                name: state.source.key,
-                label: state.source.label,
-                value: state.source.value,
-                error: state.source.error,
-                isRequired: true
-            ))
+            context.render(
+                FormInputField(
+                    name: state.source.key,
+                    label: state.source.label,
+                    value: state.source.value,
+                    error: state.source.error,
+                    isRequired: true
+                )
+            )
 
-            context.render(FormInputField(
-                name: state.destination.key,
-                label: state.destination.label,
-                value: state.destination.value,
-                error: state.destination.error,
-                isRequired: true
-            ))
+            context.render(
+                FormInputField(
+                    name: state.destination.key,
+                    label: state.destination.label,
+                    value: state.destination.value,
+                    error: state.destination.error,
+                    isRequired: true
+                )
+            )
 
-            context.render(FormSelectField(
-                name: state.statusCode.key,
-                label: state.statusCode.label,
-                options: Self.statusOptions.map {
-                    .init(label: $0.1, value: $0.0)
-                },
-                selectedValue: state.statusCode.value ?? "301",
-                error: state.statusCode.error,
-                isRequired: true
-            ))
+            context.render(
+                FormSelectField(
+                    name: state.statusCode.key,
+                    label: state.statusCode.label,
+                    options: Self.statusOptions.map {
+                        .init(label: $0.1, value: $0.0)
+                    },
+                    selectedValue: state.statusCode.value ?? "301",
+                    error: state.statusCode.error,
+                    isRequired: true
+                )
+            )
 
-            context.render(FormInputField(
-                name: state.notes.key,
-                label: state.notes.label,
-                value: state.notes.value,
-                error: state.notes.error
-            ))
+            context.render(
+                FormInputField(
+                    name: state.notes.key,
+                    label: state.notes.label,
+                    value: state.notes.value,
+                    error: state.notes.error
+                )
+            )
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")

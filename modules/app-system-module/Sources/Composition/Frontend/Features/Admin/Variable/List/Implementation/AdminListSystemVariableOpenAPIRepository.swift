@@ -18,7 +18,10 @@ struct AdminListSystemVariableOpenAPIRepository:
     func listSystemVariables(
         page: Int,
         search: String?
-    ) async throws -> SystemAdminAPI.Components.Responses.SystemVariableListItemSearchSchemaSearchResponse {
+    ) async throws
+        -> SystemAdminAPI.Components.Responses
+        .SystemVariableListItemSearchSchemaSearchResponse
+    {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
@@ -26,7 +29,10 @@ struct AdminListSystemVariableOpenAPIRepository:
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
-                            page: .init(size: 20, number: page),
+                            page: .init(
+                                size: AdminListSystemVariable.pageSize,
+                                number: page
+                            ),
                             filters: .init(search: search)
                         )
                     )

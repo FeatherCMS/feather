@@ -14,8 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminEditAuthAccessControlDefaultPresenter:
     AdminEditAuthAccessControlPresenter
@@ -86,7 +86,8 @@ struct AdminEditAuthAccessControlDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Auth", link: "/admin/auth/")]
+                .init(label: "Auth", link: "/admin/auth/"),
+            ]
         )
     }
 }

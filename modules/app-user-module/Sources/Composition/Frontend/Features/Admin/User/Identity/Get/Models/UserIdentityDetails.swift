@@ -1,8 +1,8 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserIdentityDetails: Component {
     struct State {
@@ -18,39 +18,50 @@ struct UserIdentityDetails: Component {
             context.render(AdminDetailFieldStyleAnchor())
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("User identity details")
-            context.render(AdminPillTabs(links: [
-                .init(
-                    label: "Details",
-                    href: "/admin/user/identities/\(state.identity.id)/",
-                    isCurrent: true
-                ),
-                .init(
-                    label: "Profile",
-                    href: "/admin/account/users/\(state.identity.id)/profile/",
-                    isCurrent: false
-                ),
-                .init(
-                    label: "Settings",
-                    href: "/admin/account/users/\(state.identity.id)/settings/",
-                    isCurrent: false
-                ),
-                .init(
-                    label: "Sessions",
-                    href:
-                        "/admin/user/identities/\(state.identity.id)/sessions/",
-                    isCurrent: false
-                ),
-                .init(
-                    label: "Magic links",
-                    href:
-                        "/admin/auth/magic-links/?userId=\(state.identity.id)",
-                    isCurrent: false
-                ),
-            ]))
+            context.render(
+                AdminPillTabs(links: [
+                    .init(
+                        label: "Details",
+                        href: "/admin/user/identities/\(state.identity.id)/",
+                        isCurrent: true
+                    ),
+                    .init(
+                        label: "Profile",
+                        href:
+                            "/admin/account/users/\(state.identity.id)/profile/",
+                        isCurrent: false
+                    ),
+                    .init(
+                        label: "Settings",
+                        href:
+                            "/admin/account/users/\(state.identity.id)/settings/",
+                        isCurrent: false
+                    ),
+                    .init(
+                        label: "Sessions",
+                        href:
+                            "/admin/user/identities/\(state.identity.id)/sessions/",
+                        isCurrent: false
+                    ),
+                    .init(
+                        label: "Magic links",
+                        href:
+                            "/admin/auth/magic-links/?userId=\(state.identity.id)",
+                        isCurrent: false
+                    ),
+                ])
+            )
 
-            context.render(AdminDetailsField(label: "Status", value: state.identity.status))
+            context.render(
+                AdminDetailsField(label: "Status", value: state.identity.status)
+            )
             if state.identity.roleNames.isEmpty {
-                context.render(AdminDetailsField(label: "Roles", value: "No roles assigned"))
+                context.render(
+                    AdminDetailsField(
+                        label: "Roles",
+                        value: "No roles assigned"
+                    )
+                )
             }
             else {
                 Div {
@@ -66,15 +77,21 @@ struct UserIdentityDetails: Component {
             }
 
             Div {
-                context.render(AdminNavigationButton(
-                    "Edit identity",
-                    href: "/admin/user/identities/\(state.identity.id)/edit/"
-                ))
-                context.render(AdminNavigationButton(
-                    "Remove identity",
-                    href: "/admin/user/identities/\(state.identity.id)/remove/",
-                    classes: ["danger"]
-                ))
+                context.render(
+                    AdminNavigationButton(
+                        "Edit identity",
+                        href:
+                            "/admin/user/identities/\(state.identity.id)/edit/"
+                    )
+                )
+                context.render(
+                    AdminNavigationButton(
+                        "Remove identity",
+                        href:
+                            "/admin/user/identities/\(state.identity.id)/remove/",
+                        classes: ["danger"]
+                    )
+                )
             }
             .class(
                 "button-row",

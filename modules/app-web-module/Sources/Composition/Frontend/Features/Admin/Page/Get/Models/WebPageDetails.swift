@@ -4,9 +4,9 @@ import Foundation
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebContracts
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebContracts
 
 struct WebPageDetails: Component {
     struct State {
@@ -30,19 +30,27 @@ struct WebPageDetails: Component {
                 P("Web page unpublished successfully.")
             }
             context.render(AdminDetailsField(label: "ID", value: state.rule.id))
-            context.render(AdminDetailsField(label: "Title", value: state.rule.title))
-            context.render(AdminDetailsField(
-                label: "Status",
-                value: state.rule.metadata.status.capitalized
-            ))
-            context.render(AdminDetailsField(
-                label: "Published date",
-                value: format(state.rule.metadata.publicationDate)
-            ))
-            context.render(AdminDetailsField(
-                label: "Expiration date",
-                value: format(state.rule.metadata.expirationDate)
-            ))
+            context.render(
+                AdminDetailsField(label: "Title", value: state.rule.title)
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Status",
+                    value: state.rule.metadata.status.capitalized
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Published date",
+                    value: format(state.rule.metadata.publicationDate)
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Expiration date",
+                    value: format(state.rule.metadata.expirationDate)
+                )
+            )
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -55,26 +63,32 @@ struct WebPageDetails: Component {
                 if state.permissions.contains(
                     WebPermissions.Pages.update.rawValue
                 ) {
-                    context.render(AdminStatusActionForm(
-                        action: "/admin/web/pages/\(state.rule.id)/status/",
-                        returnTo: "/admin/web/pages/\(state.rule.id)/",
-                        status: isPublished ? "draft" : "published",
-                        label: isPublished ? "Unpublish" : "Publish",
-                        classes: ["secondary"]
-                    ))
-                    context.render(AdminNavigationButton(
-                        "Edit page",
-                        href: "/admin/web/pages/\(state.rule.id)/edit/"
-                    ))
+                    context.render(
+                        AdminStatusActionForm(
+                            action: "/admin/web/pages/\(state.rule.id)/status/",
+                            returnTo: "/admin/web/pages/\(state.rule.id)/",
+                            status: isPublished ? "draft" : "published",
+                            label: isPublished ? "Unpublish" : "Publish",
+                            classes: ["secondary"]
+                        )
+                    )
+                    context.render(
+                        AdminNavigationButton(
+                            "Edit page",
+                            href: "/admin/web/pages/\(state.rule.id)/edit/"
+                        )
+                    )
                 }
                 if state.permissions.contains(
                     WebPermissions.Pages.delete.rawValue
                 ) {
-                    context.render(AdminNavigationButton(
-                        "Remove page",
-                        href: "/admin/web/pages/\(state.rule.id)/remove/",
-                        classes: ["danger"]
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Remove page",
+                            href: "/admin/web/pages/\(state.rule.id)/remove/",
+                            classes: ["danger"]
+                        )
+                    )
                 }
             }
             .class("button-row", "admin-detail-actions")

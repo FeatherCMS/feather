@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct MediaProcessorFormView: Component {
     struct FormState {
@@ -29,30 +29,36 @@ struct MediaProcessorFormView: Component {
             H1(title)
             if let error = form.error { P(error).class("error") }
             Form {
-                context.render(FormInputField(
-                    name: "fileSuffix",
-                    label: "File suffix",
-                    value: form.fileSuffix,
-                    isRequired: true,
-                    inputClass: "text-input"
-                ))
+                context.render(
+                    FormInputField(
+                        name: "fileSuffix",
+                        label: "File suffix",
+                        value: form.fileSuffix,
+                        isRequired: true,
+                        inputClass: "text-input"
+                    )
+                )
 
-                context.render(FormInputField(
-                    name: "matchExtensions",
-                    label: "Match extensions",
-                    value: form.matchExtensions,
-                    isRequired: true,
-                    inputClass: "text-input"
-                ))
+                context.render(
+                    FormInputField(
+                        name: "matchExtensions",
+                        label: "Match extensions",
+                        value: form.matchExtensions,
+                        isRequired: true,
+                        inputClass: "text-input"
+                    )
+                )
 
-                context.render(FormTextAreaField(
-                    name: "commandTemplate",
-                    label: "Command template",
-                    value: form.commandTemplate,
-                    rows: 4,
-                    isRequired: true,
-                    textareaClass: "text-input"
-                ))
+                context.render(
+                    FormTextAreaField(
+                        name: "commandTemplate",
+                        label: "Command template",
+                        value: form.commandTemplate,
+                        rows: 4,
+                        isRequired: true,
+                        textareaClass: "text-input"
+                    )
+                )
 
                 Section {
                     P(

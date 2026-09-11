@@ -1,8 +1,8 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SettingsEdit: Component {
 
@@ -23,33 +23,35 @@ struct SettingsEdit: Component {
             H1("Settings")
 
             if let userID = state.userID {
-                context.render(AdminPillTabs(links: [
-                    .init(
-                        label: "Details",
-                        href: "/admin/user/identities/\(userID)/",
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Profile",
-                        href: "/admin/account/users/\(userID)/profile/",
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Settings",
-                        href: "/admin/account/users/\(userID)/settings/",
-                        isCurrent: true
-                    ),
-                    .init(
-                        label: "Sessions",
-                        href: "/admin/user/identities/\(userID)/sessions/",
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Magic links",
-                        href: "/admin/auth/magic-links/?userId=\(userID)",
-                        isCurrent: false
-                    ),
-                ]))
+                context.render(
+                    AdminPillTabs(links: [
+                        .init(
+                            label: "Details",
+                            href: "/admin/user/identities/\(userID)/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Profile",
+                            href: "/admin/account/users/\(userID)/profile/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Settings",
+                            href: "/admin/account/users/\(userID)/settings/",
+                            isCurrent: true
+                        ),
+                        .init(
+                            label: "Sessions",
+                            href: "/admin/user/identities/\(userID)/sessions/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Magic links",
+                            href: "/admin/auth/magic-links/?userId=\(userID)",
+                            isCurrent: false
+                        ),
+                    ])
+                )
             }
 
             if !state.canEdit {

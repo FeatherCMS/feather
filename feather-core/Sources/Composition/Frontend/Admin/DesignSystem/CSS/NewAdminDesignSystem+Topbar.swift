@@ -4,8 +4,7 @@ import WebBuilders
 extension NewAdminDesignSystem {
 
     @Builder<CSS.Rule>
-    func topbar(
-    ) -> [any Rule] {
+    func topbar() -> [any Rule] {
         Media {
             Class("top-bar") {
                 Position(.relative)
@@ -14,7 +13,11 @@ extension NewAdminDesignSystem {
                 JustifyContent(.spaceBetween)
                 Padding(vertical: 12.px, horizontal: 16.px)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                BorderBottom(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
             }
             Class("top-bar-brand") {
                 Display(.flex)
@@ -41,19 +44,36 @@ extension NewAdminDesignSystem {
                 Overflow(.hidden)
                 TextOverflow(.ellipsis)
             }
-            Custom(".top-bar-title-link, .top-bar-title-link:hover, .top-bar-title-link:visited, .top-bar-title-link:active") {
+            Custom(
+                ".top-bar-title-link, .top-bar-title-link:hover, .top-bar-title-link:visited, .top-bar-title-link:active"
+            ) {
                 BackgroundImage(
                     .linearGradient(
                         LinearGradient(
                             direction: .angle(120.deg),
                             stops: [
-                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accents.Primary.tint.propertyName))"), 0.percent),
-                                .init(CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Accents.Secondary.tint.propertyName))"), 100.percent)
+                                .init(
+                                    CSSColor(
+                                        stringLiteral:
+                                            "var(--\(TokenKey.Colors.Accents.Primary.tint.propertyName))"
+                                    ),
+                                    0.percent
+                                ),
+                                .init(
+                                    CSSColor(
+                                        stringLiteral:
+                                            "var(--\(TokenKey.Colors.Accents.Secondary.tint.propertyName))"
+                                    ),
+                                    100.percent
+                                ),
                             ]
                         )
                     )
                 )
-                UnsafeRawProperty(name: "-webkit-background-clip", value: "text")
+                UnsafeRawProperty(
+                    name: "-webkit-background-clip",
+                    value: "text"
+                )
                 UnsafeRawProperty(name: "background-clip", value: "text")
                 Color(.transparent)
                 WebkitTextFillColor(.transparent)
@@ -101,10 +121,15 @@ extension NewAdminDesignSystem {
                 Width(28.px)
                 Height(28.px)
                 BorderRadius(999.px)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Secondary.border)
+                )
                 BoxSizing(.borderBox)
             }
-            Custom(".menu-trigger-icon, .account-trigger .account-profile-icon") {
+            Custom(".menu-trigger-icon, .account-trigger .account-profile-icon")
+            {
                 Display(.block)
                 Width(24.px)
                 Height(24.px)
@@ -122,13 +147,20 @@ extension NewAdminDesignSystem {
                 Display(.none)
                 ZIndex(.number(20))
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
                 BorderRadius(10.px)
                 BoxShadow(
                     0.px,
                     10.px,
                     blur: 24.px,
-                    color: CSSColor(stringLiteral: "var(--\(TokenKey.Colors.BoxShadow.tint.propertyName))")
+                    color: CSSColor(
+                        stringLiteral:
+                            "var(--\(TokenKey.Colors.BoxShadow.tint.propertyName))"
+                    )
                 )
             }
             Custom(".account-menu li a") {
@@ -137,10 +169,12 @@ extension NewAdminDesignSystem {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 TextDecoration(.none)
             }
-            Custom("#accountToggle:checked + .account-trigger + .account-menu") {
+            Custom("#accountToggle:checked + .account-trigger + .account-menu")
+            {
                 Display(.block)
             }
-            Custom(".account-menu li a:hover, .account-menu li a:focus-visible") {
+            Custom(".account-menu li a:hover, .account-menu li a:focus-visible")
+            {
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
             Custom(".menu-trigger-mobile line") {

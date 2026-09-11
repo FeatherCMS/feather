@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct ContactFormForm: Component {
     struct State: FeatherAdmin.Object {
@@ -57,10 +57,10 @@ struct ContactFormForm: Component {
             Padding(vertical: 10.px, horizontal: 12.px)
             // Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(10.px)
-//            Background(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
         }
         Custom(".contact-form-field-row.is-available") {
-//            Background(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
         }
         Class("contact-form-field-drag") {
             // Color(.variable("cms-light-font"))
@@ -118,7 +118,9 @@ struct ContactFormForm: Component {
             if let error = state.error { P(error).class("error") }
             Section {
                 Label {
-                    context.render(AdminFieldLabel(label: "Name", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "Name", required: true)
+                    )
                     Input().type(.text).id("name").name("name")
                         .value(state.name).required()
                 }
@@ -126,24 +128,38 @@ struct ContactFormForm: Component {
             .if(state.error != nil) { $0.class("has-error") }
             Section {
                 Label {
-                    context.render(AdminFieldLabel(label: "Success message", required: false))
+                    context.render(
+                        AdminFieldLabel(
+                            label: "Success message",
+                            required: false
+                        )
+                    )
                     Input().type(.text).id("successMessage")
                         .name("successMessage").value(state.successMessage)
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "Failure message", required: false))
+                    context.render(
+                        AdminFieldLabel(
+                            label: "Failure message",
+                            required: false
+                        )
+                    )
                     Input().type(.text).id("failureMessage")
                         .name("failureMessage").value(state.failureMessage)
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "Redirect URL", required: false))
+                    context.render(
+                        AdminFieldLabel(label: "Redirect URL", required: false)
+                    )
                     Input().type(.text).id("redirectUrl").name("redirectUrl")
                         .value(state.redirectUrl ?? "")
                 }
             }
             if !state.availableFields.isEmpty {
                 Section {
-                    context.render(AdminFieldLabel(label: "Fields", required: false))
+                    context.render(
+                        AdminFieldLabel(label: "Fields", required: false)
+                    )
                     Div {
                         Div {
                             H3("Selected fields")

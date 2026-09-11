@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogPostForm: Component {
 
@@ -91,27 +91,31 @@ struct BlogPostForm: Component {
 
             Div {
 
-                context.render(AdminMediaAssetPicker(
-                    state: .init(
-                        field: .init(
-                            key: state.imageAssetId.key,
-                            label: state.imageAssetId.label,
-                            value: state.imageAssetId.value,
-                            error: state.imageAssetId.error
-                        ),
-                        selectedAsset: state.selectedImageAsset,
-                        browsePath:
-                            "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
-                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                context.render(
+                    AdminMediaAssetPicker(
+                        state: .init(
+                            field: .init(
+                                key: state.imageAssetId.key,
+                                label: state.imageAssetId.label,
+                                value: state.imageAssetId.value,
+                                error: state.imageAssetId.error
+                            ),
+                            selectedAsset: state.selectedImageAsset,
+                            browsePath:
+                                "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                            allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                        )
                     )
-                ))
-                context.render(FormInputField(
-                    name: state.title.key,
-                    label: state.title.label,
-                    value: state.title.value,
-                    error: state.title.error,
-                    isRequired: true
-                ))
+                )
+                context.render(
+                    FormInputField(
+                        name: state.title.key,
+                        label: state.title.label,
+                        value: state.title.value,
+                        error: state.title.error,
+                        isRequired: true
+                    )
+                )
                 textarea(state.excerpt, rows: 4, context: &context)
                 textarea(state.content, context: &context)
                 multiselect(
@@ -141,11 +145,13 @@ struct BlogPostForm: Component {
                             .class("secondary")
                     }
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")
@@ -164,14 +170,16 @@ struct BlogPostForm: Component {
         context: inout RenderContext
     ) -> FormTextAreaField {
 
-        context.render(FormTextAreaField(
-            name: field.key,
-            label: field.label,
-            value: field.value,
-            error: field.error,
-            rows: rows,
-            isRequired: required
-        ))
+        context.render(
+            FormTextAreaField(
+                name: field.key,
+                label: field.label,
+                value: field.value,
+                error: field.error,
+                rows: rows,
+                isRequired: required
+            )
+        )
     }
 
     private func multiselect(

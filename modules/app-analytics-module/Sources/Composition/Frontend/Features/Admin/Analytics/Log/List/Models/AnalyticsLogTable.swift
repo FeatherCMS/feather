@@ -5,8 +5,8 @@ import Foundation
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AnalyticsLogTable: Component {
 
@@ -161,71 +161,80 @@ struct AnalyticsLogTable: Component {
                     }
                 }
                 else {
-                    context.render(ListTableShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    Th("Method")
-                                    Th("Status")
-                                    Th("Source")
-                                    Th("Path")
-                                    Th("Created")
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for log in state.logs {
+                    context.render(
+                        ListTableShell(
+                            table: Table {
+                                Thead {
                                     Tr {
-                                        Td(log.method)
-                                            .data("label", "Method")
-                                        Td("\(log.responseCode)")
-                                            .data("label", "Status")
-                                        Td(log.source)
-                                            .data("label", "Source")
-                                        Td(log.path)
-                                            .data("label", "Path")
-                                        Td(
-                                            DateFormatting.formatUnixTimestamp(
-                                                log.createdAt
-                                            )
-                                        )
-                                        .data("label", "Created")
-                                        context.render(ListTableRowActions(
-                                            state: .init(
-                                                label: "Actions",
-                                                actions: [
-                                                    .init(
-                                                        title: "Details",
-                                                        href:
-                                                            "/admin/analytics/logs/\(log.id)/",
-                                                        className: nil,
-                                                        permission:
-                                                            "analytics:logs:list"
+                                        Th("Method")
+                                        Th("Status")
+                                        Th("Source")
+                                        Th("Path")
+                                        Th("Created")
+                                        Th("Actions")
+                                    }
+                                }
+                                Tbody {
+                                    for log in state.logs {
+                                        Tr {
+                                            Td(log.method)
+                                                .data("label", "Method")
+                                            Td("\(log.responseCode)")
+                                                .data("label", "Status")
+                                            Td(log.source)
+                                                .data("label", "Source")
+                                            Td(log.path)
+                                                .data("label", "Path")
+                                            Td(
+                                                DateFormatting
+                                                    .formatUnixTimestamp(
+                                                        log.createdAt
                                                     )
-                                                ],
-                                                permissions: state.permissions
                                             )
-                                        ))
+                                            .data("label", "Created")
+                                            context.render(
+                                                ListTableRowActions(
+                                                    state: .init(
+                                                        label: "Actions",
+                                                        actions: [
+                                                            .init(
+                                                                title:
+                                                                    "Details",
+                                                                href:
+                                                                    "/admin/analytics/logs/\(log.id)/",
+                                                                className: nil,
+                                                                permission:
+                                                                    "analytics:logs:list"
+                                                            )
+                                                        ],
+                                                        permissions: state
+                                                            .permissions
+                                                    )
+                                                )
+                                            )
+                                        }
                                     }
                                 }
                             }
-                        }
-                        .class("cms-table", "action-table")
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/analytics/logs/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search,
-                            queryItems: [
-                                ("source", state.source),
-                                ("method", state.method),
-                                ("responseCode", state.responseCode),
-                            ]
+                            .class("cms-table", "action-table")
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/analytics/logs/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search,
+                                queryItems: [
+                                    ("source", state.source),
+                                    ("method", state.method),
+                                    ("responseCode", state.responseCode),
+                                ]
+                            )
+                        )
+                    )
                 }
             }
         }

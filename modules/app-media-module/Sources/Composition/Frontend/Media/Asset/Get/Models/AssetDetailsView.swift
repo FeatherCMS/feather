@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AssetDetailsView: Component {
     let item: Components.Schemas.MediaAssetDetailSchema
@@ -47,10 +47,19 @@ struct AssetDetailsView: Component {
             context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Media asset details")
             context.render(AdminDetailsField(label: "ID", value: item.id))
-            context.render(AdminDetailsField(label: "Storage key", value: item.storageKey))
+            context.render(
+                AdminDetailsField(label: "Storage key", value: item.storageKey)
+            )
             context.render(AdminDetailsField(label: "Type", value: item._type))
-            context.render(AdminDetailsField(label: "Status", value: item.status))
-            context.render(AdminDetailsField(label: "Size bytes", value: "\(item.sizeBytes)"))
+            context.render(
+                AdminDetailsField(label: "Status", value: item.status)
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Size bytes",
+                    value: "\(item.sizeBytes)"
+                )
+            )
             Div {
                 P("Preview original")
                     .class("admin-details-field__label")
@@ -68,60 +77,68 @@ struct AssetDetailsView: Component {
                 context.render(AdminDetailsField(label: "Title", value: title))
             }
             if let altText = item.altText {
-                context.render(AdminDetailsField(label: "Alt text", value: altText))
+                context.render(
+                    AdminDetailsField(label: "Alt text", value: altText)
+                )
             }
             if variants.isEmpty {
                 P("No generated variants linked to this asset yet.")
             }
             else {
                 H2("Associated variants")
-                context.render(ListTableShell(
-                    table: Table {
-                        Thead {
-                            Tr {
-                                Th("Name")
-                                Th("Type")
-                                Th("Storage key")
-                                Th("Preview")
-                            }
-                        }
-                        Tbody {
-                            for variant in variants {
+                context.render(
+                    ListTableShell(
+                        table: Table {
+                            Thead {
                                 Tr {
-                                    Td(variant.name)
-                                    Td(variant._type)
-                                    Td(variant.storageKey)
-                                    Td {
-                                        A("Preview")
-                                            .href(
-                                                previewLink(
-                                                    for: variant.storageKey,
-                                                    isVariant: true
+                                    Th("Name")
+                                    Th("Type")
+                                    Th("Storage key")
+                                    Th("Preview")
+                                }
+                            }
+                            Tbody {
+                                for variant in variants {
+                                    Tr {
+                                        Td(variant.name)
+                                        Td(variant._type)
+                                        Td(variant.storageKey)
+                                        Td {
+                                            A("Preview")
+                                                .href(
+                                                    previewLink(
+                                                        for: variant.storageKey,
+                                                        isVariant: true
+                                                    )
                                                 )
-                                            )
-                                            .target(.blank)
-                                            .class("row-btn")
+                                                .target(.blank)
+                                                .class("row-btn")
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    .class("cms-table")
-                ))
+                        .class("cms-table")
+                    )
+                )
             }
             Div {
                 if canEdit {
-                    context.render(AdminNavigationButton(
-                        "Edit asset",
-                        href: "/admin/media/assets/\(item.id)/edit/"
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Edit asset",
+                            href: "/admin/media/assets/\(item.id)/edit/"
+                        )
+                    )
                 }
                 if canRemove {
-                    context.render(AdminNavigationButton(
-                        "Remove asset",
-                        href: "/admin/media/assets/\(item.id)/remove/",
-                        classes: ["danger"]
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Remove asset",
+                            href: "/admin/media/assets/\(item.id)/remove/",
+                            classes: ["danger"]
+                        )
+                    )
                 }
             }
             .class("button-row", "admin-detail-actions")

@@ -4,8 +4,8 @@ import Foundation
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebPageForm: Component {
 
@@ -74,28 +74,32 @@ struct WebPageForm: Component {
 
             Div {
 
-                context.render(AdminMediaAssetPicker(
-                    state: .init(
-                        field: .init(
-                            key: state.imageAssetId.key,
-                            label: state.imageAssetId.label,
-                            value: state.imageAssetId.value,
-                            error: state.imageAssetId.error
-                        ),
-                        selectedAsset: state.selectedImageAsset,
-                        browsePath:
-                            "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
-                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                context.render(
+                    AdminMediaAssetPicker(
+                        state: .init(
+                            field: .init(
+                                key: state.imageAssetId.key,
+                                label: state.imageAssetId.label,
+                                value: state.imageAssetId.value,
+                                error: state.imageAssetId.error
+                            ),
+                            selectedAsset: state.selectedImageAsset,
+                            browsePath:
+                                "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                            allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                        )
                     )
-                ))
+                )
 
-                context.render(FormInputField(
-                    name: state.title.key,
-                    label: state.title.label,
-                    value: state.title.value,
-                    error: state.title.error,
-                    isRequired: true
-                ))
+                context.render(
+                    FormInputField(
+                        name: state.title.key,
+                        label: state.title.label,
+                        value: state.title.value,
+                        error: state.title.error,
+                        isRequired: true
+                    )
+                )
                 context.render(textarea(state.excerpt, rows: 4))
                 markdownEditor(state.content, context: &context)
             }
@@ -111,11 +115,13 @@ struct WebPageForm: Component {
                             .class("secondary")
                     }
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")
@@ -265,38 +271,44 @@ struct WebPageForm: Component {
                 AppEnvironmentStore.current.publicOrigins.mediaBaseURL
                     .absoluteString
             )
-            context.render(AdminMediaAssetPicker(
-                state: .init(
-                    field: .init(
-                        key: "markdown-image-url",
-                        label: "Choose image",
-                        value: nil,
-                        error: nil
-                    ),
-                    selectedAsset: nil,
-                    browsePath:
-                        "/admin/media/assets/?picker=1&field=markdown-image-url&extensions=png,jpg,jpeg,webp,gif",
-                    allowedExtensions: ["png", "jpg", "jpeg", "webp", "gif"],
-                    outputMode: .relativeURL,
-                    showsCurrentCard: false
+            context.render(
+                AdminMediaAssetPicker(
+                    state: .init(
+                        field: .init(
+                            key: "markdown-image-url",
+                            label: "Choose image",
+                            value: nil,
+                            error: nil
+                        ),
+                        selectedAsset: nil,
+                        browsePath:
+                            "/admin/media/assets/?picker=1&field=markdown-image-url&extensions=png,jpg,jpeg,webp,gif",
+                        allowedExtensions: [
+                            "png", "jpg", "jpeg", "webp", "gif",
+                        ],
+                        outputMode: .relativeURL,
+                        showsCurrentCard: false
+                    )
                 )
-            ))
-            context.render(AdminMediaAssetPicker(
-                state: .init(
-                    field: .init(
-                        key: "markdown-video-url",
-                        label: "Choose video",
-                        value: nil,
-                        error: nil
-                    ),
-                    selectedAsset: nil,
-                    browsePath:
-                        "/admin/media/assets/?picker=1&field=markdown-video-url&extensions=mp4,mov,webm",
-                    allowedExtensions: ["mp4", "mov", "webm"],
-                    outputMode: .relativeURL,
-                    showsCurrentCard: false
+            )
+            context.render(
+                AdminMediaAssetPicker(
+                    state: .init(
+                        field: .init(
+                            key: "markdown-video-url",
+                            label: "Choose video",
+                            value: nil,
+                            error: nil
+                        ),
+                        selectedAsset: nil,
+                        browsePath:
+                            "/admin/media/assets/?picker=1&field=markdown-video-url&extensions=mp4,mov,webm",
+                        allowedExtensions: ["mp4", "mov", "webm"],
+                        outputMode: .relativeURL,
+                        showsCurrentCard: false
+                    )
                 )
-            ))
+            )
             if let error = field.error {
                 Span(error).class("field-error")
             }

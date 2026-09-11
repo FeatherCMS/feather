@@ -4,8 +4,8 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AccountInvitationAdd: Component {
 
@@ -21,11 +21,13 @@ struct AccountInvitationAdd: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add user invitation")
-            context.render(AccountInvitationForm(
-                state: state.form,
-                action: "/admin/account/invitations/add/",
-                submitLabel: "Add invitation"
-            ))
+            context.render(
+                AccountInvitationForm(
+                    state: state.form,
+                    action: "/admin/account/invitations/add/",
+                    submitLabel: "Add invitation"
+                )
+            )
         }
         .class("cms-section")
     }

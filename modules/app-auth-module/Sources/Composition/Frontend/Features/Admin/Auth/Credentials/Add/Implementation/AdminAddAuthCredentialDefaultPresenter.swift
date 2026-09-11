@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
     let request: Request
@@ -90,6 +90,7 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Credentials", link: "/admin/auth/credentials/")])
+            .init(label: "Credentials", link: "/admin/auth/credentials/"),
+        ])
     }
 }

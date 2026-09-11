@@ -6,8 +6,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebPageEdit: Component {
 
@@ -44,15 +44,17 @@ struct WebPageEdit: Component {
                 }
             }
             if state.isEdited { P("Page edited successfully.") }
-            context.render(WebPageForm(
-                state: state.form,
-                metadataHref:
-                    "/admin/web/pages/\(state.id)/edit/metadata/\(state.id)/",
-                action: "/admin/web/pages/\(state.id)/edit/",
-                submitLabel: "Edit page",
-                removeHref: "/admin/web/pages/\(state.id)/remove/",
-                removeLabel: "Remove page"
-            ))
+            context.render(
+                WebPageForm(
+                    state: state.form,
+                    metadataHref:
+                        "/admin/web/pages/\(state.id)/edit/metadata/\(state.id)/",
+                    action: "/admin/web/pages/\(state.id)/edit/",
+                    submitLabel: "Edit page",
+                    removeHref: "/admin/web/pages/\(state.id)/remove/",
+                    removeLabel: "Remove page"
+                )
+            )
         }
         .class("cms-section")
     }

@@ -10,9 +10,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogTagDetails: Component {
     struct State {
@@ -36,19 +36,27 @@ struct BlogTagDetails: Component {
                 P("Blog tag unpublished successfully.")
             }
             context.render(AdminDetailsField(label: "ID", value: state.rule.id))
-            context.render(AdminDetailsField(label: "Title", value: state.rule.title))
-            context.render(AdminDetailsField(
-                label: "Status",
-                value: state.rule.metadata.status.capitalized
-            ))
-            context.render(AdminDetailsField(
-                label: "Published date",
-                value: format(state.rule.metadata.publicationDate)
-            ))
-            context.render(AdminDetailsField(
-                label: "Expiration date",
-                value: format(state.rule.metadata.expirationDate)
-            ))
+            context.render(
+                AdminDetailsField(label: "Title", value: state.rule.title)
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Status",
+                    value: state.rule.metadata.status.capitalized
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Published date",
+                    value: format(state.rule.metadata.publicationDate)
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Expiration date",
+                    value: format(state.rule.metadata.expirationDate)
+                )
+            )
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -68,19 +76,23 @@ struct BlogTagDetails: Component {
                         label: isPublished ? "Unpublish" : "Publish",
                         classes: ["secondary"]
                     )
-                    context.render(AdminNavigationButton(
-                        "Edit tag",
-                        href: "/admin/blog/tags/\(state.rule.id)/edit/"
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Edit tag",
+                            href: "/admin/blog/tags/\(state.rule.id)/edit/"
+                        )
+                    )
                 }
                 if state.permissions.contains(
                     BlogPermissions.Tags.delete.rawValue
                 ) {
-                    context.render(AdminNavigationButton(
-                        "Remove tag",
-                        href: "/admin/blog/tags/\(state.rule.id)/remove/",
-                        classes: ["danger"]
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Remove tag",
+                            href: "/admin/blog/tags/\(state.rule.id)/remove/",
+                            classes: ["danger"]
+                        )
+                    )
                 }
             }
             .class("button-row", "admin-detail-actions")

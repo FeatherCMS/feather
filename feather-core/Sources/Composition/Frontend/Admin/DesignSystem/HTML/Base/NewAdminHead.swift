@@ -5,11 +5,11 @@
 //  Created by Tibor Bödecs on 2026. 09. 04..
 //
 
-import HTML
 import CSS
+import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminHead: Component {
 
@@ -30,7 +30,8 @@ public struct NewAdminHead: Component {
     public func html(context: inout RenderContext) -> Head {
         Head {
             Meta().charset("utf-8")
-            Meta().name(.viewport).content("width=device-width, initial-scale=1")
+            Meta().name(.viewport)
+                .content("width=device-width, initial-scale=1")
 
             Title(title)
 

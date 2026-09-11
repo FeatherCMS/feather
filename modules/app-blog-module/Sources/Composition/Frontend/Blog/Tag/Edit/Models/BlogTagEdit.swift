@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogTagEdit: Component {
 
@@ -28,10 +28,12 @@ struct BlogTagEdit: Component {
 
             H1 {
                 Span("Edit tag")
-                context.render(AdminPreviewLink(
-                    slug: state.form.metadata.slug.value,
-                    label: "Preview tag"
-                ))
+                context.render(
+                    AdminPreviewLink(
+                        slug: state.form.metadata.slug.value,
+                        label: "Preview tag"
+                    )
+                )
             }
             if state.isEdited { P("Tag edited successfully.") }
             BlogTagForm(

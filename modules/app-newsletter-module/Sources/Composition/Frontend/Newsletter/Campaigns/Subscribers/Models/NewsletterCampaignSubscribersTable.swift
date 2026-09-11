@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct NewsletterCampaignSubscribersTable: Component {
     struct State {
@@ -23,10 +23,12 @@ struct NewsletterCampaignSubscribersTable: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminNewsletterCampaignTabs(
-                campaignId: state.newsletterId,
-                active: .subscribers
-            ))
+            context.render(
+                AdminNewsletterCampaignTabs(
+                    campaignId: state.newsletterId,
+                    active: .subscribers
+                )
+            )
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Campaign subscribers")
             if let error = state.error { P(error).class("error") }
@@ -34,23 +36,27 @@ struct NewsletterCampaignSubscribersTable: Component {
             if state.isEdited { P("Subscriber edited successfully.") }
             if state.isRemoved { P("Subscriber removed successfully.") }
             Div {
-                context.render(AdminNavigationButton(
-                    "Add subscriber",
-                    href:
-                        "/admin/newsletters/\(state.newsletterId)/subscribers/add/"
-                ))
+                context.render(
+                    AdminNavigationButton(
+                        "Add subscriber",
+                        href:
+                            "/admin/newsletters/\(state.newsletterId)/subscribers/add/"
+                    )
+                )
             }
             .class("button-row")
             Br()
             Br()
-            context.render(ListTableSearchForm(
-                state: .init(
-                    action:
-                        "/admin/newsletters/\(state.newsletterId)/subscribers/",
-                    placeholder: "Quick search subscribers",
-                    search: state.search
+            context.render(
+                ListTableSearchForm(
+                    state: .init(
+                        action:
+                            "/admin/newsletters/\(state.newsletterId)/subscribers/",
+                        placeholder: "Quick search subscribers",
+                        search: state.search
+                    )
                 )
-            ))
+            )
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -59,75 +65,97 @@ struct NewsletterCampaignSubscribersTable: Component {
                 )
             }
             else {
-                context.render(ListTableRemoveForm(
-                    state: .init(
-                        action:
-                            "/admin/newsletters/\(state.newsletterId)/subscribers/remove/",
-                        page: 1,
-                        search: state.search,
-                        canRemove: state.canRemove,
-                        buttonTitle: "Remove selected"
-                    ),
-                    table: context.render(ListTableShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    if state.canRemove {
-                                        context.render(ListTableSelectAllCheckbox())
-                                    }
-                                    Th("Email")
-                                    Th("Name")
-                                    Th("Status")
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for item in state.items {
-                                    Tr {
-                                        if state.canRemove {
-                                            context.render(ListTableRowSelectCheckbox(
-                                                state: .init(id: item.id)
-                                            ))
+                context.render(
+                    ListTableRemoveForm(
+                        state: .init(
+                            action:
+                                "/admin/newsletters/\(state.newsletterId)/subscribers/remove/",
+                            page: 1,
+                            search: state.search,
+                            canRemove: state.canRemove,
+                            buttonTitle: "Remove selected"
+                        ),
+                        table: context.render(
+                            ListTableShell(
+                                table: Table {
+                                    Thead {
+                                        Tr {
+                                            if state.canRemove {
+                                                context.render(
+                                                    ListTableSelectAllCheckbox()
+                                                )
+                                            }
+                                            Th("Email")
+                                            Th("Name")
+                                            Th("Status")
+                                            Th("Actions")
                                         }
-                                        Td(item.email).data("label", "Email")
-                                        Td("\(item.firstName) \(item.lastName)")
-                                            .data("label", "Name")
-                                        Td(item.status).data("label", "Status")
-                                        context.render(ListTableRowActions(
-                                            state: .init(
-                                                label: "Actions",
-                                                actions: [
-                                                    .init(
-                                                        title: "Edit",
-                                                        href:
-                                                            "/admin/newsletters/\(state.newsletterId)/subscribers/\(item.id)/edit/",
-                                                        className: "edit",
-                                                        permission:
-                                                            "newsletter:subscribers:update"
-                                                    ),
-                                                    .init(
-                                                        title: "Remove",
-                                                        href:
-                                                            "/admin/newsletters/\(state.newsletterId)/subscribers/\(item.id)/remove/",
-                                                        className: "delete",
-                                                        permission:
-                                                            "newsletter:subscribers:delete"
-                                                    ),
-                                                ],
-                                                permissions: [
-                                                    "newsletter:subscribers:update",
-                                                    "newsletter:subscribers:delete",
-                                                ]
-                                            )
-                                        ))
+                                    }
+                                    Tbody {
+                                        for item in state.items {
+                                            Tr {
+                                                if state.canRemove {
+                                                    context.render(
+                                                        ListTableRowSelectCheckbox(
+                                                            state: .init(
+                                                                id: item.id
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                                Td(item.email)
+                                                    .data("label", "Email")
+                                                Td(
+                                                    "\(item.firstName) \(item.lastName)"
+                                                )
+                                                .data("label", "Name")
+                                                Td(item.status)
+                                                    .data("label", "Status")
+                                                context.render(
+                                                    ListTableRowActions(
+                                                        state: .init(
+                                                            label: "Actions",
+                                                            actions: [
+                                                                .init(
+                                                                    title:
+                                                                        "Edit",
+                                                                    href:
+                                                                        "/admin/newsletters/\(state.newsletterId)/subscribers/\(item.id)/edit/",
+                                                                    className:
+                                                                        "edit",
+                                                                    permission:
+                                                                        "newsletter:subscribers:update"
+                                                                ),
+                                                                .init(
+                                                                    title:
+                                                                        "Remove",
+                                                                    href:
+                                                                        "/admin/newsletters/\(state.newsletterId)/subscribers/\(item.id)/remove/",
+                                                                    className:
+                                                                        "delete",
+                                                                    permission:
+                                                                        "newsletter:subscribers:delete"
+                                                                ),
+                                                            ],
+                                                            permissions: [
+                                                                "newsletter:subscribers:update",
+                                                                "newsletter:subscribers:delete",
+                                                            ]
+                                                        )
+                                                    )
+                                                )
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        }
-                        .class("cms-table", "action-table")
-                        .if(state.canRemove) { $0.class("select-table") }
-                    ))
-                ))
+                                .class("cms-table", "action-table")
+                                .if(state.canRemove) {
+                                    $0.class("select-table")
+                                }
+                            )
+                        )
+                    )
+                )
             }
         }
         .class("cms-section")

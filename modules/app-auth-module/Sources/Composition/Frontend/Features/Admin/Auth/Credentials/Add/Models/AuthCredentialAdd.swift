@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthCredentialAdd: Component {
     struct State {
@@ -28,12 +28,14 @@ struct AuthCredentialAdd: Component {
         Section {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Add user credential")
-            context.render(AuthCredentialForm(
-                state: state.form,
-                action: "/admin/auth/credentials/add/",
-                submitLabel: "Add credential",
-                removeHref: nil
-            ))
+            context.render(
+                AuthCredentialForm(
+                    state: state.form,
+                    action: "/admin/auth/credentials/add/",
+                    submitLabel: "Add credential",
+                    removeHref: nil
+                )
+            )
         }
         .class("cms-section")
     }

@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct NewsletterForm: Component {
     struct State: FeatherAdmin.Object {
@@ -25,12 +25,16 @@ struct NewsletterForm: Component {
             if let error = state.error { P(error).class("error") }
             Section {
                 Label {
-                    context.render(AdminFieldLabel(label: "Name", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "Name", required: true)
+                    )
                     Input().type(.text).id("name").name("name")
                         .value(state.name).required()
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "From email", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "From email", required: true)
+                    )
                     Input().type(.email).id("fromEmail").name("fromEmail")
                         .value(state.fromEmail).required()
                 }

@@ -10,9 +10,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 import struct Foundation.CharacterSet
 
@@ -105,22 +105,26 @@ struct BlogAuthorTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add author",
-                            href: "/admin/blog/authors/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add author",
+                                href: "/admin/blog/authors/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/blog/authors/",
-                        placeholder: "Quick search blog authors",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/blog/authors/",
+                            placeholder: "Quick search blog authors",
+                            search: state.search
+                        )
                     )
-                ))
+                )
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -152,110 +156,129 @@ struct BlogAuthorTable: Component {
                     let canRemove = state.permissions.contains(
                         "blog:authors:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/blog/authors/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("Profile")
-                                        Th("Name")
-                                        Th("Status")
-                                        Th("Publication")
-                                        Th("Expiration")
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for rule in state.rules {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: rule.id
-                                                    )
-                                                ))
-                                            }
-                                            Td {
-                                                if let profileImage = rule
-                                                    .profileImage
-                                                {
-                                                    Img(
-                                                        src: previewLink(
-                                                            for: profileImage
-                                                                .storageKey
-                                                        ),
-                                                        alt: profileImage
-                                                            .altText
-                                                            ?? profileImage
-                                                            .title ?? rule.name
-                                                    )
-                                                    .class(
-                                                        "blog-author-list-profile-image"
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/blog/authors/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected"
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
                                                     )
                                                 }
-                                                else {
-                                                    Span("No image")
-                                                        .class(
-                                                            "blog-author-list-profile-placeholder"
+                                                Th("Profile")
+                                                Th("Name")
+                                                Th("Status")
+                                                Th("Publication")
+                                                Th("Expiration")
+                                                Th("Actions")
+                                            }
+                                        }
+                                        Tbody {
+                                            for rule in state.rules {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: rule.id
+                                                                )
+                                                            )
                                                         )
+                                                    }
+                                                    Td {
+                                                        if let profileImage =
+                                                            rule
+                                                            .profileImage
+                                                        {
+                                                            Img(
+                                                                src:
+                                                                    previewLink(
+                                                                        for:
+                                                                            profileImage
+                                                                            .storageKey
+                                                                    ),
+                                                                alt:
+                                                                    profileImage
+                                                                    .altText
+                                                                    ?? profileImage
+                                                                    .title
+                                                                    ?? rule.name
+                                                            )
+                                                            .class(
+                                                                "blog-author-list-profile-image"
+                                                            )
+                                                        }
+                                                        else {
+                                                            Span("No image")
+                                                                .class(
+                                                                    "blog-author-list-profile-placeholder"
+                                                                )
+                                                        }
+                                                    }
+                                                    .class(
+                                                        "blog-author-list-profile-cell"
+                                                    )
+                                                    .data(
+                                                        "label",
+                                                        "Profile"
+                                                    )
+                                                    titleCell(
+                                                        for: rule,
+                                                        context: &context
+                                                    )
+                                                    statusCell(for: rule)
+                                                    Td(
+                                                        format(
+                                                            rule.metadata
+                                                                .publicationDate
+                                                        )
+                                                    )
+                                                    .data(
+                                                        "label",
+                                                        "Publication"
+                                                    )
+                                                    Td(
+                                                        format(
+                                                            rule.metadata
+                                                                .expirationDate
+                                                        )
+                                                    )
+                                                    .data(
+                                                        "label",
+                                                        "Expiration"
+                                                    )
+                                                    actionsCell(for: rule)
                                                 }
                                             }
-                                            .class(
-                                                "blog-author-list-profile-cell"
-                                            )
-                                            .data(
-                                                "label",
-                                                "Profile"
-                                            )
-                                            titleCell(for: rule, context: &context)
-                                            statusCell(for: rule)
-                                            Td(
-                                                format(
-                                                    rule.metadata
-                                                        .publicationDate
-                                                )
-                                            )
-                                            .data(
-                                                "label",
-                                                "Publication"
-                                            )
-                                            Td(
-                                                format(
-                                                    rule.metadata.expirationDate
-                                                )
-                                            )
-                                            .data(
-                                                "label",
-                                                "Expiration"
-                                            )
-                                            actionsCell(for: rule)
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/blog/authors/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/blog/authors/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
+                        )
+                    )
                 }
             }
         }

@@ -9,8 +9,8 @@ import NIOCore
 import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct MediaAdminAPIClient: Sendable {
     public let client: MediaAdminAPI.Client

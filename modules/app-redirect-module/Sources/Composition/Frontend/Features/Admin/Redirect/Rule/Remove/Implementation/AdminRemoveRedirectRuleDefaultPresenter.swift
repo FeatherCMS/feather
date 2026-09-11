@@ -3,8 +3,8 @@ import Foundation
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminRemoveRedirectRuleDefaultPresenter:
     AdminRemoveRedirectRulePresenter
@@ -68,7 +68,8 @@ struct AdminRemoveRedirectRuleDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Redirect", link: "/admin/redirect/"),
-                .init(label: "Rules", link: "/admin/redirect/rules/")]
+                .init(label: "Rules", link: "/admin/redirect/rules/"),
+            ]
         )
     }
 }

@@ -1,5 +1,5 @@
-import Hummingbird
 import FeatherAdmin
+import Hummingbird
 
 enum SystemVariableRoutes {
     private static let admin = RouterPath("admin")

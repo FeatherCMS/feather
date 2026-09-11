@@ -1,18 +1,21 @@
-import HTML
 import CSS
+import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminListShell<Table: FlowContent>: Component {
 
     public let table: Table
 
-    public func rules(
-    ) -> [any Rule] {
+    public func rules() -> [any Rule] {
         Media {
             Custom(".table-shell") {
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
                 BorderRadius(12.px)
                 Overflow(.hidden)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
@@ -27,7 +30,11 @@ public struct NewAdminListShell<Table: FlowContent>: Component {
                 MinWidth(680.px)
             }
             Custom(".cms-table th, .cms-table td") {
-                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                BorderBottom(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
                 TextAlign(.left)
                 Padding(vertical: 12.px, horizontal: 14.px)
                 FontSize(0.92.rem)
@@ -46,7 +53,8 @@ public struct NewAdminListShell<Table: FlowContent>: Component {
             Custom(".cms-table tbody tr:last-child td") {
                 BorderBottom(0)
             }
-            Custom(".action-table th:first-child, .action-table td:first-child") {
+            Custom(".action-table th:first-child, .action-table td:first-child")
+            {
                 TextAlign(.left)
             }
             Custom(".action-table input[type='checkbox']") {
@@ -62,41 +70,47 @@ public struct NewAdminListShell<Table: FlowContent>: Component {
                 TextAlign(.right)
             }
         }
-            Media(.maxWidth(768.px)) {
-                Custom(".cms-table, .cms-table thead, .cms-table tbody, .cms-table tr, .cms-table th, .cms-table td") {
-                    Display(.block)
-                    Width(100.percent)
-                    MinWidth(0.px)
-                }
-                Custom(".cms-table thead") {
-                    Position(.absolute)
-                    Width(1.px)
-                    Height(1.px)
-                    Overflow(.hidden)
-                    Opacity(0)
-                }
-                Custom(".cms-table tr") {
-                    BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
-                    Padding(vertical: 8.px, horizontal: 12.px)
-                }
-                Custom(".cms-table td") {
-                    Border(0)
-                    Padding(vertical: 8.px, horizontal: 0.px)
-                }
-                Custom(".cms-table td::before") {
-                    Content(.string("attr(data-label)"))
-                    Display(.block)
-                    Color(.variable(TokenKey.Colors.Materials.Primary.text))
-                    FontSize(0.78.rem)
-                    FontWeight(.number(700))
-                    TextTransform(.uppercase)
-                    LetterSpacing(0.05.em)
-                    MarginBottom(3.px)
-                }
-                Custom(".table-shell .table-wrap") {
-                    OverflowX(.visible)
-                }
+        Media(.maxWidth(768.px)) {
+            Custom(
+                ".cms-table, .cms-table thead, .cms-table tbody, .cms-table tr, .cms-table th, .cms-table td"
+            ) {
+                Display(.block)
+                Width(100.percent)
+                MinWidth(0.px)
             }
+            Custom(".cms-table thead") {
+                Position(.absolute)
+                Width(1.px)
+                Height(1.px)
+                Overflow(.hidden)
+                Opacity(0)
+            }
+            Custom(".cms-table tr") {
+                BorderBottom(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Secondary.border)
+                )
+                Padding(vertical: 8.px, horizontal: 12.px)
+            }
+            Custom(".cms-table td") {
+                Border(0)
+                Padding(vertical: 8.px, horizontal: 0.px)
+            }
+            Custom(".cms-table td::before") {
+                Content(.string("attr(data-label)"))
+                Display(.block)
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                FontSize(0.78.rem)
+                FontWeight(.number(700))
+                TextTransform(.uppercase)
+                LetterSpacing(0.05.em)
+                MarginBottom(3.px)
+            }
+            Custom(".table-shell .table-wrap") {
+                OverflowX(.visible)
+            }
+        }
 
     }
 

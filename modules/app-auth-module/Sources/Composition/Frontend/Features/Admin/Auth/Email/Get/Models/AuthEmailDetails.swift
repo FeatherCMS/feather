@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthEmailDetails: Component {
     struct State {
@@ -29,20 +29,26 @@ struct AuthEmailDetails: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("User email details")
             context.render(AdminDetailsField(label: "ID", value: state.link.id))
-            context.render(AdminDetailsField(
-                label: "Identity ID",
-                value: state.link.identityId
-            ))
+            context.render(
+                AdminDetailsField(
+                    label: "Identity ID",
+                    value: state.link.identityId
+                )
+            )
             Div {
-                context.render(AdminNavigationButton(
-                    "Edit email",
-                    href: "/admin/auth/emails/\(state.link.id)/edit/"
-                ))
-                context.render(AdminNavigationButton(
-                    "Remove email",
-                    href: "/admin/auth/emails/\(state.link.id)/remove/",
-                    classes: ["danger"]
-                ))
+                context.render(
+                    AdminNavigationButton(
+                        "Edit email",
+                        href: "/admin/auth/emails/\(state.link.id)/edit/"
+                    )
+                )
+                context.render(
+                    AdminNavigationButton(
+                        "Remove email",
+                        href: "/admin/auth/emails/\(state.link.id)/remove/",
+                        classes: ["danger"]
+                    )
+                )
             }
             .class("button-row", "admin-detail-actions")
         }

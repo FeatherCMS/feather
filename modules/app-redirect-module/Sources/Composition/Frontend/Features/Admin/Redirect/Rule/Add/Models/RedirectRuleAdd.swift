@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct RedirectRuleAdd: Component {
 
@@ -22,11 +22,13 @@ struct RedirectRuleAdd: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add redirect rule")
-            context.render(RedirectRuleForm(
-                state: state.form,
-                action: "/admin/redirect/rules/add/",
-                submitLabel: "Add rule"
-            ))
+            context.render(
+                RedirectRuleForm(
+                    state: state.form,
+                    action: "/admin/redirect/rules/add/",
+                    submitLabel: "Add rule"
+                )
+            )
         }
         .class("cms-section")
     }

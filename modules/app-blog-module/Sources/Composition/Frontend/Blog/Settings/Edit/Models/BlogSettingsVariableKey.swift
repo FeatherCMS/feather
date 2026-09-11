@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 enum BlogSettingsVariableKey: String, CaseIterable, Sendable {
     case postListPath = "blog.post.list_path"

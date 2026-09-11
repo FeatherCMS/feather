@@ -10,8 +10,8 @@ import DOM
 import HTML
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct AdminBody<T: Component>: Component {
 
@@ -71,7 +71,7 @@ public struct AdminBody<T: Component>: Component {
                     "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.js"
                 )
                 .defer()
-            }
+        }
     }
 
 }

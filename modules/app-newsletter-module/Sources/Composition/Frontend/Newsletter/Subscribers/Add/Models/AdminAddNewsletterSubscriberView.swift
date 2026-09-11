@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminAddNewsletterSubscriberView: Component {
     let model: AdminAddNewsletterSubscriberModel
@@ -20,39 +20,48 @@ struct AdminAddNewsletterSubscriberView: Component {
             if let error = model.error { P(error).class("error") }
             Form {
                 Label {
-                    context.render(AdminFieldLabel(label: "Email", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "Email", required: true)
+                    )
                     Input().type(.email).class("text-input").name("email")
                         .value(model.email).required()
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "First name", required: false))
+                    context.render(
+                        AdminFieldLabel(label: "First name", required: false)
+                    )
                     Input().type(.text).class("text-input").name("firstName")
                         .value(model.firstName)
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "Last name", required: false))
+                    context.render(
+                        AdminFieldLabel(label: "Last name", required: false)
+                    )
                     Input().type(.text).class("text-input").name("lastName")
                         .value(model.lastName)
                 }
-                context.render(AdminAutocompleteField(
-                    state: .init(
-                        key: "campaignIds",
-                        label: "Campaigns",
-                        placeholder: "Select campaigns",
-                        options: model.campaigns.map {
-                            .init(
-                                label: $0.name,
-                                value: $0.id,
-                                isSelected: model.selectedCampaignIds.contains(
-                                    $0.id
+                context.render(
+                    AdminAutocompleteField(
+                        state: .init(
+                            key: "campaignIds",
+                            label: "Campaigns",
+                            placeholder: "Select campaigns",
+                            options: model.campaigns.map {
+                                .init(
+                                    label: $0.name,
+                                    value: $0.id,
+                                    isSelected: model.selectedCampaignIds
+                                        .contains(
+                                            $0.id
+                                        )
                                 )
-                            )
-                        },
-                        error: nil,
-                        selectionMode: .multiple,
-                        isEnabled: true
+                            },
+                            error: nil,
+                            selectionMode: .multiple,
+                            isEnabled: true
+                        )
                     )
-                ))
+                )
                 Div { Button("Add subscriber").type(.submit) }
                     .class("button-row")
             }

@@ -4,8 +4,7 @@ import WebBuilders
 extension NewAdminDesignSystem {
 
     @Builder<CSS.Rule>
-    func breadcrumb(
-    ) -> [any Rule] {
+    func breadcrumb() -> [any Rule] {
         Media {
             Custom(".breadcrumb") {
                 MarginBottom(15.px)

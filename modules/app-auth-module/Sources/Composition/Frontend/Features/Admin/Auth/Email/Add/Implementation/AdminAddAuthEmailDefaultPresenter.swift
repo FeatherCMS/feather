@@ -14,8 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
     let request: Request
@@ -70,7 +70,8 @@ struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/")])
+            .init(label: "Emails", link: "/admin/auth/emails/"),
+        ])
     }
 
     func format(

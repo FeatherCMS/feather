@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct NewsletterCampaignAddView: Component {
     struct State {
@@ -24,14 +24,18 @@ struct NewsletterCampaignAddView: Component {
             Form {
                 Section {
                     Label {
-                        context.render(AdminFieldLabel(label: "Name", required: true))
+                        context.render(
+                            AdminFieldLabel(label: "Name", required: true)
+                        )
                         Input().type(.text).class("text-input").name("name")
                             .value(state.name).id("name").required()
                     }
                 }
                 Section {
                     Label {
-                        context.render(AdminFieldLabel(label: "From email", required: true))
+                        context.render(
+                            AdminFieldLabel(label: "From email", required: true)
+                        )
                         Input().type(.email).class("text-input")
                             .name("fromEmail").value(state.fromEmail)
                             .id("fromEmail").required()

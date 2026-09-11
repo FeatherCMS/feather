@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetSystemPermissionDefaultPresenter:
     AdminGetSystemPermissionPresenter
@@ -17,7 +17,8 @@ struct AdminGetSystemPermissionDefaultPresenter:
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "System", link: "/admin/system/"),
-            .init(label: "Permissions", link: "/admin/system/permissions/")])
+            .init(label: "Permissions", link: "/admin/system/permissions/"),
+        ])
     }
 
     func renderDetailsPage(

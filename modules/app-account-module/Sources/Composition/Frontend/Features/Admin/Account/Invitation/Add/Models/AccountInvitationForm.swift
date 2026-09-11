@@ -2,8 +2,8 @@ import CSS
 import FeatherAdmin
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AccountInvitationForm: Component {
 
@@ -50,19 +50,23 @@ struct AccountInvitationForm: Component {
                 P(error).class("error")
             }
 
-            context.render(FormInputField(
-                name: state.email.key,
-                label: state.email.label,
-                value: state.email.value,
-                error: state.email.error,
-                isRequired: true
-            ))
+            context.render(
+                FormInputField(
+                    name: state.email.key,
+                    label: state.email.label,
+                    value: state.email.value,
+                    error: state.email.error,
+                    isRequired: true
+                )
+            )
             Section {
                 if state.roleOptions.isEmpty {
                     P("No roles available.")
                 }
                 else {
-                    context.render(AdminFieldLabel(label: "Roles", required: false))
+                    context.render(
+                        AdminFieldLabel(label: "Roles", required: false)
+                    )
                     Div {
                         for option in state.roleOptions {
                             Label {
@@ -88,11 +92,13 @@ struct AccountInvitationForm: Component {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")

@@ -74,7 +74,8 @@ struct AdminGetAnalyticsNotFoundDefaultPresenter:
     private var analyticsNotFoundBreadcrumb: AdminBreadcrumb.State {
         .init(
             links: [
-                .init(label: "Redirect", link: "/admin/analytics/")]
+                .init(label: "Redirect", link: "/admin/analytics/")
+            ]
         )
     }
 }

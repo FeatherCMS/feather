@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct MediaProcessorDetailsView: Component {
     let item: Components.Schemas.MediaProcessorDetailSchema
@@ -18,29 +18,41 @@ struct MediaProcessorDetailsView: Component {
             context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Processor details")
             context.render(AdminDetailsField(label: "ID", value: item.id))
-            context.render(AdminDetailsField(label: "File suffix", value: item.name))
-            context.render(AdminDetailsField(
-                label: "Match extensions",
-                value: item.matchExtensions
-            ))
-            context.render(AdminDetailsField(
-                label: "Command template",
-                value: item.commandTemplate
-            ))
-            context.render(AdminDetailsField(
-                label: "Active",
-                value: item.isActive ? "Yes" : "No"
-            ))
+            context.render(
+                AdminDetailsField(label: "File suffix", value: item.name)
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Match extensions",
+                    value: item.matchExtensions
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Command template",
+                    value: item.commandTemplate
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Active",
+                    value: item.isActive ? "Yes" : "No"
+                )
+            )
             Div {
-                context.render(AdminNavigationButton(
-                    "Edit processor",
-                    href: "/admin/media/processors/\(item.id)/edit/"
-                ))
-                context.render(AdminNavigationButton(
-                    "Remove processor",
-                    href: "/admin/media/processors/\(item.id)/remove/",
-                    classes: ["danger"]
-                ))
+                context.render(
+                    AdminNavigationButton(
+                        "Edit processor",
+                        href: "/admin/media/processors/\(item.id)/edit/"
+                    )
+                )
+                context.render(
+                    AdminNavigationButton(
+                        "Remove processor",
+                        href: "/admin/media/processors/\(item.id)/remove/",
+                        classes: ["danger"]
+                    )
+                )
             }
             .class("button-row", "admin-detail-actions")
         }

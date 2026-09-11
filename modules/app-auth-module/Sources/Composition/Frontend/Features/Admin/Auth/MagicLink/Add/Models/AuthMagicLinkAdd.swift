@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthMagicLinkAdd: Component {
 
@@ -30,11 +30,13 @@ struct AuthMagicLinkAdd: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add user magic link")
-            context.render(AuthMagicLinkForm(
-                state: state.form,
-                action: "/admin/auth/magic-links/add/",
-                submitLabel: "Add magic link"
-            ))
+            context.render(
+                AuthMagicLinkForm(
+                    state: state.form,
+                    action: "/admin/auth/magic-links/add/",
+                    submitLabel: "Add magic link"
+                )
+            )
         }
         .class("cms-section")
     }

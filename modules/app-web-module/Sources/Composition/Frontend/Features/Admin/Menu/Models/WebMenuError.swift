@@ -5,8 +5,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebMenuError: Component {
 

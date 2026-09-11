@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SystemPermissionAdd: Component {
 
@@ -21,11 +21,13 @@ struct SystemPermissionAdd: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add system permission")
-            context.render(SystemPermissionForm(
-                state: state.form,
-                action: "/admin/system/permissions/add/",
-                submitLabel: "Add permission"
-            ))
+            context.render(
+                SystemPermissionForm(
+                    state: state.form,
+                    action: "/admin/system/permissions/add/",
+                    submitLabel: "Add permission"
+                )
+            )
         }
         .class("cms-section")
     }

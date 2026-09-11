@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserRoleAdd: Component {
 
@@ -21,11 +21,13 @@ struct UserRoleAdd: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add user role")
-            context.render(UserRoleForm(
-                state: state.form,
-                action: "/admin/user/roles/add/",
-                submitLabel: "Add role"
-            ))
+            context.render(
+                UserRoleForm(
+                    state: state.form,
+                    action: "/admin/user/roles/add/",
+                    submitLabel: "Add role"
+                )
+            )
         }
         .class("cms-section")
     }

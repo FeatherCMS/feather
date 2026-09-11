@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListContactFormFieldsDefaultPresenter:
     AdminListContactFormFieldsPresenter
@@ -47,6 +47,7 @@ struct AdminListContactFormFieldsDefaultPresenter:
     private func breadcrumb(formId: String) -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Contact", link: "/admin/contact/")])
+            .init(label: "Contact", link: "/admin/contact/"),
+        ])
     }
 }

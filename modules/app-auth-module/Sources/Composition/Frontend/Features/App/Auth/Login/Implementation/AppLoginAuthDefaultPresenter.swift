@@ -14,8 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
     let request: Request
@@ -31,12 +31,14 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
             title: "Login",
             description: "This is the login page for the Feather CMS app",
             imagePath: "images/logos/logo.png",
-            content: renderContext.render(LoginPage(
-                state: .init(
-                    form: form,
-                    message: message
+            content: renderContext.render(
+                LoginPage(
+                    state: .init(
+                        form: form,
+                        message: message
+                    )
                 )
-            ))
+            )
         )
     }
 

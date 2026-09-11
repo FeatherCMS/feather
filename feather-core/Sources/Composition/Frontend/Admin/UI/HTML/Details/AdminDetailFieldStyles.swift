@@ -1,6 +1,6 @@
 import CSS
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public enum AdminDetailFieldStyles {
 
@@ -11,12 +11,12 @@ public enum AdminDetailFieldStyles {
             },
             Class("admin-details-field__label") {
                 Margin(top: 0.px, right: 0.px, bottom: 6.px, left: 0.px)
-//                Color(.variable(TokenKey.Background.primary))
+                //                Color(.variable(TokenKey.Background.primary))
                 FontWeight(.number(600))
             },
             Class("admin-details-field__value") {
                 Margin(0.px)
-//                Color(.variable(TokenKey.Background.primary))
+                //                Color(.variable(TokenKey.Background.primary))
             },
             Class("admin-detail-actions") {
                 MarginTop(24.px)

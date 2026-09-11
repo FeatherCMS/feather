@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct NewsletterTable: Component {
     struct State {
@@ -29,21 +29,25 @@ struct NewsletterTable: Component {
             if state.isEdited { P("Campaign edited successfully.") }
             if state.isRemoved { P("Campaign removed successfully.") }
             Div {
-                context.render(AdminNavigationButton(
-                    "Add campaign",
-                    href: "/admin/newsletters/add/"
-                ))
+                context.render(
+                    AdminNavigationButton(
+                        "Add campaign",
+                        href: "/admin/newsletters/add/"
+                    )
+                )
             }
             .class("button-row")
             Br()
             Br()
-            context.render(ListTableSearchForm(
-                state: .init(
-                    action: "/admin/newsletters/",
-                    placeholder: "Quick search campaigns",
-                    search: state.search
+            context.render(
+                ListTableSearchForm(
+                    state: .init(
+                        action: "/admin/newsletters/",
+                        placeholder: "Quick search campaigns",
+                        search: state.search
+                    )
                 )
-            ))
+            )
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -55,95 +59,114 @@ struct NewsletterTable: Component {
                 let canRemove = state.permissions.contains(
                     "newsletter:campaigns:delete"
                 )
-                context.render(ListTableRemoveForm(
-                    state: .init(
-                        action: "/admin/newsletters/remove/",
-                        page: 1,
-                        search: state.search,
-                        canRemove: canRemove,
-                        buttonTitle: "Remove selected"
-                    ),
-                    table: context.render(ListTableShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    if canRemove {
-                                        context.render(ListTableSelectAllCheckbox())
-                                    }
-                                    Th("Name")
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for item in state.items {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableRowSelectCheckbox(
-                                                state: .init(id: item.id)
-                                            ))
-                                        }
-                                        if state.isPicker {
-                                            Td {
-                                                Button(item.name)
-                                                    .type(.button)
-                                                    .data(
-                                                        "mce-picker-item",
-                                                        item.id
-                                                    )
-                                                    .data(
-                                                        "mce-picker-label",
-                                                        item.name
-                                                    )
+                context.render(
+                    ListTableRemoveForm(
+                        state: .init(
+                            action: "/admin/newsletters/remove/",
+                            page: 1,
+                            search: state.search,
+                            canRemove: canRemove,
+                            buttonTitle: "Remove selected"
+                        ),
+                        table: context.render(
+                            ListTableShell(
+                                table: Table {
+                                    Thead {
+                                        Tr {
+                                            if canRemove {
+                                                context.render(
+                                                    ListTableSelectAllCheckbox()
+                                                )
                                             }
-                                            .data("label", "Name")
+                                            Th("Name")
+                                            Th("Actions")
                                         }
-                                        else {
-                                            Td(item.name).data("label", "Name")
+                                    }
+                                    Tbody {
+                                        for item in state.items {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableRowSelectCheckbox(
+                                                            state: .init(
+                                                                id: item.id
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                                if state.isPicker {
+                                                    Td {
+                                                        Button(item.name)
+                                                            .type(.button)
+                                                            .data(
+                                                                "mce-picker-item",
+                                                                item.id
+                                                            )
+                                                            .data(
+                                                                "mce-picker-label",
+                                                                item.name
+                                                            )
+                                                    }
+                                                    .data("label", "Name")
+                                                }
+                                                else {
+                                                    Td(item.name)
+                                                        .data("label", "Name")
+                                                }
+                                                context.render(
+                                                    ListTableRowActions(
+                                                        state: .init(
+                                                            label: "Actions",
+                                                            actions: [
+                                                                .init(
+                                                                    title:
+                                                                        "Copy",
+                                                                    className:
+                                                                        nil,
+                                                                    permission:
+                                                                        "newsletter:campaigns:read",
+                                                                    copyText:
+                                                                        "@NewsletterCampaign(id: \(item.id))"
+                                                                ),
+                                                                .init(
+                                                                    title:
+                                                                        "Details",
+                                                                    href:
+                                                                        "/admin/newsletters/\(item.id)/details/",
+                                                                    className:
+                                                                        "edit",
+                                                                    permission:
+                                                                        "newsletter:campaigns:update"
+                                                                ),
+                                                                .init(
+                                                                    title:
+                                                                        "Remove",
+                                                                    href:
+                                                                        "/admin/newsletters/\(item.id)/remove/",
+                                                                    className:
+                                                                        "delete",
+                                                                    permission:
+                                                                        "newsletter:campaigns:delete"
+                                                                ),
+                                                            ],
+                                                            permissions: [
+                                                                "newsletter:campaigns:read",
+                                                                "newsletter:campaigns:update",
+                                                                "newsletter:campaigns:delete",
+                                                            ]
+                                                        )
+                                                    )
+                                                )
+                                            }
                                         }
-                                        context.render(ListTableRowActions(
-                                            state: .init(
-                                                label: "Actions",
-                                                actions: [
-                                                    .init(
-                                                        title: "Copy",
-                                                        className: nil,
-                                                        permission:
-                                                            "newsletter:campaigns:read",
-                                                        copyText:
-                                                            "@NewsletterCampaign(id: \(item.id))"
-                                                    ),
-                                                    .init(
-                                                        title: "Details",
-                                                        href:
-                                                            "/admin/newsletters/\(item.id)/details/",
-                                                        className: "edit",
-                                                        permission:
-                                                            "newsletter:campaigns:update"
-                                                    ),
-                                                    .init(
-                                                        title: "Remove",
-                                                        href:
-                                                            "/admin/newsletters/\(item.id)/remove/",
-                                                        className: "delete",
-                                                        permission:
-                                                            "newsletter:campaigns:delete"
-                                                    ),
-                                                ],
-                                                permissions: [
-                                                    "newsletter:campaigns:read",
-                                                    "newsletter:campaigns:update",
-                                                    "newsletter:campaigns:delete",
-                                                ]
-                                            )
-                                        ))
                                     }
                                 }
-                            }
-                        }
-                        .class("cms-table", "action-table")
-                        .if(canRemove) { $0.class("select-table") }
-                    ))
-                ))
+                                .class("cms-table", "action-table")
+                                .if(canRemove) { $0.class("select-table") }
+                            )
+                        )
+                    )
+                )
             }
         }
         .class("cms-section")

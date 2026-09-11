@@ -1,8 +1,8 @@
 import CSS
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct AdminFieldLabel: Component {
     public let label: String
@@ -15,16 +15,16 @@ public struct AdminFieldLabel: Component {
 
     public func selectors() -> [any Selector] {
         Class("field-label") {
-//            Color(.variable("cms-strong-font"))
+            //            Color(.variable("cms-strong-font"))
         }
         Custom("label .field-label") {
-//            Color(.variable("cms-strong-font"))
+            //            Color(.variable("cms-strong-font"))
         }
         Class("field-label__required") {
-//            Color(.variable("cms-light-font"))
+            //            Color(.variable("cms-light-font"))
         }
         Custom("label .field-label__required") {
-//            Color(.variable("cms-light-font"))
+            //            Color(.variable("cms-light-font"))
         }
     }
 

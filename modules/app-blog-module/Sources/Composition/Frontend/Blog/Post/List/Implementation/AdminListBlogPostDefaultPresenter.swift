@@ -9,9 +9,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct AdminListBlogPostDefaultPresenter:
     AdminListBlogPostPresenter
@@ -130,7 +130,8 @@ struct AdminListBlogPostDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/")]
+                .init(label: "Blog", link: "/admin/blog/"),
+            ]
         )
     }
 }

@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 extension AdminMediaAssetReferenceModel {
     public init(schema: MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema)

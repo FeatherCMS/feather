@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetMediaProcessorDefaultPresenter: AdminGetMediaProcessorPresenter {
     let request: Request
@@ -57,13 +57,15 @@ struct AdminGetMediaProcessorDefaultPresenter: AdminGetMediaProcessorPresenter {
     ) -> AdminBreadcrumb.State {
         var links: [AdminBreadcrumb.State.Link] = [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Media", link: "/admin/media/")
+            .init(label: "Media", link: "/admin/media/"),
         ]
         if includeCollection {
-            links.append(.init(
-                label: "Processors",
-                link: "/admin/media/processors/"
-            ))
+            links.append(
+                .init(
+                    label: "Processors",
+                    link: "/admin/media/processors/"
+                )
+            )
         }
         return .init(links: links)
     }

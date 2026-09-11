@@ -5,11 +5,11 @@
 //  Created by Tibor Bödecs on 2026. 09. 04..
 //
 
-import HTML
 import CSS
+import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
 
@@ -40,11 +40,13 @@ public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
         let style = context.stylesheet()
         let css = cssRenderer.render(style)
         let scripts = context.scripts()
-        let renderedHead: Head = context.render(NewAdminHead(
-            title: title,
-            stylesheet: css,
-            scripts: scripts
-        ))
+        let renderedHead: Head = context.render(
+            NewAdminHead(
+                title: title,
+                stylesheet: css,
+                scripts: scripts
+            )
+        )
 
         return Html {
             renderedHead

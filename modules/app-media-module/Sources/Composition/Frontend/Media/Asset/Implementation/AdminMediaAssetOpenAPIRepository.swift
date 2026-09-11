@@ -7,8 +7,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct AdminMediaAssetOpenAPIRepository: Sendable {
     let api: MediaAdminAPIClient

@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogAuthorLinkConfirmation: Component {
 
@@ -23,20 +23,22 @@ struct BlogAuthorLinkConfirmation: Component {
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
-        return context.render(AdminConfirmationDialog(
-            state: .init(
-                breadcrumb: state.breadcrumb,
-                title: "Remove blog author link",
-                message:
-                    "Are you sure you want to remove this blog author link? This action cannot be undone.",
-                details: [
-                    .init(prefix: "Label: ", value: state.label)
-                ],
-                submitLabel: "Remove link",
-                actionURL:
-                    "/admin/blog/authors/\(state.menuId)/links/\(state.id)/remove/",
-                cancelURL: "/admin/blog/authors/\(state.menuId)/links/"
+        context.render(
+            AdminConfirmationDialog(
+                state: .init(
+                    breadcrumb: state.breadcrumb,
+                    title: "Remove blog author link",
+                    message:
+                        "Are you sure you want to remove this blog author link? This action cannot be undone.",
+                    details: [
+                        .init(prefix: "Label: ", value: state.label)
+                    ],
+                    submitLabel: "Remove link",
+                    actionURL:
+                        "/admin/blog/authors/\(state.menuId)/links/\(state.id)/remove/",
+                    cancelURL: "/admin/blog/authors/\(state.menuId)/links/"
+                )
             )
-        ))
+        )
     }
 }

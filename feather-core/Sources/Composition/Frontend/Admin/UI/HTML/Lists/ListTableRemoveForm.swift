@@ -1,10 +1,9 @@
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
-public struct ListTableRemoveForm<Table: FlowContent>: Component
-{
+public struct ListTableRemoveForm<Table: FlowContent>: Component {
 
     public struct State: Sendable {
         public let action: String
@@ -48,36 +47,38 @@ public struct ListTableRemoveForm<Table: FlowContent>: Component
                 Form {
                     table
 
-                Div {
-                    context.render(NewAdminSubmitButton(
-                        state.buttonTitle,
-                        style: state.buttonStyle
-                    ))
-                    .disabled()
-                    .class("remove-submit")
-                }
-                .class("table-actions")
+                    Div {
+                        context.render(
+                            NewAdminSubmitButton(
+                                state.buttonTitle,
+                                style: state.buttonStyle
+                            )
+                        )
+                        .disabled()
+                        .class("remove-submit")
+                    }
+                    .class("table-actions")
 
-                Input()
-                    .type(.hidden)
-                    .name("page")
-                    .value("\(state.page)")
-
-                if !state.search.isEmpty {
                     Input()
                         .type(.hidden)
-                        .name("search")
-                        .value(state.search)
-                }
+                        .name("page")
+                        .value("\(state.page)")
 
-                for item in state.queryItems {
-                    Input()
-                        .type(.hidden)
-                        .name(item.0)
-                        .value(item.1)
-                }
+                    if !state.search.isEmpty {
+                        Input()
+                            .type(.hidden)
+                            .name("search")
+                            .value(state.search)
+                    }
 
-                Script(script())
+                    for item in state.queryItems {
+                        Input()
+                            .type(.hidden)
+                            .name(item.0)
+                            .value(item.1)
+                    }
+
+                    Script(script())
                 }
                 .method(.get)
                 .action(state.action)

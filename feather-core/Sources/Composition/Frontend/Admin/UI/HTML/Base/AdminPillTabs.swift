@@ -1,8 +1,8 @@
 import CSS
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct AdminPillTabs: Component {
 
@@ -32,7 +32,7 @@ public struct AdminPillTabs: Component {
         Class("admin-pill-tabs") {
             Display(.flex)
             AlignItems(.center)
-//            Border(1.px, .solid, .variable(TokenKey.Background.primary))
+            //            Border(1.px, .solid, .variable(TokenKey.Background.primary))
             BorderRadius(999.px)
             MarginBottom(16.px)
             Padding(4.px)
@@ -61,7 +61,7 @@ public struct AdminPillTabs: Component {
             Border(0)
             BorderRadius(999.px)
             BackgroundColor(.transparent)
-//            Color(.variable(TokenKey.Background.primary))
+            //            Color(.variable(TokenKey.Background.primary))
             Padding(vertical: 8.px, horizontal: 12.px)
             LineHeight(1.2)
             TextAlign(.center)
@@ -70,12 +70,12 @@ public struct AdminPillTabs: Component {
             WhiteSpace(.nowrap)
         }
         Custom(".admin-pill-tabs a:hover:not(.is-current)") {
-//            Color(.variable(TokenKey.Background.primary))
+            //            Color(.variable(TokenKey.Background.primary))
             TextDecoration(.underline)
         }
         Custom(".admin-pill-tabs a.is-current") {
-//            Background(.variable(TokenKey.Background.primary))
-//            Color(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
+            //            Color(.variable(TokenKey.Background.primary))
         }
     }
 

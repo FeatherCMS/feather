@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetSystemJobDefaultPresenter {
     let request: Request
@@ -51,6 +51,7 @@ struct AdminGetSystemJobDefaultPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "System", link: "/admin/system/"),
-            .init(label: "Worker jobs", link: "/admin/system/jobs/")])
+            .init(label: "Worker jobs", link: "/admin/system/jobs/"),
+        ])
     }
 }

@@ -8,8 +8,8 @@ import MediaAdminAPI
 import MediaContracts
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminEditMediaFolderDefaultPresenter: AdminEditMediaFolderPresenter {
     let request: Request
@@ -72,7 +72,8 @@ struct AdminEditMediaFolderDefaultPresenter: AdminEditMediaFolderPresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Assets", link: "/admin/media/assets/")]
+                .init(label: "Assets", link: "/admin/media/assets/"),
+            ]
         )
     }
 }

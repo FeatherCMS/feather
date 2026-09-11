@@ -17,8 +17,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct AuthAdminAPIClient: Sendable {
     public let client: AuthAdminAPI.Client

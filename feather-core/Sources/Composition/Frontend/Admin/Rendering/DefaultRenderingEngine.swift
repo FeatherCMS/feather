@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct RenderingEngineAssetConfiguration: Sendable {
     public let publicStylesheetPaths: [String]
@@ -57,7 +57,8 @@ public struct DefaultRenderingEngine: RenderingEngine {
             content
         }
 
-        let metadata = context.render(Metadata(
+        let metadata = context.render(
+            Metadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -69,14 +70,19 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     path: imagePath
                 ),
                 noIndex: false
-            ))
-        var headElements = metadata.children + assets.publicStylesheetPaths.map {
-            Link(rel: .stylesheet).href(stylesheetURL(path: $0))
-        }
+            )
+        )
+        var headElements =
+            metadata.children
+            + assets.publicStylesheetPaths.map {
+                Link(rel: .stylesheet).href(stylesheetURL(path: $0))
+            }
         if let path = assets.rootStylesheetPath {
             headElements.append(Link(rel: .stylesheet).href(path))
         }
-        let head = Head(elements: headElements.compactMap { $0 as? any MetadataContent })
+        let head = Head(
+            elements: headElements.compactMap { $0 as? any MetadataContent }
+        )
 
         let html = Html {
             head
@@ -96,25 +102,30 @@ public struct DefaultRenderingEngine: RenderingEngine {
         content: T
     ) -> HTMLResponse {
         var context = RenderContext()
-        let toast = AdminNotificationFlash.notification(from: request).map { notification in
-            AdminToastRedirect.Payload(
-                type: notification.kind.rawValue,
-                title: notification.title,
-                message: notification.message,
-                position: notification.position
-            )
-        } ?? AdminToastRedirect.payload(from: request)
-        let body = Body {
-            context.render(AdminBody(
-                state: .init(
-                    sidebar: sidebarState,
-                    toast: toast,
-                    content: content
+        let toast =
+            AdminNotificationFlash.notification(from: request)
+            .map { notification in
+                AdminToastRedirect.Payload(
+                    type: notification.kind.rawValue,
+                    title: notification.title,
+                    message: notification.message,
+                    position: notification.position
                 )
-            ))
+            } ?? AdminToastRedirect.payload(from: request)
+        let body = Body {
+            context.render(
+                AdminBody(
+                    state: .init(
+                        sidebar: sidebarState,
+                        toast: toast,
+                        content: content
+                    )
+                )
+            )
         }
 
-        let metadata = context.render(Metadata(
+        let metadata = context.render(
+            Metadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -126,14 +137,19 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     path: imagePath
                 ),
                 noIndex: false
-            ))
-        var headElements = metadata.children + assets.adminStylesheetPaths.map {
-            Link(rel: .stylesheet).href(stylesheetURL(path: $0))
-        }
+            )
+        )
+        var headElements =
+            metadata.children
+            + assets.adminStylesheetPaths.map {
+                Link(rel: .stylesheet).href(stylesheetURL(path: $0))
+            }
         if let path = assets.rootStylesheetPath {
             headElements.append(Link(rel: .stylesheet).href(path))
         }
-        let head = Head(elements: headElements.compactMap { $0 as? any MetadataContent })
+        let head = Head(
+            elements: headElements.compactMap { $0 as? any MetadataContent }
+        )
 
         let html = Html {
             head

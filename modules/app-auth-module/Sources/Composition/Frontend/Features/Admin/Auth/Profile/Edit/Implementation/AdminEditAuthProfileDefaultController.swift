@@ -14,8 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminEditAuthProfileDefaultController:
     AdminEditAuthProfileController
@@ -277,7 +277,8 @@ struct AdminEditAuthProfileDefaultController:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Account", link: "/admin/account/"),
-                .init(label: "Profile", link: "/admin/auth/profile/")]
+                .init(label: "Profile", link: "/admin/auth/profile/"),
+            ]
         )
     }
 }

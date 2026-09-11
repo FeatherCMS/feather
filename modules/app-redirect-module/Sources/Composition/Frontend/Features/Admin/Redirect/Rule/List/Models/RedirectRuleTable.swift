@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct RedirectRuleTable: Component {
 
@@ -60,10 +60,12 @@ struct RedirectRuleTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add rule",
-                            href: "/admin/redirect/rules/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add rule",
+                                href: "/admin/redirect/rules/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
@@ -129,103 +131,123 @@ struct RedirectRuleTable: Component {
                     let canRemove = state.permissions.contains(
                         "redirect:rules:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/redirect/rules/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("Source")
-                                        Th("Destination")
-                                        Th("Status")
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for rule in state.rules {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: rule.id
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/redirect/rules/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected"
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
                                                     )
-                                                ))
+                                                }
+                                                Th("Source")
+                                                Th("Destination")
+                                                Th("Status")
+                                                Th("Actions")
                                             }
-                                            Td(rule.source)
-                                                .data(
-                                                    "label",
-                                                    "Source"
-                                                )
-                                            Td(rule.destination)
-                                                .data(
-                                                    "label",
-                                                    "Destination"
-                                                )
-                                            Td("\(rule.statusCode)")
-                                                .data(
-                                                    "label",
-                                                    "Status"
-                                                )
-                                            context.render(ListTableRowActions(
-                                                state: .init(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/redirect/rules/\(rule.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                "redirect:rules:read"
-                                                        ),
-                                                        .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/redirect/rules/\(rule.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                "redirect:rules:update"
-                                                        ),
-                                                        .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/redirect/rules/\(rule.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                "redirect:rules:delete"
-                                                        ),
-                                                    ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            ))
+                                        }
+                                        Tbody {
+                                            for rule in state.rules {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: rule.id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    Td(rule.source)
+                                                        .data(
+                                                            "label",
+                                                            "Source"
+                                                        )
+                                                    Td(rule.destination)
+                                                        .data(
+                                                            "label",
+                                                            "Destination"
+                                                        )
+                                                    Td("\(rule.statusCode)")
+                                                        .data(
+                                                            "label",
+                                                            "Status"
+                                                        )
+                                                    context.render(
+                                                        ListTableRowActions(
+                                                            state: .init(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        title:
+                                                                            "Details",
+                                                                        href:
+                                                                            "/admin/redirect/rules/\(rule.id)/",
+                                                                        className:
+                                                                            nil,
+                                                                        permission:
+                                                                            "redirect:rules:read"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Edit",
+                                                                        href:
+                                                                            "/admin/redirect/rules/\(rule.id)/edit/",
+                                                                        className:
+                                                                            "edit",
+                                                                        permission:
+                                                                            "redirect:rules:update"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Remove",
+                                                                        href:
+                                                                            "/admin/redirect/rules/\(rule.id)/remove/",
+                                                                        className:
+                                                                            "delete",
+                                                                        permission:
+                                                                            "redirect:rules:delete"
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    state
+                                                                    .permissions
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/redirect/rules/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search,
-                            queryItems: [("statusCode", state.statusCode)]
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/redirect/rules/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search,
+                                queryItems: [("statusCode", state.statusCode)]
+                            )
+                        )
+                    )
                 }
             }
         }

@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AssetAddView: Component {
     struct State {
@@ -178,30 +178,36 @@ struct AssetAddView: Component {
             Input().type(.hidden).name("view").value(state.form.view)
                 .id("view")
 
-            context.render(FormInputField(
-                name: "title",
-                label: "Title",
-                value: state.form.title,
-                id: "title",
-                inputClass: "text-input"
-            ))
+            context.render(
+                FormInputField(
+                    name: "title",
+                    label: "Title",
+                    value: state.form.title,
+                    id: "title",
+                    inputClass: "text-input"
+                )
+            )
 
-            context.render(FormInputField(
-                name: "altText",
-                label: "Alt text",
-                value: state.form.altText,
-                id: "altText",
-                inputClass: "text-input"
-            ))
+            context.render(
+                FormInputField(
+                    name: "altText",
+                    label: "Alt text",
+                    value: state.form.altText,
+                    id: "altText",
+                    inputClass: "text-input"
+                )
+            )
 
-            context.render(FormInputField(
-                name: "file",
-                label: "File",
-                id: "file",
-                type: .file,
-                isRequired: true,
-                inputClass: "text-input"
-            ))
+            context.render(
+                FormInputField(
+                    name: "file",
+                    label: "File",
+                    id: "file",
+                    type: .file,
+                    isRequired: true,
+                    inputClass: "text-input"
+                )
+            )
             Input().type(.hidden).name("data").id("data")
                 .value(state.form.data)
 
@@ -228,30 +234,36 @@ struct AssetAddView: Component {
             Input().type(.hidden).name("view").value(state.form.view)
                 .id("view")
 
-            context.render(FormInputField(
-                name: "title",
-                label: "Title",
-                value: state.form.title,
-                id: "title",
-                inputClass: "text-input"
-            ))
+            context.render(
+                FormInputField(
+                    name: "title",
+                    label: "Title",
+                    value: state.form.title,
+                    id: "title",
+                    inputClass: "text-input"
+                )
+            )
 
-            context.render(FormInputField(
-                name: "altText",
-                label: "Alt text",
-                value: state.form.altText,
-                id: "altText",
-                inputClass: "text-input"
-            ))
+            context.render(
+                FormInputField(
+                    name: "altText",
+                    label: "Alt text",
+                    value: state.form.altText,
+                    id: "altText",
+                    inputClass: "text-input"
+                )
+            )
 
-            context.render(FormInputField(
-                name: "file",
-                label: "File",
-                id: "file",
-                type: .file,
-                isRequired: true,
-                inputClass: "text-input"
-            ))
+            context.render(
+                FormInputField(
+                    name: "file",
+                    label: "File",
+                    id: "file",
+                    type: .file,
+                    isRequired: true,
+                    inputClass: "text-input"
+                )
+            )
             Input().type(.hidden).name("data").id("data")
                 .value(state.form.data)
 

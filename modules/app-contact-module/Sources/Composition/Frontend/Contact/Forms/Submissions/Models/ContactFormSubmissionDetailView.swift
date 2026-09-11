@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct ContactFormSubmissionDetailView: Component {
     struct State {
@@ -19,7 +19,9 @@ struct ContactFormSubmissionDetailView: Component {
     let state: State
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminContactFormTabs(formId: state.formId, active: .submissions))
+            context.render(
+                AdminContactFormTabs(formId: state.formId, active: .submissions)
+            )
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Contact form submission")
             if let error = state.error { P(error).class("error") }
@@ -46,7 +48,9 @@ struct ContactFormSubmissionDetailView: Component {
             }
             Form {
                 Label {
-                    context.render(AdminFieldLabel(label: "Status", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "Status", required: true)
+                    )
                     Select {
                         for status in [
                             "received", "processed", "spam", "failed",

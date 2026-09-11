@@ -14,7 +14,7 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetAuthHomeInfrastructure: Sendable {}

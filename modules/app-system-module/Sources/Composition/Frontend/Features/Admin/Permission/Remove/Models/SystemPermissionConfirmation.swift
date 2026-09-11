@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SystemPermissionConfirmation: Component {
 
@@ -18,19 +18,21 @@ struct SystemPermissionConfirmation: Component {
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
-        return context.render(AdminConfirmationDialog(
-            state: .init(
-                breadcrumb: state.breadcrumb,
-                title: "Remove system permission",
-                message:
-                    "Are you sure you want to remove this system permission? This action cannot be undone.",
-                details: [
-                    .init(prefix: "Name: ", value: state.name)
-                ],
-                submitLabel: "Remove permission",
-                actionURL: "/admin/system/permissions/\(state.id)/remove/",
-                cancelURL: "/admin/system/permissions/"
+        context.render(
+            AdminConfirmationDialog(
+                state: .init(
+                    breadcrumb: state.breadcrumb,
+                    title: "Remove system permission",
+                    message:
+                        "Are you sure you want to remove this system permission? This action cannot be undone.",
+                    details: [
+                        .init(prefix: "Name: ", value: state.name)
+                    ],
+                    submitLabel: "Remove permission",
+                    actionURL: "/admin/system/permissions/\(state.id)/remove/",
+                    cancelURL: "/admin/system/permissions/"
+                )
             )
-        ))
+        )
     }
 }

@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SystemVariableAdd: Component {
 
@@ -21,11 +21,13 @@ struct SystemVariableAdd: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add system variable")
-            context.render(SystemVariableForm(
-                state: state.form,
-                action: SystemVariableRoutes.add.description,
-                submitLabel: "Add variable"
-            ))
+            context.render(
+                SystemVariableForm(
+                    state: state.form,
+                    action: SystemVariableRoutes.add.description,
+                    submitLabel: "Add variable"
+                )
+            )
         }
         .class("cms-section")
     }

@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetUserRoleDefaultPresenter: AdminGetUserRolePresenter {
     let request: Request
@@ -15,7 +15,8 @@ struct AdminGetUserRoleDefaultPresenter: AdminGetUserRolePresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "User", link: "/admin/user/"),
-            .init(label: "Roles", link: "/admin/user/roles/")])
+            .init(label: "Roles", link: "/admin/user/roles/"),
+        ])
     }
 
     func renderDetailsPage(

@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct ContactFormFieldForm: Component {
     let field: AdminContactFormFieldRow
@@ -38,7 +38,9 @@ struct ContactFormFieldForm: Component {
                     .value(field.label).required()
             }
             Label {
-                context.render(AdminFieldLabel(label: "Allowed values", required: false))
+                context.render(
+                    AdminFieldLabel(label: "Allowed values", required: false)
+                )
                 Textarea(field.allowedValues).class("text-input")
                     .name("allowedValues")
             }

@@ -4,9 +4,9 @@ import Foundation
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebContracts
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebContracts
 
 struct WebMetadataForm: Component {
 
@@ -82,62 +82,82 @@ struct WebMetadataForm: Component {
                 P(error).class("error")
             }
 
-            context.render(FormInputField(
-                name: state.slug.key,
-                label: state.slug.label,
-                value: state.slug.value,
-                error: state.slug.error,
-                isRequired: true
-            ))
+            context.render(
+                FormInputField(
+                    name: state.slug.key,
+                    label: state.slug.label,
+                    value: state.slug.value,
+                    error: state.slug.error,
+                    isRequired: true
+                )
+            )
             context.render(templateField(state.template))
-            context.render(FormDateTimeField(
-                name: state.publicationDate.key,
-                label: state.publicationDate.label,
-                value: state.publicationDate.value,
-                error: state.publicationDate.error
-            ))
-            context.render(FormDateTimeField(
-                name: state.expirationDate.key,
-                label: state.expirationDate.label,
-                value: state.expirationDate.value,
-                error: state.expirationDate.error
-            ))
+            context.render(
+                FormDateTimeField(
+                    name: state.publicationDate.key,
+                    label: state.publicationDate.label,
+                    value: state.publicationDate.value,
+                    error: state.publicationDate.error
+                )
+            )
+            context.render(
+                FormDateTimeField(
+                    name: state.expirationDate.key,
+                    label: state.expirationDate.label,
+                    value: state.expirationDate.value,
+                    error: state.expirationDate.error
+                )
+            )
             context.render(statusField(state.status))
-            context.render(FormInputField(
-                name: state.title.key,
-                label: state.title.label,
-                value: state.title.value,
-                error: state.title.error
-            ))
+            context.render(
+                FormInputField(
+                    name: state.title.key,
+                    label: state.title.label,
+                    value: state.title.value,
+                    error: state.title.error
+                )
+            )
             context.render(textarea(state.excerpt, rows: 4))
-            imagePicker(state.imageUrl, selectedAsset: state.selectedImageAsset, context: &context)
-            context.render(FormInputField(
-                name: state.canonicalUrl.key,
-                label: state.canonicalUrl.label,
-                value: state.canonicalUrl.value,
-                error: state.canonicalUrl.error
-            ))
+            imagePicker(
+                state.imageUrl,
+                selectedAsset: state.selectedImageAsset,
+                context: &context
+            )
+            context.render(
+                FormInputField(
+                    name: state.canonicalUrl.key,
+                    label: state.canonicalUrl.label,
+                    value: state.canonicalUrl.value,
+                    error: state.canonicalUrl.error
+                )
+            )
             checkbox(state.noIndex, context: &context)
-            context.render(FormInputField(
-                name: state.primaryKeyword.key,
-                label: state.primaryKeyword.label,
-                value: state.primaryKeyword.value,
-                error: state.primaryKeyword.error
-            ))
+            context.render(
+                FormInputField(
+                    name: state.primaryKeyword.key,
+                    label: state.primaryKeyword.label,
+                    value: state.primaryKeyword.value,
+                    error: state.primaryKeyword.error
+                )
+            )
             context.render(textarea(state.cssCodeInjection, rows: 10))
             context.render(textarea(state.javascriptCodeInjection, rows: 10))
-            context.render(textarea(state.structuredDataCodeInjection, rows: 10))
+            context.render(
+                textarea(state.structuredDataCodeInjection, rows: 10)
+            )
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")
@@ -156,7 +176,9 @@ struct WebMetadataForm: Component {
 
         Section {
             Label {
-                context.render(AdminFieldLabel(label: field.label, required: false))
+                context.render(
+                    AdminFieldLabel(label: field.label, required: false)
+                )
                 Input()
                     .type(.text)
                     .id(field.key)
@@ -216,20 +238,22 @@ struct WebMetadataForm: Component {
 
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
-        return context.render(AdminMediaAssetPicker(
-            state: .init(
-                field: .init(
-                    key: field.key,
-                    label: field.label,
-                    value: field.value,
-                    error: field.error
-                ),
-                selectedAsset: selectedAsset,
-                browsePath: browsePath,
-                allowedExtensions: ["png", "jpg", "jpeg", "webp"],
-                outputMode: .originalURL
+        return context.render(
+            AdminMediaAssetPicker(
+                state: .init(
+                    field: .init(
+                        key: field.key,
+                        label: field.label,
+                        value: field.value,
+                        error: field.error
+                    ),
+                    selectedAsset: selectedAsset,
+                    browsePath: browsePath,
+                    allowedExtensions: ["png", "jpg", "jpeg", "webp"],
+                    outputMode: .originalURL
+                )
             )
-        ))
+        )
     }
 
     private func checkbox(
@@ -238,14 +262,16 @@ struct WebMetadataForm: Component {
     ) -> Section {
 
         Section {
-            context.render(CheckboxField(
-                state: .init(
-                    key: field.key,
-                    label: field.label,
-                    value: field.value,
-                    error: field.error
+            context.render(
+                CheckboxField(
+                    state: .init(
+                        key: field.key,
+                        label: field.label,
+                        value: field.value,
+                        error: field.error
+                    )
                 )
-            ))
+            )
         }
         .if(field.error != nil) { $0.class("has-error") }
     }

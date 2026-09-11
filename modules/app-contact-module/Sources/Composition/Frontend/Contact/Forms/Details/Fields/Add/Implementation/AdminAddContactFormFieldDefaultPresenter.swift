@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminAddContactFormFieldDefaultPresenter:
     AdminAddContactFormFieldPresenter
@@ -19,7 +19,8 @@ struct AdminAddContactFormFieldDefaultPresenter:
         let breadcrumb = AdminBreadcrumb.State(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Contact", link: "/admin/contact/"),
-            .init(label: "Forms", link: "/admin/contact/forms/")])
+            .init(label: "Forms", link: "/admin/contact/forms/"),
+        ])
         return renderEngine.renderAdminPage(
             request: request,
             title: "Add contact form field",

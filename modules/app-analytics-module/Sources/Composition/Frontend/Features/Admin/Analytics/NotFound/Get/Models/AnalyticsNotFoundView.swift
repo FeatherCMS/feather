@@ -5,8 +5,8 @@ import Foundation
 import HTML
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AnalyticsNotFoundView: Component {
 
@@ -16,12 +16,15 @@ struct AnalyticsNotFoundView: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(
-                state: .init(
-                    links: [
-                        .init(label: "Redirect", link: "/admin/analytics/")]
+            context.render(
+                AdminBreadcrumb(
+                    state: .init(
+                        links: [
+                            .init(label: "Redirect", link: "/admin/analytics/")
+                        ]
+                    )
                 )
-            ))
+            )
             H1("404s")
             filters
             dailyChart

@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AssetEditView: Component {
     struct State {
@@ -35,31 +35,46 @@ struct AssetEditView: Component {
                     P(error).class("error")
                 }
 
-                context.render(AdminDetailsField(
-                    label: "Storage key",
-                    value: state.model.storageKey
-                ))
-                context.render(AdminDetailsField(label: "Type", value: state.model.type))
-                context.render(AdminDetailsField(label: "Status", value: state.model.status))
-                context.render(AdminDetailsField(
-                    label: "Size bytes",
-                    value: "\(state.model.sizeBytes)"
-                ))
+                context.render(
+                    AdminDetailsField(
+                        label: "Storage key",
+                        value: state.model.storageKey
+                    )
+                )
+                context.render(
+                    AdminDetailsField(label: "Type", value: state.model.type)
+                )
+                context.render(
+                    AdminDetailsField(
+                        label: "Status",
+                        value: state.model.status
+                    )
+                )
+                context.render(
+                    AdminDetailsField(
+                        label: "Size bytes",
+                        value: "\(state.model.sizeBytes)"
+                    )
+                )
 
                 Form {
-                    context.render(FormInputField(
-                        name: "title",
-                        label: "Title",
-                        value: state.model.title,
-                        inputClass: "text-input"
-                    ))
+                    context.render(
+                        FormInputField(
+                            name: "title",
+                            label: "Title",
+                            value: state.model.title,
+                            inputClass: "text-input"
+                        )
+                    )
 
-                    context.render(FormInputField(
-                        name: "altText",
-                        label: "Alt text",
-                        value: state.model.altText,
-                        inputClass: "text-input"
-                    ))
+                    context.render(
+                        FormInputField(
+                            name: "altText",
+                            label: "Alt text",
+                            value: state.model.altText,
+                            inputClass: "text-input"
+                        )
+                    )
 
                     Section {
                         Div { Button("Save").type(.submit) }.class("button-row")

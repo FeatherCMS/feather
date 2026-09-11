@@ -1,8 +1,8 @@
 import FeatherAdmin
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListAuthSessionView: Component {
     struct State {
@@ -15,46 +15,55 @@ struct AdminListAuthSessionView: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(
-                state: .init(
-                    links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "User", link: "/admin/user/"),
-                        .init(
-                            label: "Identity",
-                            link: "/admin/user/identities/\(state.identityID)/"
-                        )]
+            context.render(
+                AdminBreadcrumb(
+                    state: .init(
+                        links: [
+                            .init(label: "Admin", link: "/admin/"),
+                            .init(label: "User", link: "/admin/user/"),
+                            .init(
+                                label: "Identity",
+                                link:
+                                    "/admin/user/identities/\(state.identityID)/"
+                            ),
+                        ]
+                    )
                 )
-            ))
+            )
             H1("Sessions")
-            context.render(AdminPillTabs(links: [
-                .init(
-                    label: "Details",
-                    href: "/admin/user/identities/\(state.identityID)/",
-                    isCurrent: false
-                ),
-                .init(
-                    label: "Profile",
-                    href: "/admin/account/users/\(state.identityID)/profile/",
-                    isCurrent: false
-                ),
-                .init(
-                    label: "Settings",
-                    href: "/admin/account/users/\(state.identityID)/settings/",
-                    isCurrent: false
-                ),
-                .init(
-                    label: "Sessions",
-                    href:
-                        "/admin/user/identities/\(state.identityID)/sessions/",
-                    isCurrent: true
-                ),
-                .init(
-                    label: "Magic links",
-                    href: "/admin/auth/magic-links/?userId=\(state.identityID)",
-                    isCurrent: false
-                ),
-            ]))
+            context.render(
+                AdminPillTabs(links: [
+                    .init(
+                        label: "Details",
+                        href: "/admin/user/identities/\(state.identityID)/",
+                        isCurrent: false
+                    ),
+                    .init(
+                        label: "Profile",
+                        href:
+                            "/admin/account/users/\(state.identityID)/profile/",
+                        isCurrent: false
+                    ),
+                    .init(
+                        label: "Settings",
+                        href:
+                            "/admin/account/users/\(state.identityID)/settings/",
+                        isCurrent: false
+                    ),
+                    .init(
+                        label: "Sessions",
+                        href:
+                            "/admin/user/identities/\(state.identityID)/sessions/",
+                        isCurrent: true
+                    ),
+                    .init(
+                        label: "Magic links",
+                        href:
+                            "/admin/auth/magic-links/?userId=\(state.identityID)",
+                        isCurrent: false
+                    ),
+                ])
+            )
             if state.items.isEmpty {
                 P("No active sessions.")
             }
@@ -76,12 +85,14 @@ struct AdminListAuthSessionView: Component {
                                 Td(item.isPersistent ? "Yes" : "No")
                                 Td {
                                     if state.canRemove {
-                                        context.render(AdminNavigationButton(
-                                            "Remove",
-                                            href:
-                                                "/admin/user/identities/\(state.identityID)/sessions/\(item.id)/remove/",
-                                            classes: ["danger"]
-                                        ))
+                                        context.render(
+                                            AdminNavigationButton(
+                                                "Remove",
+                                                href:
+                                                    "/admin/user/identities/\(state.identityID)/sessions/\(item.id)/remove/",
+                                                classes: ["danger"]
+                                            )
+                                        )
                                     }
                                 }
                             }

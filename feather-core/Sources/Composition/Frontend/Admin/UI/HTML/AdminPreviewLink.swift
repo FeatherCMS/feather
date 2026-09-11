@@ -2,8 +2,8 @@ import CSS
 import Foundation
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct AdminPreviewLink: Component {
     public let slug: String?
@@ -15,15 +15,17 @@ public struct AdminPreviewLink: Component {
     }
 
     public func selectors() -> [any CSS.Selector] {
-        [Class("admin-preview-link") {
-            Display(.inlineFlex)
-            AlignItems(.center)
-            JustifyContent(.center)
-            Width(1.25.rem)
-            Height(1.25.rem)
-            MarginLeft(0.4.rem)
-            VerticalAlign(.middle)
-        }]
+        [
+            Class("admin-preview-link") {
+                Display(.inlineFlex)
+                AlignItems(.center)
+                JustifyContent(.center)
+                Width(1.25.rem)
+                Height(1.25.rem)
+                MarginLeft(0.4.rem)
+                VerticalAlign(.middle)
+            }
+        ]
     }
 
     public func html(context: inout RenderContext) -> A {
@@ -31,7 +33,8 @@ public struct AdminPreviewLink: Component {
             FeatherIcons.externalLink()
         }
         if let slug = normalizedSlug {
-            link = link
+            link =
+                link
                 .href("/\(slug)/")
                 .target(.blank)
                 .ariaLabel(label)

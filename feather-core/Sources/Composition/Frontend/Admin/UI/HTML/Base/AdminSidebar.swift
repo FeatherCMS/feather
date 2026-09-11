@@ -9,8 +9,8 @@ import CSS
 import HTML
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct AdminSidebar: Component {
 
@@ -86,7 +86,9 @@ public struct AdminSidebar: Component {
                                         Li {
                                             if let link = menu.current.link {
                                                 A {
-                                                    menu.current.icon.class("menu-icon")
+                                                    menu.current.icon.class(
+                                                        "menu-icon"
+                                                    )
                                                     Span(menu.current.label)
                                                 }
                                                 .title(menu.current.label)
@@ -96,7 +98,9 @@ public struct AdminSidebar: Component {
                                                 }
                                             }
                                             else {
-                                                menu.current.icon.class("menu-icon")
+                                                menu.current.icon.class(
+                                                    "menu-icon"
+                                                )
                                                 Span(menu.current.label)
                                             }
                                         }
@@ -126,7 +130,9 @@ public struct AdminSidebar: Component {
                                                     .href(link)
                                                 }
                                                 else {
-                                                    menu.current.icon.class("menu-icon")
+                                                    menu.current.icon.class(
+                                                        "menu-icon"
+                                                    )
                                                     Span(menu.current.label)
                                                 }
                                             }
@@ -140,7 +146,9 @@ public struct AdminSidebar: Component {
                                                 for child in menu.children {
                                                     Li {
                                                         A {
-                                                            child.icon.class("menu-icon")
+                                                            child.icon.class(
+                                                                "menu-icon"
+                                                            )
                                                             Span(child.label)
                                                         }
                                                         .title(child.label)

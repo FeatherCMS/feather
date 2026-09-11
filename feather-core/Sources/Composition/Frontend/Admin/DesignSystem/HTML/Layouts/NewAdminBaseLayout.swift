@@ -9,8 +9,8 @@ import DOM
 import HTML
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminBaseLayout<T: Component>: Component {
 
@@ -24,7 +24,9 @@ public struct NewAdminBaseLayout<T: Component>: Component {
         menuGroups: [NewAdminSidebar.Group],
         notification: AdminNotification? = nil
     ) {
-        self.topbar = .init(notification: notification.map(NewAdminNotification.init))
+        self.topbar = .init(
+            notification: notification.map(NewAdminNotification.init)
+        )
         self.sidebar = .init(groups: menuGroups)
         self.content = content
     }

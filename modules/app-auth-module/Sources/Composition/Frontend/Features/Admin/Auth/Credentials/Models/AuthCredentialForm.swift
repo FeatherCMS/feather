@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthCredentialForm: Component {
     struct FieldState: FeatherAdmin.Object {
@@ -53,23 +53,27 @@ struct AuthCredentialForm: Component {
                 .type(.hidden)
                 .name("userId")
                 .value(state.identity.value)
-            context.render(AdminAutocompleteField(
-                state: .init(
-                    key: state.email.key,
-                    label: "Auth email",
-                    placeholder: "Select an email",
-                    options: state.identityOptions,
-                    error: state.email.error,
-                    selectionMode: .single,
-                    isEnabled: true
+            context.render(
+                AdminAutocompleteField(
+                    state: .init(
+                        key: state.email.key,
+                        label: "Auth email",
+                        placeholder: "Select an email",
+                        options: state.identityOptions,
+                        error: state.email.error,
+                        selectionMode: .single,
+                        isEnabled: true
+                    )
                 )
-            ))
+            )
             Section {
                 Label {
-                    context.render(AdminFieldLabel(
-                        label: state.password.label,
-                        required: state.passwordRequired
-                    ))
+                    context.render(
+                        AdminFieldLabel(
+                            label: state.password.label,
+                            required: state.passwordRequired
+                        )
+                    )
                     Input()
                         .type(.password)
                         .id(state.password.key)
@@ -85,11 +89,13 @@ struct AuthCredentialForm: Component {
                 Div {
                     Button(submitLabel).type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            "Remove credential",
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Remove credential",
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")

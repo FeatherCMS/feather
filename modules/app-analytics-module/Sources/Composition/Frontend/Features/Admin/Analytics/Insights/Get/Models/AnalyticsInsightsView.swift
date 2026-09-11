@@ -5,8 +5,8 @@ import Foundation
 import HTML
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AnalyticsInsightsView: Component {
 
@@ -34,7 +34,8 @@ struct AnalyticsInsightsView: Component {
     private var breadcrumb: AdminBreadcrumb.State {
         .init(
             links: [
-                .init(label: "Analytics", link: "/admin/analytics/")]
+                .init(label: "Analytics", link: "/admin/analytics/")
+            ]
         )
     }
 

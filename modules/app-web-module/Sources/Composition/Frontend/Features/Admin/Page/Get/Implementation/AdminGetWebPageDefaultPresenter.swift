@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetWebPageDefaultPresenter: AdminGetWebPagePresenter {
     let request: Request
@@ -69,6 +69,7 @@ struct AdminGetWebPageDefaultPresenter: AdminGetWebPagePresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Pages", link: "/admin/web/pages/")])
+            .init(label: "Pages", link: "/admin/web/pages/"),
+        ])
     }
 }

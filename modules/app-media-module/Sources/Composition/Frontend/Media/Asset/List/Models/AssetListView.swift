@@ -9,8 +9,8 @@ import MediaAdminAPI
 import MediaContracts
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 import class Foundation.ByteCountFormatter
 import struct Foundation.CharacterSet
@@ -268,16 +268,18 @@ struct AssetListView: Component {
                     emptyState()
                 }
 
-                context.render(ListTablePagination(
-                    state: .init(
-                        path: "/admin/media/assets/",
-                        page: state.page,
-                        pageSize: state.pageSize,
-                        total: state.total,
-                        search: state.search,
-                        queryItems: queryItems()
+                context.render(
+                    ListTablePagination(
+                        state: .init(
+                            path: "/admin/media/assets/",
+                            page: state.page,
+                            pageSize: state.pageSize,
+                            total: state.total,
+                            search: state.search,
+                            queryItems: queryItems()
+                        )
                     )
-                ))
+                )
                 if state.picker.isEnabled {
                     Script(pickerScript())
                 }
@@ -502,7 +504,9 @@ extension AssetListView {
         Div {
             Div {
                 if state.canAdd && !state.picker.isEnabled {
-                    context.render(AdminNavigationButton("Add asset", href: addAssetPath()))
+                    context.render(
+                        AdminNavigationButton("Add asset", href: addAssetPath())
+                    )
                 }
                 if state.canAdd && !state.picker.isEnabled {
                     A("Add folder")
@@ -517,15 +521,17 @@ extension AssetListView {
                     pickerSearchControls()
                 }
                 else {
-                    context.render(ListTableSearchForm(
-                        state: .init(
-                            action: "/admin/media/assets/",
-                            placeholder: "Quick search assets",
-                            search: state.search,
-                            resetPath: browsePath(parentId: state.parentId),
-                            queryItems: queryItems()
+                    context.render(
+                        ListTableSearchForm(
+                            state: .init(
+                                action: "/admin/media/assets/",
+                                placeholder: "Quick search assets",
+                                search: state.search,
+                                resetPath: browsePath(parentId: state.parentId),
+                                queryItems: queryItems()
+                            )
                         )
-                    ))
+                    )
                 }
                 Div {
                     A("Grid")
@@ -627,7 +633,9 @@ extension AssetListView {
         }
     }
 
-    fileprivate func gridContent(context: inout RenderContext) -> some FlowContent {
+    fileprivate func gridContent(context: inout RenderContext)
+        -> some FlowContent
+    {
         Div {
             if let currentFolder = state.currentFolder {
                 upCard(parentId: currentFolder.parentId, context: &context)
@@ -642,55 +650,72 @@ extension AssetListView {
         .class("grid", "grid-421", "media-assets-grid")
     }
 
-    fileprivate func listContent(context: inout RenderContext) -> some FlowContent {
+    fileprivate func listContent(context: inout RenderContext)
+        -> some FlowContent
+    {
 
         let canRemove =
             state.permissions.contains(
                 MediaPermissions.Assets.delete.rawValue
             )
             && !state.picker.isEnabled
-        return context.render(ListTableRemoveForm(
-            state: .init(
-                action: "/admin/media/assets/remove/",
-                page: state.page,
-                search: state.search,
-                canRemove: canRemove,
-                buttonTitle: "Remove selected",
-                queryItems: queryItems()
-            ),
-            table: context.render(ListTableShell(
-                table: Table {
-                    Thead {
-                        Tr {
-                            if canRemove {
-                                context.render(ListTableSelectAllCheckbox())
+        return context.render(
+            ListTableRemoveForm(
+                state: .init(
+                    action: "/admin/media/assets/remove/",
+                    page: state.page,
+                    search: state.search,
+                    canRemove: canRemove,
+                    buttonTitle: "Remove selected",
+                    queryItems: queryItems()
+                ),
+                table: context.render(
+                    ListTableShell(
+                        table: Table {
+                            Thead {
+                                Tr {
+                                    if canRemove {
+                                        context.render(
+                                            ListTableSelectAllCheckbox()
+                                        )
+                                    }
+                                    Th("Preview").columnWidth(percent: 10)
+                                    Th("File name")
+                                    Th("Type").columnWidth(percent: 12)
+                                    Th("Size").columnWidth(percent: 12)
+                                    Th("Actions").columnWidth(percent: 20)
+                                }
                             }
-                            Th("Preview").columnWidth(percent: 10)
-                            Th("File name")
-                            Th("Type").columnWidth(percent: 12)
-                            Th("Size").columnWidth(percent: 12)
-                            Th("Actions").columnWidth(percent: 20)
+                            Tbody {
+                                if let currentFolder = state.currentFolder {
+                                    upRow(
+                                        parentId: currentFolder.parentId,
+                                        canRemove: canRemove,
+                                        context: &context
+                                    )
+                                }
+                                for folder in state.folders {
+                                    folderRow(
+                                        folder,
+                                        canRemove: canRemove,
+                                        context: &context
+                                    )
+                                }
+                                for item in state.items {
+                                    assetRow(
+                                        item,
+                                        canRemove: canRemove,
+                                        context: &context
+                                    )
+                                }
+                            }
                         }
-                    }
-                    Tbody {
-                        if let currentFolder = state.currentFolder {
-                            upRow(
-                                parentId: currentFolder.parentId,
-                                canRemove: canRemove
-                            , context: &context)
-                        }
-                        for folder in state.folders {
-                            folderRow(folder, canRemove: canRemove, context: &context)
-                        }
-                        for item in state.items {
-                            assetRow(item, canRemove: canRemove, context: &context)
-                        }
-                    }
-                }
-                .class("cms-table", "action-table")
-                .if(canRemove) { $0.class("select-table") }
-            ))
-        ))
+                        .class("cms-table", "action-table")
+                        .if(canRemove) { $0.class("select-table") }
+                    )
+                )
+            )
+        )
     }
 
     fileprivate func upCard(
@@ -885,7 +910,10 @@ extension AssetListView {
             if canRemove {
                 Td("")
             }
-            parentPreviewCell(href: browsePath(parentId: parentId), context: &context)
+            parentPreviewCell(
+                href: browsePath(parentId: parentId),
+                context: &context
+            )
             Td {
                 A("Up to parent").href(browsePath(parentId: parentId))
             }
@@ -913,8 +941,9 @@ extension AssetListView {
             }
             folderPreviewCell(
                 label: folder.name,
-                href: browsePath(parentId: folder.id)
-            , context: &context)
+                href: browsePath(parentId: folder.id),
+                context: &context
+            )
             folderTitleCell(for: folder)
             Td("Folder")
                 .data("label", "Type")
@@ -956,14 +985,21 @@ extension AssetListView {
         let originalURL = assetOriginalLink(for: item.asset)
         return Tr {
             if canRemove {
-                context.render(ListTableRowSelectCheckbox(state: .init(id: item.asset.id)))
+                context.render(
+                    ListTableRowSelectCheckbox(state: .init(id: item.asset.id))
+                )
             }
             assetPreviewCell(
                 for: item,
                 previewURL: previewURL,
-                originalURL: originalURL
-            , context: &context)
-            assetTitleCell(for: item, originalURL: originalURL, context: &context)
+                originalURL: originalURL,
+                context: &context
+            )
+            assetTitleCell(
+                for: item,
+                originalURL: originalURL,
+                context: &context
+            )
             Td(item.asset._type)
                 .data("label", "Type")
             Td(fileSizeLabel(bytes: item.asset.sizeBytes))

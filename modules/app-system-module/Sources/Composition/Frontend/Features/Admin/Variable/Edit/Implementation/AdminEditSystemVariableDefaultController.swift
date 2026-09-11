@@ -17,7 +17,9 @@ struct AdminEditSystemVariableDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.update) else {
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
+        else {
             throw HTTPError(.forbidden)
         }
         let runtime = buildRuntime(request, context)
@@ -50,7 +52,9 @@ struct AdminEditSystemVariableDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.update) else {
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
+        else {
             throw HTTPError(.forbidden)
         }
         let runtime = buildRuntime(request, context)

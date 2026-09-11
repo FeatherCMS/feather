@@ -14,8 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AppLogoutAuthDefaultInteractor: AppLogoutAuthInteractor {
     private let repository: any AppLogoutAuthRepository

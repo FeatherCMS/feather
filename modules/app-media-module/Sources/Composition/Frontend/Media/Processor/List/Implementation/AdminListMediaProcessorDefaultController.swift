@@ -7,8 +7,8 @@ import MediaAdminAPI
 import MediaContracts
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListMediaProcessorDefaultController:
     AdminListMediaProcessorController

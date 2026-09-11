@@ -13,8 +13,7 @@ public struct NewAdminDesignSystem {
     public init() {}
 
     @Builder<CSS.Rule>
-    public func rules(
-    ) -> [any Rule] {
+    public func rules() -> [any Rule] {
         variables()
         base()
         layouts()

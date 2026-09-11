@@ -6,8 +6,8 @@ import Hummingbird
 import SGML
 import UserAdminAPI
 import UserContracts
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
     let request: Request
@@ -125,6 +125,7 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
     private func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/")])
+            .init(label: "User", link: "/admin/user/"),
+        ])
     }
 }

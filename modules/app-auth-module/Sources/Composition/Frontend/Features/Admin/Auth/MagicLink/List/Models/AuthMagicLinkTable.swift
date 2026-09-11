@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthMagicLinkTable: Component {
 
@@ -50,33 +50,38 @@ struct AuthMagicLinkTable: Component {
                 H1("User magic links")
 
                 if let userID = state.userID {
-                    context.render(AdminPillTabs(links: [
-                        .init(
-                            label: "Details",
-                            href: "/admin/user/identities/\(userID)/",
-                            isCurrent: false
-                        ),
-                        .init(
-                            label: "Profile",
-                            href: "/admin/account/users/\(userID)/profile/",
-                            isCurrent: false
-                        ),
-                        .init(
-                            label: "Settings",
-                            href: "/admin/account/users/\(userID)/settings/",
-                            isCurrent: false
-                        ),
-                        .init(
-                            label: "Sessions",
-                            href: "/admin/user/identities/\(userID)/sessions/",
-                            isCurrent: false
-                        ),
-                        .init(
-                            label: "Magic links",
-                            href: "/admin/auth/magic-links/?userId=\(userID)",
-                            isCurrent: true
-                        ),
-                    ]))
+                    context.render(
+                        AdminPillTabs(links: [
+                            .init(
+                                label: "Details",
+                                href: "/admin/user/identities/\(userID)/",
+                                isCurrent: false
+                            ),
+                            .init(
+                                label: "Profile",
+                                href: "/admin/account/users/\(userID)/profile/",
+                                isCurrent: false
+                            ),
+                            .init(
+                                label: "Settings",
+                                href:
+                                    "/admin/account/users/\(userID)/settings/",
+                                isCurrent: false
+                            ),
+                            .init(
+                                label: "Sessions",
+                                href:
+                                    "/admin/user/identities/\(userID)/sessions/",
+                                isCurrent: false
+                            ),
+                            .init(
+                                label: "Magic links",
+                                href:
+                                    "/admin/auth/magic-links/?userId=\(userID)",
+                                isCurrent: true
+                            ),
+                        ])
+                    )
                 }
 
                 if state.isAdded {
@@ -90,23 +95,28 @@ struct AuthMagicLinkTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add magic link",
-                            href: "/admin/auth/magic-links/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add magic link",
+                                href: "/admin/auth/magic-links/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/auth/magic-links/",
-                        placeholder: "Quick search magic links",
-                        search: state.search,
-                        queryItems: state.userID.map { [("userId", $0)] } ?? []
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/auth/magic-links/",
+                            placeholder: "Quick search magic links",
+                            search: state.search,
+                            queryItems: state.userID.map { [("userId", $0)] }
+                                ?? []
+                        )
                     )
-                ))
+                )
 
                 if state.links.isEmpty {
                     let totalPages = max(
@@ -141,115 +151,150 @@ struct AuthMagicLinkTable: Component {
                     let canRemove = state.permissions.contains(
                         "auth:magic-links:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/auth/magic-links/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected",
-                            queryItems: state.userID.map { [("userId", $0)] }
-                                ?? []
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("Email")
-                                            .columnWidth(percent: 50)
-                                        Th("Expires At")
-                                            .columnWidth(percent: 24)
-                                        Th("Persistent")
-                                            .columnWidth(percent: 10)
-                                        Th("Used")
-                                            .columnWidth(percent: 10)
-                                        Th("Actions")
-                                    }
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/auth/magic-links/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected",
+                                queryItems: state.userID.map {
+                                    [("userId", $0)]
                                 }
-                                Tbody {
-                                    for link in state.links {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(id: link.id)
-                                                ))
-                                            }
-                                            Td(
-                                                state.emailByAuthEmailId[
-                                                    String(link.credentialId)
-                                                ] ?? "Unknown email"
-                                            )
-                                            .data("label", "Email")
-                                            .columnWidth(percent: 50)
-                                            Td(
-                                                DateFormatting
-                                                    .formatUnixTimestamp(
-                                                        link.expiresAt
+                                    ?? []
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
                                                     )
-                                            )
-                                            .data("label", "Expires At")
-                                            .columnWidth(percent: 24)
-                                            Td(link.isPersistent ? "Yes" : "No")
-                                                .data("label", "Persistent")
-                                                .columnWidth(percent: 10)
-                                            Td(link.isUsed ? "Yes" : "No")
-                                                .data("label", "Used")
-                                                .columnWidth(percent: 10)
-                                            context.render(ListTableRowActions(
-                                                state: .init(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/auth/magic-links/\(link.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                "auth:magic-links:read"
-                                                        ),
-                                                        .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/auth/magic-links/\(link.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                "auth:magic-links:update"
-                                                        ),
-                                                        .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/auth/magic-links/\(link.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                "auth:magic-links:delete"
-                                                        ),
-                                                    ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            ))
+                                                }
+                                                Th("Email")
+                                                    .columnWidth(percent: 50)
+                                                Th("Expires At")
+                                                    .columnWidth(percent: 24)
+                                                Th("Persistent")
+                                                    .columnWidth(percent: 10)
+                                                Th("Used")
+                                                    .columnWidth(percent: 10)
+                                                Th("Actions")
+                                            }
+                                        }
+                                        Tbody {
+                                            for link in state.links {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: link.id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    Td(
+                                                        state.emailByAuthEmailId[
+                                                            String(
+                                                                link
+                                                                    .credentialId
+                                                            )
+                                                        ] ?? "Unknown email"
+                                                    )
+                                                    .data("label", "Email")
+                                                    .columnWidth(percent: 50)
+                                                    Td(
+                                                        DateFormatting
+                                                            .formatUnixTimestamp(
+                                                                link.expiresAt
+                                                            )
+                                                    )
+                                                    .data("label", "Expires At")
+                                                    .columnWidth(percent: 24)
+                                                    Td(
+                                                        link.isPersistent
+                                                            ? "Yes" : "No"
+                                                    )
+                                                    .data("label", "Persistent")
+                                                    .columnWidth(percent: 10)
+                                                    Td(
+                                                        link.isUsed
+                                                            ? "Yes" : "No"
+                                                    )
+                                                    .data("label", "Used")
+                                                    .columnWidth(percent: 10)
+                                                    context.render(
+                                                        ListTableRowActions(
+                                                            state: .init(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        title:
+                                                                            "Details",
+                                                                        href:
+                                                                            "/admin/auth/magic-links/\(link.id)/",
+                                                                        className:
+                                                                            nil,
+                                                                        permission:
+                                                                            "auth:magic-links:read"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Edit",
+                                                                        href:
+                                                                            "/admin/auth/magic-links/\(link.id)/edit/",
+                                                                        className:
+                                                                            "edit",
+                                                                        permission:
+                                                                            "auth:magic-links:update"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Remove",
+                                                                        href:
+                                                                            "/admin/auth/magic-links/\(link.id)/remove/",
+                                                                        className:
+                                                                            "delete",
+                                                                        permission:
+                                                                            "auth:magic-links:delete"
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    state
+                                                                    .permissions
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/auth/magic-links/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search,
-                            queryItems: state.userID.map { [("userId", $0)] }
-                                ?? []
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/auth/magic-links/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search,
+                                queryItems: state.userID.map {
+                                    [("userId", $0)]
+                                }
+                                    ?? []
+                            )
+                        )
+                    )
                 }
             }
         }

@@ -89,7 +89,8 @@ struct AdminEditAccountInvitationDefaultPresenter:
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "User", link: "/admin/user/"),
-            .init(label: "Invitations", link: "/admin/account/invitations/")])
+            .init(label: "Invitations", link: "/admin/account/invitations/"),
+        ])
     }
 
     func format(

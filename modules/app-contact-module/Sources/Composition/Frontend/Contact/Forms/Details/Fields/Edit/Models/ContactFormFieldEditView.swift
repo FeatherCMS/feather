@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct ContactFormFieldEditView: Component {
     struct State {
@@ -21,11 +21,13 @@ struct ContactFormFieldEditView: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Edit contact form field")
             if let error = state.error { P(error).class("error") }
-            context.render(ContactFormFieldForm(
-                field: state.field,
-                action: "\(basePath)/\(state.field.id)/edit/",
-                submitLabel: "Save"
-            ))
+            context.render(
+                ContactFormFieldForm(
+                    field: state.field,
+                    action: "\(basePath)/\(state.field.id)/edit/",
+                    submitLabel: "Save"
+                )
+            )
         }
         .class("cms-section")
     }

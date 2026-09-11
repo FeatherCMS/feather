@@ -10,9 +10,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogAuthorDetails: Component {
     struct State {
@@ -63,26 +63,40 @@ struct BlogAuthorDetails: Component {
                 )
             }
             else if let profileImageAssetId = state.author.profileImageAssetId {
-                context.render(AdminDetailsField(
-                    label: "Profile picture asset ID",
-                    value: profileImageAssetId
-                ))
+                context.render(
+                    AdminDetailsField(
+                        label: "Profile picture asset ID",
+                        value: profileImageAssetId
+                    )
+                )
             }
-            context.render(AdminDetailsField(label: "ID", value: state.author.id))
-            context.render(AdminDetailsField(label: "Name", value: state.author.name))
-            context.render(AdminDetailsField(
-                label: "Status",
-                value: state.author.metadata.status.capitalized
-            ))
-            context.render(AdminDetailsField(
-                label: "Published date",
-                value: format(state.author.metadata.publicationDate)
-            ))
-            context.render(AdminDetailsField(
-                label: "Expiration date",
-                value: format(state.author.metadata.expirationDate)
-            ))
-            context.render(AdminDetailsField(label: "Content", value: state.author.content))
+            context.render(
+                AdminDetailsField(label: "ID", value: state.author.id)
+            )
+            context.render(
+                AdminDetailsField(label: "Name", value: state.author.name)
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Status",
+                    value: state.author.metadata.status.capitalized
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Published date",
+                    value: format(state.author.metadata.publicationDate)
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Expiration date",
+                    value: format(state.author.metadata.expirationDate)
+                )
+            )
+            context.render(
+                AdminDetailsField(label: "Content", value: state.author.content)
+            )
 
             Div {
                 if let previewPath = previewPath {
@@ -108,19 +122,24 @@ struct BlogAuthorDetails: Component {
                             : "Publish",
                         classes: ["secondary"]
                     )
-                    context.render(AdminNavigationButton(
-                        "Edit author",
-                        href: "/admin/blog/authors/\(state.author.id)/edit/"
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Edit author",
+                            href: "/admin/blog/authors/\(state.author.id)/edit/"
+                        )
+                    )
                 }
                 if state.permissions.contains(
                     BlogPermissions.Authors.delete.rawValue
                 ) {
-                    context.render(AdminNavigationButton(
-                        "Remove author",
-                        href: "/admin/blog/authors/\(state.author.id)/remove/",
-                        classes: ["danger"]
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Remove author",
+                            href:
+                                "/admin/blog/authors/\(state.author.id)/remove/",
+                            classes: ["danger"]
+                        )
+                    )
                 }
             }
             .class(
@@ -140,11 +159,13 @@ struct BlogAuthorDetails: Component {
                 BlogPermissions.AuthorLinks.create.rawValue
             ) {
                 Div {
-                    context.render(AdminNavigationButton(
-                        "Add link",
-                        href:
-                            "/admin/blog/authors/\(state.author.id)/links/add/"
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Add link",
+                            href:
+                                "/admin/blog/authors/\(state.author.id)/links/add/"
+                        )
+                    )
                 }
                 .class("button-row", "blog-author-details-link-add")
             }
@@ -155,88 +176,107 @@ struct BlogAuthorDetails: Component {
                 let canRemove = state.permissions.contains(
                     "blog:author-links:delete"
                 )
-                context.render(ListTableRemoveForm(
-                    state: .init(
-                        action:
-                            "/admin/blog/authors/\(state.author.id)/links/remove/",
-                        page: 1,
-                        search: "",
-                        canRemove: canRemove,
-                        buttonTitle: "Remove selected"
-                    ),
-                    table: context.render(ListTableShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    if canRemove {
-                                        context.render(ListTableSelectAllCheckbox())
-                                    }
-                                    Th("Label")
-                                    Th("URL")
-                                    Th("Priority")
-                                    Th("Blank")
-                                    Th("Permission")
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for item in state.author.items {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableRowSelectCheckbox(
-                                                state: .init(id: item.id)
-                                            ))
+                context.render(
+                    ListTableRemoveForm(
+                        state: .init(
+                            action:
+                                "/admin/blog/authors/\(state.author.id)/links/remove/",
+                            page: 1,
+                            search: "",
+                            canRemove: canRemove,
+                            buttonTitle: "Remove selected"
+                        ),
+                        table: context.render(
+                            ListTableShell(
+                                table: Table {
+                                    Thead {
+                                        Tr {
+                                            if canRemove {
+                                                context.render(
+                                                    ListTableSelectAllCheckbox()
+                                                )
+                                            }
+                                            Th("Label")
+                                            Th("URL")
+                                            Th("Priority")
+                                            Th("Blank")
+                                            Th("Permission")
+                                            Th("Actions")
                                         }
-                                        Td(item.label)
-                                            .data("label", "Label")
-                                        Td(item.url)
-                                            .data("label", "URL")
-                                        Td("\(item.priority)")
-                                            .data("label", "Priority")
-                                        Td(item.isBlank ? "Yes" : "No")
-                                            .data("label", "Blank")
-                                        Td(item.permission)
-                                            .data("label", "Permission")
-                                        context.render(ListTableRowActions(
-                                            state: .init(
-                                                label: "Actions",
-                                                actions: [
-                                                    .init(
-                                                        title: "Details",
-                                                        href:
-                                                            "/admin/blog/authors/\(state.author.id)/links/\(item.id)/",
-                                                        className: nil,
-                                                        permission:
-                                                            "blog:author-links:read"
-                                                    ),
-                                                    .init(
-                                                        title: "Edit",
-                                                        href:
-                                                            "/admin/blog/authors/\(state.author.id)/links/\(item.id)/edit/",
-                                                        className: "edit",
-                                                        permission:
-                                                            "blog:author-links:update"
-                                                    ),
-                                                    .init(
-                                                        title: "Remove",
-                                                        href:
-                                                            "/admin/blog/authors/\(state.author.id)/links/\(item.id)/remove/",
-                                                        className: "delete",
-                                                        permission:
-                                                            "blog:author-links:delete"
-                                                    ),
-                                                ],
-                                                permissions: state.permissions
-                                            )
-                                        ))
+                                    }
+                                    Tbody {
+                                        for item in state.author.items {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableRowSelectCheckbox(
+                                                            state: .init(
+                                                                id: item.id
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                                Td(item.label)
+                                                    .data("label", "Label")
+                                                Td(item.url)
+                                                    .data("label", "URL")
+                                                Td("\(item.priority)")
+                                                    .data("label", "Priority")
+                                                Td(item.isBlank ? "Yes" : "No")
+                                                    .data("label", "Blank")
+                                                Td(item.permission)
+                                                    .data("label", "Permission")
+                                                context.render(
+                                                    ListTableRowActions(
+                                                        state: .init(
+                                                            label: "Actions",
+                                                            actions: [
+                                                                .init(
+                                                                    title:
+                                                                        "Details",
+                                                                    href:
+                                                                        "/admin/blog/authors/\(state.author.id)/links/\(item.id)/",
+                                                                    className:
+                                                                        nil,
+                                                                    permission:
+                                                                        "blog:author-links:read"
+                                                                ),
+                                                                .init(
+                                                                    title:
+                                                                        "Edit",
+                                                                    href:
+                                                                        "/admin/blog/authors/\(state.author.id)/links/\(item.id)/edit/",
+                                                                    className:
+                                                                        "edit",
+                                                                    permission:
+                                                                        "blog:author-links:update"
+                                                                ),
+                                                                .init(
+                                                                    title:
+                                                                        "Remove",
+                                                                    href:
+                                                                        "/admin/blog/authors/\(state.author.id)/links/\(item.id)/remove/",
+                                                                    className:
+                                                                        "delete",
+                                                                    permission:
+                                                                        "blog:author-links:delete"
+                                                                ),
+                                                            ],
+                                                            permissions: state
+                                                                .permissions
+                                                        )
+                                                    )
+                                                )
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        }
-                        .class("cms-table", "action-table")
-                        .if(canRemove) { $0.class("select-table") }
-                    ))
-                ))
+                                .class("cms-table", "action-table")
+                                .if(canRemove) { $0.class("select-table") }
+                            )
+                        )
+                    )
+                )
             }
         }
         .class("cms-section")

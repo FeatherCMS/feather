@@ -11,11 +11,14 @@ import WebBuilders
 extension NewAdminDesignSystem {
 
     @Builder<CSS.Rule>
-    func navigation(
-    ) -> [any Rule] {
+    func navigation() -> [any Rule] {
         Media {
             Custom(".group + .group") {
-                BorderTop(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
+                BorderTop(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Secondary.border)
+                )
             }
             Custom(".group-label") {
                 Display(.block)
@@ -68,8 +71,16 @@ extension NewAdminDesignSystem {
                 Top(50.percent)
                 Width(7.px)
                 Height(7.px)
-                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Accents.Primary.border))
-                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Accents.Primary.border))
+                BorderRight(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Accents.Primary.border)
+                )
+                BorderBottom(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Accents.Primary.border)
+                )
                 UnsafeRawProperty(
                     name: "transform",
                     value: "translateY(-50%) rotate(-45deg)"
@@ -107,7 +118,10 @@ extension NewAdminDesignSystem {
                 Width(100.percent)
                 MaxHeight(0)
                 Overflow(.hidden)
-                UnsafeRawProperty(name: "transition", value: "max-height 0.22s ease-out")
+                UnsafeRawProperty(
+                    name: "transition",
+                    value: "max-height 0.22s ease-out"
+                )
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
             }
             Custom("#menuToggle:checked ~ .menu") {
@@ -124,14 +138,26 @@ extension NewAdminDesignSystem {
                 )
                 UnsafeRawProperty(name: "transform-origin", value: "50% 50%")
             }
-            Custom("body:has(#menuToggle:checked) .menu-trigger-mobile line:nth-child(1)") {
+            Custom(
+                "body:has(#menuToggle:checked) .menu-trigger-mobile line:nth-child(1)"
+            ) {
                 Transform(.translateX((-50).px))
             }
-            Custom("body:has(#menuToggle:checked) .menu-trigger-mobile line:nth-child(2)") {
-                UnsafeRawProperty(name: "transform", value: "translateY(6px) rotate(45deg)")
+            Custom(
+                "body:has(#menuToggle:checked) .menu-trigger-mobile line:nth-child(2)"
+            ) {
+                UnsafeRawProperty(
+                    name: "transform",
+                    value: "translateY(6px) rotate(45deg)"
+                )
             }
-            Custom("body:has(#menuToggle:checked) .menu-trigger-mobile line:nth-child(3)") {
-                UnsafeRawProperty(name: "transform", value: "translateY(-6px) rotate(-45deg)")
+            Custom(
+                "body:has(#menuToggle:checked) .menu-trigger-mobile line:nth-child(3)"
+            ) {
+                UnsafeRawProperty(
+                    name: "transform",
+                    value: "translateY(-6px) rotate(-45deg)"
+                )
             }
         }
         Media(.minWidth("600px")) {
@@ -143,8 +169,16 @@ extension NewAdminDesignSystem {
                 Width(250.px)
                 MaxHeight(.none)
                 Overflow(.hidden)
-                BorderRight(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
-                BorderBottom(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                BorderRight(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
+                BorderBottom(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
             }
             Custom(".menu .group-label") {
                 Overflow(.hidden)
@@ -171,7 +205,9 @@ extension NewAdminDesignSystem {
                 PaddingBottom(0.px)
                 Transform(.translateX((-6).px))
             }
-            Custom("#menuToggle:checked ~ .menu .submenu-label span, #menuToggle:checked ~ .menu li a span") {
+            Custom(
+                "#menuToggle:checked ~ .menu .submenu-label span, #menuToggle:checked ~ .menu li a span"
+            ) {
                 MaxWidth(0.px)
                 Opacity(0)
                 Transform(.translateX((-4).px))
@@ -186,7 +222,9 @@ extension NewAdminDesignSystem {
                 Width(100.percent)
                 Overflow(.hidden)
             }
-            Custom("#menuToggle:checked ~ .menu .submenu-label, #menuToggle:checked ~ .menu li a") {
+            Custom(
+                "#menuToggle:checked ~ .menu .submenu-label, #menuToggle:checked ~ .menu li a"
+            ) {
                 JustifyContent(.center)
                 Gap(0.px)
                 Padding(16.px)
@@ -194,12 +232,17 @@ extension NewAdminDesignSystem {
             Custom("#menuToggle:checked ~ .menu .submenu-label > a") {
                 PointerEvents(.none)
             }
-            Custom("#menuToggle:checked ~ .menu .has-submenu > .submenu-toggle:checked + .submenu-label + .sub-menu") {
+            Custom(
+                "#menuToggle:checked ~ .menu .has-submenu > .submenu-toggle:checked + .submenu-label + .sub-menu"
+            ) {
                 MaxHeight(.none)
             }
             Class("menu-trigger-desktop") {
                 Display(.block)
-                UnsafeRawProperty(name: "transition", value: "transform 0.22s ease-out")
+                UnsafeRawProperty(
+                    name: "transition",
+                    value: "transform 0.22s ease-out"
+                )
             }
             Class("menu-trigger-mobile") {
                 Display(.none)

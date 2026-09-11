@@ -1,13 +1,12 @@
-import HTML
 import CSS
+import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminListToolbar: Component {
 
-    public func rules(
-    ) -> [any Rule] {
+    public func rules() -> [any Rule] {
         Media {
             Class("list-toolbar") {
                 Display(.flex)

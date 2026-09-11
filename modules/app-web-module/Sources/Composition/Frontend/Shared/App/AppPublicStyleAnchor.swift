@@ -3,8 +3,8 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AppPublicStyleAnchor: Component {
     func selectors() -> [any Selector] {
@@ -29,9 +29,9 @@ struct AppPublicStyleAnchor: Component {
             Display(.grid)
             Gap(20.px)
             Padding(28.px)
-//            Border(1.px, .solid, .variable("cms-gray-3"))
+            //            Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(24.px)
-//            Background(.variable("cms-white"))
+            //            Background(.variable("cms-white"))
             UnsafeRawProperty(name: "box-shadow", value: "var(--cms-shadow)")
         }
         Class("public-heading") {
@@ -72,7 +72,7 @@ struct AppPublicStyleAnchor: Component {
             AlignItems(.center)
             Padding(vertical: 8.px, horizontal: 12.px)
             BorderRadius(999.px)
-//            Background(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
             // Color(.variable("cms-light-font"))
             FontSize(0.84.rem)
             FontWeight(600)
@@ -81,7 +81,7 @@ struct AppPublicStyleAnchor: Component {
             BorderRadius(20.px)
             // Border(1.px, .solid, .variable("cms-gray-3"))
             Overflow(.hidden)
-//            Background(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
         }
         Custom(".public-image img") {
             Display(.block)
@@ -102,7 +102,7 @@ struct AppPublicStyleAnchor: Component {
             Padding(18.px)
             // Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(18.px)
-//            Background(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
             TextDecoration(.none)
         }
         Custom(".public-card h2, .public-card h3") {
@@ -125,7 +125,7 @@ struct AppPublicStyleAnchor: Component {
         }
         Custom(".public-section h2") {
             Margin(0)
-//            Color(.variable(TokenKey.Background.primary))
+            //            Color(.variable(TokenKey.Background.primary))
             FontSize(1.45.rem)
         }
         Class("public-links") {
@@ -138,7 +138,7 @@ struct AppPublicStyleAnchor: Component {
             AlignItems(.center)
             Padding(vertical: 8.px, horizontal: 12.px)
             BorderRadius(999.px)
-//            Background(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
             // Color(.variable("cms-strong-font"))
             TextDecoration(.none)
             FontWeight(600)

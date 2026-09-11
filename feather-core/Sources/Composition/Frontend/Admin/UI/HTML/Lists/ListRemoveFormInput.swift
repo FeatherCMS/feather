@@ -48,17 +48,29 @@ public struct ListRemoveFormInput: Decodable, Sendable {
             ids = [value]
         }
         else {
-            ids = try container.decodeIfPresent([String].self, forKey: .idsArray)
+            ids = try container.decodeIfPresent(
+                [String].self,
+                forKey: .idsArray
+            )
         }
         if ids == nil {
-            if let values = try? container.decodeIfPresent([String].self, forKey: .selectedIds) {
+            if let values = try? container.decodeIfPresent(
+                [String].self,
+                forKey: .selectedIds
+            ) {
                 selectedIds = values
             }
-            else if let value = try? container.decodeIfPresent(String.self, forKey: .selectedIds) {
+            else if let value = try? container.decodeIfPresent(
+                String.self,
+                forKey: .selectedIds
+            ) {
                 selectedIds = [value]
             }
             else {
-                selectedIds = try container.decodeIfPresent([String].self, forKey: .selectedIdsArray)
+                selectedIds = try container.decodeIfPresent(
+                    [String].self,
+                    forKey: .selectedIdsArray
+                )
             }
         }
 

@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserRoleEdit: Component {
 
@@ -24,13 +24,15 @@ struct UserRoleEdit: Component {
 
             H1("Edit user role")
             if state.isEdited { P("User role edited successfully.") }
-            context.render(UserRoleForm(
-                state: state.form,
-                action: "/admin/user/roles/\(state.id)/edit/",
-                submitLabel: "Edit role",
-                removeHref: "/admin/user/roles/\(state.id)/remove/",
-                removeLabel: "Remove role"
-            ))
+            context.render(
+                UserRoleForm(
+                    state: state.form,
+                    action: "/admin/user/roles/\(state.id)/edit/",
+                    submitLabel: "Edit role",
+                    removeHref: "/admin/user/roles/\(state.id)/remove/",
+                    removeLabel: "Remove role"
+                )
+            )
         }
         .class("cms-section")
     }

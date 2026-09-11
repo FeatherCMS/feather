@@ -1,6 +1,6 @@
-import SystemAdminAPI
 import FeatherAdmin
 import Hummingbird
+import SystemAdminAPI
 
 struct AdminListSystemVariableDefaultInteractor:
     AdminListSystemVariableInteractor
@@ -10,7 +10,9 @@ struct AdminListSystemVariableDefaultInteractor:
     func listSystemVariables(
         page: Int,
         search: String?
-    ) async throws -> AdminListModel<Components.Schemas.SystemVariableListItemSchema> {
+    ) async throws -> AdminListModel<
+        Components.Schemas.SystemVariableListItemSchema
+    > {
         let response = try await repository.listSystemVariables(
             page: page,
             search: search
@@ -18,9 +20,11 @@ struct AdminListSystemVariableDefaultInteractor:
         let body = try response.body.json
         return .init(
             items: body.data.items,
-            page: body.query.page.number,
-            pageSize: body.query.page.size,
-            total: body.data.total
+            pageState: .init(
+                page: body.query.page.number,
+                pageSize: body.query.page.size,
+                total: body.data.total
+            )
         )
     }
 

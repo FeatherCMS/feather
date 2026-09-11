@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct NewsletterCampaignSubscriberFormView: Component {
     struct State {
@@ -31,20 +31,28 @@ struct NewsletterCampaignSubscriberFormView: Component {
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    context.render(AdminFieldLabel(label: "Email", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "Email", required: true)
+                    )
                     Input().type(.email).name("email").value(state.email)
                         .required().if(state.isEdit) { $0.readOnly() }
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "First name", required: false))
+                    context.render(
+                        AdminFieldLabel(label: "First name", required: false)
+                    )
                     Input().type(.text).name("firstName").value(state.firstName)
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "Last name", required: false))
+                    context.render(
+                        AdminFieldLabel(label: "Last name", required: false)
+                    )
                     Input().type(.text).name("lastName").value(state.lastName)
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "Status", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "Status", required: true)
+                    )
                     Select {
                         Option("Subscribed").value("subscribed")
                             .if(state.status == "subscribed") { $0.selected() }

@@ -53,7 +53,8 @@ struct AdminGetAnalyticsInsightsDefaultPresenter:
                             .init(
                                 label: "Analytics",
                                 link: "/admin/analytics/"
-                            )]
+                            )
+                        ]
                     )
                 )
             )
@@ -82,7 +83,8 @@ struct AdminGetAnalyticsInsightsDefaultPresenter:
                             .init(
                                 label: "Analytics",
                                 link: "/admin/analytics/"
-                            )]
+                            )
+                        ]
                     )
                 )
             )

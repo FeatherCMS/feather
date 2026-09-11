@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct ContactFormAdd: Component {
     struct State {
@@ -19,11 +19,13 @@ struct ContactFormAdd: Component {
         Section {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Add contact form")
-            context.render(ContactFormForm(
-                state: state.form,
-                action: "/admin/contact/forms/add/",
-                submitLabel: "Add form"
-            ))
+            context.render(
+                ContactFormForm(
+                    state: state.form,
+                    action: "/admin/contact/forms/add/",
+                    submitLabel: "Add form"
+                )
+            )
         }
         .class("cms-section")
     }

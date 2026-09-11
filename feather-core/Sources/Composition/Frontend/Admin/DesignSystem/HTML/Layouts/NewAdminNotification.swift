@@ -2,8 +2,8 @@ import CSS
 import HTML
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminNotification: Component {
     let notification: AdminNotification
@@ -28,7 +28,13 @@ public struct NewAdminNotification: Component {
                 BorderRadius(999.px)
                 Background(CSSColor(stringLiteral: "#111111"))
                 Color(CSSColor(stringLiteral: "#ffffff"))
-                BoxShadow(0.px, 8.px, blur: 24.px, spread: 0.px, color: CSSColor(stringLiteral: "rgba(0, 0, 0, 0.28)"))
+                BoxShadow(
+                    0.px,
+                    8.px,
+                    blur: 24.px,
+                    spread: 0.px,
+                    color: CSSColor(stringLiteral: "rgba(0, 0, 0, 0.28)")
+                )
             },
             Class("admin-notification__icon") {
                 Display(.inlineFlex)
@@ -64,12 +70,16 @@ public struct NewAdminNotification: Component {
                 Color(CSSColor(stringLiteral: "#9ca3af"))
                 Cursor(.pointer)
             },
-            Custom(".admin-notification__close:hover, .admin-notification__close:focus-visible") {
+            Custom(
+                ".admin-notification__close:hover, .admin-notification__close:focus-visible"
+            ) {
                 Background(CSSColor(stringLiteral: "#2d2d2d"))
                 Color(CSSColor(stringLiteral: "#ffffff"))
                 Outline(0.px, .none)
             },
-            Custom(".admin-notification__icon svg, .admin-notification__close svg") {
+            Custom(
+                ".admin-notification__icon svg, .admin-notification__close svg"
+            ) {
                 Width(16.px)
                 Height(16.px)
             },
@@ -85,7 +95,8 @@ public struct NewAdminNotification: Component {
             Span {
                 Span(notification.title).class("admin-notification__title")
                 if !notification.message.isEmpty {
-                    Span(notification.message).class("admin-notification__message")
+                    Span(notification.message)
+                        .class("admin-notification__message")
                 }
             }
             .class("admin-notification__content")

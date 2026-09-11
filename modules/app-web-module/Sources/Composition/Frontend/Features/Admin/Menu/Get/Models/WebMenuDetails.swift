@@ -3,8 +3,8 @@ import HTML
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebMenuDetails: Component {
     struct State {
@@ -22,20 +22,30 @@ struct WebMenuDetails: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Menu details")
             context.render(AdminDetailsField(label: "ID", value: state.menu.id))
-            context.render(AdminDetailsField(label: "Key", value: state.menu.key))
-            context.render(AdminDetailsField(label: "Name", value: state.menu.name))
-            context.render(AdminDetailsField(label: "Notes", value: state.menu.notes ?? ""))
+            context.render(
+                AdminDetailsField(label: "Key", value: state.menu.key)
+            )
+            context.render(
+                AdminDetailsField(label: "Name", value: state.menu.name)
+            )
+            context.render(
+                AdminDetailsField(label: "Notes", value: state.menu.notes ?? "")
+            )
 
             Div {
-                context.render(AdminNavigationButton(
-                    "Edit menu",
-                    href: "/admin/web/menus/\(state.menu.id)/edit/"
-                ))
-                context.render(AdminNavigationButton(
-                    "Remove menu",
-                    href: "/admin/web/menus/\(state.menu.id)/remove/",
-                    classes: ["danger"]
-                ))
+                context.render(
+                    AdminNavigationButton(
+                        "Edit menu",
+                        href: "/admin/web/menus/\(state.menu.id)/edit/"
+                    )
+                )
+                context.render(
+                    AdminNavigationButton(
+                        "Remove menu",
+                        href: "/admin/web/menus/\(state.menu.id)/remove/",
+                        classes: ["danger"]
+                    )
+                )
             }
             .class(
                 "button-row",

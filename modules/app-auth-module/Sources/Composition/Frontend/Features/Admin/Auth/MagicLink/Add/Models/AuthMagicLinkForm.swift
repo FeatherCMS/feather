@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthMagicLinkForm: Component {
 
@@ -75,39 +75,45 @@ struct AuthMagicLinkForm: Component {
                 P(error).class("error")
             }
 
-            context.render(AdminAutocompleteField(
-                state: .init(
-                    key: state.credentialId.key,
-                    label: "Email",
-                    placeholder: "Select an email",
-                    options: state.emailOptions,
-                    error: state.credentialId.error,
-                    selectionMode: .single,
-                    isEnabled: true
+            context.render(
+                AdminAutocompleteField(
+                    state: .init(
+                        key: state.credentialId.key,
+                        label: "Email",
+                        placeholder: "Select an email",
+                        options: state.emailOptions,
+                        error: state.credentialId.error,
+                        selectionMode: .single,
+                        isEnabled: true
+                    )
                 )
-            ))
+            )
 
-            context.render(CheckboxField(
-                state: .init(
-                    key: state.isPersistent.key,
-                    label: state.isPersistent.label,
-                    value: state.isPersistent.value,
-                    error: state.isPersistent.error,
-                    labelPosition: .before,
+            context.render(
+                CheckboxField(
+                    state: .init(
+                        key: state.isPersistent.key,
+                        label: state.isPersistent.label,
+                        value: state.isPersistent.value,
+                        error: state.isPersistent.error,
+                        labelPosition: .before,
 
+                    )
                 )
-            ))
+            )
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")

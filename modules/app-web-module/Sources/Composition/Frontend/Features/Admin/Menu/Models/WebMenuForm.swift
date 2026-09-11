@@ -3,8 +3,8 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebMenuForm: Component {
 
@@ -46,20 +46,24 @@ struct WebMenuForm: Component {
                 P(error).class("error")
             }
 
-            context.render(FormInputField(
-                name: state.key.key,
-                label: state.key.label,
-                value: state.key.value,
-                error: state.key.error,
-                isRequired: true
-            ))
-            context.render(FormInputField(
-                name: state.name.key,
-                label: state.name.label,
-                value: state.name.value,
-                error: state.name.error,
-                isRequired: true
-            ))
+            context.render(
+                FormInputField(
+                    name: state.key.key,
+                    label: state.key.label,
+                    value: state.key.value,
+                    error: state.key.error,
+                    isRequired: true
+                )
+            )
+            context.render(
+                FormInputField(
+                    name: state.name.key,
+                    label: state.name.label,
+                    value: state.name.value,
+                    error: state.name.error,
+                    isRequired: true
+                )
+            )
             context.render(textarea(state.notes))
 
             Section {
@@ -67,11 +71,13 @@ struct WebMenuForm: Component {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")

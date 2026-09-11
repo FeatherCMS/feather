@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
     let request: Request
@@ -40,7 +40,8 @@ struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Assets", link: "/admin/media/assets/")]
+                .init(label: "Assets", link: "/admin/media/assets/"),
+            ]
         )
     }
 }

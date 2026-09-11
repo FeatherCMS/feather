@@ -6,9 +6,9 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebContracts
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebContracts
 
 struct WebPageTable: Component {
 
@@ -62,22 +62,26 @@ struct WebPageTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add page",
-                            href: "/admin/web/pages/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add page",
+                                href: "/admin/web/pages/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/web/pages/",
-                        placeholder: "Quick search web pages",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/web/pages/",
+                            placeholder: "Quick search web pages",
+                            search: state.search
+                        )
                     )
-                ))
+                )
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -109,77 +113,94 @@ struct WebPageTable: Component {
                     let canRemove = state.permissions.contains(
                         "web:pages:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/web/pages/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("Title")
-                                        Th("Status")
-                                        Th("Publication")
-                                        Th("Expiration")
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for item in state.rules {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: item.id
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/web/pages/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected"
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
                                                     )
-                                                ))
+                                                }
+                                                Th("Title")
+                                                Th("Status")
+                                                Th("Publication")
+                                                Th("Expiration")
+                                                Th("Actions")
                                             }
-                                            titleCell(for: item, context: &context)
-                                            statusCell(for: item, context: &context)
-                                            Td(
-                                                format(
-                                                    item.metadata
-                                                        .publicationDate
-                                                )
-                                            )
-                                            .data(
-                                                "label",
-                                                "Publication"
-                                            )
-                                            Td(
-                                                format(
-                                                    item.metadata.expirationDate
-                                                )
-                                            )
-                                            .data(
-                                                "label",
-                                                "Expiration"
-                                            )
-                                            actionsCell(for: item)
+                                        }
+                                        Tbody {
+                                            for item in state.rules {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: item.id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    titleCell(
+                                                        for: item,
+                                                        context: &context
+                                                    )
+                                                    statusCell(
+                                                        for: item,
+                                                        context: &context
+                                                    )
+                                                    Td(
+                                                        format(
+                                                            item.metadata
+                                                                .publicationDate
+                                                        )
+                                                    )
+                                                    .data(
+                                                        "label",
+                                                        "Publication"
+                                                    )
+                                                    Td(
+                                                        format(
+                                                            item.metadata
+                                                                .expirationDate
+                                                        )
+                                                    )
+                                                    .data(
+                                                        "label",
+                                                        "Expiration"
+                                                    )
+                                                    actionsCell(for: item)
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/web/pages/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/web/pages/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
+                        )
+                    )
                 }
             }
         }
@@ -252,10 +273,12 @@ struct WebPageTable: Component {
 
         Td {
             if state.canEdit {
-                context.render(AdminStatusSelectField(
-                    formID: statusFormID(for: item.id),
-                    selectedStatus: item.metadata.normalizedStatus
-                ))
+                context.render(
+                    AdminStatusSelectField(
+                        formID: statusFormID(for: item.id),
+                        selectedStatus: item.metadata.normalizedStatus
+                    )
+                )
             }
             else {
                 Span(item.metadata.status.capitalized)
@@ -271,11 +294,13 @@ struct WebPageTable: Component {
         Div {
             if state.canEdit {
                 for item in state.rules {
-                    context.render(AdminStatusSelectFormDefinition(
-                        id: statusFormID(for: item.id),
-                        action: "/admin/web/pages/\(item.id)/status/",
-                        returnTo: "/admin/web/pages/"
-                    ))
+                    context.render(
+                        AdminStatusSelectFormDefinition(
+                            id: statusFormID(for: item.id),
+                            action: "/admin/web/pages/\(item.id)/status/",
+                            returnTo: "/admin/web/pages/"
+                        )
+                    )
                 }
             }
         }

@@ -14,8 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminRemoveAuthEmailDefaultPresenter:
     AdminRemoveAuthEmailPresenter
@@ -29,7 +29,8 @@ struct AdminRemoveAuthEmailDefaultPresenter:
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/")])
+            .init(label: "Emails", link: "/admin/auth/emails/"),
+        ])
     }
 
     func renderPage(

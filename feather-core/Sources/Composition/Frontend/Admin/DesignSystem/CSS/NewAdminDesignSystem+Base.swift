@@ -11,8 +11,7 @@ import WebBuilders
 extension NewAdminDesignSystem {
 
     @Builder<CSS.Rule>
-    func base(
-    ) -> [any Rule] {
+    func base() -> [any Rule] {
 
         Media {
             Universal {
@@ -48,7 +47,11 @@ extension NewAdminDesignSystem {
                 BoxSizing(.borderBox)
                 UnsafeRawProperty(name: "font", value: "inherit")
                 FontWeight(.number(700))
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
                 BorderRadius(999.px)
                 Padding(vertical: 10.px, horizontal: 16.px)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
@@ -56,10 +59,13 @@ extension NewAdminDesignSystem {
                 TextDecoration(.none)
                 UnsafeRawProperty(
                     name: "transition",
-                    value: "background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease"
+                    value:
+                        "background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease"
                 )
             }
-            Custom(".button, .button:link, .button:visited, .button:hover, .button:active") {
+            Custom(
+                ".button, .button:link, .button:visited, .button:hover, .button:active"
+            ) {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 TextDecoration(.none)
             }
@@ -86,24 +92,41 @@ extension NewAdminDesignSystem {
                 Background(.variable(TokenKey.Colors.Accents.Secondary.hover))
             }
             Custom(".button.primary-ghost") {
-                Background(.variable(TokenKey.Colors.Buttons.Ghost.Primary.tint))
-                BorderColor(.variable(TokenKey.Colors.Buttons.Ghost.Primary.border))
+                Background(
+                    .variable(TokenKey.Colors.Buttons.Ghost.Primary.tint)
+                )
+                BorderColor(
+                    .variable(TokenKey.Colors.Buttons.Ghost.Primary.border)
+                )
                 Color(.variable(TokenKey.Colors.Buttons.Ghost.Primary.text))
             }
-            Custom(".button.primary-ghost:hover:not(:disabled):not(.disabled)") {
-                Background(.variable(TokenKey.Colors.Buttons.Ghost.Primary.hover))
+            Custom(".button.primary-ghost:hover:not(:disabled):not(.disabled)")
+            {
+                Background(
+                    .variable(TokenKey.Colors.Buttons.Ghost.Primary.hover)
+                )
             }
             Custom(".button.secondary-ghost") {
-                Background(.variable(TokenKey.Colors.Buttons.Ghost.Secondary.tint))
-                BorderColor(.variable(TokenKey.Colors.Buttons.Ghost.Secondary.border))
+                Background(
+                    .variable(TokenKey.Colors.Buttons.Ghost.Secondary.tint)
+                )
+                BorderColor(
+                    .variable(TokenKey.Colors.Buttons.Ghost.Secondary.border)
+                )
                 Color(.variable(TokenKey.Colors.Buttons.Ghost.Secondary.text))
             }
-            Custom(".button.secondary-ghost:hover:not(:disabled):not(.disabled)") {
-                Background(.variable(TokenKey.Colors.Buttons.Ghost.Secondary.hover))
+            Custom(
+                ".button.secondary-ghost:hover:not(:disabled):not(.disabled)"
+            ) {
+                Background(
+                    .variable(TokenKey.Colors.Buttons.Ghost.Secondary.hover)
+                )
             }
             Custom(".button.destructive") {
                 Background(.variable(TokenKey.Colors.Buttons.Destructive.tint))
-                BorderColor(.variable(TokenKey.Colors.Buttons.Destructive.border))
+                BorderColor(
+                    .variable(TokenKey.Colors.Buttons.Destructive.border)
+                )
                 Color(.variable(TokenKey.Colors.Buttons.Destructive.text))
             }
             Custom(".button.destructive:hover:not(:disabled):not(.disabled)") {
@@ -122,16 +145,23 @@ extension NewAdminDesignSystem {
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
 
-
             Custom("body") {
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
-                FontFamily(.family("'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif"))
+                FontFamily(
+                    .family(
+                        "'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+                    )
+                )
             }
             Id("footer") {
                 Padding(32.px)
                 TextAlign(.center)
-                BorderTop(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                BorderTop(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
             }
 
         }

@@ -6,9 +6,9 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebContracts
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebContracts
 
 struct WebMetadataTable: Component {
 
@@ -80,82 +80,93 @@ struct WebMetadataTable: Component {
                     )
                 }
                 else {
-                    context.render(ListTableShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    Th("Slug")
-                                        .style("width:42%;min-width:20rem;")
-                                    Th("Reference type")
-                                        .style("width:18%;min-width:12rem;")
-                                    Th("Status")
-                                        .style(
-                                            "width:8%;min-width:6.5rem;white-space:nowrap;"
-                                        )
-                                    Th("Publication")
-                                        .style(
-                                            "width:12%;min-width:8.5rem;white-space:nowrap;"
-                                        )
-                                    Th("Expiration")
-                                        .style(
-                                            "width:12%;min-width:8.5rem;white-space:nowrap;"
-                                        )
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for rule in state.rules {
+                    context.render(
+                        ListTableShell(
+                            table: Table {
+                                Thead {
                                     Tr {
-                                        Td(rule.slug)
-                                            .style("min-width:20rem;")
-                                        Td(rule.referenceType ?? "-")
-                                            .style("white-space:nowrap;")
-                                        Td(rule.status.capitalized)
-                                            .style("white-space:nowrap;")
-                                        Td(format(rule.publicationDate))
-                                            .style("white-space:nowrap;")
-                                        Td(format(rule.expirationDate))
-                                            .style("white-space:nowrap;")
-                                        context.render(ListTableRowActions(
-                                            state: .init(
-                                                label: "Actions",
-                                                actions: [
-                                                    .init(
-                                                        title: "Details",
-                                                        href:
-                                                            "/admin/web/metadata/\(rule.id)/",
-                                                        className: nil,
-                                                        permission:
-                                                            "web:metadata:read"
-                                                    ),
-                                                    .init(
-                                                        title: "Edit",
-                                                        href:
-                                                            "/admin/web/metadata/\(rule.id)/edit/",
-                                                        className: "edit",
-                                                        permission:
-                                                            "web:metadata:update"
-                                                    ),
-                                                ],
-                                                permissions: state.permissions
+                                        Th("Slug")
+                                            .style("width:42%;min-width:20rem;")
+                                        Th("Reference type")
+                                            .style("width:18%;min-width:12rem;")
+                                        Th("Status")
+                                            .style(
+                                                "width:8%;min-width:6.5rem;white-space:nowrap;"
                                             )
-                                        ))
+                                        Th("Publication")
+                                            .style(
+                                                "width:12%;min-width:8.5rem;white-space:nowrap;"
+                                            )
+                                        Th("Expiration")
+                                            .style(
+                                                "width:12%;min-width:8.5rem;white-space:nowrap;"
+                                            )
+                                        Th("Actions")
+                                    }
+                                }
+                                Tbody {
+                                    for rule in state.rules {
+                                        Tr {
+                                            Td(rule.slug)
+                                                .style("min-width:20rem;")
+                                            Td(rule.referenceType ?? "-")
+                                                .style("white-space:nowrap;")
+                                            Td(rule.status.capitalized)
+                                                .style("white-space:nowrap;")
+                                            Td(format(rule.publicationDate))
+                                                .style("white-space:nowrap;")
+                                            Td(format(rule.expirationDate))
+                                                .style("white-space:nowrap;")
+                                            context.render(
+                                                ListTableRowActions(
+                                                    state: .init(
+                                                        label: "Actions",
+                                                        actions: [
+                                                            .init(
+                                                                title:
+                                                                    "Details",
+                                                                href:
+                                                                    "/admin/web/metadata/\(rule.id)/",
+                                                                className: nil,
+                                                                permission:
+                                                                    "web:metadata:read"
+                                                            ),
+                                                            .init(
+                                                                title: "Edit",
+                                                                href:
+                                                                    "/admin/web/metadata/\(rule.id)/edit/",
+                                                                className:
+                                                                    "edit",
+                                                                permission:
+                                                                    "web:metadata:update"
+                                                            ),
+                                                        ],
+                                                        permissions: state
+                                                            .permissions
+                                                    )
+                                                )
+                                            )
+                                        }
                                     }
                                 }
                             }
-                        }
-                        .class("cms-table", "action-table")
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/web/metadata/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search,
-                            queryItems: [("referenceType", state.referenceType)]
+                            .class("cms-table", "action-table")
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/web/metadata/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search,
+                                queryItems: [
+                                    ("referenceType", state.referenceType)
+                                ]
+                            )
+                        )
+                    )
                 }
             }
         }

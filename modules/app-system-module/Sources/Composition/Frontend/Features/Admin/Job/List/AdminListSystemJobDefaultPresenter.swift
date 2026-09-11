@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListSystemJobDefaultPresenter {
     let request: Request
@@ -55,6 +55,7 @@ struct AdminListSystemJobDefaultPresenter {
     private func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "System", link: "/admin/system/")])
+            .init(label: "System", link: "/admin/system/"),
+        ])
     }
 }

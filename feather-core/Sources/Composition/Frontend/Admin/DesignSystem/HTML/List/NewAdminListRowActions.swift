@@ -1,29 +1,28 @@
-import HTML
 import CSS
 import FeatherContracts
+import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminListRowActions: Component {
 
-    public func rules(
-    ) -> [any Rule] {
+    public func rules() -> [any Rule] {
         Media {
             Class("action-cell") {
                 WhiteSpace(.nowrap)
                 TextAlign(.right)
             }
         }
-            Media(.maxWidth(768.px)) {
-                Custom(".action-table td.action-cell") {
-                    WhiteSpace(.nowrap)
-                    TextAlign(.right)
-                }
-                Custom(".action-table td.action-cell::before") {
-                    MarginBottom(8.px)
-                }
+        Media(.maxWidth(768.px)) {
+            Custom(".action-table td.action-cell") {
+                WhiteSpace(.nowrap)
+                TextAlign(.right)
             }
+            Custom(".action-table td.action-cell::before") {
+                MarginBottom(8.px)
+            }
+        }
 
     }
 
@@ -71,20 +70,24 @@ public struct NewAdminListRowActions: Component {
         return Td {
             for (index, action) in visibleActions.enumerated() {
                 if let copyText = action.copyText {
-                    context.render(NewAdminControlButton(
-                        action.title,
-                        style: action.style
-                    ))
+                    context.render(
+                        NewAdminControlButton(
+                            action.title,
+                            style: action.style
+                        )
+                    )
                     .onClick(
                         "navigator.clipboard.writeText('\(copyText)')"
                     )
                 }
                 else {
-                    context.render(NewAdminRowButton(
-                        action.title,
-                        href: action.href,
-                        style: action.style
-                    ))
+                    context.render(
+                        NewAdminRowButton(
+                            action.title,
+                            href: action.href,
+                            style: action.style
+                        )
+                    )
                 }
 
                 if index < visibleActions.count - 1 {

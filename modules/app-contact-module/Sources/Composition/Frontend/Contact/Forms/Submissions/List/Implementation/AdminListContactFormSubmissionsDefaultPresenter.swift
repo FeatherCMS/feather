@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListContactFormSubmissionsDefaultPresenter:
     AdminListContactFormSubmissionsPresenter
@@ -48,6 +48,7 @@ struct AdminListContactFormSubmissionsDefaultPresenter:
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Contact", link: "/admin/contact/"),
-            .init(label: "Forms", link: "/admin/contact/forms/")])
+            .init(label: "Forms", link: "/admin/contact/forms/"),
+        ])
     }
 }

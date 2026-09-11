@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 protocol AdminRemoveAuthCredentialPresenter: Sendable {
     func renderPage(model: AuthCredentialDetailsModel, permissions: Set<String>)

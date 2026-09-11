@@ -4,8 +4,8 @@ import Foundation
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminMetadataFields: Component {
 
@@ -130,14 +130,16 @@ struct AdminMetadataFields: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Div {
-            context.render(FormInputField(
-                name: state.slug.key,
-                label: state.slug.label,
-                prefix: state.slugPrefix,
-                value: state.slug.value,
-                error: state.slug.error,
-                isRequired: true
-            ))
+            context.render(
+                FormInputField(
+                    name: state.slug.key,
+                    label: state.slug.label,
+                    prefix: state.slugPrefix,
+                    value: state.slug.value,
+                    error: state.slug.error,
+                    isRequired: true
+                )
+            )
             if showTemplate {
                 context.render(templateField(state.template))
             }
@@ -145,18 +147,22 @@ struct AdminMetadataFields: Component {
             Div {
                 H3("Publishing")
                 context.render(statusField(state.status))
-                context.render(FormDateTimeField(
-                    name: state.publicationDate.key,
-                    label: state.publicationDate.label,
-                    value: state.publicationDate.value,
-                    error: state.publicationDate.error
-                ))
-                context.render(FormDateTimeField(
-                    name: state.expirationDate.key,
-                    label: state.expirationDate.label,
-                    value: state.expirationDate.value,
-                    error: state.expirationDate.error
-                ))
+                context.render(
+                    FormDateTimeField(
+                        name: state.publicationDate.key,
+                        label: state.publicationDate.label,
+                        value: state.publicationDate.value,
+                        error: state.publicationDate.error
+                    )
+                )
+                context.render(
+                    FormDateTimeField(
+                        name: state.expirationDate.key,
+                        label: state.expirationDate.label,
+                        value: state.expirationDate.value,
+                        error: state.expirationDate.error
+                    )
+                )
             }
             .class("admin-metadata-fields__group")
 
@@ -164,19 +170,22 @@ struct AdminMetadataFields: Component {
                 H3("Social")
                 Div {
                     if showTitle {
-                        context.render(FormInputField(
-                            name: state.title.key,
-                            label: state.title.label,
-                            value: state.title.value,
-                            error: state.title.error,
-                            isRequired: titleRequired
-                        ))
+                        context.render(
+                            FormInputField(
+                                name: state.title.key,
+                                label: state.title.label,
+                                value: state.title.value,
+                                error: state.title.error,
+                                isRequired: titleRequired
+                            )
+                        )
                     }
                     context.render(textarea(state.excerpt, rows: 4))
                     imagePicker(
                         state.imageUrl,
-                        selectedAsset: state.selectedImageAsset
-                    , context: &context)
+                        selectedAsset: state.selectedImageAsset,
+                        context: &context
+                    )
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -185,22 +194,30 @@ struct AdminMetadataFields: Component {
             Div {
                 H3("Advanced")
                 Div {
-                    context.render(FormInputField(
-                        name: state.canonicalUrl.key,
-                        label: state.canonicalUrl.label,
-                        value: state.canonicalUrl.value,
-                        error: state.canonicalUrl.error
-                    ))
+                    context.render(
+                        FormInputField(
+                            name: state.canonicalUrl.key,
+                            label: state.canonicalUrl.label,
+                            value: state.canonicalUrl.value,
+                            error: state.canonicalUrl.error
+                        )
+                    )
                     checkbox(state.noIndex, context: &context)
-                    context.render(FormInputField(
-                        name: state.primaryKeyword.key,
-                        label: state.primaryKeyword.label,
-                        value: state.primaryKeyword.value,
-                        error: state.primaryKeyword.error
-                    ))
+                    context.render(
+                        FormInputField(
+                            name: state.primaryKeyword.key,
+                            label: state.primaryKeyword.label,
+                            value: state.primaryKeyword.value,
+                            error: state.primaryKeyword.error
+                        )
+                    )
                     context.render(textarea(state.cssCodeInjection, rows: 10))
-                    context.render(textarea(state.javascriptCodeInjection, rows: 10))
-                    context.render(textarea(state.structuredDataCodeInjection, rows: 10))
+                    context.render(
+                        textarea(state.javascriptCodeInjection, rows: 10)
+                    )
+                    context.render(
+                        textarea(state.structuredDataCodeInjection, rows: 10)
+                    )
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -246,20 +263,22 @@ struct AdminMetadataFields: Component {
 
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
-        return context.render(AdminMediaAssetPicker(
-            state: .init(
-                field: .init(
-                    key: field.key,
-                    label: field.label,
-                    value: field.value,
-                    error: field.error
-                ),
-                selectedAsset: selectedAsset,
-                browsePath: browsePath,
-                allowedExtensions: ["png", "jpg", "jpeg", "webp"],
-                outputMode: .originalURL
+        return context.render(
+            AdminMediaAssetPicker(
+                state: .init(
+                    field: .init(
+                        key: field.key,
+                        label: field.label,
+                        value: field.value,
+                        error: field.error
+                    ),
+                    selectedAsset: selectedAsset,
+                    browsePath: browsePath,
+                    allowedExtensions: ["png", "jpg", "jpeg", "webp"],
+                    outputMode: .originalURL
+                )
             )
-        ))
+        )
     }
 
     private func textarea(
@@ -281,14 +300,16 @@ struct AdminMetadataFields: Component {
     ) -> some BasicTag {
 
         Section {
-            context.render(CheckboxField(
-                state: .init(
-                    key: field.key,
-                    label: field.label,
-                    value: field.value,
-                    error: field.error
+            context.render(
+                CheckboxField(
+                    state: .init(
+                        key: field.key,
+                        label: field.label,
+                        value: field.value,
+                        error: field.error
+                    )
                 )
-            ))
+            )
         }
         .if(field.error != nil) { $0.class("has-error") }
     }

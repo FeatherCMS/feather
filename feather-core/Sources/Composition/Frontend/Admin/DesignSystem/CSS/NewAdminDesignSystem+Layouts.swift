@@ -4,8 +4,7 @@ import WebBuilders
 extension NewAdminDesignSystem {
 
     @Builder<CSS.Rule>
-    func layouts(
-    ) -> [any Rule] {
+    func layouts() -> [any Rule] {
         Media {
             Class("grid") {
                 Display(.grid)
@@ -43,14 +42,21 @@ extension NewAdminDesignSystem {
                 MarginBottom(32.px)
                 Padding(15.px)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
                 BorderRadius(20.px)
                 BoxShadow(
                     0.px,
                     12.px,
                     blur: 26.px,
                     spread: 2.px,
-                    color: CSSColor(stringLiteral: "var(--\(TokenKey.Colors.BoxShadow.tint.propertyName))")
+                    color: CSSColor(
+                        stringLiteral:
+                            "var(--\(TokenKey.Colors.BoxShadow.tint.propertyName))"
+                    )
                 )
             }
 

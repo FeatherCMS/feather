@@ -10,9 +10,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogPostDetails: Component {
     struct State {
@@ -36,29 +36,41 @@ struct BlogPostDetails: Component {
                 P("Blog post unpublished successfully.")
             }
             context.render(AdminDetailsField(label: "ID", value: state.rule.id))
-            context.render(AdminDetailsField(label: "Title", value: state.rule.title))
-            context.render(AdminDetailsField(
-                label: "Status",
-                value: state.rule.metadata.status.capitalized
-            ))
-            context.render(AdminDetailsField(
-                label: "Published date",
-                value: format(state.rule.metadata.publicationDate)
-            ))
-            context.render(AdminDetailsField(
-                label: "Expiration date",
-                value: format(state.rule.metadata.expirationDate)
-            ))
-            context.render(AdminDetailsField(
-                label: "Authors",
-                value: state.rule.authorIds.isEmpty
-                    ? "None" : state.rule.authorIds.joined(separator: ", ")
-            ))
-            context.render(AdminDetailsField(
-                label: "Tags",
-                value: state.rule.tagIds.isEmpty
-                    ? "None" : state.rule.tagIds.joined(separator: ", ")
-            ))
+            context.render(
+                AdminDetailsField(label: "Title", value: state.rule.title)
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Status",
+                    value: state.rule.metadata.status.capitalized
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Published date",
+                    value: format(state.rule.metadata.publicationDate)
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Expiration date",
+                    value: format(state.rule.metadata.expirationDate)
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Authors",
+                    value: state.rule.authorIds.isEmpty
+                        ? "None" : state.rule.authorIds.joined(separator: ", ")
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Tags",
+                    value: state.rule.tagIds.isEmpty
+                        ? "None" : state.rule.tagIds.joined(separator: ", ")
+                )
+            )
             H2("Content")
             Pre { state.rule.content }
             Div {
@@ -78,19 +90,23 @@ struct BlogPostDetails: Component {
                         label: isPublished ? "Unpublish" : "Publish",
                         classes: ["secondary"]
                     )
-                    context.render(AdminNavigationButton(
-                        "Edit post",
-                        href: "/admin/blog/posts/\(state.rule.id)/edit/"
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Edit post",
+                            href: "/admin/blog/posts/\(state.rule.id)/edit/"
+                        )
+                    )
                 }
                 if state.permissions.contains(
                     BlogPermissions.Posts.delete.rawValue
                 ) {
-                    context.render(AdminNavigationButton(
-                        "Remove post",
-                        href: "/admin/blog/posts/\(state.rule.id)/remove/",
-                        classes: ["danger"]
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Remove post",
+                            href: "/admin/blog/posts/\(state.rule.id)/remove/",
+                            classes: ["danger"]
+                        )
+                    )
                 }
             }
             .class("button-row", "admin-detail-actions")

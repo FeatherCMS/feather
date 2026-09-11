@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct ContactFormFieldAddView: Component {
     struct State {
@@ -28,7 +28,9 @@ struct ContactFormFieldAddView: Component {
             if let error = state.error { P(error).class("error") }
             Form {
                 Label {
-                    context.render(AdminFieldLabel(label: "Type", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "Type", required: true)
+                    )
                     Select {
                         if state.type == "text" {
                             Option("Text").value("text").selected()
@@ -64,17 +66,26 @@ struct ContactFormFieldAddView: Component {
                     .name("type").class("text-input")
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "Key", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "Key", required: true)
+                    )
                     Input().type(.text).class("text-input").name("key")
                         .value(state.key).required()
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "Label", required: true))
+                    context.render(
+                        AdminFieldLabel(label: "Label", required: true)
+                    )
                     Input().type(.text).class("text-input").name("label")
                         .value(state.label).required()
                 }
                 Label {
-                    context.render(AdminFieldLabel(label: "Allowed values", required: false))
+                    context.render(
+                        AdminFieldLabel(
+                            label: "Allowed values",
+                            required: false
+                        )
+                    )
                     Textarea(state.allowedValues).class("text-input")
                         .name("allowedValues").placeholder("One value per line")
                 }

@@ -1,12 +1,11 @@
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminListSelectAllCheckbox: Component {
 
-    public init(
-    ) {
+    public init() {
     }
 
     public func html(context: inout RenderContext) -> Th {

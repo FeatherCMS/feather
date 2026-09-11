@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminAddNewsletterIssueDefaultPresenter:
     AdminAddNewsletterIssuePresenter
@@ -19,7 +19,8 @@ struct AdminAddNewsletterIssueDefaultPresenter:
         let breadcrumb = AdminBreadcrumb.State(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Campaigns", link: "/admin/newsletters/"),
-            .init(label: "Campaign", link: "/admin/newsletters/")])
+            .init(label: "Campaign", link: "/admin/newsletters/"),
+        ])
         return renderEngine.renderAdminPage(
             request: request,
             title: "Add campaign issue",

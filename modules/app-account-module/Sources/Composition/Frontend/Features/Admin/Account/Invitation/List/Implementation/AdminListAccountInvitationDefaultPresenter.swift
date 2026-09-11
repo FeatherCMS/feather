@@ -4,8 +4,8 @@ import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListAccountInvitationDefaultPresenter:
     AdminListAccountInvitationPresenter
@@ -125,6 +125,7 @@ struct AdminListAccountInvitationDefaultPresenter:
     func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/")])
+            .init(label: "User", link: "/admin/user/"),
+        ])
     }
 }

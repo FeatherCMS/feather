@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminRemoveAuthCredentialDefaultPresenter:
     AdminRemoveAuthCredentialPresenter
@@ -90,6 +90,7 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
             .init(
                 label: "User",
                 link: "/admin/auth/credentials/\(model.userId)/"
-            )])
+            ),
+        ])
     }
 }

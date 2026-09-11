@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
     let request: Request
@@ -46,7 +46,8 @@ struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
                 .init(
                     label: "Items",
                     link: "/admin/web/menus/\(menuId)/items/"
-                )]
+                ),
+            ]
         )
     }
 }

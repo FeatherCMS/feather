@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AppMagicLink {
 
@@ -33,22 +33,26 @@ struct AppMagicLink {
                 if let error { P(error).class("error") }
                 if token == nil {
                     Form {
-                        context.render(EmailField(
-                            state: .init(
-                                key: "email",
-                                label: "Email address",
-                                value: email
+                        context.render(
+                            EmailField(
+                                state: .init(
+                                    key: "email",
+                                    label: "Email address",
+                                    value: email
+                                )
                             )
-                        ))
-                        context.render(CheckboxField(
-                            state: .init(
-                                key: "is_persistent",
-                                label: "Permanent link",
-                                value: isPersistent,
-                                error: nil,
-                                labelPosition: .before
+                        )
+                        context.render(
+                            CheckboxField(
+                                state: .init(
+                                    key: "is_persistent",
+                                    label: "Permanent link",
+                                    value: isPersistent,
+                                    error: nil,
+                                    labelPosition: .before
+                                )
                             )
-                        ))
+                        )
                         Button("Send magic link").type(.submit)
                     }
                     .method(.post)
@@ -73,8 +77,9 @@ struct AppMagicLink {
             email: "",
             isPersistent: true,
             error: nil,
-            message: nil
-        , context: &renderContext)
+            message: nil,
+            context: &renderContext
+        )
     }
 
     func postRequest(
@@ -106,8 +111,9 @@ struct AppMagicLink {
                     isPersistent: input.isPersistent.value,
                     error: nil,
                     message:
-                        "If the account exists, a magic link has been sent."
-                , context: &renderContext)
+                        "If the account exists, a magic link has been sent.",
+                    context: &renderContext
+                )
             case .undocumented(let statusCode, let response):
                 throw try await context.authAppAPI()
                     .failure(
@@ -122,8 +128,9 @@ struct AppMagicLink {
                 email: input.email,
                 isPersistent: input.isPersistent.value,
                 error: error.errorDescription,
-                message: nil
-            , context: &renderContext)
+                message: nil,
+                context: &renderContext
+            )
         }
     }
 
@@ -167,8 +174,9 @@ struct AppMagicLink {
                     isPersistent: true,
                     error:
                         "This magic link is invalid, expired, or has already been used.",
-                    message: nil
-                , context: &renderContext)
+                    message: nil,
+                    context: &renderContext
+                )
                 .response(from: request, context: context)
             case .undocumented(let statusCode, let response):
                 throw try await context.authAppAPI()
@@ -184,8 +192,9 @@ struct AppMagicLink {
                 email: "",
                 isPersistent: true,
                 error: error.errorDescription,
-                message: nil
-            , context: &renderContext)
+                message: nil,
+                context: &renderContext
+            )
             .response(from: request, context: context)
         }
     }
@@ -204,13 +213,15 @@ struct AppMagicLink {
             title: "Magic link",
             description: "Sign in without a password using a magic link.",
             imagePath: "images/puppy.png",
-            content: context.render(Page(
-                token: nil,
-                email: email,
-                isPersistent: isPersistent,
-                error: error,
-                message: message
-            ))
+            content: context.render(
+                Page(
+                    token: nil,
+                    email: email,
+                    isPersistent: isPersistent,
+                    error: error,
+                    message: message
+                )
+            )
         )
     }
 

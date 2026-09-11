@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import SystemContracts
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListSystemPermissionDefaultPresenter:
     AdminListSystemPermissionPresenter
@@ -116,7 +116,8 @@ struct AdminListSystemPermissionDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/")]
+                .init(label: "System", link: "/admin/system/"),
+            ]
         )
     }
 }

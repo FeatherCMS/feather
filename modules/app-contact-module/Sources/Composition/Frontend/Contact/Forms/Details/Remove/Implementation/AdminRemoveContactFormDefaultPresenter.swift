@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
     let request: Request
@@ -67,6 +67,7 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Contact", link: "/admin/contact/"),
-            .init(label: "Forms", link: "/admin/contact/forms/")])
+            .init(label: "Forms", link: "/admin/contact/forms/"),
+        ])
     }
 }

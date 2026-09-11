@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct RedirectRuleError: Component {
 

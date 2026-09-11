@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct ContactFormTable: Component {
     struct State {
@@ -29,21 +29,25 @@ struct ContactFormTable: Component {
             if state.isEdited { P("Contact form edited successfully.") }
             if state.isRemoved { P("Contact form removed successfully.") }
             Div {
-                context.render(AdminNavigationButton(
-                    "Add form",
-                    href: "/admin/contact/forms/add/"
-                ))
+                context.render(
+                    AdminNavigationButton(
+                        "Add form",
+                        href: "/admin/contact/forms/add/"
+                    )
+                )
             }
             .class("button-row")
             Br()
             Br()
-            context.render(ListTableSearchForm(
-                state: .init(
-                    action: "/admin/contact/forms/",
-                    placeholder: "Quick search contact forms",
-                    search: state.search
+            context.render(
+                ListTableSearchForm(
+                    state: .init(
+                        action: "/admin/contact/forms/",
+                        placeholder: "Quick search contact forms",
+                        search: state.search
+                    )
                 )
-            ))
+            )
             if state.items.isEmpty {
                 P(
                     state.search.isEmpty
@@ -52,95 +56,116 @@ struct ContactFormTable: Component {
                 )
             }
             else {
-                context.render(ListTableRemoveForm(
-                    state: .init(
-                        action: "/admin/contact/forms/remove/",
-                        page: 1,
-                        search: state.search,
-                        canRemove: state.canRemove,
-                        buttonTitle: "Remove selected"
-                    ),
-                    table: context.render(ListTableShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    if state.canRemove {
-                                        context.render(ListTableSelectAllCheckbox())
-                                    }
-                                    Th("Name")
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for item in state.items {
-                                    Tr {
-                                        if state.canRemove {
-                                            context.render(ListTableRowSelectCheckbox(
-                                                state: .init(id: item.id)
-                                            ))
-                                        }
-                                        if state.isPicker {
-                                            Td {
-                                                Button(item.name)
-                                                    .type(.button)
-                                                    .data(
-                                                        "mce-picker-item",
-                                                        item.id
-                                                    )
-                                                    .data(
-                                                        "mce-picker-label",
-                                                        item.name
-                                                    )
+                context.render(
+                    ListTableRemoveForm(
+                        state: .init(
+                            action: "/admin/contact/forms/remove/",
+                            page: 1,
+                            search: state.search,
+                            canRemove: state.canRemove,
+                            buttonTitle: "Remove selected"
+                        ),
+                        table: context.render(
+                            ListTableShell(
+                                table: Table {
+                                    Thead {
+                                        Tr {
+                                            if state.canRemove {
+                                                context.render(
+                                                    ListTableSelectAllCheckbox()
+                                                )
                                             }
-                                            .data("label", "Name")
+                                            Th("Name")
+                                            Th("Actions")
                                         }
-                                        else {
-                                            Td(item.name).data("label", "Name")
+                                    }
+                                    Tbody {
+                                        for item in state.items {
+                                            Tr {
+                                                if state.canRemove {
+                                                    context.render(
+                                                        ListTableRowSelectCheckbox(
+                                                            state: .init(
+                                                                id: item.id
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                                if state.isPicker {
+                                                    Td {
+                                                        Button(item.name)
+                                                            .type(.button)
+                                                            .data(
+                                                                "mce-picker-item",
+                                                                item.id
+                                                            )
+                                                            .data(
+                                                                "mce-picker-label",
+                                                                item.name
+                                                            )
+                                                    }
+                                                    .data("label", "Name")
+                                                }
+                                                else {
+                                                    Td(item.name)
+                                                        .data("label", "Name")
+                                                }
+                                                context.render(
+                                                    ListTableRowActions(
+                                                        state: .init(
+                                                            label: "Actions",
+                                                            actions: [
+                                                                .init(
+                                                                    title:
+                                                                        "Copy",
+                                                                    className:
+                                                                        nil,
+                                                                    permission:
+                                                                        "contact:forms:read",
+                                                                    copyText:
+                                                                        "@ContactForm(id: \(item.id))"
+                                                                ),
+                                                                .init(
+                                                                    title:
+                                                                        "Edit",
+                                                                    href:
+                                                                        "/admin/contact/forms/\(item.id)/edit/",
+                                                                    className:
+                                                                        "edit",
+                                                                    permission:
+                                                                        "contact:forms:update"
+                                                                ),
+                                                                .init(
+                                                                    title:
+                                                                        "Remove",
+                                                                    href:
+                                                                        "/admin/contact/forms/remove/?selectedIds[]=\(item.id)",
+                                                                    className:
+                                                                        "delete",
+                                                                    permission:
+                                                                        "contact:forms:delete"
+                                                                ),
+                                                            ],
+                                                            permissions: [
+                                                                "contact:forms:read",
+                                                                "contact:forms:update",
+                                                                "contact:forms:delete",
+                                                            ]
+                                                        )
+                                                    )
+                                                )
+                                            }
                                         }
-                                        context.render(ListTableRowActions(
-                                            state: .init(
-                                                label: "Actions",
-                                                actions: [
-                                                    .init(
-                                                        title: "Copy",
-                                                        className: nil,
-                                                        permission:
-                                                            "contact:forms:read",
-                                                        copyText:
-                                                            "@ContactForm(id: \(item.id))"
-                                                    ),
-                                                    .init(
-                                                        title: "Edit",
-                                                        href:
-                                                            "/admin/contact/forms/\(item.id)/edit/",
-                                                        className: "edit",
-                                                        permission:
-                                                            "contact:forms:update"
-                                                    ),
-                                                    .init(
-                                                        title: "Remove",
-                                                        href:
-                                                            "/admin/contact/forms/remove/?selectedIds[]=\(item.id)",
-                                                        className: "delete",
-                                                        permission:
-                                                            "contact:forms:delete"
-                                                    ),
-                                                ],
-                                                permissions: [
-                                                    "contact:forms:read",
-                                                    "contact:forms:update",
-                                                    "contact:forms:delete",
-                                                ]
-                                            )
-                                        ))
                                     }
                                 }
-                            }
-                        }
-                        .class("cms-table", "action-table")
-                        .if(state.canRemove) { $0.class("select-table") }
-                    ))
-                ))
+                                .class("cms-table", "action-table")
+                                .if(state.canRemove) {
+                                    $0.class("select-table")
+                                }
+                            )
+                        )
+                    )
+                )
             }
         }
         .class("cms-section")

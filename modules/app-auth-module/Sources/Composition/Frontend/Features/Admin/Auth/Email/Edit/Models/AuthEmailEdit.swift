@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthEmailEdit: Component {
 
@@ -33,13 +33,15 @@ struct AuthEmailEdit: Component {
 
             H1("Edit user email")
             if state.isEdited { P("User email edited successfully.") }
-            context.render(AuthEmailForm(
-                state: state.form,
-                action: "/admin/auth/emails/\(state.id)/edit/",
-                submitLabel: "Edit email",
-                removeHref: "/admin/auth/emails/\(state.id)/remove/",
-                removeLabel: "Remove email"
-            ))
+            context.render(
+                AuthEmailForm(
+                    state: state.form,
+                    action: "/admin/auth/emails/\(state.id)/edit/",
+                    submitLabel: "Edit email",
+                    removeHref: "/admin/auth/emails/\(state.id)/remove/",
+                    removeLabel: "Remove email"
+                )
+            )
         }
         .class("cms-section")
     }

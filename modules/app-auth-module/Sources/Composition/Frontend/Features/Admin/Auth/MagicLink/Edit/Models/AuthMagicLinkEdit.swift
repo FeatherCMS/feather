@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthMagicLinkEdit: Component {
 
@@ -33,13 +33,15 @@ struct AuthMagicLinkEdit: Component {
 
             H1("Edit user magic link")
             if state.isEdited { P("User magic link edited successfully.") }
-            context.render(AuthMagicLinkForm(
-                state: state.form,
-                action: "/admin/auth/magic-links/\(state.id)/edit/",
-                submitLabel: "Edit magic link",
-                removeHref: "/admin/auth/magic-links/\(state.id)/remove/",
-                removeLabel: "Remove magic link"
-            ))
+            context.render(
+                AuthMagicLinkForm(
+                    state: state.form,
+                    action: "/admin/auth/magic-links/\(state.id)/edit/",
+                    submitLabel: "Edit magic link",
+                    removeHref: "/admin/auth/magic-links/\(state.id)/remove/",
+                    removeLabel: "Remove magic link"
+                )
+            )
         }
         .class("cms-section")
     }

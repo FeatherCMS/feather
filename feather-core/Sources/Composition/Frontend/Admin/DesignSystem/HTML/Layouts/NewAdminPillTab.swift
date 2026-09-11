@@ -1,8 +1,8 @@
 import CSS
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminPillTab: Component {
 
@@ -30,13 +30,16 @@ public struct NewAdminPillTab: Component {
         self.links = links
     }
 
-    public func rules(
-    ) -> [any Rule] {
+    public func rules() -> [any Rule] {
         Media {
             Class("pill-tabs") {
                 Display(.flex)
                 AlignItems(.center)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Secondary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Secondary.border)
+                )
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
                 BoxSizing(.borderBox)
                 BorderRadius(999.px)

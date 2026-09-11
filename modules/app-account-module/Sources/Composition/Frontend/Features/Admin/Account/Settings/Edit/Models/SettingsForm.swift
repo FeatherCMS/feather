@@ -2,8 +2,8 @@ import CSS
 import FeatherAdmin
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SettingsForm: Component {
 
@@ -36,42 +36,48 @@ struct SettingsForm: Component {
                 P(error).class("error")
             }
 
-            context.render(FormInputField(
-                name: state.language.key,
-                label: state.language.label,
-                value: state.language.value,
-                error: state.language.error,
-                placeholder: "Language code, e.g. en",
-                isRequired: true,
-                isDisabled: !state.canEdit,
-                inputClass: "text-input"
-            ))
+            context.render(
+                FormInputField(
+                    name: state.language.key,
+                    label: state.language.label,
+                    value: state.language.value,
+                    error: state.language.error,
+                    placeholder: "Language code, e.g. en",
+                    isRequired: true,
+                    isDisabled: !state.canEdit,
+                    inputClass: "text-input"
+                )
+            )
 
-            context.render(FormInputField(
-                name: state.timezone.key,
-                label: state.timezone.label,
-                value: state.timezone.value,
-                error: state.timezone.error,
-                placeholder: "Timezone, e.g. Europe/Budapest",
-                isRequired: true,
-                isDisabled: !state.canEdit,
-                inputClass: "text-input"
-            ))
+            context.render(
+                FormInputField(
+                    name: state.timezone.key,
+                    label: state.timezone.label,
+                    value: state.timezone.value,
+                    error: state.timezone.error,
+                    placeholder: "Timezone, e.g. Europe/Budapest",
+                    isRequired: true,
+                    isDisabled: !state.canEdit,
+                    inputClass: "text-input"
+                )
+            )
 
-            context.render(FormSelectField(
-                name: state.pageSize.key,
-                label: state.pageSize.label,
-                options: [10, 20, 50, 100]
-                    .map {
-                        let value = "\($0)"
-                        return .init(label: value, value: value)
-                    },
-                selectedValue: state.pageSize.value,
-                error: state.pageSize.error,
-                isRequired: true,
-                isDisabled: !state.canEdit,
-                selectClass: "text-input page-size-select"
-            ))
+            context.render(
+                FormSelectField(
+                    name: state.pageSize.key,
+                    label: state.pageSize.label,
+                    options: [10, 20, 50, 100]
+                        .map {
+                            let value = "\($0)"
+                            return .init(label: value, value: value)
+                        },
+                    selectedValue: state.pageSize.value,
+                    error: state.pageSize.error,
+                    isRequired: true,
+                    isDisabled: !state.canEdit,
+                    selectClass: "text-input page-size-select"
+                )
+            )
 
             if state.canEdit {
                 Section {

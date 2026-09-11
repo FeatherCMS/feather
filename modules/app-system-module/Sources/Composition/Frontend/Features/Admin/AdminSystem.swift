@@ -78,7 +78,7 @@ public struct AdminSystem {
         .controller.route(on: router)
 
         AdminRemoveSystemVariable(
-            renderingEngine: renderingEngine
+            events: adminEvents
         )
         .controller.route(on: router)
 

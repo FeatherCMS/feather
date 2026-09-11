@@ -1,94 +1,97 @@
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminRemoveSystemVariableDefaultPresenter:
     AdminRemoveSystemVariablePresenter
 {
     let request: Request
-    let renderingEngine: any RenderingEngine
+    let context: DefaultRequestContext
+    let events: any EventPublisher
 
     func renderErrorPage(
-        id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        message: String
+    ) async throws -> HTMLResponse {
+        let menuGroups = try await context.adminMenuGroups(
             request: request,
-            title: "Remove system variable",
-            description: "Remove confirmation for a management system variable",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
+            events: events
+        )
+        return render(
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
             ),
-            content: SystemVariableError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb(id: id)
-                )
-            )
+            menuGroups: menuGroups
         )
     }
 
     func renderRemoveConfirmation(
         page: Int,
         search: String?,
-        ids: [String],
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        ids: [String]
+    ) async throws -> HTMLResponse {
+        let menuGroups = try await context.adminMenuGroups(
             request: request,
-            title: "Remove selected variables",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
+            events: events
+        )
+        return render(
+            content: NewAdminConfirmation(
+                breadcrumb: breadcrumb(),
+                title: "Remove selected variables",
+                message:
+                    "Are you sure you want to remove these selected variables? This action cannot be undone.",
+                details: [
+                    "Selected \(ids.count) items.",
+                    "IDs: \(ids.prefix(10).joined(separator: ", "))",
+                ],
+                action: SystemVariableRoutes.removeRoute.description,
+                cancel: ListRemoveRedirect.location(
+                    path: SystemVariableRoutes.list.description,
+                    page: page,
+                    search: search,
+                    title: nil,
+                    message: nil
+                ),
+                hiddenFields: ids.map {
+                    .init(name: "ids", value: $0)
+                }
             ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: bulkBreadcrumb(),
-                    title: "Remove selected variables",
-                    message: "Are you sure you want to remove these selected variables? This action cannot be undone.",
-                    action: SystemVariableRoutes.removeRoute.description,
-                    cancelLink: ListRemoveRedirect.location(
-                        path: SystemVariableRoutes.list.description,
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: ids,
-                    idFieldName: "ids"
+            menuGroups: menuGroups
+        )
+    }
+
+    private func render<T: Component>(
+        content: T,
+        menuGroups: [NewAdminSidebar.Group]
+    ) -> HTMLResponse {
+        var context = RenderContext()
+        let layout = NewAdminBaseLayout(
+            content: content,
+            menuGroups: menuGroups
+        )
+        return .init(
+            context.render(
+                NewAdminHTML(
+                    title: "Manage system variables",
+                    body: .init(content: layout)
                 )
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-                .init(label: "Variables", link: SystemVariableRoutes.list.description)]
-        )
-    }
-
-    private func bulkBreadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    private func breadcrumb() -> NewAdminBreadcrumb.State {
+        .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "System", link: "/admin/system/"),
-            .init(label: "Variables", link: SystemVariableRoutes.list.description)
-            ]
-        )
+            .init(
+                label: "Variables",
+                link: SystemVariableRoutes.list.description
+            ),
+        ])
     }
 }

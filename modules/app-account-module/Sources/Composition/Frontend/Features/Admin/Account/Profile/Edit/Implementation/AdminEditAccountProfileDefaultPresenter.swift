@@ -59,7 +59,8 @@ struct AdminEditAccountProfileDefaultPresenter:
                     breadcrumb: .init(
                         links: [
                             .init(label: "Admin", link: "/admin/"),
-                            .init(label: "User", link: "/admin/user/")]
+                            .init(label: "User", link: "/admin/user/"),
+                        ]
                     )
                 )
             )

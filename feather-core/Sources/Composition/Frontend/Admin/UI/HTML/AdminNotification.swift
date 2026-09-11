@@ -32,7 +32,8 @@ public struct AdminNotification: Codable, Sendable, Equatable {
 public enum AdminNotificationFlash {
     public static let cookieName = "admin_notification"
 
-    public static func notification(from request: Request) -> AdminNotification? {
+    public static func notification(from request: Request) -> AdminNotification?
+    {
         guard
             let value = request.cookies[cookieName]?.value,
             let data = Data(base64Encoded: value)
@@ -57,7 +58,8 @@ public enum AdminNotificationFlash {
         notification: AdminNotification
     ) -> Response {
         var headers: HTTPFields = [.location: location]
-        headers[values: .setCookie].append(cookie(for: notification).description)
+        headers[values: .setCookie]
+            .append(cookie(for: notification).description)
         return Response(status: .seeOther, headers: headers)
     }
 }

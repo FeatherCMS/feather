@@ -1,13 +1,12 @@
-import HTML
 import CSS
+import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminListSearch: Component {
 
-    public func rules(
-    ) -> [any Rule] {
+    public func rules() -> [any Rule] {
         Media {
             Custom(".table-search-form") {
                 Display(.flex)
@@ -16,8 +15,14 @@ public struct NewAdminListSearch: Component {
                 FlexWrap(.wrap)
                 MarginBottom(12.px)
             }
-            Custom(".table-search-form input[type='search'], .table-search-form select") {
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+            Custom(
+                ".table-search-form input[type='search'], .table-search-form select"
+            ) {
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
                 BorderRadius(9.px)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
@@ -37,9 +42,20 @@ public struct NewAdminListSearch: Component {
                 Flex(0, .number(0), .auto)
                 Cursor(.pointer)
             }
-            Custom(".table-search-form input[type='search']:focus, .table-search-form input[type='search']:focus-visible, .table-search-form select:focus, .table-search-form select:focus-visible") {
+            Custom(
+                ".table-search-form input[type='search']:focus, .table-search-form input[type='search']:focus-visible, .table-search-form select:focus, .table-search-form select:focus-visible"
+            ) {
                 BorderColor(.variable(TokenKey.Colors.Materials.Primary.border))
-                BoxShadow(0.px, 0.px, blur: 0.px, spread: 2.px, color: CSSColor(stringLiteral: "var(--\(TokenKey.Colors.Materials.Tertiary.hover.propertyName))"))
+                BoxShadow(
+                    0.px,
+                    0.px,
+                    blur: 0.px,
+                    spread: 2.px,
+                    color: CSSColor(
+                        stringLiteral:
+                            "var(--\(TokenKey.Colors.Materials.Tertiary.hover.propertyName))"
+                    )
+                )
                 Outline(0.px, .none)
             }
             Custom(".table-search-form .table-search-reset") {
@@ -118,7 +134,9 @@ public struct NewAdminListSearch: Component {
             for field in additionalFields {
                 field
             }
-            context.render(NewAdminSubmitButton("Search", style: .ghost(.primary)))
+            context.render(
+                NewAdminSubmitButton("Search", style: .ghost(.primary))
+            )
             A("Reset")
                 .href(state.resetPath)
                 .class("table-search-reset")

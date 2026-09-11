@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct MediaFolderAddView: Component {
     struct State {
@@ -37,13 +37,15 @@ struct MediaFolderAddView: Component {
                 Input().type(.hidden).name("view")
                     .value(state.form.view).id("view")
 
-                context.render(FormInputField(
-                    name: "name",
-                    label: "Folder name",
-                    value: state.form.name,
-                    isRequired: true,
-                    inputClass: "text-input"
-                ))
+                context.render(
+                    FormInputField(
+                        name: "name",
+                        label: "Folder name",
+                        value: state.form.name,
+                        isRequired: true,
+                        inputClass: "text-input"
+                    )
+                )
 
                 Section {
                     Div { Button("Add").type(.submit) }.class("button-row")

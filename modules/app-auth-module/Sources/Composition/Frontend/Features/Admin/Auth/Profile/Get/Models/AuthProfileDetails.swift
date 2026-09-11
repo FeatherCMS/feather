@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthProfileDetails: Component {
 
@@ -32,7 +32,9 @@ struct AuthProfileDetails: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Profile")
 
-            context.render(AdminDetailsField(label: "ID", value: state.profile.id))
+            context.render(
+                AdminDetailsField(label: "ID", value: state.profile.id)
+            )
             Div {
                 P("Profile image")
                     .class("admin-details-field__label")
@@ -53,14 +55,18 @@ struct AuthProfileDetails: Component {
                 }
             }
             .class("admin-details-field")
-            context.render(AdminDetailsField(
-                label: "First name",
-                value: state.profile.firstName ?? ""
-            ))
-            context.render(AdminDetailsField(
-                label: "Last name",
-                value: state.profile.lastName ?? ""
-            ))
+            context.render(
+                AdminDetailsField(
+                    label: "First name",
+                    value: state.profile.firstName ?? ""
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Last name",
+                    value: state.profile.lastName ?? ""
+                )
+            )
             Div {
                 P("Roles")
                     .class("admin-details-field__label")
@@ -95,10 +101,12 @@ struct AuthProfileDetails: Component {
 
             if state.canEdit {
                 Div {
-                    context.render(AdminNavigationButton(
-                        "Edit profile",
-                        href: "/admin/auth/profile/edit/"
-                    ))
+                    context.render(
+                        AdminNavigationButton(
+                            "Edit profile",
+                            href: "/admin/auth/profile/edit/"
+                        )
+                    )
                 }
                 .class("button-row", "admin-detail-actions")
             }

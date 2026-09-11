@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import RedirectContracts
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListRedirectRuleDefaultPresenter:
     AdminListRedirectRulePresenter
@@ -119,7 +119,8 @@ struct AdminListRedirectRuleDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Redirect", link: "/admin/redirect/")]
+                .init(label: "Redirect", link: "/admin/redirect/"),
+            ]
         )
     }
 }

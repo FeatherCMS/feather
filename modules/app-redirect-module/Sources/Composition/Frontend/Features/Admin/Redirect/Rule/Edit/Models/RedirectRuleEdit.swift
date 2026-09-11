@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct RedirectRuleEdit: Component {
 
@@ -25,13 +25,15 @@ struct RedirectRuleEdit: Component {
 
             H1("Edit redirect rule")
             if state.isEdited { P("Redirect rule edited successfully.") }
-            context.render(RedirectRuleForm(
-                state: state.form,
-                action: "/admin/redirect/rules/\(state.id)/edit/",
-                submitLabel: "Edit rule",
-                removeHref: "/admin/redirect/rules/\(state.id)/remove/",
-                removeLabel: "Remove rule"
-            ))
+            context.render(
+                RedirectRuleForm(
+                    state: state.form,
+                    action: "/admin/redirect/rules/\(state.id)/edit/",
+                    submitLabel: "Edit rule",
+                    removeHref: "/admin/redirect/rules/\(state.id)/remove/",
+                    removeLabel: "Remove rule"
+                )
+            )
         }
         .class("cms-section")
     }

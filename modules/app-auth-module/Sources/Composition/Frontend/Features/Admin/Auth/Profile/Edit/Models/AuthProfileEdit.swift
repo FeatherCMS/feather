@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthProfileEdit: Component {
 
@@ -36,11 +36,13 @@ struct AuthProfileEdit: Component {
                 P("Profile edited successfully.").class("success")
             }
 
-            context.render(AuthProfileForm(
-                state: state.form,
-                action: "/admin/auth/profile/edit/",
-                submitLabel: "Edit profile"
-            ))
+            context.render(
+                AuthProfileForm(
+                    state: state.form,
+                    action: "/admin/auth/profile/edit/",
+                    submitLabel: "Edit profile"
+                )
+            )
         }
         .class("cms-section")
     }

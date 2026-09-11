@@ -14,8 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListAuthEmailDefaultPresenter:
     AdminListAuthEmailPresenter
@@ -110,6 +110,7 @@ struct AdminListAuthEmailDefaultPresenter:
     private func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/")])
+            .init(label: "Auth", link: "/admin/auth/"),
+        ])
     }
 }

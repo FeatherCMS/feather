@@ -4,8 +4,8 @@ import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListAnalyticsLogDefaultPresenter:
     AdminListAnalyticsLogPresenter
@@ -78,7 +78,8 @@ struct AdminListAnalyticsLogDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Analytics", link: "/admin/analytics/")]
+                .init(label: "Analytics", link: "/admin/analytics/"),
+            ]
         )
     }
 }

@@ -4,8 +4,8 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AccountInvitationTable: Component {
 
@@ -49,22 +49,26 @@ struct AccountInvitationTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add invitation",
-                            href: "/admin/account/invitations/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add invitation",
+                                href: "/admin/account/invitations/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/account/invitations/",
-                        placeholder: "Quick search invitations",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/account/invitations/",
+                            placeholder: "Quick search invitations",
+                            search: state.search
+                        )
                     )
-                ))
+                )
 
                 if state.invitations.isEmpty {
                     let totalPages = max(
@@ -97,105 +101,131 @@ struct AccountInvitationTable: Component {
                     let canRemove = state.permissions.contains(
                         "account:invitations:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/account/invitations/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("Email")
-                                            .columnWidth(percent: 62)
-                                        Th("Expires At")
-                                            .columnWidth(percent: 28)
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for invitation in state.invitations {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: invitation.id
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/account/invitations/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected"
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
                                                     )
-                                                ))
+                                                }
+                                                Th("Email")
+                                                    .columnWidth(percent: 62)
+                                                Th("Expires At")
+                                                    .columnWidth(percent: 28)
+                                                Th("Actions")
                                             }
-                                            Td(invitation.email)
-                                                .data(
-                                                    "label",
-                                                    "Email"
-                                                )
-                                                .columnWidth(percent: 62)
-                                            Td(
-                                                DateFormatting
-                                                    .formatUnixTimestamp(
-                                                        invitation.expiresAt
+                                        }
+                                        Tbody {
+                                            for invitation in state.invitations
+                                            {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id:
+                                                                        invitation
+                                                                        .id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    Td(invitation.email)
+                                                        .data(
+                                                            "label",
+                                                            "Email"
+                                                        )
+                                                        .columnWidth(
+                                                            percent: 62
+                                                        )
+                                                    Td(
+                                                        DateFormatting
+                                                            .formatUnixTimestamp(
+                                                                invitation
+                                                                    .expiresAt
+                                                            )
                                                     )
-                                            )
-                                            .data(
-                                                "label",
-                                                "Expires At"
-                                            )
-                                            .columnWidth(percent: 28)
-                                            context.render(ListTableRowActions(
-                                                state: .init(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/account/invitations/\(invitation.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                "account:invitations:read"
-                                                        ),
-                                                        .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/account/invitations/\(invitation.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                "account:invitations:update"
-                                                        ),
-                                                        .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/account/invitations/\(invitation.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                "account:invitations:delete"
-                                                        ),
-                                                    ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            ))
+                                                    .data(
+                                                        "label",
+                                                        "Expires At"
+                                                    )
+                                                    .columnWidth(percent: 28)
+                                                    context.render(
+                                                        ListTableRowActions(
+                                                            state: .init(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        title:
+                                                                            "Details",
+                                                                        href:
+                                                                            "/admin/account/invitations/\(invitation.id)/",
+                                                                        className:
+                                                                            nil,
+                                                                        permission:
+                                                                            "account:invitations:read"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Edit",
+                                                                        href:
+                                                                            "/admin/account/invitations/\(invitation.id)/edit/",
+                                                                        className:
+                                                                            "edit",
+                                                                        permission:
+                                                                            "account:invitations:update"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Remove",
+                                                                        href:
+                                                                            "/admin/account/invitations/\(invitation.id)/remove/",
+                                                                        className:
+                                                                            "delete",
+                                                                        permission:
+                                                                            "account:invitations:delete"
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    state
+                                                                    .permissions
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/account/invitations/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/account/invitations/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
+                        )
+                    )
                 }
             }
         }

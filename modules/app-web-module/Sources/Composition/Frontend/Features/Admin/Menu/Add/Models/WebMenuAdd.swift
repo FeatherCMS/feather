@@ -5,8 +5,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebMenuAdd: Component {
 
@@ -22,11 +22,13 @@ struct WebMenuAdd: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add menu")
-            context.render(WebMenuForm(
-                state: state.form,
-                action: "/admin/web/menus/add/",
-                submitLabel: "Add menu"
-            ))
+            context.render(
+                WebMenuForm(
+                    state: state.form,
+                    action: "/admin/web/menus/add/",
+                    submitLabel: "Add menu"
+                )
+            )
         }
         .class("cms-section")
     }

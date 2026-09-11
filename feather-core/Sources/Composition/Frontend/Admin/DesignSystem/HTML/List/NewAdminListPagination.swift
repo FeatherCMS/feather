@@ -1,14 +1,13 @@
-import HTML
 import CSS
+import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminListPagination: Component {
 
-    public func rules(
-    ) -> [any Rule] {
+    public func rules() -> [any Rule] {
         Media {
             Class("table-pagination") {
                 Display(.flex)
@@ -42,7 +41,11 @@ public struct NewAdminListPagination: Component {
                 Width(4.75.rem)
                 Height(34.px)
                 Padding(vertical: 0.px, horizontal: 12.px)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
                 BorderRadius(10.px)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
@@ -53,7 +56,11 @@ public struct NewAdminListPagination: Component {
                 Gap(8.px)
             }
             Custom(".table-pagination .page-controls a") {
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
                 BorderRadius(9.px)
                 Padding(vertical: 8.px, horizontal: 12.px)
                 TextDecoration(.none)
@@ -127,8 +134,8 @@ public struct NewAdminListPagination: Component {
         let filterSuffix = "\(searchSuffix)\(extraQuerySuffix)"
         let from =
             state.pageState.total == 0
-                ? 0
-                : ((state.pageState.page - 1) * state.pageState.pageSize) + 1
+            ? 0
+            : ((state.pageState.page - 1) * state.pageState.pageSize) + 1
         let to = min(
             state.pageState.page * state.pageState.pageSize,
             state.pageState.total

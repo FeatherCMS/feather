@@ -1,7 +1,7 @@
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 private typealias HTMLButton = HTML.Button
 public typealias AdminNavigationRenderedButton = HTML.Button
@@ -21,7 +21,9 @@ public struct AdminNavigationButton: Component {
         self.className = classes.isEmpty ? nil : classes.joined(separator: " ")
     }
 
-    public func html(context: inout RenderContext) -> AdminNavigationRenderedButton {
+    public func html(context: inout RenderContext)
+        -> AdminNavigationRenderedButton
+    {
         var button = HTMLButton(label)
             .type(.button)
             .onClick(

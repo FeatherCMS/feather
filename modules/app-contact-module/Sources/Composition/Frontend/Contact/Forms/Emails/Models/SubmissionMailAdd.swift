@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SubmissionMailAdd: Component {
     let formId: String
@@ -16,16 +16,20 @@ struct SubmissionMailAdd: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminContactFormTabs(formId: formId, active: .emails))
+            context.render(
+                AdminContactFormTabs(formId: formId, active: .emails)
+            )
             context.render(AdminBreadcrumb(state: breadcrumb))
             H1("Add contact form email")
             replacementVariables
-            context.render(SubmissionMailForm(
-                mail: mail,
-                action: "/admin/contact/forms/\(formId)/emails/add/",
-                submitLabel: "Add email",
-                error: error
-            ))
+            context.render(
+                SubmissionMailForm(
+                    mail: mail,
+                    action: "/admin/contact/forms/\(formId)/emails/add/",
+                    submitLabel: "Add email",
+                    error: error
+                )
+            )
         }
         .class("cms-section")
     }

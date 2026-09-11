@@ -8,9 +8,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogAuthorLinkForm: Component {
 
@@ -65,34 +65,42 @@ struct BlogAuthorLinkForm: Component {
                 P(error).class("error")
             }
 
-            context.render(FormInputField(
-                name: state.label.key,
-                label: state.label.label,
-                value: state.label.value,
-                error: state.label.error,
-                isRequired: true
-            ))
-            context.render(FormInputField(
-                name: state.url.key,
-                label: state.url.label,
-                value: state.url.value,
-                error: state.url.error,
-                isRequired: true
-            ))
-            context.render(FormInputField(
-                name: state.priority.key,
-                label: state.priority.label,
-                value: state.priority.value,
-                error: state.priority.error,
-                isRequired: true
-            ))
+            context.render(
+                FormInputField(
+                    name: state.label.key,
+                    label: state.label.label,
+                    value: state.label.value,
+                    error: state.label.error,
+                    isRequired: true
+                )
+            )
+            context.render(
+                FormInputField(
+                    name: state.url.key,
+                    label: state.url.label,
+                    value: state.url.value,
+                    error: state.url.error,
+                    isRequired: true
+                )
+            )
+            context.render(
+                FormInputField(
+                    name: state.priority.key,
+                    label: state.priority.label,
+                    value: state.priority.value,
+                    error: state.priority.error,
+                    isRequired: true
+                )
+            )
             checkbox(state.isBlank)
-            context.render(FormInputField(
-                name: state.permission.key,
-                label: state.permission.label,
-                value: state.permission.value,
-                error: state.permission.error
-            ))
+            context.render(
+                FormInputField(
+                    name: state.permission.key,
+                    label: state.permission.label,
+                    value: state.permission.value,
+                    error: state.permission.error
+                )
+            )
             textarea(state.notes, context: &context)
 
             Section {
@@ -100,11 +108,13 @@ struct BlogAuthorLinkForm: Component {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")
@@ -121,13 +131,15 @@ struct BlogAuthorLinkForm: Component {
         context: inout RenderContext
     ) -> FormTextAreaField {
 
-        context.render(FormTextAreaField(
-            name: field.key,
-            label: field.label,
-            value: field.value,
-            error: field.error,
-            rows: 6
-        ))
+        context.render(
+            FormTextAreaField(
+                name: field.key,
+                label: field.label,
+                value: field.value,
+                error: field.error,
+                rows: 6
+            )
+        )
     }
 
     private func checkbox(

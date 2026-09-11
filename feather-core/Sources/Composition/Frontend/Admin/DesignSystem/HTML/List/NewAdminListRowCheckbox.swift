@@ -1,7 +1,7 @@
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminListRowCheckbox: Component {
 

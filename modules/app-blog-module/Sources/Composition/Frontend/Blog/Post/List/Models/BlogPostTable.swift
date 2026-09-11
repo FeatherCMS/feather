@@ -10,9 +10,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogPostTable: Component {
 
@@ -66,22 +66,26 @@ struct BlogPostTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add post",
-                            href: "/admin/blog/posts/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add post",
+                                href: "/admin/blog/posts/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/blog/posts/",
-                        placeholder: "Quick search blog posts",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/blog/posts/",
+                            placeholder: "Quick search blog posts",
+                            search: state.search
+                        )
                     )
-                ))
+                )
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -113,77 +117,91 @@ struct BlogPostTable: Component {
                     let canRemove = state.permissions.contains(
                         "blog:posts:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/blog/posts/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("Title")
-                                        Th("Status")
-                                        Th("Publication")
-                                        Th("Expiration")
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for item in state.rules {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: item.id
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/blog/posts/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected"
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
                                                     )
-                                                ))
+                                                }
+                                                Th("Title")
+                                                Th("Status")
+                                                Th("Publication")
+                                                Th("Expiration")
+                                                Th("Actions")
                                             }
-                                            titleCell(for: item, context: &context)
-                                            statusCell(for: item)
-                                            Td(
-                                                format(
-                                                    item.metadata
-                                                        .publicationDate
-                                                )
-                                            )
-                                            .data(
-                                                "label",
-                                                "Publication"
-                                            )
-                                            Td(
-                                                format(
-                                                    item.metadata.expirationDate
-                                                )
-                                            )
-                                            .data(
-                                                "label",
-                                                "Expiration"
-                                            )
-                                            actionsCell(for: item)
+                                        }
+                                        Tbody {
+                                            for item in state.rules {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: item.id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    titleCell(
+                                                        for: item,
+                                                        context: &context
+                                                    )
+                                                    statusCell(for: item)
+                                                    Td(
+                                                        format(
+                                                            item.metadata
+                                                                .publicationDate
+                                                        )
+                                                    )
+                                                    .data(
+                                                        "label",
+                                                        "Publication"
+                                                    )
+                                                    Td(
+                                                        format(
+                                                            item.metadata
+                                                                .expirationDate
+                                                        )
+                                                    )
+                                                    .data(
+                                                        "label",
+                                                        "Expiration"
+                                                    )
+                                                    actionsCell(for: item)
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/blog/posts/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/blog/posts/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
+                        )
+                    )
                 }
             }
         }

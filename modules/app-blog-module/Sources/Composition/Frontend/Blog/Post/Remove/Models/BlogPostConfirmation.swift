@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogPostConfirmation: Component {
 
@@ -22,19 +22,21 @@ struct BlogPostConfirmation: Component {
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
-        return context.render(AdminConfirmationDialog(
-            state: .init(
-                breadcrumb: state.breadcrumb,
-                title: "Remove post",
-                message:
-                    "Are you sure you want to remove this post? This action cannot be undone.",
-                details: [
-                    .init(prefix: "Title: ", value: state.source)
-                ],
-                submitLabel: "Remove post",
-                actionURL: "/admin/blog/posts/\(state.id)/remove/",
-                cancelURL: "/admin/blog/posts/"
+        context.render(
+            AdminConfirmationDialog(
+                state: .init(
+                    breadcrumb: state.breadcrumb,
+                    title: "Remove post",
+                    message:
+                        "Are you sure you want to remove this post? This action cannot be undone.",
+                    details: [
+                        .init(prefix: "Title: ", value: state.source)
+                    ],
+                    submitLabel: "Remove post",
+                    actionURL: "/admin/blog/posts/\(state.id)/remove/",
+                    cancelURL: "/admin/blog/posts/"
+                )
             )
-        ))
+        )
     }
 }

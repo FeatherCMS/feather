@@ -10,9 +10,9 @@ import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 extension AdminMediaAssetOpenAPIRepository {
     init(api: BlogAdminAPIClient) {
@@ -84,37 +84,43 @@ struct AdminMetadataFields: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Div {
-            context.render(FormInputField(
-                name: state.slug.key,
-                label: state.slug.label,
-                prefix: state.slugPrefix,
-                value: state.slug.value,
-                error: state.slug.error,
-                isRequired: true
-            ))
-            if showTemplate {
-                context.render(FormSelectField(
-                    name: state.template.key,
-                    label: state.template.label,
-                    options: [.init(label: "Default", value: "default")],
-                    selectedValue: state.template.value,
-                    error: state.template.error,
+            context.render(
+                FormInputField(
+                    name: state.slug.key,
+                    label: state.slug.label,
+                    prefix: state.slugPrefix,
+                    value: state.slug.value,
+                    error: state.slug.error,
                     isRequired: true
-                ))
+                )
+            )
+            if showTemplate {
+                context.render(
+                    FormSelectField(
+                        name: state.template.key,
+                        label: state.template.label,
+                        options: [.init(label: "Default", value: "default")],
+                        selectedValue: state.template.value,
+                        error: state.template.error,
+                        isRequired: true
+                    )
+                )
             }
             Div {
                 H3("Publishing")
-                context.render(FormSelectField(
-                    name: state.status.key,
-                    label: state.status.label,
-                    options: ["draft", "published", "archived"]
-                        .map {
-                            .init(label: $0.capitalized, value: $0)
-                        },
-                    selectedValue: state.status.value,
-                    error: state.status.error,
-                    isRequired: true
-                ))
+                context.render(
+                    FormSelectField(
+                        name: state.status.key,
+                        label: state.status.label,
+                        options: ["draft", "published", "archived"]
+                            .map {
+                                .init(label: $0.capitalized, value: $0)
+                            },
+                        selectedValue: state.status.value,
+                        error: state.status.error,
+                        isRequired: true
+                    )
+                )
                 FormDateTimeField(
                     name: state.publicationDate.key,
                     label: state.publicationDate.label,
@@ -134,36 +140,44 @@ struct AdminMetadataFields: Component {
                 H3("Social")
                 Div {
                     if showTitle {
-                        context.render(FormInputField(
-                            name: state.title.key,
-                            label: state.title.label,
-                            value: state.title.value,
-                            error: state.title.error,
-                            isRequired: titleRequired
-                        ))
-                    }
-                    context.render(FormTextAreaField(
-                        name: state.excerpt.key,
-                        label: state.excerpt.label,
-                        value: state.excerpt.value,
-                        error: state.excerpt.error,
-                        rows: 4
-                    ))
-                    context.render(AdminMediaAssetPicker(
-                        state: .init(
-                            field: .init(
-                                key: state.imageUrl.key,
-                                label: state.imageUrl.label,
-                                value: state.imageUrl.value,
-                                error: state.imageUrl.error
-                            ),
-                            selectedAsset: state.selectedImageAsset,
-                            browsePath:
-                                "/admin/media/assets/?picker=1&field=\(state.imageUrl.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
-                            allowedExtensions: ["png", "jpg", "jpeg", "webp"],
-                            outputMode: .originalURL
+                        context.render(
+                            FormInputField(
+                                name: state.title.key,
+                                label: state.title.label,
+                                value: state.title.value,
+                                error: state.title.error,
+                                isRequired: titleRequired
+                            )
                         )
-                    ))
+                    }
+                    context.render(
+                        FormTextAreaField(
+                            name: state.excerpt.key,
+                            label: state.excerpt.label,
+                            value: state.excerpt.value,
+                            error: state.excerpt.error,
+                            rows: 4
+                        )
+                    )
+                    context.render(
+                        AdminMediaAssetPicker(
+                            state: .init(
+                                field: .init(
+                                    key: state.imageUrl.key,
+                                    label: state.imageUrl.label,
+                                    value: state.imageUrl.value,
+                                    error: state.imageUrl.error
+                                ),
+                                selectedAsset: state.selectedImageAsset,
+                                browsePath:
+                                    "/admin/media/assets/?picker=1&field=\(state.imageUrl.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                                allowedExtensions: [
+                                    "png", "jpg", "jpeg", "webp",
+                                ],
+                                outputMode: .originalURL
+                            )
+                        )
+                    )
                 }
                 .class("admin-metadata-fields__group")
             }
@@ -172,12 +186,14 @@ struct AdminMetadataFields: Component {
             Div {
                 H3("Advanced")
                 Div {
-                    context.render(FormInputField(
-                        name: state.canonicalUrl.key,
-                        label: state.canonicalUrl.label,
-                        value: state.canonicalUrl.value,
-                        error: state.canonicalUrl.error
-                    ))
+                    context.render(
+                        FormInputField(
+                            name: state.canonicalUrl.key,
+                            label: state.canonicalUrl.label,
+                            value: state.canonicalUrl.value,
+                            error: state.canonicalUrl.error
+                        )
+                    )
                     CheckboxField(
                         state: .init(
                             key: state.noIndex.key,
@@ -186,33 +202,41 @@ struct AdminMetadataFields: Component {
                             error: state.noIndex.error
                         )
                     )
-                    context.render(FormInputField(
-                        name: state.primaryKeyword.key,
-                        label: state.primaryKeyword.label,
-                        value: state.primaryKeyword.value,
-                        error: state.primaryKeyword.error
-                    ))
-                    context.render(FormTextAreaField(
-                        name: state.cssCodeInjection.key,
-                        label: state.cssCodeInjection.label,
-                        value: state.cssCodeInjection.value,
-                        error: state.cssCodeInjection.error,
-                        rows: 10
-                    ))
-                    context.render(FormTextAreaField(
-                        name: state.javascriptCodeInjection.key,
-                        label: state.javascriptCodeInjection.label,
-                        value: state.javascriptCodeInjection.value,
-                        error: state.javascriptCodeInjection.error,
-                        rows: 10
-                    ))
-                    context.render(FormTextAreaField(
-                        name: state.structuredDataCodeInjection.key,
-                        label: state.structuredDataCodeInjection.label,
-                        value: state.structuredDataCodeInjection.value,
-                        error: state.structuredDataCodeInjection.error,
-                        rows: 10
-                    ))
+                    context.render(
+                        FormInputField(
+                            name: state.primaryKeyword.key,
+                            label: state.primaryKeyword.label,
+                            value: state.primaryKeyword.value,
+                            error: state.primaryKeyword.error
+                        )
+                    )
+                    context.render(
+                        FormTextAreaField(
+                            name: state.cssCodeInjection.key,
+                            label: state.cssCodeInjection.label,
+                            value: state.cssCodeInjection.value,
+                            error: state.cssCodeInjection.error,
+                            rows: 10
+                        )
+                    )
+                    context.render(
+                        FormTextAreaField(
+                            name: state.javascriptCodeInjection.key,
+                            label: state.javascriptCodeInjection.label,
+                            value: state.javascriptCodeInjection.value,
+                            error: state.javascriptCodeInjection.error,
+                            rows: 10
+                        )
+                    )
+                    context.render(
+                        FormTextAreaField(
+                            name: state.structuredDataCodeInjection.key,
+                            label: state.structuredDataCodeInjection.label,
+                            value: state.structuredDataCodeInjection.value,
+                            error: state.structuredDataCodeInjection.error,
+                            rows: 10
+                        )
+                    )
                 }
                 .class("admin-metadata-fields__group")
             }

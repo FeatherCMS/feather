@@ -11,8 +11,7 @@ import WebBuilders
 extension NewAdminDesignSystem {
 
     @Builder<CSS.Rule>
-    func variables(
-    ) -> [any Rule] {
+    func variables() -> [any Rule] {
         Media {
             Root {
                 Variable(TokenKey.Colors.Link.default, "#8647b2")
@@ -52,13 +51,28 @@ extension NewAdminDesignSystem {
 
                 Variable(TokenKey.Colors.Buttons.Ghost.Primary.tint, "#374151")
                 Variable(TokenKey.Colors.Buttons.Ghost.Primary.text, "#fff")
-                Variable(TokenKey.Colors.Buttons.Ghost.Primary.border, "#1f2937")
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Primary.border,
+                    "#1f2937"
+                )
                 Variable(TokenKey.Colors.Buttons.Ghost.Primary.hover, "#0f172a")
 
-                Variable(TokenKey.Colors.Buttons.Ghost.Secondary.tint, "#e2e8f0")
-                Variable(TokenKey.Colors.Buttons.Ghost.Secondary.text, "#4b5563")
-                Variable(TokenKey.Colors.Buttons.Ghost.Secondary.border, "#cbd5e1")
-                Variable(TokenKey.Colors.Buttons.Ghost.Secondary.hover, "#cbd5e1")
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Secondary.tint,
+                    "#e2e8f0"
+                )
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Secondary.text,
+                    "#4b5563"
+                )
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Secondary.border,
+                    "#cbd5e1"
+                )
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Secondary.hover,
+                    "#cbd5e1"
+                )
 
                 Variable(TokenKey.Colors.Buttons.Disabled.tint, "#eef0f2")
                 Variable(TokenKey.Colors.Buttons.Disabled.text, "#9ca3af")
@@ -68,7 +82,10 @@ extension NewAdminDesignSystem {
                 Variable(TokenKey.Colors.Selection.tint, "#fff")
                 Variable(TokenKey.Colors.Selection.text, "#fff")
 
-                Variable(TokenKey.Colors.BoxShadow.tint, "rgba(17, 24, 39, 0.08)")
+                Variable(
+                    TokenKey.Colors.BoxShadow.tint,
+                    "rgba(17, 24, 39, 0.08)"
+                )
             }
         }
         Media(.prefersColorScheme(.dark)) {
@@ -111,13 +128,28 @@ extension NewAdminDesignSystem {
 
                 Variable(TokenKey.Colors.Buttons.Ghost.Primary.tint, "#3a3a3e")
                 Variable(TokenKey.Colors.Buttons.Ghost.Primary.text, "#f5f0f7")
-                Variable(TokenKey.Colors.Buttons.Ghost.Primary.border, "#525255")
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Primary.border,
+                    "#525255"
+                )
                 Variable(TokenKey.Colors.Buttons.Ghost.Primary.hover, "#525255")
 
-                Variable(TokenKey.Colors.Buttons.Ghost.Secondary.tint, "#242428")
-                Variable(TokenKey.Colors.Buttons.Ghost.Secondary.text, "#d6d1dc")
-                Variable(TokenKey.Colors.Buttons.Ghost.Secondary.border, "#3b3b42")
-                Variable(TokenKey.Colors.Buttons.Ghost.Secondary.hover, "#34343a")
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Secondary.tint,
+                    "#242428"
+                )
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Secondary.text,
+                    "#d6d1dc"
+                )
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Secondary.border,
+                    "#3b3b42"
+                )
+                Variable(
+                    TokenKey.Colors.Buttons.Ghost.Secondary.hover,
+                    "#34343a"
+                )
 
                 Variable(TokenKey.Colors.Buttons.Disabled.tint, "#1f1f22")
                 Variable(TokenKey.Colors.Buttons.Disabled.text, "#716a75")
@@ -131,13 +163,13 @@ extension NewAdminDesignSystem {
             }
         }
 
-//        Media(.prefersColorScheme(.dark) && .minWidth(600.px)) {
-//            Root {
-//                Variable(TokenKey.Colors.Background.primary, "#1c1c1e")
-//                Variable(TokenKey.Colors.Background.secondary, "#1c1c1e")
-//                Variable(TokenKey.Colors.Background.tertiary, "#303033")
-//                Variable(TokenKey.Colors.Background.muted, "#3a3a3e")
-//            }
-//        }
+        //        Media(.prefersColorScheme(.dark) && .minWidth(600.px)) {
+        //            Root {
+        //                Variable(TokenKey.Colors.Background.primary, "#1c1c1e")
+        //                Variable(TokenKey.Colors.Background.secondary, "#1c1c1e")
+        //                Variable(TokenKey.Colors.Background.tertiary, "#303033")
+        //                Variable(TokenKey.Colors.Background.muted, "#3a3a3e")
+        //            }
+        //        }
     }
 }

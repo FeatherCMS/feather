@@ -3,8 +3,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetAnalyticsLogDefaultPresenter: AdminGetAnalyticsLogPresenter {
     let request: Request
@@ -63,7 +63,8 @@ struct AdminGetAnalyticsLogDefaultPresenter: AdminGetAnalyticsLogPresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Analytics", link: "/admin/analytics/"),
-                .init(label: "Logs", link: "/admin/analytics/logs/")]
+                .init(label: "Logs", link: "/admin/analytics/logs/"),
+            ]
         )
     }
 }

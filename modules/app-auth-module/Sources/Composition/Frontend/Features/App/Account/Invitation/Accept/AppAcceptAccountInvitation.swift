@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AppAcceptAccountInvitation {
 
@@ -29,7 +29,9 @@ struct AppAcceptAccountInvitation {
                 H1("Create your account")
                 if let success {
                     P(success).class("success")
-                    context.render(AdminNavigationButton("Go to login", href: "/login/"))
+                    context.render(
+                        AdminNavigationButton("Go to login", href: "/login/")
+                    )
                 }
                 else {
                     P("Complete your registration using the invitation.")
@@ -37,20 +39,24 @@ struct AppAcceptAccountInvitation {
                     if let error { P(error).class("error") }
                     Form {
                         Input().type(.hidden).name("token").value(token)
-                        context.render(PasswordField(
-                            state: .init(
-                                key: "password",
-                                label: "Password",
-                                value: password
+                        context.render(
+                            PasswordField(
+                                state: .init(
+                                    key: "password",
+                                    label: "Password",
+                                    value: password
+                                )
                             )
-                        ))
-                        context.render(PasswordField(
-                            state: .init(
-                                key: "confirmation",
-                                label: "Confirm password",
-                                value: confirmation
+                        )
+                        context.render(
+                            PasswordField(
+                                state: .init(
+                                    key: "confirmation",
+                                    label: "Confirm password",
+                                    value: confirmation
+                                )
                             )
-                        ))
+                        )
                         Button("Create account").type(.submit)
                     }
                     .method(.post)
@@ -79,8 +85,9 @@ struct AppAcceptAccountInvitation {
                 password: "",
                 confirmation: "",
                 error: "Invitation token is missing.",
-                success: nil
-            , context: &renderContext)
+                success: nil,
+                context: &renderContext
+            )
         }
         do {
             let response = try await context.accountAppAPI()
@@ -100,8 +107,9 @@ struct AppAcceptAccountInvitation {
                     password: "",
                     confirmation: "",
                     error: nil,
-                    success: nil
-                , context: &renderContext)
+                    success: nil,
+                    context: &renderContext
+                )
             case .undocumented(let statusCode, let response):
                 throw try await context.accountAppAPI()
                     .failure(
@@ -118,8 +126,9 @@ struct AppAcceptAccountInvitation {
                 password: "",
                 confirmation: "",
                 error: error.errorDescription,
-                success: nil
-            , context: &renderContext)
+                success: nil,
+                context: &renderContext
+            )
         }
     }
 
@@ -141,8 +150,9 @@ struct AppAcceptAccountInvitation {
                 password: payload.password,
                 confirmation: payload.confirmation,
                 error: "Password must contain at least 8 characters.",
-                success: nil
-            , context: &renderContext)
+                success: nil,
+                context: &renderContext
+            )
         }
         guard payload.password == payload.confirmation else {
             return render(
@@ -153,8 +163,9 @@ struct AppAcceptAccountInvitation {
                 password: payload.password,
                 confirmation: payload.confirmation,
                 error: "Passwords do not match.",
-                success: nil
-            , context: &renderContext)
+                success: nil,
+                context: &renderContext
+            )
         }
         do {
             let response = try await context.accountAppAPI()
@@ -181,8 +192,9 @@ struct AppAcceptAccountInvitation {
                     confirmation: "",
                     error: nil,
                     success:
-                        "Your account was created successfully. You can now sign in."
-                , context: &renderContext)
+                        "Your account was created successfully. You can now sign in.",
+                    context: &renderContext
+                )
             case .undocumented(let statusCode, let response):
                 throw try await context.accountAppAPI()
                     .failure(
@@ -199,8 +211,9 @@ struct AppAcceptAccountInvitation {
                 password: payload.password,
                 confirmation: payload.confirmation,
                 error: error.errorDescription,
-                success: nil
-            , context: &renderContext)
+                success: nil,
+                context: &renderContext
+            )
         }
     }
 
@@ -220,14 +233,16 @@ struct AppAcceptAccountInvitation {
             title: "Create account",
             description: "Complete your invited account registration.",
             imagePath: "images/puppy.png",
-            content: context.render(Page(
-                token: token,
-                email: email,
-                password: password,
-                confirmation: confirmation,
-                error: error,
-                success: success
-            ))
+            content: context.render(
+                Page(
+                    token: token,
+                    email: email,
+                    password: password,
+                    confirmation: confirmation,
+                    error: error,
+                    success: success
+                )
+            )
         )
     }
 

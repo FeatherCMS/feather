@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct AdminRemoveBlogPostDefaultPresenter:
     AdminRemoveBlogPostPresenter
@@ -73,7 +73,8 @@ struct AdminRemoveBlogPostDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Posts", link: "/admin/blog/posts/")]
+                .init(label: "Posts", link: "/admin/blog/posts/"),
+            ]
         )
     }
 }

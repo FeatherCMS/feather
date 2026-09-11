@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthProfileForm: Component {
 
@@ -55,38 +55,44 @@ struct AuthProfileForm: Component {
                 P(error).class("error")
             }
 
-            context.render(AdminMediaAssetPicker(
-                state: .init(
-                    field: .init(
-                        key: state.profileImageAssetId.key,
-                        label: state.profileImageAssetId.label,
-                        value: state.profileImageAssetId.value,
-                        error: state.profileImageAssetId.error
-                    ),
-                    selectedAsset: state.selectedImageAsset,
-                    browsePath:
-                        "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
-                    allowedExtensions: ["png", "jpg", "jpeg", "webp"],
-                    outputMode: .assetId
+            context.render(
+                AdminMediaAssetPicker(
+                    state: .init(
+                        field: .init(
+                            key: state.profileImageAssetId.key,
+                            label: state.profileImageAssetId.label,
+                            value: state.profileImageAssetId.value,
+                            error: state.profileImageAssetId.error
+                        ),
+                        selectedAsset: state.selectedImageAsset,
+                        browsePath:
+                            "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                        allowedExtensions: ["png", "jpg", "jpeg", "webp"],
+                        outputMode: .assetId
+                    )
                 )
-            ))
+            )
 
-            context.render(FormInputField(
-                name: state.firstName.key,
-                label: state.firstName.label,
-                value: state.firstName.value,
-                error: state.firstName.error,
-                isRequired: false,
-                inputClass: "text-input"
-            ))
-            context.render(FormInputField(
-                name: state.lastName.key,
-                label: state.lastName.label,
-                value: state.lastName.value,
-                error: state.lastName.error,
-                isRequired: false,
-                inputClass: "text-input"
-            ))
+            context.render(
+                FormInputField(
+                    name: state.firstName.key,
+                    label: state.firstName.label,
+                    value: state.firstName.value,
+                    error: state.firstName.error,
+                    isRequired: false,
+                    inputClass: "text-input"
+                )
+            )
+            context.render(
+                FormInputField(
+                    name: state.lastName.key,
+                    label: state.lastName.label,
+                    value: state.lastName.value,
+                    error: state.lastName.error,
+                    isRequired: false,
+                    inputClass: "text-input"
+                )
+            )
 
             Section {
                 Div {

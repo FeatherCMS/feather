@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthEmailAdd: Component {
 
@@ -30,11 +30,13 @@ struct AuthEmailAdd: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add user email")
-            context.render(AuthEmailForm(
-                state: state.form,
-                action: "/admin/auth/emails/add/",
-                submitLabel: "Add email"
-            ))
+            context.render(
+                AuthEmailForm(
+                    state: state.form,
+                    action: "/admin/auth/emails/add/",
+                    submitLabel: "Add email"
+                )
+            )
         }
         .class("cms-section")
     }

@@ -8,8 +8,8 @@ import MediaAdminAPI
 import MediaContracts
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetMediaAssetDefaultPresenter: AdminGetMediaAssetPresenter {
     let request: Request
@@ -67,13 +67,15 @@ struct AdminGetMediaAssetDefaultPresenter: AdminGetMediaAssetPresenter {
     ) -> AdminBreadcrumb.State {
         var links: [AdminBreadcrumb.State.Link] = [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Media", link: "/admin/media/")
+            .init(label: "Media", link: "/admin/media/"),
         ]
         if includeCollection {
-            links.append(.init(
-                label: "Assets",
-                link: "/admin/media/assets/"
-            ))
+            links.append(
+                .init(
+                    label: "Assets",
+                    link: "/admin/media/assets/"
+                )
+            )
         }
         return .init(links: links)
     }

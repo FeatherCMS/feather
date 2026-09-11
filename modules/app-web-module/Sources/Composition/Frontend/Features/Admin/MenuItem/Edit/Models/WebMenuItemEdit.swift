@@ -5,8 +5,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebMenuItemEdit: Component {
 
@@ -25,17 +25,21 @@ struct WebMenuItemEdit: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit item")
-            context.render(AdminWebMenuTabs(menuID: state.menuId, active: .items))
+            context.render(
+                AdminWebMenuTabs(menuID: state.menuId, active: .items)
+            )
             if state.isEdited { P("Item edited successfully.") }
-            context.render(WebMenuItemForm(
-                state: state.form,
-                action:
-                    "/admin/web/menus/\(state.menuId)/items/\(state.id)/edit/",
-                submitLabel: "Edit item",
-                removeHref:
-                    "/admin/web/menus/\(state.menuId)/items/\(state.id)/remove/",
-                removeLabel: "Remove item"
-            ))
+            context.render(
+                WebMenuItemForm(
+                    state: state.form,
+                    action:
+                        "/admin/web/menus/\(state.menuId)/items/\(state.id)/edit/",
+                    submitLabel: "Edit item",
+                    removeHref:
+                        "/admin/web/menus/\(state.menuId)/items/\(state.id)/remove/",
+                    removeLabel: "Remove item"
+                )
+            )
         }
         .class("cms-section")
     }

@@ -7,8 +7,8 @@
 
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct NewAdminBody<T: Component>: Component where T.HTML: FlowContent {
 

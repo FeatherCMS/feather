@@ -3,8 +3,8 @@ import Foundation
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminAddRedirectRuleDefaultPresenter: AdminAddRedirectRulePresenter {
     let request: Request
@@ -37,7 +37,8 @@ struct AdminAddRedirectRuleDefaultPresenter: AdminAddRedirectRulePresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Redirect", link: "/admin/redirect/"),
-                .init(label: "Rules", link: "/admin/redirect/rules/")]
+                .init(label: "Rules", link: "/admin/redirect/rules/"),
+            ]
         )
     }
 }

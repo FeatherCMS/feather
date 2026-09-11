@@ -2,8 +2,8 @@ import CSS
 import FeatherAdmin
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserRoleForm: Component {
 
@@ -48,39 +48,47 @@ struct UserRoleForm: Component {
             }
 
             if let id = state.id {
-                context.render(FormInputField(
-                    name: id.key,
-                    label: id.label,
-                    value: id.value,
-                    error: id.error,
-                    isRequired: true
-                ))
+                context.render(
+                    FormInputField(
+                        name: id.key,
+                        label: id.label,
+                        value: id.value,
+                        error: id.error,
+                        isRequired: true
+                    )
+                )
             }
 
-            context.render(FormInputField(
-                name: state.name.key,
-                label: state.name.label,
-                value: state.name.value,
-                error: state.name.error
-            ))
+            context.render(
+                FormInputField(
+                    name: state.name.key,
+                    label: state.name.label,
+                    value: state.name.value,
+                    error: state.name.error
+                )
+            )
 
-            context.render(FormInputField(
-                name: state.notes.key,
-                label: state.notes.label,
-                value: state.notes.value,
-                error: state.notes.error
-            ))
+            context.render(
+                FormInputField(
+                    name: state.notes.key,
+                    label: state.notes.label,
+                    value: state.notes.value,
+                    error: state.notes.error
+                )
+            )
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")

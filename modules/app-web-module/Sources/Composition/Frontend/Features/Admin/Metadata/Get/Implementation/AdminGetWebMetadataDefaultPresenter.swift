@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetWebMetadataDefaultPresenter: AdminGetWebMetadataPresenter {
     let request: Request
@@ -64,6 +64,7 @@ struct AdminGetWebMetadataDefaultPresenter: AdminGetWebMetadataPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Metadata", link: "/admin/web/metadata/")])
+            .init(label: "Metadata", link: "/admin/web/metadata/"),
+        ])
     }
 }

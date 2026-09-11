@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthCredentialIdentityTable: Component {
     struct State {
@@ -41,13 +41,15 @@ struct AuthCredentialIdentityTable: Component {
                 context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Credentials")
                 P("Select a user to manage their credentials.")
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/auth/credentials/",
-                        placeholder: "Quick search users",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/auth/credentials/",
+                            placeholder: "Quick search users",
+                            search: state.search
+                        )
                     )
-                ))
+                )
                 if state.identities.isEmpty {
                     P(
                         state.search.isEmpty
@@ -56,40 +58,44 @@ struct AuthCredentialIdentityTable: Component {
                     )
                 }
                 else {
-                    context.render(ListTableShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    Th("Identity")
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for identity in state.identities {
+                    context.render(
+                        ListTableShell(
+                            table: Table {
+                                Thead {
                                     Tr {
-                                        Td(identity.id)
-                                            .data("label", "Identity")
-                                        Td {
-                                            A("Credentials")
-                                                .href(
-                                                    "/admin/auth/credentials/\(identity.id)/"
-                                                )
+                                        Th("Identity")
+                                        Th("Actions")
+                                    }
+                                }
+                                Tbody {
+                                    for identity in state.identities {
+                                        Tr {
+                                            Td(identity.id)
+                                                .data("label", "Identity")
+                                            Td {
+                                                A("Credentials")
+                                                    .href(
+                                                        "/admin/auth/credentials/\(identity.id)/"
+                                                    )
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        .class("cms-table", "action-table")
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/auth/credentials/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
+                            .class("cms-table", "action-table")
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/auth/credentials/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
+                        )
+                    )
                 }
             }
         }

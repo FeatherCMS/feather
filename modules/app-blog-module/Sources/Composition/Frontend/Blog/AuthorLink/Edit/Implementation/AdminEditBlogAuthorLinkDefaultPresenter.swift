@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct AdminEditBlogAuthorLinkDefaultPresenter: AdminEditBlogAuthorLinkPresenter
 {
@@ -83,7 +83,8 @@ struct AdminEditBlogAuthorLinkDefaultPresenter: AdminEditBlogAuthorLinkPresenter
                 .init(
                     label: "Links",
                     link: "/admin/blog/authors/\(menuId)/links/"
-                )]
+                ),
+            ]
         )
     }
 }

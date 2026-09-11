@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 protocol AdminRemoveContactFormSubmissionsController: Sendable {
     func confirm(request: Request, context: DefaultRequestContext) async throws

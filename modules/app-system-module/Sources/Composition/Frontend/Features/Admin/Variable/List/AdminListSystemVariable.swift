@@ -3,6 +3,8 @@ import FeatherContracts
 import Hummingbird
 
 struct AdminListSystemVariable {
+    static let pageSize = 20
+
     let controller: any AdminListSystemVariableController
 
     init(

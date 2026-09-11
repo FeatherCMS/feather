@@ -5,8 +5,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebMenuTable: Component {
 
@@ -50,22 +50,26 @@ struct WebMenuTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add menu",
-                            href: "/admin/web/menus/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add menu",
+                                href: "/admin/web/menus/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/web/menus/",
-                        placeholder: "Quick search menus",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/web/menus/",
+                            placeholder: "Quick search menus",
+                            search: state.search
+                        )
                     )
-                ))
+                )
 
                 if state.rules.isEmpty {
                     let totalPages = max(
@@ -97,96 +101,116 @@ struct WebMenuTable: Component {
                     let canRemove = state.permissions.contains(
                         "web:menus:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/web/menus/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("Key")
-                                        Th("Name")
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for rule in state.rules {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: rule.id
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/web/menus/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected"
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
                                                     )
-                                                ))
+                                                }
+                                                Th("Key")
+                                                Th("Name")
+                                                Th("Actions")
                                             }
-                                            Td(rule.key)
-                                                .data(
-                                                    "label",
-                                                    "Key"
-                                                )
-                                            Td(rule.name)
-                                                .data(
-                                                    "label",
-                                                    "Name"
-                                                )
-                                            context.render(ListTableRowActions(
-                                                state: .init(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/web/menus/\(rule.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                "web:menus:read"
-                                                        ),
-                                                        .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/web/menus/\(rule.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                "web:menus:update"
-                                                        ),
-                                                        .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/web/menus/\(rule.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                "web:menus:delete"
-                                                        ),
-                                                    ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            ))
+                                        }
+                                        Tbody {
+                                            for rule in state.rules {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: rule.id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    Td(rule.key)
+                                                        .data(
+                                                            "label",
+                                                            "Key"
+                                                        )
+                                                    Td(rule.name)
+                                                        .data(
+                                                            "label",
+                                                            "Name"
+                                                        )
+                                                    context.render(
+                                                        ListTableRowActions(
+                                                            state: .init(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        title:
+                                                                            "Details",
+                                                                        href:
+                                                                            "/admin/web/menus/\(rule.id)/",
+                                                                        className:
+                                                                            nil,
+                                                                        permission:
+                                                                            "web:menus:read"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Edit",
+                                                                        href:
+                                                                            "/admin/web/menus/\(rule.id)/edit/",
+                                                                        className:
+                                                                            "edit",
+                                                                        permission:
+                                                                            "web:menus:update"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Remove",
+                                                                        href:
+                                                                            "/admin/web/menus/\(rule.id)/remove/",
+                                                                        className:
+                                                                            "delete",
+                                                                        permission:
+                                                                            "web:menus:delete"
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    state
+                                                                    .permissions
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/web/menus/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/web/menus/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
+                        )
+                    )
                 }
             }
         }

@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct AdminAddBlogPostDefaultPresenter: AdminAddBlogPostPresenter {
     let request: Request
@@ -42,7 +42,8 @@ struct AdminAddBlogPostDefaultPresenter: AdminAddBlogPostPresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Posts", link: "/admin/blog/posts/")]
+                .init(label: "Posts", link: "/admin/blog/posts/"),
+            ]
         )
     }
 }

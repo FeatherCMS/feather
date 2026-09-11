@@ -8,8 +8,8 @@ import MediaAdminAPI
 import MediaContracts
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
 {
@@ -115,7 +115,8 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Media", link: "/admin/media/")]
+                .init(label: "Media", link: "/admin/media/"),
+            ]
         )
     }
 }

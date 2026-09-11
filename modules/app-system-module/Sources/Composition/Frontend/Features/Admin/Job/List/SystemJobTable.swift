@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import SGML
 import SystemAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SystemJobTable: Component {
     struct State {
@@ -22,13 +22,15 @@ struct SystemJobTable: Component {
         Section {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("Worker jobs")
-            context.render(ListTableSearchForm(
-                state: .init(
-                    action: "/admin/system/jobs/",
-                    placeholder: "Quick search worker jobs",
-                    search: state.search
+            context.render(
+                ListTableSearchForm(
+                    state: .init(
+                        action: "/admin/system/jobs/",
+                        placeholder: "Quick search worker jobs",
+                        search: state.search
+                    )
                 )
-            ))
+            )
 
             if state.jobs.isEmpty {
                 let totalPages = max(
@@ -55,59 +57,66 @@ struct SystemJobTable: Component {
                 }
             }
             else {
-                context.render(ListTableShell(
-                    table: Table {
-                        Thead {
-                            Tr {
-                                Th("Job")
-                                Th("Parameters")
-                                Th("Status")
-                                Th("Actions")
-                            }
-                        }
-                        Tbody {
-                            for job in state.jobs {
-                                let payload = SystemJobPayload(job: job)
+                context.render(
+                    ListTableShell(
+                        table: Table {
+                            Thead {
                                 Tr {
-                                    Td(payload.name).data("label", "Job")
-                                    Td(
-                                        payload.parameterSummary.isEmpty
-                                            ? "—" : payload.parameterSummary
-                                    )
-                                    .data("label", "Parameters")
-                                    Td(statusLabel(job.status))
-                                        .data("label", "Status")
-                                    context.render(ListTableRowActions(
-                                        state: .init(
-                                            label: "Actions",
-                                            actions: [
-                                                .init(
-                                                    title: "Details",
-                                                    href:
-                                                        "/admin/system/jobs/\(job.id)/",
-                                                    className: nil,
-                                                    permission:
-                                                        "system:jobs:read"
-                                                )
-                                            ],
-                                            permissions: state.permissions
+                                    Th("Job")
+                                    Th("Parameters")
+                                    Th("Status")
+                                    Th("Actions")
+                                }
+                            }
+                            Tbody {
+                                for job in state.jobs {
+                                    let payload = SystemJobPayload(job: job)
+                                    Tr {
+                                        Td(payload.name).data("label", "Job")
+                                        Td(
+                                            payload.parameterSummary.isEmpty
+                                                ? "—" : payload.parameterSummary
                                         )
-                                    ))
+                                        .data("label", "Parameters")
+                                        Td(statusLabel(job.status))
+                                            .data("label", "Status")
+                                        context.render(
+                                            ListTableRowActions(
+                                                state: .init(
+                                                    label: "Actions",
+                                                    actions: [
+                                                        .init(
+                                                            title: "Details",
+                                                            href:
+                                                                "/admin/system/jobs/\(job.id)/",
+                                                            className: nil,
+                                                            permission:
+                                                                "system:jobs:read"
+                                                        )
+                                                    ],
+                                                    permissions: state
+                                                        .permissions
+                                                )
+                                            )
+                                        )
+                                    }
                                 }
                             }
                         }
-                    }
-                    .class("cms-table", "action-table")
-                ))
-                context.render(ListTablePagination(
-                    state: .init(
-                        path: "/admin/system/jobs/",
-                        page: state.page,
-                        pageSize: state.pageSize,
-                        total: state.total,
-                        search: state.search
+                        .class("cms-table", "action-table")
                     )
-                ))
+                )
+                context.render(
+                    ListTablePagination(
+                        state: .init(
+                            path: "/admin/system/jobs/",
+                            page: state.page,
+                            pageSize: state.pageSize,
+                            total: state.total,
+                            search: state.search
+                        )
+                    )
+                )
             }
         }
         .class("cms-section")

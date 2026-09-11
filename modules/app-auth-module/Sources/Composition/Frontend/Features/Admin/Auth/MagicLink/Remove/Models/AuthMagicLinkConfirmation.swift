@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthMagicLinkConfirmation: Component {
 
@@ -27,22 +27,24 @@ struct AuthMagicLinkConfirmation: Component {
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
-        return context.render(AdminConfirmationDialog(
-            state: .init(
-                breadcrumb: state.breadcrumb,
-                title: "Remove user magic link",
-                message:
-                    "Are you sure you want to remove this user magic link? This action cannot be undone.",
-                details: [
-                    .init(
-                        prefix: "Auth email ID: ",
-                        value: state.credentialId
-                    )
-                ],
-                submitLabel: "Remove magic link",
-                actionURL: "/admin/auth/magic-links/\(state.id)/remove/",
-                cancelURL: "/admin/auth/magic-links/"
+        context.render(
+            AdminConfirmationDialog(
+                state: .init(
+                    breadcrumb: state.breadcrumb,
+                    title: "Remove user magic link",
+                    message:
+                        "Are you sure you want to remove this user magic link? This action cannot be undone.",
+                    details: [
+                        .init(
+                            prefix: "Auth email ID: ",
+                            value: state.credentialId
+                        )
+                    ],
+                    submitLabel: "Remove magic link",
+                    actionURL: "/admin/auth/magic-links/\(state.id)/remove/",
+                    cancelURL: "/admin/auth/magic-links/"
+                )
             )
-        ))
+        )
     }
 }

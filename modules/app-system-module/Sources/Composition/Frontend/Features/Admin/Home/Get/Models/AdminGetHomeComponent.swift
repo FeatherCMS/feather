@@ -3,8 +3,8 @@ import Foundation
 import HTML
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetHomeComponent: Component {
     private let chartPrimaryColor = "var(--cms-primary-hover)"
@@ -13,9 +13,11 @@ struct AdminGetHomeComponent: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(
-                state: .init(links: [])
-            ))
+            context.render(
+                AdminBreadcrumb(
+                    state: .init(links: [])
+                )
+            )
             H1("Dashboard")
             P(model.summary)
                 .style("margin:0 0 16px 0;")

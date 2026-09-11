@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct MediaProcessorRemoveView: Component {
     let id: String
@@ -16,19 +16,21 @@ struct MediaProcessorRemoveView: Component {
     let breadcrumb: AdminBreadcrumb.State
 
     func html(context: inout RenderContext) -> some BasicTag {
-        return context.render(AdminConfirmationDialog(
-            state: .init(
-                breadcrumb: breadcrumb,
-                title: "Remove processor",
-                message:
-                    "Are you sure you want to remove this processor? This action cannot be undone.",
-                details: [
-                    .init(prefix: "ID: ", value: id)
-                ],
-                submitLabel: "Remove processor",
-                actionURL: formURL,
-                cancelURL: cancelURL
+        context.render(
+            AdminConfirmationDialog(
+                state: .init(
+                    breadcrumb: breadcrumb,
+                    title: "Remove processor",
+                    message:
+                        "Are you sure you want to remove this processor? This action cannot be undone.",
+                    details: [
+                        .init(prefix: "ID: ", value: id)
+                    ],
+                    submitLabel: "Remove processor",
+                    actionURL: formURL,
+                    cancelURL: cancelURL
+                )
             )
-        ))
+        )
     }
 }

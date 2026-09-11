@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthCredentialTable: Component {
     struct State {
@@ -42,22 +42,26 @@ struct AuthCredentialTable: Component {
                 H1("User credentials")
                 if state.permissions.contains("auth:credential:create") {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add credential",
-                            href: "/admin/auth/credentials/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add credential",
+                                href: "/admin/auth/credentials/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/auth/credentials/",
-                        placeholder: "Quick search credentials",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/auth/credentials/",
+                            placeholder: "Quick search credentials",
+                            search: state.search
+                        )
                     )
-                ))
+                )
                 if state.credentials.isEmpty {
                     P(
                         state.search.isEmpty
@@ -66,62 +70,75 @@ struct AuthCredentialTable: Component {
                     )
                 }
                 else {
-                    context.render(ListTableShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    Th("User")
-                                    Th("Email")
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for credential in state.credentials {
+                    context.render(
+                        ListTableShell(
+                            table: Table {
+                                Thead {
                                     Tr {
-                                        Td(credential.identityName)
-                                            .data("label", "User")
-                                        Td(credential.email)
-                                            .data("label", "Email")
-                                        context.render(ListTableRowActions(
-                                            state: .init(
-                                                label: "Actions",
-                                                actions: [
-                                                    .init(
-                                                        title: "Edit",
-                                                        href:
-                                                            "/admin/auth/credentials/\(credential.id)/edit/",
-                                                        className: "edit",
-                                                        permission:
-                                                            "auth:credential:update"
-                                                    ),
-                                                    .init(
-                                                        title: "Remove",
-                                                        href:
-                                                            "/admin/auth/credentials/\(credential.id)/remove/",
-                                                        className: "delete",
-                                                        permission:
-                                                            "auth:credential:delete"
-                                                    ),
-                                                ],
-                                                permissions: state.permissions
+                                        Th("User")
+                                        Th("Email")
+                                        Th("Actions")
+                                    }
+                                }
+                                Tbody {
+                                    for credential in state.credentials {
+                                        Tr {
+                                            Td(credential.identityName)
+                                                .data("label", "User")
+                                            Td(credential.email)
+                                                .data("label", "Email")
+                                            context.render(
+                                                ListTableRowActions(
+                                                    state: .init(
+                                                        label: "Actions",
+                                                        actions: [
+                                                            .init(
+                                                                title: "Edit",
+                                                                href:
+                                                                    "/admin/auth/credentials/\(credential.id)/edit/",
+                                                                className:
+                                                                    "edit",
+                                                                permission:
+                                                                    "auth:credential:update"
+                                                            ),
+                                                            .init(
+                                                                title: "Remove",
+                                                                href:
+                                                                    "/admin/auth/credentials/\(credential.id)/remove/",
+                                                                className:
+                                                                    "delete",
+                                                                permission:
+                                                                    "auth:credential:delete"
+                                                            ),
+                                                        ],
+                                                        permissions: state
+                                                            .permissions
+                                                    )
+                                                )
                                             )
-                                        ))
+                                        }
                                     }
                                 }
                             }
-                        }
-                        .class("cms-table", "action-table", "credential-table")
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path:
-                                "/admin/auth/credentials/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
+                            .class(
+                                "cms-table",
+                                "action-table",
+                                "credential-table"
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path:
+                                    "/admin/auth/credentials/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
+                        )
+                    )
                 }
             }
         }

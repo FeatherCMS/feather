@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthEmailForm: Component {
 
@@ -74,37 +74,43 @@ struct AuthEmailForm: Component {
                 P(error).class("error")
             }
 
-            context.render(AdminAutocompleteField(
-                state: .init(
-                    key: state.identityId.key,
-                    label: state.identityId.label,
-                    placeholder: "Select a user identity",
-                    options: state.identityOptions,
-                    error: state.identityId.error,
-                    selectionMode: .single,
-                    isEnabled: true
+            context.render(
+                AdminAutocompleteField(
+                    state: .init(
+                        key: state.identityId.key,
+                        label: state.identityId.label,
+                        placeholder: "Select a user identity",
+                        options: state.identityOptions,
+                        error: state.identityId.error,
+                        selectionMode: .single,
+                        isEnabled: true
+                    )
                 )
-            ))
+            )
 
-            context.render(FormInputField(
-                name: state.email.key,
-                label: state.email.label,
-                value: state.email.value,
-                error: state.email.error,
-                type: .email,
-                isRequired: true
-            ))
+            context.render(
+                FormInputField(
+                    name: state.email.key,
+                    label: state.email.label,
+                    value: state.email.value,
+                    error: state.email.error,
+                    type: .email,
+                    isRequired: true
+                )
+            )
 
             Section {
                 Div {
                     Button(submitLabel)
                         .type(.submit)
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")

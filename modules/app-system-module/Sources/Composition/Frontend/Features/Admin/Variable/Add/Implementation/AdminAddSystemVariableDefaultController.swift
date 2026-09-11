@@ -16,7 +16,9 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.create) else {
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
+        else {
             throw HTTPError(.forbidden)
         }
         let runtime = buildRuntime(request, context)
@@ -30,7 +32,9 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.create) else {
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
+        else {
             throw HTTPError(.forbidden)
         }
         let runtime = buildRuntime(request, context)

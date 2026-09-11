@@ -294,4 +294,3 @@ extension FeatherIcons {
         }
     }
 }
-

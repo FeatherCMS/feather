@@ -14,8 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthAccessControlMatrix: Component {
 
@@ -55,13 +55,15 @@ struct AuthAccessControlMatrix: Component {
             }
 
             Div {
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/auth/access-control/",
-                        placeholder: "Quick search access control",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/auth/access-control/",
+                            placeholder: "Quick search access control",
+                            search: state.search
+                        )
                     )
-                ))
+                )
             }
             .style(
                 "margin: 1.5rem 0 0.75rem;"

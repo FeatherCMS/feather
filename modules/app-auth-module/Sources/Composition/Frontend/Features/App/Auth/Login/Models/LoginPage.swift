@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct LoginPage: Component {
 
@@ -110,7 +110,7 @@ struct LoginPage: Component {
             Padding(vertical: 12.px, horizontal: 18.px)
             BorderRadius(999.px)
             // Border(1.px, .solid, .variable("cms-gray-3"))
-//            Background(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
             // Color(.variable("cms-white"))
             FontWeight(600)
             LineHeight(1)
@@ -128,7 +128,7 @@ struct LoginPage: Component {
             Padding(vertical: 10.px, horizontal: 12.px)
             // Border(1.px, .solid, .variable("cms-red-border"))
             BorderRadius(10.px)
-//            Background(.variable(TokenKey.Background.primary))
+            //            Background(.variable(TokenKey.Background.primary))
             // Color(.variable("cms-strong-font"))
             FontSize(0.92.rem)
             LineHeight(1.45)

@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AuthMagicLinkDetails: Component {
     struct State {
@@ -29,24 +29,33 @@ struct AuthMagicLinkDetails: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("User magic link details")
             context.render(AdminDetailsField(label: "ID", value: state.link.id))
-            context.render(AdminDetailsField(
-                label: "Credential ID",
-                value: state.link.credentialId
-            ))
-            context.render(AdminDetailsField(
-                label: "Persistent",
-                value: state.link.isPersistent ? "Yes" : "No"
-            ))
+            context.render(
+                AdminDetailsField(
+                    label: "Credential ID",
+                    value: state.link.credentialId
+                )
+            )
+            context.render(
+                AdminDetailsField(
+                    label: "Persistent",
+                    value: state.link.isPersistent ? "Yes" : "No"
+                )
+            )
             Div {
-                context.render(AdminNavigationButton(
-                    "Edit magic link",
-                    href: "/admin/auth/magic-links/\(state.link.id)/edit/"
-                ))
-                context.render(AdminNavigationButton(
-                    "Remove magic link",
-                    href: "/admin/auth/magic-links/\(state.link.id)/remove/",
-                    classes: ["danger"]
-                ))
+                context.render(
+                    AdminNavigationButton(
+                        "Edit magic link",
+                        href: "/admin/auth/magic-links/\(state.link.id)/edit/"
+                    )
+                )
+                context.render(
+                    AdminNavigationButton(
+                        "Remove magic link",
+                        href:
+                            "/admin/auth/magic-links/\(state.link.id)/remove/",
+                        classes: ["danger"]
+                    )
+                )
             }
             .class("button-row", "admin-detail-actions")
         }

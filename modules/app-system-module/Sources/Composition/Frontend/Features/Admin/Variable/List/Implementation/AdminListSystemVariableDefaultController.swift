@@ -1,6 +1,7 @@
-import SystemAdminAPI
 import FeatherAdmin
+import FeatherContracts
 import Hummingbird
+import SystemAdminAPI
 import SystemContracts
 
 struct AdminListSystemVariableDefaultController:
@@ -23,13 +24,8 @@ struct AdminListSystemVariableDefaultController:
         let canAccess = context.isCurrentUserAllowed(
             to: SystemPermissions.Variables.list
         )
-        let emptyModel = AdminListModel<Components.Schemas.SystemVariableListItemSchema>(
-            items: [],
-            page: page,
-            pageSize: 20,
-            total: 0
-        )
-        let model: AdminListModel<Components.Schemas.SystemVariableListItemSchema>
+        let model:
+            AdminListModel<Components.Schemas.SystemVariableListItemSchema>?
         let error: String?
         if canAccess {
             do {
@@ -40,12 +36,12 @@ struct AdminListSystemVariableDefaultController:
                 error = nil
             }
             catch let caughtError {
-                model = emptyModel
+                model = nil
                 error = caughtError.displayMessage
             }
         }
         else {
-            model = emptyModel
+            model = nil
             error = nil
         }
         return try await presenter.renderListPage(
@@ -53,7 +49,8 @@ struct AdminListSystemVariableDefaultController:
             notification: AdminNotificationFlash.notification(from: request),
             permissions: permissions,
             search: search,
-            error: error
+            error: error,
+            accessDenied: !canAccess
         )
     }
 

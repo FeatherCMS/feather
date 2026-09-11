@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SystemPermissionEdit: Component {
 
@@ -24,13 +24,15 @@ struct SystemPermissionEdit: Component {
 
             H1("Edit system permission")
             if state.isEdited { P("System permission edited successfully.") }
-            context.render(SystemPermissionForm(
-                state: state.form,
-                action: "/admin/system/permissions/\(state.id)/edit/",
-                submitLabel: "Edit permission",
-                removeHref: "/admin/system/permissions/\(state.id)/remove/",
-                removeLabel: "Remove permission"
-            ))
+            context.render(
+                SystemPermissionForm(
+                    state: state.form,
+                    action: "/admin/system/permissions/\(state.id)/edit/",
+                    submitLabel: "Edit permission",
+                    removeHref: "/admin/system/permissions/\(state.id)/remove/",
+                    removeLabel: "Remove permission"
+                )
+            )
         }
         .class("cms-section")
     }

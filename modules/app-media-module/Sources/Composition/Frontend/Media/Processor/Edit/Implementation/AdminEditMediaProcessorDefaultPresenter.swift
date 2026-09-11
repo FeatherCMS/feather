@@ -6,8 +6,8 @@ import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminEditMediaProcessorDefaultPresenter: AdminEditMediaProcessorPresenter
 {
@@ -49,7 +49,8 @@ struct AdminEditMediaProcessorDefaultPresenter: AdminEditMediaProcessorPresenter
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Processors", link: "/admin/media/processors/")]
+                .init(label: "Processors", link: "/admin/media/processors/"),
+            ]
         )
     }
 }

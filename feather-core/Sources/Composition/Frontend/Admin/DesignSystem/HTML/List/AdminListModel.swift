@@ -6,15 +6,10 @@ public struct AdminListModel<Item: Sendable>: Sendable {
 
     public init(
         items: [Item],
-        page: Int,
-        pageSize: Int,
-        total: Int
+        pageState: ListPageState
     ) {
         self.items = items
-        self.pageState = .init(
-            page: page,
-            pageSize: pageSize,
-            total: total
-        )
+        self.pageState = pageState
     }
+
 }

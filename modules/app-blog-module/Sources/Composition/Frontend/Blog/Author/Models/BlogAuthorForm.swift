@@ -8,9 +8,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogAuthorForm: Component {
 
@@ -81,28 +81,37 @@ struct BlogAuthorForm: Component {
 
             Div {
 
-                context.render(AdminMediaAssetPicker(
-                    state: .init(
-                        field: .init(
-                            key: state.profileImageAssetId.key,
-                            label: state.profileImageAssetId.label,
-                            value: state.profileImageAssetId.value,
-                            error: state.profileImageAssetId.error
-                        ),
-                        selectedAsset: state.selectedProfileImage,
-                        browsePath:
-                            "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
-                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                context.render(
+                    AdminMediaAssetPicker(
+                        state: .init(
+                            field: .init(
+                                key: state.profileImageAssetId.key,
+                                label: state.profileImageAssetId.label,
+                                value: state.profileImageAssetId.value,
+                                error: state.profileImageAssetId.error
+                            ),
+                            selectedAsset: state.selectedProfileImage,
+                            browsePath:
+                                "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                            allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                        )
                     )
-                ))
-                context.render(FormInputField(
-                    name: state.name.key,
-                    label: state.name.label,
-                    value: state.name.value,
-                    error: state.name.error,
-                    isRequired: true
-                ))
-                textarea(state.excerpt, required: true, rows: 4, context: &context)
+                )
+                context.render(
+                    FormInputField(
+                        name: state.name.key,
+                        label: state.name.label,
+                        value: state.name.value,
+                        error: state.name.error,
+                        isRequired: true
+                    )
+                )
+                textarea(
+                    state.excerpt,
+                    required: true,
+                    rows: 4,
+                    context: &context
+                )
                 textarea(state.content, required: true, context: &context)
             }
             Section {
@@ -117,11 +126,13 @@ struct BlogAuthorForm: Component {
                             .class("secondary")
                     }
                     if let removeHref {
-                        context.render(AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                removeLabel,
+                                href: removeHref,
+                                classes: ["danger"]
+                            )
+                        )
                     }
                 }
                 .class("button-row")
@@ -140,13 +151,15 @@ struct BlogAuthorForm: Component {
         context: inout RenderContext
     ) -> FormTextAreaField {
 
-        context.render(FormTextAreaField(
-            name: field.key,
-            label: field.label,
-            value: field.value,
-            error: field.error,
-            rows: rows,
-            isRequired: required
-        ))
+        context.render(
+            FormTextAreaField(
+                name: field.key,
+                label: field.label,
+                value: field.value,
+                error: field.error,
+                rows: rows,
+                isRequired: required
+            )
+        )
     }
 }

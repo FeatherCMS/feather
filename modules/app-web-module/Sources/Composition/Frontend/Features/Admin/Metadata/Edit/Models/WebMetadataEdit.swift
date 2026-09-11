@@ -5,8 +5,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct WebMetadataEdit: Component {
 
@@ -28,18 +28,22 @@ struct WebMetadataEdit: Component {
 
             H1 {
                 Span(state.title)
-                context.render(AdminPreviewLink(
-                    slug: state.form.slug.value,
-                    label: "Preview page"
-                ))
+                context.render(
+                    AdminPreviewLink(
+                        slug: state.form.slug.value,
+                        label: "Preview page"
+                    )
+                )
             }
             if state.isEdited { P("Web metadata edited successfully.") }
             context.render(AdminPillTabs(links: state.navigationTabs))
-            context.render(WebMetadataForm(
-                state: state.form,
-                action: state.action,
-                submitLabel: "Edit entry"
-            ))
+            context.render(
+                WebMetadataForm(
+                    state: state.form,
+                    action: state.action,
+                    submitLabel: "Edit entry"
+                )
+            )
         }
         .class("cms-section")
     }

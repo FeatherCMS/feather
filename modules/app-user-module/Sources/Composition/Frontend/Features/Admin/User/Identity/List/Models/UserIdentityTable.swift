@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserIdentityTable: Component {
 
@@ -52,10 +52,12 @@ struct UserIdentityTable: Component {
                 }
                 if state.canAdd {
                     Div {
-                        context.render(AdminNavigationButton(
-                            "Add identity",
-                            href: "/admin/user/identities/add/"
-                        ))
+                        context.render(
+                            AdminNavigationButton(
+                                "Add identity",
+                                href: "/admin/user/identities/add/"
+                            )
+                        )
                     }
                     .class("button-row")
                     Br()
@@ -119,111 +121,134 @@ struct UserIdentityTable: Component {
                     let canRemove = state.permissions.contains(
                         "user:identities:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/user/identities/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected",
-                            queryItems: state.role.isEmpty
-                                ? []
-                                : [("role", state.role)]
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("Name")
-                                        Th("Id")
-                                        Th("Status")
-                                        Th("Roles")
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for identity in state.identities {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: identity.id
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/user/identities/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected",
+                                queryItems: state.role.isEmpty
+                                    ? []
+                                    : [("role", state.role)]
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
                                                     )
-                                                ))
+                                                }
+                                                Th("Name")
+                                                Th("Id")
+                                                Th("Status")
+                                                Th("Roles")
+                                                Th("Actions")
                                             }
-                                            Td(identity.name)
-                                                .data("label", "Name")
-                                            Td(identity.id)
-                                                .data(
-                                                    "label",
-                                                    "User identifier"
-                                                )
-                                            Td(identity.status.rawValue)
-                                                .data("label", "Status")
-                                            Td(
-                                                identity.roles.isEmpty
-                                                    ? "No roles assigned"
-                                                    : identity.roles.joined(
-                                                        separator: ", "
+                                        }
+                                        Tbody {
+                                            for identity in state.identities {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: identity
+                                                                        .id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    Td(identity.name)
+                                                        .data("label", "Name")
+                                                    Td(identity.id)
+                                                        .data(
+                                                            "label",
+                                                            "User identifier"
+                                                        )
+                                                    Td(identity.status.rawValue)
+                                                        .data("label", "Status")
+                                                    Td(
+                                                        identity.roles.isEmpty
+                                                            ? "No roles assigned"
+                                                            : identity.roles
+                                                                .joined(
+                                                                    separator:
+                                                                        ", "
+                                                                )
                                                     )
-                                            )
-                                            .data("label", "Roles")
-                                            context.render(ListTableRowActions(
-                                                state: .init(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/user/identities/\(identity.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                "user:identities:read"
-                                                        ),
-                                                        .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/user/identities/\(identity.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                "user:identities:update"
-                                                        ),
-                                                        .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/user/identities/\(identity.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                "user:identities:delete"
-                                                        ),
-                                                    ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            ))
+                                                    .data("label", "Roles")
+                                                    context.render(
+                                                        ListTableRowActions(
+                                                            state: .init(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        title:
+                                                                            "Details",
+                                                                        href:
+                                                                            "/admin/user/identities/\(identity.id)/",
+                                                                        className:
+                                                                            nil,
+                                                                        permission:
+                                                                            "user:identities:read"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Edit",
+                                                                        href:
+                                                                            "/admin/user/identities/\(identity.id)/edit/",
+                                                                        className:
+                                                                            "edit",
+                                                                        permission:
+                                                                            "user:identities:update"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Remove",
+                                                                        href:
+                                                                            "/admin/user/identities/\(identity.id)/remove/",
+                                                                        className:
+                                                                            "delete",
+                                                                        permission:
+                                                                            "user:identities:delete"
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    state
+                                                                    .permissions
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/user/identities/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search,
-                            queryItems: state.role.isEmpty
-                                ? []
-                                : [("role", state.role)]
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/user/identities/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search,
+                                queryItems: state.role.isEmpty
+                                    ? []
+                                    : [("role", state.role)]
+                            )
+                        )
+                    )
                 }
             }
         }

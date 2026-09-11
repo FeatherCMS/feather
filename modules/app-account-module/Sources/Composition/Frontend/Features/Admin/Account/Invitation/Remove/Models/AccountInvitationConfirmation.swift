@@ -4,8 +4,8 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AccountInvitationConfirmation: Component {
 
@@ -18,19 +18,21 @@ struct AccountInvitationConfirmation: Component {
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
-        return context.render(AdminConfirmationDialog(
-            state: .init(
-                breadcrumb: state.breadcrumb,
-                title: "Remove user invitation",
-                message:
-                    "Are you sure you want to remove this user invitation? This action cannot be undone.",
-                details: [
-                    .init(prefix: "Email: ", value: state.email)
-                ],
-                submitLabel: "Remove invitation",
-                actionURL: "/admin/account/invitations/\(state.id)/remove/",
-                cancelURL: "/admin/account/invitations/"
+        context.render(
+            AdminConfirmationDialog(
+                state: .init(
+                    breadcrumb: state.breadcrumb,
+                    title: "Remove user invitation",
+                    message:
+                        "Are you sure you want to remove this user invitation? This action cannot be undone.",
+                    details: [
+                        .init(prefix: "Email: ", value: state.email)
+                    ],
+                    submitLabel: "Remove invitation",
+                    actionURL: "/admin/account/invitations/\(state.id)/remove/",
+                    cancelURL: "/admin/account/invitations/"
+                )
             )
-        ))
+        )
     }
 }

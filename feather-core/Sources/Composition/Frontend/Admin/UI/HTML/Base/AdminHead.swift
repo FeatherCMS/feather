@@ -9,8 +9,8 @@ import CSS
 import HTML
 import SGML
 import SVG
-import WebComponents
 import WebBuilders
+import WebComponents
 
 public struct AdminHeadElements: Component {
 
@@ -26,16 +26,23 @@ public struct AdminHeadElements: Component {
     let state: State
 
     public func html(context: inout RenderContext) -> Head {
-        let metadata = context.render(Metadata(
-            canonicalUrl: state.canonicalUrl,
-            title: state.title,
-            description: state.description,
-            imageUrl: state.imageUrl,
-            noIndex: false
-        ))
+        let metadata = context.render(
+            Metadata(
+                canonicalUrl: state.canonicalUrl,
+                title: state.title,
+                description: state.description,
+                imageUrl: state.imageUrl,
+                noIndex: false
+            )
+        )
 
-        return Head(elements: metadata.children.compactMap { $0 as? any MetadataContent } + state.externalCSSUrls.map {
-            Link(rel: .stylesheet).href($0)
-        } + [Style(state.css)])
+        return Head(
+            elements: metadata.children.compactMap {
+                $0 as? any MetadataContent
+            }
+                + state.externalCSSUrls.map {
+                    Link(rel: .stylesheet).href($0)
+                } + [Style(state.css)]
+        )
     }
 }

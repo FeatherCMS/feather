@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import UserAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserRoleTable: Component {
 
@@ -44,23 +44,27 @@ struct UserRoleTable: Component {
                 if state.canAdd {
                     Div {
                         if state.canAdd {
-                            context.render(AdminNavigationButton(
-                                "Add role",
-                                href: "/admin/user/roles/add/"
-                            ))
+                            context.render(
+                                AdminNavigationButton(
+                                    "Add role",
+                                    href: "/admin/user/roles/add/"
+                                )
+                            )
                         }
                     }
                     .class("button-row")
                     Br()
                     Br()
                 }
-                context.render(ListTableSearchForm(
-                    state: .init(
-                        action: "/admin/user/roles/",
-                        placeholder: "Quick search user roles",
-                        search: state.search
+                context.render(
+                    ListTableSearchForm(
+                        state: .init(
+                            action: "/admin/user/roles/",
+                            placeholder: "Quick search user roles",
+                            search: state.search
+                        )
                     )
-                ))
+                )
 
                 if state.roles.isEmpty {
                     let totalPages = max(
@@ -90,88 +94,110 @@ struct UserRoleTable: Component {
                     let canRemove = state.permissions.contains(
                         "user:roles:delete"
                     )
-                    context.render(ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/user/roles/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: context.render(ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            context.render(ListTableSelectAllCheckbox())
-                                        }
-                                        Th("Name")
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for role in state.roles {
-                                        Tr {
-                                            if canRemove {
-                                                context.render(ListTableRowSelectCheckbox(
-                                                    state: .init(id: role.id)
-                                                ))
+                    context.render(
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/user/roles/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected"
+                            ),
+                            table: context.render(
+                                ListTableShell(
+                                    table: Table {
+                                        Thead {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableSelectAllCheckbox()
+                                                    )
+                                                }
+                                                Th("Name")
+                                                Th("Actions")
                                             }
-                                            Td(role.name ?? "")
-                                                .data(
-                                                    "label",
-                                                    "Name"
-                                                )
-                                            context.render(ListTableRowActions(
-                                                state: .init(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/user/roles/\(role.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                "user:roles:read"
-                                                        ),
-                                                        .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/user/roles/\(role.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                "user:roles:update"
-                                                        ),
-                                                        .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/user/roles/\(role.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                "user:roles:delete"
-                                                        ),
-                                                    ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            ))
+                                        }
+                                        Tbody {
+                                            for role in state.roles {
+                                                Tr {
+                                                    if canRemove {
+                                                        context.render(
+                                                            ListTableRowSelectCheckbox(
+                                                                state: .init(
+                                                                    id: role.id
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    Td(role.name ?? "")
+                                                        .data(
+                                                            "label",
+                                                            "Name"
+                                                        )
+                                                    context.render(
+                                                        ListTableRowActions(
+                                                            state: .init(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        title:
+                                                                            "Details",
+                                                                        href:
+                                                                            "/admin/user/roles/\(role.id)/",
+                                                                        className:
+                                                                            nil,
+                                                                        permission:
+                                                                            "user:roles:read"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Edit",
+                                                                        href:
+                                                                            "/admin/user/roles/\(role.id)/edit/",
+                                                                        className:
+                                                                            "edit",
+                                                                        permission:
+                                                                            "user:roles:update"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Remove",
+                                                                        href:
+                                                                            "/admin/user/roles/\(role.id)/remove/",
+                                                                        className:
+                                                                            "delete",
+                                                                        permission:
+                                                                            "user:roles:delete"
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    state
+                                                                    .permissions
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
-                        ))
-                    ))
-                    context.render(ListTablePagination(
-                        state: .init(
-                            path: "/admin/user/roles/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
+                                    .class("cms-table", "action-table")
+                                    .if(canRemove) { $0.class("select-table") }
+                                )
+                            )
                         )
-                    ))
+                    )
+                    context.render(
+                        ListTablePagination(
+                            state: .init(
+                                path: "/admin/user/roles/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
+                        )
+                    )
                 }
             }
         }

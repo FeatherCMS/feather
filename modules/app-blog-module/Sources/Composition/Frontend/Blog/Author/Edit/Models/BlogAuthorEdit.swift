@@ -7,9 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
+import WebFrontend
 
 struct BlogAuthorEdit: Component {
 
@@ -28,10 +28,12 @@ struct BlogAuthorEdit: Component {
 
             H1 {
                 Span("Edit author")
-                context.render(AdminPreviewLink(
-                    slug: state.form.metadata.slug.value,
-                    label: "Preview author"
-                ))
+                context.render(
+                    AdminPreviewLink(
+                        slug: state.form.metadata.slug.value,
+                        label: "Preview author"
+                    )
+                )
             }
             if state.isEdited { P("Author edited successfully.") }
             BlogAuthorForm(

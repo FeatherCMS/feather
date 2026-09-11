@@ -13,8 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminGetAuthProfileDefaultPresenter:
     AdminGetAuthProfilePresenter
@@ -65,7 +65,8 @@ struct AdminGetAuthProfileDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Account", link: "/admin/account/")]
+                .init(label: "Account", link: "/admin/account/"),
+            ]
         )
     }
 }
