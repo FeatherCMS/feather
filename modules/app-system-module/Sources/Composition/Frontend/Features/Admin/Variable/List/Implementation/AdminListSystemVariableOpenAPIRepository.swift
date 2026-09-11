@@ -25,7 +25,7 @@ struct AdminListSystemVariableOpenAPIRepository:
     func listSystemVariables(
         page: Int,
         search: String?
-    ) async throws -> AdminListSystemVariableModel {
+    ) async throws -> SystemAdminAPI.Components.Responses.SystemVariableListItemSearchSchemaSearchResponse {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
@@ -41,13 +41,7 @@ struct AdminListSystemVariableOpenAPIRepository:
 
             switch response {
             case .ok(let okResponse):
-                let body = try okResponse.body.json
-                return .init(
-                    items: body.data.items,
-                    total: body.data.total,
-                    page: body.query.page.number,
-                    pageSize: body.query.page.size
-                )
+                return okResponse
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized(
                     message: listUnauthorizedMessage

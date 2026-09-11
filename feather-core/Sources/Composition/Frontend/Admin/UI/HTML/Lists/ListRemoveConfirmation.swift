@@ -15,6 +15,7 @@ public struct ListRemoveConfirmation: Component {
         public let cancelLink: String
         public let selectedIds: [String]
         public let hiddenFields: [AdminConfirmationDialog.HiddenField]
+        public let idFieldName: String
 
         public init(
             breadcrumb: AdminBreadcrumb.State,
@@ -23,7 +24,8 @@ public struct ListRemoveConfirmation: Component {
             action: String,
             cancelLink: String,
             selectedIds: [String],
-            hiddenFields: [AdminConfirmationDialog.HiddenField] = []
+            hiddenFields: [AdminConfirmationDialog.HiddenField] = [],
+            idFieldName: String = "selectedIds"
         ) {
             self.breadcrumb = breadcrumb
             self.title = title
@@ -32,6 +34,7 @@ public struct ListRemoveConfirmation: Component {
             self.cancelLink = cancelLink
             self.selectedIds = selectedIds
             self.hiddenFields = hiddenFields
+            self.idFieldName = idFieldName
         }
     }
 
@@ -67,7 +70,7 @@ public struct ListRemoveConfirmation: Component {
                 actionURL: state.action,
                 cancelURL: state.cancelLink,
                 hiddenFields: state.selectedIds.map {
-                    .init(name: "selectedIds", value: $0)
+                    .init(name: state.idFieldName, value: $0)
                 } + state.hiddenFields
             )
         ))

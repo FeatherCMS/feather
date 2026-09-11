@@ -17,21 +17,14 @@ public struct NewAdminBaseLayout<T: Component>: Component {
     public let content: T
 
     private let topbar: NewAdminTopBar
-    private let toast: AdminToastBootstrap?
     private let sidebar: NewAdminSidebar
 
     public init(
         content: T,
         menuGroups: [NewAdminSidebar.Group],
-        toast: AdminToastRedirect.Payload? = nil
+        notification: AdminNotification? = nil
     ) {
-        self.topbar = .init()
-        if let toast {
-            self.toast = AdminToastBootstrap(payload: toast)
-        }
-        else {
-            self.toast = nil
-        }
+        self.topbar = .init(notification: notification.map(NewAdminNotification.init))
         self.sidebar = .init(groups: menuGroups)
         self.content = content
     }
@@ -39,10 +32,6 @@ public struct NewAdminBaseLayout<T: Component>: Component {
     public func html(context: inout RenderContext) -> Div {
         Div {
             context.render(topbar)
-            if let toast {
-                context.render(toast)
-            }
-
             Div {
                 context.render(sidebar)
 

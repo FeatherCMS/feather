@@ -96,7 +96,14 @@ public struct DefaultRenderingEngine: RenderingEngine {
         content: T
     ) -> HTMLResponse {
         var context = RenderContext()
-        let toast = AdminToastRedirect.payload(from: request)
+        let toast = AdminNotificationFlash.notification(from: request).map { notification in
+            AdminToastRedirect.Payload(
+                type: notification.kind.rawValue,
+                title: notification.title,
+                message: notification.message,
+                position: notification.position
+            )
+        } ?? AdminToastRedirect.payload(from: request)
         let body = Body {
             context.render(AdminBody(
                 state: .init(

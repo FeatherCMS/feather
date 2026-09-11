@@ -11,60 +11,64 @@ struct AdminRemoveSystemVariableDefaultController:
             presenter: any AdminRemoveSystemVariablePresenter
         )
 
-    func getRemoveSystemVariable(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
-        let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
-        do {
-            let variable = try await runtime.interactor.get(id: id)
-            return runtime.presenter.renderRemovePage(
-                id: id,
-                name: variable.name ?? "",
-                permissions: permissions
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription,
-                permissions: permissions
-            )
-        }
-    }
-
-    func postRemoveSystemVariable(
+    func getRemoveSystemVariables(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
-        let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
-        do {
-            try await runtime.interactor.delete(id: id)
+        let (_, presenter) = buildRuntime(request, context)
+        let ids = request.queryStrings("ids")
+        let page = request.queryPage()
+        let search = request.querySearch()
+        guard !ids.isEmpty else {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/system/variables/",
-                        title: "Removed",
-                        message: "System variable removed successfully."
+                    .location: ListRemoveRedirect.location(
+                        path: SystemVariableRoutes.list.description,
+                        page: page,
+                        search: search,
+                        title: nil,
+                        message: nil
                     )
                 ]
             )
         }
-        catch let error as OpenAPIRepositoryError {
-            return try runtime.presenter
-                .renderErrorPage(
-                    id: id,
-                    info: error.errorTitle,
-                    message: error.errorDescription,
-                    permissions: permissions
-                )
-                .response(from: request, context: context)
+        return try presenter.renderRemoveConfirmation(
+            page: page,
+            search: search,
+            ids: ids,
+            permissions: context.currentUserPermissions
+        ).response(from: request, context: context)
+    }
+
+    func postRemoveSystemVariables(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response {
+        let (interactor, _) = buildRuntime(request, context)
+        let payload = try await request.decode(
+            as: ListRemoveFormInput.self,
+            context: context
+        )
+        if !payload.normalizedIds.isEmpty {
+            try await interactor.delete(ids: payload.normalizedIds)
         }
+        let location = ListRemoveRedirect.location(
+            path: SystemVariableRoutes.list.description,
+            page: payload.normalizedPage,
+            search: payload.normalizedSearch,
+            title: nil,
+            message: nil
+        )
+        guard !payload.normalizedIds.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        return AdminNotificationFlash.redirect(
+            to: location,
+            notification: .init(
+                title: "Removed",
+                message: "System variable removed successfully."
+            )
+        )
     }
 }

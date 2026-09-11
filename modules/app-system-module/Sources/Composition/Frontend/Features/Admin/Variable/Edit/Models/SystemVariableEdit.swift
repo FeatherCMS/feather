@@ -11,7 +11,6 @@ struct SystemVariableEdit: Component {
 
     struct State {
         let id: String
-        let isEdited: Bool
         let form: SystemVariableForm.State
         let breadcrumb: AdminBreadcrumb.State
     }
@@ -23,12 +22,11 @@ struct SystemVariableEdit: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Edit system variable")
-            if state.isEdited { P("System variable edited successfully.") }
             context.render(SystemVariableForm(
                 state: state.form,
-                action: "/admin/system/variables/\(state.id)/edit/",
+                action: SystemVariableRoutes.edit(RouterPath(state.id)).description,
                 submitLabel: "Edit variable",
-                removeHref: "/admin/system/variables/\(state.id)/remove/",
+                removeHref: SystemVariableRoutes.remove(state.id),
                 removeLabel: "Remove variable"
             ))
         }

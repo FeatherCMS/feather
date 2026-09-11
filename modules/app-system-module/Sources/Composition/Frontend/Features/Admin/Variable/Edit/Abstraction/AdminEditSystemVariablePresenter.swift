@@ -6,7 +6,6 @@ protocol AdminEditSystemVariablePresenter: Sendable {
     func renderEditPage(
         id: String,
         state: SystemVariableForm.State,
-        isEdited: Bool,
         permissions: Set<String>
     ) -> HTMLResponse
 

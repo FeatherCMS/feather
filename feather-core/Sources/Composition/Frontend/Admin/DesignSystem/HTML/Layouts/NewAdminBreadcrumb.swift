@@ -13,6 +13,14 @@ import WebBuilders
 
 public struct NewAdminBreadcrumb: Component {
 
+    public struct State: Sendable {
+        public let links: [Link]
+
+        public init(links: [Link]) {
+            self.links = links
+        }
+    }
+
     public struct Link: Sendable {
         public let label: String
         public let link: String
@@ -24,6 +32,10 @@ public struct NewAdminBreadcrumb: Component {
     }
 
     public let links: [Link]
+
+    public init(state: State) {
+        self.links = state.links
+    }
 
     public init(links: [Link]) {
         self.links = links

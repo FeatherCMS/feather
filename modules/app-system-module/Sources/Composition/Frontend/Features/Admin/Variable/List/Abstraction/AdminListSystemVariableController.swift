@@ -8,15 +8,6 @@ protocol AdminListSystemVariableController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getSystemVariablesRemoveConfirmation(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response
-
-    func postSystemVariablesRemove(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response
 }
 
 extension AdminListSystemVariableController {
@@ -25,16 +16,8 @@ extension AdminListSystemVariableController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/system/variables",
+            SystemVariableRoutes.list,
             use: getSystemVariables
-        )
-        router.get(
-            "/admin/system/variables/remove/",
-            use: getSystemVariablesRemoveConfirmation
-        )
-        router.post(
-            "/admin/system/variables/remove/",
-            use: postSystemVariablesRemove
         )
     }
 }

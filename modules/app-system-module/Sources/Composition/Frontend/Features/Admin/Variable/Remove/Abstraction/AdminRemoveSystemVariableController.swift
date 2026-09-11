@@ -4,12 +4,12 @@ import Hummingbird
 
 protocol AdminRemoveSystemVariableController: Sendable {
 
-    func getRemoveSystemVariable(
+    func getRemoveSystemVariables(
         request: Request,
         context: DefaultRequestContext
-    ) async throws -> HTMLResponse
+    ) async throws -> Response
 
-    func postRemoveSystemVariable(
+    func postRemoveSystemVariables(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -21,12 +21,12 @@ extension AdminRemoveSystemVariableController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/system/variables/{id}/remove/",
-            use: getRemoveSystemVariable
+            SystemVariableRoutes.removeRoute,
+            use: getRemoveSystemVariables
         )
         router.post(
-            "/admin/system/variables/{id}/remove/",
-            use: postRemoveSystemVariable
+            SystemVariableRoutes.removeRoute,
+            use: postRemoveSystemVariables
         )
     }
 }

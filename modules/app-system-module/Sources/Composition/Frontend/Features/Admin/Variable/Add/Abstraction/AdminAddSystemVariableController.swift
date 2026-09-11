@@ -21,11 +21,11 @@ extension AdminAddSystemVariableController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/system/variables/add/",
+            SystemVariableRoutes.add,
             use: getAddSystemVariable
         )
         router.post(
-            "/admin/system/variables/add/",
+            SystemVariableRoutes.add,
             use: postAddSystemVariable
         )
     }

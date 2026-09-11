@@ -23,7 +23,7 @@ struct SystemVariableAdd: Component {
             H1("Add system variable")
             context.render(SystemVariableForm(
                 state: state.form,
-                action: "/admin/system/variables/add/",
+                action: SystemVariableRoutes.add.description,
                 submitLabel: "Add variable"
             ))
         }

@@ -39,15 +39,12 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
             try await payload.validate()
             try await runtime.interactor.execute(input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/system/variables/",
-                        title: "Added",
-                        message: "System variable added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: SystemVariableRoutes.list.description,
+                notification: .init(
+                    title: "Added",
+                    message: "System variable added successfully."
+                )
             )
         }
         catch let error as ValidationError {

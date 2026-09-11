@@ -1,3 +1,4 @@
+import Hummingbird
 import FeatherAdmin
 import FeatherContracts
 import HTML
@@ -7,65 +8,63 @@ import SystemContracts
 import WebBuilders
 import WebComponents
 
-private enum SystemVariableRoutes {
-    static let list = "/admin/system/variables/"
-    static let remove = "/admin/system/variables/remove/"
+private struct SystemVariableRow: Component {
 
-    static func details(_ id: String) -> String { "\(list)\(id)/" }
-    static func edit(_ id: String) -> String { "\(list)\(id)/edit/" }
-    static func remove(_ id: String) -> String { "\(list)\(id)/remove/" }
-}
+    struct State: Sendable {
+        let id: String
+        let name: String
+        let value: String
+        let canDelete: Bool
+        let actions: [NewAdminListRowActions.Action]
 
-private struct SystemVariablePermissions {
-    let actions: ListActions
-
-    init(_ permissions: Set<PermissionKey>) {
-        actions = ListActions(permissions)
+        init(
+            variable: Components.Schemas.SystemVariableListItemSchema,
+            permissions: ListActions
+        ) {
+            self.id = variable.id
+            self.name = variable.name ?? ""
+            self.value = variable.value
+            self.canDelete = permissions.allows(SystemPermissions.Variables.delete)
+            self.actions = [
+                .init(
+                    "Details",
+                    href: SystemVariableRoutes.details(RouterPath(variable.id)).description,
+                    style: .ghost(.primary),
+                    permission: SystemPermissions.Variables.read
+                ),
+                .init(
+                    "Edit",
+                    href: SystemVariableRoutes.edit(RouterPath(variable.id)).description,
+                    style: .ghost(.secondary),
+                    permission: SystemPermissions.Variables.update
+                ),
+                .init(
+                    "Remove",
+                    href: SystemVariableRoutes.remove(variable.id),
+                    style: .destructive,
+                    permission: SystemPermissions.Variables.delete
+                )
+            ]
+        }
     }
 
-    var canList: Bool { actions.allows(SystemPermissions.Variables.list) }
-    var canCreate: Bool { actions.allows(SystemPermissions.Variables.create) }
-    var canDelete: Bool { actions.allows(SystemPermissions.Variables.delete) }
-}
-
-private struct SystemVariableRow: Component {
-    let variable: Components.Schemas.SystemVariableListItemSchema
+    let state: State
     let permissions: ListActions
-    let canDelete: Bool
 
     func html(context: inout RenderContext) -> Tr {
         Tr {
-            if canDelete {
-                context.render(NewAdminListRowCheckbox(id: variable.id))
+            if state.canDelete {
+                context.render(NewAdminListRowCheckbox(id: state.id))
             }
-            Td(variable.name ?? "")
+            Td(state.name)
                 .data("label", "Name")
                 .columnWidth(percent: 50)
-            Td(variable.value)
+            Td(state.value)
                 .data("label", "Value")
                 .columnWidth(percent: 50)
             context.render(NewAdminListRowActions(
                 label: "Actions",
-                actions: [
-                    .init(
-                        "Details",
-                        href: SystemVariableRoutes.details(variable.id),
-                        style: .ghost(.primary),
-                        permission: SystemPermissions.Variables.read
-                    ),
-                    .init(
-                        "Edit",
-                        href: SystemVariableRoutes.edit(variable.id),
-                        style: .ghost(.secondary),
-                        permission: SystemPermissions.Variables.update
-                    ),
-                    .init(
-                        "Remove",
-                        href: SystemVariableRoutes.remove(variable.id),
-                        style: .destructive,
-                        permission: SystemPermissions.Variables.delete
-                    )
-                ],
+                actions: state.actions,
                 permissions: permissions
             ))
         }
@@ -84,39 +83,75 @@ private struct SystemVariableTableContent: Component {
 
         return context.render(NewAdminList(
             table: {
-                context.render(NewAdminListSelectionForm(
-                    state: .init(
-                        action: SystemVariableRoutes.remove,
+                if pageState.isPageOutOfRange {
+                    context.render(NewAdminListInvalidPageState(
                         pageState: pageState,
-                        search: search,
-                        button: .init("Remove selected", style: .destructive),
-                        isEnabled: canDelete
-                    ),
-                    table: context.render(NewAdminListShell(
-                        table: Table {
-                            Thead {
-                                Tr {
-                                    if canDelete {
-                                        context.render(NewAdminListSelectAllCheckbox())
-                                    }
-                                    Th("Name").columnWidth(percent: 50)
-                                    Th("Value").columnWidth(percent: 50)
-                                    Th("Actions")
-                                }
-                            }
-                            Tbody {
-                                for variable in variables {
-                                    context.render(SystemVariableRow(
-                                        variable: variable,
-                                        permissions: permissions,
-                                        canDelete: canDelete
-                                    ))
-                                }
+                        path: SystemVariableRoutes.list.description,
+                        search: search
+                    ))
+                }
+                else if variables.isEmpty {
+                    context.render(NewAdminListEmptyState(
+                        message: search.isEmpty
+                            ? "No system variables yet."
+                            : "No system variables match your search.",
+                        icon: FeatherIcons.inbox(),
+                        action: {
+                            if search.isEmpty && permissions.allows(SystemPermissions.Variables.create) {
+                                context.render(NewAdminButton(
+                                    "Add variable",
+                                    href: SystemVariableRoutes.add.description
+                                ))
                             }
                         }
-                        .class("cms-table", "action-table")
-                        .if(canDelete) { $0.class("select-table") }
                     ))
+                }
+                else {
+                    context.render(NewAdminListSelectionForm(
+                        state: .init(
+                            action: SystemVariableRoutes.removeRoute.description,
+                            pageState: pageState,
+                            search: search,
+                            button: .init("Remove selected", style: .destructive),
+                            isEnabled: canDelete
+                        ),
+                        table: context.render(NewAdminListShell(
+                            table: Table {
+                                Thead {
+                                    Tr {
+                                        if canDelete {
+                                            context.render(NewAdminListSelectAllCheckbox())
+                                        }
+                                        Th("Name").columnWidth(percent: 50)
+                                        Th("Value").columnWidth(percent: 50)
+                                        Th("Actions")
+                                    }
+                                }
+                                Tbody {
+                                    for variable in variables {
+                                        context.render(SystemVariableRow(
+                                            state: .init(
+                                                variable: variable,
+                                                permissions: permissions
+                                            ),
+                                            permissions: permissions
+                                        ))
+                                    }
+                                }
+                            }
+                            .class("cms-table", "action-table")
+                            .if(canDelete) { $0.class("select-table") }
+                        ))
+                    ))
+                }
+            },
+            search: {
+                context.render(NewAdminListSearch(
+                    state: .init(
+                        action: SystemVariableRoutes.list.description,
+                        placeholder: "Quick search system variables",
+                        search: search
+                    )
                 ))
             },
             toolbar: {
@@ -124,7 +159,7 @@ private struct SystemVariableTableContent: Component {
                     context.render(NewAdminListToolbar {
                         context.render(NewAdminButton(
                             "Add variable",
-                            href: "\(SystemVariableRoutes.list)add/"
+                            href: SystemVariableRoutes.add.description
                         ))
                     })
                 }
@@ -132,7 +167,7 @@ private struct SystemVariableTableContent: Component {
             pagination: {
                 context.render(NewAdminListPagination(
                     state: .init(
-                        path: SystemVariableRoutes.list,
+                        path: SystemVariableRoutes.list.description,
                         pageState: pageState,
                         search: search
                     )
@@ -145,23 +180,20 @@ private struct SystemVariableTableContent: Component {
 struct SystemVariableTable: Component {
 
     struct State {
-        let isAdded: Bool
-        let isEdited: Bool
-        let isRemoved: Bool
         let permissions: Set<PermissionKey>
         let variables: [Components.Schemas.SystemVariableListItemSchema]
         let pageState: ListPageState
         let search: String
-        let breadcrumb: NewAdminBreadcrumb
+        let breadcrumb: NewAdminBreadcrumb.State
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
-        let permissions = SystemVariablePermissions(state.permissions)
+        let permissions = ListActions(state.permissions)
 
         return Section {
-            if !permissions.canList {
+            if !permissions.allows(SystemPermissions.Variables.list) {
                 context.render(NewAdminStatusView(
                     state: .init(
                         title: "Forbidden",
@@ -171,44 +203,16 @@ struct SystemVariableTable: Component {
                 ))
             }
             else {
-                context.render(state.breadcrumb)
+                context.render(NewAdminBreadcrumb(state: state.breadcrumb))
                 H1("System variables")
 
-                if state.isAdded { P("System variable added successfully.") }
-                if state.isEdited { P("System variable edited successfully.") }
-                if state.isRemoved { P("System variable removed successfully.") }
 
-                context.render(NewAdminListSearch(
-                    state: .init(
-                        action: SystemVariableRoutes.list,
-                        placeholder: "Quick search system variables",
-                        search: state.search
-                    )
+                context.render(SystemVariableTableContent(
+                    variables: state.variables,
+                    permissions: permissions,
+                    pageState: state.pageState,
+                    search: state.search
                 ))
-
-                if state.variables.isEmpty {
-                    if state.pageState.isPageOutOfRange {
-                        context.render(NewAdminListInvalidPageState(
-                            pageState: state.pageState,
-                            path: SystemVariableRoutes.list
-                        ))
-                    }
-                    else {
-                        context.render(NewAdminListEmptyState(
-                            message: state.search.isEmpty
-                                ? "No system variables yet."
-                                : "No system variables match your search."
-                        ))
-                    }
-                }
-                else {
-                    context.render(SystemVariableTableContent(
-                        variables: state.variables,
-                        permissions: permissions.actions,
-                        pageState: state.pageState,
-                        search: state.search
-                    ))
-                }
             }
         }
         .class("cms-section")

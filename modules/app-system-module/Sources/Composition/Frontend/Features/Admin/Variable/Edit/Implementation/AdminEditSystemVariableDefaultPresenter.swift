@@ -13,7 +13,6 @@ struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
     func renderEditPage(
         id: String,
         state: SystemVariableForm.State,
-        isEdited: Bool,
         permissions: Set<String>
     ) -> HTMLResponse {
         renderingEngine.renderAdminPage(
@@ -28,7 +27,6 @@ struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
             content: SystemVariableEdit(
                 state: .init(
                     id: id,
-                    isEdited: isEdited,
                     form: state,
                     breadcrumb: breadcrumb(id: id)
                 )
@@ -68,7 +66,7 @@ struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "System", link: "/admin/system/"),
-                .init(label: "Variables", link: "/admin/system/variables/")]
+                .init(label: "Variables", link: SystemVariableRoutes.list.description)]
         )
     }
 }

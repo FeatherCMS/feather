@@ -24,7 +24,21 @@
         });
     }
 
-    if (!toastNode || !window.toast) {
+    if (!toastNode) {
+        return;
+    }
+
+    if (toastNode.dataset.notificationInline === "true") {
+        try {
+            document.cookie = "admin_notification=; Max-Age=0; Path=/admin; SameSite=Lax";
+        }
+        catch (_) {
+            // Ignore cookie access errors.
+        }
+        return;
+    }
+
+    if (!window.toast) {
         return;
     }
 
@@ -36,6 +50,7 @@
     });
 
     try {
+        document.cookie = "admin_notification=; Max-Age=0; Path=/admin; SameSite=Lax";
         var url = new URL(window.location.href);
         [
             "toastType",

@@ -29,7 +29,6 @@ struct AdminEditSystemVariableDefaultController:
                     value: variable.value,
                     notes: variable.notes ?? ""
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
         }
@@ -61,15 +60,12 @@ struct AdminEditSystemVariableDefaultController:
             try await payload.validate()
             try await runtime.interactor.update(id: id, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/system/variables/\(id)/edit/",
-                        title: "Saved",
-                        message: "System variable edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: SystemVariableRoutes.edit(RouterPath(id)).description,
+                notification: .init(
+                    title: "Saved",
+                    message: "System variable edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -88,7 +84,6 @@ struct AdminEditSystemVariableDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -105,7 +100,6 @@ struct AdminEditSystemVariableDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -122,7 +116,6 @@ struct AdminEditSystemVariableDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)

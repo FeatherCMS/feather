@@ -3,16 +3,17 @@ import Hummingbird
 
 protocol AdminRemoveSystemVariablePresenter: Sendable {
 
-    func renderRemovePage(
-        id: String,
-        name: String,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
     func renderErrorPage(
         id: String,
         info: String,
         message: String,
+        permissions: Set<String>
+    ) -> HTMLResponse
+
+    func renderRemoveConfirmation(
+        page: Int,
+        search: String?,
+        ids: [String],
         permissions: Set<String>
     ) -> HTMLResponse
 

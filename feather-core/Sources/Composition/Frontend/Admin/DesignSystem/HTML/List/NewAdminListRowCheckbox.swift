@@ -17,7 +17,7 @@ public struct NewAdminListRowCheckbox: Component {
         Td {
             Input()
                 .type(.checkbox)
-                .name("selectedIds")
+                .name("ids")
                 .value(id)
                 .ariaLabel("Select row")
                 .class("select-row")

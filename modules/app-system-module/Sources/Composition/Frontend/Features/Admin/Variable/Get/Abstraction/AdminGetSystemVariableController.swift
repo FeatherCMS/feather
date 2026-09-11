@@ -15,7 +15,7 @@ extension AdminGetSystemVariableController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/system/variables/{id}/",
+            SystemVariableRoutes.details(RouterPath("{id}")),
             use: getSystemVariable
         )
     }

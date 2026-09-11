@@ -1,3 +1,4 @@
+import SystemAdminAPI
 import FeatherAdmin
 import FeatherContracts
 import HTML
@@ -16,10 +17,8 @@ struct AdminListSystemVariableDefaultPresenter:
     let renderEngine: any RenderingEngine
 
     func renderListPage(
-        model: AdminListSystemVariableModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
+        model: AdminListModel<Components.Schemas.SystemVariableListItemSchema>,
+        notification: AdminNotification?,
         permissions: Set<String>,
         search: String?,
         error: String?
@@ -39,7 +38,7 @@ struct AdminListSystemVariableDefaultPresenter:
                     state: .init(
                         info: "Unable to load system variables.",
                         message: error,
-                        breadcrumb: systemVariableBreadcrumbState()
+                        breadcrumb: legacySystemVariableBreadcrumbState()
                     )
                 )
             )
@@ -51,21 +50,15 @@ struct AdminListSystemVariableDefaultPresenter:
         let layout = NewAdminBaseLayout(
             content: SystemVariableTable(
                 state: .init(
-                    isAdded: isAdded,
-                    isEdited: isEdited,
-                    isRemoved: isRemoved,
                     permissions: Set(permissions.map(PermissionKey.init)),
                     variables: model.items,
-                    pageState: .init(
-                        page: model.page,
-                        pageSize: model.pageSize,
-                        total: model.total
-                    ),
+                    pageState: model.pageState,
                     search: search ?? "",
                     breadcrumb: systemVariableBreadcrumb()
                 )
             ),
-            menuGroups: menuGroups
+            menuGroups: menuGroups,
+            notification: notification
         )
         let component = NewAdminHTML(
             title: "Manage system variables",
@@ -74,42 +67,7 @@ struct AdminListSystemVariableDefaultPresenter:
         return .init(renderContext.render(component))
     }
 
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
-            request: request,
-            title: "Remove selected variables",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: systemVariableBreadcrumbState(),
-                    title: "Remove selected variables",
-                    message:
-                        "Are you sure you want to remove these selected variables? This action cannot be undone.",
-                    action: "/admin/system/variables/remove/",
-                    cancelLink: ListRemoveRedirect.location(
-                        path: "/admin/system/variables/",
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: selectedIds
-                )
-            )
-        )
-    }
-
-    private func systemVariableBreadcrumbState() -> AdminBreadcrumb.State {
+    private func systemVariableBreadcrumb() -> NewAdminBreadcrumb.State {
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
@@ -117,11 +75,11 @@ struct AdminListSystemVariableDefaultPresenter:
         )
     }
 
-    private func systemVariableBreadcrumb() -> NewAdminBreadcrumb {
+    private func legacySystemVariableBreadcrumbState() -> AdminBreadcrumb.State {
         .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/")]
+            links: systemVariableBreadcrumb().links.map {
+                .init(label: $0.label, link: $0.link)
+            }
         )
     }
 }

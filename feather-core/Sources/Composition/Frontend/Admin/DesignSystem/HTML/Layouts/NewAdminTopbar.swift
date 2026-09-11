@@ -14,6 +14,12 @@ import WebBuilders
 
 public struct NewAdminTopBar: Component {
 
+    private let notification: NewAdminNotification?
+
+    public init(notification: NewAdminNotification? = nil) {
+        self.notification = notification
+    }
+
     private func renderMenuTrigger(context: inout RenderContext) -> Div {
 
         Div {
@@ -29,7 +35,7 @@ public struct NewAdminTopBar: Component {
         .class("top-bar-brand")
     }
 
-    private func renderTitle() -> Div {
+    private func renderTitle(context: inout RenderContext) -> Div {
         Div {
             Div {
                 H1 {
@@ -39,6 +45,9 @@ public struct NewAdminTopBar: Component {
                 }
             }
             .class("top-bar-title-copy")
+            if let notification {
+                context.render(notification)
+            }
         }
         .class("top-bar-title")
     }
@@ -72,7 +81,7 @@ public struct NewAdminTopBar: Component {
     public func html(context: inout RenderContext) -> some BasicTag {
         Div {
             renderMenuTrigger(context: &context)
-            renderTitle()
+            renderTitle(context: &context)
             renderAccountActions(context: &context)
         }
         .class("top-bar")

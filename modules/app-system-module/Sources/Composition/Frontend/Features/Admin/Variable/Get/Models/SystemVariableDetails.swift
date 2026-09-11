@@ -1,3 +1,4 @@
+import Hummingbird
 import FeatherAdmin
 import HTML
 import SGML
@@ -23,12 +24,12 @@ struct SystemVariableDetails: Component {
             Div {
                 context.render(AdminNavigationButton(
                     "Edit variable",
-                    href: "/admin/system/variables/\(state.variable.id)/edit/"
+                    href: SystemVariableRoutes.edit(RouterPath(state.variable.id)).description
                 ))
                 context.render(AdminNavigationButton(
                     "Remove variable",
                     href:
-                        "/admin/system/variables/\(state.variable.id)/remove/",
+                        SystemVariableRoutes.remove(state.variable.id),
                     classes: ["danger"]
                 ))
             }
