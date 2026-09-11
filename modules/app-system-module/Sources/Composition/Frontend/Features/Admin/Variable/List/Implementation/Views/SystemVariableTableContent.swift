@@ -11,7 +11,11 @@ struct SystemVariableTableContent: Component {
     let variables: [Components.Schemas.SystemVariableListItemSchema]
     let permissions: ListActions
     let pageState: ListPageState
-    let search: String
+    let search: String?
+
+    private var searchValue: String {
+        search ?? ""
+    }
 
     func html(context: inout RenderContext) -> Div {
         let canDelete = permissions.allows(SystemPermissions.Variables.delete)
@@ -24,19 +28,19 @@ struct SystemVariableTableContent: Component {
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: SystemVariableRoutes.list.description,
-                                search: search
+                                search: searchValue
                             )
                         )
                     }
                     else if variables.isEmpty {
                         context.render(
                             NewAdminListEmptyState(
-                                message: search.isEmpty
+                                message: search?.isEmpty ?? true
                                     ? "No system variables yet."
                                     : "No system variables match your search.",
                                 icon: FeatherIcons.inbox(),
                                 action: {
-                                    if search.isEmpty
+                                    if search?.isEmpty ?? true
                                         && permissions.allows(
                                             SystemPermissions.Variables.create
                                         )
@@ -57,10 +61,10 @@ struct SystemVariableTableContent: Component {
                         context.render(
                             NewAdminListSelectionForm(
                                 state: .init(
-                                    action: SystemVariableRoutes.removeRoute
+                                    action: SystemVariableRoutes.remove
                                         .description,
                                     pageState: pageState,
-                                    search: search,
+                                    search: searchValue,
                                     button: .init(
                                         "Remove selected",
                                         style: .destructive
@@ -119,7 +123,7 @@ struct SystemVariableTableContent: Component {
                             state: .init(
                                 action: SystemVariableRoutes.list.description,
                                 placeholder: "Quick search system variables",
-                                search: search
+                                search: searchValue
                             )
                         )
                     )
@@ -145,7 +149,7 @@ struct SystemVariableTableContent: Component {
                             state: .init(
                                 path: SystemVariableRoutes.list.description,
                                 pageState: pageState,
-                                search: search
+                                search: searchValue
                             )
                         )
                     )

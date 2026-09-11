@@ -21,11 +21,11 @@ extension AdminRemoveSystemVariableController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            SystemVariableRoutes.removeRoute,
+            SystemVariableRoutes.remove,
             use: getRemoveSystemVariables
         )
         router.post(
-            SystemVariableRoutes.removeRoute,
+            SystemVariableRoutes.remove,
             use: postRemoveSystemVariables
         )
     }

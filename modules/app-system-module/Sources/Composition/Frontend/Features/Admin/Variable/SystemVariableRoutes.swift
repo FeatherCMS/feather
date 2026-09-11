@@ -6,7 +6,7 @@ enum SystemVariableRoutes {
     private static let system = admin.appendingPath(RouterPath("system"))
     static let list = system.appendingPath(RouterPath("variables"))
     static let add = list.appendingPath(RouterPath("add"))
-    static let removeRoute = list.appendingPath(RouterPath("remove"))
+    static let remove = list.appendingPath(RouterPath("remove"))
 
     static func details(_ id: RouterPath) -> RouterPath {
         list.appendingPath(id)
@@ -17,6 +17,6 @@ enum SystemVariableRoutes {
     }
 
     static func remove(_ id: String) -> String {
-        "\(removeRoute.description)?ids=\(id.queryEncoded())"
+        "\(remove.description)?ids=\(id.queryEncoded())"
     }
 }

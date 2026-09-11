@@ -17,7 +17,6 @@ public struct NewAdminConfirmation: Component {
     public let breadcrumb: NewAdminBreadcrumb.State
     public let title: String
     public let message: String
-    public let details: [String]
     public let selectedIDs: [String]
     public let action: String
     public let cancel: String
@@ -29,7 +28,6 @@ public struct NewAdminConfirmation: Component {
         breadcrumb: NewAdminBreadcrumb.State,
         title: String,
         message: String,
-        details: [String] = [],
         selectedIDs: [String] = [],
         action: String,
         cancel: String,
@@ -40,7 +38,6 @@ public struct NewAdminConfirmation: Component {
         self.breadcrumb = breadcrumb
         self.title = title
         self.message = message
-        self.details = details
         self.selectedIDs = selectedIDs
         self.action = action
         self.cancel = cancel
@@ -54,7 +51,6 @@ public struct NewAdminConfirmation: Component {
             context.render(NewAdminBreadcrumb(state: breadcrumb))
             H1(title)
             P(message)
-            for detail in details { P(detail) }
             if !selectedIDs.isEmpty {
                 P("Selected \(selectedIDs.count) items.")
                 P("IDs: \(selectedIDs.prefix(10).joined(separator: ", "))")

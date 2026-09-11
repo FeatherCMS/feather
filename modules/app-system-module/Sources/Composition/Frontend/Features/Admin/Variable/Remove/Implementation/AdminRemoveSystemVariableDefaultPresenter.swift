@@ -43,7 +43,7 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 message:
                     "Are you sure you want to remove these selected variables? This action cannot be undone.",
                 selectedIDs: ids,
-                action: SystemVariableRoutes.removeRoute.description,
+                action: SystemVariableRoutes.remove.description,
                 cancel: ListRemoveRedirect.location(
                     path: SystemVariableRoutes.list.description,
                     page: page,

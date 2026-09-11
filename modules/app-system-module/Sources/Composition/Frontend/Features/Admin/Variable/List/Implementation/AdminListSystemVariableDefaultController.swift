@@ -34,7 +34,7 @@ struct AdminListSystemVariableDefaultController:
             let model = try await interactor.listSystemVariables(page: page, search: search)
             return try await presenter.renderListPage(
                 model: model,
-                permissions: permissions,
+                permissions: Set(permissions.map(PermissionKey.init)),
                 search: search
             )
         }

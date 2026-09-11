@@ -2,7 +2,6 @@ import FeatherAdmin
 import FeatherContracts
 import Hummingbird
 import SystemAdminAPI
-import SystemContracts
 import WebComponents
 
 struct AdminListSystemVariableDefaultPresenter:
@@ -12,49 +11,61 @@ struct AdminListSystemVariableDefaultPresenter:
     let context: DefaultRequestContext
     let events: any EventPublisher
 
+    private var requestNotification: AdminNotification? {
+        AdminNotificationFlash.notification(from: request)
+    }
+
     func renderListPage(
         model: AdminListModel<Components.Schemas.SystemVariableListItemSchema>,
-        permissions: Set<String>,
+        permissions: Set<PermissionKey>,
         search: String?
     ) async throws -> HTMLResponse {
-        var renderContext = RenderContext()
         let menuGroups = try await context.adminMenuGroups(
             request: request,
             events: events
         )
-        let notification = AdminNotificationFlash.notification(from: request)
-        let layout = NewAdminBaseLayout(
+        let actions = ListActions(permissions)
+        return renderPage(
             content: SystemVariableTable(
                 state: .init(
-                    permissions: Set(permissions.map(PermissionKey.init)),
+                    permissions: actions,
                     variables: model.items,
                     pageState: model.pageState,
-                    search: search ?? "",
+                    search: search,
                     breadcrumb: systemVariableBreadcrumb()
                 )
             ),
             menuGroups: menuGroups,
-            notification: notification
+            notification: requestNotification
         )
-        let component = NewAdminHTML(
-            title: "Manage system variables",
-            body: .init(content: layout)
-        )
-        return .init(renderContext.render(component))
     }
 
     func renderErrorPage(
         title: String,
         message: String
     ) async throws -> HTMLResponse {
-        let menuGroups = try await context.adminMenuGroups(request: request, events: events)
-        let notification = AdminNotificationFlash.notification(from: request)
-        var renderContext = RenderContext()
-        let layout = NewAdminBaseLayout(
+        let menuGroups = try await context.adminMenuGroups(
+            request: request,
+            events: events
+        )
+        return renderPage(
             content: NewAdminStatusView(
                 state: .init(title: title, message: message),
                 icon: FeatherIcons.alertCircle()
             ),
+            menuGroups: menuGroups,
+            notification: requestNotification
+        )
+    }
+
+    private func renderPage<T: Component>(
+        content: T,
+        menuGroups: [NewAdminSidebar.Group],
+        notification: AdminNotification?
+    ) -> HTMLResponse {
+        var renderContext = RenderContext()
+        let layout = NewAdminBaseLayout(
+            content: content,
             menuGroups: menuGroups,
             notification: notification
         )
