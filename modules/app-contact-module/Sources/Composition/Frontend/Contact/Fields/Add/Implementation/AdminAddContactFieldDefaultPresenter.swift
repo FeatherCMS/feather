@@ -18,12 +18,7 @@ struct AdminAddContactFieldDefaultPresenter:
     ) -> HTMLResponse {
         let breadcrumb = AdminBreadcrumb.State(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Contact", link: "/admin/contact/"),
-            .init(
-                label: "Add field",
-                link: "/admin/contact/fields/add/"
-            ),
-        ])
+            .init(label: "Contact", link: "/admin/contact/")])
         return renderEngine.renderAdminPage(
             request: request,
             title: "Add contact form field",

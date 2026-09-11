@@ -126,9 +126,7 @@ struct AdminListBlogTagDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Tags", link: "/admin/blog/tags/"),
-            ]
+                .init(label: "Blog", link: "/admin/blog/")]
         )
     }
 }

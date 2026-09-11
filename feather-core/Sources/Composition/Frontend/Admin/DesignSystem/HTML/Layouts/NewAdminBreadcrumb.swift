@@ -31,12 +31,9 @@ public struct NewAdminBreadcrumb: Component {
 
     public func html(context: inout RenderContext) -> Nav {
         Nav {
-            Ol {
-                for (idx, breadcrumb) in links.enumerated() {
-                    if idx == links.count - 1 {
-                        Li(breadcrumb.label).ariaCurrent(.page)
-                    }
-                    else {
+            if !links.isEmpty {
+                Ol {
+                    for breadcrumb in links {
                         Li { A(breadcrumb.label).href(breadcrumb.link) }
                     }
                 }

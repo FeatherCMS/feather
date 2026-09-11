@@ -49,12 +49,7 @@ struct AdminEditMediaProcessorDefaultPresenter: AdminEditMediaProcessorPresenter
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Processors", link: "/admin/media/processors/"),
-                .init(
-                    label: "Edit",
-                    link: "/admin/media/processors/\(id)/edit/"
-                ),
-            ]
+                .init(label: "Processors", link: "/admin/media/processors/")]
         )
     }
 }

@@ -29,12 +29,7 @@ struct AdminRemoveAuthEmailDefaultPresenter:
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/"),
-            .init(
-                label: "Remove",
-                link: "/admin/auth/emails/\(id)/remove/"
-            ),
-        ])
+            .init(label: "Emails", link: "/admin/auth/emails/")])
     }
 
     func renderPage(

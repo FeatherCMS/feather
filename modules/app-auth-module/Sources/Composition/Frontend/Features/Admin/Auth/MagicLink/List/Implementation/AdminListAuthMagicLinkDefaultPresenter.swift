@@ -110,8 +110,6 @@ struct AdminListAuthMagicLinkDefaultPresenter:
     private func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-        ])
+            .init(label: "Auth", link: "/admin/auth/")])
     }
 }

@@ -47,13 +47,6 @@ extension NewAdminDesignSystem {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
                 Color(.variable(TokenKey.Colors.Link.hover))
             }
-            Custom(".breadcrumb li[aria-current='page']") {
-                Padding(vertical: 5.px, horizontal: 10.px)
-                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Primary.text))
-                BorderRadius(10.px)
-                FontWeight(.number(600))
-            }
         }
     }
 }

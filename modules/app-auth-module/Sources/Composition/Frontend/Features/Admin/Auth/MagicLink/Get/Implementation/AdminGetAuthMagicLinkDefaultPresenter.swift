@@ -27,9 +27,7 @@ struct AdminGetAuthMagicLinkDefaultPresenter: AdminGetAuthMagicLinkPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-            .init(label: "Details", link: "/admin/auth/magic-links/\(id)/"),
-        ])
+            .init(label: "Magic links", link: "/admin/auth/magic-links/")])
     }
 
     func renderPage(

@@ -90,11 +90,6 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
             .init(
                 label: "User",
                 link: "/admin/auth/credentials/\(model.userId)/"
-            ),
-            .init(
-                label: "Remove",
-                link: "/admin/auth/credentials/\(model.id)/remove/"
-            ),
-        ])
+            )])
     }
 }

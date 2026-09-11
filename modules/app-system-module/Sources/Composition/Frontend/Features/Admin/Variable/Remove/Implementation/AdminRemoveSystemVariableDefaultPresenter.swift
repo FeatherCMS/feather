@@ -67,12 +67,7 @@ struct AdminRemoveSystemVariableDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "System", link: "/admin/system/"),
-                .init(label: "Variables", link: "/admin/system/variables/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/system/variables/\(id)/remove/"
-                ),
-            ]
+                .init(label: "Variables", link: "/admin/system/variables/")]
         )
     }
 }

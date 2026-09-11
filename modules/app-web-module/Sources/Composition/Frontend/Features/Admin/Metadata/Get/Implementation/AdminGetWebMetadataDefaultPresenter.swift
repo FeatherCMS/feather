@@ -64,8 +64,6 @@ struct AdminGetWebMetadataDefaultPresenter: AdminGetWebMetadataPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Metadata", link: "/admin/web/metadata/"),
-            .init(label: "Details", link: "/admin/web/metadata/\(id)/"),
-        ])
+            .init(label: "Metadata", link: "/admin/web/metadata/")])
     }
 }

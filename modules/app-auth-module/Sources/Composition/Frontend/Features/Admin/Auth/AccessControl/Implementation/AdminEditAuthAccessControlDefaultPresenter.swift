@@ -86,12 +86,7 @@ struct AdminEditAuthAccessControlDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Auth", link: "/admin/auth/"),
-                .init(
-                    label: "Access Control",
-                    link: "/admin/auth/access-control/"
-                ),
-            ]
+                .init(label: "Auth", link: "/admin/auth/")]
         )
     }
 }

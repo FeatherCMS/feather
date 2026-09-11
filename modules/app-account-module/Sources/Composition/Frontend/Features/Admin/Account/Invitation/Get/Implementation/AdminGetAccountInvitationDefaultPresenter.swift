@@ -65,8 +65,6 @@ struct AdminGetAccountInvitationDefaultPresenter:
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "User", link: "/admin/user/"),
-            .init(label: "Invitations", link: "/admin/account/invitations/"),
-            .init(label: "Details", link: "/admin/account/invitations/\(id)/"),
-        ])
+            .init(label: "Invitations", link: "/admin/account/invitations/")])
     }
 }

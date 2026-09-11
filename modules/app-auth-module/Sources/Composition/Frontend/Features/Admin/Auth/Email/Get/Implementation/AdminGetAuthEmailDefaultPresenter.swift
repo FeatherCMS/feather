@@ -27,9 +27,7 @@ struct AdminGetAuthEmailDefaultPresenter: AdminGetAuthEmailPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/"),
-            .init(label: "Details", link: "/admin/auth/emails/\(id)/"),
-        ])
+            .init(label: "Emails", link: "/admin/auth/emails/")])
     }
 
     func renderPage(

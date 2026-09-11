@@ -119,9 +119,7 @@ struct AdminListRedirectRuleDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Redirect", link: "/admin/redirect/"),
-                .init(label: "Rules", link: "/admin/redirect/rules/"),
-            ]
+                .init(label: "Redirect", link: "/admin/redirect/")]
         )
     }
 }

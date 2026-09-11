@@ -269,12 +269,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "User", link: "/admin/user/"),
-                .init(label: "Identities", link: "/admin/user/identities/"),
-                .init(
-                    label: "Edit",
-                    link: "/admin/user/identities/\(id)/edit/"
-                ),
-            ]
+                .init(label: "Identities", link: "/admin/user/identities/")]
         )
     }
 

@@ -44,12 +44,7 @@ struct AdminRemoveMediaProcessorDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Processors", link: "/admin/media/processors/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/media/processors/\(id)/remove/"
-                ),
-            ]
+                .init(label: "Processors", link: "/admin/media/processors/")]
         )
     }
 }

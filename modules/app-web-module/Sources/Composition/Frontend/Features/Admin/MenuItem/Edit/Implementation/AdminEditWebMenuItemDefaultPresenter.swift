@@ -77,12 +77,7 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
                 .init(
                     label: "Items",
                     link: "/admin/web/menus/\(menuId)/items/"
-                ),
-                .init(
-                    label: "Edit",
-                    link: "/admin/web/menus/\(menuId)/items/\(id)/edit/"
-                ),
-            ]
+                )]
         )
     }
 }

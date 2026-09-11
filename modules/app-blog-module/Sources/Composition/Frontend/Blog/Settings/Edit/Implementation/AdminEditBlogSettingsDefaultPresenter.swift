@@ -62,9 +62,7 @@ struct AdminEditBlogSettingsDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Settings", link: "/admin/blog/settings/"),
-            ]
+                .init(label: "Blog", link: "/admin/blog/")]
         )
     }
 }

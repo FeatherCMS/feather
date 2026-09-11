@@ -41,11 +41,6 @@ struct AdminListContactFormEmailsDefaultPresenter:
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Contact", link: "/admin/contact/"),
-            .init(label: "Forms", link: "/admin/contact/forms/"),
-            .init(
-                label: "Emails",
-                link: "/admin/contact/forms/\(formId)/emails/"
-            ),
-        ])
+            .init(label: "Forms", link: "/admin/contact/forms/")])
     }
 }

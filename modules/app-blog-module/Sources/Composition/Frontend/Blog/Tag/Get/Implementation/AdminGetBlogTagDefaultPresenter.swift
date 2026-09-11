@@ -74,8 +74,6 @@ struct AdminGetBlogTagDefaultPresenter: AdminGetBlogTagPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Blog", link: "/admin/blog/"),
-            .init(label: "Tags", link: "/admin/blog/tags/"),
-            .init(label: "Details", link: "/admin/blog/tags/\(id)/"),
-        ])
+            .init(label: "Tags", link: "/admin/blog/tags/")])
     }
 }

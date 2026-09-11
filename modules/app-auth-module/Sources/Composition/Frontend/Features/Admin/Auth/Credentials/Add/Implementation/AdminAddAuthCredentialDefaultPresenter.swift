@@ -90,8 +90,6 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Credentials", link: "/admin/auth/credentials/"),
-            .init(label: "Add", link: "/admin/auth/credentials/add/"),
-        ])
+            .init(label: "Credentials", link: "/admin/auth/credentials/")])
     }
 }

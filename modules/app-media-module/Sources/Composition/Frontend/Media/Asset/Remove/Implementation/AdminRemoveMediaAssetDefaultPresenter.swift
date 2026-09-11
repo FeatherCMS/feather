@@ -40,12 +40,7 @@ struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Assets", link: "/admin/media/assets/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/media/assets/\(id)/remove/"
-                ),
-            ]
+                .init(label: "Assets", link: "/admin/media/assets/")]
         )
     }
 }

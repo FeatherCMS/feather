@@ -84,7 +84,6 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
             .init(
                 label: "Submissions",
                 link: "/admin/contact/forms/\(formId)/submissions/"
-            ), .init(label: label, link: ""),
-        ])
+            )])
     }
 }

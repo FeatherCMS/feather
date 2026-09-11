@@ -57,12 +57,7 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-            .init(
-                label: "Edit",
-                link: "/admin/auth/magic-links/\(id)/edit/"
-            ),
-        ])
+            .init(label: "Magic links", link: "/admin/auth/magic-links/")])
     }
 
     func renderPage(

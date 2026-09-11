@@ -79,21 +79,14 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
             return .init(
                 links: [
                     .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Details", link: detailsPath),
-                    .init(label: "Metadata", link: path),
-                ]
+                    .init(label: "Details", link: detailsPath)]
             )
         }
         return .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Metadata", link: "/admin/web/metadata/"),
-                .init(
-                    label: "Edit",
-                    link: "/admin/web/metadata/\(id)/edit/"
-                ),
-            ]
+                .init(label: "Metadata", link: "/admin/web/metadata/")]
         )
     }
 }

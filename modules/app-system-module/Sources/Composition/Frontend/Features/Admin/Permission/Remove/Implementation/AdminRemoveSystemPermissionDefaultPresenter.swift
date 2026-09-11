@@ -69,12 +69,7 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "System", link: "/admin/system/"),
-                .init(label: "Permissions", link: "/admin/system/permissions/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/system/permissions/\(id)/remove/"
-                ),
-            ]
+                .init(label: "Permissions", link: "/admin/system/permissions/")]
         )
     }
 }

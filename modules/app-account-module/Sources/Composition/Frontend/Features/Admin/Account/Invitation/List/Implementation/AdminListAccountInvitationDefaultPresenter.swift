@@ -125,8 +125,6 @@ struct AdminListAccountInvitationDefaultPresenter:
     func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Invitations", link: "/admin/account/invitations/"),
-        ])
+            .init(label: "User", link: "/admin/user/")])
     }
 }

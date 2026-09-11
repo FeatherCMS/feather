@@ -151,9 +151,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
     private func mediaAssetsBreadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Media", link: "/admin/media/"),
-            .init(label: "Assets", link: "/admin/media/assets/"),
-        ])
+            .init(label: "Media", link: "/admin/media/")])
     }
 
     private func mediaAssetsPath(

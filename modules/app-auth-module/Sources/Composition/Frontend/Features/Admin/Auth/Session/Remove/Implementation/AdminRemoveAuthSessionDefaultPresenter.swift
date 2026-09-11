@@ -66,13 +66,7 @@ struct AdminRemoveAuthSessionDefaultPresenter:
                 .init(
                     label: "Details",
                     link: "/admin/user/identities/\(identityId)/"
-                ),
-                .init(
-                    label: "Remove session",
-                    link:
-                        "/admin/user/identities/\(identityId)/sessions/\(sessionId)/remove/"
-                ),
-            ]
+                )]
         )
     }
 }

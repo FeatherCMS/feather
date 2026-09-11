@@ -55,8 +55,6 @@ struct AdminListSystemJobDefaultPresenter {
     private func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "System", link: "/admin/system/"),
-            .init(label: "Worker jobs", link: "/admin/system/jobs/"),
-        ])
+            .init(label: "System", link: "/admin/system/")])
     }
 }

@@ -29,12 +29,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-            .init(
-                label: "Remove",
-                link: "/admin/auth/magic-links/\(id)/remove/"
-            ),
-        ])
+            .init(label: "Magic links", link: "/admin/auth/magic-links/")])
     }
 
     func renderPage(

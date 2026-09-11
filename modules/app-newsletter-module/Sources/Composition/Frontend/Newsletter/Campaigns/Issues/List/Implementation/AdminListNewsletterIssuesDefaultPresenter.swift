@@ -22,12 +22,7 @@ struct AdminListNewsletterIssuesDefaultPresenter:
         let breadcrumb = AdminBreadcrumb.State(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Newsletter", link: "/admin/newsletters/"),
-            .init(label: "Campaigns", link: "/admin/newsletters/"),
-            .init(
-                label: "Issues",
-                link: "/admin/newsletters/\(newsletterId)/issues/"
-            ),
-        ])
+            .init(label: "Campaigns", link: "/admin/newsletters/")])
         return renderEngine.renderAdminPage(
             request: request,
             title: "Campaign issues",

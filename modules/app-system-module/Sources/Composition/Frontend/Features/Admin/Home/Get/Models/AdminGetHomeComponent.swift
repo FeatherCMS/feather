@@ -14,7 +14,7 @@ struct AdminGetHomeComponent: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(AdminBreadcrumb(
-                state: .init(links: [.init(label: "Admin", link: "/admin/")])
+                state: .init(links: [])
             ))
             H1("Dashboard")
             P(model.summary)

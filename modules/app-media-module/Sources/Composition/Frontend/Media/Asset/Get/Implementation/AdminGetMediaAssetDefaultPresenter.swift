@@ -21,14 +21,7 @@ struct AdminGetMediaAssetDefaultPresenter: AdminGetMediaAssetPresenter {
         permissions: Set<String>,
         error: String?
     ) -> HTMLResponse {
-        let breadcrumb = mediaAssetsBreadcrumb(
-            [
-                .init(
-                    label: "Details",
-                    link: "/admin/media/assets/\(id)/"
-                )
-            ]
-        )
+        let breadcrumb = mediaAssetsBreadcrumb(includeCollection: true)
         if let model {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -70,14 +63,18 @@ struct AdminGetMediaAssetDefaultPresenter: AdminGetMediaAssetPresenter {
     }
 
     private func mediaAssetsBreadcrumb(
-        _ extra: [AdminBreadcrumb.State.Link] = []
+        includeCollection: Bool = false
     ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Assets", link: "/admin/media/assets/"),
-            ] + extra
-        )
+        var links: [AdminBreadcrumb.State.Link] = [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Media", link: "/admin/media/")
+        ]
+        if includeCollection {
+            links.append(.init(
+                label: "Assets",
+                link: "/admin/media/assets/"
+            ))
+        }
+        return .init(links: links)
     }
 }

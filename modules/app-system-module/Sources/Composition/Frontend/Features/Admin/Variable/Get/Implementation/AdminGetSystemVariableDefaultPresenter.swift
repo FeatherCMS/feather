@@ -63,8 +63,6 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "System", link: "/admin/system/"),
-            .init(label: "Variables", link: "/admin/system/variables/"),
-            .init(label: "Details", link: "/admin/system/variables/\(id)/"),
-        ])
+            .init(label: "Variables", link: "/admin/system/variables/")])
     }
 }

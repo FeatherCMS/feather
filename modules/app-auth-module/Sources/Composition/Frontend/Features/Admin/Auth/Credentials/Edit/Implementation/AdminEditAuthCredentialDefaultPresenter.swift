@@ -113,8 +113,6 @@ struct AdminEditAuthCredentialDefaultPresenter: AdminEditAuthCredentialPresenter
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Credentials", link: "/admin/auth/credentials/"),
-            .init(label: "Edit", link: "/admin/auth/credentials/\(id)/edit/"),
-        ])
+            .init(label: "Credentials", link: "/admin/auth/credentials/")])
     }
 }

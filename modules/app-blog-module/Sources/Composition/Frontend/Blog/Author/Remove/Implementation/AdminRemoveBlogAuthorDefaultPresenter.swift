@@ -73,12 +73,7 @@ struct AdminRemoveBlogAuthorDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Authors", link: "/admin/blog/authors/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/blog/authors/\(id)/remove/"
-                ),
-            ]
+                .init(label: "Authors", link: "/admin/blog/authors/")]
         )
     }
 }

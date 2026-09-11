@@ -125,8 +125,6 @@ struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
     private func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Roles", link: "/admin/user/roles/"),
-        ])
+            .init(label: "User", link: "/admin/user/")])
     }
 }

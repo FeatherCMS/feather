@@ -368,9 +368,7 @@ struct AdminEditWebSettingsDefaultController:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Settings", link: "/admin/web/settings/"),
-            ]
+                .init(label: "Web", link: "/admin/web/")]
         )
     }
 

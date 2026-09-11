@@ -37,9 +37,7 @@ struct AdminAddWebMenuDefaultPresenter: AdminAddWebMenuPresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Menus", link: "/admin/web/menus/"),
-                .init(label: "Add", link: "/admin/web/menus/add/"),
-            ]
+                .init(label: "Menus", link: "/admin/web/menus/")]
         )
     }
 }

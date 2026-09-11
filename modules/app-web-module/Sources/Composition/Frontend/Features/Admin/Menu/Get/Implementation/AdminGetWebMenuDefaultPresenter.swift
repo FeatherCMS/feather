@@ -69,8 +69,6 @@ struct AdminGetWebMenuDefaultPresenter: AdminGetWebMenuPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Menus", link: "/admin/web/menus/"),
-            .init(label: "Details", link: "/admin/web/menus/\(id)/"),
-        ])
+            .init(label: "Menus", link: "/admin/web/menus/")])
     }
 }

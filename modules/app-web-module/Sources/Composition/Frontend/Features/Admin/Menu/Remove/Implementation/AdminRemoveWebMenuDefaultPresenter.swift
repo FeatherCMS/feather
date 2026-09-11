@@ -68,12 +68,7 @@ struct AdminRemoveWebMenuDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Menus", link: "/admin/web/menus/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/web/menus/\(id)/remove/"
-                ),
-            ]
+                .init(label: "Menus", link: "/admin/web/menus/")]
         )
     }
 }

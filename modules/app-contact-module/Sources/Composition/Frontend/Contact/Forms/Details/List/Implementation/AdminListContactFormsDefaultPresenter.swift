@@ -48,8 +48,6 @@ struct AdminListContactFormsDefaultPresenter: AdminListContactFormsPresenter {
     private func breadcrumb() -> AdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
-            .init(label: "Contact", link: "/admin/contact/"),
-            .init(label: "Forms", link: "/admin/contact/forms/"),
-        ])
+            .init(label: "Contact", link: "/admin/contact/")])
     }
 }

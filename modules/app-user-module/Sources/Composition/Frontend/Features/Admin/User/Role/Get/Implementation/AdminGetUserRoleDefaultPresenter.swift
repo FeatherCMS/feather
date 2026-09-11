@@ -15,9 +15,7 @@ struct AdminGetUserRoleDefaultPresenter: AdminGetUserRolePresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "User", link: "/admin/user/"),
-            .init(label: "Roles", link: "/admin/user/roles/"),
-            .init(label: "Details", link: "/admin/user/roles/\(id)/"),
-        ])
+            .init(label: "Roles", link: "/admin/user/roles/")])
     }
 
     func renderDetailsPage(

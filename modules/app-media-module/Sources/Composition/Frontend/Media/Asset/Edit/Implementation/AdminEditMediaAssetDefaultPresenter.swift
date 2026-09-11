@@ -72,9 +72,7 @@ struct AdminEditMediaAssetDefaultPresenter: AdminEditMediaAssetPresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Assets", link: "/admin/media/assets/"),
-                .init(label: "Edit", link: "/admin/media/assets/\(id)/edit/"),
-            ]
+                .init(label: "Assets", link: "/admin/media/assets/")]
         )
     }
 }

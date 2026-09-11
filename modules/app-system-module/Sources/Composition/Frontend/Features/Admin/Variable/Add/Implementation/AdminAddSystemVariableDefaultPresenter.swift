@@ -36,9 +36,7 @@ struct AdminAddSystemVariableDefaultPresenter: AdminAddSystemVariablePresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "System", link: "/admin/system/"),
-                .init(label: "Variables", link: "/admin/system/variables/"),
-                .init(label: "Add", link: "/admin/system/variables/add/"),
-            ]
+                .init(label: "Variables", link: "/admin/system/variables/")]
         )
     }
 }

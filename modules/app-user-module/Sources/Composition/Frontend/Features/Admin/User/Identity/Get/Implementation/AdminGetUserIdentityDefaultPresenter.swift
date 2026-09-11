@@ -60,8 +60,6 @@ struct AdminGetUserIdentityDefaultPresenter: AdminGetUserIdentityPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "User", link: "/admin/user/"),
-            .init(label: "Identities", link: "/admin/user/identities/"),
-            .init(label: "Details", link: "/admin/user/identities/\(id)/"),
-        ])
+            .init(label: "Identities", link: "/admin/user/identities/")])
     }
 }

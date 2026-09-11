@@ -45,9 +45,7 @@ struct AdminAddMediaFolderDefaultPresenter: AdminAddMediaFolderPresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Assets", link: "/admin/media/assets/"),
-                .init(label: "Add", link: "/admin/media/folders/add/"),
-            ]
+                .init(label: "Assets", link: "/admin/media/assets/")]
         )
     }
 }

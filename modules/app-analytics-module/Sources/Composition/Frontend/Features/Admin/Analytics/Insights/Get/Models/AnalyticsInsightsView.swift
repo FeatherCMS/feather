@@ -34,9 +34,7 @@ struct AnalyticsInsightsView: Component {
     private var breadcrumb: AdminBreadcrumb.State {
         .init(
             links: [
-                .init(label: "Analytics", link: "/admin/analytics/"),
-                .init(label: page.source.pageTitle, link: page.source.pagePath),
-            ]
+                .init(label: "Analytics", link: "/admin/analytics/")]
         )
     }
 

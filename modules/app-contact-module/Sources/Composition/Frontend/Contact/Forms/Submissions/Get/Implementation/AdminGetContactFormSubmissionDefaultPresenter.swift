@@ -48,7 +48,6 @@ struct AdminGetContactFormSubmissionDefaultPresenter:
             .init(
                 label: "Submissions",
                 link: "/admin/contact/forms/\(formId)/submissions/"
-            ), .init(label: "Details", link: ""),
-        ])
+            )])
     }
 }

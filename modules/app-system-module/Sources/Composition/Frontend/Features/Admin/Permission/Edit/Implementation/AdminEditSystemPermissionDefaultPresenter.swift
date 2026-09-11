@@ -69,12 +69,7 @@ struct AdminEditSystemPermissionDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "System", link: "/admin/system/"),
-                .init(label: "Permissions", link: "/admin/system/permissions/"),
-                .init(
-                    label: "Edit",
-                    link: "/admin/system/permissions/\(id)/edit/"
-                ),
-            ]
+                .init(label: "Permissions", link: "/admin/system/permissions/")]
         )
     }
 }

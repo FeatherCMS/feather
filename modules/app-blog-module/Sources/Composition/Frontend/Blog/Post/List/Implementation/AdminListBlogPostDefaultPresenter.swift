@@ -130,9 +130,7 @@ struct AdminListBlogPostDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Posts", link: "/admin/blog/posts/"),
-            ]
+                .init(label: "Blog", link: "/admin/blog/")]
         )
     }
 }

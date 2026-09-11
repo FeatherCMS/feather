@@ -78,9 +78,7 @@ struct AdminListAnalyticsLogDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Analytics", link: "/admin/analytics/"),
-                .init(label: "Logs", link: "/admin/analytics/logs/"),
-            ]
+                .init(label: "Analytics", link: "/admin/analytics/")]
         )
     }
 }

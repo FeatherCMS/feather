@@ -79,9 +79,7 @@ struct AdminListWebMetadataDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Metadata", link: "/admin/web/metadata/"),
-            ]
+                .init(label: "Web", link: "/admin/web/")]
         )
     }
 }

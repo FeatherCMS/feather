@@ -68,12 +68,7 @@ struct AdminEditSystemVariableDefaultPresenter: AdminEditSystemVariablePresenter
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "System", link: "/admin/system/"),
-                .init(label: "Variables", link: "/admin/system/variables/"),
-                .init(
-                    label: "Edit",
-                    link: "/admin/system/variables/\(id)/edit/"
-                ),
-            ]
+                .init(label: "Variables", link: "/admin/system/variables/")]
         )
     }
 }

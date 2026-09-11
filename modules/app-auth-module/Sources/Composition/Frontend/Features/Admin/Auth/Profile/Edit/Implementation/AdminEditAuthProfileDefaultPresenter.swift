@@ -66,12 +66,7 @@ struct AdminEditAuthProfileDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Account", link: "/admin/account/"),
-                .init(label: "Profile", link: "/admin/auth/profile/"),
-                .init(
-                    label: "Edit",
-                    link: "/admin/auth/profile/edit/"
-                ),
-            ]
+                .init(label: "Profile", link: "/admin/auth/profile/")]
         )
     }
 }

@@ -51,12 +51,7 @@ struct AdminAddBlogAuthorLinkDefaultPresenter: AdminAddBlogAuthorLinkPresenter {
                 .init(
                     label: "Links",
                     link: "/admin/blog/authors/\(menuId)/links/"
-                ),
-                .init(
-                    label: "Add",
-                    link: "/admin/blog/authors/\(menuId)/links/add/"
-                ),
-            ]
+                )]
         )
     }
 }

@@ -64,8 +64,6 @@ struct AdminGetRedirectRuleDefaultPresenter: AdminGetRedirectRulePresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Redirect", link: "/admin/redirect/"),
-            .init(label: "Rules", link: "/admin/redirect/rules/"),
-            .init(label: "Details", link: "/admin/redirect/rules/\(id)/"),
-        ])
+            .init(label: "Rules", link: "/admin/redirect/rules/")])
     }
 }

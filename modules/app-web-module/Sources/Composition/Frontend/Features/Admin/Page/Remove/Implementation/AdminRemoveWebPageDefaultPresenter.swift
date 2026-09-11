@@ -68,12 +68,7 @@ struct AdminRemoveWebPageDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Pages", link: "/admin/web/pages/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/web/pages/\(id)/remove/"
-                ),
-            ]
+                .init(label: "Pages", link: "/admin/web/pages/")]
         )
     }
 }

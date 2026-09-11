@@ -46,12 +46,7 @@ struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
                 .init(
                     label: "Items",
                     link: "/admin/web/menus/\(menuId)/items/"
-                ),
-                .init(
-                    label: "Add",
-                    link: "/admin/web/menus/\(menuId)/items/add/"
-                ),
-            ]
+                )]
         )
     }
 }

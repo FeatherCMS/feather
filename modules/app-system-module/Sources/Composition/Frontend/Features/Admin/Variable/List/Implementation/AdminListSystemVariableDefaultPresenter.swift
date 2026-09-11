@@ -113,9 +113,7 @@ struct AdminListSystemVariableDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-                .init(label: "Variables", link: "/admin/system/variables/"),
-            ]
+                .init(label: "System", link: "/admin/system/")]
         )
     }
 
@@ -123,9 +121,7 @@ struct AdminListSystemVariableDefaultPresenter:
         .init(
             links: [
                 .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-                .init(label: "Variables", link: "/admin/system/variables/")
-            ]
+                .init(label: "System", link: "/admin/system/")]
         )
     }
 }

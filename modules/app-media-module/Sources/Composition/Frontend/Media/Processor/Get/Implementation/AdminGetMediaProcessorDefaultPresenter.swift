@@ -19,14 +19,7 @@ struct AdminGetMediaProcessorDefaultPresenter: AdminGetMediaProcessorPresenter {
         permissions: Set<String>,
         error: String?
     ) -> HTMLResponse {
-        let breadcrumb = mediaProcessorsBreadcrumb(
-            [
-                .init(
-                    label: "Details",
-                    link: "/admin/media/processors/\(id)/"
-                )
-            ]
-        )
+        let breadcrumb = mediaProcessorsBreadcrumb(includeCollection: true)
         if let model {
             return renderEngine.renderAdminPage(
                 request: request,
@@ -60,14 +53,18 @@ struct AdminGetMediaProcessorDefaultPresenter: AdminGetMediaProcessorPresenter {
     }
 
     private func mediaProcessorsBreadcrumb(
-        _ extra: [AdminBreadcrumb.State.Link] = []
+        includeCollection: Bool = false
     ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Processors", link: "/admin/media/processors/"),
-            ] + extra
-        )
+        var links: [AdminBreadcrumb.State.Link] = [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Media", link: "/admin/media/")
+        ]
+        if includeCollection {
+            links.append(.init(
+                label: "Processors",
+                link: "/admin/media/processors/"
+            ))
+        }
+        return .init(links: links)
     }
 }

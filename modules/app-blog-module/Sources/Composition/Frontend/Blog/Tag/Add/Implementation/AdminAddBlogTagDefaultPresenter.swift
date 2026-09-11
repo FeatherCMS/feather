@@ -42,9 +42,7 @@ struct AdminAddBlogTagDefaultPresenter: AdminAddBlogTagPresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Tags", link: "/admin/blog/tags/"),
-                .init(label: "Add", link: "/admin/blog/tags/add/"),
-            ]
+                .init(label: "Tags", link: "/admin/blog/tags/")]
         )
     }
 }

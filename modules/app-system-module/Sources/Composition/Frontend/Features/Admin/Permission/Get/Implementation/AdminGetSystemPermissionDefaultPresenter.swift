@@ -17,9 +17,7 @@ struct AdminGetSystemPermissionDefaultPresenter:
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "System", link: "/admin/system/"),
-            .init(label: "Permissions", link: "/admin/system/permissions/"),
-            .init(label: "Details", link: "/admin/system/permissions/\(id)/"),
-        ])
+            .init(label: "Permissions", link: "/admin/system/permissions/")])
     }
 
     func renderDetailsPage(

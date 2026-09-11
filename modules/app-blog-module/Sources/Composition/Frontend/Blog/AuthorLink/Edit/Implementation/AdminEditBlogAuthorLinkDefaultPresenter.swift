@@ -83,12 +83,7 @@ struct AdminEditBlogAuthorLinkDefaultPresenter: AdminEditBlogAuthorLinkPresenter
                 .init(
                     label: "Links",
                     link: "/admin/blog/authors/\(menuId)/links/"
-                ),
-                .init(
-                    label: "Edit",
-                    link: "/admin/blog/authors/\(menuId)/links/\(id)/edit/"
-                ),
-            ]
+                )]
         )
     }
 }

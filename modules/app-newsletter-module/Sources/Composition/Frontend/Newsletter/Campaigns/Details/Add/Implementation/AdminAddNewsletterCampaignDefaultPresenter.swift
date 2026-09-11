@@ -20,9 +20,7 @@ struct AdminAddNewsletterCampaignDefaultPresenter:
         let breadcrumb = AdminBreadcrumb.State(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Campaigns", link: "/admin/newsletters/"),
-            .init(label: "Campaigns", link: "/admin/newsletters/"),
-            .init(label: "Add", link: "/admin/newsletters/add/"),
-        ])
+            .init(label: "Campaigns", link: "/admin/newsletters/")])
         return renderEngine.renderAdminPage(
             request: request,
             title: "Add campaign",

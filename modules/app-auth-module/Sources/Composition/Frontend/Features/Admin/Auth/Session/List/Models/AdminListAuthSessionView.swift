@@ -23,13 +23,7 @@ struct AdminListAuthSessionView: Component {
                         .init(
                             label: "Identity",
                             link: "/admin/user/identities/\(state.identityID)/"
-                        ),
-                        .init(
-                            label: "Sessions",
-                            link:
-                                "/admin/user/identities/\(state.identityID)/sessions/"
-                        ),
-                    ]
+                        )]
                 )
             ))
             H1("Sessions")

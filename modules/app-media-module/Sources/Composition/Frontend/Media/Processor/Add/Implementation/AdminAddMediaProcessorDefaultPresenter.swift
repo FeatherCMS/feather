@@ -48,9 +48,7 @@ struct AdminAddMediaProcessorDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Media", link: "/admin/media/"),
-                .init(label: "Processors", link: "/admin/media/processors/"),
-                .init(label: "Add", link: "/admin/media/processors/add/"),
-            ]
+                .init(label: "Processors", link: "/admin/media/processors/")]
         )
     }
 }

@@ -37,9 +37,7 @@ struct AdminAddWebPageDefaultPresenter: AdminAddWebPagePresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Pages", link: "/admin/web/pages/"),
-                .init(label: "Add", link: "/admin/web/pages/add/"),
-            ]
+                .init(label: "Pages", link: "/admin/web/pages/")]
         )
     }
 }

@@ -61,12 +61,7 @@ struct AdminListAuthSessionDefaultPresenter {
                             .init(
                                 label: "Identity",
                                 link: "/admin/user/identities/\(identityID)/"
-                            ),
-                            .init(
-                                label: "Sessions",
-                                link: request.uri.path
-                            ),
-                        ]
+                            )]
                     )
                 )
             )

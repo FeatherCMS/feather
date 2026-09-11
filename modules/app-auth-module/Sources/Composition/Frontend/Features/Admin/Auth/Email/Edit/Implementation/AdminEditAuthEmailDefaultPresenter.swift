@@ -57,12 +57,7 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/"),
-            .init(
-                label: "Edit",
-                link: "/admin/auth/emails/\(id)/edit/"
-            ),
-        ])
+            .init(label: "Emails", link: "/admin/auth/emails/")])
     }
 
     func renderPage(

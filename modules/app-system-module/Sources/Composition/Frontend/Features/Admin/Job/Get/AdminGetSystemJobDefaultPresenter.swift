@@ -51,8 +51,6 @@ struct AdminGetSystemJobDefaultPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "System", link: "/admin/system/"),
-            .init(label: "Worker jobs", link: "/admin/system/jobs/"),
-            .init(label: "Details", link: "/admin/system/jobs/\(id)/"),
-        ])
+            .init(label: "Worker jobs", link: "/admin/system/jobs/")])
     }
 }

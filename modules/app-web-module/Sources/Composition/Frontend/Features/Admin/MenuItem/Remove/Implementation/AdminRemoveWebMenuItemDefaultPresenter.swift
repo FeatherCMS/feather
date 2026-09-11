@@ -77,12 +77,7 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
                 .init(
                     label: "Items",
                     link: "/admin/web/menus/\(menuId)/items/"
-                ),
-                .init(
-                    label: "Remove",
-                    link: "/admin/web/menus/\(menuId)/items/\(id)/remove/"
-                ),
-            ]
+                )]
         )
     }
 }

@@ -70,9 +70,7 @@ struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/"),
-            .init(label: "Add", link: "/admin/auth/emails/add/"),
-        ])
+            .init(label: "Emails", link: "/admin/auth/emails/")])
     }
 
     func format(

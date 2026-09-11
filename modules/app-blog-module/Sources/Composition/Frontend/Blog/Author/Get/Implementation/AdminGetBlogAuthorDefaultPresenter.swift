@@ -78,8 +78,6 @@ struct AdminGetBlogAuthorDefaultPresenter: AdminGetBlogAuthorPresenter {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Blog", link: "/admin/blog/"),
-            .init(label: "Authors", link: "/admin/blog/authors/"),
-            .init(label: "Details", link: "/admin/blog/authors/\(id)/"),
-        ])
+            .init(label: "Authors", link: "/admin/blog/authors/")])
     }
 }

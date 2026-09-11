@@ -68,12 +68,7 @@ struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Pages", link: "/admin/web/pages/"),
-                .init(
-                    label: "Edit",
-                    link: "/admin/web/pages/\(id)/edit/"
-                ),
-            ]
+                .init(label: "Pages", link: "/admin/web/pages/")]
         )
     }
 }

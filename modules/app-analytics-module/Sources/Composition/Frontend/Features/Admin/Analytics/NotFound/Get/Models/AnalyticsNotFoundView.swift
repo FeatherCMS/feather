@@ -19,12 +19,7 @@ struct AnalyticsNotFoundView: Component {
             context.render(AdminBreadcrumb(
                 state: .init(
                     links: [
-                        .init(label: "Redirect", link: "/admin/analytics/"),
-                        .init(
-                            label: "404s",
-                            link: "/admin/analytics/not-found/"
-                        ),
-                    ]
+                        .init(label: "Redirect", link: "/admin/analytics/")]
                 )
             ))
             H1("404s")

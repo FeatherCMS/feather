@@ -41,12 +41,7 @@ struct AdminAddSystemPermissionDefaultPresenter:
                 .init(
                     label: "Permissions",
                     link: "/admin/system/permissions/"
-                ),
-                .init(
-                    label: "Add",
-                    link: "/admin/system/permissions/add/"
-                ),
-            ]
+                )]
         )
     }
 }

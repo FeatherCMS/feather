@@ -16,9 +16,7 @@ struct AccountProfileEdit: Component {
                     links: [
                         .init(label: "Admin", link: "/admin/"),
                         .init(label: "Account", link: "/admin/account/"),
-                        .init(label: "Users", link: "/admin/user/identities/"),
-                        .init(label: "Profile", link: state.action),
-                    ]
+                        .init(label: "Users", link: "/admin/user/identities/")]
                 )
             ))
             H1("Profile")

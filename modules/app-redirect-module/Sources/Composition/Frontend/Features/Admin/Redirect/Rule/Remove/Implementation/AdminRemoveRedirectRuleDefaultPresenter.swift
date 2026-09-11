@@ -68,12 +68,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter:
             links: [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Redirect", link: "/admin/redirect/"),
-                .init(label: "Rules", link: "/admin/redirect/rules/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/redirect/rules/\(id)/remove/"
-                ),
-            ]
+                .init(label: "Rules", link: "/admin/redirect/rules/")]
         )
     }
 }

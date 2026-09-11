@@ -27,9 +27,7 @@ struct AdminGetDesignSystemComponent: Component {
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Lorem ipsum", link: "/admin/"),
                 .init(label: "Design System", link: "/admin/design-system/"),
-                .init(label: "Components", link: "#components"),
-                .init(label: "Breadcrumb", link: "#breadcrumb")
-            ]
+                .init(label: "Components", link: "#components")]
         )
     }
 
