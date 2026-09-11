@@ -47,7 +47,7 @@ struct AdminListSystemVariableDefaultController:
             model = emptyModel
             error = nil
         }
-        return presenter.renderListPage(
+        return try await presenter.renderListPage(
             model: model,
             isAdded: request.hasQueryFlag("added"),
             isEdited: request.hasQueryFlag("edited"),

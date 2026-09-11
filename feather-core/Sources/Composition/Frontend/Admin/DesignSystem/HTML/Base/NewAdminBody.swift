@@ -6,7 +6,6 @@
 //
 
 import HTML
-import CSS
 import SGML
 import WebComponents
 import WebBuilders
@@ -20,21 +19,6 @@ public struct NewAdminBody<T: Renderable>: Branch where T.HTML: FlowContent {
     }
 
     // MARK: -
-
-    public func rules() -> [any Rule] {
-        Media {
-            Custom("body") {
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Primary.text))
-                FontFamily(.family("'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif"))
-            }
-            Id("footer") {
-                Padding(32.px)
-                TextAlign(.center)
-                BorderTop(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
-            }
-        }
-    }
 
     public var children: [any Component] {
         content

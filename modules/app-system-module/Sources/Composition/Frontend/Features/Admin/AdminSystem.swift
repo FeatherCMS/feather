@@ -17,6 +17,9 @@ public struct AdminSystem {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
+        AdminGetStyle()
+            .route(on: router)
+
         AdminGetHome(
             renderingEngine: renderingEngine,
             events: adminEvents
@@ -60,7 +63,8 @@ public struct AdminSystem {
         .controller.route(on: router)
 
         AdminListSystemVariable(
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            events: adminEvents
         )
         .controller.route(on: router)
 

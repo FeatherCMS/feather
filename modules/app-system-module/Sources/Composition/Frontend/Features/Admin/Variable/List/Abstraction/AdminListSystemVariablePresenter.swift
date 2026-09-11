@@ -11,7 +11,7 @@ protocol AdminListSystemVariablePresenter: Sendable {
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderRemoveConfirmation(
         page: Int,

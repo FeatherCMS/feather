@@ -1,13 +1,11 @@
 import FeatherAdmin
-import FeatherValidation
 import HTML
-import Hummingbird
 import SGML
 import SystemAdminAPI
-import WebComponents
 import WebBuilders
+import WebComponents
 
-struct SystemVariableTable: Leaf {
+struct SystemVariableTable: Branch {
 
     struct State {
         let isAdded: Bool
@@ -23,10 +21,46 @@ struct SystemVariableTable: Leaf {
         let search: String
         let deniedInfo: String
         let deniedMessage: String
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: NewAdminBreadcrumb
     }
 
     let state: State
+
+    var children: [any Component] {
+        state.breadcrumb
+        NewAdminList(
+            table: {
+                Div {}
+            }
+        )
+        NewAdminListSearch(
+            state: .init(
+                action: "/admin/system/variables/",
+                placeholder: "Quick search system variables",
+                search: state.search
+            )
+        )
+        NewAdminListToolbar {
+            Div {}
+        }
+        NewAdminListShell(table: Table {})
+        NewAdminListRowActions(
+            label: "Actions",
+            actions: [],
+            permissions: []
+        )
+        NewAdminListSelectAllCheckbox()
+        NewAdminListRowCheckbox(id: "")
+        NewAdminListPagination(
+            state: .init(
+                path: "/admin/system/variables/",
+                page: state.page,
+                pageSize: state.pageSize,
+                total: state.total,
+                search: state.search
+            )
+        )
+    }
 
     func html() -> some BasicTag {
         Section {
@@ -35,30 +69,14 @@ struct SystemVariableTable: Leaf {
                 P(state.deniedMessage)
             }
             else {
-                AdminBreadcrumb(state: state.breadcrumb).html()
+                state.breadcrumb.html()
                 H1("System variables")
 
-                if state.isAdded {
-                    P("System variable added successfully.")
-                }
-                if state.isEdited {
-                    P("System variable edited successfully.")
-                }
-                if state.isRemoved {
-                    P("System variable removed successfully.")
-                }
-                if state.canAdd {
-                    Div {
-                        AdminNavigationButton(
-                            "Add variable",
-                            href: "/admin/system/variables/add/"
-                        ).html()
-                    }
-                    .class("button-row")
-                    Br()
-                    Br()
-                }
-                ListTableSearchForm(
+                if state.isAdded { P("System variable added successfully.") }
+                if state.isEdited { P("System variable edited successfully.") }
+                if state.isRemoved { P("System variable removed successfully.") }
+
+                NewAdminListSearch(
                     state: .init(
                         action: "/admin/system/variables/",
                         placeholder: "Quick search system variables",
@@ -78,9 +96,7 @@ struct SystemVariableTable: Leaf {
                             A("page 1").href("/admin/system/variables/?page=1")
                             Span(" or ")
                             A("page \(totalPages)")
-                                .href(
-                                    "/admin/system/variables/?page=\(totalPages)"
-                                )
+                                .href("/admin/system/variables/?page=\(totalPages)")
                             Span(".")
                         }
                     }
@@ -93,102 +109,93 @@ struct SystemVariableTable: Leaf {
                     }
                 }
                 else {
-                    let canRemove = state.permissions.contains(
-                        "system:variables:delete"
-                    )
-                    ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/system/variables/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            ListTableSelectAllCheckbox().html()
-                                        }
-                                        Th("Name")
-                                            .columnWidth(percent: 50)
-                                        Th("Value")
-                                            .columnWidth(percent: 50)
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for variable in state.variables {
+                    let canRemove = state.permissions.contains("system:variables:delete")
+                    NewAdminList(
+                    table: {
+                        ListTableRemoveForm(
+                            state: .init(
+                                action: "/admin/system/variables/remove/",
+                                page: state.page,
+                                search: state.search,
+                                canRemove: canRemove,
+                                buttonTitle: "Remove selected"
+                            ),
+                            table: NewAdminListShell(
+                                table: Table {
+                                    Thead {
                                         Tr {
-                                            if canRemove {
-                                                ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: variable.id
-                                                    )
-                                                ).html()
-                                            }
-                                            Td(variable.name ?? "")
-                                                .data(
-                                                    "label",
-                                                    "Name"
-                                                )
-                                                .columnWidth(percent: 50)
-                                            Td(variable.value)
-                                                .data(
-                                                    "label",
-                                                    "Value"
-                                                )
-                                                .columnWidth(percent: 50)
-                                            ListTableRowActions(
-                                                state: .init(
+                                            if canRemove { NewAdminListSelectAllCheckbox().html() }
+                                            Th("Name").columnWidth(percent: 50)
+                                            Th("Value").columnWidth(percent: 50)
+                                            Th("Actions")
+                                        }
+                                    }
+                                    Tbody {
+                                        for variable in state.variables {
+                                            Tr {
+                                                if canRemove {
+                                                    NewAdminListRowCheckbox(id: variable.id).html()
+                                                }
+                                                Td(variable.name ?? "")
+                                                    .data("label", "Name")
+                                                    .columnWidth(percent: 50)
+                                                Td(variable.value)
+                                                    .data("label", "Value")
+                                                    .columnWidth(percent: 50)
+                                                NewAdminListRowActions(
                                                     label: "Actions",
                                                     actions: [
                                                         .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/system/variables/\(variable.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                "system:variables:read"
+                                                            "Details",
+                                                            href: "/admin/system/variables/\(variable.id)/",
+                                                            style: .ghost(.primary),
+                                                            permission: "system:variables:read"
                                                         ),
                                                         .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/system/variables/\(variable.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                "system:variables:update"
+                                                            "Edit",
+                                                            href: "/admin/system/variables/\(variable.id)/edit/",
+                                                            style: .ghost(.primary),
+                                                            permission: "system:variables:update"
                                                         ),
                                                         .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/system/variables/\(variable.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                "system:variables:delete"
-                                                        ),
+                                                            "Remove",
+                                                            href: "/admin/system/variables/\(variable.id)/remove/",
+                                                            style: .destructive,
+                                                            permission: "system:variables:delete"
+                                                        )
                                                     ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            ).html()
+                                                    permissions: state.permissions
+                                                ).html()
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
+                                .class("cms-table", "action-table")
+                                .if(canRemove) { $0.class("select-table") }
+                            ).html()
                         ).html()
-                    ).html()
-                    ListTablePagination(
-                        state: .init(
-                            path: "/admin/system/variables/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
-                        )
+                    },
+                    toolbar: {
+                        if state.canAdd {
+                            NewAdminListToolbar {
+                                NewAdminButton(
+                                    "Add variable",
+                                    href: "/admin/system/variables/add/"
+                                ).html()
+                            }.html()
+                        }
+                    },
+                    pagination: {
+                        NewAdminListPagination(
+                            state: .init(
+                                path: "/admin/system/variables/",
+                                page: state.page,
+                                pageSize: state.pageSize,
+                                total: state.total,
+                                search: state.search
+                            )
+                        ).html()
+                    }
                     ).html()
                 }
             }

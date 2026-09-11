@@ -34,6 +34,8 @@ public struct NewAdminHead: Leaf {
             
             Title(title)
 
+            Link(rel: .stylesheet).href("/admin/style.css")
+
             if !stylesheet.isEmpty {
                 Style(stylesheet)
             }

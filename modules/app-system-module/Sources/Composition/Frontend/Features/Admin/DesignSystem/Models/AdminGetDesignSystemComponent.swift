@@ -8,6 +8,18 @@ import WebComponents
 struct AdminGetDesignSystemComponent: Branch {
 
     let breadcrumb: NewAdminBreadcrumb
+    let primaryLink = NewAdminButton("Primary", href: "#primary", style: .primary)
+    let secondaryLink = NewAdminButton("Secondary", href: "#secondary", style: .secondary)
+    let ghostPrimaryLink = NewAdminButton("Primary ghost", href: "#ghost-primary", style: .ghost(.primary))
+    let ghostSecondaryLink = NewAdminButton("Secondary ghost", href: "#ghost-secondary", style: .ghost(.secondary))
+    let destructiveLink = NewAdminButton("Destructive", href: "#destructive", style: .destructive)
+    let disabledLink = NewAdminButton("Disabled", style: .disabled)
+    let primaryRowLink = NewAdminRowButton("Primary", href: "#primary-action", style: .primary)
+    let secondaryRowLink = NewAdminRowButton("Secondary", href: "#secondary-action", style: .secondary)
+    let ghostPrimaryRowLink = NewAdminRowButton("Primary ghost", href: "#ghost-primary-action", style: .ghost(.primary))
+    let ghostSecondaryRowLink = NewAdminRowButton("Secondary ghost", href: "#ghost-secondary-action", style: .ghost(.secondary))
+    let destructiveRowLink = NewAdminRowButton("Destructive", href: "#destructive-action", style: .destructive)
+    let disabledRowLink = NewAdminRowButton("Disabled", style: .disabled)
 
     init() {
         self.breadcrumb = .init(
@@ -23,6 +35,18 @@ struct AdminGetDesignSystemComponent: Branch {
 
     var children: [any Component] {
         breadcrumb
+        primaryLink
+        secondaryLink
+        ghostPrimaryLink
+        ghostSecondaryLink
+        destructiveLink
+        disabledLink
+        primaryRowLink
+        secondaryRowLink
+        ghostPrimaryRowLink
+        ghostSecondaryRowLink
+        destructiveRowLink
+        disabledRowLink
     }
 
     func rules() -> [any Rule] {
@@ -59,78 +83,7 @@ struct AdminGetDesignSystemComponent: Branch {
                 FlexWrap(.wrap)
                 Gap(12.px)
             }
-            Custom(".button-row .feather-button") {
-                Display(.inlineFlex)
-                AlignItems(.center)
-                JustifyContent(.center)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Primary.border))
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Primary.text))
-                FontWeight(.number(700))
-                BorderRadius(999.px)
-                Padding(vertical: 10.px, horizontal: 16.px)
-                Cursor(.pointer)
-                TextDecoration(.none)
-                UnsafeRawProperty(
-                    name: "transition",
-                    value: "background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease"
-                )
-            }
-            Custom(".button-row .feather-button--primary") {
-                Background(.variable(TokenKey.Colors.Accents.Primary.tint))
-                BorderColor(.variable(TokenKey.Colors.Accents.Primary.border))
-                Color(.variable(TokenKey.Colors.Accents.Primary.text))
-            }
-            Custom(".button-row .feather-button--primary:hover") {
-                Background(.variable(TokenKey.Colors.Accents.Primary.hover))
-            }
-            Custom(".button-row .feather-button--secondary") {
-                Background(.variable(TokenKey.Colors.Accents.Secondary.tint))
-                BorderColor(.variable(TokenKey.Colors.Accents.Secondary.border))
-                Color(.variable(TokenKey.Colors.Accents.Secondary.text))
-            }
-            Custom(".button-row .feather-button--secondary:hover") {
-                Background(.variable(TokenKey.Colors.Accents.Secondary.hover))
-            }
-            Custom(".button-row .feather-button--destructive") {
-                Background(.variable(TokenKey.Colors.Buttons.Destructive.tint))
-                BorderColor(.variable(TokenKey.Colors.Buttons.Destructive.border))
-                Color(.variable(TokenKey.Colors.Buttons.Destructive.text))
-            }
-            Custom(".button-row .feather-button--destructive:hover") {
-                Background(.variable(TokenKey.Colors.Buttons.Destructive.hover))
-            }
-            Custom(".button-row .feather-button--primary-ghost") {
-                Background(.variable(TokenKey.Colors.Buttons.Ghost.Primary.tint))
-                BorderColor(.variable(TokenKey.Colors.Buttons.Ghost.Primary.border))
-                Color(.variable(TokenKey.Colors.Buttons.Ghost.Primary.text))
-            }
-            Custom(".button-row .feather-button--primary-ghost:hover") {
-                Background(.variable(TokenKey.Colors.Buttons.Ghost.Primary.hover))
-            }
-            Custom(".button-row .feather-button--secondary-ghost") {
-                Background(.variable(TokenKey.Colors.Buttons.Ghost.Secondary.tint))
-                BorderColor(.variable(TokenKey.Colors.Buttons.Ghost.Secondary.border))
-                Color(.variable(TokenKey.Colors.Buttons.Ghost.Secondary.text))
-            }
-            Custom(".button-row .feather-button--secondary-ghost:hover") {
-                Background(.variable(TokenKey.Colors.Buttons.Ghost.Secondary.hover))
-            }
-            Custom(".button-row .feather-button--disabled") {
-                Background(.variable(TokenKey.Colors.Buttons.Disabled.tint))
-                BorderColor(.variable(TokenKey.Colors.Buttons.Disabled.border))
-                Color(.variable(TokenKey.Colors.Buttons.Disabled.text))
-                Cursor(.notAllowed)
-            }
-            Custom(".button-row .feather-button--disabled:hover") {
-                Background(.variable(TokenKey.Colors.Buttons.Disabled.hover))
-            }
-            Custom(".button-row .feather-button--action") {
-                BorderRadius(6.px)
-                Padding(vertical: 7.px, horizontal: 10.px)
-                FontSize(0.875.rem)
-                FontWeight(.normal)
-            }
+
         }
     }
 
@@ -213,14 +166,14 @@ struct AdminGetDesignSystemComponent: Branch {
                 Div {
                     H3("Buttons")
                     Div {
-                        PrimaryButton("Primary", href: "#primary")
-                        SecondaryButton("Secondary", href: "#secondary")
-                        PrimaryGhostButton("Primary ghost", href: "#primary-ghost")
-                        SecondaryGhostButton("Secondary ghost", href: "#secondary-ghost")
-                        DestructiveButton("Destructive", href: "#destructive")
-                        DisabledButton("Disabled")
+                        primaryLink.html()
+                        secondaryLink.html()
+                        ghostPrimaryLink.html()
+                        ghostSecondaryLink.html()
+                        destructiveLink.html()
+                        disabledLink.html()
                     }
-                    .class("design-system-component-row", "button-row")
+                    .class("design-system-component-row")
                     A("Sample link")
                         .href("#sample-link")
                         .class("design-system-sample-link")
@@ -228,16 +181,16 @@ struct AdminGetDesignSystemComponent: Branch {
                 .class("design-system-component-group")
 
                 Div {
-                    H3("Action buttons")
+                    H3("Row buttons")
                     Div {
-                        PrimaryActionButton("Primary", href: "#primary-action")
-                        SecondaryActionButton("Secondary", href: "#secondary-action")
-                        PrimaryGhostActionButton("Primary ghost", href: "#primary-ghost-action")
-                        SecondaryGhostActionButton("Secondary ghost", href: "#secondary-ghost-action")
-                        DestructiveActionButton("Destructive", href: "#destructive-action")
-                        DisabledActionButton("Disabled")
+                        primaryRowLink.html()
+                        secondaryRowLink.html()
+                        ghostPrimaryRowLink.html()
+                        ghostSecondaryRowLink.html()
+                        destructiveRowLink.html()
+                        disabledRowLink.html()
                     }
-                    .class("design-system-component-row", "button-row")
+                    .class("design-system-component-row")
                 }
                 .class("design-system-component-group")
             }

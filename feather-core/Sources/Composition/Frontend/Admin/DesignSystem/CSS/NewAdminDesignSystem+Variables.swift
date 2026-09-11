@@ -2,23 +2,17 @@
 //  File.swift
 //  feather-core
 //
-//  Created by Tibor Bödecs on 2026. 09. 04..
+//  Created by Tibor Bödecs on 2026. 09. 10..
 //
 
-import HTML
 import CSS
-import SGML
-import WebComponents
 import WebBuilders
 
+extension NewAdminDesignSystem {
 
-struct HTMLDesignSystem: Component {
-
-    func scripts() -> [String] {
-        #"console.log('👋 Welcome to Feather CMS!')"#
-    }
-
-    func rules() -> [any Rule] {
+    @Builder<CSS.Rule>
+    func variables(
+    ) -> [any Rule] {
         Media {
             Root {
                 Variable(TokenKey.Colors.Link.default, "#8647b2")

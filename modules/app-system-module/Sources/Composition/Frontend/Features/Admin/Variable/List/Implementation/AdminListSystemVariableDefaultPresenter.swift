@@ -11,6 +11,8 @@ struct AdminListSystemVariableDefaultPresenter:
     AdminListSystemVariablePresenter
 {
     let request: Request
+    let context: DefaultRequestContext
+    let events: any EventPublisher
     let renderEngine: any RenderingEngine
 
     func renderListPage(
@@ -21,7 +23,7 @@ struct AdminListSystemVariableDefaultPresenter:
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let canAccess = permissions.contains(
             SystemPermissions.Variables.list.rawValue
         )
@@ -44,15 +46,11 @@ struct AdminListSystemVariableDefaultPresenter:
                 )
             )
         }
-        return renderEngine.renderAdminPage(
+        let menuGroups = try await context.adminMenuGroups(
             request: request,
-            title: "Manage system variables",
-            description: "Management system variable list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
+            events: events
+        )
+        let layout = NewAdminBaseLayout(
             content: SystemVariableTable(
                 state: .init(
                     isAdded: isAdded,
@@ -71,10 +69,16 @@ struct AdminListSystemVariableDefaultPresenter:
                     deniedInfo: "Forbidden",
                     deniedMessage:
                         "Your account cannot access system variables.",
-                    breadcrumb: systemVariableBreadcrumbState()
+                    breadcrumb: systemVariableBreadcrumb()
                 )
-            )
+            ),
+            menuGroups: menuGroups
         )
+        let component = NewAdminHTML(
+            title: "Manage system variables",
+            body: .init(content: layout)
+        )
+        return .init(component.html())
     }
 
     func renderRemoveConfirmation(
@@ -118,6 +122,16 @@ struct AdminListSystemVariableDefaultPresenter:
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "System", link: "/admin/system/"),
                 .init(label: "Variables", link: "/admin/system/variables/"),
+            ]
+        )
+    }
+
+    private func systemVariableBreadcrumb() -> NewAdminBreadcrumb {
+        .init(
+            links: [
+                .init(label: "Admin", link: "/admin/"),
+                .init(label: "System", link: "/admin/system/"),
+                .init(label: "Variables", link: "/admin/system/variables/")
             ]
         )
     }

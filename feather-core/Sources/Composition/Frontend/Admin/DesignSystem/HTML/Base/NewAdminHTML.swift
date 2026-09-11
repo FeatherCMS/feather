@@ -16,7 +16,7 @@ public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
     let title: String
     let language: String
     let body: NewAdminBody<T>
-    private let designSystem: HTMLDesignSystem
+
     private let cssRenderer: CSSRenderer
     private let styleCollector: ComponentStyleCollector
     private let scriptCollector: ComponentScriptCollector
@@ -29,7 +29,7 @@ public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
         self.title = title
         self.language = language
         self.body = body
-        self.designSystem = .init()
+
         #if DEBUG
         self.cssRenderer = .init(minify: false)
         #else
@@ -40,42 +40,7 @@ public struct NewAdminHTML<T: Renderable>: Branch where T.HTML: FlowContent {
     }
 
     public var children: [any Component] {
-        designSystem
         body
-    }
-
-    public func rules() -> [any Rule] {
-        Media {
-            Universal {
-                Margin(0)
-                Padding(0)
-            }
-            
-            Custom("ul.inline") {
-                Display(.flex)
-                FlexWrap(.wrap)
-                Gap(16.px)
-            }
-            Custom("ul.plain li, ul.inline li") {
-                ListStyleType(.none)
-            }
-
-            Custom("a:link") {
-                Color(.variable(TokenKey.Colors.Link.default))
-            }
-            Custom("a:visited") {
-                Color(.variable(TokenKey.Colors.Link.visited))
-            }
-            Custom("a:hover") {
-                Color(.variable(TokenKey.Colors.Link.hover))
-            }
-            Custom("a:active") {
-                Color(.variable(TokenKey.Colors.Link.active))
-            }
-            Class("panel") {
-                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
-            }
-        }
     }
 
     public func html() -> Html {
