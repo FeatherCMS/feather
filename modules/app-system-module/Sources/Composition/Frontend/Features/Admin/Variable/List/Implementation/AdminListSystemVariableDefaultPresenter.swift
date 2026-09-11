@@ -14,7 +14,6 @@ struct AdminListSystemVariableDefaultPresenter:
 
     func renderListPage(
         model: AdminListModel<Components.Schemas.SystemVariableListItemSchema>,
-        notification: AdminNotification?,
         permissions: Set<String>,
         search: String?
     ) async throws -> HTMLResponse {
@@ -23,6 +22,7 @@ struct AdminListSystemVariableDefaultPresenter:
             request: request,
             events: events
         )
+        let notification = AdminNotificationFlash.notification(from: request)
         let layout = NewAdminBaseLayout(
             content: SystemVariableTable(
                 state: .init(
@@ -45,10 +45,10 @@ struct AdminListSystemVariableDefaultPresenter:
 
     func renderErrorPage(
         title: String,
-        message: String,
-        notification: AdminNotification?
+        message: String
     ) async throws -> HTMLResponse {
         let menuGroups = try await context.adminMenuGroups(request: request, events: events)
+        let notification = AdminNotificationFlash.notification(from: request)
         var renderContext = RenderContext()
         let layout = NewAdminBaseLayout(
             content: NewAdminStatusView(
