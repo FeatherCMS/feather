@@ -28,7 +28,7 @@ struct AdminEditSystemVariableDefaultController:
             )
         }
         let id = try context.requiredID()
-        let permissions = permissionKeys(context.currentUserPermissions)
+        let permissions = context.currentUserAdminListActions.granted
         do {
             let variable = try await runtime.interactor.load(id: id)
             return try await runtime.presenter.renderEditPage(
@@ -67,7 +67,7 @@ struct AdminEditSystemVariableDefaultController:
                 .response(from: request, context: context)
         }
         let id = try context.requiredID()
-        let permissions = permissionKeys(context.currentUserPermissions)
+        let permissions = context.currentUserAdminListActions.granted
         var lastPayload: SystemVariableEditFormInput?
 
         do {
@@ -142,9 +142,4 @@ struct AdminEditSystemVariableDefaultController:
         input.map { SystemVariableEditForm.State.from(input: $0) } ?? .empty()
     }
 
-    private func permissionKeys(_ permissions: Set<String>) -> Set<
-        PermissionKey
-    > {
-        Set(permissions.map(PermissionKey.init))
-    }
 }
