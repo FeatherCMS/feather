@@ -78,7 +78,7 @@ struct BlogPostForm: Component {
         return links
     }
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -116,21 +116,27 @@ struct BlogPostForm: Component {
                         isRequired: true
                     )
                 )
-                textarea(state.excerpt, rows: 4, context: &context)
-                textarea(state.content, context: &context)
-                multiselect(
-                    key: "authorIds[]",
-                    label: "Authors",
-                    placeholder: "Search and select authors...",
-                    options: state.authorOptions,
-                    error: state.authorIdsError
+                context.render(
+                    textarea(state.excerpt, rows: 4, context: &context)
                 )
-                multiselect(
-                    key: "tagIds[]",
-                    label: "Tags",
-                    placeholder: "Search and select tags...",
-                    options: state.tagOptions,
-                    error: state.tagIdsError
+                context.render(textarea(state.content, context: &context))
+                context.render(
+                    multiselect(
+                        key: "authorIds[]",
+                        label: "Authors",
+                        placeholder: "Search and select authors...",
+                        options: state.authorOptions,
+                        error: state.authorIdsError
+                    )
+                )
+                context.render(
+                    multiselect(
+                        key: "tagIds[]",
+                        label: "Tags",
+                        placeholder: "Search and select tags...",
+                        options: state.tagOptions,
+                        error: state.tagIdsError
+                    )
                 )
             }
             Section {
@@ -170,15 +176,13 @@ struct BlogPostForm: Component {
         context: inout RenderContext
     ) -> FormTextAreaField {
 
-        context.render(
-            FormTextAreaField(
-                name: field.key,
-                label: field.label,
-                value: field.value,
-                error: field.error,
-                rows: rows,
-                isRequired: required
-            )
+        FormTextAreaField(
+            name: field.key,
+            label: field.label,
+            value: field.value,
+            error: field.error,
+            rows: rows,
+            isRequired: required
         )
     }
 
@@ -188,7 +192,7 @@ struct BlogPostForm: Component {
         placeholder: String,
         options: [OptionState],
         error: String?
-    ) -> some FlowContent {
+    ) -> AdminAutocompleteField {
         AdminAutocompleteField(
             state: .init(
                 key: key,

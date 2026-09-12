@@ -144,7 +144,7 @@ extension AuthAccessControlMatrix {
                                 "acl-select-row-\(groupToken)-\(roleToken)"
                             let allSelected = group.permissions.allSatisfy {
                                 state.selectedPairs.contains(
-                                    "\(role.id)|\($0.id)"
+                                    "\(role.id)|\($0.key)"
                                 )
                             }
 
@@ -180,7 +180,7 @@ extension AuthAccessControlMatrix {
                             Td(permissionRowTitle(permission.name ?? ""))
                                 .class("role-permission-matrix-permission")
                             for role in state.roles {
-                                let pair = "\(role.id)|\(permission.id)"
+                                let pair = "\(role.id)|\(permission.key)"
                                 let roleToken = cssToken(role.id)
                                 let rowClass =
                                     "acl-select-row-\(groupToken)-\(roleToken)"

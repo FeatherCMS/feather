@@ -32,15 +32,18 @@ public struct EditPermission: UseCase {
 
     public struct Input: DTO {
         public let id: String
+        public let key: String?
         public let name: String?
         public let notes: String?
 
         public init(
             id: String,
+            key: String? = nil,
             name: String?,
             notes: String?
         ) {
             self.id = id
+            self.key = key
             self.name = name
             self.notes = notes
         }
@@ -69,6 +72,7 @@ public struct EditPermission: UseCase {
                 }
 
                 try model.update(
+                    key: input.key,
                     name: name,
                     notes: notes
                 )

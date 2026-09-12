@@ -15,7 +15,7 @@ extension RolePermissionTable.Row {
     var asQueryListItem: RolePermissionList.Item {
         .init(
             roleId: roleId,
-            permissionId: permissionId,
+            permissionId: permissionKey ?? permissionId,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -24,7 +24,7 @@ extension RolePermissionTable.Row {
     var asDetail: RolePermissionDetail {
         .init(
             roleId: roleId,
-            permissionId: permissionId,
+            permissionId: permissionKey ?? permissionId,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -37,6 +37,22 @@ public struct RolePermissionDatabaseQueries: RolePermissionQueries {
 
     public init(context: DatabaseQueryContext) {
         self.context = context
+    }
+
+    private func permissionID(forKey key: String) async throws -> String {
+        try await context.connection.run(
+            query: #"""
+                SELECT id
+                FROM system_permission
+                WHERE key=\#(key)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                throw RepositoryError.notFound
+            }
+            return try row.decode(column: "id", as: String.self)
+        }
     }
 
     private func pageSizeOffset(
@@ -100,13 +116,14 @@ public struct RolePermissionDatabaseQueries: RolePermissionQueries {
         permissionId: String
     ) async throws -> RolePermissionDetail {
         let table = RolePermissionTable(connection: context.connection)
+        let databasePermissionID = try await permissionID(forKey: permissionId)
         guard
             let row = try await table.find(
                 roleId: roleId,
-                permissionId: permissionId
+                permissionId: databasePermissionID
             )
         else {
-            fatalError()
+            throw RepositoryError.notFound
         }
         return row.asDetail
     }

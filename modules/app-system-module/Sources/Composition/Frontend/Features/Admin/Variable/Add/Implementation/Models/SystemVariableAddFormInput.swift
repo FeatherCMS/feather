@@ -2,14 +2,14 @@ import Foundation
 
 public struct SystemVariableAddFormInput: Codable, Sendable, Equatable, Hashable
 {
-    let id: String
+    let key: String
     let value: String
     let name: String?
     let notes: String?
     let nonce: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, value, name, notes
+        case key, value, name, notes
         case nonce = "_nonce"
     }
 
@@ -18,8 +18,8 @@ public struct SystemVariableAddFormInput: Codable, Sendable, Equatable, Hashable
         return value.isEmpty ? nil : value
     }
 
-    var normalizedID: String {
-        id.trimmingCharacters(in: .whitespacesAndNewlines)
+    var normalizedKey: String {
+        key.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     var normalizedValue: String {

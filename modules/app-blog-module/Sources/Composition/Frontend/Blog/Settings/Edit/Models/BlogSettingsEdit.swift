@@ -40,7 +40,7 @@ struct BlogSettingsEdit: Component {
                 P("Settings edited successfully.").class("success")
             }
 
-            BlogSettingsForm(state: state.form)
+            context.render(BlogSettingsForm(state: state.form))
         }
         .class("cms-section")
     }

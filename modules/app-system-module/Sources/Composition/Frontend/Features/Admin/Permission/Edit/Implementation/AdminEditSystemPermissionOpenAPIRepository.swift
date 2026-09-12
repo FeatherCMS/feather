@@ -23,6 +23,7 @@ struct AdminEditSystemPermissionOpenAPIRepository:
                 let permission = try okResponse.body.json
                 return .init(
                     id: permission.id,
+                    key: permission.key,
                     name: permission.name,
                     notes: permission.notes
                 )
@@ -59,7 +60,7 @@ struct AdminEditSystemPermissionOpenAPIRepository:
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
-                        id: id,
+                        key: input.normalizedKey,
                         name: input.normalizedName,
                         notes: input.normalizedNotes
                     )

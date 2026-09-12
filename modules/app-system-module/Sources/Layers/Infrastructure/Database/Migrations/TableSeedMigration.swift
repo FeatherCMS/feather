@@ -44,7 +44,7 @@ public struct TableSeedMigration: DatabaseMigration {
         for permission in permissions {
             _ = try await permissionRepository.insert(
                 try Permission.create(
-                    id: permission.id,
+                    key: permission.key,
                     name: permission.name,
                     notes: permission.notes
                 )
@@ -64,7 +64,7 @@ public struct TableSeedMigration: DatabaseMigration {
         for variable in variables {
             _ = try await variableRepository.insert(
                 try Variable.create(
-                    id: variable.id,
+                    key: variable.key,
                     value: variable.value,
                     name: variable.name,
                     notes: variable.notes

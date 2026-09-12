@@ -69,12 +69,14 @@ struct BlogTagDetails: Component {
                 if state.permissions.contains(
                     BlogPermissions.Tags.update.rawValue
                 ) {
-                    AdminStatusActionForm(
-                        action: "/admin/blog/tags/\(state.rule.id)/status/",
-                        returnTo: "/admin/blog/tags/\(state.rule.id)/",
-                        status: isPublished ? "draft" : "published",
-                        label: isPublished ? "Unpublish" : "Publish",
-                        classes: ["secondary"]
+                    context.render(
+                        AdminStatusActionForm(
+                            action: "/admin/blog/tags/\(state.rule.id)/status/",
+                            returnTo: "/admin/blog/tags/\(state.rule.id)/",
+                            status: isPublished ? "draft" : "published",
+                            label: isPublished ? "Unpublish" : "Publish",
+                            classes: ["secondary"]
+                        )
                     )
                     context.render(
                         AdminNavigationButton(

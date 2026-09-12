@@ -61,14 +61,21 @@ struct AdminRemoveSystemVariableDefaultController:
             throw HTTPError(.forbidden)
         }
         let (interactor, presenter) = buildRuntime(request, context)
-        var errorPage = (page: request.queryPage(), search: request.querySearch())
+        var errorPage = (
+            page: request.queryPage(), search: request.querySearch()
+        )
         do {
             let payload = try await request.decode(
                 as: ListRemoveFormInput.self,
                 context: context
             )
             errorPage = (payload.normalizedPage, payload.normalizedSearch)
-            guard await AdminNonceStore.shared.consume(payload.nonce, sessionToken: context.sessionToken) else {
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
                 throw HTTPError(.forbidden)
             }
             if !payload.normalizedIds.isEmpty {
@@ -102,7 +109,13 @@ struct AdminRemoveSystemVariableDefaultController:
                 try await presenter.renderErrorPage(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    cancel: ListRemoveRedirect.location(path: SystemVariableRoutes.list.description, page: errorPage.page, search: errorPage.search, title: nil, message: nil)
+                    cancel: ListRemoveRedirect.location(
+                        path: SystemVariableRoutes.list.description,
+                        page: errorPage.page,
+                        search: errorPage.search,
+                        title: nil,
+                        message: nil
+                    )
                 )
                 .response(from: request, context: context)
         }
@@ -111,7 +124,13 @@ struct AdminRemoveSystemVariableDefaultController:
                 try await presenter.renderErrorPage(
                     info: "Unable to remove system variables.",
                     message: error.displayMessage,
-                    cancel: ListRemoveRedirect.location(path: SystemVariableRoutes.list.description, page: errorPage.page, search: errorPage.search, title: nil, message: nil)
+                    cancel: ListRemoveRedirect.location(
+                        path: SystemVariableRoutes.list.description,
+                        page: errorPage.page,
+                        search: errorPage.search,
+                        title: nil,
+                        message: nil
+                    )
                 )
                 .response(from: request, context: context)
         }

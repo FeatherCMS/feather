@@ -108,19 +108,21 @@ struct BlogAuthorDetails: Component {
                 if state.permissions.contains(
                     BlogPermissions.Authors.update.rawValue
                 ) {
-                    AdminStatusActionForm(
-                        action:
-                            "/admin/blog/authors/\(state.author.id)/status/",
-                        returnTo: "/admin/blog/authors/\(state.author.id)/",
-                        status: state.author.metadata.normalizedStatus
-                            == "published"
-                            ? "draft"
-                            : "published",
-                        label: state.author.metadata.normalizedStatus
-                            == "published"
-                            ? "Unpublish"
-                            : "Publish",
-                        classes: ["secondary"]
+                    context.render(
+                        AdminStatusActionForm(
+                            action:
+                                "/admin/blog/authors/\(state.author.id)/status/",
+                            returnTo: "/admin/blog/authors/\(state.author.id)/",
+                            status: state.author.metadata.normalizedStatus
+                                == "published"
+                                ? "draft"
+                                : "published",
+                            label: state.author.metadata.normalizedStatus
+                                == "published"
+                                ? "Unpublish"
+                                : "Publish",
+                            classes: ["secondary"]
+                        )
                     )
                     context.render(
                         AdminNavigationButton(

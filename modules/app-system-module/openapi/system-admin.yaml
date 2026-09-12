@@ -84,7 +84,7 @@ paths:
       - SystemPermissions
       operationId: systemPermissionGet
       parameters:
-      - $ref: '#/components/parameters/SystemPermissionIdParameter'
+      - $ref: '#/components/parameters/SystemPermissionIDParameter'
       responses:
         200:
           $ref: '#/components/responses/SystemPermissionDetailResponse'
@@ -101,7 +101,7 @@ paths:
       - SystemPermissions
       operationId: systemPermissionUpdate
       parameters:
-      - $ref: '#/components/parameters/SystemPermissionIdParameter'
+      - $ref: '#/components/parameters/SystemPermissionIDParameter'
       requestBody:
         $ref: '#/components/requestBodies/SystemPermissionUpdateRequestBody'
       responses:
@@ -120,7 +120,7 @@ paths:
       - SystemPermissions
       operationId: systemPermissionPatch
       parameters:
-      - $ref: '#/components/parameters/SystemPermissionIdParameter'
+      - $ref: '#/components/parameters/SystemPermissionIDParameter'
       requestBody:
         $ref: '#/components/requestBodies/SystemPermissionPatchRequestBody'
       responses:
@@ -205,7 +205,7 @@ paths:
       - SystemVariables
       operationId: systemVariableGet
       parameters:
-      - $ref: '#/components/parameters/SystemVariableIdParameter'
+      - $ref: '#/components/parameters/SystemVariableIDParameter'
       responses:
         200:
           $ref: '#/components/responses/SystemVariableDetailResponse'
@@ -222,7 +222,7 @@ paths:
       - SystemVariables
       operationId: systemVariableUpdate
       parameters:
-      - $ref: '#/components/parameters/SystemVariableIdParameter'
+      - $ref: '#/components/parameters/SystemVariableIDParameter'
       requestBody:
         $ref: '#/components/requestBodies/SystemVariableUpdateRequestBody'
       responses:
@@ -241,7 +241,7 @@ paths:
       - SystemVariables
       operationId: systemVariablePatch
       parameters:
-      - $ref: '#/components/parameters/SystemVariableIdParameter'
+      - $ref: '#/components/parameters/SystemVariableIDParameter'
       requestBody:
         $ref: '#/components/requestBodies/SystemVariablePatchRequestBody'
       responses:
@@ -292,7 +292,7 @@ components:
     SystemPermissionCreateSchema:
       type: object
       properties:
-        id:
+        key:
           type: string
           example: system.permission:read
         name:
@@ -300,7 +300,7 @@ components:
         notes:
           $ref: '#/components/schemas/SystemPermissionNotesField'
       required:
-      - id
+      - key
     SystemPermissionNameField:
       type: string
       example: system.permission:read
@@ -311,6 +311,8 @@ components:
       type: object
       properties:
         id:
+          $ref: '#/components/schemas/SystemPermissionIDField'
+        key:
           type: string
           example: system.permission:read
         name:
@@ -319,6 +321,10 @@ components:
           $ref: '#/components/schemas/SystemPermissionNotesField'
       required:
       - id
+      - key
+    SystemPermissionIDField:
+      type: string
+      example: V1StGXR8_Z5jdHi6B-myT
     DeleteRequestSchema:
       type: object
       properties:
@@ -386,14 +392,17 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/SystemPermissionIdField'
+          $ref: '#/components/schemas/SystemPermissionIDField'
+        key:
+          $ref: '#/components/schemas/SystemPermissionKeyField'
         name:
           $ref: '#/components/schemas/SystemPermissionNameField'
         notes:
           $ref: '#/components/schemas/SystemPermissionNotesField'
       required:
       - id
-    SystemPermissionIdField:
+      - key
+    SystemPermissionKeyField:
       type: string
       example: system.permission:read
     SystemPermissionListItemSearchQuerySchema:
@@ -409,10 +418,10 @@ components:
               field:
                 type: string
                 enum:
-                - id
+                - key
                 - name
                 - notes
-                example: id
+                example: key
               direction:
                 $ref: '#/components/schemas/SortDirection'
             required:
@@ -425,6 +434,11 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            ids:
+              type: array
+              items:
+                type: string
+                example: V1StGXR8_Z5jdHi6B-myT
       required:
       - page
       - filters
@@ -484,7 +498,7 @@ components:
     SystemVariableCreateSchema:
       type: object
       properties:
-        id:
+        key:
           type: string
           example: sys_variable_timezone
         value:
@@ -495,7 +509,7 @@ components:
         notes:
           $ref: '#/components/schemas/SystemVariableNotesField'
       required:
-      - id
+      - key
       - value
     SystemVariableNameField:
       type: string
@@ -507,6 +521,8 @@ components:
       type: object
       properties:
         id:
+          $ref: '#/components/schemas/SystemVariableIDField'
+        key:
           type: string
           example: sys_variable_timezone
         value:
@@ -518,7 +534,11 @@ components:
           $ref: '#/components/schemas/SystemVariableNotesField'
       required:
       - id
+      - key
       - value
+    SystemVariableIDField:
+      type: string
+      example: V1StGXR8_Z5jdHi6B-myT
     SystemVariableListSchema:
       type: array
       items:
@@ -527,7 +547,9 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/SystemVariableIdField'
+          $ref: '#/components/schemas/SystemVariableIDField'
+        key:
+          $ref: '#/components/schemas/SystemVariableKeyField'
         value:
           $ref: '#/components/schemas/SystemVariableValueField'
         name:
@@ -536,8 +558,9 @@ components:
           $ref: '#/components/schemas/SystemVariableNotesField'
       required:
       - id
+      - key
       - value
-    SystemVariableIdField:
+    SystemVariableKeyField:
       type: string
       example: sys_variable_timezone
     SystemVariableValueField:
@@ -556,11 +579,11 @@ components:
               field:
                 type: string
                 enum:
-                - id
+                - key
                 - name
                 - value
                 - notes
-                example: id
+                example: key
               direction:
                 $ref: '#/components/schemas/SortDirection'
             required:
@@ -573,6 +596,11 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            ids:
+              type: array
+              items:
+                type: string
+                example: V1StGXR8_Z5jdHi6B-myT
       required:
       - page
       - filters
@@ -692,19 +720,19 @@ components:
           schema:
             $ref: '#/components/schemas/SystemJobSchema'
   parameters:
-    SystemPermissionIdParameter:
+    SystemPermissionIDParameter:
       name: systemPermissionId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/SystemPermissionIdField'
+        $ref: '#/components/schemas/SystemPermissionIDField'
       description: SystemPermission id
-    SystemVariableIdParameter:
+    SystemVariableIDParameter:
       name: systemVariableId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/SystemVariableIdField'
+        $ref: '#/components/schemas/SystemVariableIDField'
       description: SystemVariable id
     SystemJobIdParameter:
       name: systemJobId

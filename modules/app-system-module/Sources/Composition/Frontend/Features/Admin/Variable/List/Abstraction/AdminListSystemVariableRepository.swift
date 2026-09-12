@@ -6,7 +6,8 @@ protocol AdminListSystemVariableRepository: Sendable {
 
     func listSystemVariables(
         page: Int,
-        search: String?
+        search: String?,
+        ids: [String]?
     ) async throws
         -> SystemAdminAPI.Components.Responses
         .SystemVariableListItemSearchSchemaSearchResponse

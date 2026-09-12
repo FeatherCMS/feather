@@ -25,11 +25,13 @@ struct BlogAuthorAdd: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("Add author")
-            BlogAuthorForm(
-                state: state.form,
-                action: "/admin/blog/authors/add/",
-                submitLabel: "Add author",
-                publishLabel: "Publish author"
+            context.render(
+                BlogAuthorForm(
+                    state: state.form,
+                    action: "/admin/blog/authors/add/",
+                    submitLabel: "Add author",
+                    publishLabel: "Publish author"
+                )
             )
         }
         .class("cms-section")

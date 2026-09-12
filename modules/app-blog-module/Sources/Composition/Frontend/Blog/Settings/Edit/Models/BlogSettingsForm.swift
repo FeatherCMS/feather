@@ -47,7 +47,7 @@ struct BlogSettingsForm: Component {
     var action: String = "/admin/blog/settings/"
     var submitLabel: String = "Save settings"
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")

@@ -17,7 +17,7 @@ struct SystemPermissionDetails: Component {
             context.render(AdminBreadcrumb(state: state.breadcrumb))
             H1("System permission details")
             context.render(
-                AdminDetailsField(label: "ID", value: state.permission.id)
+                AdminDetailsField(label: "Key", value: state.permission.key)
             )
             context.render(
                 AdminDetailsField(

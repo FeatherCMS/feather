@@ -585,7 +585,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                     systemPermissionId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "systemPermissionId",
-                        as: Components.Parameters.SystemPermissionIdParameter
+                        as: Components.Parameters.SystemPermissionIDParameter
                             .self
                     )
                 )
@@ -661,7 +661,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                     systemPermissionId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "systemPermissionId",
-                        as: Components.Parameters.SystemPermissionIdParameter
+                        as: Components.Parameters.SystemPermissionIDParameter
                             .self
                     )
                 )
@@ -763,7 +763,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                     systemPermissionId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "systemPermissionId",
-                        as: Components.Parameters.SystemPermissionIdParameter
+                        as: Components.Parameters.SystemPermissionIDParameter
                             .self
                     )
                 )
@@ -1187,7 +1187,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                     systemVariableId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "systemVariableId",
-                        as: Components.Parameters.SystemVariableIdParameter.self
+                        as: Components.Parameters.SystemVariableIDParameter.self
                     )
                 )
                 let headers: Operations.SystemVariableGet.Input.Headers = .init(
@@ -1261,7 +1261,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                     systemVariableId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "systemVariableId",
-                        as: Components.Parameters.SystemVariableIdParameter.self
+                        as: Components.Parameters.SystemVariableIDParameter.self
                     )
                 )
                 let headers: Operations.SystemVariablePatch.Input.Headers =
@@ -1362,7 +1362,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                     systemVariableId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "systemVariableId",
-                        as: Components.Parameters.SystemVariableIdParameter.self
+                        as: Components.Parameters.SystemVariableIDParameter.self
                     )
                 )
                 let headers: Operations.SystemVariableUpdate.Input.Headers =

@@ -16,7 +16,7 @@ struct AppBlogAuthorPage: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Main {
-            AppPublicStyleAnchor()
+            context.render(AppPublicStyleAnchor())
             Div {
                 Article {
                     Div {
@@ -35,7 +35,7 @@ struct AppBlogAuthorPage: Component {
                         .class("public-image")
                     }
 
-                    AppPublicTextBlock(text: state.content)
+                    context.render(AppPublicTextBlock(text: state.content))
 
                     if !state.links.isEmpty {
                         Section {

@@ -6,7 +6,7 @@ import WebComponents
 
 struct SystemVariableAddForm: Component {
     struct State: Sendable {
-        var id: NewAdminFormFieldInput.State
+        var key: NewAdminFormFieldInput.State
         var name: NewAdminFormFieldInput.State
         var value: NewAdminFormFieldTextArea.State
         var notes: NewAdminFormFieldTextArea.State
@@ -14,7 +14,7 @@ struct SystemVariableAddForm: Component {
         var success: String?
 
         mutating func apply(errors: [String: String]) {
-            id.error = errors[id.name]
+            key.error = errors[key.name]
             name.error = errors[name.name]
             value.error = errors[value.name]
             notes.error = errors[notes.name]
@@ -24,7 +24,12 @@ struct SystemVariableAddForm: Component {
 
         static func empty() -> Self {
             .init(
-                id: .init(name: "id", label: "ID", value: "", isRequired: true),
+                key: .init(
+                    name: "key",
+                    label: "Key",
+                    value: "",
+                    isRequired: true
+                ),
                 name: .init(
                     name: "name",
                     label: "Name",
@@ -51,10 +56,10 @@ struct SystemVariableAddForm: Component {
 
         static func from(input: SystemVariableAddFormInput) -> Self {
             .init(
-                id: .init(
-                    name: "id",
-                    label: "ID",
-                    value: input.normalizedID,
+                key: .init(
+                    name: "key",
+                    label: "Key",
+                    value: input.normalizedKey,
                     isRequired: true
                 ),
                 name: .init(
@@ -100,7 +105,7 @@ struct SystemVariableAddForm: Component {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
-            context.render(NewAdminFormFieldInput(state: state.id))
+            context.render(NewAdminFormFieldInput(state: state.key))
             context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldTextArea(state: state.value))
             context.render(NewAdminFormFieldTextArea(state: state.notes))

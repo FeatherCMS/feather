@@ -19,7 +19,7 @@ struct AdminAddSystemPermissionOpenAPIRepository:
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
-                            id: UUID().uuidString,
+                            key: entity.key,
                             name: entity.name,
                             notes: entity.notes
                         )

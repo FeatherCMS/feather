@@ -12,10 +12,10 @@ import FeatherInfrastructure
 import struct Foundation.Date
 
 extension RolePermissionTable.Row {
-    var asDomain: RolePermission {
+    func asDomain(permissionKey: String? = nil) -> RolePermission {
         .init(
             roleId: roleId,
-            permissionId: permissionId,
+            permissionId: permissionKey ?? self.permissionKey ?? permissionId,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -30,31 +30,52 @@ public struct RolePermissionDatabaseRepository: RolePermissionRepository {
         self.context = context
     }
 
+    private func permissionID(forKey key: String) async throws -> String {
+        try await context.connection.run(
+            query: #"""
+                SELECT id
+                FROM system_permission
+                WHERE key=\#(key)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                throw RepositoryError.notFound
+            }
+            return try row.decode(column: "id", as: String.self)
+        }
+    }
+
     public func findBy(
         roleId: String,
         permissionId: String
     ) async throws -> RolePermission? {
         let table = RolePermissionTable(connection: context.connection)
+        let databasePermissionID = try await permissionID(forKey: permissionId)
         return try await table.find(
             roleId: roleId,
-            permissionId: permissionId
+            permissionId: databasePermissionID
         )?
-        .asDomain
+        .asDomain(permissionKey: permissionId)
     }
 
     public func insert(
         _ model: RolePermission.New
     ) async throws -> RolePermission {
         let table = RolePermissionTable(connection: context.connection)
+        let databasePermissionID = try await permissionID(
+            forKey: model.permissionId
+        )
         let saved = try await table.save(
             row: .init(
                 roleId: model.roleId,
-                permissionId: model.permissionId,
+                permissionId: databasePermissionID,
+                permissionKey: model.permissionId,
                 createdAt: .init(timeIntervalSince1970: 0),
                 updatedAt: .init(timeIntervalSince1970: 0)
             )
         )
-        return saved.asDomain
+        return saved.asDomain(permissionKey: model.permissionId)
     }
 
     public func update(
@@ -63,12 +84,19 @@ public struct RolePermissionDatabaseRepository: RolePermissionRepository {
         _ model: RolePermission.New
     ) async throws -> RolePermission {
         let table = RolePermissionTable(connection: context.connection)
+        let oldDatabasePermissionID = try await permissionID(
+            forKey: permissionId
+        )
+        let newDatabasePermissionID = try await permissionID(
+            forKey: model.permissionId
+        )
         let updated = try await table.update(
             roleId: roleId,
-            permissionId: permissionId,
+            permissionId: oldDatabasePermissionID,
             row: .init(
                 roleId: model.roleId,
-                permissionId: model.permissionId,
+                permissionId: newDatabasePermissionID,
+                permissionKey: model.permissionId,
                 createdAt: .init(timeIntervalSince1970: 0),
                 updatedAt: .init(timeIntervalSince1970: 0)
             )
@@ -76,13 +104,27 @@ public struct RolePermissionDatabaseRepository: RolePermissionRepository {
         guard let updated else {
             throw RepositoryError.notFound
         }
-        return updated.asDomain
+        return updated.asDomain(permissionKey: model.permissionId)
     }
 
     public func delete(
         ids: [String]
     ) async throws -> [String] {
         let table = RolePermissionTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        var databaseIDs: [String] = []
+        var databaseToExternal: [String: String] = [:]
+        for value in ids {
+            let parts = value.split(separator: ":", maxSplits: 1)
+                .map(String.init)
+            guard parts.count == 2 else { continue }
+            let databasePermissionID = try await permissionID(forKey: parts[1])
+            let databaseValue = "\(parts[0]):\(databasePermissionID)"
+            databaseIDs.append(databaseValue)
+            databaseToExternal[databaseValue] = value
+        }
+        return try await table.delete(ids: databaseIDs)
+            .compactMap {
+                databaseToExternal[$0]
+            }
     }
 }

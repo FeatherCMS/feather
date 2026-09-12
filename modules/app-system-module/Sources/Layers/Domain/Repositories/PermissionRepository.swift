@@ -17,6 +17,10 @@ public protocol PermissionRepository: Repository {
     ) async throws -> Permission
 
     func find(
+        key: String
+    ) async throws -> Permission?
+
+    func find(
         id: String
     ) async throws -> Permission?
 

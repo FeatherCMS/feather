@@ -16,27 +16,27 @@ struct AdminGetSystemOverviewComponent: Component {
         Destination(
             title: "Variables",
             description: "Manage application configuration values.",
-            href: "/admin/system/variables/"
-            , icon: "sliders"
+            href: "/admin/system/variables/",
+            icon: "sliders"
         ),
         Destination(
             title: "Permissions",
             description: "Manage system access permissions.",
-            href: "/admin/system/permissions/"
-            , icon: "lock"
+            href: "/admin/system/permissions/",
+            icon: "lock"
         ),
         Destination(
             title: "Worker jobs",
             description: "Inspect queued and completed background jobs.",
-            href: "/admin/system/jobs/"
-            , icon: "activity"
+            href: "/admin/system/jobs/",
+            icon: "activity"
         ),
         Destination(
             title: "Design system",
             description:
                 "Explore the admin interface materials and components.",
-            href: "/admin/system/design-system/"
-            , icon: "layers"
+            href: "/admin/system/design-system/",
+            icon: "layers"
         ),
     ]
 
@@ -82,7 +82,7 @@ struct AdminGetSystemOverviewComponent: Component {
             context.render(
                 NewAdminBreadcrumb(
                     state: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
+                        .init(label: "Admin", link: "/admin/")
                     ])
                 )
             )
@@ -98,7 +98,8 @@ struct AdminGetSystemOverviewComponent: Component {
             Div {
                 for destination in destinations {
                     Div {
-                        if let icon = FeatherIcons.get(named: destination.icon) {
+                        if let icon = FeatherIcons.get(named: destination.icon)
+                        {
                             icon
                         }
                         H2(destination.title)

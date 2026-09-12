@@ -121,17 +121,21 @@ struct AdminMetadataFields: Component {
                         isRequired: true
                     )
                 )
-                FormDateTimeField(
-                    name: state.publicationDate.key,
-                    label: state.publicationDate.label,
-                    value: state.publicationDate.value,
-                    error: state.publicationDate.error
+                context.render(
+                    FormDateTimeField(
+                        name: state.publicationDate.key,
+                        label: state.publicationDate.label,
+                        value: state.publicationDate.value,
+                        error: state.publicationDate.error
+                    )
                 )
-                FormDateTimeField(
-                    name: state.expirationDate.key,
-                    label: state.expirationDate.label,
-                    value: state.expirationDate.value,
-                    error: state.expirationDate.error
+                context.render(
+                    FormDateTimeField(
+                        name: state.expirationDate.key,
+                        label: state.expirationDate.label,
+                        value: state.expirationDate.value,
+                        error: state.expirationDate.error
+                    )
                 )
             }
             .class("admin-metadata-fields__group")
@@ -194,12 +198,14 @@ struct AdminMetadataFields: Component {
                             error: state.canonicalUrl.error
                         )
                     )
-                    CheckboxField(
-                        state: .init(
-                            key: state.noIndex.key,
-                            label: state.noIndex.label,
-                            value: state.noIndex.value,
-                            error: state.noIndex.error
+                    context.render(
+                        CheckboxField(
+                            state: .init(
+                                key: state.noIndex.key,
+                                label: state.noIndex.label,
+                                value: state.noIndex.value,
+                                error: state.noIndex.error
+                            )
                         )
                     )
                     context.render(
@@ -426,13 +432,13 @@ public struct AppPublicTagSummaryModel: Sendable {
 }
 
 public struct AppPublicStyleAnchor: Component {
-    public func html(context: inout RenderContext) -> some BasicTag { Div {} }
+    public func html(context: inout RenderContext) -> Div { Div {} }
 }
 
 public struct AppPublicTextBlock: Component {
     public let text: String
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout RenderContext) -> Div {
         Div { text }.class("public-body")
     }
 }

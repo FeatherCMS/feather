@@ -36,14 +36,16 @@ struct BlogAuthorEdit: Component {
                 )
             }
             if state.isEdited { P("Author edited successfully.") }
-            BlogAuthorForm(
-                state: state.form,
-                metadataHref:
-                    "/admin/blog/authors/\(state.id)/edit/metadata/\(state.id)/",
-                action: "/admin/blog/authors/\(state.id)/edit/",
-                submitLabel: "Edit author",
-                removeHref: "/admin/blog/authors/\(state.id)/remove/",
-                removeLabel: "Remove author"
+            context.render(
+                BlogAuthorForm(
+                    state: state.form,
+                    metadataHref:
+                        "/admin/blog/authors/\(state.id)/edit/metadata/\(state.id)/",
+                    action: "/admin/blog/authors/\(state.id)/edit/",
+                    submitLabel: "Edit author",
+                    removeHref: "/admin/blog/authors/\(state.id)/remove/",
+                    removeLabel: "Remove author"
+                )
             )
         }
         .class("cms-section")

@@ -3,6 +3,19 @@ import FeatherValidation
 
 enum SystemPermissionFormFieldValidator {
 
+    static func key(
+        _ value: String,
+        required: Bool
+    ) -> Validator<String> {
+        .init(
+            key: "key",
+            value: value,
+            required: required,
+            invocation: .all,
+            rules: []
+        )
+    }
+
     static func name(
         _ value: String?,
         required: Bool
@@ -34,6 +47,7 @@ extension SystemPermissionFormInput {
 
     private var validator: GroupValidator {
         GroupValidator {
+            SystemPermissionFormFieldValidator.key(key, required: true)
             SystemPermissionFormFieldValidator.name(name, required: false)
             SystemPermissionFormFieldValidator.notes(notes, required: false)
         }

@@ -22,6 +22,7 @@ struct AdminEditSystemVariableOpenAPIRepository:
                 let variable = try okResponse.body.json
                 return .init(
                     id: variable.id,
+                    key: variable.key,
                     value: variable.value,
                     name: variable.name,
                     notes: variable.notes

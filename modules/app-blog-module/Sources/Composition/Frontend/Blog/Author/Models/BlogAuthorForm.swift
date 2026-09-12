@@ -68,7 +68,7 @@ struct BlogAuthorForm: Component {
         return links
     }
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -106,13 +106,17 @@ struct BlogAuthorForm: Component {
                         isRequired: true
                     )
                 )
-                textarea(
-                    state.excerpt,
-                    required: true,
-                    rows: 4,
-                    context: &context
+                context.render(
+                    textarea(
+                        state.excerpt,
+                        required: true,
+                        rows: 4,
+                        context: &context
+                    )
                 )
-                textarea(state.content, required: true, context: &context)
+                context.render(
+                    textarea(state.content, required: true, context: &context)
+                )
             }
             Section {
                 Div {
@@ -151,15 +155,13 @@ struct BlogAuthorForm: Component {
         context: inout RenderContext
     ) -> FormTextAreaField {
 
-        context.render(
-            FormTextAreaField(
-                name: field.key,
-                label: field.label,
-                value: field.value,
-                error: field.error,
-                rows: rows,
-                isRequired: required
-            )
+        FormTextAreaField(
+            name: field.key,
+            label: field.label,
+            value: field.value,
+            error: field.error,
+            rows: rows,
+            isRequired: required
         )
     }
 }

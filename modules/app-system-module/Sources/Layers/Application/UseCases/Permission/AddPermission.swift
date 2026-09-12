@@ -27,16 +27,16 @@ public struct AddPermission: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let key: String
         public let name: String?
         public let notes: String?
 
         public init(
-            id: String,
+            key: String,
             name: String?,
             notes: String?
         ) {
-            self.id = id
+            self.key = key
             self.name = name
             self.notes = notes
         }
@@ -59,7 +59,7 @@ public struct AddPermission: UseCase {
             try await transaction.run { scope in
                 try await scope.permission.insert(
                     Permission.create(
-                        id: input.id,
+                        key: input.key,
                         name: name,
                         notes: notes
                     )

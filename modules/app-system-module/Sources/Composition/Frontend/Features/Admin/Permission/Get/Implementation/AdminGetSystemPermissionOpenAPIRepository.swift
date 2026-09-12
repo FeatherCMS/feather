@@ -24,6 +24,7 @@ struct AdminGetSystemPermissionOpenAPIRepository:
                 let permission = try okResponse.body.json
                 return .init(
                     id: permission.id,
+                    key: permission.key,
                     name: permission.name,
                     notes: permission.notes
                 )

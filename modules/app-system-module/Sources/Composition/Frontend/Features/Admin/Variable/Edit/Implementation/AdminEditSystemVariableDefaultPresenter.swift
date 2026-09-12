@@ -27,7 +27,8 @@ struct AdminEditSystemVariableDefaultPresenter:
                     state: state,
                     action: SystemVariableRoutes.edit(RouterPath(id))
                         .description,
-                    viewHref: SystemVariableRoutes.details(RouterPath(id)).description,
+                    viewHref: SystemVariableRoutes.details(RouterPath(id))
+                        .description,
                     removeHref: actions.allows(
                         SystemPermissions.Variables.delete
                     ) ? SystemVariableRoutes.remove(id) : nil,

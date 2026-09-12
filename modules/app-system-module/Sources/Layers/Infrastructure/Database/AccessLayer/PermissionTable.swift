@@ -13,6 +13,7 @@ extension PermissionTable.Row {
 
     init(from row: DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
+        self.key = try row.decode(column: "key", as: String.self)
         self.name = try row.decode(column: "name", as: String?.self)
         self.notes = try row.decode(column: "notes", as: String?.self)
         self.createdAt = try row.decode(
@@ -32,11 +33,13 @@ struct PermissionTable {
 
         struct Create {
             let id: String
+            let key: String
             let name: String?
             let notes: String?
         }
 
         let id: String
+        let key: String
         let name: String?
         let notes: String?
         let createdAt: Date
@@ -52,6 +55,7 @@ struct PermissionTable {
             query: #"""
                 INSERT INTO system_permission (
                     id,
+                    key,
                     name,
                     notes,
                     created_at,
@@ -59,6 +63,7 @@ struct PermissionTable {
                 )
                 VALUES (
                     \#(row.id),
+                    \#(row.key),
                     \#(row.name),
                     \#(row.notes),
                     NOW(),
@@ -76,17 +81,24 @@ struct PermissionTable {
 
     func list(
         search: String?,
+        ids: [String]?,
         orderBy: String,
         limit: Int,
         offset: Int
     ) async throws -> [Row] {
-        try await connection.run(
+        let idValues = ids ?? []
+        let idFilter = idValues.isEmpty ? [""] : idValues
+
+        return try await connection.run(
             query: #"""
                 SELECT *
                 FROM system_permission
                 WHERE (
+                    \#(idValues.isEmpty)
+                    OR id IN (\#(idFilter))
+                ) AND (
                     \#(search == nil)
-                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(notes) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 )
@@ -100,15 +112,22 @@ struct PermissionTable {
     }
 
     func count(
-        search: String?
+        search: String?,
+        ids: [String]?
     ) async throws -> Int {
-        try await connection.run(
+        let idValues = ids ?? []
+        let idFilter = idValues.isEmpty ? [""] : idValues
+
+        return try await connection.run(
             query: #"""
                 SELECT COUNT(*) AS count
                 FROM system_permission
                 WHERE (
+                    \#(idValues.isEmpty)
+                    OR id IN (\#(idFilter))
+                ) AND (
                     \#(search == nil)
-                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(notes) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 );
@@ -139,6 +158,24 @@ struct PermissionTable {
         }
     }
 
+    func find(
+        key: String
+    ) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT *
+                FROM system_permission
+                WHERE key=\#(key)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try Row(from: row)
+        }
+    }
+
     func update(
         id: String,
         row: Row
@@ -148,6 +185,7 @@ struct PermissionTable {
                 UPDATE system_permission
                 SET
                     id=\#(row.id),
+                    key=\#(row.key),
                     name=\#(row.name),
                     notes=\#(row.notes),
                     updated_at=NOW()
@@ -156,7 +194,7 @@ struct PermissionTable {
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
-                fatalError("TODO")
+                throw RepositoryError.notFound
             }
             return try Row(from: row)
         }

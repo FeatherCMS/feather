@@ -15,7 +15,8 @@ struct AdminListSystemVariableDefaultInteractor:
     > {
         let response = try await repository.listSystemVariables(
             page: page,
-            search: search
+            search: search,
+            ids: nil
         )
         let body = try response.body.json
         return .init(

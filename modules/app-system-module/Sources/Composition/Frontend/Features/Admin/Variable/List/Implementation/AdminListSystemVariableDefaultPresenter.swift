@@ -16,12 +16,17 @@ struct AdminListSystemVariableDefaultPresenter:
     }
 
     func renderListPage(
-        model: NewAdminListModel<Components.Schemas.SystemVariableListItemSchema>,
+        model: NewAdminListModel<
+            Components.Schemas.SystemVariableListItemSchema
+        >,
         permissions: Set<PermissionKey>,
         search: String?
     ) async throws -> HTMLResponse {
         let actions = NewAdminListActions(permissions)
-        return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Variables",
+        return try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Variables",
             content: SystemVariableTable(
                 state: .init(
                     permissions: actions,
@@ -30,7 +35,7 @@ struct AdminListSystemVariableDefaultPresenter:
                     search: search,
                 )
             ),
-            
+
         )
     }
 
@@ -38,14 +43,16 @@ struct AdminListSystemVariableDefaultPresenter:
         title: String,
         message: String
     ) async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Variables",
+        try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Variables",
             content: NewAdminStatusView(
                 state: .init(title: title, message: message),
                 icon: FeatherIcons.alertCircle()
             ),
-            
+
         )
     }
-
 
 }

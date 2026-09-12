@@ -36,14 +36,16 @@ struct BlogPostEdit: Component {
                 )
             }
             if state.isEdited { P("Post edited successfully.") }
-            BlogPostForm(
-                state: state.form,
-                metadataHref:
-                    "/admin/blog/posts/\(state.id)/edit/metadata/\(state.id)/",
-                action: "/admin/blog/posts/\(state.id)/edit/",
-                submitLabel: "Edit post",
-                removeHref: "/admin/blog/posts/\(state.id)/remove/",
-                removeLabel: "Remove post"
+            context.render(
+                BlogPostForm(
+                    state: state.form,
+                    metadataHref:
+                        "/admin/blog/posts/\(state.id)/edit/metadata/\(state.id)/",
+                    action: "/admin/blog/posts/\(state.id)/edit/",
+                    submitLabel: "Edit post",
+                    removeHref: "/admin/blog/posts/\(state.id)/remove/",
+                    removeLabel: "Remove post"
+                )
             )
         }
         .class("cms-section")

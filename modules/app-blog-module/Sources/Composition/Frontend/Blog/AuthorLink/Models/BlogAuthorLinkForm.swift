@@ -56,7 +56,7 @@ struct BlogAuthorLinkForm: Component {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout RenderContext) -> Form {
         Form {
             if let success = state.success {
                 P(success).class("success")
@@ -92,7 +92,7 @@ struct BlogAuthorLinkForm: Component {
                     isRequired: true
                 )
             )
-            checkbox(state.isBlank)
+            context.render(checkbox(state.isBlank))
             context.render(
                 FormInputField(
                     name: state.permission.key,
@@ -101,7 +101,7 @@ struct BlogAuthorLinkForm: Component {
                     error: state.permission.error
                 )
             )
-            textarea(state.notes, context: &context)
+            context.render(textarea(state.notes, context: &context))
 
             Section {
                 Div {
@@ -131,29 +131,25 @@ struct BlogAuthorLinkForm: Component {
         context: inout RenderContext
     ) -> FormTextAreaField {
 
-        context.render(
-            FormTextAreaField(
-                name: field.key,
-                label: field.label,
-                value: field.value,
-                error: field.error,
-                rows: 6
-            )
+        FormTextAreaField(
+            name: field.key,
+            label: field.label,
+            value: field.value,
+            error: field.error,
+            rows: 6
         )
     }
 
     private func checkbox(
         _ field: CheckboxState
-    ) -> some BasicTag {
-        Section {
-            CheckboxField(
-                state: .init(
-                    key: field.key,
-                    label: field.label,
-                    value: field.value,
-                    error: field.error
-                )
+    ) -> CheckboxField {
+        CheckboxField(
+            state: .init(
+                key: field.key,
+                label: field.label,
+                value: field.value,
+                error: field.error
             )
-        }
+        )
     }
 }

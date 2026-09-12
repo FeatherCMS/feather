@@ -14,6 +14,7 @@ public struct PermissionList: DTO {
 
     public struct Item: Sendable {
         public let id: String
+        public let key: String
         public let name: String?
         public let notes: String?
         public let createdAt: Date
@@ -21,12 +22,14 @@ public struct PermissionList: DTO {
 
         package init(
             id: String,
+            key: String,
             name: String?,
             notes: String?,
             createdAt: Date,
             updatedAt: Date
         ) {
             self.id = id
+            self.key = key
             self.name = name
             self.notes = notes
             self.createdAt = createdAt
@@ -38,7 +41,7 @@ public struct PermissionList: DTO {
 
         public struct Sort: Sendable {
             public enum Field: String, Sendable, CaseIterable {
-                case id
+                case key
                 case name
                 case notes
             }
@@ -58,15 +61,18 @@ public struct PermissionList: DTO {
         public var page: Search.Page
         public var sort: [Sort]
         public var search: String?
+        public var ids: [String]?
 
         public init(
             page: Search.Page = .init(),
             sort: [Sort] = [],
-            search: String? = nil
+            search: String? = nil,
+            ids: [String]? = nil
         ) {
             self.page = page
             self.sort = sort
             self.search = search
+            self.ids = ids
         }
     }
 

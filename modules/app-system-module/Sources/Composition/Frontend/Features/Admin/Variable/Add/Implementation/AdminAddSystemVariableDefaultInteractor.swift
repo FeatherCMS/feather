@@ -13,7 +13,7 @@ struct AdminAddSystemVariableDefaultInteractor: AdminAddSystemVariableInteractor
         try await input.validate()
         try await repository.create(
             input: .init(
-                id: input.normalizedID,
+                key: input.normalizedKey,
                 value: input.normalizedValue,
                 name: input.normalizedName,
                 notes: input.normalizedNotes

@@ -16,7 +16,7 @@ struct AppBlogAuthorListPage: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Main {
-            AppPublicStyleAnchor()
+            context.render(AppPublicStyleAnchor())
             Div {
                 Div {
                     P("Blog").class("public-eyebrow")

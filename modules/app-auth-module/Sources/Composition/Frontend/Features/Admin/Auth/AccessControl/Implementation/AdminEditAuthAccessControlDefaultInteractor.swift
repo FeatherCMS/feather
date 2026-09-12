@@ -82,7 +82,7 @@ struct AdminEditAuthAccessControlDefaultInteractor:
                         || ($0.name ?? "")
                             .localizedCaseInsensitiveContains(search)
                 }
-                .map(\.id)
+                .map(\.key)
         )
 
         let desiredVisible = Set(

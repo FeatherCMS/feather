@@ -36,14 +36,16 @@ struct BlogTagEdit: Component {
                 )
             }
             if state.isEdited { P("Tag edited successfully.") }
-            BlogTagForm(
-                state: state.form,
-                metadataHref:
-                    "/admin/blog/tags/\(state.id)/edit/metadata/\(state.id)/",
-                action: "/admin/blog/tags/\(state.id)/edit/",
-                submitLabel: "Edit tag",
-                removeHref: "/admin/blog/tags/\(state.id)/remove/",
-                removeLabel: "Remove tag"
+            context.render(
+                BlogTagForm(
+                    state: state.form,
+                    metadataHref:
+                        "/admin/blog/tags/\(state.id)/edit/metadata/\(state.id)/",
+                    action: "/admin/blog/tags/\(state.id)/edit/",
+                    submitLabel: "Edit tag",
+                    removeHref: "/admin/blog/tags/\(state.id)/remove/",
+                    removeLabel: "Remove tag"
+                )
             )
         }
         .class("cms-section")

@@ -19,53 +19,53 @@ public struct SettingsDatabaseQueries: SettingsQueries {
     public func get() async throws -> SettingsDetail {
         let pairs = try await context.connection.run(
             query: #"""
-                SELECT name, value
+                SELECT key, value
                 FROM system_variable
-                WHERE name IN (
-                    'web.site.logo',
-                    'web.site.logo_dark',
-                    'web.site.meta_image',
-                    'web.site.primary_color',
-                    'web.site.secondary_color',
-                    'web.site.tertiary_color',
-                    'web.site.primary_font',
-                    'web.site.secondary_font',
-                    'web.site.home_page_id',
-                    'web.site.locale',
-                    'web.site.timezone',
-                    'web.site.title',
-                    'web.site.excerpt',
-                    'web.site.no_index',
-                    'web.site.css',
-                    'web.site.js'
+                WHERE key IN (
+                    'web-settings-logo',
+                    'web-settings-logo-dark',
+                    'web-settings-meta-image',
+                    'web-settings-primary-color',
+                    'web-settings-secondary-color',
+                    'web-settings-tertiary-color',
+                    'web-settings-primary-font',
+                    'web-settings-secondary-font',
+                    'web-settings-home-page-id',
+                    'web-settings-locale',
+                    'web-settings-timezone',
+                    'web-settings-title',
+                    'web-settings-excerpt',
+                    'web-settings-no-index',
+                    'web-settings-css',
+                    'web-settings-js'
                 );
                 """#
         ) { sequence in
             let rows = try await sequence.collect()
             return try rows.reduce(into: [String: String]()) { result, row in
-                let name = try row.decode(column: "name", as: String.self)
+                let name = try row.decode(column: "key", as: String.self)
                 let value = try row.decode(column: "value", as: String.self)
                 result[name] = value
             }
         }
 
-        let logo = pairs["web.site.logo"] ?? ""
-        let logoDark = pairs["web.site.logo_dark"] ?? ""
-        let metaImage = pairs["web.site.meta_image"] ?? ""
-        let primaryColor = pairs["web.site.primary_color"] ?? ""
-        let secondaryColor = pairs["web.site.secondary_color"] ?? ""
-        let tertiaryColor = pairs["web.site.tertiary_color"] ?? ""
-        let primaryFont = pairs["web.site.primary_font"] ?? ""
-        let secondaryFont = pairs["web.site.secondary_font"] ?? ""
-        let homePageId = pairs["web.site.home_page_id"]
+        let logo = pairs["web-settings-logo"] ?? ""
+        let logoDark = pairs["web-settings-logo-dark"] ?? ""
+        let metaImage = pairs["web-settings-meta-image"] ?? ""
+        let primaryColor = pairs["web-settings-primary-color"] ?? ""
+        let secondaryColor = pairs["web-settings-secondary-color"] ?? ""
+        let tertiaryColor = pairs["web-settings-tertiary-color"] ?? ""
+        let primaryFont = pairs["web-settings-primary-font"] ?? ""
+        let secondaryFont = pairs["web-settings-secondary-font"] ?? ""
+        let homePageId = pairs["web-settings-home-page-id"]
             .flatMap { $0.isEmpty ? nil : $0 }
-        let locale = pairs["web.site.locale"] ?? "en_us"
-        let timezone = pairs["web.site.timezone"] ?? "utc"
-        let title = pairs["web.site.title"] ?? ""
-        let excerpt = pairs["web.site.excerpt"] ?? ""
-        let noIndex = (pairs["web.site.no_index"] ?? "false") == "true"
-        let css = pairs["web.site.css"] ?? ""
-        let js = pairs["web.site.js"] ?? ""
+        let locale = pairs["web-settings-locale"] ?? "en_us"
+        let timezone = pairs["web-settings-timezone"] ?? "utc"
+        let title = pairs["web-settings-title"] ?? ""
+        let excerpt = pairs["web-settings-excerpt"] ?? ""
+        let noIndex = (pairs["web-settings-no-index"] ?? "false") == "true"
+        let css = pairs["web-settings-css"] ?? ""
+        let js = pairs["web-settings-js"] ?? ""
 
         return .init(
             logo: logo,

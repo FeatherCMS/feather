@@ -47,7 +47,7 @@ struct BlogTagTable: Component {
             else {
                 context.render(AdminBreadcrumb(state: state.breadcrumb))
                 H1("Blog tags")
-                statusFormDefinitions()
+                statusFormDefinitions(context: &context)
 
                 if state.isAdded {
                     P("Blog tag added successfully.")
@@ -159,7 +159,10 @@ struct BlogTagTable: Component {
                                                         for: item,
                                                         context: &context
                                                     )
-                                                    statusCell(for: item)
+                                                    statusCell(
+                                                        for: item,
+                                                        context: &context
+                                                    )
                                                     Td(
                                                         format(
                                                             item.metadata
@@ -268,13 +271,16 @@ struct BlogTagTable: Component {
     }
 
     private func statusCell(
-        for item: AdminListBlogTagItemModel
+        for item: AdminListBlogTagItemModel,
+        context: inout RenderContext
     ) -> some BasicTag {
         Td {
             if state.canEdit {
-                AdminStatusSelectField(
-                    formID: statusFormID(for: item.id),
-                    selectedStatus: item.metadata.normalizedStatus
+                context.render(
+                    AdminStatusSelectField(
+                        formID: statusFormID(for: item.id),
+                        selectedStatus: item.metadata.normalizedStatus
+                    )
                 )
             }
             else {
@@ -284,14 +290,18 @@ struct BlogTagTable: Component {
         .data("label", "Status")
     }
 
-    private func statusFormDefinitions() -> some FlowContent {
+    private func statusFormDefinitions(
+        context: inout RenderContext
+    ) -> some FlowContent {
         Div {
             if state.canEdit {
                 for item in state.rules {
-                    AdminStatusSelectFormDefinition(
-                        id: statusFormID(for: item.id),
-                        action: "/admin/blog/tags/\(item.id)/status/",
-                        returnTo: "/admin/blog/tags/"
+                    context.render(
+                        AdminStatusSelectFormDefinition(
+                            id: statusFormID(for: item.id),
+                            action: "/admin/blog/tags/\(item.id)/status/",
+                            returnTo: "/admin/blog/tags/"
+                        )
                     )
                 }
             }

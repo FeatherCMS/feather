@@ -40,6 +40,7 @@ struct AdminAddSystemPermissionDefaultController:
 
             try await interactor.execute(
                 entity: .init(
+                    key: payload.normalizedKey,
                     name: payload.normalizedName,
                     notes: payload.normalizedNotes
                 )
@@ -62,6 +63,7 @@ struct AdminAddSystemPermissionDefaultController:
                 errors[failure.key] = failure.message
             }
             var state = formState(
+                key: lastPayload?.normalizedKey ?? "",
                 name: lastPayload?.normalizedName ?? "",
                 notes: lastPayload?.normalizedNotes ?? ""
             )
@@ -76,6 +78,7 @@ struct AdminAddSystemPermissionDefaultController:
         }
         catch let error as OpenAPIRepositoryError {
             var state = formState(
+                key: lastPayload?.normalizedKey ?? "",
                 name: lastPayload?.normalizedName ?? "",
                 notes: lastPayload?.normalizedNotes ?? ""
             )
@@ -90,6 +93,7 @@ struct AdminAddSystemPermissionDefaultController:
         }
         catch {
             var state = formState(
+                key: lastPayload?.normalizedKey ?? "",
                 name: lastPayload?.normalizedName ?? "",
                 notes: lastPayload?.normalizedNotes ?? ""
             )
@@ -105,11 +109,13 @@ struct AdminAddSystemPermissionDefaultController:
     }
 
     private func formState(
+        key: String = "",
         name: String = "",
         notes: String = ""
     ) -> SystemPermissionForm.State {
         .init(
             name: .init(key: "name", label: "Name", value: name, error: nil),
+            key: .init(key: "key", label: "Key", value: key, error: nil),
             notes: .init(
                 key: "notes",
                 label: "Notes",

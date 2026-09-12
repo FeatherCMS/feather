@@ -12,6 +12,7 @@ extension Permission {
     var asDetail: PermissionDetail {
         .init(
             id: id,
+            key: key,
             name: name,
             notes: notes,
             createdAt: createdAt,

@@ -51,7 +51,7 @@ struct SystemVariableRow: Component {
             if permissions.allows(SystemPermissions.Variables.delete) {
                 context.render(NewAdminListRowCheckbox(id: state.id))
             }
-            Td(state.id).data("label", "ID").columnWidth(percent: 30)
+            Td(state.id).data("label", "Key").columnWidth(percent: 30)
             Td(state.name).data("label", "Name").columnWidth(percent: 35)
             Td(state.value).data("label", "Value").columnWidth(percent: 35)
             context.render(

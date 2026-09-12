@@ -16,9 +16,9 @@ struct AppBlogPostPage: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Main {
-            AppPublicStyleAnchor()
+            context.render(AppPublicStyleAnchor())
             Div {
-                articlePanel()
+                articlePanel(context: &context)
             }
             .class("public-container")
         }
@@ -27,7 +27,8 @@ struct AppBlogPostPage: Component {
 }
 
 extension AppBlogPostPage {
-    fileprivate func articlePanel() -> some BasicTag {
+    fileprivate func articlePanel(context: inout RenderContext) -> some BasicTag
+    {
         Article {
             Div {
                 P("Post").class("public-eyebrow")
@@ -52,7 +53,7 @@ extension AppBlogPostPage {
                 .class("public-image")
             }
 
-            AppPublicTextBlock(text: state.content)
+            context.render(AppPublicTextBlock(text: state.content))
 
             if !state.authors.isEmpty {
                 Section {

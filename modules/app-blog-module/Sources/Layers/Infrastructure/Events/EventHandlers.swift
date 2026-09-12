@@ -30,39 +30,39 @@ public enum EventHandlers {
         ) { _, _ in
             [
                 .init(
-                    id: "blog-settings-post-list-path",
+                    key: "blog-settings-post-list-path",
                     value: "posts",
-                    name: "blog.post.list_path",
+                    name: "Blog post list path",
                     notes: "Public blog post list path."
                 ),
                 .init(
-                    id: "blog-settings-author-list-path",
+                    key: "blog-settings-author-list-path",
                     value: "authors",
-                    name: "blog.author.list_path",
+                    name: "Blog author list path",
                     notes: "Public blog author list path."
                 ),
                 .init(
-                    id: "blog-settings-tag-list-path",
+                    key: "blog-settings-tag-list-path",
                     value: "tags",
-                    name: "blog.tag.list_path",
+                    name: "Blog tag list path",
                     notes: "Public blog tag list path."
                 ),
                 .init(
-                    id: "blog-settings-post-path-prefix",
+                    key: "blog-settings-post-path-prefix",
                     value: "posts",
-                    name: "blog.post.path_prefix",
+                    name: "Blog post path prefix",
                     notes: "Public blog post detail path prefix."
                 ),
                 .init(
-                    id: "blog-settings-author-path-prefix",
+                    key: "blog-settings-author-path-prefix",
                     value: "authors",
-                    name: "blog.author.path_prefix",
+                    name: "Blog author path prefix",
                     notes: "Public blog author detail path prefix."
                 ),
                 .init(
-                    id: "blog-settings-tag-path-prefix",
+                    key: "blog-settings-tag-path-prefix",
                     value: "tags",
-                    name: "blog.tag.path_prefix",
+                    name: "Blog tag path prefix",
                     notes: "Public blog tag detail path prefix."
                 ),
             ]

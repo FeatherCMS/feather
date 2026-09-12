@@ -22,7 +22,7 @@ struct AdminEditSystemVariableDefaultInteractor:
         try await repository.update(
             id: id,
             input: .init(
-                id: input.normalizedID,
+                key: input.normalizedKey,
                 value: input.normalizedValue,
                 name: input.normalizedName,
                 notes: input.normalizedNotes

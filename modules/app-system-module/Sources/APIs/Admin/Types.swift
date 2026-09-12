@@ -316,8 +316,8 @@ public enum Components {
         /// - Remark: Generated from `#/components/schemas/SystemPermissionCreateSchema`.
         public struct SystemPermissionCreateSchema: Codable, Hashable, Sendable
         {
-            /// - Remark: Generated from `#/components/schemas/SystemPermissionCreateSchema/id`.
-            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/SystemPermissionCreateSchema/key`.
+            public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/SystemPermissionCreateSchema/name`.
             public var name: Components.Schemas.SystemPermissionNameField?
             /// - Remark: Generated from `#/components/schemas/SystemPermissionCreateSchema/notes`.
@@ -325,20 +325,20 @@ public enum Components {
             /// Creates a new `SystemPermissionCreateSchema`.
             ///
             /// - Parameters:
-            ///   - id:
+            ///   - key:
             ///   - name:
             ///   - notes:
             public init(
-                id: Swift.String,
+                key: Swift.String,
                 name: Components.Schemas.SystemPermissionNameField? = nil,
                 notes: Components.Schemas.SystemPermissionNotesField? = nil
             ) {
-                self.id = id
+                self.key = key
                 self.name = name
                 self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
-                case id
+                case key
                 case name
                 case notes
             }
@@ -351,7 +351,9 @@ public enum Components {
         public struct SystemPermissionDetailSchema: Codable, Hashable, Sendable
         {
             /// - Remark: Generated from `#/components/schemas/SystemPermissionDetailSchema/id`.
-            public var id: Swift.String
+            public var id: Components.Schemas.SystemPermissionIDField
+            /// - Remark: Generated from `#/components/schemas/SystemPermissionDetailSchema/key`.
+            public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/SystemPermissionDetailSchema/name`.
             public var name: Components.Schemas.SystemPermissionNameField?
             /// - Remark: Generated from `#/components/schemas/SystemPermissionDetailSchema/notes`.
@@ -360,23 +362,29 @@ public enum Components {
             ///
             /// - Parameters:
             ///   - id:
+            ///   - key:
             ///   - name:
             ///   - notes:
             public init(
-                id: Swift.String,
+                id: Components.Schemas.SystemPermissionIDField,
+                key: Swift.String,
                 name: Components.Schemas.SystemPermissionNameField? = nil,
                 notes: Components.Schemas.SystemPermissionNotesField? = nil
             ) {
                 self.id = id
+                self.key = key
                 self.name = name
                 self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
                 case id
+                case key
                 case name
                 case notes
             }
         }
+        /// - Remark: Generated from `#/components/schemas/SystemPermissionIDField`.
+        public typealias SystemPermissionIDField = Swift.String
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
@@ -504,7 +512,9 @@ public enum Components {
             Sendable
         {
             /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/id`.
-            public var id: Components.Schemas.SystemPermissionIdField
+            public var id: Components.Schemas.SystemPermissionIDField
+            /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/key`.
+            public var key: Components.Schemas.SystemPermissionKeyField
             /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/name`.
             public var name: Components.Schemas.SystemPermissionNameField?
             /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSchema/notes`.
@@ -513,25 +523,29 @@ public enum Components {
             ///
             /// - Parameters:
             ///   - id:
+            ///   - key:
             ///   - name:
             ///   - notes:
             public init(
-                id: Components.Schemas.SystemPermissionIdField,
+                id: Components.Schemas.SystemPermissionIDField,
+                key: Components.Schemas.SystemPermissionKeyField,
                 name: Components.Schemas.SystemPermissionNameField? = nil,
                 notes: Components.Schemas.SystemPermissionNotesField? = nil
             ) {
                 self.id = id
+                self.key = key
                 self.name = name
                 self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
                 case id
+                case key
                 case name
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SystemPermissionIdField`.
-        public typealias SystemPermissionIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SystemPermissionKeyField`.
+        public typealias SystemPermissionKeyField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSearchQuerySchema`.
         public struct SystemPermissionListItemSearchQuerySchema: Codable,
             Hashable, Sendable
@@ -545,7 +559,7 @@ public enum Components {
                 public enum FieldPayload: String, Codable, Hashable, Sendable,
                     CaseIterable
                 {
-                    case id = "id"
+                    case key = "key"
                     case name = "name"
                     case notes = "notes"
                 }
@@ -585,16 +599,23 @@ public enum Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSearchQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSearchQuerySchema/filters/ids`.
+                public var ids: [Swift.String]?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil)
-                {
+                ///   - ids:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    ids: [Swift.String]? = nil
+                ) {
                     self.search = search
+                    self.ids = ids
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case ids
                 }
             }
             /// - Remark: Generated from `#/components/schemas/SystemPermissionListItemSearchQuerySchema/filters`.
@@ -741,8 +762,8 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/SystemVariableCreateSchema`.
         public struct SystemVariableCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/SystemVariableCreateSchema/id`.
-            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/SystemVariableCreateSchema/key`.
+            public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/SystemVariableCreateSchema/value`.
             public var value: Swift.String
             /// - Remark: Generated from `#/components/schemas/SystemVariableCreateSchema/name`.
@@ -752,23 +773,23 @@ public enum Components {
             /// Creates a new `SystemVariableCreateSchema`.
             ///
             /// - Parameters:
-            ///   - id:
+            ///   - key:
             ///   - value:
             ///   - name:
             ///   - notes:
             public init(
-                id: Swift.String,
+                key: Swift.String,
                 value: Swift.String,
                 name: Components.Schemas.SystemVariableNameField? = nil,
                 notes: Components.Schemas.SystemVariableNotesField? = nil
             ) {
-                self.id = id
+                self.key = key
                 self.value = value
                 self.name = name
                 self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
-                case id
+                case key
                 case value
                 case name
                 case notes
@@ -781,7 +802,9 @@ public enum Components {
         /// - Remark: Generated from `#/components/schemas/SystemVariableDetailSchema`.
         public struct SystemVariableDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SystemVariableDetailSchema/id`.
-            public var id: Swift.String
+            public var id: Components.Schemas.SystemVariableIDField
+            /// - Remark: Generated from `#/components/schemas/SystemVariableDetailSchema/key`.
+            public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/SystemVariableDetailSchema/value`.
             public var value: Swift.String
             /// - Remark: Generated from `#/components/schemas/SystemVariableDetailSchema/name`.
@@ -792,27 +815,33 @@ public enum Components {
             ///
             /// - Parameters:
             ///   - id:
+            ///   - key:
             ///   - value:
             ///   - name:
             ///   - notes:
             public init(
-                id: Swift.String,
+                id: Components.Schemas.SystemVariableIDField,
+                key: Swift.String,
                 value: Swift.String,
                 name: Components.Schemas.SystemVariableNameField? = nil,
                 notes: Components.Schemas.SystemVariableNotesField? = nil
             ) {
                 self.id = id
+                self.key = key
                 self.value = value
                 self.name = name
                 self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
                 case id
+                case key
                 case value
                 case name
                 case notes
             }
         }
+        /// - Remark: Generated from `#/components/schemas/SystemVariableIDField`.
+        public typealias SystemVariableIDField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemVariableListSchema`.
         public typealias SystemVariableListSchema = [Components.Schemas
             .SystemVariableListItemSchema]
@@ -820,7 +849,9 @@ public enum Components {
         public struct SystemVariableListItemSchema: Codable, Hashable, Sendable
         {
             /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/id`.
-            public var id: Components.Schemas.SystemVariableIdField
+            public var id: Components.Schemas.SystemVariableIDField
+            /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/key`.
+            public var key: Components.Schemas.SystemVariableKeyField
             /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/value`.
             public var value: Components.Schemas.SystemVariableValueField
             /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSchema/name`.
@@ -831,29 +862,33 @@ public enum Components {
             ///
             /// - Parameters:
             ///   - id:
+            ///   - key:
             ///   - value:
             ///   - name:
             ///   - notes:
             public init(
-                id: Components.Schemas.SystemVariableIdField,
+                id: Components.Schemas.SystemVariableIDField,
+                key: Components.Schemas.SystemVariableKeyField,
                 value: Components.Schemas.SystemVariableValueField,
                 name: Components.Schemas.SystemVariableNameField? = nil,
                 notes: Components.Schemas.SystemVariableNotesField? = nil
             ) {
                 self.id = id
+                self.key = key
                 self.value = value
                 self.name = name
                 self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
                 case id
+                case key
                 case value
                 case name
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SystemVariableIdField`.
-        public typealias SystemVariableIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SystemVariableKeyField`.
+        public typealias SystemVariableKeyField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemVariableValueField`.
         public typealias SystemVariableValueField = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSearchQuerySchema`.
@@ -869,7 +904,7 @@ public enum Components {
                 public enum FieldPayload: String, Codable, Hashable, Sendable,
                     CaseIterable
                 {
-                    case id = "id"
+                    case key = "key"
                     case name = "name"
                     case value = "value"
                     case notes = "notes"
@@ -910,16 +945,23 @@ public enum Components {
             public struct FiltersPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSearchQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSearchQuerySchema/filters/ids`.
+                public var ids: [Swift.String]?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
                 ///   - search:
-                public init(search: Components.Schemas.SearchStringField? = nil)
-                {
+                ///   - ids:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    ids: [Swift.String]? = nil
+                ) {
                     self.search = search
+                    self.ids = ids
                 }
                 public enum CodingKeys: String, CodingKey {
                     case search
+                    case ids
                 }
             }
             /// - Remark: Generated from `#/components/schemas/SystemVariableListItemSearchQuerySchema/filters`.
@@ -1091,14 +1133,14 @@ public enum Components {
     public enum Parameters {
         /// SystemPermission id
         ///
-        /// - Remark: Generated from `#/components/parameters/SystemPermissionIdParameter`.
-        public typealias SystemPermissionIdParameter = Components.Schemas
-            .SystemPermissionIdField
+        /// - Remark: Generated from `#/components/parameters/SystemPermissionIDParameter`.
+        public typealias SystemPermissionIDParameter = Components.Schemas
+            .SystemPermissionIDField
         /// SystemVariable id
         ///
-        /// - Remark: Generated from `#/components/parameters/SystemVariableIdParameter`.
-        public typealias SystemVariableIdParameter = Components.Schemas
-            .SystemVariableIdField
+        /// - Remark: Generated from `#/components/parameters/SystemVariableIDParameter`.
+        public typealias SystemVariableIDParameter = Components.Schemas
+            .SystemVariableIDField
         /// Worker job id
         ///
         /// - Remark: Generated from `#/components/parameters/SystemJobIdParameter`.
@@ -2154,14 +2196,14 @@ public enum Operations {
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/system/permissions/{systemPermissionId}/GET/path/systemPermissionId`.
                 public var systemPermissionId:
-                    Components.Parameters.SystemPermissionIdParameter
+                    Components.Parameters.SystemPermissionIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - systemPermissionId: SystemPermission id
                 public init(
                     systemPermissionId: Components.Parameters
-                        .SystemPermissionIdParameter
+                        .SystemPermissionIDParameter
                 ) {
                     self.systemPermissionId = systemPermissionId
                 }
@@ -2380,14 +2422,14 @@ public enum Operations {
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/system/permissions/{systemPermissionId}/PATCH/path/systemPermissionId`.
                 public var systemPermissionId:
-                    Components.Parameters.SystemPermissionIdParameter
+                    Components.Parameters.SystemPermissionIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - systemPermissionId: SystemPermission id
                 public init(
                     systemPermissionId: Components.Parameters
-                        .SystemPermissionIdParameter
+                        .SystemPermissionIDParameter
                 ) {
                     self.systemPermissionId = systemPermissionId
                 }
@@ -2613,14 +2655,14 @@ public enum Operations {
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/system/permissions/{systemPermissionId}/PUT/path/systemPermissionId`.
                 public var systemPermissionId:
-                    Components.Parameters.SystemPermissionIdParameter
+                    Components.Parameters.SystemPermissionIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - systemPermissionId: SystemPermission id
                 public init(
                     systemPermissionId: Components.Parameters
-                        .SystemPermissionIdParameter
+                        .SystemPermissionIDParameter
                 ) {
                     self.systemPermissionId = systemPermissionId
                 }
@@ -3545,14 +3587,14 @@ public enum Operations {
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/system/variables/{systemVariableId}/GET/path/systemVariableId`.
                 public var systemVariableId:
-                    Components.Parameters.SystemVariableIdParameter
+                    Components.Parameters.SystemVariableIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - systemVariableId: SystemVariable id
                 public init(
                     systemVariableId: Components.Parameters
-                        .SystemVariableIdParameter
+                        .SystemVariableIDParameter
                 ) {
                     self.systemVariableId = systemVariableId
                 }
@@ -3767,14 +3809,14 @@ public enum Operations {
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/system/variables/{systemVariableId}/PATCH/path/systemVariableId`.
                 public var systemVariableId:
-                    Components.Parameters.SystemVariableIdParameter
+                    Components.Parameters.SystemVariableIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - systemVariableId: SystemVariable id
                 public init(
                     systemVariableId: Components.Parameters
-                        .SystemVariableIdParameter
+                        .SystemVariableIDParameter
                 ) {
                     self.systemVariableId = systemVariableId
                 }
@@ -3998,14 +4040,14 @@ public enum Operations {
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/system/variables/{systemVariableId}/PUT/path/systemVariableId`.
                 public var systemVariableId:
-                    Components.Parameters.SystemVariableIdParameter
+                    Components.Parameters.SystemVariableIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - systemVariableId: SystemVariable id
                 public init(
                     systemVariableId: Components.Parameters
-                        .SystemVariableIdParameter
+                        .SystemVariableIDParameter
                 ) {
                     self.systemVariableId = systemVariableId
                 }

@@ -13,6 +13,7 @@ extension PermissionTable.Row {
     var asDomain: Permission {
         .init(
             id: id,
+            key: key,
             name: name,
             notes: notes,
             createdAt: createdAt,
@@ -23,10 +24,17 @@ extension PermissionTable.Row {
 
 public struct PermissionDatabaseRepository: PermissionRepository {
 
-    public let context: DatabaseTransactionContext
+    public let context: any DatabaseContext
+    public let idGenerator: any IDGenerator
+
+    public init(context: any DatabaseContext) {
+        self.context = context
+        self.idGenerator = NanoIDGenerator()
+    }
 
     public init(context: DatabaseTransactionContext) {
         self.context = context
+        self.idGenerator = context.idGenerator
     }
 
     public func insert(
@@ -35,7 +43,8 @@ public struct PermissionDatabaseRepository: PermissionRepository {
         let table = PermissionTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
-                id: model.id,
+                id: idGenerator.generate(),
+                key: model.key,
                 name: model.name,
                 notes: model.notes
             )
@@ -51,6 +60,7 @@ public struct PermissionDatabaseRepository: PermissionRepository {
             id: model.id,
             row: .init(
                 id: model.id,
+                key: model.key,
                 name: model.name,
                 notes: model.notes,
                 createdAt: model.createdAt,
@@ -58,6 +68,13 @@ public struct PermissionDatabaseRepository: PermissionRepository {
             )
         )
         return updated.asDomain
+    }
+
+    public func find(
+        key: String
+    ) async throws -> Permission? {
+        let table = PermissionTable(connection: context.connection)
+        return try await table.find(key: key)?.asDomain
     }
 
     public func find(

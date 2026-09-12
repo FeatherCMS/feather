@@ -79,7 +79,7 @@ struct AdminEditSystemVariableDefaultController:
             try await runtime.interactor.edit(id: id, input: payload)
 
             return AdminNotificationFlash.redirect(
-                to: SystemVariableRoutes.edit(RouterPath(payload.normalizedID))
+                to: SystemVariableRoutes.edit(RouterPath(id))
                     .description,
                 notification: .init(
                     title: "Saved",

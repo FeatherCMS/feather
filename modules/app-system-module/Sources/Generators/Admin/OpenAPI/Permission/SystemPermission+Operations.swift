@@ -15,7 +15,7 @@ public protocol SystemPermissionIDOperation: SystemPermissionOperation {
 extension SystemPermissionIDOperation {
     public var parameters: [ParameterRepresentable] {
         [
-            SystemPermissionIdParameter().reference()
+            SystemPermissionIDParameter().reference()
         ]
     }
 }
@@ -44,11 +44,13 @@ struct SystemPermissionSearchOperation: SystemPermissionOperation {
         .init(
             items: SystemPermissionListItemSchema(),
             sortFieldKeys: [
-                "id",
+                "key",
                 "name",
                 "notes",
             ],
-            filters: SearchFilterSchema()
+            filters: SearchFilterSchema(
+                additionalProperties: ["ids": SystemPermissionIDsFilter()]
+            )
         )
     }
 

@@ -28,18 +28,18 @@ public struct AddVariable: UseCase {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let key: String
         public let value: String
         public let name: String?
         public let notes: String?
 
         public init(
-            id: String,
+            key: String,
             value: String,
             name: String?,
             notes: String?
         ) {
-            self.id = id
+            self.key = key
             self.name = name
             self.value = value
             self.notes = notes
@@ -63,7 +63,7 @@ public struct AddVariable: UseCase {
         let model = try await transaction.run { scope in
             try await scope.variable.insert(
                 Variable.create(
-                    id: input.id,
+                    key: input.key,
                     value: value,
                     name: name,
                     notes: notes

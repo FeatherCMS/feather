@@ -21,7 +21,7 @@ struct SystemVariableDetails: Component {
                     description: "System variable details."
                 ),
                 fields: [
-                    .init(label: "ID", value: state.variable.id),
+                    .init(label: "Key", value: state.variable.key),
                     .init(label: "Name", value: state.variable.name ?? "—"),
                     .init(label: "Value", value: state.variable.value),
                     .init(label: "Notes", value: state.variable.notes ?? "—"),

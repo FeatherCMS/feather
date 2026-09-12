@@ -83,12 +83,15 @@ struct BlogPostDetails: Component {
                 if state.permissions.contains(
                     BlogPermissions.Posts.update.rawValue
                 ) {
-                    AdminStatusActionForm(
-                        action: "/admin/blog/posts/\(state.rule.id)/status/",
-                        returnTo: "/admin/blog/posts/\(state.rule.id)/",
-                        status: isPublished ? "draft" : "published",
-                        label: isPublished ? "Unpublish" : "Publish",
-                        classes: ["secondary"]
+                    context.render(
+                        AdminStatusActionForm(
+                            action:
+                                "/admin/blog/posts/\(state.rule.id)/status/",
+                            returnTo: "/admin/blog/posts/\(state.rule.id)/",
+                            status: isPublished ? "draft" : "published",
+                            label: isPublished ? "Unpublish" : "Publish",
+                            classes: ["secondary"]
+                        )
                     )
                     context.render(
                         AdminNavigationButton(

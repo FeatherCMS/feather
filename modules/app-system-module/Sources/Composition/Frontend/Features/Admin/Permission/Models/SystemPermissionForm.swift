@@ -16,6 +16,7 @@ struct SystemPermissionForm: Component {
 
     struct State: FeatherAdmin.Object {
         var name: FieldState
+        var key: FieldState
         var notes: FieldState
         var error: String?
         var success: String?
@@ -24,6 +25,7 @@ struct SystemPermissionForm: Component {
             errors: [String: String]
         ) {
             name.error = errors[name.key]
+            key.error = errors[key.key]
             notes.error = errors[notes.key]
         }
     }
@@ -42,6 +44,16 @@ struct SystemPermissionForm: Component {
             if let error = state.error {
                 P(error).class("error")
             }
+
+            context.render(
+                FormInputField(
+                    name: state.key.key,
+                    label: "Key",
+                    value: state.key.value,
+                    error: state.key.error,
+                    isRequired: true
+                )
+            )
 
             context.render(
                 FormInputField(

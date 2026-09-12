@@ -1,13 +1,13 @@
 import FeatherValidation
 
 private enum SystemVariableAddFormValidator {
-    static func id(_ value: String) -> Validator<String> {
+    static func key(_ value: String) -> Validator<String> {
         .init(
-            key: "id",
+            key: "key",
             value: value,
             required: true,
             invocation: .all,
-            rules: [.trimmedNonempty(message: "ID is required.")]
+            rules: [.trimmedNonempty(message: "Key is required.")]
         )
     }
 
@@ -45,7 +45,7 @@ private enum SystemVariableAddFormValidator {
 extension SystemVariableAddFormInput {
     private var validator: GroupValidator {
         GroupValidator {
-            SystemVariableAddFormValidator.id(id)
+            SystemVariableAddFormValidator.key(key)
             SystemVariableAddFormValidator.name(name)
             SystemVariableAddFormValidator.value(value)
             SystemVariableAddFormValidator.notes(notes)
