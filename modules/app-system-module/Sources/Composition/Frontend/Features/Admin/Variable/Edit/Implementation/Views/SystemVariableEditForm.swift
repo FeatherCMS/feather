@@ -34,7 +34,7 @@ struct SystemVariableEditForm: Component {
                     name: "name",
                     label: "Name",
                     value: "",
-                    isRequired: true
+                    isRequired: false
                 ),
                 value: .init(
                     name: "value",
@@ -65,7 +65,7 @@ struct SystemVariableEditForm: Component {
                     name: "name",
                     label: "Name",
                     value: variable.name ?? "",
-                    isRequired: true
+                    isRequired: false
                 ),
                 value: .init(
                     name: "value",
@@ -96,7 +96,7 @@ struct SystemVariableEditForm: Component {
                     name: "name",
                     label: "Name",
                     value: input.normalizedName,
-                    isRequired: true
+                    isRequired: false
                 ),
                 value: .init(
                     name: "value",

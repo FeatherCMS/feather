@@ -85,7 +85,7 @@ public struct NewAdminFormFieldInput: Component {
                 OutlineOffset(2.px)
             },
             Custom(".new-admin-form-field .field-error") {
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                Color(.red)
                 FontSize(0.86.rem)
             },
             Custom(".new-admin-form-field.has-error input") {

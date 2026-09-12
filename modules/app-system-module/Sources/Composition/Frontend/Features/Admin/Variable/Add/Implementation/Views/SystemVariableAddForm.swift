@@ -34,7 +34,7 @@ struct SystemVariableAddForm: Component {
                     name: "name",
                     label: "Name",
                     value: "",
-                    isRequired: true
+                    isRequired: false
                 ),
                 value: .init(
                     name: "value",
@@ -65,7 +65,7 @@ struct SystemVariableAddForm: Component {
                     name: "name",
                     label: "Name",
                     value: input.normalizedName,
-                    isRequired: true
+                    isRequired: false
                 ),
                 value: .init(
                     name: "value",
@@ -106,8 +106,8 @@ struct SystemVariableAddForm: Component {
                 P(error).class("new-admin-form__error")
             }
             context.render(NewAdminFormFieldInput(state: state.key))
-            context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldTextArea(state: state.value))
+            context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldTextArea(state: state.notes))
             Div {
                 context.render(

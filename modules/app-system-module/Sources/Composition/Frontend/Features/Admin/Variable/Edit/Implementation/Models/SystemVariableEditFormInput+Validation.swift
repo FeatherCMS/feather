@@ -7,7 +7,10 @@ private enum SystemVariableEditFormValidator {
             value: value,
             required: true,
             invocation: .all,
-            rules: [.trimmedNonempty(message: "Key is required.")]
+            rules: [
+                .trimmedNonempty(message: "Key is required."),
+                .min(length: 2, message: "Key must be at least 2 characters.")
+            ]
         )
     }
 

@@ -117,7 +117,7 @@ public struct NewAdminFormFieldTextArea: Component {
                 OutlineOffset(2.px)
             },
             Custom(".new-admin-form-textarea .field-error") {
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                Color(.red)
                 FontSize(0.86.rem)
             },
             Custom(".new-admin-form-textarea.has-error textarea") {
