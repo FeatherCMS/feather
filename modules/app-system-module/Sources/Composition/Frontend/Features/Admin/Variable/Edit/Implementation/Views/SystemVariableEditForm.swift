@@ -28,8 +28,7 @@ struct SystemVariableEditForm: Component {
                     name: "key",
                     label: "Key",
                     value: "",
-                    isRequired: true,
-                    isReadOnly: true
+                    isRequired: true
                 ),
                 name: .init(
                     name: "name",
@@ -41,8 +40,7 @@ struct SystemVariableEditForm: Component {
                     name: "value",
                     label: "Value",
                     value: "",
-                    style: .small,
-                    isRequired: true
+                    style: .small
                 ),
                 notes: .init(
                     name: "notes",
@@ -61,8 +59,7 @@ struct SystemVariableEditForm: Component {
                     name: "key",
                     label: "Key",
                     value: variable.key,
-                    isRequired: true,
-                    isReadOnly: true
+                    isRequired: true
                 ),
                 name: .init(
                     name: "name",
@@ -74,8 +71,7 @@ struct SystemVariableEditForm: Component {
                     name: "value",
                     label: "Value",
                     value: variable.value,
-                    style: .small,
-                    isRequired: true
+                    style: .small
                 ),
                 notes: .init(
                     name: "notes",
@@ -94,8 +90,7 @@ struct SystemVariableEditForm: Component {
                     name: "key",
                     label: "Key",
                     value: input.normalizedKey,
-                    isRequired: true,
-                    isReadOnly: true
+                    isRequired: true
                 ),
                 name: .init(
                     name: "name",
@@ -107,8 +102,7 @@ struct SystemVariableEditForm: Component {
                     name: "value",
                     label: "Value",
                     value: input.normalizedValue,
-                    style: .small,
-                    isRequired: true
+                    style: .small
                 ),
                 notes: .init(
                     name: "notes",
@@ -147,8 +141,8 @@ struct SystemVariableEditForm: Component {
             if let success = state.success { P(success).class("success") }
             if let error = state.error { P(error).class("error") }
             context.render(NewAdminFormFieldInput(state: state.key))
-            context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldTextArea(state: state.value))
+            context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldTextArea(state: state.notes))
             Div {
                 context.render(

@@ -10,13 +10,13 @@ import WebComponents
 struct SystemVariableRow: Component {
     struct State: Sendable {
         let id: String
-        let name: String
+        let key: String
         let value: String
         let actions: [NewAdminListRowActions.Action]
 
         init(variable: Components.Schemas.SystemVariableListItemSchema) {
             self.id = variable.id
-            self.name = variable.name ?? ""
+            self.key = variable.key
             self.value = variable.value
             self.actions = [
                 .init(
@@ -51,9 +51,8 @@ struct SystemVariableRow: Component {
             if permissions.allows(SystemPermissions.Variables.delete) {
                 context.render(NewAdminListRowCheckbox(id: state.id))
             }
-            Td(state.id).data("label", "Key").columnWidth(percent: 30)
-            Td(state.name).data("label", "Name").columnWidth(percent: 35)
-            Td(state.value).data("label", "Value").columnWidth(percent: 35)
+            Td(state.key).data("label", "Key").columnWidth(percent: 50)
+            Td(state.value).data("label", "Value").columnWidth(percent: 50)
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",

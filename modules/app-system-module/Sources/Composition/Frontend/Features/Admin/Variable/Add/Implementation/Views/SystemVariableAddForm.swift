@@ -40,8 +40,7 @@ struct SystemVariableAddForm: Component {
                     name: "value",
                     label: "Value",
                     value: "",
-                    style: .small,
-                    isRequired: true
+                    style: .small
                 ),
                 notes: .init(
                     name: "notes",
@@ -72,8 +71,7 @@ struct SystemVariableAddForm: Component {
                     name: "value",
                     label: "Value",
                     value: input.normalizedValue,
-                    style: .small,
-                    isRequired: true
+                    style: .small
                 ),
                 notes: .init(
                     name: "notes",

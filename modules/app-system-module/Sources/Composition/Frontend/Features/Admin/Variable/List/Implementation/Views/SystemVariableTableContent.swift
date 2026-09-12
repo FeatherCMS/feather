@@ -90,17 +90,13 @@ struct SystemVariableTableContent: Component {
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
-                                                    Th("ID")
+                                                    Th("Key")
                                                         .columnWidth(
-                                                            percent: 30
-                                                        )
-                                                    Th("Name")
-                                                        .columnWidth(
-                                                            percent: 35
+                                                            percent: 50
                                                         )
                                                     Th("Value")
                                                         .columnWidth(
-                                                            percent: 35
+                                                            percent: 50
                                                         )
                                                     Th("Actions")
                                                 }

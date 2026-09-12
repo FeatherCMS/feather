@@ -25,9 +25,9 @@ private enum SystemVariableEditFormValidator {
         .init(
             key: "value",
             value: value,
-            required: true,
+            required: false,
             invocation: .all,
-            rules: [.trimmedNonempty(message: "Value is required.")]
+            rules: []
         )
     }
 
