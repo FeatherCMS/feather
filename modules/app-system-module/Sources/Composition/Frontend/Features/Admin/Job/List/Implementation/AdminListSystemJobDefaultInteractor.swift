@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import SystemAdminAPI
 
@@ -10,10 +11,8 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
         search: String?
     ) async throws -> AdminListSystemJobModel {
         let allJobs = try await repository.list()
-        let normalizedSearch =
-            search?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let filteredJobs =
-            normalizedSearch.isEmpty
+        let normalizedSearch = search?.emptyToNil ?? ""
+        let filteredJobs = normalizedSearch.isEmpty
             ? allJobs
             : allJobs.filter { job in
                 [
@@ -27,20 +26,21 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
                     $0.localizedCaseInsensitiveContains(normalizedSearch)
                 }
             }
-        let pageSize = 20
+        let pageSize = AdminListSystemJob.pageSize
         let normalizedPage = max(1, page)
         let start = (normalizedPage - 1) * pageSize
-        let items =
-            start < filteredJobs.count
+        let items = start < filteredJobs.count
             ? Array(
                 filteredJobs[start..<min(start + pageSize, filteredJobs.count)]
             )
             : []
         return .init(
             items: items,
-            total: filteredJobs.count,
-            page: normalizedPage,
-            pageSize: pageSize
+            pageState: .init(
+                page: normalizedPage,
+                pageSize: pageSize,
+                total: filteredJobs.count
+            )
         )
     }
 }

@@ -2,6 +2,8 @@ import FeatherAdmin
 import Hummingbird
 
 struct AdminListSystemJob {
+    static let pageSize = 20
+
     let controller: any AdminListSystemJobController
 
     init(renderingEngine: any RenderingEngine) {
@@ -15,6 +17,7 @@ struct AdminListSystemJob {
                     ),
                     presenter: AdminListSystemJobDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

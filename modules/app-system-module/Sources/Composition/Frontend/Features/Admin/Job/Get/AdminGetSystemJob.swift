@@ -15,6 +15,7 @@ struct AdminGetSystemJob {
                     ),
                     presenter: AdminGetSystemJobDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

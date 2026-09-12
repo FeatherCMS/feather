@@ -5,7 +5,7 @@ import SystemAdminAPI
 struct AdminGetSystemJobOpenAPIRepository: AdminGetSystemJobRepository {
     let api: SystemAdminAPIClient
 
-    func get(id: String) async throws -> Components.Schemas.SystemJobSchema {
+    func get(id: String) async throws -> SystemJobDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.systemJobGet(
                 path: .init(systemJobId: id),
@@ -13,7 +13,7 @@ struct AdminGetSystemJobOpenAPIRepository: AdminGetSystemJobRepository {
             )
             switch response {
             case .ok(let value):
-                return try value.body.json
+                return .init(job: try value.body.json)
             case .notFound:
                 throw OpenAPIRepositoryError.notFound(
                     message: "Worker job not found."
