@@ -7,14 +7,14 @@ public struct NewAdminListSelectionForm<Table: FlowContent>: Component {
 
     public struct State: Sendable {
         public let action: String
-        public let pageState: ListPageState
+        public let pageState: NewAdminListPageState
         public let search: String
         public let button: NewAdminSubmitButton
         public let isEnabled: Bool
 
         public init(
             action: String,
-            pageState: ListPageState,
+            pageState: NewAdminListPageState,
             search: String,
             button: NewAdminSubmitButton,
             isEnabled: Bool = true

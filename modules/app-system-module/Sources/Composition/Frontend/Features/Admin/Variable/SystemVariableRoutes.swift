@@ -31,4 +31,25 @@ enum SystemVariableRoutes {
     static func removeFromDetails(_ id: String) -> String {
         "\(remove.description)?ids=\(id.queryEncoded())&from=details"
     }
+
+    static func removeCancel(
+        ids: [String],
+        page: Int,
+        search: String?,
+        fromDetails: Bool
+    ) -> String {
+        if fromDetails, ids.count == 1 {
+            return details(RouterPath(ids[0])).description
+        }
+        if ids.count == 1 {
+            return edit(RouterPath(ids[0])).description
+        }
+        return ListRemoveRedirect.location(
+            path: list.description,
+            page: page,
+            search: search,
+            title: nil,
+            message: nil
+        )
+    }
 }

@@ -5,11 +5,11 @@ import WebComponents
 
 public struct NewAdminListInvalidPageState: Component {
 
-    public let pageState: ListPageState
+    public let pageState: NewAdminListPageState
     public let path: String
 
     public init(
-        pageState: ListPageState,
+        pageState: NewAdminListPageState,
         path: String
     ) {
         self.pageState = pageState

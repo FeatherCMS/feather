@@ -11,12 +11,14 @@ struct AdminRemoveSystemVariableDefaultPresenter:
 
     func renderErrorPage(
         info: String,
-        message: String
+        message: String,
+        cancel: String,
     ) async throws -> HTMLResponse {
         return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Manage system variables",
             content: NewAdminStatusView(
                 state: .init(title: info, message: message),
-                icon: FeatherIcons.alertCircle()
+                icon: FeatherIcons.alertCircle(),
+                action: NewAdminButton("Back", href: cancel, style: .secondary)
             )
         )
     }
@@ -28,6 +30,9 @@ struct AdminRemoveSystemVariableDefaultPresenter:
         names: [String],
         fromDetails: Bool
     ) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
         return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Manage system variables",
             content: NewAdminConfirmation(
                 breadcrumb: SystemVariableRoutes.breadcrumb,
@@ -37,22 +42,10 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 ),
                 selectedItems: names,
                 action: SystemVariableRoutes.remove.description,
-                cancel: fromDetails && ids.count == 1
-                    ? SystemVariableRoutes.details(RouterPath(ids[0]))
-                        .description
-                    : ids.count == 1
-                        ? SystemVariableRoutes.edit(RouterPath(ids[0]))
-                            .description
-                        : ListRemoveRedirect.location(
-                            path: SystemVariableRoutes.list.description,
-                            page: page,
-                            search: search,
-                            title: nil,
-                            message: nil
-                        ),
+                cancel: SystemVariableRoutes.removeCancel(ids: ids, page: page, search: search, fromDetails: fromDetails),
                 hiddenFields: ids.map {
                     .init(name: "ids", value: $0)
-                }
+                } + [.init(name: "_nonce", value: nonceToken)]
             )
         )
     }

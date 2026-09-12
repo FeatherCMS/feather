@@ -7,6 +7,7 @@ public struct ListRemoveFormInput: Decodable, Sendable {
     public var page: Int?
     public var search: String?
     public var campaignId: String?
+    public var nonce: String?
 
     private enum CodingKeys: String, CodingKey {
         case selectedIds
@@ -16,6 +17,7 @@ public struct ListRemoveFormInput: Decodable, Sendable {
         case page
         case search
         case campaignId
+        case nonce = "_nonce"
     }
 
     public init(
@@ -23,13 +25,15 @@ public struct ListRemoveFormInput: Decodable, Sendable {
         selectedIds: [String]? = nil,
         page: Int? = nil,
         search: String? = nil,
-        campaignId: String? = nil
+        campaignId: String? = nil,
+        nonce: String? = nil
     ) {
         self.ids = ids
         self.selectedIds = selectedIds
         self.page = page
         self.search = search
         self.campaignId = campaignId
+        self.nonce = nonce
     }
 
     public init(from decoder: any Decoder) throws {
@@ -80,6 +84,7 @@ public struct ListRemoveFormInput: Decodable, Sendable {
             String.self,
             forKey: .campaignId
         )
+        nonce = try container.decodeIfPresent(String.self, forKey: .nonce)
     }
 
     public var normalizedSelectedIds: [String] {

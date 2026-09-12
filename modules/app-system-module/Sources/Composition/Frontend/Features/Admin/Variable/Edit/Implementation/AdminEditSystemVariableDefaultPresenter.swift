@@ -17,7 +17,7 @@ struct AdminEditSystemVariableDefaultPresenter:
         state: SystemVariableEditForm.State,
         permissions: Set<PermissionKey>
     ) async throws -> HTMLResponse {
-        let actions = ListActions(permissions)
+        let actions = NewAdminListActions(permissions)
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )

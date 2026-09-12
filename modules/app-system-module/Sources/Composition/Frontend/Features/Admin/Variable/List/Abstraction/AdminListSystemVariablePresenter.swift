@@ -6,7 +6,7 @@ import SystemAdminAPI
 protocol AdminListSystemVariablePresenter: Sendable {
 
     func renderListPage(
-        model: AdminListModel<Components.Schemas.SystemVariableListItemSchema>,
+        model: NewAdminListModel<Components.Schemas.SystemVariableListItemSchema>,
         permissions: Set<PermissionKey>,
         search: String?
     ) async throws -> HTMLResponse

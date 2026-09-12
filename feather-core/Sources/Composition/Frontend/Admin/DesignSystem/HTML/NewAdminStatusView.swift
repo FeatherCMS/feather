@@ -23,13 +23,16 @@ public struct NewAdminStatusView: Component {
 
     public let state: State
     public let icon: SVG?
+    public let action: NewAdminButton?
 
     public init(
         state: State,
-        icon: SVG? = nil
+        icon: SVG? = nil,
+        action: NewAdminButton? = nil
     ) {
         self.state = state
         self.icon = icon
+        self.action = action
     }
 
     public func rules() -> [any Rule] {
@@ -60,6 +63,7 @@ public struct NewAdminStatusView: Component {
             }
             H1(state.title)
             P(state.message)
+            if let action { context.render(action) }
         }
         .class("admin-status-view")
     }

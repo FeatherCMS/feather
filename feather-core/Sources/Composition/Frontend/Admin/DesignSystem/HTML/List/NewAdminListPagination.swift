@@ -111,13 +111,13 @@ public struct NewAdminListPagination: Component {
 
     public struct State: Sendable {
         public let path: String
-        public let pageState: ListPageState
+        public let pageState: NewAdminListPageState
         public let search: String
         public let queryItems: [QueryItem]
 
         public init(
             path: String,
-            pageState: ListPageState,
+            pageState: NewAdminListPageState,
             search: String,
             queryItems: [QueryItem] = []
         ) {

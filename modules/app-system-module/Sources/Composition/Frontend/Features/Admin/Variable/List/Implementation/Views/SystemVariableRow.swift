@@ -44,7 +44,7 @@ struct SystemVariableRow: Component {
     }
 
     let state: State
-    let permissions: ListActions
+    let permissions: NewAdminListActions
 
     func html(context: inout RenderContext) -> Tr {
         Tr {

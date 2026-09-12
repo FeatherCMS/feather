@@ -1,12 +1,12 @@
 import FeatherContracts
 
-public struct AdminListModel<Item: Sendable>: Sendable {
+public struct NewAdminListModel<Item: Sendable>: Sendable {
     public let items: [Item]
-    public let pageState: ListPageState
+    public let pageState: NewAdminListPageState
 
     public init(
         items: [Item],
-        pageState: ListPageState
+        pageState: NewAdminListPageState
     ) {
         self.items = items
         self.pageState = pageState

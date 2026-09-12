@@ -9,8 +9,8 @@ import WebComponents
 
 struct SystemVariableTableContent: Component {
     let variables: [Components.Schemas.SystemVariableListItemSchema]
-    let permissions: ListActions
-    let pageState: ListPageState
+    let permissions: NewAdminListActions
+    let pageState: NewAdminListPageState
     let search: String?
 
     private var searchValue: String {

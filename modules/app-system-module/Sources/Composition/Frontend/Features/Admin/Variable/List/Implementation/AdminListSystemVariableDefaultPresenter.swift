@@ -16,11 +16,11 @@ struct AdminListSystemVariableDefaultPresenter:
     }
 
     func renderListPage(
-        model: AdminListModel<Components.Schemas.SystemVariableListItemSchema>,
+        model: NewAdminListModel<Components.Schemas.SystemVariableListItemSchema>,
         permissions: Set<PermissionKey>,
         search: String?
     ) async throws -> HTMLResponse {
-        let actions = ListActions(permissions)
+        let actions = NewAdminListActions(permissions)
         return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Variables",
             content: SystemVariableTable(
                 state: .init(

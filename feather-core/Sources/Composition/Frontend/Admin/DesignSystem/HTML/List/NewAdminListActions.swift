@@ -1,6 +1,6 @@
 import FeatherContracts
 
-public struct ListActions: Sendable {
+public struct NewAdminListActions: Sendable {
 
     public let granted: Set<PermissionKey>
 

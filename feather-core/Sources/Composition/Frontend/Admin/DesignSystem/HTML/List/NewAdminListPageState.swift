@@ -1,4 +1,4 @@
-public struct ListPageState: Sendable, Equatable {
+public struct NewAdminListPageState: Sendable, Equatable {
     public let page: Int
     public let pageSize: Int
     public let total: Int

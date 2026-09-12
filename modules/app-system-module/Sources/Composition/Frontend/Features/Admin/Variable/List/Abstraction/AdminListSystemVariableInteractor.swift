@@ -7,7 +7,7 @@ protocol AdminListSystemVariableInteractor: Sendable {
     func listSystemVariables(
         page: Int,
         search: String?
-    ) async throws -> AdminListModel<
+    ) async throws -> NewAdminListModel<
         Components.Schemas.SystemVariableListItemSchema
     >
 

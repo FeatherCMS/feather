@@ -53,12 +53,12 @@ public struct NewAdminListRowActions: Component {
 
     public let label: String
     public let actions: [Action]
-    public let permissions: ListActions
+    public let permissions: NewAdminListActions
 
     public init(
         label: String,
         actions: [Action],
-        permissions: ListActions
+        permissions: NewAdminListActions
     ) {
         self.label = label
         self.actions = actions
