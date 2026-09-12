@@ -1,6 +1,7 @@
 import Foundation
 
-public struct SystemVariableAddFormInput: Codable, Sendable, Equatable, Hashable {
+public struct SystemVariableAddFormInput: Codable, Sendable, Equatable, Hashable
+{
     let id: String
     let value: String
     let name: String?

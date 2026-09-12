@@ -360,8 +360,9 @@ extension DefaultRequestContext {
         // and trailing slashes do not affect selection, while similarly named
         // routes (for example `/variables` and `/variables-archive`) remain
         // distinct.
-        guard currentPath == normalizedLink
-            || currentPath.hasPrefix(normalizedLink + "/")
+        guard
+            currentPath == normalizedLink
+                || currentPath.hasPrefix(normalizedLink + "/")
         else {
             return false
         }

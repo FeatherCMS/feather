@@ -2,11 +2,23 @@ import FeatherValidation
 
 private enum SystemVariableAddFormValidator {
     static func id(_ value: String) -> Validator<String> {
-        .init(key: "id", value: value, required: true, invocation: .all, rules: [.trimmedNonempty(message: "ID is required.")])
+        .init(
+            key: "id",
+            value: value,
+            required: true,
+            invocation: .all,
+            rules: [.trimmedNonempty(message: "ID is required.")]
+        )
     }
 
     static func name(_ value: String?) -> Validator<String> {
-        .init(key: "name", value: value, required: false, invocation: .all, rules: [])
+        .init(
+            key: "name",
+            value: value,
+            required: false,
+            invocation: .all,
+            rules: []
+        )
     }
 
     static func value(_ value: String) -> Validator<String> {
@@ -20,7 +32,13 @@ private enum SystemVariableAddFormValidator {
     }
 
     static func notes(_ value: String?) -> Validator<String> {
-        .init(key: "notes", value: value, required: false, invocation: .all, rules: [])
+        .init(
+            key: "notes",
+            value: value,
+            required: false,
+            invocation: .all,
+            rules: []
+        )
     }
 }
 

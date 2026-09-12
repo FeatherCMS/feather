@@ -27,11 +27,14 @@ struct BlogAuthorLinkAdd: Component {
 
             H1("Add blog author link")
             Div {
-                context.render(BlogAuthorLinkForm(
-                state: state.form,
-                action: "/admin/blog/authors/\(state.menuId)/links/add/",
-                submitLabel: "Add link"
-                ))
+                context.render(
+                    BlogAuthorLinkForm(
+                        state: state.form,
+                        action:
+                            "/admin/blog/authors/\(state.menuId)/links/add/",
+                        submitLabel: "Add link"
+                    )
+                )
             }
         }
         .class("cms-section")

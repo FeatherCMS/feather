@@ -69,10 +69,14 @@ struct AdminListSystemVariableDefaultPresenter:
             menuGroups: menuGroups,
             notification: notification
         )
-        return .init(renderContext.render(NewAdminHTML(
-            title: "Variables",
-            body: .init(content: layout)
-        )))
+        return .init(
+            renderContext.render(
+                NewAdminHTML(
+                    title: "Variables",
+                    body: .init(content: layout)
+                )
+            )
+        )
     }
 
     private func systemVariableBreadcrumb() -> NewAdminBreadcrumb.State {

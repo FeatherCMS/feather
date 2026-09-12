@@ -19,12 +19,17 @@ struct SystemVariableTable: Component {
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
-        return Section {
+        Section {
             context.render(NewAdminBreadcrumb(state: state.breadcrumb))
-            context.render(NewAdminPageHeader(state: .init(
-                title: "Variables",
-                description: "Manage configuration values used by the application."
-            )))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Variables",
+                        description:
+                            "Manage configuration values used by the application."
+                    )
+                )
+            )
             context.render(
                 SystemVariableTableContent(
                     variables: state.variables,

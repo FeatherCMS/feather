@@ -26,12 +26,14 @@ struct BlogTagAdd: Component {
 
             H1("Add tag")
             Div {
-                context.render(BlogTagForm(
-                state: state.form,
-                action: "/admin/blog/tags/add/",
-                submitLabel: "Add tag",
-                publishLabel: "Publish tag"
-                ))
+                context.render(
+                    BlogTagForm(
+                        state: state.form,
+                        action: "/admin/blog/tags/add/",
+                        submitLabel: "Add tag",
+                        publishLabel: "Publish tag"
+                    )
+                )
             }
         }
         .class("cms-section")

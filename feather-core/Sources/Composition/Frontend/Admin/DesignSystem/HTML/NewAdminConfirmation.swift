@@ -57,7 +57,11 @@ public struct NewAdminConfirmation: Component {
                 Margin(vertical: 20.px, horizontal: 0.px)
                 Padding(vertical: 16.px, horizontal: 20.px)
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Tertiary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
                 BorderRadius(8.px)
             }
             Custom(".admin-confirmation-items p") { Margin(0) }
@@ -74,7 +78,11 @@ public struct NewAdminConfirmation: Component {
     public func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(NewAdminBreadcrumb(state: breadcrumb))
-            context.render(NewAdminPageHeader(state: .init(title: title, description: message)))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(title: title, description: message)
+                )
+            )
             if !selectedNames.isEmpty {
                 Div {
                     Ul {

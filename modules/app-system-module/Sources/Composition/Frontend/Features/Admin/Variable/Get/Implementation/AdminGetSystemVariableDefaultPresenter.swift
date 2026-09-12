@@ -17,7 +17,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
         breadcrumb: NewAdminBreadcrumb.State,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "System variable details",
@@ -36,7 +36,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
         breadcrumb: NewAdminBreadcrumb.State,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "System variable details",

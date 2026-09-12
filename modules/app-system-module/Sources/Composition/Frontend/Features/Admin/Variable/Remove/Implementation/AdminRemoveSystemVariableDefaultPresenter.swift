@@ -48,16 +48,18 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 selectedNames: names,
                 action: SystemVariableRoutes.remove.description,
                 cancel: fromDetails && ids.count == 1
-                    ? SystemVariableRoutes.details(RouterPath(ids[0])).description
+                    ? SystemVariableRoutes.details(RouterPath(ids[0]))
+                        .description
                     : ids.count == 1
-                    ? SystemVariableRoutes.edit(RouterPath(ids[0])).description
-                    : ListRemoveRedirect.location(
-                        path: SystemVariableRoutes.list.description,
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
+                        ? SystemVariableRoutes.edit(RouterPath(ids[0]))
+                            .description
+                        : ListRemoveRedirect.location(
+                            path: SystemVariableRoutes.list.description,
+                            page: page,
+                            search: search,
+                            title: nil,
+                            message: nil
+                        ),
                 hiddenFields: ids.map {
                     .init(name: "ids", value: $0)
                 }

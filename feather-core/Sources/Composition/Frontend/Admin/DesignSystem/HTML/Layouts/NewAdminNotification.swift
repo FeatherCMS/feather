@@ -29,7 +29,11 @@ public struct NewAdminNotification: Component {
                 BoxSizing(.borderBox)
                 Padding(top: 12.px, right: 48.px, bottom: 12.px, left: 22.px)
                 BorderRadius(999.px)
-                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Tertiary.border))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
                 TextAlign(.left)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
@@ -129,7 +133,9 @@ public struct NewAdminNotification: Component {
             Span {
                 icon
             }
-            .class("admin-notification__icon admin-notification__icon--\(notification.kind.rawValue)")
+            .class(
+                "admin-notification__icon admin-notification__icon--\(notification.kind.rawValue)"
+            )
             Span {
                 Span(notification.title).class("admin-notification__title")
                 if !notification.message.isEmpty {
@@ -144,16 +150,18 @@ public struct NewAdminNotification: Component {
             .type(.button)
             .class("admin-notification__close")
             .ariaLabel("Dismiss notification")
-            .onClick("document.cookie='admin_notification=; Max-Age=0; path=/admin';var n=this.closest('#admin-toast');if(n){n.classList.remove('is-visible');n.classList.add('is-hidden');setTimeout(function(){n.remove()},220)}")
+            .onClick(
+                "document.cookie='admin_notification=; Max-Age=0; path=/admin';var n=this.closest('#admin-toast');if(n){n.classList.remove('is-visible');n.classList.add('is-hidden');setTimeout(function(){n.remove()},220)}"
+            )
         }
         .id("admin-toast")
         .class("admin-notification")
         .data("notification-inline", "true")
         .data("toast-type", notification.kind.rawValue)
         .data("toast-title", notification.title)
-            .data("toast-message", notification.message)
-            .data("toast-position", notification.position)
-        }
+        .data("toast-message", notification.message)
+        .data("toast-position", notification.position)
+    }
 
     private var icon: SVG {
         switch notification.kind {

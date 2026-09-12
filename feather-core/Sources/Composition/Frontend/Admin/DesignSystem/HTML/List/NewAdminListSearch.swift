@@ -40,7 +40,9 @@ public struct NewAdminListSearch: Component {
                 Width(100.percent)
                 PaddingRight(34.px)
             }
-            Custom(".table-search-form input[type='search']::-webkit-search-cancel-button") {
+            Custom(
+                ".table-search-form input[type='search']::-webkit-search-cancel-button"
+            ) {
                 Display(.none)
             }
             Custom(".table-search-form .table-search-input") {
@@ -56,7 +58,9 @@ public struct NewAdminListSearch: Component {
             Custom(
                 ".table-search-form input[type='search']:focus, .table-search-form input[type='search']:focus-visible, .table-search-form select:focus, .table-search-form select:focus-visible"
             ) {
-                BorderColor(.variable(TokenKey.Colors.Materials.Tertiary.border))
+                BorderColor(
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
                 Outline(
                     2.px,
                     .solid,

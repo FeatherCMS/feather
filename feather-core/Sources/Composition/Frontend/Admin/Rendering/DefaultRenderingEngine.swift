@@ -176,8 +176,16 @@ public struct DefaultRenderingEngine: RenderingEngine {
         )
         let notification = AdminNotificationFlash.notification(from: request)
         var context = RenderContext()
-        let layout = NewAdminBaseLayout(content: content, menuGroups: menuGroups, notification: notification)
-        return .init(context.render(NewAdminHTML(title: title, body: .init(content: layout))))
+        let layout = NewAdminBaseLayout(
+            content: content,
+            menuGroups: menuGroups,
+            notification: notification
+        )
+        return .init(
+            context.render(
+                NewAdminHTML(title: title, body: .init(content: layout))
+            )
+        )
     }
 
     private func normalizedURL(

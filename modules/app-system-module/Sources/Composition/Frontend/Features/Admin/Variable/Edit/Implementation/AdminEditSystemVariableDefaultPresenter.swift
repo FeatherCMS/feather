@@ -27,9 +27,12 @@ struct AdminEditSystemVariableDefaultPresenter:
                 breadcrumb: breadcrumb(),
                 form: SystemVariableEditForm(
                     state: state,
-                    action: SystemVariableRoutes.edit(RouterPath(id)).description,
+                    action: SystemVariableRoutes.edit(RouterPath(id))
+                        .description,
                     submitLabel: "Save",
-                    removeHref: actions.allows(SystemPermissions.Variables.delete) ? SystemVariableRoutes.remove(id) : nil,
+                    removeHref: actions.allows(
+                        SystemPermissions.Variables.delete
+                    ) ? SystemVariableRoutes.remove(id) : nil,
                     nonceToken: nonceToken
                 )
             )
@@ -40,7 +43,7 @@ struct AdminEditSystemVariableDefaultPresenter:
         info: String,
         message: String
     ) async throws -> HTMLResponse {
-        return try await renderPage(
+        try await renderPage(
             content: NewAdminStatusView(
                 state: .init(title: info, message: message),
                 icon: FeatherIcons.alertCircle()
@@ -48,8 +51,10 @@ struct AdminEditSystemVariableDefaultPresenter:
         )
     }
 
-    private func renderPage<T: Component>(content: T) async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(
+    private func renderPage<T: Component>(content: T) async throws
+        -> HTMLResponse
+    {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Manage system variables",

@@ -107,7 +107,12 @@ struct SystemVariableAddForm: Component {
             context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldTextArea(state: state.value))
             context.render(NewAdminFormFieldTextArea(state: state.notes))
-            Div { context.render(NewAdminSubmitButton(submitLabel, style: .primary)) }.class("new-admin-form__actions")
+            Div {
+                context.render(
+                    NewAdminSubmitButton(submitLabel, style: .primary)
+                )
+            }
+            .class("new-admin-form__actions")
         }
         context.register(form)
         return form.html(context: &context)

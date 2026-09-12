@@ -34,6 +34,7 @@ public struct NewAdminPageHeader: Component {
         Div {
             H1(state.title)
             P(state.description)
-        }.class("admin-page-header")
+        }
+        .class("admin-page-header")
     }
 }

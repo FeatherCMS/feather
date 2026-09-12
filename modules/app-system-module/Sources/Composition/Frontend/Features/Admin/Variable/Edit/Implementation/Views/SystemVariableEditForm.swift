@@ -25,9 +25,25 @@ struct SystemVariableEditForm: Component {
         static func empty() -> Self {
             .init(
                 id: .init(name: "id", label: "ID", value: "", isRequired: true),
-                name: .init(name: "name", label: "Name", value: "", isRequired: true),
-                value: .init(name: "value", label: "Value", value: "", style: .small, isRequired: true),
-                notes: .init(name: "notes", label: "Notes", value: "", style: .small),
+                name: .init(
+                    name: "name",
+                    label: "Name",
+                    value: "",
+                    isRequired: true
+                ),
+                value: .init(
+                    name: "value",
+                    label: "Value",
+                    value: "",
+                    style: .small,
+                    isRequired: true
+                ),
+                notes: .init(
+                    name: "notes",
+                    label: "Notes",
+                    value: "",
+                    style: .small
+                ),
                 error: nil,
                 success: nil
             )
@@ -35,10 +51,31 @@ struct SystemVariableEditForm: Component {
 
         static func from(variable: SystemVariableDetailsModel) -> Self {
             .init(
-                id: .init(name: "id", label: "ID", value: variable.id, isRequired: true),
-                name: .init(name: "name", label: "Name", value: variable.name ?? "", isRequired: true),
-                value: .init(name: "value", label: "Value", value: variable.value, style: .small, isRequired: true),
-                notes: .init(name: "notes", label: "Notes", value: variable.notes ?? "", style: .small),
+                id: .init(
+                    name: "id",
+                    label: "ID",
+                    value: variable.id,
+                    isRequired: true
+                ),
+                name: .init(
+                    name: "name",
+                    label: "Name",
+                    value: variable.name ?? "",
+                    isRequired: true
+                ),
+                value: .init(
+                    name: "value",
+                    label: "Value",
+                    value: variable.value,
+                    style: .small,
+                    isRequired: true
+                ),
+                notes: .init(
+                    name: "notes",
+                    label: "Notes",
+                    value: variable.notes ?? "",
+                    style: .small
+                ),
                 error: nil,
                 success: nil
             )
@@ -46,10 +83,31 @@ struct SystemVariableEditForm: Component {
 
         static func from(input: SystemVariableEditFormInput) -> Self {
             .init(
-                id: .init(name: "id", label: "ID", value: input.normalizedID, isRequired: true),
-                name: .init(name: "name", label: "Name", value: input.normalizedName, isRequired: true),
-                value: .init(name: "value", label: "Value", value: input.normalizedValue, style: .small, isRequired: true),
-                notes: .init(name: "notes", label: "Notes", value: input.normalizedNotes, style: .small),
+                id: .init(
+                    name: "id",
+                    label: "ID",
+                    value: input.normalizedID,
+                    isRequired: true
+                ),
+                name: .init(
+                    name: "name",
+                    label: "Name",
+                    value: input.normalizedName,
+                    isRequired: true
+                ),
+                value: .init(
+                    name: "value",
+                    label: "Value",
+                    value: input.normalizedValue,
+                    style: .small,
+                    isRequired: true
+                ),
+                notes: .init(
+                    name: "notes",
+                    label: "Notes",
+                    value: input.normalizedNotes,
+                    style: .small
+                ),
                 error: nil,
                 success: nil
             )
@@ -85,11 +143,20 @@ struct SystemVariableEditForm: Component {
             context.render(NewAdminFormFieldTextArea(state: state.value))
             context.render(NewAdminFormFieldTextArea(state: state.notes))
             Div {
-                context.render(NewAdminSubmitButton(submitLabel, style: .primary))
+                context.render(
+                    NewAdminSubmitButton(submitLabel, style: .primary)
+                )
                 if let removeHref {
-                    context.render(NewAdminButton("Remove", href: removeHref, style: .destructive))
+                    context.render(
+                        NewAdminButton(
+                            "Remove",
+                            href: removeHref,
+                            style: .destructive
+                        )
+                    )
                 }
-            }.class("new-admin-form__actions")
+            }
+            .class("new-admin-form__actions")
         }
         context.register(form)
         return form.html(context: &context)

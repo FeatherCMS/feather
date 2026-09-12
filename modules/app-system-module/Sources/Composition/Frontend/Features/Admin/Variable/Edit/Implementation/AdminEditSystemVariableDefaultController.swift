@@ -68,16 +68,19 @@ struct AdminEditSystemVariableDefaultController:
                 context: context
             )
             lastPayload = payload
-            guard await AdminNonceStore.shared.consume(
-                payload.nonce,
-                sessionToken: context.sessionToken
-            ) else {
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
                 throw HTTPError(.forbidden)
             }
             try await runtime.interactor.edit(id: id, input: payload)
 
             return AdminNotificationFlash.redirect(
-                to: SystemVariableRoutes.edit(RouterPath(payload.normalizedID)).description,
+                to: SystemVariableRoutes.edit(RouterPath(payload.normalizedID))
+                    .description,
                 notification: .init(
                     title: "Saved",
                     message: "System variable edited successfully."
@@ -132,7 +135,9 @@ struct AdminEditSystemVariableDefaultController:
         input.map { SystemVariableEditForm.State.from(input: $0) } ?? .empty()
     }
 
-    private func permissionKeys(_ permissions: Set<String>) -> Set<PermissionKey> {
+    private func permissionKeys(_ permissions: Set<String>) -> Set<
+        PermissionKey
+    > {
         Set(permissions.map(PermissionKey.init))
     }
 }

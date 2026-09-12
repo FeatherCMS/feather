@@ -31,8 +31,10 @@ struct AdminAddSystemVariableDefaultPresenter:
         )
     }
 
-    private func renderPage<T: Component>(content: T) async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(
+    private func renderPage<T: Component>(content: T) async throws
+        -> HTMLResponse
+    {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Manage system variables",

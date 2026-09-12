@@ -22,7 +22,8 @@ public struct NewAdminListPagination: Component {
                 FontSize(0.82.rem)
                 Margin(0)
             }
-            Custom(".table-pagination .table-pagination-summary p:first-child") {
+            Custom(".table-pagination .table-pagination-summary p:first-child")
+            {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 FontSize(0.86.rem)
                 FontWeight(.normal)
@@ -60,7 +61,8 @@ public struct NewAdminListPagination: Component {
                 UnsafeRawProperty(name: "appearance", value: "none")
                 UnsafeRawProperty(
                     name: "background-image",
-                    value: "linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%)"
+                    value:
+                        "linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%)"
                 )
                 UnsafeRawProperty(
                     name: "background-position",
@@ -74,7 +76,11 @@ public struct NewAdminListPagination: Component {
                 Gap(8.px)
             }
             Custom(".table-pagination .pagination-page-select:focus-visible") {
-                Outline(2.px, .solid, .color(.variable(TokenKey.Colors.Link.hover)))
+                Outline(
+                    2.px,
+                    .solid,
+                    .color(.variable(TokenKey.Colors.Link.hover))
+                )
                 OutlineOffset(2.px)
             }
         }
@@ -167,7 +173,8 @@ public struct NewAdminListPagination: Component {
                     context.render(
                         NewAdminRowButton(
                             "Prev",
-                            href: "\(state.path)?page=\(state.pageState.page - 1)\(filterSuffix)",
+                            href:
+                                "\(state.path)?page=\(state.pageState.page - 1)\(filterSuffix)",
                             style: .ghost(.secondary)
                         )
                     )
@@ -229,7 +236,8 @@ public struct NewAdminListPagination: Component {
                     context.render(
                         NewAdminRowButton(
                             "Last",
-                            href: "\(state.path)?page=\(totalPages)\(filterSuffix)",
+                            href:
+                                "\(state.path)?page=\(totalPages)\(filterSuffix)",
                             style: .ghost(.secondary)
                         )
                     )

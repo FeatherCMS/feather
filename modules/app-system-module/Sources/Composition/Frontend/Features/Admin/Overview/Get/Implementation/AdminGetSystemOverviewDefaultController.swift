@@ -1,7 +1,8 @@
 import FeatherAdmin
 import Hummingbird
 
-struct AdminGetSystemOverviewDefaultController: AdminGetSystemOverviewController {
+struct AdminGetSystemOverviewDefaultController: AdminGetSystemOverviewController
+{
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetSystemOverviewInteractor,

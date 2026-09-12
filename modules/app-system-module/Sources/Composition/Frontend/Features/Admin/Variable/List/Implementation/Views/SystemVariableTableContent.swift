@@ -91,11 +91,17 @@ struct SystemVariableTableContent: Component {
                                                         )
                                                     }
                                                     Th("ID")
-                                                        .columnWidth(percent: 30)
+                                                        .columnWidth(
+                                                            percent: 30
+                                                        )
                                                     Th("Name")
-                                                        .columnWidth(percent: 35)
+                                                        .columnWidth(
+                                                            percent: 35
+                                                        )
                                                     Th("Value")
-                                                        .columnWidth(percent: 35)
+                                                        .columnWidth(
+                                                            percent: 35
+                                                        )
                                                     Th("Actions")
                                                 }
                                             }

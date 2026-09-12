@@ -46,10 +46,12 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
                 context: context
             )
             lastPayload = payload
-            guard await AdminNonceStore.shared.consume(
-                payload.nonce,
-                sessionToken: context.sessionToken
-            ) else {
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
                 throw HTTPError(.forbidden)
             }
             try await runtime.interactor.add(input: payload)

@@ -30,15 +30,17 @@ struct BlogAuthorLinkEdit: Component {
             H1("Edit blog author link")
             if state.isEdited { P("Blog author link edited successfully.") }
             Div {
-                context.render(BlogAuthorLinkForm(
-                state: state.form,
-                action:
-                    "/admin/blog/authors/\(state.menuId)/links/\(state.id)/edit/",
-                submitLabel: "Edit link",
-                removeHref:
-                    "/admin/blog/authors/\(state.menuId)/links/\(state.id)/remove/",
-                removeLabel: "Remove link"
-                ))
+                context.render(
+                    BlogAuthorLinkForm(
+                        state: state.form,
+                        action:
+                            "/admin/blog/authors/\(state.menuId)/links/\(state.id)/edit/",
+                        submitLabel: "Edit link",
+                        removeHref:
+                            "/admin/blog/authors/\(state.menuId)/links/\(state.id)/remove/",
+                        removeLabel: "Remove link"
+                    )
+                )
             }
         }
         .class("cms-section")
