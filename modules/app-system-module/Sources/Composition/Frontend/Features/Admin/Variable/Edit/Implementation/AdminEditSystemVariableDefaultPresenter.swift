@@ -30,6 +30,7 @@ struct AdminEditSystemVariableDefaultPresenter:
                     action: SystemVariableRoutes.edit(RouterPath(id))
                         .description,
                     submitLabel: "Save",
+                    viewHref: SystemVariableRoutes.details(RouterPath(id)).description,
                     removeHref: actions.allows(
                         SystemPermissions.Variables.delete
                     ) ? SystemVariableRoutes.remove(id) : nil,

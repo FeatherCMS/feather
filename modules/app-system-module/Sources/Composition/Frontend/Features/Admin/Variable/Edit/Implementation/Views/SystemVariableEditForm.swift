@@ -117,6 +117,7 @@ struct SystemVariableEditForm: Component {
     let state: State
     let action: String
     let submitLabel: String
+    let viewHref: String
     let removeHref: String?
     let nonceToken: String?
 
@@ -124,12 +125,14 @@ struct SystemVariableEditForm: Component {
         state: State,
         action: String,
         submitLabel: String,
+        viewHref: String,
         removeHref: String?,
         nonceToken: String? = nil
     ) {
         self.state = state
         self.action = action
         self.submitLabel = submitLabel
+        self.viewHref = viewHref
         self.removeHref = removeHref
         self.nonceToken = nonceToken
     }
@@ -145,6 +148,9 @@ struct SystemVariableEditForm: Component {
             Div {
                 context.render(
                     NewAdminSubmitButton(submitLabel, style: .primary)
+                )
+                context.render(
+                    NewAdminButton("View", href: viewHref, style: .secondary)
                 )
                 if let removeHref {
                     context.render(

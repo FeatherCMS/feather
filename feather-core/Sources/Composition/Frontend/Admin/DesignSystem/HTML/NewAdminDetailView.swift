@@ -77,25 +77,23 @@ public struct NewAdminDetailView: Component {
                 Gap(12.px)
             }
             Custom(".admin-detail-view-field") {
-                Padding(0.px)
+                Padding(vertical: 12.px)
             }
             Custom(".admin-detail-view-field-label") {
                 Margin(0)
+                Padding(bottom: 8.px)
+                BorderBottom(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
                 FontWeight(.normal)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 Opacity(0.8)
             }
             Custom(".admin-detail-view-field-value") {
                 Margin(top: 6.px)
-                Padding(vertical: 10.px, horizontal: 12.px)
-                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Secondary.border)
-                )
-                BorderRadius(6.px)
             }
             Custom(".new-admin-detail-actions") {
                 Display(.flex)
