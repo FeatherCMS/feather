@@ -15,7 +15,7 @@ extension AdminGetDesignSystemController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/design-system",
+            "/admin/system/design-system",
             use: getDesignSystem
         )
     }

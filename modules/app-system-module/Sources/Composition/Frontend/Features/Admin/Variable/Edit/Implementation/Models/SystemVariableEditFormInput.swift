@@ -1,4 +1,5 @@
 import Foundation
+import FeatherContracts
 
 public struct SystemVariableEditFormInput: Codable, Sendable, Equatable,
     Hashable
@@ -15,20 +16,18 @@ public struct SystemVariableEditFormInput: Codable, Sendable, Equatable,
     }
 
     var normalizedName: String? {
-        let value = name?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        return value.isEmpty ? nil : value
+        name?.emptyToNil
     }
 
     var normalizedKey: String {
-        key.trimmingCharacters(in: .whitespacesAndNewlines)
+        key.emptyToNil ?? ""
     }
 
     var normalizedValue: String {
-        value.trimmingCharacters(in: .whitespacesAndNewlines)
+        value.emptyToNil ?? ""
     }
 
     var normalizedNotes: String? {
-        let value = notes?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        return value.isEmpty ? nil : value
+        notes?.emptyToNil
     }
 }

@@ -1,76 +1,50 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
-import SGML
-import WebBuilders
+import SystemAdminAPI
 import WebComponents
 
 struct AdminEditSystemPermissionDefaultPresenter:
     AdminEditSystemPermissionPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(
         id: String,
-        state: SystemPermissionForm.State,
-        isEdited: Bool,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        state: SystemPermissionEditForm.State,
+        isEdited: Bool
+    ) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
-            title: "Edit system permission",
-            description: "Edit a management system permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: SystemPermissionEdit(
+            context: context,
+            title: "Manage system permissions",
+            content: SystemPermissionEditPage(
                 state: .init(
                     id: id,
                     isEdited: isEdited,
                     form: state,
-                    breadcrumb: breadcrumb(id: id)
+                    nonceToken: nonceToken
                 )
             )
         )
     }
 
     func renderErrorPage(
-        id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        message: String
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
-            title: "Edit system permission",
-            description: "Edit a management system permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: SystemPermissionError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb(id: id)
-                )
+            context: context,
+            title: "Manage system permissions",
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
             )
-        )
-    }
-
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-                .init(label: "Permissions", link: "/admin/system/permissions/"),
-            ]
         )
     }
 }

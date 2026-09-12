@@ -14,9 +14,6 @@ extension AdminGetSystemPermissionController {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.get(
-            "/admin/system/permissions/{id}/",
-            use: getSystemPermission
-        )
+        router.get(SystemPermissionRoutes.details(RouterPath("{id}")), use: getSystemPermission)
     }
 }

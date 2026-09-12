@@ -2,7 +2,6 @@ import FeatherAdmin
 import FeatherContracts
 import HTML
 import Hummingbird
-import SGML
 import SystemContracts
 import WebBuilders
 import WebComponents
@@ -11,113 +10,46 @@ struct AdminListSystemPermissionDefaultPresenter:
     AdminListSystemPermissionPresenter
 {
     let request: Request
-    let renderEngine: any RenderingEngine
+    let context: DefaultRequestContext
+    let renderingEngine: any RenderingEngine
 
     func renderListPage(
         model: AdminListSystemPermissionModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
-        permissions: Set<String>,
-        search: String?,
-        error: String?
-    ) -> HTMLResponse {
-        let canAccess = permissions.contains(
-            SystemPermissions.Permissions.list.rawValue
-        )
-        if let error {
-            return renderEngine.renderAdminPage(
-                request: request,
-                title: "Manage system permissions",
-                description: "Management system permission list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
-                content: SystemPermissionError(
-                    state: .init(
-                        info: "Unable to load system permissions.",
-                        message: error,
-                        breadcrumb: systemPermissionBreadcrumbState()
-                    )
-                )
-            )
-        }
-        return renderEngine.renderAdminPage(
+        permissions: NewAdminListActions,
+        search: String?
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
-            title: "Manage system permissions",
-            description: "Management system permission list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
+            context: context,
+            title: "Permissions",
             content: SystemPermissionTable(
                 state: .init(
-                    isAdded: isAdded,
-                    isEdited: isEdited,
-                    isRemoved: isRemoved,
-                    canAccess: canAccess,
                     permissions: permissions,
-                    canAdd: permissions.contains(
-                        SystemPermissions.Permissions.create.rawValue
+                    permissionsList: model.items,
+                    pageState: .init(
+                        page: model.page,
+                        pageSize: model.pageSize,
+                        total: model.total
                     ),
-                    items: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
-                    search: search ?? "",
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your account cannot access system permissions.",
-                    breadcrumb: systemPermissionBreadcrumbState()
+                    search: search
                 )
             )
         )
     }
 
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    func renderErrorPage(
+        title: String,
+        message: String
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
-            title: "Remove selected permissions",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: systemPermissionBreadcrumbState(),
-                    title: "Remove selected permissions",
-                    message:
-                        "Are you sure you want to remove these selected permissions? This action cannot be undone.",
-                    action: "/admin/system/permissions/remove/",
-                    cancelLink: ListRemoveRedirect.location(
-                        path: "/admin/system/permissions/",
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: selectedIds
-                )
+            context: context,
+            title: "Permissions",
+            content: NewAdminStatusView(
+                state: .init(title: title, message: message),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
 
-    private func systemPermissionBreadcrumbState() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-            ]
-        )
-    }
 }

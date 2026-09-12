@@ -3,11 +3,7 @@ import Foundation
 
 protocol AdminRemoveSystemPermissionInteractor: Sendable {
 
-    func get(
-        id: String
-    ) async throws -> SystemPermissionDetailsModel
+    func names(ids: [String]) async throws -> [String]
 
-    func delete(
-        id: String
-    ) async throws
+    func delete(ids: [String]) async throws
 }

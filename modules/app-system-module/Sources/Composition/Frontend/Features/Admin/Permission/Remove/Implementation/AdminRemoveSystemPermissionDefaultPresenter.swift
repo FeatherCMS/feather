@@ -1,76 +1,87 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
-import SGML
-import WebBuilders
+import SystemContracts
 import WebComponents
 
 struct AdminRemoveSystemPermissionDefaultPresenter:
     AdminRemoveSystemPermissionPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
-        id: String,
-        name: String,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        page: Int,
+        search: String?,
+        ids: [String],
+        names: [String],
+        fromDetails: Bool,
+        fromEdit: Bool
+    ) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
-            title: "Remove system permission",
-            description:
-                "Remove confirmation for a management system permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: SystemPermissionConfirmation(
-                state: .init(
-                    id: id,
-                    name: name,
-                    breadcrumb: breadcrumb(id: id)
-                )
+            context: context,
+            title: "Manage system permissions",
+            content: NewAdminConfirmation(
+                breadcrumb: SystemPermissionRoutes.breadcrumb,
+                pageHeader: .init(
+                    title: "Remove selected permissions",
+                    description: "You’re about to permanently remove the selected system permissions. This action cannot be undone."
+                ),
+                selectedItems: names,
+                action: SystemPermissionRoutes.remove.description,
+                cancel: cancelURL(
+                    ids: ids,
+                    page: page,
+                    search: search,
+                    fromDetails: fromDetails,
+                    fromEdit: fromEdit
+                ),
+                hiddenFields: ids.map { .init(name: "ids", value: $0) }
+                    + [.init(name: "_nonce", value: nonceToken)]
             )
         )
     }
 
     func renderErrorPage(
-        id: String,
         info: String,
         message: String,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        cancel: String
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
-            title: "Remove system permission",
-            description:
-                "Remove confirmation for a management system permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: SystemPermissionError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb(id: id)
-                )
+            context: context,
+            title: "Manage system permissions",
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle(),
+                action: NewAdminButton("Back", href: cancel, style: .secondary)
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-                .init(label: "Permissions", link: "/admin/system/permissions/"),
-            ]
+    private func cancelURL(
+        ids: [String],
+        page: Int,
+        search: String?,
+        fromDetails: Bool,
+        fromEdit: Bool
+    ) -> String {
+        if fromDetails, ids.count == 1 {
+            return SystemPermissionRoutes.details(RouterPath(ids[0])).description
+        }
+        if fromEdit, ids.count == 1 {
+            return SystemPermissionRoutes.edit(RouterPath(ids[0])).description
+        }
+        return ListRemoveRedirect.location(
+            path: SystemPermissionRoutes.list.description,
+            page: page,
+            search: search,
+            title: nil,
+            message: nil
         )
     }
 }

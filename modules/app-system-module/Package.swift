@@ -193,6 +193,9 @@ let package = Package(
                 .target(name: "SystemAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
+            exclude: [
+                "Features/Admin/Variable/AGENTS.md"
+            ],
             swiftSettings: defaultSwiftSettings
         ),
         // MARK: -

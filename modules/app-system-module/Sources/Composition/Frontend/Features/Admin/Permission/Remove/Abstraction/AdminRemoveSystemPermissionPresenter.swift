@@ -4,19 +4,17 @@ import Hummingbird
 protocol AdminRemoveSystemPermissionPresenter: Sendable {
 
     func renderRemovePage(
-        id: String,
-        name: String,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        page: Int,
+        search: String?,
+        ids: [String],
+        names: [String],
+        fromDetails: Bool,
+        fromEdit: Bool
+    ) async throws -> HTMLResponse
 
     func renderErrorPage(
-        id: String,
         info: String,
         message: String,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State
+        cancel: String
+    ) async throws -> HTMLResponse
 }

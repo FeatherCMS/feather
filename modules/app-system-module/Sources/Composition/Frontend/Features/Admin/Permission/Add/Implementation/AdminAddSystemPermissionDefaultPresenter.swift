@@ -1,48 +1,41 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
-import SGML
-import WebBuilders
+import SystemAdminAPI
 import WebComponents
 
 struct AdminAddSystemPermissionDefaultPresenter:
     AdminAddSystemPermissionPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(
-        state: SystemPermissionForm.State,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        state: SystemPermissionAddForm.State
+    ) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
-            title: "Add system permission",
-            description: "Add a system permission in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: SystemPermissionAdd(
-                state: .init(
-                    form: state,
-                    breadcrumb: breadcrumb()
-                )
-            )
+            context: context,
+            title: "Manage system permissions",
+            content: SystemPermissionAddPage(state: .init(form: state, nonceToken: nonceToken))
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-                .init(
-                    label: "Permissions",
-                    link: "/admin/system/permissions/"
-                ),
-            ]
+    func renderErrorPage(
+        info: String,
+        message: String
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Manage system permissions",
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
+            )
         )
     }
 }

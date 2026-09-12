@@ -4,7 +4,11 @@ import Hummingbird
 protocol AdminAddSystemPermissionPresenter: Sendable {
 
     func renderAddPage(
-        state: SystemPermissionForm.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        state: SystemPermissionAddForm.State
+    ) async throws -> HTMLResponse
+
+    func renderErrorPage(
+        info: String,
+        message: String
+    ) async throws -> HTMLResponse
 }

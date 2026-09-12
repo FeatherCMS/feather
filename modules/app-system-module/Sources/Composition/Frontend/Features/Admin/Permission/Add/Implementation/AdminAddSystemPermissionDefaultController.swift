@@ -1,6 +1,7 @@
 import FeatherAdmin
 import FeatherValidation
 import Hummingbird
+import SystemContracts
 
 struct AdminAddSystemPermissionDefaultController:
     AdminAddSystemPermissionController
@@ -16,10 +17,13 @@ struct AdminAddSystemPermissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderAddPage(
-            state: formState(),
-            permissions: context.currentUserPermissions
-        )
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Permissions.create) else {
+            return try await presenter.renderErrorPage(
+                info: "Forbidden",
+                message: "Your account cannot create system permissions."
+            )
+        }
+        return try await presenter.renderAddPage(state: formState())
     }
 
     func postAddSystemPermission(
@@ -27,15 +31,29 @@ struct AdminAddSystemPermissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        let permissions = context.currentUserPermissions
-        var lastPayload: SystemPermissionFormInput?
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Permissions.create) else {
+            return try await presenter.renderErrorPage(
+                info: "Forbidden",
+                message: "Your account cannot create system permissions."
+            ).response(from: request, context: context)
+        }
+        var lastPayload: SystemPermissionAddFormInput?
 
         do {
             let payload = try await request.decode(
-                as: SystemPermissionFormInput.self,
+                as: SystemPermissionAddFormInput.self,
                 context: context
             )
             lastPayload = payload
+            guard await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            ) else {
+                return try await presenter.renderErrorPage(
+                    info: "Forbidden",
+                    message: "This form has expired. Please try again."
+                ).response(from: request, context: context)
+            }
             try await payload.validate()
 
             try await interactor.execute(
@@ -46,15 +64,12 @@ struct AdminAddSystemPermissionDefaultController:
                 )
             )
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/system/permissions/",
-                        title: "Added",
-                        message: "System permission added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: SystemPermissionRoutes.list.description,
+                notification: .init(
+                    title: "Added",
+                    message: "System permission added successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -69,10 +84,9 @@ struct AdminAddSystemPermissionDefaultController:
             )
             state.apply(errors: errors)
             return
-                try presenter
+                try await presenter
                 .renderAddPage(
                     state: state,
-                    permissions: permissions
                 )
                 .response(from: request, context: context)
         }
@@ -84,12 +98,17 @@ struct AdminAddSystemPermissionDefaultController:
             )
             state.error = error.errorDescription
             return
-                try presenter
+                try await presenter
                 .renderAddPage(
                     state: state,
-                    permissions: permissions
                 )
                 .response(from: request, context: context)
+        }
+        catch let error as HTTPError {
+            return try await presenter.renderErrorPage(
+                info: "Unable to create system permission.",
+                message: error.displayMessage
+            ).response(from: request, context: context)
         }
         catch {
             var state = formState(
@@ -99,10 +118,9 @@ struct AdminAddSystemPermissionDefaultController:
             )
             state.error = error.displayMessage
             return
-                try presenter
+                try await presenter
                 .renderAddPage(
                     state: state,
-                    permissions: permissions
                 )
                 .response(from: request, context: context)
         }
@@ -112,18 +130,12 @@ struct AdminAddSystemPermissionDefaultController:
         key: String = "",
         name: String = "",
         notes: String = ""
-    ) -> SystemPermissionForm.State {
+    ) -> SystemPermissionAddForm.State {
         .init(
-            name: .init(key: "name", label: "Name", value: name, error: nil),
-            key: .init(key: "key", label: "Key", value: key, error: nil),
-            notes: .init(
-                key: "notes",
-                label: "Notes",
-                value: notes,
-                error: nil
-            ),
-            error: nil,
-            success: nil
+            key: .init(name: "key", label: "Key", value: key, isRequired: true),
+            name: .init(name: "name", label: "Name", value: name),
+            notes: .init(name: "notes", label: "Notes", value: notes, style: .small),
+            error: nil
         )
     }
 }

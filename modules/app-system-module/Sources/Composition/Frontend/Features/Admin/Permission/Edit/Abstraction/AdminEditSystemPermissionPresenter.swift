@@ -5,19 +5,12 @@ protocol AdminEditSystemPermissionPresenter: Sendable {
 
     func renderEditPage(
         id: String,
-        state: SystemPermissionForm.State,
-        isEdited: Bool,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        state: SystemPermissionEditForm.State,
+        isEdited: Bool
+    ) async throws -> HTMLResponse
 
     func renderErrorPage(
-        id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State
+        message: String
+    ) async throws -> HTMLResponse
 }

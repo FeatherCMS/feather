@@ -15,7 +15,8 @@ struct AdminGetSystemPermission {
                 )
                 let presenter = AdminGetSystemPermissionDefaultPresenter(
                     request: request,
-                    renderEngine: renderingEngine
+                    context: context,
+                    renderingEngine: renderingEngine
                 )
                 return (
                     interactor: interactor,

@@ -52,7 +52,7 @@ struct AdminEditSystemPermissionOpenAPIRepository:
 
     func update(
         id: String,
-        input: SystemPermissionFormInput
+        input: SystemPermissionEditFormInput
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.systemPermissionUpdate(

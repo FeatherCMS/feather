@@ -1,5 +1,6 @@
 import CSS
 import FeatherAdmin
+import Hummingbird
 import HTML
 import SGML
 import WebBuilders
@@ -22,7 +23,7 @@ struct AdminGetSystemOverviewComponent: Component {
         Destination(
             title: "Permissions",
             description: "Manage system access permissions.",
-            href: "/admin/system/permissions/",
+            href: SystemPermissionRoutes.list.description,
             icon: "lock"
         ),
         Destination(

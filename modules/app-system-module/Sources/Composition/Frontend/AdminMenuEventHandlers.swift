@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
+import Hummingbird
 
 public enum AdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
@@ -51,7 +52,7 @@ public enum AdminMenuEventHandlers {
                     menuKey: "system",
                     label: "Permissions",
                     icon: "lock",
-                    link: "/admin/system/permissions/",
+                    link: SystemPermissionRoutes.list.description,
                     permission: "system:permissions:list"
                 ),
                 .init(
@@ -65,7 +66,7 @@ public enum AdminMenuEventHandlers {
                     menuKey: "system",
                     label: "Design System",
                     icon: "layers",
-                    link: "/admin/design-system/",
+                    link: "/admin/system/design-system/",
                     permission: "system.admin.access"
                 ),
             ]

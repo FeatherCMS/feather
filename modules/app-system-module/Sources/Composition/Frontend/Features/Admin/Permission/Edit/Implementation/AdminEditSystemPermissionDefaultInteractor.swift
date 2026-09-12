@@ -14,7 +14,7 @@ struct AdminEditSystemPermissionDefaultInteractor:
 
     func update(
         id: String,
-        input: SystemPermissionFormInput
+        input: SystemPermissionEditFormInput
     ) async throws {
         try await repository.update(id: id, input: input)
     }

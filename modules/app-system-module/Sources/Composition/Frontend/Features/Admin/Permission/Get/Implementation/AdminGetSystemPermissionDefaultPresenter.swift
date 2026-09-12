@@ -1,70 +1,40 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
-import SGML
-import WebBuilders
+import SystemAdminAPI
 import WebComponents
 
 struct AdminGetSystemPermissionDefaultPresenter:
     AdminGetSystemPermissionPresenter
 {
     let request: Request
-    let renderEngine: any RenderingEngine
-
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "System", link: "/admin/system/"),
-            .init(label: "Permissions", link: "/admin/system/permissions/"),
-        ])
-    }
+    let context: DefaultRequestContext
+    let renderingEngine: any RenderingEngine
 
     func renderDetailsPage(
         permission: SystemPermissionDetailsModel,
-        breadcrumb: AdminBreadcrumb.State,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+        permissions: NewAdminListActions
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "System permission details",
-            description: "Management system permission details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: SystemPermissionDetails(
-                state: .init(
-                    permission: permission,
-                    breadcrumb: breadcrumb
-                )
+            content: SystemPermissionDetailsView(
+                state: .init(permission: permission, permissions: permissions)
             )
         )
     }
 
     func renderErrorPage(
         info: String,
-        message: String,
-        breadcrumb: AdminBreadcrumb.State,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+        message: String
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "System permission details",
-            description: "Management system permission details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: SystemPermissionError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb
-                )
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
