@@ -9,13 +9,13 @@ struct AdminGetSystemOverviewDefaultController: AdminGetSystemOverviewController
             presenter: any AdminGetSystemOverviewPresenter
         )
 
-    func getHome(
+    func getOverview(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
-        let model = try await interactor.getHome()
-        return try await presenter.renderHome(
+        let model = try await interactor.getOverview()
+        return try await presenter.renderOverview(
             model: model,
             permissions: context.currentUserPermissions
         )

@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
@@ -7,10 +6,9 @@ import SGML
 struct AdminGetSystemOverviewDefaultPresenter: AdminGetSystemOverviewPresenter {
     let request: Request
     let context: DefaultRequestContext
-    let events: any EventPublisher
     let renderingEngine: any RenderingEngine
 
-    func renderHome(
+    func renderOverview(
         model: AdminGetSystemOverviewModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {

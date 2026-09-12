@@ -9,7 +9,6 @@ struct AdminListSystemVariableDefaultPresenter:
 {
     let request: Request
     let context: DefaultRequestContext
-    let events: any EventPublisher
     let renderingEngine: any RenderingEngine
 
     private var requestNotification: AdminNotification? {

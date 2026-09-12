@@ -27,8 +27,7 @@ public struct AdminSystem {
         .controller.route(on: router)
 
         AdminGetSystemOverview(
-            renderingEngine: renderingEngine,
-            events: adminEvents
+            renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
@@ -64,32 +63,27 @@ public struct AdminSystem {
         .controller.route(on: router)
 
         AdminListSystemVariable(
-            events: adminEvents,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminAddSystemVariable(
-            events: adminEvents,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminEditSystemVariable(
-            events: adminEvents,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminRemoveSystemVariable(
-            events: adminEvents,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminGetSystemVariable(
-            renderingEngine: renderingEngine,
-            events: adminEvents
+            renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 

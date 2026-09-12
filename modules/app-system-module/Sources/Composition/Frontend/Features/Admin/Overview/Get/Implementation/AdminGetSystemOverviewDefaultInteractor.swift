@@ -3,7 +3,7 @@ import Hummingbird
 
 struct AdminGetSystemOverviewDefaultInteractor: AdminGetSystemOverviewInteractor
 {
-    func getHome() async throws -> AdminGetSystemOverviewModel {
+    func getOverview() async throws -> AdminGetSystemOverviewModel {
         .init(title: "System module")
     }
 }

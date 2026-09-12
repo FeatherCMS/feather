@@ -6,15 +6,13 @@ protocol AdminGetSystemVariablePresenter: Sendable {
 
     func renderDetailsPage(
         variable: SystemVariableDetailsModel,
-        breadcrumb: NewAdminBreadcrumb.State,
-        permissions: Set<String>
+        breadcrumb: NewAdminBreadcrumb.State
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
         info: String,
         message: String,
-        breadcrumb: NewAdminBreadcrumb.State,
-        permissions: Set<String>
+        breadcrumb: NewAdminBreadcrumb.State
     ) async throws -> HTMLResponse
 
 }

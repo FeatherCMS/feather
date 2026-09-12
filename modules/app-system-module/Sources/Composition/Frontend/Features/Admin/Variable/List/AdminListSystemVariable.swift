@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
 
 struct AdminListSystemVariable {
@@ -8,7 +7,6 @@ struct AdminListSystemVariable {
     let controller: any AdminListSystemVariableController
 
     init(
-        events: any EventPublisher,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminListSystemVariableDefaultController(
@@ -22,7 +20,6 @@ struct AdminListSystemVariable {
                     presenter: AdminListSystemVariableDefaultPresenter(
                         request: request,
                         context: context,
-                        events: events,
                         renderingEngine: renderingEngine
                     )
                 )

@@ -11,7 +11,7 @@ struct AdminEditSystemVariableOpenAPIRepository:
 
     func load(
         id: String
-    ) async throws -> SystemVariableDetailsModel {
+    ) async throws -> SystemVariableEditModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.systemVariableGet(
                 path: .init(systemVariableId: id),

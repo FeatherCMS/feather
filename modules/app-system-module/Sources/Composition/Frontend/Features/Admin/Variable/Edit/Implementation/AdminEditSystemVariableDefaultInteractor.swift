@@ -10,7 +10,7 @@ struct AdminEditSystemVariableDefaultInteractor:
 
     func load(
         id: String
-    ) async throws -> SystemVariableDetailsModel {
+    ) async throws -> SystemVariableEditModel {
         try await repository.load(id: id)
     }
 

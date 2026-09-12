@@ -6,7 +6,7 @@ protocol AdminEditSystemVariableRepository: Sendable {
 
     func load(
         id: String
-    ) async throws -> SystemVariableDetailsModel
+    ) async throws -> SystemVariableEditModel
 
     func update(
         id: String,

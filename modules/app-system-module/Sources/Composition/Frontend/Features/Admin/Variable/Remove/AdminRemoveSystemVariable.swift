@@ -1,11 +1,10 @@
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
 
 struct AdminRemoveSystemVariable {
     let controller: any AdminRemoveSystemVariableController
 
-    init(events: any EventPublisher, renderingEngine: any RenderingEngine) {
+    init(renderingEngine: any RenderingEngine) {
         self.controller = AdminRemoveSystemVariableDefaultController(
             buildRuntime: { request, context in
                 (
@@ -17,7 +16,6 @@ struct AdminRemoveSystemVariable {
                     presenter: AdminRemoveSystemVariableDefaultPresenter(
                         request: request,
                         context: context,
-                        events: events,
                         renderingEngine: renderingEngine
                     )
                 )

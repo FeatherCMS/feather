@@ -3,7 +3,7 @@ import Hummingbird
 
 protocol AdminGetSystemOverviewPresenter: Sendable {
 
-    func renderHome(
+    func renderOverview(
         model: AdminGetSystemOverviewModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse

@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
 import SystemAdminAPI
 import WebComponents
@@ -9,7 +8,6 @@ struct AdminAddSystemVariableDefaultPresenter:
 {
     let request: Request
     let context: DefaultRequestContext
-    let events: any EventPublisher
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(

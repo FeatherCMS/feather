@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
@@ -9,13 +8,11 @@ import WebComponents
 struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     let request: Request
     let context: DefaultRequestContext
-    let events: any EventPublisher
     let renderingEngine: any RenderingEngine
 
     func renderDetailsPage(
         variable: SystemVariableDetailsModel,
-        breadcrumb: NewAdminBreadcrumb.State,
-        permissions: Set<String>
+        breadcrumb: NewAdminBreadcrumb.State
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -33,8 +30,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     func renderErrorPage(
         info: String,
         message: String,
-        breadcrumb: NewAdminBreadcrumb.State,
-        permissions: Set<String>
+        breadcrumb: NewAdminBreadcrumb.State
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,

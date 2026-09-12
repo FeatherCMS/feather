@@ -3,7 +3,7 @@ import Hummingbird
 
 protocol AdminGetSystemOverviewController: Sendable {
 
-    func getHome(
+    func getOverview(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
@@ -16,7 +16,7 @@ extension AdminGetSystemOverviewController {
     ) {
         router.get(
             "/admin/system/",
-            use: getHome
+            use: getOverview
         )
     }
 }

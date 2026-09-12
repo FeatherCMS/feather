@@ -21,7 +21,6 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
         }
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
         do {
             let variable = try await runtime.interactor.execute(
                 entity: .init(id: id)
@@ -29,7 +28,6 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
             return try await runtime.presenter.renderDetailsPage(
                 variable: variable,
                 breadcrumb: SystemVariableRoutes.breadcrumb,
-                permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
@@ -37,7 +35,6 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
                 info: error.errorTitle,
                 message: error.errorDescription,
                 breadcrumb: SystemVariableRoutes.breadcrumb,
-                permissions: permissions
             )
         }
     }

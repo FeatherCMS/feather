@@ -49,7 +49,7 @@ struct SystemVariableEditForm: Component {
             )
         }
 
-        static func from(variable: SystemVariableDetailsModel) -> Self {
+        static func from(variable: SystemVariableEditModel) -> Self {
             .init(
                 id: .init(
                     name: "id",
