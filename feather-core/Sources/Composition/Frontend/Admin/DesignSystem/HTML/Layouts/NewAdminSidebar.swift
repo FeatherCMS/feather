@@ -349,12 +349,43 @@ extension DefaultRequestContext {
         _ link: String,
         path: String
     ) -> Bool {
-        guard link != "/" else { return path == "/" }
-        guard path == link || path.hasPrefix(link) else { return false }
-        if link == "/admin/" {
-            return path == link
+        let normalizedLink = normalizedPath(link)
+        let currentPath = normalizedPath(path)
+
+        guard normalizedLink != "/" else {
+            return currentPath == "/"
+        }
+
+        // Match route segments rather than raw prefixes so query parameters
+        // and trailing slashes do not affect selection, while similarly named
+        // routes (for example `/variables` and `/variables-archive`) remain
+        // distinct.
+        guard currentPath == normalizedLink
+            || currentPath.hasPrefix(normalizedLink + "/")
+        else {
+            return false
+        }
+
+        // The admin root is a standalone route and must not remain selected
+        // for nested admin pages.
+        if normalizedLink == "/admin" {
+            return currentPath == normalizedLink
         }
         return true
+    }
+
+    private func normalizedPath(_ value: String) -> String {
+        let path = String(
+            value.split(
+                separator: "?",
+                maxSplits: 1,
+                omittingEmptySubsequences: false
+            )[0]
+        )
+        guard path.count > 1, path.hasSuffix("/") else {
+            return path
+        }
+        return String(path.dropLast())
     }
 
     private func load(

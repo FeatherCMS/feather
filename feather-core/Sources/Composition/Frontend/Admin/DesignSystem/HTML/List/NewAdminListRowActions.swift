@@ -19,8 +19,8 @@ public struct NewAdminListRowActions: Component {
         }
         Media(.maxWidth(768.px)) {
             Custom(".action-table td.action-cell") {
-                WhiteSpace(.nowrap)
-                TextAlign(.right)
+                WhiteSpace(.normal)
+                TextAlign(.left)
             }
             Custom(".action-table td.action-cell::before") {
                 MarginBottom(8.px)

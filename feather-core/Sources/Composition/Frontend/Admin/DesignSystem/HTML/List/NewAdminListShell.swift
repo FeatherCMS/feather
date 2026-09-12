@@ -91,16 +91,31 @@ public struct NewAdminListShell<Table: FlowContent>: Component {
                     .solid,
                     .variable(TokenKey.Colors.Materials.Secondary.border)
                 )
-                Padding(vertical: 8.px, horizontal: 12.px)
+                Padding(vertical: 12.px, horizontal: 14.px)
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+            }
+            Custom(".cms-table tbody") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(12.px)
             }
             Custom(".cms-table td") {
                 Border(0)
                 Padding(vertical: 8.px, horizontal: 0.px)
             }
+            Custom(".cms-table td.select-cell") {
+                Display(.flex)
+                AlignItems(.center)
+                Width(100.percent)
+                Padding(vertical: 4.px, horizontal: 0.px)
+            }
+            Custom(".cms-table td.select-cell::before") {
+                Display(.none)
+            }
             Custom(".cms-table td::before") {
                 Content(.string("attr(data-label)"))
                 Display(.block)
-                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 FontSize(0.78.rem)
                 FontWeight(.number(700))
                 TextTransform(.uppercase)

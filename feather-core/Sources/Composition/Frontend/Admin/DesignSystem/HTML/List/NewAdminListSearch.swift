@@ -34,6 +34,15 @@ public struct NewAdminListSearch: Component {
                 UnsafeRawProperty(name: "appearance", value: "none")
             }
             Custom(".table-search-form input[type='search']") {
+                MinWidth(0.px)
+                Width(100.percent)
+                PaddingRight(34.px)
+            }
+            Custom(".table-search-form input[type='search']::-webkit-search-cancel-button") {
+                Display(.none)
+            }
+            Custom(".table-search-form .table-search-input") {
+                Position(.relative)
                 Flex(1, .number(1), .auto)
                 MinWidth(0.px)
                 Width(100.percent)
@@ -54,12 +63,31 @@ public struct NewAdminListSearch: Component {
                 OutlineOffset(2.px)
             }
             Custom(".table-search-form .table-search-reset") {
+                Position(.absolute)
+                Top(50.percent)
+                Right(9.px)
+                Transform(.translateY((-50).percent))
                 Display(.inlineFlex)
                 AlignItems(.center)
                 JustifyContent(.center)
-                Padding(vertical: 8.px, horizontal: 12.px)
-                FontSize(0.9.rem)
-                FontWeight(.number(700))
+                Width(24.px)
+                Height(24.px)
+                Padding(0.px)
+                BorderRadius(999.px)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                FontSize(1.15.rem)
+                LineHeight(1)
+                TextDecoration(.none)
+            }
+            Custom(".table-search-form .table-search-reset.is-hidden") {
+                Display(.none)
+            }
+            Custom(
+                ".table-search-form .table-search-reset:hover, .table-search-form .table-search-reset:focus-visible"
+            ) {
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                Outline(0.px, .none)
             }
         }
         Media(.minWidth(769.px)) {
@@ -121,11 +149,20 @@ public struct NewAdminListSearch: Component {
             for item in state.queryItems {
                 Input().type(.hidden).name(item.name).value(item.value)
             }
-            Input()
-                .type(.search)
-                .name("search")
-                .value(state.search)
-                .placeholder(state.placeholder)
+            Div {
+                Input()
+                    .type(.search)
+                    .name("search")
+                    .value(state.search)
+                    .placeholder(state.placeholder)
+                A("×")
+                    .href(state.resetPath)
+                    .ariaLabel("Reset search")
+                    .title("Reset search")
+                    .class("table-search-reset")
+                    .if(state.search.isEmpty) { $0.class("is-hidden") }
+            }
+            .class("table-search-input")
             for field in additionalFields {
                 field
             }
@@ -136,12 +173,29 @@ public struct NewAdminListSearch: Component {
                     isRowButton: true
                 )
             )
-            A("Reset")
-                .href(state.resetPath)
-                .class("table-search-reset")
+            Script(searchScript())
         }
         .method(.get)
         .action(state.action)
         .class("table-search-form")
+    }
+
+    private func searchScript() -> String {
+        """
+        document.addEventListener('DOMContentLoaded',function(){
+            document.querySelectorAll('.table-search-form').forEach(function(form){
+                var input=form.querySelector("input[name='search']");
+                var reset=form.querySelector('.table-search-reset');
+                if(!input||!reset){return;}
+                var update=function(){reset.classList.toggle('is-hidden',input.value.length===0);};
+                input.addEventListener('input',update);
+                reset.addEventListener('click',function(){
+                    input.value='';
+                    update();
+                });
+                update();
+            });
+        });
+        """
     }
 }

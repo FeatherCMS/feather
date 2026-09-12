@@ -31,6 +31,15 @@ public struct NewAdminListEmptyState: Component {
                 TextAlign(.center)
                 Gap(12.px)
                 Padding(vertical: 40.px, horizontal: 24.px)
+                Width(100.percent)
+                BoxSizing(.borderBox)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                BorderRadius(12.px)
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
             }
             Custom(".list-empty-state p") {
                 Margin(0)

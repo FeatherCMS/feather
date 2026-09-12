@@ -16,18 +16,22 @@ public struct NewAdminListPagination: Component {
                 JustifyContent(.center)
                 Gap(12.px)
                 Padding(vertical: 12.px, horizontal: 14.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
             }
             Custom(".table-pagination p") {
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-                FontSize(0.86.rem)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                FontSize(0.82.rem)
                 Margin(0)
+            }
+            Custom(".table-pagination .table-pagination-summary p:first-child") {
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                FontSize(0.86.rem)
+                FontWeight(.normal)
             }
             Custom(".table-pagination .table-pagination-summary") {
                 Display(.flex)
                 FlexDirection(.column)
                 AlignItems(.center)
-                Gap(2.px)
+                Gap(5.px)
                 TextAlign(.center)
             }
             Custom(".table-pagination .pagination-page-form") {
@@ -41,34 +45,37 @@ public struct NewAdminListPagination: Component {
                 Width(4.75.rem)
                 Height(34.px)
                 Padding(vertical: 0.px, horizontal: 12.px)
+                PaddingRight(30.px)
                 Border(
                     1.px,
                     .solid,
-                    .variable(TokenKey.Colors.Materials.Primary.border)
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
                 )
                 BorderRadius(10.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 BoxSizing(.borderBox)
+                FontSize(0.9.rem)
+                Cursor(.pointer)
+                UnsafeRawProperty(name: "appearance", value: "none")
+                UnsafeRawProperty(
+                    name: "background-image",
+                    value: "linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%)"
+                )
+                UnsafeRawProperty(
+                    name: "background-position",
+                    value: "calc(100% - 15px) 14px, calc(100% - 10px) 14px"
+                )
+                UnsafeRawProperty(name: "background-size", value: "5px 5px")
+                UnsafeRawProperty(name: "background-repeat", value: "no-repeat")
             }
             Custom(".table-pagination .page-controls") {
                 Display(.flex)
                 Gap(8.px)
             }
-            Custom(".table-pagination .page-controls a") {
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Primary.border)
-                )
-                BorderRadius(9.px)
-                Padding(vertical: 8.px, horizontal: 12.px)
-                TextDecoration(.none)
-            }
-            Custom(".table-pagination .page-controls a.disabled") {
-                PointerEvents(.none)
-                Opacity(0.45)
-                Cursor(.default)
+            Custom(".table-pagination .pagination-page-select:focus-visible") {
+                Outline(2.px, .solid, .color(.variable(TokenKey.Colors.Link.hover)))
+                OutlineOffset(2.px)
             }
         }
         Media(.maxWidth(768.px)) {
@@ -145,20 +152,28 @@ public struct NewAdminListPagination: Component {
         return Div {
             Div {
                 if state.pageState.page > 1 {
-                    A("First")
-                        .href("\(state.path)?page=1\(filterSuffix)")
+                    context.render(
+                        NewAdminRowButton(
+                            "First",
+                            href: "\(state.path)?page=1\(filterSuffix)",
+                            style: .ghost(.secondary)
+                        )
+                    )
                 }
                 else {
-                    A("First").href("#").class("disabled")
+                    context.render(NewAdminRowButton("First", style: .disabled))
                 }
                 if state.pageState.page > 1 {
-                    A("Prev")
-                        .href(
-                            "\(state.path)?page=\(state.pageState.page - 1)\(filterSuffix)"
+                    context.render(
+                        NewAdminRowButton(
+                            "Prev",
+                            href: "\(state.path)?page=\(state.pageState.page - 1)\(filterSuffix)",
+                            style: .ghost(.secondary)
                         )
+                    )
                 }
                 else {
-                    A("Prev").href("#").class("disabled")
+                    context.render(NewAdminRowButton("Prev", style: .disabled))
                 }
 
                 Form {
@@ -198,20 +213,29 @@ public struct NewAdminListPagination: Component {
                 .class("pagination-page-form")
 
                 if state.pageState.page < totalPages {
-                    A("Next")
-                        .href(
-                            "\(state.path)?page=\(state.pageState.page + 1)\(filterSuffix)"
+                    context.render(
+                        NewAdminRowButton(
+                            "Next",
+                            href:
+                                "\(state.path)?page=\(state.pageState.page + 1)\(filterSuffix)",
+                            style: .ghost(.secondary)
                         )
+                    )
                 }
                 else {
-                    A("Next").href("#").class("disabled")
+                    context.render(NewAdminRowButton("Next", style: .disabled))
                 }
                 if state.pageState.page < totalPages {
-                    A("Last")
-                        .href("\(state.path)?page=\(totalPages)\(filterSuffix)")
+                    context.render(
+                        NewAdminRowButton(
+                            "Last",
+                            href: "\(state.path)?page=\(totalPages)\(filterSuffix)",
+                            style: .ghost(.secondary)
+                        )
+                    )
                 }
                 else {
-                    A("Last").href("#").class("disabled")
+                    context.render(NewAdminRowButton("Last", style: .disabled))
                 }
             }
             .class("page-controls")

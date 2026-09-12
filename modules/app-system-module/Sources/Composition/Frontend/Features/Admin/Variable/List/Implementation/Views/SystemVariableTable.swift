@@ -21,7 +21,8 @@ struct SystemVariableTable: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         return Section {
             context.render(NewAdminBreadcrumb(state: state.breadcrumb))
-            H1("System variables")
+            H1("Variables")
+            P("Manage configuration values used across the Feather application.")
             context.render(
                 SystemVariableTableContent(
                     variables: state.variables,

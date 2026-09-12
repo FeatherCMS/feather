@@ -70,7 +70,7 @@ struct AdminListSystemVariableDefaultPresenter:
             notification: notification
         )
         return .init(renderContext.render(NewAdminHTML(
-            title: "Manage system variables",
+            title: "Variables",
             body: .init(content: layout)
         )))
     }

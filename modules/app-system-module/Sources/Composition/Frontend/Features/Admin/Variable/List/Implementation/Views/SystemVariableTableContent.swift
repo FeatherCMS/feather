@@ -27,8 +27,7 @@ struct SystemVariableTableContent: Component {
                         context.render(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
-                                path: SystemVariableRoutes.list.description,
-                                search: searchValue
+                                path: SystemVariableRoutes.list.description
                             )
                         )
                     }
@@ -40,8 +39,18 @@ struct SystemVariableTableContent: Component {
                                     : "No system variables match your search.",
                                 icon: FeatherIcons.inbox(),
                                 action: {
-                                    if search?.isEmpty ?? true
-                                        && permissions.allows(
+                                    if !(search?.isEmpty ?? true) {
+                                        context.render(
+                                            NewAdminButton(
+                                                "Reset search",
+                                                href: SystemVariableRoutes.list
+                                                    .description,
+                                                style: .secondary
+                                            )
+                                        )
+                                    }
+                                    else if search?.isEmpty ?? true,
+                                        permissions.allows(
                                             SystemPermissions.Variables.create
                                         )
                                     {
