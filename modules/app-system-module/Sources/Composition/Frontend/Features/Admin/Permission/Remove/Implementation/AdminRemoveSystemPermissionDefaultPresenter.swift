@@ -29,7 +29,8 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
                 breadcrumb: SystemPermissionRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected permissions",
-                    description: "You’re about to permanently remove the selected system permissions. This action cannot be undone."
+                    description:
+                        "You’re about to permanently remove the selected system permissions. This action cannot be undone."
                 ),
                 selectedItems: names,
                 action: SystemPermissionRoutes.remove.description,
@@ -71,7 +72,8 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
         fromEdit: Bool
     ) -> String {
         if fromDetails, ids.count == 1 {
-            return SystemPermissionRoutes.details(RouterPath(ids[0])).description
+            return SystemPermissionRoutes.details(RouterPath(ids[0]))
+                .description
         }
         if fromEdit, ids.count == 1 {
             return SystemPermissionRoutes.edit(RouterPath(ids[0])).description

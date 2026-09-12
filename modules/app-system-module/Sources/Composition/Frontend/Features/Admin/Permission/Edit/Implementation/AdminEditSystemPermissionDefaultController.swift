@@ -19,7 +19,11 @@ struct AdminEditSystemPermissionDefaultController:
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Permissions.update) else {
+        guard
+            context.isCurrentUserAllowed(
+                to: SystemPermissions.Permissions.update
+            )
+        else {
             return try await presenter.renderErrorPage(
                 info: "Forbidden",
                 message: "Your account cannot edit system permissions."
@@ -57,11 +61,17 @@ struct AdminEditSystemPermissionDefaultController:
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Permissions.update) else {
-            return try await presenter.renderErrorPage(
-                info: "Forbidden",
-                message: "Your account cannot edit system permissions."
-            ).response(from: request, context: context)
+        guard
+            context.isCurrentUserAllowed(
+                to: SystemPermissions.Permissions.update
+            )
+        else {
+            return
+                try await presenter.renderErrorPage(
+                    info: "Forbidden",
+                    message: "Your account cannot edit system permissions."
+                )
+                .response(from: request, context: context)
         }
         var lastPayload: SystemPermissionEditFormInput?
         do {
@@ -70,14 +80,18 @@ struct AdminEditSystemPermissionDefaultController:
                 context: context
             )
             lastPayload = payload
-            guard await AdminNonceStore.shared.consume(
-                payload.nonce,
-                sessionToken: context.sessionToken
-            ) else {
-                return try await presenter.renderErrorPage(
-                    info: "Forbidden",
-                    message: "This form has expired. Please try again."
-                ).response(from: request, context: context)
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return
+                    try await presenter.renderErrorPage(
+                        info: "Forbidden",
+                        message: "This form has expired. Please try again."
+                    )
+                    .response(from: request, context: context)
             }
             try await payload.validate()
             try await interactor.update(id: id, input: payload)
@@ -91,51 +105,74 @@ struct AdminEditSystemPermissionDefaultController:
         }
         catch let error as ValidationError {
             var state = formState(input: lastPayload)
-            state.apply(errors: Dictionary(
-                uniqueKeysWithValues: error.failures.map { ($0.key, $0.message) }
-            ))
-            return try await presenter.renderEditPage(
-                id: id,
-                state: state,
-                isEdited: false
-            ).response(from: request, context: context)
+            state.apply(
+                errors: Dictionary(
+                    uniqueKeysWithValues: error.failures.map {
+                        ($0.key, $0.message)
+                    }
+                )
+            )
+            return
+                try await presenter.renderEditPage(
+                    id: id,
+                    state: state,
+                    isEdited: false
+                )
+                .response(from: request, context: context)
         }
         catch let error as HTTPError {
-            return try await presenter.renderErrorPage(
-                info: "Unable to update system permission.",
-                message: error.displayMessage
-            ).response(from: request, context: context)
+            return
+                try await presenter.renderErrorPage(
+                    info: "Unable to update system permission.",
+                    message: error.displayMessage
+                )
+                .response(from: request, context: context)
         }
         catch let error as OpenAPIRepositoryError {
             var state = formState(input: lastPayload)
             state.error = error.errorDescription
-            return try await presenter.renderEditPage(
-                id: id,
-                state: state,
-                isEdited: false
-            ).response(from: request, context: context)
+            return
+                try await presenter.renderEditPage(
+                    id: id,
+                    state: state,
+                    isEdited: false
+                )
+                .response(from: request, context: context)
         }
         catch {
             var state = formState(input: lastPayload)
             state.error = error.displayMessage
-            return try await presenter.renderEditPage(
-                id: id,
-                state: state,
-                isEdited: false
-            ).response(from: request, context: context)
+            return
+                try await presenter.renderEditPage(
+                    id: id,
+                    state: state,
+                    isEdited: false
+                )
+                .response(from: request, context: context)
         }
     }
 
-    private func formState(key: String = "", name: String = "", notes: String = "") -> SystemPermissionEditForm.State {
+    private func formState(
+        key: String = "",
+        name: String = "",
+        notes: String = ""
+    ) -> SystemPermissionEditForm.State {
         .init(
             key: .init(name: "key", label: "Key", value: key, isRequired: true),
             name: .init(name: "name", label: "Name", value: name),
-            notes: .init(name: "notes", label: "Notes", value: notes, style: .small),
+            notes: .init(
+                name: "notes",
+                label: "Notes",
+                value: notes,
+                style: .small
+            ),
             error: nil
         )
     }
 
-    private func formState(input: SystemPermissionEditFormInput?) -> SystemPermissionEditForm.State {
+    private func formState(input: SystemPermissionEditFormInput?)
+        -> SystemPermissionEditForm.State
+    {
         formState(
             key: input?.normalizedKey ?? "",
             name: input?.normalizedName ?? "",

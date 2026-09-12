@@ -17,7 +17,11 @@ struct AdminAddSystemPermissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Permissions.create) else {
+        guard
+            context.isCurrentUserAllowed(
+                to: SystemPermissions.Permissions.create
+            )
+        else {
             return try await presenter.renderErrorPage(
                 info: "Forbidden",
                 message: "Your account cannot create system permissions."
@@ -31,11 +35,17 @@ struct AdminAddSystemPermissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Permissions.create) else {
-            return try await presenter.renderErrorPage(
-                info: "Forbidden",
-                message: "Your account cannot create system permissions."
-            ).response(from: request, context: context)
+        guard
+            context.isCurrentUserAllowed(
+                to: SystemPermissions.Permissions.create
+            )
+        else {
+            return
+                try await presenter.renderErrorPage(
+                    info: "Forbidden",
+                    message: "Your account cannot create system permissions."
+                )
+                .response(from: request, context: context)
         }
         var lastPayload: SystemPermissionAddFormInput?
 
@@ -45,14 +55,18 @@ struct AdminAddSystemPermissionDefaultController:
                 context: context
             )
             lastPayload = payload
-            guard await AdminNonceStore.shared.consume(
-                payload.nonce,
-                sessionToken: context.sessionToken
-            ) else {
-                return try await presenter.renderErrorPage(
-                    info: "Forbidden",
-                    message: "This form has expired. Please try again."
-                ).response(from: request, context: context)
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return
+                    try await presenter.renderErrorPage(
+                        info: "Forbidden",
+                        message: "This form has expired. Please try again."
+                    )
+                    .response(from: request, context: context)
             }
             try await payload.validate()
 
@@ -105,10 +119,12 @@ struct AdminAddSystemPermissionDefaultController:
                 .response(from: request, context: context)
         }
         catch let error as HTTPError {
-            return try await presenter.renderErrorPage(
-                info: "Unable to create system permission.",
-                message: error.displayMessage
-            ).response(from: request, context: context)
+            return
+                try await presenter.renderErrorPage(
+                    info: "Unable to create system permission.",
+                    message: error.displayMessage
+                )
+                .response(from: request, context: context)
         }
         catch {
             var state = formState(
@@ -134,7 +150,12 @@ struct AdminAddSystemPermissionDefaultController:
         .init(
             key: .init(name: "key", label: "Key", value: key, isRequired: true),
             name: .init(name: "name", label: "Name", value: name),
-            notes: .init(name: "notes", label: "Notes", value: notes, style: .small),
+            notes: .init(
+                name: "notes",
+                label: "Notes",
+                value: notes,
+                style: .small
+            ),
             error: nil
         )
     }

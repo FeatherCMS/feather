@@ -1,5 +1,5 @@
-import Foundation
 import FeatherContracts
+import Foundation
 
 public struct SystemVariableAddFormInput: Codable, Sendable, Equatable, Hashable
 {

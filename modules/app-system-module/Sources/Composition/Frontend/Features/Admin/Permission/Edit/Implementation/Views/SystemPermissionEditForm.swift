@@ -26,14 +26,26 @@ struct SystemPermissionEditForm: Component {
 
     func html(context: inout RenderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
-            if let error = state.error { P(error).class("new-admin-form__error") }
+            if let error = state.error {
+                P(error).class("new-admin-form__error")
+            }
             context.render(NewAdminFormFieldInput(state: state.key))
             context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldTextArea(state: state.notes))
             Div {
-                context.render(NewAdminSubmitButton("Save changes", style: .primary))
-                context.render(NewAdminButton("View", href: viewHref, style: .secondary))
-                context.render(NewAdminButton("Remove", href: removeHref, style: .destructive))
+                context.render(
+                    NewAdminSubmitButton("Save changes", style: .primary)
+                )
+                context.render(
+                    NewAdminButton("View", href: viewHref, style: .secondary)
+                )
+                context.render(
+                    NewAdminButton(
+                        "Remove",
+                        href: removeHref,
+                        style: .destructive
+                    )
+                )
             }
             .class("new-admin-form__actions")
         }

@@ -17,7 +17,9 @@ struct AdminGetSystemPermissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Permissions.read) else {
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Permissions.read)
+        else {
             return try await presenter.renderErrorPage(
                 info: "Forbidden",
                 message: "Your account cannot access system permissions."

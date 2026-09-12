@@ -44,7 +44,8 @@ struct SystemPermissionTableContent: Component {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset search",
-                                                href: SystemPermissionRoutes.list
+                                                href: SystemPermissionRoutes
+                                                    .list
                                                     .description,
                                                 style: .secondary
                                             )
@@ -92,9 +93,13 @@ struct SystemPermissionTableContent: Component {
                                                         )
                                                     }
                                                     Th("Key")
-                                                        .columnWidth(percent: 50)
+                                                        .columnWidth(
+                                                            percent: 50
+                                                        )
                                                     Th("Name")
-                                                        .columnWidth(percent: 50)
+                                                        .columnWidth(
+                                                            percent: 50
+                                                        )
                                                     Th("Actions")
                                                 }
                                             }
@@ -102,7 +107,8 @@ struct SystemPermissionTableContent: Component {
                                                 for permission in permissions {
                                                     context.render(
                                                         SystemPermissionRow(
-                                                            permission: permission,
+                                                            permission:
+                                                                permission,
                                                             actions: actions
                                                         )
                                                     )

@@ -19,7 +19,13 @@ extension AdminRemoveSystemPermissionController {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.get(SystemPermissionRoutes.remove, use: getRemoveSystemPermissions)
-        router.post(SystemPermissionRoutes.remove, use: postRemoveSystemPermissions)
+        router.get(
+            SystemPermissionRoutes.remove,
+            use: getRemoveSystemPermissions
+        )
+        router.post(
+            SystemPermissionRoutes.remove,
+            use: postRemoveSystemPermissions
+        )
     }
 }

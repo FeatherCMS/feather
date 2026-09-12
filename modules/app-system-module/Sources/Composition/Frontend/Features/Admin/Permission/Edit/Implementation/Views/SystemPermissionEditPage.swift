@@ -17,14 +17,26 @@ struct SystemPermissionEditPage: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(state: SystemPermissionRoutes.breadcrumb))
-            context.render(NewAdminPageHeader(state: .init(title: "Edit system permission", description: "Update this system permission.")))
+            context.render(
+                NewAdminBreadcrumb(state: SystemPermissionRoutes.breadcrumb)
+            )
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Edit system permission",
+                        description: "Update this system permission."
+                    )
+                )
+            )
             if state.isEdited { P("System permission edited successfully.") }
             context.render(
                 SystemPermissionEditForm(
                     state: state.form,
-                    action: SystemPermissionRoutes.edit(RouterPath(state.id)).description,
-                    viewHref: SystemPermissionRoutes.details(RouterPath(state.id)).description,
+                    action: SystemPermissionRoutes.edit(RouterPath(state.id))
+                        .description,
+                    viewHref:
+                        SystemPermissionRoutes.details(RouterPath(state.id))
+                        .description,
                     removeHref: SystemPermissionRoutes.removeFromEdit(state.id),
                     nonceToken: state.nonceToken
                 )

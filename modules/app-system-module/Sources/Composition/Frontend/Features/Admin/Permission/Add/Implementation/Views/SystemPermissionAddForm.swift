@@ -33,12 +33,16 @@ struct SystemPermissionAddForm: Component {
 
     func html(context: inout RenderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
-            if let error = state.error { P(error).class("new-admin-form__error") }
+            if let error = state.error {
+                P(error).class("new-admin-form__error")
+            }
             context.render(NewAdminFormFieldInput(state: state.key))
             context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldTextArea(state: state.notes))
             Div {
-                context.render(NewAdminSubmitButton("Add permission", style: .primary))
+                context.render(
+                    NewAdminSubmitButton("Add permission", style: .primary)
+                )
             }
             .class("new-admin-form__actions")
         }

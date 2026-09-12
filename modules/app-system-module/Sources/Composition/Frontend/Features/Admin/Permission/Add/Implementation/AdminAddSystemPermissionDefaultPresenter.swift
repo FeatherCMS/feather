@@ -20,7 +20,9 @@ struct AdminAddSystemPermissionDefaultPresenter:
             request: request,
             context: context,
             title: "Manage system permissions",
-            content: SystemPermissionAddPage(state: .init(form: state, nonceToken: nonceToken))
+            content: SystemPermissionAddPage(
+                state: .init(form: state, nonceToken: nonceToken)
+            )
         )
     }
 

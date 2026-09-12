@@ -19,7 +19,13 @@ extension AdminEditSystemPermissionController {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.get(SystemPermissionRoutes.edit(RouterPath("{id}")), use: getEditSystemPermission)
-        router.post(SystemPermissionRoutes.edit(RouterPath("{id}")), use: postEditSystemPermission)
+        router.get(
+            SystemPermissionRoutes.edit(RouterPath("{id}")),
+            use: getEditSystemPermission
+        )
+        router.post(
+            SystemPermissionRoutes.edit(RouterPath("{id}")),
+            use: postEditSystemPermission
+        )
     }
 }
