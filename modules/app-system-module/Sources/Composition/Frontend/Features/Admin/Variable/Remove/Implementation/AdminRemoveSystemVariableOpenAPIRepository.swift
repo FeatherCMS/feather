@@ -13,9 +13,26 @@ struct AdminRemoveSystemVariableOpenAPIRepository:
         ids: [String]
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.systemVariableDelete(
+            let response = try await client.systemVariableDelete(
                 body: .json(.init(ids: ids, results: false, summary: true))
             )
+            switch response {
+            case .ok:
+                return
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized(
+                    message: "Please sign in again to remove system variables."
+                )
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden(
+                    message: "Your account cannot remove system variables."
+                )
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
         }
     }
 
@@ -37,7 +54,8 @@ struct AdminRemoveSystemVariableOpenAPIRepository:
                 }
             )
             return ids.map { id in
-                byID[id]?.name ?? "Variable not found (id: \(id))"
+                byID[id]?.name ?? byID[id]?.key
+                    ?? "Variable not found (id: \(id))"
             }
         }
     }

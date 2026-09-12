@@ -27,6 +27,7 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
             )
             return try await runtime.presenter.renderDetailsPage(
                 variable: variable,
+                permissions: context.currentUserPermissions,
             )
         }
         catch let error as OpenAPIRepositoryError {

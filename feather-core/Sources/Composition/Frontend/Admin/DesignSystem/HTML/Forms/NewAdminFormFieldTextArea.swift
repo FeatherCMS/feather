@@ -129,7 +129,8 @@ public struct NewAdminFormFieldTextArea: Component {
     }
 
     public func html(context: inout RenderContext) -> Section {
-        Section {
+        let errorID = "\(state.name)-error"
+        return Section {
             Label {
                 Span {
                     Span(state.label)
@@ -142,13 +143,16 @@ public struct NewAdminFormFieldTextArea: Component {
                     .id(state.name)
                     .rows(state.style.rows)
                     .ariaInvalid(state.error == nil ? .false : .true)
+                    .if(state.error != nil) { $0.ariaErrorMessage(errorID) }
                     .if(state.isRequired) { $0.required() }
                     .if(state.isDisabled) { $0.disabled() }
                     .if(state.isReadOnly) { $0.readOnly() }
             }
             .for(state.name)
             if let help = state.help { Span(help).class("field-help") }
-            if let error = state.error { Span(error).class("field-error") }
+            if let error = state.error {
+                Span(error).id(errorID).class("field-error")
+            }
         }
         .if(state.error != nil) { $0.class("has-error") }
         .class(

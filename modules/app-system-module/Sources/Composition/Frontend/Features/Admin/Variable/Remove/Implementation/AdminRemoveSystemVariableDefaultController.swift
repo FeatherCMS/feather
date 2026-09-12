@@ -46,7 +46,8 @@ struct AdminRemoveSystemVariableDefaultController:
                 search: search,
                 ids: ids,
                 names: try await interactor.names(ids: ids),
-                fromDetails: request.queryString("from") == "details"
+                fromDetails: request.queryString("from") == "details",
+                fromEdit: request.queryString("from") == "edit"
             )
             .response(from: request, context: context)
     }

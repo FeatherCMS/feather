@@ -1,7 +1,9 @@
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
+import SystemContracts
 import WebBuilders
 import WebComponents
 
@@ -11,7 +13,8 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     let renderingEngine: any RenderingEngine
 
     func renderDetailsPage(
-        variable: SystemVariableDetailsModel
+        variable: SystemVariableDetailsModel,
+        permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -20,6 +23,12 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
             content: SystemVariableDetails(
                 state: .init(
                     variable: variable,
+                    canEdit: permissions.contains(
+                        SystemPermissions.Variables.update.rawValue
+                    ),
+                    canDelete: permissions.contains(
+                        SystemPermissions.Variables.delete.rawValue
+                    )
                 )
             )
         )

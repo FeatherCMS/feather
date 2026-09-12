@@ -31,7 +31,8 @@ struct AdminRemoveSystemVariableDefaultPresenter:
         search: String?,
         ids: [String],
         names: [String],
-        fromDetails: Bool
+        fromDetails: Bool,
+        fromEdit: Bool
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -52,8 +53,9 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 cancel: SystemVariableRoutes.removeCancel(
                     ids: ids,
                     page: page,
-                    search: search,
-                    fromDetails: fromDetails
+            search: search,
+            fromDetails: fromDetails,
+            fromEdit: fromEdit
                 ),
                 hiddenFields: ids.map {
                     .init(name: "ids", value: $0)

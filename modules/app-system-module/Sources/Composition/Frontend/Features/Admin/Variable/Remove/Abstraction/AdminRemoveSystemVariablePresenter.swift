@@ -14,7 +14,8 @@ protocol AdminRemoveSystemVariablePresenter: Sendable {
         search: String?,
         ids: [String],
         names: [String],
-        fromDetails: Bool
+        fromDetails: Bool,
+        fromEdit: Bool
     ) async throws -> HTMLResponse
 
 }

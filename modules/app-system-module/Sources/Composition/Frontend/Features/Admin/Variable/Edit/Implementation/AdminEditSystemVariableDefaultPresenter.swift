@@ -31,7 +31,7 @@ struct AdminEditSystemVariableDefaultPresenter:
                         .description,
                     removeHref: actions.allows(
                         SystemPermissions.Variables.delete
-                    ) ? SystemVariableRoutes.remove(id) : nil,
+                    ) ? SystemVariableRoutes.removeFromEdit(id) : nil,
                     nonceToken: nonceToken
                 )
             )

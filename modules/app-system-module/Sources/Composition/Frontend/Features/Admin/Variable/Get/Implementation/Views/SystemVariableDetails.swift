@@ -8,6 +8,8 @@ import WebComponents
 struct SystemVariableDetails: Component {
     struct State {
         let variable: SystemVariableDetailsModel
+        let canEdit: Bool
+        let canDelete: Bool
     }
 
     let state: State
@@ -22,11 +24,16 @@ struct SystemVariableDetails: Component {
                 ),
                 fields: [
                     .init(label: "Key", value: state.variable.key),
-                    .init(label: "Value", value: state.variable.value),
-                    .init(label: "Name", value: state.variable.name ?? ""),
-                    .init(label: "Notes", value: state.variable.notes ?? ""),
+                    .init(
+                        label: "Value",
+                        value: state.variable.value.isEmpty
+                            ? "—"
+                            : state.variable.value
+                    ),
+                    .init(label: "Name", value: state.variable.name ?? "—"),
+                    .init(label: "Notes", value: state.variable.notes ?? "—"),
                 ],
-                actions: [
+                actions: ([
                     .init(
                         label: "Edit",
                         href:
@@ -43,7 +50,9 @@ struct SystemVariableDetails: Component {
                         ),
                         style: .destructive
                     ),
-                ]
+                ] as [NewAdminDetailView.Action]).filter { action in
+                    action.label == "Edit" ? state.canEdit : state.canDelete
+                }
             )
         )
     }

@@ -5,7 +5,8 @@ import HTML
 protocol AdminGetSystemVariablePresenter: Sendable {
 
     func renderDetailsPage(
-        variable: SystemVariableDetailsModel
+        variable: SystemVariableDetailsModel,
+        permissions: Set<String>
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
