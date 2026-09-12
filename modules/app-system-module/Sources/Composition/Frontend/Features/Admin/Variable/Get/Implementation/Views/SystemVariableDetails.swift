@@ -23,8 +23,8 @@ struct SystemVariableDetails: Component {
                 fields: [
                     .init(label: "Key", value: state.variable.key),
                     .init(label: "Value", value: state.variable.value),
-                    .init(label: "Name", value: state.variable.name ?? "—"),
-                    .init(label: "Notes", value: state.variable.notes ?? "—"),
+                    .init(label: "Name", value: state.variable.name ?? ""),
+                    .init(label: "Notes", value: state.variable.notes ?? ""),
                 ],
                 actions: [
                     .init(

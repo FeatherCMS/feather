@@ -5,6 +5,7 @@ public enum OpenAPIRepositoryError: Error {
     case unauthorized(message: String)
     case forbidden(message: String)
     case notFound(message: String)
+    case conflict(message: String)
     case failure(Failure)
     case transport(description: String)
 
@@ -88,6 +89,8 @@ extension OpenAPIRepositoryError {
             return .forbidden
         case .notFound:
             return .notFound
+        case .conflict:
+            return .conflict
         case .failure(let failure):
             return .init(code: failure.statusCode)
         case .transport:
@@ -103,6 +106,8 @@ extension OpenAPIRepositoryError {
             return "Forbidden"
         case .notFound:
             return "Not found"
+        case .conflict:
+            return "Unable to save changes"
         case .failure(let failure):
             return "Unexpected response from server (\(failure.statusCode))."
         case .transport:
@@ -121,6 +126,8 @@ extension OpenAPIRepositoryError {
         case .forbidden(let message):
             return [message]
         case .notFound(let message):
+            return [message]
+        case .conflict(let message):
             return [message]
         case .failure(let failure):
             if let backendError = failure.backendError {

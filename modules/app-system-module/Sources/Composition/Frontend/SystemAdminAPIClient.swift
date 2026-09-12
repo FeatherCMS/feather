@@ -46,8 +46,12 @@ public struct SystemAdminAPIClient: Sendable {
 
     public func failure(
         statusCode: Int,
-        responseBody: HTTPBody?
+        responseBody: HTTPBody?,
+        conflictMessage: String? = nil
     ) async throws -> OpenAPIRepositoryError {
+        if statusCode == 409, let conflictMessage {
+            return .conflict(message: conflictMessage)
+        }
         let body = try await responseBody?.collectString()
         return OpenAPIRepositoryError.parsedFailure(
             statusCode: statusCode,

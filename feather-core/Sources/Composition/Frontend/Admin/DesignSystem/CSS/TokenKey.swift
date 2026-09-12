@@ -5,6 +5,75 @@ public enum TokenKey {
 
     public enum Colors {
 
+        public enum Palette {
+
+            public enum Red: String, CSSVariableNameRepresentable {
+                case border
+                case foreground
+                case background
+                case text
+
+                public var propertyName: String {
+                    "color-red-" + rawValue
+                }
+            }
+
+            public enum Blue: String, CSSVariableNameRepresentable {
+                case border
+                case foreground
+                case background
+                case text
+
+                public var propertyName: String {
+                    "color-blue-" + rawValue
+                }
+            }
+
+            public enum Green: String, CSSVariableNameRepresentable {
+                case border
+                case foreground
+                case background
+                case text
+
+                public var propertyName: String {
+                    "color-green-" + rawValue
+                }
+            }
+
+            public enum Yellow: String, CSSVariableNameRepresentable {
+                case border
+                case foreground
+                case background
+                case text
+
+                public var propertyName: String {
+                    "color-yellow-" + rawValue
+                }
+            }
+
+            public enum Orange: String, CSSVariableNameRepresentable {
+                case border
+                case foreground
+                case background
+                case text
+
+                public var propertyName: String {
+                    "color-orange-" + rawValue
+                }
+            }
+
+            public enum Purple: String, CSSVariableNameRepresentable {
+                case border
+                case foreground
+                case background
+                case text
+
+                public var propertyName: String {
+                    "color-purple-" + rawValue
+                }
+            }
+        }
+
         public enum Link: String, CSSVariableNameRepresentable {
             case `default`
             case hover

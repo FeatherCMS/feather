@@ -33,7 +33,9 @@ struct AdminAddSystemVariableOpenAPIRepository: AdminAddSystemVariableRepository
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
-                    responseBody: response.body
+                    responseBody: response.body,
+                    conflictMessage:
+                        "A system variable with this key already exists. Choose a different key."
                 )
             }
         }

@@ -139,7 +139,9 @@ struct SystemVariableEditForm: Component {
     func html(context: inout RenderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
             if let success = state.success { P(success).class("success") }
-            if let error = state.error { P(error).class("error") }
+            if let error = state.error {
+                P(error).class("new-admin-form__error")
+            }
             context.render(NewAdminFormFieldInput(state: state.key))
             context.render(NewAdminFormFieldTextArea(state: state.value))
             context.render(NewAdminFormFieldInput(state: state.name))

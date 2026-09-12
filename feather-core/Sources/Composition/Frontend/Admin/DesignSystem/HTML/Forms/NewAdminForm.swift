@@ -55,10 +55,15 @@ public struct NewAdminForm: Component {
             },
             Custom(".new-admin-form > .new-admin-form__error") {
                 Margin(0)
-                Padding(10.px)
+                Padding(vertical: 12.px, horizontal: 14.px)
                 BorderRadius(8.px)
-                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Palette.Red.border)
+                )
+                Background(.variable(TokenKey.Colors.Palette.Red.background))
+                Color(.variable(TokenKey.Colors.Palette.Red.text))
             },
             Class("new-admin-form__actions") {
                 Display(.flex)

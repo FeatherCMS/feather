@@ -14,6 +14,36 @@ extension NewAdminDesignSystem {
     func variables() -> [any Rule] {
         Media {
             Root {
+                Variable(TokenKey.Colors.Palette.Red.background, "#fff7f7")
+                Variable(TokenKey.Colors.Palette.Red.border, "#d14343")
+                Variable(TokenKey.Colors.Palette.Red.foreground, "#d14343")
+                Variable(TokenKey.Colors.Palette.Red.text, "#000")
+
+                Variable(TokenKey.Colors.Palette.Blue.background, "#eff6ff")
+                Variable(TokenKey.Colors.Palette.Blue.border, "#bfdbfe")
+                Variable(TokenKey.Colors.Palette.Blue.foreground, "#2563eb")
+                Variable(TokenKey.Colors.Palette.Blue.text, "#000")
+
+                Variable(TokenKey.Colors.Palette.Green.background, "#ecfdf3")
+                Variable(TokenKey.Colors.Palette.Green.border, "#a7f3d0")
+                Variable(TokenKey.Colors.Palette.Green.foreground, "#16a34a")
+                Variable(TokenKey.Colors.Palette.Green.text, "#000")
+
+                Variable(TokenKey.Colors.Palette.Yellow.background, "#fefce8")
+                Variable(TokenKey.Colors.Palette.Yellow.border, "#fde68a")
+                Variable(TokenKey.Colors.Palette.Yellow.foreground, "#ca8a04")
+                Variable(TokenKey.Colors.Palette.Yellow.text, "#000")
+
+                Variable(TokenKey.Colors.Palette.Orange.background, "#fff7ed")
+                Variable(TokenKey.Colors.Palette.Orange.border, "#fdba74")
+                Variable(TokenKey.Colors.Palette.Orange.foreground, "#ea580c")
+                Variable(TokenKey.Colors.Palette.Orange.text, "#000")
+
+                Variable(TokenKey.Colors.Palette.Purple.background, "#faf5ff")
+                Variable(TokenKey.Colors.Palette.Purple.border, "#d8b4fe")
+                Variable(TokenKey.Colors.Palette.Purple.foreground, "#9333ea")
+                Variable(TokenKey.Colors.Palette.Purple.text, "#000")
+
                 Variable(TokenKey.Colors.Link.default, "#8647b2")
                 Variable(TokenKey.Colors.Link.hover, "#664ca6")
                 Variable(TokenKey.Colors.Link.visited, "#8647b2")
@@ -90,6 +120,36 @@ extension NewAdminDesignSystem {
         }
         Media(.prefersColorScheme(.dark)) {
             Root {
+
+                Variable(TokenKey.Colors.Palette.Red.background, "rgba(255, 69, 58, 0.16)")
+                Variable(TokenKey.Colors.Palette.Red.border, "rgba(255, 105, 97, 0.58)")
+                Variable(TokenKey.Colors.Palette.Red.foreground, "#ff6961")
+                Variable(TokenKey.Colors.Palette.Red.text, "#fff")
+
+                Variable(TokenKey.Colors.Palette.Blue.background, "rgba(10, 132, 255, 0.16)")
+                Variable(TokenKey.Colors.Palette.Blue.border, "rgba(10, 132, 255, 0.55)")
+                Variable(TokenKey.Colors.Palette.Blue.foreground, "#64b5ff")
+                Variable(TokenKey.Colors.Palette.Blue.text, "#fff")
+
+                Variable(TokenKey.Colors.Palette.Green.background, "rgba(48, 209, 88, 0.16)")
+                Variable(TokenKey.Colors.Palette.Green.border, "rgba(48, 209, 88, 0.55)")
+                Variable(TokenKey.Colors.Palette.Green.foreground, "#63e68a")
+                Variable(TokenKey.Colors.Palette.Green.text, "#fff")
+
+                Variable(TokenKey.Colors.Palette.Yellow.background, "rgba(255, 214, 10, 0.16)")
+                Variable(TokenKey.Colors.Palette.Yellow.border, "rgba(255, 214, 10, 0.55)")
+                Variable(TokenKey.Colors.Palette.Yellow.foreground, "#ffd60a")
+                Variable(TokenKey.Colors.Palette.Yellow.text, "#fff")
+
+                Variable(TokenKey.Colors.Palette.Orange.background, "rgba(255, 159, 10, 0.16)")
+                Variable(TokenKey.Colors.Palette.Orange.border, "rgba(255, 159, 10, 0.55)")
+                Variable(TokenKey.Colors.Palette.Orange.foreground, "#ffb340")
+                Variable(TokenKey.Colors.Palette.Orange.text, "#fff")
+
+                Variable(TokenKey.Colors.Palette.Purple.background, "rgba(191, 90, 242, 0.16)")
+                Variable(TokenKey.Colors.Palette.Purple.border, "rgba(191, 90, 242, 0.55)")
+                Variable(TokenKey.Colors.Palette.Purple.foreground, "#d08cff")
+                Variable(TokenKey.Colors.Palette.Purple.text, "#fff")
 
                 Variable(TokenKey.Colors.Link.default, "#b06cff")
                 Variable(TokenKey.Colors.Link.hover, "#c38cff")
