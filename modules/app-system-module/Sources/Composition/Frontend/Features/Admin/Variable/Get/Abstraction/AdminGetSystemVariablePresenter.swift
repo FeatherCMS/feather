@@ -17,7 +17,4 @@ protocol AdminGetSystemVariablePresenter: Sendable {
         permissions: Set<String>
     ) async throws -> HTMLResponse
 
-    func breadcrumb(
-        id: String
-    ) -> NewAdminBreadcrumb.State
 }

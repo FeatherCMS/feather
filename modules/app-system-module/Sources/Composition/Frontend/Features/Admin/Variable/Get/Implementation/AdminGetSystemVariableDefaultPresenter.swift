@@ -47,16 +47,4 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> NewAdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "System", link: "/admin/system/"),
-            .init(
-                label: "Variables",
-                link: SystemVariableRoutes.list.description
-            ),
-        ])
-    }
 }

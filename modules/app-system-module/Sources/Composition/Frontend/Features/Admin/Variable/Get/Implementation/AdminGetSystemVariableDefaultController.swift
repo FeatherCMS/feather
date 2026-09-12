@@ -28,7 +28,7 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
             )
             return try await runtime.presenter.renderDetailsPage(
                 variable: variable,
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
+                breadcrumb: SystemVariableRoutes.breadcrumb,
                 permissions: permissions
             )
         }
@@ -36,7 +36,7 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
             return try await runtime.presenter.renderErrorPage(
                 info: error.errorTitle,
                 message: error.errorDescription,
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
+                breadcrumb: SystemVariableRoutes.breadcrumb,
                 permissions: permissions
             )
         }

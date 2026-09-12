@@ -9,21 +9,17 @@ struct AdminRemoveSystemVariableDefaultPresenter:
     let request: Request
     let context: DefaultRequestContext
     let events: any EventPublisher
+    let renderingEngine: any RenderingEngine
 
     func renderErrorPage(
         info: String,
         message: String
     ) async throws -> HTMLResponse {
-        let menuGroups = try await context.adminMenuGroups(
-            request: request,
-            events: events
-        )
-        return render(
+        return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Manage system variables",
             content: NewAdminStatusView(
                 state: .init(title: info, message: message),
                 icon: FeatherIcons.alertCircle()
-            ),
-            menuGroups: menuGroups
+            )
         )
     }
 
@@ -34,13 +30,9 @@ struct AdminRemoveSystemVariableDefaultPresenter:
         names: [String],
         fromDetails: Bool
     ) async throws -> HTMLResponse {
-        let menuGroups = try await context.adminMenuGroups(
-            request: request,
-            events: events
-        )
-        return render(
+        return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Manage system variables",
             content: NewAdminConfirmation(
-                breadcrumb: breadcrumb(),
+                breadcrumb: SystemVariableRoutes.breadcrumb,
                 title: "Remove selected variables",
                 message:
                     "You’re about to permanently remove the selected system variables. This action cannot be undone.",
@@ -63,38 +55,9 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 hiddenFields: ids.map {
                     .init(name: "ids", value: $0)
                 }
-            ),
-            menuGroups: menuGroups
-        )
-    }
-
-    private func render<T: Component>(
-        content: T,
-        menuGroups: [NewAdminSidebar.Group]
-    ) -> HTMLResponse {
-        var context = RenderContext()
-        let layout = NewAdminBaseLayout(
-            content: content,
-            menuGroups: menuGroups
-        )
-        return .init(
-            context.render(
-                NewAdminHTML(
-                    title: "Manage system variables",
-                    body: .init(content: layout)
-                )
             )
         )
     }
 
-    private func breadcrumb() -> NewAdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "System", link: "/admin/system/"),
-            .init(
-                label: "Variables",
-                link: SystemVariableRoutes.list.description
-            ),
-        ])
-    }
+
 }

@@ -84,18 +84,15 @@ struct SystemVariableAddForm: Component {
 
     let state: State
     let action: String
-    let submitLabel: String
     let nonceToken: String?
 
     init(
         state: State,
         action: String,
-        submitLabel: String,
         nonceToken: String? = nil
     ) {
         self.state = state
         self.action = action
-        self.submitLabel = submitLabel
         self.nonceToken = nonceToken
     }
 
@@ -109,7 +106,7 @@ struct SystemVariableAddForm: Component {
             context.render(NewAdminFormFieldTextArea(state: state.notes))
             Div {
                 context.render(
-                    NewAdminSubmitButton(submitLabel, style: .primary)
+                    NewAdminSubmitButton("Add variable", style: .primary)
                 )
             }
             .class("new-admin-form__actions")

@@ -24,7 +24,7 @@ struct SystemVariableEditForm: Component {
 
         static func empty() -> Self {
             .init(
-                id: .init(name: "id", label: "ID", value: "", isRequired: true),
+                id: .init(name: "id", label: "ID", value: "", isRequired: true, isReadOnly: true),
                 name: .init(
                     name: "name",
                     label: "Name",
@@ -55,7 +55,8 @@ struct SystemVariableEditForm: Component {
                     name: "id",
                     label: "ID",
                     value: variable.id,
-                    isRequired: true
+                    isRequired: true,
+                    isReadOnly: true
                 ),
                 name: .init(
                     name: "name",
@@ -87,7 +88,8 @@ struct SystemVariableEditForm: Component {
                     name: "id",
                     label: "ID",
                     value: input.normalizedID,
-                    isRequired: true
+                    isRequired: true,
+                    isReadOnly: true
                 ),
                 name: .init(
                     name: "name",
@@ -116,7 +118,6 @@ struct SystemVariableEditForm: Component {
 
     let state: State
     let action: String
-    let submitLabel: String
     let viewHref: String
     let removeHref: String?
     let nonceToken: String?
@@ -124,14 +125,12 @@ struct SystemVariableEditForm: Component {
     init(
         state: State,
         action: String,
-        submitLabel: String,
         viewHref: String,
         removeHref: String?,
         nonceToken: String? = nil
     ) {
         self.state = state
         self.action = action
-        self.submitLabel = submitLabel
         self.viewHref = viewHref
         self.removeHref = removeHref
         self.nonceToken = nonceToken
@@ -147,7 +146,7 @@ struct SystemVariableEditForm: Component {
             context.render(NewAdminFormFieldTextArea(state: state.notes))
             Div {
                 context.render(
-                    NewAdminSubmitButton(submitLabel, style: .primary)
+                    NewAdminSubmitButton("Save changes", style: .primary)
                 )
                 context.render(
                     NewAdminButton("View", href: viewHref, style: .secondary)

@@ -20,11 +20,10 @@ struct AdminAddSystemVariableDefaultPresenter:
         )
         return try await renderPage(
             content: SystemVariableAddPage(
-                breadcrumb: breadcrumb(),
+                breadcrumb: SystemVariableRoutes.breadcrumb,
                 form: SystemVariableAddForm(
                     state: state,
                     action: SystemVariableRoutes.add.description,
-                    submitLabel: "Save",
                     nonceToken: nonceToken
                 )
             )
@@ -42,14 +41,4 @@ struct AdminAddSystemVariableDefaultPresenter:
         )
     }
 
-    private func breadcrumb() -> NewAdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "System", link: "/admin/system/"),
-            .init(
-                label: "Variables",
-                link: SystemVariableRoutes.list.description
-            ),
-        ])
-    }
 }

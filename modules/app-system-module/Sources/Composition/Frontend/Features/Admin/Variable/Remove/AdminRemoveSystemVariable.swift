@@ -5,7 +5,7 @@ import Hummingbird
 struct AdminRemoveSystemVariable {
     let controller: any AdminRemoveSystemVariableController
 
-    init(events: any EventPublisher) {
+    init(events: any EventPublisher, renderingEngine: any RenderingEngine) {
         self.controller = AdminRemoveSystemVariableDefaultController(
             buildRuntime: { request, context in
                 (
@@ -17,7 +17,8 @@ struct AdminRemoveSystemVariable {
                     presenter: AdminRemoveSystemVariableDefaultPresenter(
                         request: request,
                         context: context,
-                        events: events
+                        events: events,
+                        renderingEngine: renderingEngine
                     )
                 )
             }

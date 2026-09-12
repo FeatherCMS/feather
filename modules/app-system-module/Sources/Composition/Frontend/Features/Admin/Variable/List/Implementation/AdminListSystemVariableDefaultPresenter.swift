@@ -10,6 +10,7 @@ struct AdminListSystemVariableDefaultPresenter:
     let request: Request
     let context: DefaultRequestContext
     let events: any EventPublisher
+    let renderingEngine: any RenderingEngine
 
     private var requestNotification: AdminNotification? {
         AdminNotificationFlash.notification(from: request)
@@ -20,23 +21,18 @@ struct AdminListSystemVariableDefaultPresenter:
         permissions: Set<PermissionKey>,
         search: String?
     ) async throws -> HTMLResponse {
-        let menuGroups = try await context.adminMenuGroups(
-            request: request,
-            events: events
-        )
         let actions = ListActions(permissions)
-        return renderPage(
+        return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Variables",
             content: SystemVariableTable(
                 state: .init(
                     permissions: actions,
                     variables: model.items,
                     pageState: model.pageState,
                     search: search,
-                    breadcrumb: systemVariableBreadcrumb()
+                    breadcrumb: SystemVariableRoutes.breadcrumb
                 )
             ),
-            menuGroups: menuGroups,
-            notification: requestNotification
+            
         )
     }
 
@@ -44,48 +40,14 @@ struct AdminListSystemVariableDefaultPresenter:
         title: String,
         message: String
     ) async throws -> HTMLResponse {
-        let menuGroups = try await context.adminMenuGroups(
-            request: request,
-            events: events
-        )
-        return renderPage(
+        return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Variables",
             content: NewAdminStatusView(
                 state: .init(title: title, message: message),
                 icon: FeatherIcons.alertCircle()
             ),
-            menuGroups: menuGroups,
-            notification: requestNotification
+            
         )
     }
 
-    private func renderPage<T: Component>(
-        content: T,
-        menuGroups: [NewAdminSidebar.Group],
-        notification: AdminNotification?
-    ) -> HTMLResponse {
-        var renderContext = RenderContext()
-        let layout = NewAdminBaseLayout(
-            content: content,
-            menuGroups: menuGroups,
-            notification: notification
-        )
-        return .init(
-            renderContext.render(
-                NewAdminHTML(
-                    title: "Variables",
-                    body: .init(content: layout)
-                )
-            )
-        )
-    }
-
-    private func systemVariableBreadcrumb() -> NewAdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-            ]
-        )
-    }
 
 }

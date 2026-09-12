@@ -24,12 +24,11 @@ struct AdminEditSystemVariableDefaultPresenter:
         )
         return try await renderPage(
             content: SystemVariableEditPage(
-                breadcrumb: breadcrumb(),
+                breadcrumb: SystemVariableRoutes.breadcrumb,
                 form: SystemVariableEditForm(
                     state: state,
                     action: SystemVariableRoutes.edit(RouterPath(id))
                         .description,
-                    submitLabel: "Save",
                     viewHref: SystemVariableRoutes.details(RouterPath(id)).description,
                     removeHref: actions.allows(
                         SystemPermissions.Variables.delete
@@ -61,17 +60,6 @@ struct AdminEditSystemVariableDefaultPresenter:
             title: "Manage system variables",
             content: content
         )
-    }
-
-    private func breadcrumb() -> NewAdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "System", link: "/admin/system/"),
-            .init(
-                label: "Variables",
-                link: SystemVariableRoutes.list.description
-            ),
-        ])
     }
 
 }
