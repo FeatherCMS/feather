@@ -12,6 +12,10 @@ extension AuthRequestContext {
         account?.permissionSet ?? []
     }
 
+    public var currentUserAdminListActions: NewAdminListActions {
+        .init(Set(currentUserPermissions.map(PermissionKey.init)))
+    }
+
     public func isCurrentUserAllowed(
         to permission: PermissionKey
     ) -> Bool {

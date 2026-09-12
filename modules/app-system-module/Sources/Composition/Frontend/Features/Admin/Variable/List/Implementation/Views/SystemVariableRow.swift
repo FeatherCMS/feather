@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
@@ -52,7 +53,7 @@ struct SystemVariableRow: Component {
                 context.render(NewAdminListRowCheckbox(id: state.id))
             }
             Td(state.key).data("label", "Key").columnWidth(percent: 50)
-            Td(state.value.isEmpty ? "—" : state.value)
+            Td(state.value.emptyToNil == nil ? "—" : state.value)
                 .data("label", "Value")
                 .columnWidth(percent: 50)
             context.render(

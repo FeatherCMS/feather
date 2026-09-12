@@ -14,7 +14,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
 
     func renderDetailsPage(
         variable: SystemVariableDetailsModel,
-        permissions: Set<String>
+        permissions: NewAdminListActions
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -23,12 +23,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
             content: SystemVariableDetails(
                 state: .init(
                     variable: variable,
-                    canEdit: permissions.contains(
-                        SystemPermissions.Variables.update.rawValue
-                    ),
-                    canDelete: permissions.contains(
-                        SystemPermissions.Variables.delete.rawValue
-                    )
+                    permissions: permissions
                 )
             )
         )

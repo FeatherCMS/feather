@@ -27,6 +27,18 @@ struct AdminAddSystemVariableDefaultPresenter:
         )
     }
 
+    func renderErrorPage(
+        info: String,
+        message: String
+    ) async throws -> HTMLResponse {
+        try await renderPage(
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
+            )
+        )
+    }
+
     private func renderPage<T: Component>(content: T) async throws
         -> HTMLResponse
     {

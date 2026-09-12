@@ -17,12 +17,9 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        guard
-            context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
-        else {
-            throw HTTPError(.forbidden)
-        }
         let runtime = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
+        else { return try await runtime.presenter.renderErrorPage(info: "Forbidden", message: "Your account cannot create system variables.") }
         return try await runtime.presenter.renderAddPage(
             state: .empty()
         )
@@ -32,12 +29,9 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        guard
-            context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
-        else {
-            throw HTTPError(.forbidden)
-        }
         let runtime = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
+        else { return try await runtime.presenter.renderErrorPage(info: "Forbidden", message: "Your account cannot create system variables.").response(from: request, context: context) }
         var lastPayload: SystemVariableAddFormInput?
 
         do {

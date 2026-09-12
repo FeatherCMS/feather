@@ -7,4 +7,9 @@ protocol AdminAddSystemVariablePresenter: Sendable {
         state: SystemVariableAddForm.State
     ) async throws -> HTMLResponse
 
+    func renderErrorPage(
+        info: String,
+        message: String
+    ) async throws -> HTMLResponse
+
 }

@@ -1,12 +1,13 @@
 import FeatherAdmin
 import Foundation
 import HTML
+import WebComponents
 
 protocol AdminGetSystemVariablePresenter: Sendable {
 
     func renderDetailsPage(
         variable: SystemVariableDetailsModel,
-        permissions: Set<String>
+        permissions: NewAdminListActions
     ) async throws -> HTMLResponse
 
     func renderErrorPage(

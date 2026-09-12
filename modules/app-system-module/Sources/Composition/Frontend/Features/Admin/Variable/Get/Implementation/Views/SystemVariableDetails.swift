@@ -2,14 +2,14 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
+import SystemContracts
 import WebBuilders
 import WebComponents
 
 struct SystemVariableDetails: Component {
     struct State {
         let variable: SystemVariableDetailsModel
-        let canEdit: Bool
-        let canDelete: Bool
+        let permissions: NewAdminListActions
     }
 
     let state: State
@@ -33,27 +33,37 @@ struct SystemVariableDetails: Component {
                     .init(label: "Name", value: state.variable.name ?? "—"),
                     .init(label: "Notes", value: state.variable.notes ?? "—"),
                 ],
-                actions: ([
-                    .init(
-                        label: "Edit",
-                        href:
-                            SystemVariableRoutes.edit(
-                                RouterPath(state.variable.id)
-                            )
-                            .description,
-                        style: .primary
-                    ),
-                    .init(
-                        label: "Remove",
-                        href: SystemVariableRoutes.removeFromDetails(
-                            state.variable.id
-                        ),
-                        style: .destructive
-                    ),
-                ] as [NewAdminDetailView.Action]).filter { action in
-                    action.label == "Edit" ? state.canEdit : state.canDelete
-                }
+                actions: actions(state: state)
             )
         )
+    }
+
+    private func actions(
+        state: State
+    ) -> [NewAdminDetailView.Action] {
+        var result: [NewAdminDetailView.Action] = []
+        if state.permissions.allows(SystemPermissions.Variables.update) {
+            result.append(
+                .init(
+                    label: "Edit",
+                    href: SystemVariableRoutes.edit(
+                        RouterPath(state.variable.id)
+                    ).description,
+                    style: .primary
+                )
+            )
+        }
+        if state.permissions.allows(SystemPermissions.Variables.delete) {
+            result.append(
+                .init(
+                    label: "Remove",
+                    href: SystemVariableRoutes.removeFromDetails(
+                        state.variable.id
+                    ),
+                    style: .destructive
+                )
+            )
+        }
+        return result
     }
 }
