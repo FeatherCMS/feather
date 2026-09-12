@@ -1,4 +1,5 @@
 import CSS
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
@@ -33,15 +34,18 @@ public struct RenderingEngineAssetConfiguration: Sendable {
 public struct DefaultRenderingEngine: RenderingEngine {
     public let publicOrigins: AppPublicOriginConfiguration
     public let adminMenuCatalog: AdminMenuCatalog
+    public let adminEvents: any EventPublisher
     public let assets: RenderingEngineAssetConfiguration
 
     public init(
         publicOrigins: AppPublicOriginConfiguration,
         adminMenuCatalog: AdminMenuCatalog,
+        adminEvents: any EventPublisher,
         assets: RenderingEngineAssetConfiguration = .init()
     ) {
         self.publicOrigins = publicOrigins
         self.adminMenuCatalog = adminMenuCatalog
+        self.adminEvents = adminEvents
         self.assets = assets
     }
 
@@ -158,6 +162,22 @@ public struct DefaultRenderingEngine: RenderingEngine {
         .lang("en-US")
 
         return .init(html)
+    }
+
+    public func renderNewAdminPage<T: Component>(
+        request: Request,
+        context: DefaultRequestContext,
+        title: String,
+        content: T
+    ) async throws -> HTMLResponse {
+        let menuGroups = try await context.adminMenuGroups(
+            request: request,
+            events: adminEvents
+        )
+        let notification = AdminNotificationFlash.notification(from: request)
+        var context = RenderContext()
+        let layout = NewAdminBaseLayout(content: content, menuGroups: menuGroups, notification: notification)
+        return .init(context.render(NewAdminHTML(title: title, body: .init(content: layout))))
     }
 
     private func normalizedURL(

@@ -56,7 +56,7 @@ struct SystemVariableTableContent: Component {
                                     {
                                         context.render(
                                             NewAdminButton(
-                                                "Add variable",
+                                                "Add new",
                                                 href: SystemVariableRoutes.add
                                                     .description
                                             )
@@ -90,14 +90,12 @@ struct SystemVariableTableContent: Component {
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
+                                                    Th("ID")
+                                                        .columnWidth(percent: 30)
                                                     Th("Name")
-                                                        .columnWidth(
-                                                            percent: 50
-                                                        )
+                                                        .columnWidth(percent: 35)
                                                     Th("Value")
-                                                        .columnWidth(
-                                                            percent: 50
-                                                        )
+                                                        .columnWidth(percent: 35)
                                                     Th("Actions")
                                                 }
                                             }
@@ -143,7 +141,7 @@ struct SystemVariableTableContent: Component {
                             NewAdminListToolbar {
                                 context.render(
                                     NewAdminButton(
-                                        "Add variable",
+                                        "Add new",
                                         href: SystemVariableRoutes.add
                                             .description
                                     )

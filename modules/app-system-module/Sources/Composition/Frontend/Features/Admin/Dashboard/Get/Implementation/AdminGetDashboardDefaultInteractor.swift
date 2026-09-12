@@ -1,0 +1,33 @@
+import FeatherAdmin
+import FeatherContracts
+
+struct AdminGetDashboardDefaultInteractor: AdminGetDashboardInteractor {
+    let events: any EventPublisher
+
+    func getHome(
+        context: AdminDashboardEventContext
+    ) async throws -> AdminGetDashboardModel {
+        let overview =
+            try await events.trigger(
+                event: AdminHomeOverviewProvider(),
+                using: context
+            )
+            .flatMap { $0 }
+        let firstOverview = overview.first {
+            $0.dailyTraffic != nil
+                || $0.topPages != nil
+                || !$0.insightCards.isEmpty
+        }
+        return .init(
+            title: "Admin - Home",
+            description:
+                "Content overview for the admin dashboard.",
+            summary:
+                "Content inventory and top pages across blog and web modules.",
+            contentStats: overview.flatMap { $0.contentStats },
+            dailyTraffic: firstOverview?.dailyTraffic,
+            topPages: firstOverview?.topPages,
+            webInsightCards: overview.flatMap { $0.insightCards }
+        )
+    }
+}

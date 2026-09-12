@@ -87,7 +87,7 @@ struct SystemVariableEditForm: Component {
             Div {
                 context.render(NewAdminSubmitButton(submitLabel, style: .primary))
                 if let removeHref {
-                    context.render(NewAdminButton("Remove variable", href: removeHref, style: .destructive))
+                    context.render(NewAdminButton("Remove", href: removeHref, style: .destructive))
                 }
             }.class("new-admin-form__actions")
         }

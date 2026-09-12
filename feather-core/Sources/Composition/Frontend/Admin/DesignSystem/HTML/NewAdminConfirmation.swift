@@ -1,3 +1,4 @@
+import CSS
 import HTML
 import SGML
 import WebBuilders
@@ -18,6 +19,7 @@ public struct NewAdminConfirmation: Component {
     public let title: String
     public let message: String
     public let selectedIDs: [String]
+    public let selectedNames: [String]
     public let action: String
     public let cancel: String
     public let submitLabel: String
@@ -29,6 +31,7 @@ public struct NewAdminConfirmation: Component {
         title: String,
         message: String,
         selectedIDs: [String] = [],
+        selectedNames: [String] = [],
         action: String,
         cancel: String,
         submitLabel: String = "Remove",
@@ -39,6 +42,7 @@ public struct NewAdminConfirmation: Component {
         self.title = title
         self.message = message
         self.selectedIDs = selectedIDs
+        self.selectedNames = selectedNames
         self.action = action
         self.cancel = cancel
         self.submitLabel = submitLabel
@@ -46,14 +50,41 @@ public struct NewAdminConfirmation: Component {
         self.hiddenFields = hiddenFields
     }
 
+    @Builder<CSS.Rule>
+    public func rules() -> [any Rule] {
+        Media {
+            Custom(".admin-confirmation-items") {
+                Margin(vertical: 20.px, horizontal: 0.px)
+                Padding(vertical: 16.px, horizontal: 20.px)
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Tertiary.border))
+                BorderRadius(8.px)
+            }
+            Custom(".admin-confirmation-items p") { Margin(0) }
+            Custom(".admin-confirmation-items ul") {
+                Margin(vertical: 12.px, horizontal: 0.px)
+                Padding(left: 20.px)
+            }
+            Custom(".admin-confirmation-items li") {
+                Margin(vertical: 8.px, horizontal: 0.px)
+            }
+        }
+    }
+
     public func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(NewAdminBreadcrumb(state: breadcrumb))
-            H1(title)
-            P(message)
-            if !selectedIDs.isEmpty {
-                P("Selected \(selectedIDs.count) items.")
-                P("IDs: \(selectedIDs.prefix(10).joined(separator: ", "))")
+            context.render(NewAdminPageHeader(state: .init(title: title, description: message)))
+            if !selectedNames.isEmpty {
+                Div {
+                    Ul {
+                        for name in selectedNames.prefix(20) { Li(name) }
+                        if selectedNames.count > 20 {
+                            Li("And \(selectedNames.count - 20) more.")
+                        }
+                    }
+                }
+                .class("admin-confirmation-items")
             }
             Form {
                 for field in hiddenFields {

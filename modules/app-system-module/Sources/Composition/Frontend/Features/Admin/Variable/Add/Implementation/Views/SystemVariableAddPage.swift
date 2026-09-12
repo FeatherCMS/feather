@@ -11,7 +11,10 @@ struct SystemVariableAddPage: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(NewAdminBreadcrumb(state: breadcrumb))
-            H1("Add system variable")
+            context.render(NewAdminPageHeader(state: .init(
+                title: "Add system variable",
+                description: "Create a configuration value for the application."
+            )))
             context.render(form)
         }.class("cms-section")
     }

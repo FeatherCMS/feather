@@ -30,7 +30,9 @@ struct AdminRemoveSystemVariableDefaultPresenter:
     func renderRemoveConfirmation(
         page: Int,
         search: String?,
-        ids: [String]
+        ids: [String],
+        names: [String],
+        fromDetails: Bool
     ) async throws -> HTMLResponse {
         let menuGroups = try await context.adminMenuGroups(
             request: request,
@@ -41,16 +43,21 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 breadcrumb: breadcrumb(),
                 title: "Remove selected variables",
                 message:
-                    "Are you sure you want to remove these selected variables? This action cannot be undone.",
+                    "You’re about to permanently remove the selected system variables. This action cannot be undone.",
                 selectedIDs: ids,
+                selectedNames: names,
                 action: SystemVariableRoutes.remove.description,
-                cancel: ListRemoveRedirect.location(
-                    path: SystemVariableRoutes.list.description,
-                    page: page,
-                    search: search,
-                    title: nil,
-                    message: nil
-                ),
+                cancel: fromDetails && ids.count == 1
+                    ? SystemVariableRoutes.details(RouterPath(ids[0])).description
+                    : ids.count == 1
+                    ? SystemVariableRoutes.edit(RouterPath(ids[0])).description
+                    : ListRemoveRedirect.location(
+                        path: SystemVariableRoutes.list.description,
+                        page: page,
+                        search: search,
+                        title: nil,
+                        message: nil
+                    ),
                 hiddenFields: ids.map {
                     .init(name: "ids", value: $0)
                 }

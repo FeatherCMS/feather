@@ -10,6 +10,7 @@ struct AdminAddSystemVariableDefaultPresenter:
     let request: Request
     let context: DefaultRequestContext
     let events: any EventPublisher
+    let renderingEngine: any RenderingEngine
 
     func renderAddPage(
         state: SystemVariableAddForm.State
@@ -23,7 +24,7 @@ struct AdminAddSystemVariableDefaultPresenter:
                 form: SystemVariableAddForm(
                     state: state,
                     action: SystemVariableRoutes.add.description,
-                    submitLabel: "Add variable",
+                    submitLabel: "Save",
                     nonceToken: nonceToken
                 )
             )
@@ -31,11 +32,12 @@ struct AdminAddSystemVariableDefaultPresenter:
     }
 
     private func renderPage<T: Component>(content: T) async throws -> HTMLResponse {
-        try await SystemVariableAdminPageRenderer(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
-            events: events
-        ).render(content: content)
+            title: "Manage system variables",
+            content: content
+        )
     }
 
     private func breadcrumb() -> NewAdminBreadcrumb.State {

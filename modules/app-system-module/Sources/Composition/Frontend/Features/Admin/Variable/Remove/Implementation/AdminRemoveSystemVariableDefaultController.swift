@@ -22,7 +22,7 @@ struct AdminRemoveSystemVariableDefaultController:
         else {
             throw HTTPError(.forbidden)
         }
-        let (_, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime(request, context)
         let ids = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -44,7 +44,9 @@ struct AdminRemoveSystemVariableDefaultController:
             try await presenter.renderRemoveConfirmation(
                 page: page,
                 search: search,
-                ids: ids
+                ids: ids,
+                names: try await interactor.names(ids: ids),
+                fromDetails: request.queryString("from") == "details"
             )
             .response(from: request, context: context)
     }

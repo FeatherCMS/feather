@@ -70,7 +70,8 @@ func buildRouter(
     let adminMenuCatalog = try await AdminMenuCatalog.load(from: adminEvents)
     let renderingEngine = DefaultRenderingEngine(
         publicOrigins: environment.publicOrigins,
-        adminMenuCatalog: adminMenuCatalog
+        adminMenuCatalog: adminMenuCatalog,
+        adminEvents: adminEvents
     )
     let applicationTemplatePaths = Bundle.module.url(
         forResource: "Templates",

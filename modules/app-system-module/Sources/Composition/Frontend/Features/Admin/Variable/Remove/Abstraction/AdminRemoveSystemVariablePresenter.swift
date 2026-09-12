@@ -11,7 +11,9 @@ protocol AdminRemoveSystemVariablePresenter: Sendable {
     func renderRemoveConfirmation(
         page: Int,
         search: String?,
-        ids: [String]
+        ids: [String],
+        names: [String],
+        fromDetails: Bool
     ) async throws -> HTMLResponse
 
 }

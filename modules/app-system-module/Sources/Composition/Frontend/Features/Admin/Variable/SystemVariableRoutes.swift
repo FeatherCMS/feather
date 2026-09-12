@@ -19,4 +19,8 @@ enum SystemVariableRoutes {
     static func remove(_ id: String) -> String {
         "\(remove.description)?ids=\(id.queryEncoded())"
     }
+
+    static func removeFromDetails(_ id: String) -> String {
+        "\(remove.description)?ids=\(id.queryEncoded())&from=details"
+    }
 }

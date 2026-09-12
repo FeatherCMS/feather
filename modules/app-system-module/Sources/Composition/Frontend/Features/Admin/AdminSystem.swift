@@ -20,13 +20,13 @@ public struct AdminSystem {
         AdminGetStyle()
             .route(on: router)
 
-        AdminGetHome(
+        AdminGetDashboard(
             renderingEngine: renderingEngine,
             events: adminEvents
         )
         .controller.route(on: router)
 
-        AdminGetSystemHome(
+        AdminGetSystemOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -68,12 +68,14 @@ public struct AdminSystem {
         .controller.route(on: router)
 
         AdminAddSystemVariable(
-            events: adminEvents
+            events: adminEvents,
+            renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminEditSystemVariable(
-            events: adminEvents
+            events: adminEvents,
+            renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
@@ -83,7 +85,8 @@ public struct AdminSystem {
         .controller.route(on: router)
 
         AdminGetSystemVariable(
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            events: adminEvents
         )
         .controller.route(on: router)
 

@@ -20,7 +20,7 @@ struct SystemVariableRow: Component {
             self.value = variable.value
             self.actions = [
                 .init(
-                    "Details",
+                    "View",
                     href: SystemVariableRoutes.details(RouterPath(variable.id))
                         .description,
                     style: .ghost(.primary),
@@ -51,8 +51,9 @@ struct SystemVariableRow: Component {
             if permissions.allows(SystemPermissions.Variables.delete) {
                 context.render(NewAdminListRowCheckbox(id: state.id))
             }
-            Td(state.name).data("label", "Name").columnWidth(percent: 50)
-            Td(state.value).data("label", "Value").columnWidth(percent: 50)
+            Td(state.id).data("label", "ID").columnWidth(percent: 30)
+            Td(state.name).data("label", "Name").columnWidth(percent: 35)
+            Td(state.value).data("label", "Value").columnWidth(percent: 35)
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",

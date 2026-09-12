@@ -15,7 +15,7 @@ public enum WebAdminDashboardEventHandlers {
                 apiBaseURL: context.apiBaseURL,
                 sessionToken: context.sessionToken
             )
-            var contentStats: [AdminGetHomeModel.ContentStat] = []
+            var contentStats: [AdminGetDashboardModel.ContentStat] = []
 
             await appendCount(
                 label: "Web pages",
@@ -119,7 +119,7 @@ public enum WebAdminDashboardEventHandlers {
         permission: String,
         permissions: Set<String>,
         operation: @escaping @Sendable () async throws -> Int,
-        to contentStats: inout [AdminGetHomeModel.ContentStat]
+        to contentStats: inout [AdminGetDashboardModel.ContentStat]
     ) async {
         guard permissions.contains(permission),
             let count = try? await operation()

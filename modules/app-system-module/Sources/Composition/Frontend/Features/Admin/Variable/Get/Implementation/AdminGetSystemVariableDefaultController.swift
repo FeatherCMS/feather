@@ -26,14 +26,14 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
             let variable = try await runtime.interactor.execute(
                 entity: .init(id: id)
             )
-            return runtime.presenter.renderDetailsPage(
+            return try await runtime.presenter.renderDetailsPage(
                 variable: variable,
                 breadcrumb: runtime.presenter.breadcrumb(id: id),
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 info: error.errorTitle,
                 message: error.errorDescription,
                 breadcrumb: runtime.presenter.breadcrumb(id: id),

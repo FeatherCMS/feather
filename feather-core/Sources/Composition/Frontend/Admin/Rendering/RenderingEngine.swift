@@ -22,6 +22,13 @@ public protocol RenderingEngine: Sendable {
         content: T
     ) -> HTMLResponse
 
+    func renderNewAdminPage<T: Component>(
+        request: Request,
+        context: DefaultRequestContext,
+        title: String,
+        content: T
+    ) async throws -> HTMLResponse
+
     func adminSidebarState(
         request: Request,
         permissions: Set<String>

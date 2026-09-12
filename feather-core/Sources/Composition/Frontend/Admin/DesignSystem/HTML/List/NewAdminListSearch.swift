@@ -14,6 +14,8 @@ public struct NewAdminListSearch: Component {
                 Gap(8.px)
                 FlexWrap(.nowrap)
                 MarginBottom(0.px)
+                Width(100.percent)
+                MaxWidth(100.percent)
             }
             Custom(
                 ".table-search-form input[type='search'], .table-search-form select"

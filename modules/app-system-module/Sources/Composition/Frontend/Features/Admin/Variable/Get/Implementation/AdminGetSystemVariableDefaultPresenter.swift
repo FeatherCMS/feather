@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
@@ -7,22 +8,19 @@ import WebComponents
 
 struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     let request: Request
+    let context: DefaultRequestContext
+    let events: any EventPublisher
     let renderingEngine: any RenderingEngine
 
     func renderDetailsPage(
         variable: SystemVariableDetailsModel,
-        breadcrumb: AdminBreadcrumb.State,
+        breadcrumb: NewAdminBreadcrumb.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "System variable details",
-            description: "Management system variable details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: SystemVariableDetails(
                 state: .init(
                     variable: variable,
@@ -35,18 +33,13 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     func renderErrorPage(
         info: String,
         message: String,
-        breadcrumb: AdminBreadcrumb.State,
+        breadcrumb: NewAdminBreadcrumb.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "System variable details",
-            description: "Management system variable details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: NewAdminStatusView(
                 state: .init(title: info, message: message),
                 icon: FeatherIcons.alertCircle()
@@ -56,7 +49,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
+    ) -> NewAdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "System", link: "/admin/system/"),
