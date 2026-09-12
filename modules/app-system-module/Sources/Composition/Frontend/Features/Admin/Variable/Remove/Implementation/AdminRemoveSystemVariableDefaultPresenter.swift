@@ -53,9 +53,9 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 cancel: SystemVariableRoutes.removeCancel(
                     ids: ids,
                     page: page,
-            search: search,
-            fromDetails: fromDetails,
-            fromEdit: fromEdit
+                    search: search,
+                    fromDetails: fromDetails,
+                    fromEdit: fromEdit
                 ),
                 hiddenFields: ids.map {
                     .init(name: "ids", value: $0)

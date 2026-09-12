@@ -17,7 +17,12 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.read)
-        else { return try await runtime.presenter.renderErrorPage(info: "Forbidden", message: "Your account cannot access system variables.") }
+        else {
+            return try await runtime.presenter.renderErrorPage(
+                info: "Forbidden",
+                message: "Your account cannot access system variables."
+            )
+        }
         let id = try context.requiredID()
         do {
             let variable = try await runtime.interactor.execute(

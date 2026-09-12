@@ -46,9 +46,11 @@ struct SystemVariableDetails: Component {
             result.append(
                 .init(
                     label: "Edit",
-                    href: SystemVariableRoutes.edit(
-                        RouterPath(state.variable.id)
-                    ).description,
+                    href:
+                        SystemVariableRoutes.edit(
+                            RouterPath(state.variable.id)
+                        )
+                        .description,
                     style: .primary
                 )
             )

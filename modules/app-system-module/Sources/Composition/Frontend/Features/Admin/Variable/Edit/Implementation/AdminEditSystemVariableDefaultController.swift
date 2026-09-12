@@ -19,8 +19,14 @@ struct AdminEditSystemVariableDefaultController:
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
-        else { return try await runtime.presenter.renderErrorPage(info: "Forbidden", message: "Your account cannot edit system variables.") }
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
+        else {
+            return try await runtime.presenter.renderErrorPage(
+                info: "Forbidden",
+                message: "Your account cannot edit system variables."
+            )
+        }
         let id = try context.requiredID()
         let permissions = permissionKeys(context.currentUserPermissions)
         do {
@@ -50,8 +56,16 @@ struct AdminEditSystemVariableDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
-        else { return try await runtime.presenter.renderErrorPage(info: "Forbidden", message: "Your account cannot edit system variables.").response(from: request, context: context) }
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
+        else {
+            return try await runtime.presenter
+                .renderErrorPage(
+                    info: "Forbidden",
+                    message: "Your account cannot edit system variables."
+                )
+                .response(from: request, context: context)
+        }
         let id = try context.requiredID()
         let permissions = permissionKeys(context.currentUserPermissions)
         var lastPayload: SystemVariableEditFormInput?

@@ -18,8 +18,17 @@ struct AdminRemoveSystemVariableDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
-        else { return try await presenter.renderErrorPage(info: "Forbidden", message: "Your account cannot remove system variables.", cancel: SystemVariableRoutes.list.description).response(from: request, context: context) }
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
+        else {
+            return
+                try await presenter.renderErrorPage(
+                    info: "Forbidden",
+                    message: "Your account cannot remove system variables.",
+                    cancel: SystemVariableRoutes.list.description
+                )
+                .response(from: request, context: context)
+        }
         let ids = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -54,8 +63,17 @@ struct AdminRemoveSystemVariableDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
-        else { return try await presenter.renderErrorPage(info: "Forbidden", message: "Your account cannot remove system variables.", cancel: SystemVariableRoutes.list.description).response(from: request, context: context) }
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
+        else {
+            return
+                try await presenter.renderErrorPage(
+                    info: "Forbidden",
+                    message: "Your account cannot remove system variables.",
+                    cancel: SystemVariableRoutes.list.description
+                )
+                .response(from: request, context: context)
+        }
         var errorPage = (
             page: request.queryPage(), search: request.querySearch()
         )

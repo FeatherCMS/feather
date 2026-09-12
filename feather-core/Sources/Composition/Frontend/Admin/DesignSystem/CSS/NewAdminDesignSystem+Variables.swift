@@ -121,33 +121,69 @@ extension NewAdminDesignSystem {
         Media(.prefersColorScheme(.dark)) {
             Root {
 
-                Variable(TokenKey.Colors.Palette.Red.background, "rgba(255, 69, 58, 0.16)")
-                Variable(TokenKey.Colors.Palette.Red.border, "rgba(255, 105, 97, 0.58)")
+                Variable(
+                    TokenKey.Colors.Palette.Red.background,
+                    "rgba(255, 69, 58, 0.16)"
+                )
+                Variable(
+                    TokenKey.Colors.Palette.Red.border,
+                    "rgba(255, 105, 97, 0.58)"
+                )
                 Variable(TokenKey.Colors.Palette.Red.foreground, "#ff6961")
                 Variable(TokenKey.Colors.Palette.Red.text, "#fff")
 
-                Variable(TokenKey.Colors.Palette.Blue.background, "rgba(10, 132, 255, 0.16)")
-                Variable(TokenKey.Colors.Palette.Blue.border, "rgba(10, 132, 255, 0.55)")
+                Variable(
+                    TokenKey.Colors.Palette.Blue.background,
+                    "rgba(10, 132, 255, 0.16)"
+                )
+                Variable(
+                    TokenKey.Colors.Palette.Blue.border,
+                    "rgba(10, 132, 255, 0.55)"
+                )
                 Variable(TokenKey.Colors.Palette.Blue.foreground, "#64b5ff")
                 Variable(TokenKey.Colors.Palette.Blue.text, "#fff")
 
-                Variable(TokenKey.Colors.Palette.Green.background, "rgba(48, 209, 88, 0.16)")
-                Variable(TokenKey.Colors.Palette.Green.border, "rgba(48, 209, 88, 0.55)")
+                Variable(
+                    TokenKey.Colors.Palette.Green.background,
+                    "rgba(48, 209, 88, 0.16)"
+                )
+                Variable(
+                    TokenKey.Colors.Palette.Green.border,
+                    "rgba(48, 209, 88, 0.55)"
+                )
                 Variable(TokenKey.Colors.Palette.Green.foreground, "#63e68a")
                 Variable(TokenKey.Colors.Palette.Green.text, "#fff")
 
-                Variable(TokenKey.Colors.Palette.Yellow.background, "rgba(255, 214, 10, 0.16)")
-                Variable(TokenKey.Colors.Palette.Yellow.border, "rgba(255, 214, 10, 0.55)")
+                Variable(
+                    TokenKey.Colors.Palette.Yellow.background,
+                    "rgba(255, 214, 10, 0.16)"
+                )
+                Variable(
+                    TokenKey.Colors.Palette.Yellow.border,
+                    "rgba(255, 214, 10, 0.55)"
+                )
                 Variable(TokenKey.Colors.Palette.Yellow.foreground, "#ffd60a")
                 Variable(TokenKey.Colors.Palette.Yellow.text, "#fff")
 
-                Variable(TokenKey.Colors.Palette.Orange.background, "rgba(255, 159, 10, 0.16)")
-                Variable(TokenKey.Colors.Palette.Orange.border, "rgba(255, 159, 10, 0.55)")
+                Variable(
+                    TokenKey.Colors.Palette.Orange.background,
+                    "rgba(255, 159, 10, 0.16)"
+                )
+                Variable(
+                    TokenKey.Colors.Palette.Orange.border,
+                    "rgba(255, 159, 10, 0.55)"
+                )
                 Variable(TokenKey.Colors.Palette.Orange.foreground, "#ffb340")
                 Variable(TokenKey.Colors.Palette.Orange.text, "#fff")
 
-                Variable(TokenKey.Colors.Palette.Purple.background, "rgba(191, 90, 242, 0.16)")
-                Variable(TokenKey.Colors.Palette.Purple.border, "rgba(191, 90, 242, 0.55)")
+                Variable(
+                    TokenKey.Colors.Palette.Purple.background,
+                    "rgba(191, 90, 242, 0.16)"
+                )
+                Variable(
+                    TokenKey.Colors.Palette.Purple.border,
+                    "rgba(191, 90, 242, 0.55)"
+                )
                 Variable(TokenKey.Colors.Palette.Purple.foreground, "#d08cff")
                 Variable(TokenKey.Colors.Palette.Purple.text, "#fff")
 
