@@ -27,7 +27,8 @@ public struct AdminSystem {
         .controller.route(on: router)
 
         AdminGetSystemOverview(
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            events: adminEvents
         )
         .controller.route(on: router)
 

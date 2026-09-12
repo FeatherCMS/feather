@@ -6,5 +6,5 @@ protocol AdminGetSystemOverviewPresenter: Sendable {
     func renderHome(
         model: AdminGetSystemOverviewModel,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

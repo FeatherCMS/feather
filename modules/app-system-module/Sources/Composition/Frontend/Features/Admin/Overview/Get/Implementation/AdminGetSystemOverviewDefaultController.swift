@@ -15,7 +15,7 @@ struct AdminGetSystemOverviewDefaultController: AdminGetSystemOverviewController
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let model = try await interactor.getHome()
-        return presenter.renderHome(
+        return try await presenter.renderHome(
             model: model,
             permissions: context.currentUserPermissions
         )
