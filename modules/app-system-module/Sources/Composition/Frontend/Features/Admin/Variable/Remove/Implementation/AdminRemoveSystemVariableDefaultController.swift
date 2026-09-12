@@ -86,7 +86,9 @@ struct AdminRemoveSystemVariableDefaultController:
                 to: location,
                 notification: .init(
                     title: "Removed",
-                    message: "System variable removed successfully."
+                    message: payload.normalizedIds.count == 1
+                        ? "System variable removed successfully."
+                        : "\(payload.normalizedIds.count) system variables removed successfully."
                 )
             )
         }

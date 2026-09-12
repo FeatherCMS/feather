@@ -27,14 +27,12 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
             )
             return try await runtime.presenter.renderDetailsPage(
                 variable: variable,
-                breadcrumb: SystemVariableRoutes.breadcrumb,
             )
         }
         catch let error as OpenAPIRepositoryError {
             return try await runtime.presenter.renderErrorPage(
                 info: error.errorTitle,
                 message: error.errorDescription,
-                breadcrumb: SystemVariableRoutes.breadcrumb,
             )
         }
     }

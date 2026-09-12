@@ -5,12 +5,11 @@ import WebBuilders
 import WebComponents
 
 struct SystemVariableEditPage: Component {
-    let breadcrumb: NewAdminBreadcrumb.State
     let form: SystemVariableEditForm
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(state: breadcrumb))
+            context.render(NewAdminBreadcrumb(state: SystemVariableRoutes.breadcrumb))
             context.render(
                 NewAdminPageHeader(
                     state: .init(

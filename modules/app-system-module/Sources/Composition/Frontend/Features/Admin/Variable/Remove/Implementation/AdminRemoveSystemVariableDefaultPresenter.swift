@@ -31,11 +31,11 @@ struct AdminRemoveSystemVariableDefaultPresenter:
         return try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Manage system variables",
             content: NewAdminConfirmation(
                 breadcrumb: SystemVariableRoutes.breadcrumb,
-                title: "Remove selected variables",
-                message:
-                    "You’re about to permanently remove the selected system variables. This action cannot be undone.",
-                selectedIDs: ids,
-                selectedNames: names,
+                pageHeader: .init(
+                    title: "Remove selected variables",
+                    description: "You’re about to permanently remove the selected system variables. This action cannot be undone."
+                ),
+                selectedItems: names,
                 action: SystemVariableRoutes.remove.description,
                 cancel: fromDetails && ids.count == 1
                     ? SystemVariableRoutes.details(RouterPath(ids[0]))

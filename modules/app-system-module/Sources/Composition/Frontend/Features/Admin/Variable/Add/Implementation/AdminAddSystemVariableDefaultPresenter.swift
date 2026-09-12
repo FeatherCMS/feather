@@ -18,7 +18,6 @@ struct AdminAddSystemVariableDefaultPresenter:
         )
         return try await renderPage(
             content: SystemVariableAddPage(
-                breadcrumb: SystemVariableRoutes.breadcrumb,
                 form: SystemVariableAddForm(
                     state: state,
                     action: SystemVariableRoutes.add.description,

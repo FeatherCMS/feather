@@ -16,10 +16,8 @@ public struct NewAdminConfirmation: Component {
     }
 
     public let breadcrumb: NewAdminBreadcrumb.State
-    public let title: String
-    public let message: String
-    public let selectedIDs: [String]
-    public let selectedNames: [String]
+    public let pageHeader: NewAdminPageHeader.State
+    public let selectedItems: [String]
     public let action: String
     public let cancel: String
     public let submitLabel: String
@@ -28,10 +26,8 @@ public struct NewAdminConfirmation: Component {
 
     public init(
         breadcrumb: NewAdminBreadcrumb.State,
-        title: String,
-        message: String,
-        selectedIDs: [String] = [],
-        selectedNames: [String] = [],
+        pageHeader: NewAdminPageHeader.State,
+        selectedItems: [String] = [],
         action: String,
         cancel: String,
         submitLabel: String = "Remove",
@@ -39,10 +35,8 @@ public struct NewAdminConfirmation: Component {
         hiddenFields: [HiddenField] = []
     ) {
         self.breadcrumb = breadcrumb
-        self.title = title
-        self.message = message
-        self.selectedIDs = selectedIDs
-        self.selectedNames = selectedNames
+        self.pageHeader = pageHeader
+        self.selectedItems = selectedItems
         self.action = action
         self.cancel = cancel
         self.submitLabel = submitLabel
@@ -78,17 +72,13 @@ public struct NewAdminConfirmation: Component {
     public func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(NewAdminBreadcrumb(state: breadcrumb))
-            context.render(
-                NewAdminPageHeader(
-                    state: .init(title: title, description: message)
-                )
-            )
-            if !selectedNames.isEmpty {
+            context.render(NewAdminPageHeader(state: pageHeader))
+            if !selectedItems.isEmpty {
                 Div {
                     Ul {
-                        for name in selectedNames.prefix(20) { Li(name) }
-                        if selectedNames.count > 20 {
-                            Li("And \(selectedNames.count - 20) more.")
+                        for item in selectedItems.prefix(20) { Li(item) }
+                        if selectedItems.count > 20 {
+                            Li("And \(selectedItems.count - 20) more.")
                         }
                     }
                 }

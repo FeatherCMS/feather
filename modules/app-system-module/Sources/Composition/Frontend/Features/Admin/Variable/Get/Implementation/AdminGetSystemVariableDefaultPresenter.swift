@@ -11,8 +11,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     let renderingEngine: any RenderingEngine
 
     func renderDetailsPage(
-        variable: SystemVariableDetailsModel,
-        breadcrumb: NewAdminBreadcrumb.State
+        variable: SystemVariableDetailsModel
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -21,7 +20,6 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
             content: SystemVariableDetails(
                 state: .init(
                     variable: variable,
-                    breadcrumb: breadcrumb
                 )
             )
         )
@@ -29,8 +27,7 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
 
     func renderErrorPage(
         info: String,
-        message: String,
-        breadcrumb: NewAdminBreadcrumb.State
+        message: String
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,

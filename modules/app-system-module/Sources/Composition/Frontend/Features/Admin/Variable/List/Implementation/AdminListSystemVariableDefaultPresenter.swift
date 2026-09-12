@@ -28,7 +28,6 @@ struct AdminListSystemVariableDefaultPresenter:
                     variables: model.items,
                     pageState: model.pageState,
                     search: search,
-                    breadcrumb: SystemVariableRoutes.breadcrumb
                 )
             ),
             

@@ -23,7 +23,6 @@ struct AdminEditSystemVariableDefaultPresenter:
         )
         return try await renderPage(
             content: SystemVariableEditPage(
-                breadcrumb: SystemVariableRoutes.breadcrumb,
                 form: SystemVariableEditForm(
                     state: state,
                     action: SystemVariableRoutes.edit(RouterPath(id))

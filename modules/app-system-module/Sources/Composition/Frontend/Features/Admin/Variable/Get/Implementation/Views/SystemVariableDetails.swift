@@ -8,7 +8,6 @@ import WebComponents
 struct SystemVariableDetails: Component {
     struct State {
         let variable: SystemVariableDetailsModel
-        let breadcrumb: NewAdminBreadcrumb.State
     }
 
     let state: State
@@ -16,7 +15,7 @@ struct SystemVariableDetails: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         context.render(
             NewAdminDetailView(
-                breadcrumb: state.breadcrumb,
+                breadcrumb: SystemVariableRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Variable details",
                     description: "System variable details."

@@ -13,14 +13,13 @@ struct SystemVariableTable: Component {
         let variables: [Components.Schemas.SystemVariableListItemSchema]
         let pageState: ListPageState
         let search: String?
-        let breadcrumb: NewAdminBreadcrumb.State
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(state: state.breadcrumb))
+            context.render(NewAdminBreadcrumb(state: SystemVariableRoutes.breadcrumb))
             context.render(
                 NewAdminPageHeader(
                     state: .init(
