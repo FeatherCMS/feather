@@ -14,6 +14,13 @@ struct AdminAddSystemVariableDefaultPresenter:
     func renderAddPage(
         state: SystemVariableAddForm.State
     ) async throws -> HTMLResponse {
+        try await renderAddPage(state: state, status: .ok)
+    }
+
+    private func renderAddPage(
+        state: SystemVariableAddForm.State,
+        status: HTTPResponse.Status
+    ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
@@ -24,7 +31,8 @@ struct AdminAddSystemVariableDefaultPresenter:
                     action: SystemVariableRoutes.add.description,
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            status: status
         )
     }
 
@@ -42,16 +50,18 @@ struct AdminAddSystemVariableDefaultPresenter:
         } ?? .empty()
         state.apply(errors: errors)
 
-        return try await renderAddPage(state: state)
+        return try await renderAddPage(
+            state: state,
+            status: .unprocessableContent
+        )
     }
 
-    func renderSuccess() async throws -> HTMLResponse {
-        try await renderPage(
-            content: NewAdminStatusView(
-                state: .init(
-                    title: "Added",
-                    message: "System variable added successfully."
-                )
+    func renderSuccess() -> Response {
+        AdminNotificationFlash.redirect(
+            to: SystemVariableRoutes.list.description,
+            notification: .init(
+                title: "Added",
+                message: "System variable added successfully."
             )
         )
     }
@@ -65,16 +75,18 @@ struct AdminAddSystemVariableDefaultPresenter:
             return try await renderUnauthorizedPage()
         case .forbidden:
             return try await renderForbiddenPage()
-        case .conflict, .unavailable:
-            var state = input.map {
-                SystemVariableAddForm.State.from(input: $0)
-            } ?? .empty()
-
-            state.apply(
-                error: formErrorMessage(for: error)
+        case .conflict:
+            return try await renderFormError(
+                input: input,
+                message: "A system variable with this key already exists.",
+                status: .conflict
             )
-
-            return try await renderAddPage(state: state)
+        case .unavailable:
+            return try await renderFormError(
+                input: input,
+                message: "The system variable could not be created. Please try again.",
+                status: .serviceUnavailable
+            )
         }
     }
 
@@ -86,7 +98,8 @@ struct AdminAddSystemVariableDefaultPresenter:
                     message: "Please sign in again to create system variables."
                 ),
                 icon: FeatherIcons.alertCircle()
-            )
+            ),
+            status: .unauthorized
         )
     }
 
@@ -98,7 +111,8 @@ struct AdminAddSystemVariableDefaultPresenter:
                     message: "Your account cannot create system variables."
                 ),
                 icon: FeatherIcons.alertCircle()
-            )
+            ),
+            status: .forbidden
         )
     }
 
@@ -110,32 +124,38 @@ struct AdminAddSystemVariableDefaultPresenter:
                     message: "This form is no longer valid. Please reload the page and try again."
                 ),
                 icon: FeatherIcons.alertCircle()
-            )
+            ),
+            status: .badRequest
         )
     }
 
-    private func renderPage<T: Component>(content: T) async throws
-        -> HTMLResponse
-    {
-        try await renderingEngine.renderNewAdminPage(
+    private func renderPage<T: Component>(
+        content: T,
+        status: HTTPResponse.Status = .ok
+    ) async throws -> HTMLResponse {
+        let page = try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Manage system variables",
             content: content
         )
+        return HTMLResponse(content: page.content, status: status)
     }
 
-    private func formErrorMessage(
-        for error: AdminAddSystemVariableError
-    ) -> String {
-        switch error {
-        case .conflict:
-            "A system variable with this key already exists."
-        case .unavailable:
-            "The system variable could not be created. Please try again."
-        case .unauthorized, .forbidden:
-            "The system variable could not be created."
-        }
+    private func renderFormError(
+        input: SystemVariableAddFormInput?,
+        message: String,
+        status: HTTPResponse.Status
+    ) async throws -> HTMLResponse {
+        var state = input.map {
+            SystemVariableAddForm.State.from(input: $0)
+        } ?? .empty()
+        state.apply(error: message)
+
+        return try await renderAddPage(
+            state: state,
+            status: status
+        )
     }
 
 }

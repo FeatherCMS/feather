@@ -11,7 +11,6 @@ struct SystemVariableAddForm: Component {
         var value: NewAdminFormFieldTextArea.State
         var notes: NewAdminFormFieldTextArea.State
         var error: String?
-        var success: String?
 
         mutating func apply(errors: [String: String]) {
             key.error = errors[key.name]
@@ -48,8 +47,7 @@ struct SystemVariableAddForm: Component {
                     value: "",
                     style: .small
                 ),
-                error: nil,
-                success: nil
+                error: nil
             )
         }
 
@@ -79,8 +77,7 @@ struct SystemVariableAddForm: Component {
                     value: input.normalizedNotes,
                     style: .small
                 ),
-                error: nil,
-                success: nil
+                error: nil
             )
         }
     }
@@ -101,7 +98,6 @@ struct SystemVariableAddForm: Component {
 
     func html(context: inout RenderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
-            if let success = state.success { P(success).class("success") }
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }

@@ -13,7 +13,7 @@ protocol AdminAddSystemVariablePresenter: Sendable {
         error: ValidationError
     ) async throws -> HTMLResponse
 
-    func renderSuccess() async throws -> HTMLResponse
+    func renderSuccess() -> Response
 
     func renderAddError(
         input: SystemVariableAddFormInput?,

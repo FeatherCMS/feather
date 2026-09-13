@@ -31,12 +31,14 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
     func postAddSystemVariable(
         request: Request,
         context: DefaultRequestContext
-    ) async throws -> HTMLResponse {
+    ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
         else {
-            return try await runtime.presenter.renderForbiddenPage()
+            return try await runtime.presenter
+                .renderForbiddenPage()
+                .response(from: request, context: context)
         }
         var lastPayload: SystemVariableAddFormInput?
 
@@ -52,11 +54,13 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
                     sessionToken: context.sessionToken
                 )
             else {
-                return try await runtime.presenter.renderInvalidNoncePage()
+                return try await runtime.presenter
+                    .renderInvalidNoncePage()
+                    .response(from: request, context: context)
             }
             try await runtime.interactor.add(input: payload)
 
-            return try await runtime.presenter.renderSuccess()
+            return runtime.presenter.renderSuccess()
         }
         catch let error as ValidationError {
             return try await runtime.presenter
@@ -64,6 +68,7 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
                     input: lastPayload,
                     error: error
                 )
+                .response(from: request, context: context)
         }
         catch let error as AdminAddSystemVariableError {
             return try await runtime.presenter
@@ -71,6 +76,7 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
                     input: lastPayload,
                     error: error
                 )
+                .response(from: request, context: context)
         }
     }
 
