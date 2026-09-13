@@ -12,7 +12,7 @@ struct RedirectRuleTableContent: Component {
 
     private var searchValue: String { state.search ?? "" }
 
-    private var isFiltered: Bool {
+    private var hasActiveQuery: Bool {
         !searchValue.isEmpty || !(state.statusCode?.isEmpty ?? true)
     }
 
@@ -42,38 +42,46 @@ struct RedirectRuleTableContent: Component {
                         )
                     }
                     else if state.rules.isEmpty {
-                        context.render(
-                            NewAdminListEmptyState(
-                                resourceName: "redirect rules",
-                                isFiltered: isFiltered,
-                                filteredMessage:
-                                    "No redirect rules match your search or filters.",
-                                icon: FeatherIcons.inbox(),
-                                action: {
-                                    if isFiltered {
+                        if hasActiveQuery {
+                            context.render(
+                                NewAdminListNoResultsState(
+                                    message:
+                                        "No redirect rules match your search or filters.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
                                         context.render(
                                             NewAdminButton(
-                                                "Reset search",
+                                                "Reset filters",
                                                 href: RedirectRuleRoutes.list
                                                     .description,
                                                 style: .secondary
                                             )
                                         )
                                     }
-                                    else if state.permissions.allows(
-                                        RedirectPermissions.Rules.create
-                                    ) {
-                                        context.render(
-                                            NewAdminButton(
-                                                "Add rule",
-                                                href: RedirectRuleRoutes.add
-                                                    .description
-                                            )
-                                        )
-                                    }
-                                }
+                                )
                             )
-                        )
+                        }
+                        else {
+                            context.render(
+                                NewAdminListEmptyState(
+                                    message: "No redirect rules yet.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
+                                        if state.permissions.allows(
+                                            RedirectPermissions.Rules.create
+                                        ) {
+                                            context.render(
+                                                NewAdminButton(
+                                                    "Add rule",
+                                                    href: RedirectRuleRoutes.add
+                                                        .description
+                                                )
+                                            )
+                                        }
+                                    }
+                                )
+                            )
+                        }
                     }
                     else {
                         context.render(
@@ -105,7 +113,7 @@ struct RedirectRuleTableContent: Component {
                                                     }
                                                     Th("Source")
                                                         .columnWidth(
-                                                            percent: 22
+                                                            percent: 24
                                                         )
                                                     Th("Destination")
                                                         .columnWidth(
@@ -117,7 +125,7 @@ struct RedirectRuleTableContent: Component {
                                                         )
                                                     Th("Actions")
                                                         .columnWidth(
-                                                            percent: 28
+                                                            percent: 26
                                                         )
                                                 }
                                             }

@@ -15,7 +15,7 @@ struct UserRoleRow: Component {
             if permissions.allows(UserPermissions.Roles.delete) {
                 context.render(NewAdminListRowCheckbox(id: role.id))
             }
-            Td(role.name ?? "—").data("label", "Name").columnWidth(percent: 69)
+            Td(role.name ?? "—").data("label", "Name").columnWidth(percent: 74)
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",

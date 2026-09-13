@@ -17,7 +17,7 @@ struct RedirectRuleRow: Component {
             if permissions.allows(RedirectPermissions.Rules.delete) {
                 context.render(NewAdminListRowCheckbox(id: rule.id))
             }
-            Td(rule.source).data("label", "Source").columnWidth(percent: 22)
+            Td(rule.source).data("label", "Source").columnWidth(percent: 24)
             Td(rule.destination).data("label", "Destination")
                 .columnWidth(percent: 40)
             Td(String(rule.statusCode)).data("label", "Status")

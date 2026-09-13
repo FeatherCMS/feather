@@ -27,7 +27,7 @@ struct SystemVariableTableContent: Component {
 
     func html(context: inout RenderContext) -> Div {
         let canDelete = permissions.allows(SystemPermissions.Variables.delete)
-        let isFiltered = !(search?.isEmpty ?? true)
+        let hasActiveQuery = !(search?.isEmpty ?? true)
 
         return context.render(
             NewAdminList(
@@ -41,15 +41,13 @@ struct SystemVariableTableContent: Component {
                         )
                     }
                     else if variables.isEmpty {
-                        context.render(
-                            NewAdminListEmptyState(
-                                resourceName: "system variables",
-                                isFiltered: isFiltered,
-                                filteredMessage:
-                                    "No system variables match your search.",
-                                icon: FeatherIcons.inbox(),
-                                action: {
-                                    if isFiltered {
+                        if hasActiveQuery {
+                            context.render(
+                                NewAdminListNoResultsState(
+                                    message:
+                                        "No system variables match your search.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset search",
@@ -59,22 +57,31 @@ struct SystemVariableTableContent: Component {
                                             )
                                         )
                                     }
-                                    else if !isFiltered,
-                                        permissions.allows(
-                                            SystemPermissions.Variables.create
-                                        )
-                                    {
-                                        context.render(
-                                            NewAdminButton(
-                                                "Add new",
-                                                href: SystemVariableRoutes.add
-                                                    .description
-                                            )
-                                        )
-                                    }
-                                }
+                                )
                             )
-                        )
+                        }
+                        else {
+                            context.render(
+                                NewAdminListEmptyState(
+                                    message: "No system variables yet.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
+                                        if permissions.allows(
+                                            SystemPermissions.Variables.create
+                                        ) {
+                                            context.render(
+                                                NewAdminButton(
+                                                    "Add new",
+                                                    href: SystemVariableRoutes
+                                                        .add
+                                                        .description
+                                                )
+                                            )
+                                        }
+                                    }
+                                )
+                            )
+                        }
                     }
                     else {
                         context.render(

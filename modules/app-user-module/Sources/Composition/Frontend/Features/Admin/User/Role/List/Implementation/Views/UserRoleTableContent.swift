@@ -14,7 +14,7 @@ struct UserRoleTableContent: Component {
     let search: String?
 
     func html(context: inout RenderContext) -> Div {
-        let isFiltered = !(search?.isEmpty ?? true)
+        let hasActiveQuery = !(search?.isEmpty ?? true)
 
         return context.render(
             NewAdminList(
@@ -28,15 +28,12 @@ struct UserRoleTableContent: Component {
                         )
                     }
                     else if roles.isEmpty {
-                        context.render(
-                            NewAdminListEmptyState(
-                                resourceName: "user roles",
-                                isFiltered: isFiltered,
-                                filteredMessage:
-                                    "No user roles match your search.",
-                                icon: FeatherIcons.inbox(),
-                                action: {
-                                    if isFiltered {
+                        if hasActiveQuery {
+                            context.render(
+                                NewAdminListNoResultsState(
+                                    message: "No user roles match your search.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset search",
@@ -46,20 +43,30 @@ struct UserRoleTableContent: Component {
                                             )
                                         )
                                     }
-                                    else if permissions.allows(
-                                        UserPermissions.Roles.create
-                                    ) {
-                                        context.render(
-                                            NewAdminButton(
-                                                "Add new",
-                                                href: UserRoleRoutes.add
-                                                    .description
-                                            )
-                                        )
-                                    }
-                                }
+                                )
                             )
-                        )
+                        }
+                        else {
+                            context.render(
+                                NewAdminListEmptyState(
+                                    message: "No user roles yet.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
+                                        if permissions.allows(
+                                            UserPermissions.Roles.create
+                                        ) {
+                                            context.render(
+                                                NewAdminButton(
+                                                    "Add new",
+                                                    href: UserRoleRoutes.add
+                                                        .description
+                                                )
+                                            )
+                                        }
+                                    }
+                                )
+                            )
+                        }
                     }
                     else {
                         let canDelete = permissions.allows(
@@ -89,11 +96,11 @@ struct UserRoleTableContent: Component {
                                                     }
                                                     Th("Name")
                                                         .columnWidth(
-                                                            percent: 69
+                                                            percent: 74
                                                         )
                                                     Th("Actions")
                                                         .columnWidth(
-                                                            percent: 30
+                                                            percent: 25
                                                         )
                                                 }
                                             }

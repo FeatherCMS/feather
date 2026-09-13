@@ -12,21 +12,6 @@ public struct NewAdminListEmptyState: Component {
     public let action: [any FlowContent]
 
     public init(
-        resourceName: String,
-        isFiltered: Bool,
-        filteredMessage: String? = nil,
-        icon: SVG? = nil,
-        @Builder<FlowContent> action: () -> [any FlowContent] = { [] }
-    ) {
-        self.message =
-            isFiltered
-            ? filteredMessage ?? "No \(resourceName) match the current filters."
-            : "No \(resourceName) yet."
-        self.icon = icon
-        self.action = action()
-    }
-
-    public init(
         message: String,
         icon: SVG? = nil,
         @Builder<FlowContent> action: () -> [any FlowContent] = { [] }

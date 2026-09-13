@@ -16,7 +16,8 @@ struct UserIdentityTableContent: Component {
     let role: String?
 
     func html(context: inout RenderContext) -> Div {
-        let isFiltered = !(search?.isEmpty ?? true) || !(role?.isEmpty ?? true)
+        let hasActiveQuery =
+            !(search?.isEmpty ?? true) || !(role?.isEmpty ?? true)
 
         return context.render(
             NewAdminList(
@@ -30,38 +31,46 @@ struct UserIdentityTableContent: Component {
                         )
                     }
                     else if identities.isEmpty {
-                        context.render(
-                            NewAdminListEmptyState(
-                                resourceName: "user identities",
-                                isFiltered: isFiltered,
-                                filteredMessage:
-                                    "No user identities match your search or filters.",
-                                icon: FeatherIcons.inbox(),
-                                action: {
-                                    if isFiltered {
+                        if hasActiveQuery {
+                            context.render(
+                                NewAdminListNoResultsState(
+                                    message:
+                                        "No user identities match your search or filters.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
                                         context.render(
                                             NewAdminButton(
-                                                "Reset search",
+                                                "Reset filters",
                                                 href: UserIdentityRoutes.list
                                                     .description,
                                                 style: .secondary
                                             )
                                         )
                                     }
-                                    else if permissions.allows(
-                                        UserPermissions.Identities.create
-                                    ) {
-                                        context.render(
-                                            NewAdminButton(
-                                                "Add new",
-                                                href: UserIdentityRoutes.add
-                                                    .description
-                                            )
-                                        )
-                                    }
-                                }
+                                )
                             )
-                        )
+                        }
+                        else {
+                            context.render(
+                                NewAdminListEmptyState(
+                                    message: "No user identities yet.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
+                                        if permissions.allows(
+                                            UserPermissions.Identities.create
+                                        ) {
+                                            context.render(
+                                                NewAdminButton(
+                                                    "Add new",
+                                                    href: UserIdentityRoutes.add
+                                                        .description
+                                                )
+                                            )
+                                        }
+                                    }
+                                )
+                            )
+                        }
                     }
                     else {
                         let canDelete = permissions.allows(
@@ -104,11 +113,11 @@ struct UserIdentityTableContent: Component {
                                                         )
                                                     Th("Roles")
                                                         .columnWidth(
-                                                            percent: 18
+                                                            percent: 20
                                                         )
                                                     Th("Actions")
                                                         .columnWidth(
-                                                            percent: 28
+                                                            percent: 26
                                                         )
                                                 }
                                             }

@@ -19,7 +19,7 @@ struct SystemJobTableContent: Component {
     }
 
     func html(context: inout RenderContext) -> Div {
-        let isFiltered = !(search?.isEmpty ?? true)
+        let hasActiveQuery = !(search?.isEmpty ?? true)
 
         return context.render(
             NewAdminList(
@@ -33,15 +33,13 @@ struct SystemJobTableContent: Component {
                         )
                     }
                     else if jobs.isEmpty {
-                        context.render(
-                            NewAdminListEmptyState(
-                                resourceName: "worker jobs",
-                                isFiltered: isFiltered,
-                                filteredMessage:
-                                    "No worker jobs match your search.",
-                                icon: FeatherIcons.inbox(),
-                                action: {
-                                    if isFiltered {
+                        if hasActiveQuery {
+                            context.render(
+                                NewAdminListNoResultsState(
+                                    message:
+                                        "No worker jobs match your search.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset search",
@@ -51,9 +49,17 @@ struct SystemJobTableContent: Component {
                                             )
                                         )
                                     }
-                                }
+                                )
                             )
-                        )
+                        }
+                        else {
+                            context.render(
+                                NewAdminListEmptyState(
+                                    message: "No worker jobs yet.",
+                                    icon: FeatherIcons.inbox()
+                                )
+                            )
+                        }
                     }
                     else {
                         context.render(

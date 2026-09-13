@@ -13,10 +13,10 @@ public struct NewAdminListRowActions: Component {
                 Display(.flex)
                 FlexWrap(.wrap)
                 AlignItems(.center)
-                JustifyContent(.flexEnd)
+                JustifyContent(.flexStart)
                 Gap(4.px)
                 WhiteSpace(.normal)
-                TextAlign(.right)
+                TextAlign(.left)
             }
             Custom(".action-cell .button ~ .button") {
                 MarginLeft(0.px)

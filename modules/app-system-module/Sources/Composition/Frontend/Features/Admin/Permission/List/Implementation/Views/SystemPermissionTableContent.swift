@@ -28,7 +28,7 @@ struct SystemPermissionTableContent: Component {
 
     func html(context: inout RenderContext) -> Div {
         let canDelete = actions.allows(SystemPermissions.Permissions.delete)
-        let isFiltered = !(search?.isEmpty ?? true)
+        let hasActiveQuery = !(search?.isEmpty ?? true)
 
         return context.render(
             NewAdminList(
@@ -42,15 +42,13 @@ struct SystemPermissionTableContent: Component {
                         )
                     }
                     else if permissions.isEmpty {
-                        context.render(
-                            NewAdminListEmptyState(
-                                resourceName: "system permissions",
-                                isFiltered: isFiltered,
-                                filteredMessage:
-                                    "No system permissions match your search.",
-                                icon: FeatherIcons.inbox(),
-                                action: {
-                                    if isFiltered {
+                        if hasActiveQuery {
+                            context.render(
+                                NewAdminListNoResultsState(
+                                    message:
+                                        "No system permissions match your search.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset search",
@@ -61,22 +59,30 @@ struct SystemPermissionTableContent: Component {
                                             )
                                         )
                                     }
-                                    else if !isFiltered,
-                                        actions.allows(
-                                            SystemPermissions.Permissions.create
-                                        )
-                                    {
-                                        context.render(
-                                            NewAdminButton(
-                                                "Add new",
-                                                href: SystemPermissionRoutes.add
-                                                    .description
-                                            )
-                                        )
-                                    }
-                                }
+                                )
                             )
-                        )
+                        }
+                        else {
+                            context.render(
+                                NewAdminListEmptyState(
+                                    message: "No system permissions yet.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
+                                        if actions.allows(
+                                            SystemPermissions.Permissions.create
+                                        ) {
+                                            context.render(
+                                                NewAdminButton(
+                                                    "Add new",
+                                                    href: SystemPermissionRoutes
+                                                        .add.description
+                                                )
+                                            )
+                                        }
+                                    }
+                                )
+                            )
+                        }
                     }
                     else {
                         context.render(

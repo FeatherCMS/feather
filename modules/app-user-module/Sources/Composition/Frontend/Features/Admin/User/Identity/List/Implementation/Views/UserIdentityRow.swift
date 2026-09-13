@@ -24,7 +24,7 @@ struct UserIdentityRow: Component {
                     ? "No roles assigned"
                     : identity.roles.joined(separator: ", ")
             )
-            .data("label", "Roles").columnWidth(percent: 18)
+            .data("label", "Roles").columnWidth(percent: 20)
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",
