@@ -1,188 +1,40 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import RedirectContracts
 
-struct AdminEditRedirectRuleDefaultController:
-    AdminEditRedirectRuleController
-{
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditRedirectRuleInteractor,
-            presenter: any AdminEditRedirectRulePresenter
-        )
+struct AdminEditRedirectRuleDefaultController: AdminEditRedirectRuleController {
+    let buildRuntime: @Sendable (Request, DefaultRequestContext) -> (interactor: any AdminEditRedirectRuleInteractor, presenter: any AdminEditRedirectRulePresenter)
 
-    func getEditRedirectRule(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+    func getEditRedirectRule(request: Request, context: DefaultRequestContext) async throws -> HTMLResponse {
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.update) else { return try await presenter.renderForbiddenPage() }
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
         do {
-            let rule = try await runtime.interactor.load(id: id)
-            return runtime.presenter.renderEditPage(
-                id: id,
-                state: formState(
-                    source: rule.source,
-                    destination: rule.destination,
-                    statusCode: "\(rule.statusCode)",
-                    notes: rule.notes ?? ""
-                ),
-                isEdited: request.hasQueryFlag("edited"),
-                permissions: permissions
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription,
-                permissions: permissions
-            )
+            return try await presenter.renderEditPage(id: id, state: .from(rule: try await interactor.load(id: id)), permissions: context.currentUserAdminListActions)
+        } catch let error as AdminEditRedirectRuleError {
+            return try await presenter.renderEditError(id: id, input: nil, error: error)
         }
     }
 
-    func postEditRedirectRule(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+    func postEditRedirectRule(request: Request, context: DefaultRequestContext) async throws -> Response {
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.update) else { return try await presenter.renderForbiddenPage().response(from: request, context: context) }
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
         var lastPayload: RedirectRuleFormInput?
-
         do {
-            let payload = try await request.decode(
-                as: RedirectRuleFormInput.self,
-                context: context
-            )
-            lastPayload = payload
-            try await payload.validate()
-            guard payload.parsedStatusCode != nil else {
-                var state = formState(
-                    source: payload.normalizedSource,
-                    destination: payload.normalizedDestination,
-                    statusCode: payload.normalizedStatusCode,
-                    notes: payload.normalizedNotes
-                )
-                state.apply(errors: [
-                    "statusCode": "Status code must be 301, 302, 307, or 308."
-                ])
-                return try runtime.presenter
-                    .renderEditPage(
-                        id: id,
-                        state: state,
-                        isEdited: false,
-                        permissions: permissions
-                    )
-                    .response(from: request, context: context)
-            }
-            try await runtime.interactor.update(id: id, input: payload)
-
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/redirect/rules/\(id)/edit/",
-                        title: "Saved",
-                        message: "Redirect rule edited successfully."
-                    )
-                ]
-            )
+            let payload = try await request.decode(as: NonceRequest<RedirectRuleFormInput>.self, context: context)
+            lastPayload = payload.input
+            guard await AdminNonceStore.shared.consume(payload.nonce, sessionToken: context.sessionToken) else { return try await presenter.renderInvalidNoncePage().response(from: request, context: context) }
+            try await payload.input.validate()
+            try await interactor.update(id: id, input: payload.input)
+            return presenter.renderSuccess()
+        } catch let error as ValidationError {
+            return try await presenter.renderValidationError(id: id, input: lastPayload, error: error).response(from: request, context: context)
+        } catch let error as AdminEditRedirectRuleError {
+            return try await presenter.renderEditError(id: id, input: lastPayload, error: error).response(from: request, context: context)
         }
-        catch let error as ValidationError {
-            var errors: [String: String] = [:]
-            for failure in error.failures {
-                errors[failure.key] = failure.message
-            }
-            var state = formState(
-                source: lastPayload?.normalizedSource ?? "",
-                destination: lastPayload?.normalizedDestination ?? "",
-                statusCode: lastPayload?.normalizedStatusCode ?? "301",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.apply(errors: errors)
-            return try runtime.presenter
-                .renderEditPage(
-                    id: id,
-                    state: state,
-                    isEdited: false,
-                    permissions: permissions
-                )
-                .response(from: request, context: context)
-        }
-        catch let error as OpenAPIRepositoryError {
-            var state = formState(
-                source: lastPayload?.normalizedSource ?? "",
-                destination: lastPayload?.normalizedDestination ?? "",
-                statusCode: lastPayload?.normalizedStatusCode ?? "301",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.errorDescription
-            return try runtime.presenter
-                .renderEditPage(
-                    id: id,
-                    state: state,
-                    isEdited: false,
-                    permissions: permissions
-                )
-                .response(from: request, context: context)
-        }
-        catch {
-            var state = formState(
-                source: lastPayload?.normalizedSource ?? "",
-                destination: lastPayload?.normalizedDestination ?? "",
-                statusCode: lastPayload?.normalizedStatusCode ?? "301",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.displayMessage
-            return try runtime.presenter
-                .renderEditPage(
-                    id: id,
-                    state: state,
-                    isEdited: false,
-                    permissions: permissions
-                )
-                .response(from: request, context: context)
-        }
-    }
-
-    private func formState(
-        source: String = "",
-        destination: String = "",
-        statusCode: String = "301",
-        notes: String = ""
-    ) -> RedirectRuleForm.State {
-        .init(
-            source: .init(
-                key: "source",
-                label: "Source path",
-                value: source,
-                error: nil
-            ),
-            destination: .init(
-                key: "destination",
-                label: "Destination URL or path",
-                value: destination,
-                error: nil
-            ),
-            statusCode: .init(
-                key: "statusCode",
-                label: "HTTP status code",
-                value: statusCode,
-                error: nil
-            ),
-            notes: .init(
-                key: "notes",
-                label: "Notes",
-                value: notes,
-                error: nil
-            ),
-            error: nil,
-            success: nil
-        )
     }
 }

@@ -3,7 +3,7 @@ import Foundation
 
 protocol AdminGetUserRoleInteractor: Sendable {
 
-    func execute(
-        entity: AdminGetUserRoleModel
+    func load(
+        id: String
     ) async throws -> UserRoleDetailsModel
 }

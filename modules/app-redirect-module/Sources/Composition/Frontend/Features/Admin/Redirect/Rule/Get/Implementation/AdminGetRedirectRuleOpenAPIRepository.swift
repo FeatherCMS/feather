@@ -8,7 +8,7 @@ import RedirectContracts
 struct AdminGetRedirectRuleOpenAPIRepository: AdminGetRedirectRuleRepository {
     let api: RedirectAdminAPIClient
 
-    func get(
+    func load(
         id: String
     ) async throws -> RedirectRuleDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in

@@ -14,12 +14,12 @@ actor MockRoleRepository: RoleRepository {
 
     private let result: Role
     private let findResult: Role?
-    private let deleteResult: Bool
+    private let deleteResult: [String]
 
     init(
         result: Role,
         findResult: Role? = nil,
-        deleteResult: Bool = false
+        deleteResult: [String] = []
     ) {
         self.result = result
         self.findResult = findResult
@@ -55,8 +55,8 @@ actor MockRoleRepository: RoleRepository {
     }
 
     func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         deleteCallCount += 1
         return deleteResult
     }

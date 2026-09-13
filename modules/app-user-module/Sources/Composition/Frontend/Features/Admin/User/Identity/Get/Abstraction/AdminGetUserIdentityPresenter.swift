@@ -1,20 +1,8 @@
 import FeatherAdmin
-import Foundation
+import HTML
+import Hummingbird
 
 protocol AdminGetUserIdentityPresenter: Sendable {
-
-    func renderPage(
-        model: AdminGetUserIdentityModel,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func errorPage(
-        id: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State
+    func renderDetailsPage(model: AdminGetUserIdentityModel, permissions: NewAdminListActions) async throws -> HTMLResponse
+    func renderErrorPage(error: AdminGetUserIdentityError) async throws -> HTMLResponse
 }

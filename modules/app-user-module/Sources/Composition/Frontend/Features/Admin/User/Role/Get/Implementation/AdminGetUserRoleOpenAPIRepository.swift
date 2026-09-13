@@ -7,7 +7,7 @@ import UserAdminAPI
 struct AdminGetUserRoleOpenAPIRepository: AdminGetUserRoleRepository {
     let api: UserAdminAPIClient
 
-    func get(
+    func load(
         id: String
     ) async throws -> UserRoleDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in

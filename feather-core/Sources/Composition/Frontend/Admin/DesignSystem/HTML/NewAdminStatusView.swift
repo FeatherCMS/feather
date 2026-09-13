@@ -39,19 +39,70 @@ public struct NewAdminStatusView: Component {
         Media {
             Class("admin-status-view") {
                 Display(.flex)
-                FlexDirection(.column)
+                FlexDirection(.row)
                 AlignItems(.center)
-                JustifyContent(.center)
-                TextAlign(.center)
+                JustifyContent(.flexStart)
+                TextAlign(.left)
                 Gap(12.px)
-                Padding(vertical: 48.px, horizontal: 24.px)
+                Padding(vertical: 12.px, horizontal: 12.px)
+                PaddingRight(44.px)
+                Width(100.percent)
+                BoxSizing(.borderBox)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                BorderRadius(9.px)
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                UnsafeRawProperty(
+                    name: "background-image",
+                    value:
+                        "linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%)"
+                )
+                UnsafeRawProperty(
+                    name: "background-position",
+                    value:
+                        "calc(100% - 25px) 50%, calc(100% - 20px) 50%"
+                )
+                UnsafeRawProperty(
+                    name: "background-size",
+                    value: "5px 5px"
+                )
+                UnsafeRawProperty(
+                    name: "background-repeat",
+                    value: "no-repeat"
+                )
             }
             Custom(".admin-status-view h1, .admin-status-view p") {
                 Margin(0)
             }
-            Custom(".admin-status-view .admin-status-view-icon") {
-                Width(40.px)
-                Height(40.px)
+            Custom(".admin-status-view-content") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(4.px)
+                FlexGrow(1)
+            }
+            Custom(".admin-status-view h1") {
+                FontSize(1.rem)
+                LineHeight(1.2)
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+            }
+            Custom(".admin-status-view p") {
+                FontSize(0.9.rem)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                LineHeight(1.5)
+            }
+            Custom(".admin-status-view-icon") {
+                Display(.block)
+                Width(20.px)
+                Height(20.px)
+                FlexShrink(0)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+            }
+            Custom(".admin-status-view .button") {
+                MarginLeft(.auto)
             }
         }
     }
@@ -61,8 +112,11 @@ public struct NewAdminStatusView: Component {
             if let icon {
                 icon.class("admin-status-view-icon")
             }
-            H1(state.title)
-            P(state.message)
+            Div {
+                H1(state.title)
+                P(state.message)
+            }
+            .class("admin-status-view-content")
             if let action { context.render(action) }
         }
         .class("admin-status-view")

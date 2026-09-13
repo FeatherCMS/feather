@@ -14,12 +14,13 @@ struct AdminGetUserIdentity {
                             api: userAPI
                         ),
                         roleRepository:
-                            AdminEditUserIdentityRoleOpenAPIRepository(
+                            AdminUserIdentityRoleOpenAPIRepository(
                                 api: userAPI
                             )
                     ),
                     presenter: AdminGetUserIdentityDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

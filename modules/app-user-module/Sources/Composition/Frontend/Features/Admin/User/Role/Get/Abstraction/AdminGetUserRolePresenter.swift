@@ -1,23 +1,8 @@
 import FeatherAdmin
-import Foundation
 import HTML
+import Hummingbird
 
 protocol AdminGetUserRolePresenter: Sendable {
-
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State
-
-    func renderDetailsPage(
-        role: UserRoleDetailsModel,
-        breadcrumb: AdminBreadcrumb.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func renderErrorPage(
-        info: String,
-        message: String,
-        breadcrumb: AdminBreadcrumb.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
+    func renderDetailsPage(role: UserRoleDetailsModel, permissions: NewAdminListActions) async throws -> HTMLResponse
+    func renderErrorPage(error: AdminGetUserRoleError) async throws -> HTMLResponse
 }

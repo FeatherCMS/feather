@@ -1,22 +1,14 @@
 import FeatherAdmin
+import FeatherValidation
 import Foundation
 import Hummingbird
 
 protocol AdminAddUserRolePresenter: Sendable {
-
-    func renderPage(
-        form: UserRoleForm.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func formState(
-        id: String,
-        name: String,
-        notes: String
-    ) -> UserRoleForm.State
-
-    func breadcrumb() -> AdminBreadcrumb.State
-    func format(
-        error: OpenAPIRepositoryError
-    ) -> String
+    func renderAddPage(state: UserRoleForm.State) async throws -> HTMLResponse
+    func renderValidationError(input: AdminAddUserRoleFormInput?, error: ValidationError) async throws -> HTMLResponse
+    func renderAddError(input: AdminAddUserRoleFormInput?, error: AdminAddUserRoleError) async throws -> HTMLResponse
+    func renderSuccess() -> Response
+    func renderUnauthorizedPage() async throws -> HTMLResponse
+    func renderForbiddenPage() async throws -> HTMLResponse
+    func renderInvalidNoncePage() async throws -> HTMLResponse
 }

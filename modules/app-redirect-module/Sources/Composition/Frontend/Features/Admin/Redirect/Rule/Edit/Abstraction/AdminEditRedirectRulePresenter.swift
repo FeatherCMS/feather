@@ -1,24 +1,20 @@
 import FeatherAdmin
 import Foundation
 import HTML
+import FeatherValidation
+import Hummingbird
 
 protocol AdminEditRedirectRulePresenter: Sendable {
 
     func renderEditPage(
         id: String,
         state: RedirectRuleForm.State,
-        isEdited: Bool,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        permissions: NewAdminListActions
+    ) async throws -> HTMLResponse
 
-    func renderErrorPage(
-        id: String,
-        info: String,
-        message: String,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State
+    func renderValidationError(id: String, input: RedirectRuleFormInput?, error: ValidationError) async throws -> HTMLResponse
+    func renderEditError(id: String, input: RedirectRuleFormInput?, error: AdminEditRedirectRuleError) async throws -> HTMLResponse
+    func renderSuccess() -> Response
+    func renderForbiddenPage() async throws -> HTMLResponse
+    func renderInvalidNoncePage() async throws -> HTMLResponse
 }

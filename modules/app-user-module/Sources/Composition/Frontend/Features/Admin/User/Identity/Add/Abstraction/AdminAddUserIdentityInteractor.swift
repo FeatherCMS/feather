@@ -3,7 +3,7 @@ import Foundation
 
 protocol AdminAddUserIdentityInteractor: Sendable {
 
-    func execute(
-        entity: AdminAddUserIdentityModel
+    func add(
+        input: AdminAddUserIdentityFormInput
     ) async throws
 }

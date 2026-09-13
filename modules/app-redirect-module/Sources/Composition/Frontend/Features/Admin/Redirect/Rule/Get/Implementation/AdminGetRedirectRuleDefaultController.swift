@@ -1,39 +1,19 @@
 import FeatherAdmin
-import Foundation
 import HTML
 import Hummingbird
+import RedirectContracts
 
 struct AdminGetRedirectRuleDefaultController: AdminGetRedirectRuleController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminGetRedirectRuleInteractor,
-            presenter: any AdminGetRedirectRulePresenter
-        )
+    let buildRuntime: @Sendable (Request, DefaultRequestContext) -> (interactor: any AdminGetRedirectRuleInteractor, presenter: any AdminGetRedirectRulePresenter)
 
-    func getRedirectRule(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+    func getRedirectRule(request: Request, context: DefaultRequestContext) async throws -> HTMLResponse {
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.read) else { return try await presenter.renderErrorPage(error: .forbidden) }
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
         do {
-            let rule = try await runtime.interactor.execute(
-                entity: .init(id: id)
-            )
-            return runtime.presenter.renderDetailsPage(
-                rule: rule,
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
-                permissions: permissions
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
-                info: error.errorTitle,
-                message: error.errorDescription,
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
-                permissions: permissions
-            )
+            return try await presenter.renderDetailsPage(rule: try await interactor.load(id: id), permissions: context.currentUserAdminListActions)
+        } catch let error as AdminGetRedirectRuleError {
+            return try await presenter.renderErrorPage(error: error)
         }
     }
 }

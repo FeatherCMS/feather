@@ -5,33 +5,29 @@ import UserAdminAPI
 struct AdminListUserIdentityDefaultInteractor: AdminListUserIdentityInteractor {
     let repository: any AdminListUserIdentityRepository
 
-    func listRoles() async throws -> [Components.Schemas.UserRoleListItemSchema]
-    {
-        try await repository.listRoles()
-    }
-
-    func execute(
+    func list(
         page: Int,
         size: Int,
         search: String?,
         role: String?
-    ) async throws -> (
-        items: [Components.Schemas.UserIdentityListItemSchema], total: Int,
-        page: Int, size: Int
-    ) {
-        try await repository.list(
-            page: page,
-            size: size,
-            search: search,
-            role: role
-        )
-    }
-
-    func remove(
-        ids: [String]
-    ) async throws {
-        for id in ids {
-            try await repository.delete(id: id)
+    ) async throws -> NewAdminListModel<Components.Schemas.UserIdentityListItemSchema> {
+        do {
+            let response = try await repository.list(page: page, size: size, search: search, role: role)
+            let body = try response.body.json
+            return .init(
+                items: body.data.items,
+                pageState: .init(
+                    page: body.query.page.number,
+                    pageSize: body.query.page.size,
+                    total: body.data.total
+                )
+            )
+        } catch let error as OpenAPIRepositoryError {
+            switch error {
+            case .unauthorized: throw AdminListUserIdentityError.unauthorized
+            case .forbidden: throw AdminListUserIdentityError.forbidden
+            default: throw AdminListUserIdentityError.unavailable
+            }
         }
     }
 }

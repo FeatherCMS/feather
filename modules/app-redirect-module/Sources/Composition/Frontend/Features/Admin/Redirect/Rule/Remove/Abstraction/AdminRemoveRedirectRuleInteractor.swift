@@ -3,11 +3,7 @@ import Foundation
 
 protocol AdminRemoveRedirectRuleInteractor: Sendable {
 
-    func get(
-        id: String
-    ) async throws -> RedirectRuleDetailsModel
+    func names(ids: [String]) async throws -> [String]
 
-    func delete(
-        id: String
-    ) async throws
+    func delete(ids: [String]) async throws
 }

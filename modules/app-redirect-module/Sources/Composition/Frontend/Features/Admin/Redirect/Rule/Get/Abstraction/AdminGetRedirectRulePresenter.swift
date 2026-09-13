@@ -6,18 +6,8 @@ protocol AdminGetRedirectRulePresenter: Sendable {
 
     func renderDetailsPage(
         rule: RedirectRuleDetailsModel,
-        breadcrumb: AdminBreadcrumb.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        permissions: NewAdminListActions
+    ) async throws -> HTMLResponse
 
-    func renderErrorPage(
-        info: String,
-        message: String,
-        breadcrumb: AdminBreadcrumb.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State
+    func renderErrorPage(error: AdminGetRedirectRuleError) async throws -> HTMLResponse
 }

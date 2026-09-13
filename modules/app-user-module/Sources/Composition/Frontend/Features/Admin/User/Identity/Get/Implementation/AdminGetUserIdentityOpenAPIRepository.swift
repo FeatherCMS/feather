@@ -7,16 +7,13 @@ import UserAdminAPI
 
 struct AdminGetUserIdentityOpenAPIRepository: AdminGetUserIdentityRepository {
     let api: UserAdminAPIClient
-    private let getUnauthorizedMessage =
-        "Please sign in again to load this user identity."
-
     init(
         api: UserAdminAPIClient
     ) {
         self.api = api
     }
 
-    func get(
+    func load(
         id: String
     ) async throws -> UserIdentityDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in

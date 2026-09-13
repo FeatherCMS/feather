@@ -1,93 +1,61 @@
 import FeatherAdmin
-import Foundation
+import FeatherValidation
 import Hummingbird
+import UserContracts
+import WebComponents
 
 struct AdminEditUserRoleDefaultPresenter: AdminEditUserRolePresenter {
     let request: Request
-    let renderEngine: any RenderingEngine
+    let context: DefaultRequestContext
+    let renderingEngine: any RenderingEngine
 
-    func renderEditPage(
-        id: String,
-        state: UserRoleForm.State,
-        isEdited: Bool,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
-            request: request,
-            title: "Edit user role",
-            description: "Edit a management user role",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: UserRoleEdit(
-                state: .init(
-                    id: id,
-                    isEdited: isEdited,
-                    form: state,
-                    breadcrumb: breadcrumb(id: id)
-                )
-            )
-        )
+    func renderEditPage(id: String, state: UserRoleForm.State) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(sessionToken: context.sessionToken)
+        return try await renderPage(content: UserRoleEditPage(id: id, form: state, permissions: context.currentUserAdminListActions, nonceToken: nonceToken))
     }
 
-    func renderErrorPage(
-        id: String,
-        info: String,
-        message: String,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
-            request: request,
-            title: "Edit user role",
-            description: "Edit a management user role",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: UserRoleError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb(id: id)
-                )
-            )
-        )
+    func renderValidationError(id: String, input: AdminEditUserRoleFormInput?, error: ValidationError) async throws -> HTMLResponse {
+        var state = input.map(UserRoleForm.State.from(input:)) ?? .edit(name: "", notes: "")
+        var errors: [String: String] = [:]
+        for failure in error.failures { errors[failure.key] = failure.message }
+        state.apply(errors: errors)
+        return try await renderEditPage(id: id, state: state).withStatus(.unprocessableContent)
     }
 
-    func formState(
-        name: String = "",
-        notes: String = ""
-    ) -> UserRoleForm.State {
-        .init(
-            id: nil,
-            name: .init(key: "name", label: "Name", value: name, error: nil),
-            notes: .init(
-                key: "notes",
-                label: "Notes",
-                value: notes,
-                error: nil
-            ),
-            error: nil,
-            success: nil
-        )
+    func renderEditError(id: String, input: AdminEditUserRoleFormInput?, error: AdminEditUserRoleError) async throws -> HTMLResponse {
+        switch error {
+        case .unauthorized: return try await renderStatusPage(title: "Session expired", message: "Please sign in again to edit user roles.", status: .unauthorized)
+        case .forbidden: return try await renderForbiddenPage()
+        case .notFound: return try await renderStatusPage(title: "User role not found", message: "This user role may have been removed.", status: .notFound)
+        case .conflict: return try await renderFormError(id: id, input: input, message: "A user role with this name already exists.", status: .conflict)
+        case .unavailable: return try await renderFormError(id: id, input: input, message: "The user role could not be updated. Please try again.", status: .serviceUnavailable)
+        }
     }
 
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Roles", link: "/admin/user/roles/"),
-        ])
+    func renderSuccess(id: String) -> Response {
+        AdminNotificationFlash.redirect(to: UserRoleRoutes.list.description, notification: .init(title: "Saved", message: "User role updated successfully."))
     }
 
-    func format(
-        error: OpenAPIRepositoryError
-    ) -> String {
-        error.errorDescription
+    func renderUnauthorizedPage() async throws -> HTMLResponse { try await renderStatusPage(title: "Session expired", message: "Please sign in again to edit user roles.", status: .unauthorized) }
+    func renderForbiddenPage() async throws -> HTMLResponse { try await renderStatusPage(title: "Forbidden", message: "Your account cannot edit user roles.", status: .forbidden) }
+    func renderInvalidNoncePage() async throws -> HTMLResponse { try await renderStatusPage(title: "Form expired", message: "This form is no longer valid. Please reload the page and try again.", status: .badRequest) }
+
+    private func renderFormError(id: String, input: AdminEditUserRoleFormInput?, message: String, status: HTTPResponse.Status) async throws -> HTMLResponse {
+        var state = input.map(UserRoleForm.State.from(input:)) ?? .edit(name: "", notes: "")
+        state.error = message
+        return try await renderEditPage(id: id, state: state).withStatus(status)
     }
+
+    private func renderStatusPage(title: String, message: String, status: HTTPResponse.Status) async throws -> HTMLResponse {
+        try await renderPage(content: NewAdminStatusView(state: .init(title: title, message: message), icon: FeatherIcons.alertCircle()), status: status)
+    }
+
+    private func renderPage<T: Component>(content: T, status: HTTPResponse.Status = .ok) async throws -> HTMLResponse {
+        let page = try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "Manage user roles", content: content)
+        return HTMLResponse(content: page.content, status: status)
+    }
+}
+
+private extension HTMLResponse {
+    func withStatus(_ status: HTTPResponse.Status) -> HTMLResponse { HTMLResponse(content: content, status: status) }
 }

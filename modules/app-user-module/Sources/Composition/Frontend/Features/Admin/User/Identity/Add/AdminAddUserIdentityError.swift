@@ -1,0 +1,8 @@
+import Foundation
+
+enum AdminAddUserIdentityError: Error, Sendable {
+    case unauthorized
+    case forbidden
+    case conflict
+    case unavailable
+}

@@ -4,9 +4,17 @@ import Foundation
 struct AdminGetRedirectRuleDefaultInteractor: AdminGetRedirectRuleInteractor {
     let repository: any AdminGetRedirectRuleRepository
 
-    func execute(
-        entity: AdminGetRedirectRuleModel
+    func load(
+        id: String
     ) async throws -> RedirectRuleDetailsModel {
-        try await repository.get(id: entity.id)
+        do { return try await repository.load(id: id) }
+        catch let error as OpenAPIRepositoryError {
+            switch error {
+            case .notFound: throw AdminGetRedirectRuleError.notFound
+            case .unauthorized: throw AdminGetRedirectRuleError.unauthorized
+            case .forbidden: throw AdminGetRedirectRuleError.forbidden
+            default: throw AdminGetRedirectRuleError.unavailable
+            }
+        }
     }
 }

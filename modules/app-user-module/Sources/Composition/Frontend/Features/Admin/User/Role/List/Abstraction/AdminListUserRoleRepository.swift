@@ -8,14 +8,7 @@ protocol AdminListUserRoleRepository: Sendable {
         page: Int,
         size: Int,
         search: String?
-    ) async throws -> (
-        items: [Components.Schemas.UserRoleListItemSchema],
-        total: Int,
-        page: Int,
-        size: Int
-    )
+    ) async throws -> UserAdminAPI.Components.Responses
+        .UserRoleListItemSearchSchemaSearchResponse
 
-    func delete(
-        id: String
-    ) async throws
 }

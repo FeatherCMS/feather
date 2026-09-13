@@ -4,9 +4,24 @@ import Foundation
 struct AdminAddUserRoleDefaultInteractor: AdminAddUserRoleInteractor {
     let repository: any AdminAddUserRoleRepository
 
-    func execute(
-        entity: AdminAddUserRoleModel
+    func add(
+        input: AdminAddUserRoleFormInput
     ) async throws {
-        try await repository.create(payload: entity.payload)
+        do {
+            try await repository.create(
+                payload: .init(
+                    id: input.normalizedID,
+                    name: input.normalizedName,
+                    notes: input.normalizedNotes
+                )
+            )
+        } catch let error as OpenAPIRepositoryError {
+            switch error {
+            case .unauthorized: throw AdminAddUserRoleError.unauthorized
+            case .forbidden: throw AdminAddUserRoleError.forbidden
+            case .conflict: throw AdminAddUserRoleError.conflict
+            default: throw AdminAddUserRoleError.unavailable
+            }
+        }
     }
 }

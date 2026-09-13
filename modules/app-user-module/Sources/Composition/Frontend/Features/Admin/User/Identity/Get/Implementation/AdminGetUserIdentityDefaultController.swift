@@ -15,9 +15,12 @@ struct AdminGetUserIdentityDefaultController: AdminGetUserIdentityController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: UserPermissions.Identities.read) else {
+            return try await presenter.renderErrorPage(error: .forbidden)
+        }
         let id = try context.requiredID()
         do {
-            let identity = try await interactor.execute(id: id)
+            let identity = try await interactor.load(id: id)
             let roleNames = try await interactor.roleNames(
                 for: identity.roleIds
             )
@@ -29,17 +32,12 @@ struct AdminGetUserIdentityDefaultController: AdminGetUserIdentityController {
                 ),
                 roleNames: roleNames
             )
-            return presenter.renderPage(
+            return try await presenter.renderDetailsPage(
                 model: model,
-                permissions: context.currentUserPermissions
+                permissions: context.currentUserAdminListActions
             )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return presenter.errorPage(
-                id: id,
-                error: error,
-                permissions: context.currentUserPermissions
-            )
+        } catch let error as AdminGetUserIdentityError {
+            return try await presenter.renderErrorPage(error: error)
         }
     }
 

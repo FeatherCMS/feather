@@ -9,12 +9,7 @@ struct AdminEditUserIdentityOpenAPIRepository:
     AdminEditUserIdentityRepository
 {
     let api: UserAdminAPIClient
-    private let getUnauthorizedMessage =
-        "Please sign in again to load this user identity."
-    private let updateUnauthorizedMessage =
-        "Please sign in again to update this user identity."
-
-    func get(
+    func load(
         id: String
     ) async throws -> AdminEditUserIdentityModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in

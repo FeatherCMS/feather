@@ -10,9 +10,31 @@ struct AdminRemoveUserIdentityDefaultInteractor:
         self.repository = repository
     }
 
-    func execute(
-        entity: AdminRemoveUserIdentityModel
+    func names(
+        ids: [String]
+    ) async throws -> [String] {
+        do { return try await repository.names(ids: ids) }
+        catch let error as OpenAPIRepositoryError {
+            throw map(error)
+        }
+    }
+
+    func delete(
+        ids: [String]
     ) async throws {
-        try await repository.delete(id: entity.id)
+        do { try await repository.delete(ids: ids) }
+        catch let error as OpenAPIRepositoryError {
+            throw map(error)
+        }
+    }
+
+    private func map(_ error: OpenAPIRepositoryError) -> AdminRemoveUserIdentityError {
+        switch error {
+        case .notFound: .notFound
+        case .unauthorized: .unauthorized
+        case .forbidden: .forbidden
+        case .conflict: .conflict
+        default: .unavailable
+        }
     }
 }

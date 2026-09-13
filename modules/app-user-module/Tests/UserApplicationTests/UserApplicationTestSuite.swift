@@ -133,7 +133,7 @@ struct UserApplicationTestSuite {
     func removeRoleForbidden() async throws {
         let roleRepo = MockRoleRepository(
             result: makeRole(id: "r-4"),
-            deleteResult: true
+            deleteResult: ["r-4"]
         )
         let transaction = MockTransactionExecutor(
             context: WriteRole(role: roleRepo)
@@ -147,7 +147,7 @@ struct UserApplicationTestSuite {
         await #expect(throws: AuthError.self) {
             _ = try await useCase.execute(
                 subject: Subject(id: "subject-6"),
-                input: .init(id: "r-4")
+                input: .init(ids: ["r-4"])
             )
         }
         #expect(await roleRepo.deleteCallCount == 0)
@@ -185,6 +185,7 @@ private func makeIdentityDetail(
 ) -> IdentityDetail {
     .init(
         id: id,
+        name: "Identity \(id)",
         status: .invited,
         createdAt: Date(),
         updatedAt: Date()

@@ -3,7 +3,7 @@ import Foundation
 
 protocol AdminGetRedirectRuleInteractor: Sendable {
 
-    func execute(
-        entity: AdminGetRedirectRuleModel
+    func load(
+        id: String
     ) async throws -> RedirectRuleDetailsModel
 }

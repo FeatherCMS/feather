@@ -16,6 +16,7 @@ struct AdminGetUserRole {
                     ),
                     presenter: AdminGetUserRoleDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

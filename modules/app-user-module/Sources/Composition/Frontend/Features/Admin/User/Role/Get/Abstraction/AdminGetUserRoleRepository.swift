@@ -3,7 +3,7 @@ import Foundation
 
 protocol AdminGetUserRoleRepository: Sendable {
 
-    func get(
+    func load(
         id: String
     ) async throws -> UserRoleDetailsModel
 }

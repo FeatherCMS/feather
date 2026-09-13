@@ -12,6 +12,9 @@ protocol AdminRemoveUserRoleController: Sendable {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
+
+    func getRemoveUserRoles(request: Request, context: DefaultRequestContext) async throws -> Response
+    func postRemoveUserRoles(request: Request, context: DefaultRequestContext) async throws -> Response
 }
 
 extension AdminRemoveUserRoleController {
@@ -27,5 +30,7 @@ extension AdminRemoveUserRoleController {
             "/admin/user/roles/{id}/remove/",
             use: postRemoveUserRole
         )
+        router.get("/admin/user/roles/remove/", use: getRemoveUserRoles)
+        router.post("/admin/user/roles/remove/", use: postRemoveUserRoles)
     }
 }

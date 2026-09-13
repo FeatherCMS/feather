@@ -4,7 +4,7 @@ import UserAdminAPI
 
 protocol AdminGetUserIdentityRepository: Sendable {
 
-    func get(
+    func load(
         id: String
     ) async throws -> UserIdentityDetailsModel
 }

@@ -6,9 +6,6 @@ import UserAdminAPI
 
 struct AdminListUserRoleOpenAPIRepository: AdminListUserRoleRepository {
     let api: UserAdminAPIClient
-    private let unauthorizedMessage =
-        "Please sign in again to view user roles."
-
     init(api: UserAdminAPIClient) {
         self.api = api
     }
@@ -17,10 +14,9 @@ struct AdminListUserRoleOpenAPIRepository: AdminListUserRoleRepository {
         page: Int,
         size: Int,
         search: String?
-    ) async throws -> (
-        items: [Components.Schemas.UserRoleListItemSchema], total: Int,
-        page: Int, size: Int
-    ) {
+    ) async throws -> UserAdminAPI.Components.Responses
+        .UserRoleListItemSearchSchemaSearchResponse
+    {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
@@ -35,13 +31,7 @@ struct AdminListUserRoleOpenAPIRepository: AdminListUserRoleRepository {
                 )
             switch response {
             case .ok(let ok):
-                let body = try ok.body.json
-                return (
-                    items: body.data.items,
-                    total: body.data.total,
-                    page: body.query.page.number,
-                    size: body.query.page.size
-                )
+                return ok
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
@@ -55,13 +45,4 @@ struct AdminListUserRoleOpenAPIRepository: AdminListUserRoleRepository {
         }
     }
 
-    func delete(
-        id: String
-    ) async throws {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.userRoleDelete(
-                body: .json(.init(ids: [id], results: false, summary: true))
-            )
-        }
-    }
 }

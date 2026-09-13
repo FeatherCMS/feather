@@ -3,6 +3,8 @@ import Foundation
 import Hummingbird
 
 struct AdminListRedirectRule {
+    static let pageSize = 20
+
     let controller: any AdminListRedirectRuleController
 
     init(renderingEngine: any RenderingEngine) {
@@ -16,7 +18,8 @@ struct AdminListRedirectRule {
                     ),
                     presenter: AdminListRedirectRuleDefaultPresenter(
                         request: request,
-                        renderEngine: renderingEngine
+                        context: context,
+                        renderingEngine: renderingEngine
                     )
                 )
             }

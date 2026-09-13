@@ -3,14 +3,15 @@ import Foundation
 
 protocol AdminEditUserIdentityInteractor: Sendable {
 
-    func loadIdentity(
+    func load(
         id: String
     ) async throws -> AdminEditUserIdentityModel
 
     func loadRoleOptions() async throws
-        -> [AdminEditUserIdentityRoleOptionModel]
+        -> [UserIdentityRoleOptionModel]
 
-    func update(
-        entity: AdminEditUserIdentityModel
+    func edit(
+        id: String,
+        input: AdminEditUserIdentityFormInput
     ) async throws
 }

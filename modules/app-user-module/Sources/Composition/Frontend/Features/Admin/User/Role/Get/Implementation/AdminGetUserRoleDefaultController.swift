@@ -15,25 +15,18 @@ struct AdminGetUserRoleDefaultController: AdminGetUserRoleController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
-        let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
-        do {
-            let role = try await runtime.interactor.execute(
-                entity: .init(id: id)
-            )
-            return runtime.presenter.renderDetailsPage(
-                role: role,
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
-                permissions: permissions
-            )
+        guard context.isCurrentUserAllowed(to: UserPermissions.Roles.read) else {
+            return try await runtime.presenter.renderErrorPage(error: .forbidden)
         }
-        catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
-                info: error.errorTitle,
-                message: error.errorDescription,
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
-                permissions: permissions
+        let id = try context.requiredID()
+        do {
+            let role = try await runtime.interactor.load(id: id)
+            return try await runtime.presenter.renderDetailsPage(
+                role: role,
+                permissions: context.currentUserAdminListActions
             )
+        } catch let error as AdminGetUserRoleError {
+            return try await runtime.presenter.renderErrorPage(error: error)
         }
     }
 }

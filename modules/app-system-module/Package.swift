@@ -194,7 +194,6 @@ let package = Package(
             ],
             path: "Sources/Composition/Frontend",
             exclude: [
-                "Features/Admin/Variable/AGENTS.md"
             ],
             swiftSettings: defaultSwiftSettings
         ),

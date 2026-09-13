@@ -3,7 +3,7 @@ import Foundation
 
 protocol AdminEditUserIdentityRepository: Sendable {
 
-    func get(
+    func load(
         id: String
     ) async throws -> AdminEditUserIdentityModel
 

@@ -4,15 +4,37 @@ import Foundation
 struct AdminEditUserRoleDefaultInteractor: AdminEditUserRoleInteractor {
     let repository: any AdminEditUserRoleRepository
 
-    func get(
+    func load(
         id: String
     ) async throws -> UserRoleDetailsModel {
-        try await repository.get(id: id)
+        do { return try await repository.load(id: id) }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    func execute(
-        entity: AdminEditUserRoleModel
+    func edit(
+        id: String,
+        input: AdminEditUserRoleFormInput
     ) async throws {
-        try await repository.update(id: entity.id, payload: entity.payload)
+        do {
+            try await repository.update(
+                id: id,
+                payload: .init(
+                    id: id,
+                    name: input.normalizedName,
+                    notes: input.normalizedNotes
+                )
+            )
+        }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
+    }
+
+    private func map(_ error: OpenAPIRepositoryError) -> AdminEditUserRoleError {
+        switch error {
+        case .notFound: .notFound
+        case .unauthorized: .unauthorized
+        case .forbidden: .forbidden
+        case .conflict: .conflict
+        default: .unavailable
+        }
     }
 }

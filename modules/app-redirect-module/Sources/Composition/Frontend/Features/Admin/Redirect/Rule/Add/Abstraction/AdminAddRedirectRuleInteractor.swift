@@ -3,7 +3,7 @@ import Foundation
 
 protocol AdminAddRedirectRuleInteractor: Sendable {
 
-    func execute(
+    func add(
         input: RedirectRuleFormInput
     ) async throws
 }

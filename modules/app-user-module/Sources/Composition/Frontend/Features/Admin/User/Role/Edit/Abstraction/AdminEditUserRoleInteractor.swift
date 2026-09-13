@@ -3,11 +3,12 @@ import Foundation
 
 protocol AdminEditUserRoleInteractor: Sendable {
 
-    func get(
+    func load(
         id: String
     ) async throws -> UserRoleDetailsModel
 
-    func execute(
-        entity: AdminEditUserRoleModel
+    func edit(
+        id: String,
+        input: AdminEditUserRoleFormInput
     ) async throws
 }

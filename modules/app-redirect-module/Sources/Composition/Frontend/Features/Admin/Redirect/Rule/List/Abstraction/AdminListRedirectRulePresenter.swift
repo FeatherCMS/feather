@@ -1,24 +1,15 @@
 import FeatherAdmin
-import Foundation
 import Hummingbird
+import RedirectAdminAPI
 
 protocol AdminListRedirectRulePresenter: Sendable {
 
     func renderListPage(
-        model: AdminListRedirectRuleModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
-        permissions: Set<String>,
+        model: NewAdminListModel<Components.Schemas.RedirectRuleListItemSchema>,
+        permissions: NewAdminListActions,
         search: String?,
-        statusCode: String?,
-        error: String?
-    ) -> HTMLResponse
+        statusCode: String?
+    ) async throws -> HTMLResponse
 
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
-    ) -> HTMLResponse
+    func renderErrorPage(error: AdminListRedirectRuleError) async throws -> HTMLResponse
 }

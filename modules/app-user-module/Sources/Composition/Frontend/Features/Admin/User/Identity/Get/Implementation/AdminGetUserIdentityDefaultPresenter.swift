@@ -1,66 +1,39 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
-import SGML
+import WebComponents
 
 struct AdminGetUserIdentityDefaultPresenter: AdminGetUserIdentityPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderPage(
-        model: AdminGetUserIdentityModel,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    func renderDetailsPage(model: AdminGetUserIdentityModel, permissions: NewAdminListActions) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "User identity details",
-            description: "Management user identity details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: UserIdentityDetails(
-                state: .init(
-                    identity: model,
-                    breadcrumb: breadcrumb(id: model.id),
-                    permissions: permissions
-                )
-            )
+            content: UserIdentityDetails(identity: model, permissions: permissions)
         )
     }
 
-    func errorPage(
-        id: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
-            request: request,
-            title: "User identity details",
-            description: "Management user identity details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: UserIdentityError(
-                state: .init(
-                    info: error.errorTitle,
-                    message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
-                )
-            )
-        )
+    func renderErrorPage(error: AdminGetUserIdentityError) async throws -> HTMLResponse {
+        let state: NewAdminStatusView.State
+        switch error {
+        case .notFound: state = .init(title: "User identity not found", message: "This user identity may have been removed.")
+        case .unauthorized: state = .init(title: "Session expired", message: "Please sign in again to view user identities.")
+        case .forbidden: state = .init(title: "Forbidden", message: "Your account cannot access user identities.")
+        case .unavailable: state = .init(title: "User identity unavailable", message: "The request could not be completed. Please try again.")
+        }
+        let page = try await renderingEngine.renderNewAdminPage(request: request, context: context, title: "User identity details", content: NewAdminStatusView(state: state, icon: FeatherIcons.alertCircle()))
+        return HTMLResponse(content: page.content, status: status(for: error))
     }
 
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Identities", link: "/admin/user/identities/"),
-        ])
+    private func status(for error: AdminGetUserIdentityError) -> HTTPResponse.Status {
+        switch error {
+        case .notFound: .notFound
+        case .unauthorized: .unauthorized
+        case .forbidden: .forbidden
+        case .unavailable: .serviceUnavailable
+        }
     }
 }

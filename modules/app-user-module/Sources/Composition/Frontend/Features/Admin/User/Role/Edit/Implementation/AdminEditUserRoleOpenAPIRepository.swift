@@ -18,7 +18,7 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
         )
     }
 
-    func get(
+    func load(
         id: String
     ) async throws -> UserRoleDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in

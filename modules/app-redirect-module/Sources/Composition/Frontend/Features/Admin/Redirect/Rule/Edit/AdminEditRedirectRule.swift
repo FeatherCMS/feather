@@ -16,6 +16,7 @@ struct AdminEditRedirectRule {
                     ),
                     presenter: AdminEditRedirectRuleDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

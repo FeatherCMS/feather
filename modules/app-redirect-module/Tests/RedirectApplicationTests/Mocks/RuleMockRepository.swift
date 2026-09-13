@@ -63,10 +63,10 @@ actor RuleMockRepository: RuleRepository {
     }
 
     func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         deleteCallCount += 1
-        lastDeleteId = id
-        return deleteResult
+        lastDeleteId = ids.first
+        return deleteResult ? ids : []
     }
 }
