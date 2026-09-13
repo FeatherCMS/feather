@@ -20,7 +20,7 @@ struct SystemPermissionTable: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(
-                NewAdminBreadcrumb(state: SystemPermissionRoutes.breadcrumb)
+                NewAdminBreadcrumb(state: SystemPermissionRoutes.listBreadcrumb)
             )
             context.render(
                 NewAdminPageHeader(

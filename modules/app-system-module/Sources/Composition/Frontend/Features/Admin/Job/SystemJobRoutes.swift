@@ -13,6 +13,7 @@ enum SystemJobRoutes {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "System", link: "/admin/system/"),
+            .init(label: "Worker jobs", link: list.description),
         ])
     }
 

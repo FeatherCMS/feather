@@ -8,6 +8,13 @@ enum SystemVariableRoutes {
     static let add = list.appendingPath(RouterPath("add"))
     static let remove = list.appendingPath(RouterPath("remove"))
 
+    static var listBreadcrumb: NewAdminBreadcrumb.State {
+        .init(links: [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "System", link: "/admin/system/"),
+        ])
+    }
+
     static var breadcrumb: NewAdminBreadcrumb.State {
         .init(links: [
             .init(label: "Admin", link: "/admin/"),
