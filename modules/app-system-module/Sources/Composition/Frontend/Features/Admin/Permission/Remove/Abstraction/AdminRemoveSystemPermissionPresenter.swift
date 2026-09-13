@@ -12,8 +12,11 @@ protocol AdminRemoveSystemPermissionPresenter: Sendable {
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
-        info: String,
-        message: String,
+        error: AdminRemoveSystemPermissionError,
         cancel: String
     ) async throws -> HTMLResponse
+
+    func renderInvalidNoncePage(cancel: String) async throws -> HTMLResponse
+
+    func renderSuccess(location: String, count: Int) -> Response
 }

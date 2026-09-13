@@ -25,6 +25,30 @@ struct SystemPermissionAddForm: Component {
                 error: nil
             )
         }
+
+        static func from(input: SystemPermissionAddFormInput) -> Self {
+            .init(
+                key: .init(
+                    name: "key",
+                    label: "Key",
+                    value: input.normalizedKey,
+                    isRequired: true
+                ),
+                name: .init(
+                    name: "name",
+                    label: "Name",
+                    value: input.normalizedName ?? ""
+                ),
+                notes: .init(
+                    name: "notes",
+                    label: "Notes",
+                    value: input.normalizedNotes ?? "",
+                    style: .small
+                ),
+                error: nil
+            )
+        }
+
     }
 
     let state: State

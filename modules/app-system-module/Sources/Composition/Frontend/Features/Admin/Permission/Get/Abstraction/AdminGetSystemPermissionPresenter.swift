@@ -9,7 +9,6 @@ protocol AdminGetSystemPermissionPresenter: Sendable {
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
-        info: String,
-        message: String
+        error: AdminGetSystemPermissionError
     ) async throws -> HTMLResponse
 }

@@ -48,6 +48,8 @@ struct AdminEditSystemVariableDefaultInteractor:
             .forbidden
         case .conflict:
             .conflict
+        case .failure(let failure) where failure.statusCode == 409:
+            .conflict
         case .failure, .transport:
             .unavailable
         }

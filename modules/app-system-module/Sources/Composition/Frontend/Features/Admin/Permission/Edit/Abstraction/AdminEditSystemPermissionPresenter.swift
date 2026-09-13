@@ -1,4 +1,6 @@
 import FeatherAdmin
+import FeatherContracts
+import FeatherValidation
 import Hummingbird
 
 protocol AdminEditSystemPermissionPresenter: Sendable {
@@ -9,8 +11,25 @@ protocol AdminEditSystemPermissionPresenter: Sendable {
         isEdited: Bool
     ) async throws -> HTMLResponse
 
+    func renderValidationError(
+        id: String,
+        input: SystemPermissionEditFormInput?,
+        error: ValidationError
+    ) async throws -> HTMLResponse
+
+    func renderEditError(
+        id: String,
+        input: SystemPermissionEditFormInput?,
+        error: AdminEditSystemPermissionError
+    ) async throws -> HTMLResponse
+
+    func renderSuccess(id: String) -> Response
+
+    func renderForbiddenPage() async throws -> HTMLResponse
+
+    func renderInvalidNoncePage() async throws -> HTMLResponse
+
     func renderErrorPage(
-        info: String,
-        message: String
+        error: AdminEditSystemPermissionError
     ) async throws -> HTMLResponse
 }

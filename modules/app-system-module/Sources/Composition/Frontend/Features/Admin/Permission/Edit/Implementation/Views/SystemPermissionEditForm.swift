@@ -16,6 +16,38 @@ struct SystemPermissionEditForm: Component {
             name.error = errors[name.name]
             notes.error = errors[notes.name]
         }
+
+        static func empty() -> Self {
+            .init(
+                key: .init(name: "key", label: "Key", isRequired: true),
+                name: .init(name: "name", label: "Name"),
+                notes: .init(name: "notes", label: "Notes", style: .small),
+                error: nil
+            )
+        }
+
+        static func from(input: SystemPermissionEditFormInput) -> Self {
+            .init(
+                key: .init(
+                    name: "key",
+                    label: "Key",
+                    value: input.normalizedKey,
+                    isRequired: true
+                ),
+                name: .init(
+                    name: "name",
+                    label: "Name",
+                    value: input.normalizedName ?? ""
+                ),
+                notes: .init(
+                    name: "notes",
+                    label: "Notes",
+                    value: input.normalizedNotes ?? "",
+                    style: .small
+                ),
+                error: nil
+            )
+        }
     }
 
     let state: State

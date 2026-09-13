@@ -16,10 +16,7 @@ struct AdminGetSystemJobDefaultController: AdminGetSystemJobController {
         let runtime = buildRuntime(request, context)
         guard context.isCurrentUserAllowed(to: SystemPermissions.Jobs.read)
         else {
-            return try await runtime.presenter.renderErrorPage(
-                info: "Forbidden",
-                message: "Your account cannot access worker jobs."
-            )
+            return try await runtime.presenter.renderErrorPage(error: .forbidden)
         }
         let id = try context.requiredID()
         do {
@@ -28,11 +25,8 @@ struct AdminGetSystemJobDefaultController: AdminGetSystemJobController {
             )
             return try await runtime.presenter.renderDetailsPage(job: job)
         }
-        catch let error as OpenAPIRepositoryError {
-            return try await runtime.presenter.renderErrorPage(
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
+        catch let error as AdminGetSystemJobError {
+            return try await runtime.presenter.renderErrorPage(error: error)
         }
     }
 }

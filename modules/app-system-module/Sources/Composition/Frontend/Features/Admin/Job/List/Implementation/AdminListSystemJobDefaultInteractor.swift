@@ -10,7 +10,17 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
         page: Int,
         search: String?
     ) async throws -> AdminListSystemJobModel {
-        let allJobs = try await repository.list()
+        let allJobs: [Components.Schemas.SystemJobSchema]
+        do {
+            allJobs = try await repository.list()
+        } catch let error as OpenAPIRepositoryError {
+            switch error {
+            case .unauthorized: throw AdminListSystemJobError.unauthorized
+            case .forbidden: throw AdminListSystemJobError.forbidden
+            case .failure, .transport, .notFound, .conflict:
+                throw AdminListSystemJobError.unavailable
+            }
+        }
         let normalizedSearch = search?.emptyToNil ?? ""
         let filteredJobs = normalizedSearch.isEmpty
             ? allJobs

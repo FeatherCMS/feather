@@ -25,17 +25,51 @@ struct AdminGetSystemPermissionDefaultPresenter:
     }
 
     func renderErrorPage(
-        info: String,
-        message: String
+        error: AdminGetSystemPermissionError
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        let state: NewAdminStatusView.State
+        switch error {
+        case .notFound:
+            state = .init(
+                title: "System permission not found",
+                message: "This system permission may have been removed."
+            )
+        case .unauthorized:
+            state = .init(
+                title: "Session expired",
+                message: "Please sign in again to view system permissions."
+            )
+        case .forbidden:
+            state = .init(
+                title: "Forbidden",
+                message: "Your account cannot access system permissions."
+            )
+        case .unavailable:
+            state = .init(
+                title: "System permission unavailable",
+                message: "The request could not be completed. Please try again."
+            )
+        }
+        let page = try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "System permission details",
             content: NewAdminStatusView(
-                state: .init(title: info, message: message),
+                state: state,
                 icon: FeatherIcons.alertCircle()
             )
         )
+        return HTMLResponse(content: page.content, status: status(for: error))
+    }
+
+    private func status(
+        for error: AdminGetSystemPermissionError
+    ) -> HTTPResponse.Status {
+        switch error {
+        case .notFound: .notFound
+        case .unauthorized: .unauthorized
+        case .forbidden: .forbidden
+        case .unavailable: .serviceUnavailable
+        }
     }
 }

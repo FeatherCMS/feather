@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherValidation
 import Hummingbird
 
 protocol AdminAddSystemPermissionPresenter: Sendable {
@@ -7,8 +8,19 @@ protocol AdminAddSystemPermissionPresenter: Sendable {
         state: SystemPermissionAddForm.State
     ) async throws -> HTMLResponse
 
-    func renderErrorPage(
-        info: String,
-        message: String
+    func renderValidationError(
+        input: SystemPermissionAddFormInput?,
+        error: ValidationError
     ) async throws -> HTMLResponse
+
+    func renderAddError(
+        input: SystemPermissionAddFormInput?,
+        error: AdminAddSystemPermissionError
+    ) async throws -> HTMLResponse
+
+    func renderSuccess() -> Response
+
+    func renderForbiddenPage() async throws -> HTMLResponse
+
+    func renderInvalidNoncePage() async throws -> HTMLResponse
 }

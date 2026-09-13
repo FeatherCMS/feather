@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
 import SystemContracts
 
@@ -19,10 +18,7 @@ struct AdminListSystemPermissionDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(SystemPermissions.Permissions.list) else {
-            return try await presenter.renderErrorPage(
-                title: "Forbidden",
-                message: "Your account cannot access system permissions."
-            )
+            return try await presenter.renderErrorPage(error: .forbidden)
         }
         do {
             let model = try await interactor.listSystemPermissions(
@@ -35,11 +31,8 @@ struct AdminListSystemPermissionDefaultController:
                 search: request.querySearch()
             )
         }
-        catch {
-            return try await presenter.renderErrorPage(
-                title: "Unable to load system permissions.",
-                message: error.displayMessage
-            )
+        catch let error as AdminListSystemPermissionError {
+            return try await presenter.renderErrorPage(error: error)
         }
     }
 }

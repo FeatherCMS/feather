@@ -9,7 +9,6 @@ protocol AdminListSystemJobPresenter: Sendable {
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
-        title: String,
-        message: String
+        error: AdminListSystemJobError
     ) async throws -> HTMLResponse
 }

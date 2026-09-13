@@ -46,9 +46,22 @@ struct AdminRemoveSystemPermissionOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.systemPermissionDelete(
+            let response = try await client.systemPermissionDelete(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
+            switch response {
+            case .ok:
+                return
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
         }
     }
 }

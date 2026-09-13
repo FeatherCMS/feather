@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
 import SystemContracts
 
@@ -20,10 +19,7 @@ struct AdminGetSystemPermissionDefaultController:
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Permissions.read)
         else {
-            return try await presenter.renderErrorPage(
-                info: "Forbidden",
-                message: "Your account cannot access system permissions."
-            )
+            return try await presenter.renderErrorPage(error: .forbidden)
         }
         let id = try context.requiredID()
         do {
@@ -33,17 +29,8 @@ struct AdminGetSystemPermissionDefaultController:
                 permissions: context.currentUserAdminListActions
             )
         }
-        catch let error as OpenAPIRepositoryError {
-            return try await presenter.renderErrorPage(
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
-        }
-        catch {
-            return try await presenter.renderErrorPage(
-                info: "Unable to load system permission.",
-                message: error.displayMessage
-            )
+        catch let error as AdminGetSystemPermissionError {
+            return try await presenter.renderErrorPage(error: error)
         }
     }
 }

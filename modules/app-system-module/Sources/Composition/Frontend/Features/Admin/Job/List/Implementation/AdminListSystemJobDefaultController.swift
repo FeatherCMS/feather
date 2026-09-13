@@ -18,10 +18,7 @@ struct AdminListSystemJobDefaultController: AdminListSystemJobController {
         let search = request.querySearch()
         let permissions = context.currentUserAdminListActions
         guard context.isCurrentUserAllowed(to: SystemPermissions.Jobs.list) else {
-            return try await runtime.presenter.renderErrorPage(
-                title: "Forbidden",
-                message: "Your account cannot access worker jobs."
-            )
+            return try await runtime.presenter.renderErrorPage(error: .forbidden)
         }
         do {
             return try await runtime.presenter.renderListPage(
@@ -32,11 +29,8 @@ struct AdminListSystemJobDefaultController: AdminListSystemJobController {
                 permissions: permissions,
                 search: search
             )
-        } catch let error as OpenAPIRepositoryError {
-            return try await runtime.presenter.renderErrorPage(
-                title: error.errorTitle,
-                message: error.errorDescription
-            )
+        } catch let error as AdminListSystemJobError {
+            return try await runtime.presenter.renderErrorPage(error: error)
         }
     }
 }

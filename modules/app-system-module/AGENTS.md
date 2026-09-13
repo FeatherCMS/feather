@@ -18,7 +18,7 @@ Each operation is split into:
 
 - `Abstraction/` — controller, interactor, presenter, and repository protocols.
 - `Implementation/` — default implementations, OpenAPI repository, models, and views.
-- A feature composition file — for example `AdminAddSystemVariable.swift` — that wires the runtime dependencies.
+- A feature composition file — for example `AdminAddSystemVariable.swift` — for wiring the runtime dependencies.
 
 Keep cross-operation route definitions in a sibling `<Feature>Routes.swift`
 file. Keep operation-specific models and views inside the operation directory.
@@ -110,9 +110,9 @@ Use `context.isCurrentUserAllowed(to:)` for individual gates. Use
 Do not manually convert `Set<String>` permission values in feature code.
 
 Permission denial for an HTML page should render a presenter-provided
-`NewAdminStatusView`. Invalid nonces remain request-level forbidden errors.
-List, details, edit, and remove views must not display actions the current user
-cannot execute.
+`NewAdminStatusView`. Invalid nonces are request-level failures and should be
+rendered as a dedicated bad-request page. List, details, edit, and remove views
+must not display actions the current user cannot execute.
 
 ## Add and edit forms
 
@@ -124,7 +124,7 @@ Key -> Value -> Name -> Notes
 
 Keep the following concerns separate:
 
-- `FormInput.swift` — Codable request payload and normalized values.
+- `FormInput.swift` — Decodable request payload and normalized values.
 - `FormInput+Validation.swift` — frontend validation rules.
 - `Form.swift` — field state, field order, rendering, and form actions.
 - `Page.swift` — breadcrumb, page header, and form composition.
@@ -133,6 +133,9 @@ Only fields that are actually required should set `isRequired: true` and
 `required: true`. Keep these two declarations consistent. Optional empty text
 fields should normalize through the feature's `emptyToNil` convention where
 the API model is nullable.
+
+Only `NonceRequest<Input>` should contain the nonce. Form inputs remain focused
+on the submitted feature fields.
 
 When validation fails, preserve the submitted normalized values and attach
 failures to the matching field names. Shared input and textarea components
@@ -174,9 +177,9 @@ Present user-facing API failures with the operation presenter and
 for destructive flows. Handle documented OpenAPI statuses explicitly, including
 unauthorized, forbidden, not found, and conflict/undocumented responses.
 
-Use direct `HTTPError` only for request-level failures such as invalid route
-parameters or failed nonce validation, unless the feature's established
-middleware requires another behavior.
+Repositories expose `OpenAPIRepositoryError`; interactors translate it into
+feature-specific errors; controllers branch on those feature errors; presenters
+own user-facing wording, HTML, response status codes, and success redirects.
 
 ## Naming and file rules
 

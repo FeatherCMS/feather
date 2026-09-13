@@ -1,6 +1,5 @@
-import FeatherAdmin
-import FeatherContracts
 import FeatherValidation
+import FeatherAdmin
 import Hummingbird
 import SystemContracts
 
@@ -24,10 +23,7 @@ struct AdminEditSystemPermissionDefaultController:
                 to: SystemPermissions.Permissions.update
             )
         else {
-            return try await presenter.renderErrorPage(
-                info: "Forbidden",
-                message: "Your account cannot edit system permissions."
-            )
+            return try await presenter.renderErrorPage(error: .forbidden)
         }
         do {
             let permission = try await interactor.load(id: id)
@@ -41,17 +37,8 @@ struct AdminEditSystemPermissionDefaultController:
                 isEdited: request.hasQueryFlag("edited")
             )
         }
-        catch let error as OpenAPIRepositoryError {
-            return try await presenter.renderErrorPage(
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
-        }
-        catch {
-            return try await presenter.renderErrorPage(
-                info: "Unable to load system permission.",
-                message: error.displayMessage
-            )
+        catch let error as AdminEditSystemPermissionError {
+            return try await presenter.renderErrorPage(error: error)
         }
     }
 
@@ -67,19 +54,16 @@ struct AdminEditSystemPermissionDefaultController:
             )
         else {
             return
-                try await presenter.renderErrorPage(
-                    info: "Forbidden",
-                    message: "Your account cannot edit system permissions."
-                )
+                try await presenter.renderErrorPage(error: .forbidden)
                 .response(from: request, context: context)
         }
         var lastPayload: SystemPermissionEditFormInput?
         do {
             let payload = try await request.decode(
-                as: SystemPermissionEditFormInput.self,
+                as: NonceRequest<SystemPermissionEditFormInput>.self,
                 context: context
             )
-            lastPayload = payload
+            lastPayload = payload.input
             guard
                 await AdminNonceStore.shared.consume(
                     payload.nonce,
@@ -87,75 +71,37 @@ struct AdminEditSystemPermissionDefaultController:
                 )
             else {
                 return
-                    try await presenter.renderErrorPage(
-                        info: "Forbidden",
-                        message: "This form has expired. Please try again."
-                    )
+                    try await presenter.renderInvalidNoncePage()
                     .response(from: request, context: context)
             }
-            try await payload.validate()
-            try await interactor.update(id: id, input: payload)
-            return AdminNotificationFlash.redirect(
-                to: SystemPermissionRoutes.edit(RouterPath(id)).description,
-                notification: .init(
-                    title: "Saved",
-                    message: "System permission edited successfully."
-                )
-            )
+            try await payload.input.validate()
+            try await interactor.update(id: id, input: payload.input)
+            return presenter.renderSuccess(id: id)
         }
         catch let error as ValidationError {
-            var state = formState(input: lastPayload)
-            state.apply(
-                errors: Dictionary(
-                    uniqueKeysWithValues: error.failures.map {
-                        ($0.key, $0.message)
-                    }
-                )
-            )
             return
-                try await presenter.renderEditPage(
+                try await presenter.renderValidationError(
                     id: id,
-                    state: state,
-                    isEdited: false
+                    input: lastPayload,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
-        catch let error as HTTPError {
+        catch let error as AdminEditSystemPermissionError {
             return
-                try await presenter.renderErrorPage(
-                    info: "Unable to update system permission.",
-                    message: error.displayMessage
-                )
-                .response(from: request, context: context)
-        }
-        catch let error as OpenAPIRepositoryError {
-            var state = formState(input: lastPayload)
-            state.error = error.errorDescription
-            return
-                try await presenter.renderEditPage(
+                try await presenter.renderEditError(
                     id: id,
-                    state: state,
-                    isEdited: false
-                )
-                .response(from: request, context: context)
-        }
-        catch {
-            var state = formState(input: lastPayload)
-            state.error = error.displayMessage
-            return
-                try await presenter.renderEditPage(
-                    id: id,
-                    state: state,
-                    isEdited: false
+                    input: lastPayload,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
     }
 
     private func formState(
-        key: String = "",
-        name: String = "",
-        notes: String = ""
+        key: String,
+        name: String,
+        notes: String
     ) -> SystemPermissionEditForm.State {
         .init(
             key: .init(name: "key", label: "Key", value: key, isRequired: true),
@@ -167,16 +113,6 @@ struct AdminEditSystemPermissionDefaultController:
                 style: .small
             ),
             error: nil
-        )
-    }
-
-    private func formState(input: SystemPermissionEditFormInput?)
-        -> SystemPermissionEditForm.State
-    {
-        formState(
-            key: input?.normalizedKey ?? "",
-            name: input?.normalizedName ?? "",
-            notes: input?.normalizedNotes ?? ""
         )
     }
 }
