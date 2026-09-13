@@ -7,11 +7,13 @@ protocol AdminAddUserIdentityPresenter: Sendable {
         -> HTMLResponse
     func renderValidationError(
         input: AdminAddUserIdentityFormInput?,
-        error: ValidationError
+        error: ValidationError,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse
     func renderAddError(
         input: AdminAddUserIdentityFormInput?,
-        error: AdminAddUserIdentityError
+        error: AdminAddUserIdentityError,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse
     func renderSuccess() -> Response
     func renderUnauthorizedPage() async throws -> HTMLResponse

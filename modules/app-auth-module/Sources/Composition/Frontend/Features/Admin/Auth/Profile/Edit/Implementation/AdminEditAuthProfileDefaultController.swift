@@ -32,7 +32,7 @@ struct AdminEditAuthProfileDefaultController:
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         guard let account = context.account else {
-            return presenter.renderDeniedPage(permissions: [])
+            return try await presenter.renderDeniedPage(permissions: [])
         }
 
         let permissions = account.permissionSet
@@ -41,11 +41,13 @@ struct AdminEditAuthProfileDefaultController:
                 to: AuthPermissions.Profile.update
             )
         else {
-            return presenter.renderDeniedPage(permissions: permissions)
+            return try await presenter.renderDeniedPage(
+                permissions: permissions
+            )
         }
 
         let profile = try await interactor.loadProfile(account: account)
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             state: .init(
                 id: profile.id,
                 isEdited: request.hasQueryFlag("edited"),
@@ -67,7 +69,7 @@ struct AdminEditAuthProfileDefaultController:
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         guard let account = context.account else {
-            return try presenter.renderDeniedPage(permissions: [])
+            return try await presenter.renderDeniedPage(permissions: [])
                 .response(from: request, context: context)
         }
 
@@ -77,15 +79,43 @@ struct AdminEditAuthProfileDefaultController:
                 to: AuthPermissions.Profile.update
             )
         else {
-            return try presenter.renderDeniedPage(permissions: permissions)
+            return
+                try await presenter.renderDeniedPage(permissions: permissions)
                 .response(from: request, context: context)
         }
 
         let profile = try await interactor.loadProfile(account: account)
-        let payload = try await request.decode(
-            as: AdminEditAuthProfileFormInput.self,
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<AdminEditAuthProfileFormInput>.self,
             context: context
         )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
+            var state = formState(
+                firstName: profile.firstName,
+                lastName: profile.lastName,
+                profileImageAssetId: profile.profileImageAssetId,
+                selectedImageAsset: profile.profileImageAsset
+            )
+            state.error = "This form has expired. Please reload the page."
+            return try await renderEditResponse(
+                request: request,
+                context: context,
+                presenter: presenter,
+                permissions: permissions,
+                state: .init(
+                    id: profile.id,
+                    isEdited: false,
+                    form: state,
+                    breadcrumb: breadcrumb()
+                )
+            )
+        }
+        let payload = nonceRequest.input
         do {
             try await interactor.execute(
                 entity: .init(
@@ -96,19 +126,16 @@ struct AdminEditAuthProfileDefaultController:
                     profileImageAsset: nil
                 )
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/auth/profile/edit/",
-                        title: "Saved",
-                        message: "Profile edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/auth/profile/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "Profile edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
-            return try renderEditResponse(
+            return try await renderEditResponse(
                 request: request,
                 context: context,
                 presenter: presenter,
@@ -123,7 +150,7 @@ struct AdminEditAuthProfileDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return try renderEditResponse(
+            return try await renderEditResponse(
                 request: request,
                 context: context,
                 presenter: presenter,
@@ -138,7 +165,7 @@ struct AdminEditAuthProfileDefaultController:
             )
         }
         catch {
-            return try renderEditResponse(
+            return try await renderEditResponse(
                 request: request,
                 context: context,
                 presenter: presenter,
@@ -264,21 +291,19 @@ struct AdminEditAuthProfileDefaultController:
         presenter: any AdminEditAuthProfilePresenter,
         permissions: Set<String>,
         state: AuthProfileEdit.State
-    ) throws -> Response {
-        try presenter.renderPage(
+    ) async throws -> Response {
+        try await presenter.renderPage(
             state: state,
             permissions: permissions
         )
         .response(from: request, context: context)
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Account", link: "/admin/account/"),
-                .init(label: "Profile", link: "/admin/auth/profile/"),
-            ]
-        )
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Account", link: "/admin/account/"),
+            .init(label: "Profile", link: "/admin/auth/profile/"),
+        ]
     }
 }

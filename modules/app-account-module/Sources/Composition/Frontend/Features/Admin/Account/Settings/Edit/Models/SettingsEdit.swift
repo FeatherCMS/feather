@@ -31,11 +31,6 @@ struct SettingsEdit: Component {
                             isCurrent: false
                         ),
                         .init(
-                            label: "Profile",
-                            href: "/admin/account/users/\(userID)/profile/",
-                            isCurrent: false
-                        ),
-                        .init(
                             label: "Settings",
                             href: "/admin/account/users/\(userID)/settings/",
                             isCurrent: true

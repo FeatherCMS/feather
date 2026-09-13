@@ -21,36 +21,27 @@ struct AdminListAuthMagicLinkDefaultPresenter:
     AdminListAuthMagicLinkPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(
         state: AuthMagicLinkTable.State
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Manage user magic links",
-            description: "Management user magic link list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: state.permissions
-            ),
             content: AuthMagicLinkTable(state: state)
         )
     }
 
     func renderError(
         error: OpenAPIRepositoryError
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Manage user magic links",
-            description: "Management user magic link list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: []
-            ),
             content: AuthMagicLinkError(
                 state: .init(
                     info: error.errorTitle,
@@ -67,50 +58,73 @@ struct AdminListAuthMagicLinkDefaultPresenter:
         search: String?,
         userID: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove selected magic links",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: breadcrumb(),
+            content: NewAdminConfirmation(
+                breadcrumb: breadcrumb(),
+                pageHeader: .init(
                     title: "Remove selected magic links",
-                    message:
-                        "Are you sure you want to remove these selected magic links? This action cannot be undone.",
-                    action: "/admin/auth/magic-links/remove/",
-                    cancelLink: ListRemoveRedirect.location(
-                        path: "/admin/auth/magic-links/",
-                        page: page,
-                        search: search,
-                        queryItems: userID.map { [("userId", $0)] } ?? [],
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: selectedIds,
-                    hiddenFields: [
-                        .init(name: "page", value: "\(page)")
-                    ]
-                        + (search.map {
-                            [.init(name: "search", value: $0)]
-                        } ?? [])
-                        + (userID.map {
-                            [.init(name: "userId", value: $0)]
-                        } ?? [])
-                )
+                    description: "Review the selected links before removal."
+                ),
+                selectedItems: selectedIds,
+                action: "/admin/auth/magic-links/remove/",
+                cancel: listLocation(
+                    page: page,
+                    search: search,
+                    userID: userID
+                ),
+                nonceToken: nonceToken,
+                hiddenFields: [
+                    .init(name: "page", value: "\(page)"),
+                    .init(name: "search", value: search ?? ""),
+                    .init(name: "userId", value: userID ?? ""),
+                ]
+                    + selectedIds.map {
+                        .init(name: "selectedIds", value: $0)
+                    }
             )
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(links: [
+    func renderInvalidNoncePage() async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Remove selected magic links",
+            content: NewAdminStatusView(
+                state: .init(
+                    title: "Form expired",
+                    message:
+                        "This form is no longer valid. Please reload the page."
+                ),
+                icon: FeatherIcons.alertCircle()
+            )
+        )
+    }
+
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
-        ])
+        ]
+    }
+
+    private func listLocation(page: Int, search: String?, userID: String?)
+        -> String
+    {
+        var components = URLComponents(string: "/admin/auth/magic-links/")!
+        components.queryItems = [
+            .init(name: "page", value: "\(page)"),
+            .init(name: "search", value: search),
+            .init(name: "userId", value: userID),
+        ]
+        .compactMap { $0.value == nil || $0.value!.isEmpty ? nil : $0 }
+        return components.string ?? "/admin/auth/magic-links/"
     }
 }

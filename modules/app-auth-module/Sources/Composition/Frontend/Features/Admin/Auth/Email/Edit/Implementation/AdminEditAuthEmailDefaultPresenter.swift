@@ -19,6 +19,7 @@ import WebComponents
 
 struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func formState(
@@ -53,12 +54,12 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
             .init(label: "Emails", link: "/admin/auth/emails/"),
-        ])
+        ]
     }
 
     func renderPage(
@@ -66,16 +67,15 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
         isEdited: Bool,
         form: AuthEmailForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        var form = form
+        form.nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit user email",
-            description: "Edit a management user email",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthEmailEdit(
                 state: .init(
                     id: id,
@@ -91,16 +91,11 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
         id: String,
         error: OpenAPIRepositoryError,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit user email",
-            description: "Edit a management user email",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthEmailError(
                 state: .init(
                     info: error.errorTitle,

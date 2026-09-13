@@ -49,6 +49,7 @@ struct UserIdentityCreateSchema: ObjectSchemaRepresentable {
         [
             "name": UserIdentityNameField().reference(),
             "status": UserIdentityStatusField().reference(required: false),
+            "roleIds": UserIdentityRoleIdsField().reference(required: false),
         ]
     }
 }

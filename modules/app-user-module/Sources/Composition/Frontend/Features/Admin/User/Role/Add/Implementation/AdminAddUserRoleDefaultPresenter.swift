@@ -50,7 +50,8 @@ struct AdminAddUserRoleDefaultPresenter: AdminAddUserRolePresenter {
         case .conflict:
             return try await renderFormError(
                 input: input,
-                message: "A user role with this ID already exists.",
+                message:
+                    "The generated role ID already exists. Please try again.",
                 status: .conflict
             )
         case .unavailable:

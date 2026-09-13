@@ -30,6 +30,7 @@ struct AdminRemoveAuthMagicLink {
                     ),
                     presenter: AdminRemoveAuthMagicLinkDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

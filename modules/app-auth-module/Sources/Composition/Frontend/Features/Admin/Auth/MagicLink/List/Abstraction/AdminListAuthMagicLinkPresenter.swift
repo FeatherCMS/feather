@@ -20,11 +20,11 @@ protocol AdminListAuthMagicLinkPresenter: Sendable {
 
     func renderPage(
         state: AuthMagicLinkTable.State
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderError(
         error: OpenAPIRepositoryError
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderRemoveConfirmation(
         selectedIds: [String],
@@ -32,5 +32,6 @@ protocol AdminListAuthMagicLinkPresenter: Sendable {
         search: String?,
         userID: String?,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
+    func renderInvalidNoncePage() async throws -> HTMLResponse
 }

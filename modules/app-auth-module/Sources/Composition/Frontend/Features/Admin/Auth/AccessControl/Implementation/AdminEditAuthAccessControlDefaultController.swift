@@ -1,7 +1,9 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation
 import Foundation
@@ -32,10 +34,14 @@ struct AdminEditAuthAccessControlDefaultController:
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
-        let canList = permissions.contains("auth:access-control:list")
-        let canEdit = permissions.contains("auth:access-control:update")
+        let canList = permissions.contains(
+            AuthPermissions.AccessControl.list.rawValue
+        )
+        let canEdit = permissions.contains(
+            AuthPermissions.AccessControl.update.rawValue
+        )
         guard canList else {
-            return presenter.deniedPage(
+            return try await presenter.deniedPage(
                 permissions: permissions,
                 message: "Your identity cannot manage access control."
             )
@@ -48,7 +54,7 @@ struct AdminEditAuthAccessControlDefaultController:
                 selectedOverride: nil,
                 error: nil
             )
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 state: state,
                 permissions: permissions,
                 search: request.querySearch() ?? ""
@@ -63,7 +69,7 @@ struct AdminEditAuthAccessControlDefaultController:
                 permissions: [],
                 selectedPairs: []
             )
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 state: state,
                 permissions: permissions,
                 search: request.querySearch() ?? ""
@@ -77,20 +83,43 @@ struct AdminEditAuthAccessControlDefaultController:
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
-        let canEdit = permissions.contains("auth:access-control:update")
+        let canEdit = permissions.contains(
+            AuthPermissions.AccessControl.update.rawValue
+        )
         guard canEdit else {
             return
-                try presenter.deniedPage(
+                try await presenter.deniedPage(
                     permissions: permissions,
                     message: "Your identity cannot manage access control."
                 )
                 .response(from: request, context: context)
         }
 
-        let payload = try await request.decode(
-            as: AdminEditAuthAccessControlFormInput.self,
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<AdminEditAuthAccessControlFormInput>.self,
             context: context
         )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
+            let state = try await interactor.loadState(
+                isEdited: false,
+                canEdit: true,
+                selectedOverride: nil,
+                error: "This form has expired. Please reload the page."
+            )
+            return
+                try await presenter.renderPage(
+                    state: state,
+                    permissions: permissions,
+                    search: request.querySearch() ?? ""
+                )
+                .response(from: request, context: context)
+        }
+        let payload = nonceRequest.input
 
         do {
             switch try await interactor.save(input: payload) {
@@ -103,20 +132,20 @@ struct AdminEditAuthAccessControlDefaultController:
                 let query =
                     search.isEmpty
                     ? [] : [URLQueryItem(name: "search", value: search)]
-                return Response(
-                    status: .seeOther,
-                    headers: [
-                        .location: AdminToastRedirect.location(
-                            defaultPath: "/admin/auth/access-control/",
-                            title: "Saved",
-                            message: "Access Control edited successfully.",
-                            extraQueryItems: query
-                        )
-                    ]
+                let location =
+                    query.isEmpty
+                    ? "/admin/auth/access-control/"
+                    : "/admin/auth/access-control/?search=\(search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? search)"
+                return AdminNotificationFlash.redirect(
+                    to: location,
+                    notification: .init(
+                        title: "Saved",
+                        message: "Access Control edited successfully."
+                    )
                 )
             case .render(let state):
                 return
-                    try presenter.renderPage(
+                    try await presenter.renderPage(
                         state: state,
                         permissions: permissions,
                         search: payload.search?
@@ -135,7 +164,7 @@ struct AdminEditAuthAccessControlDefaultController:
                 error: error.displayMessage
             )
             return
-                try presenter.renderPage(
+                try await presenter.renderPage(
                     state: state,
                     permissions: permissions,
                     search: payload.search?

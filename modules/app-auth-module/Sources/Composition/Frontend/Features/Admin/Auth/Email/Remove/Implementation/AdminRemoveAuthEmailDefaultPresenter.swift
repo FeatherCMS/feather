@@ -21,38 +21,54 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     AdminRemoveAuthEmailPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
             .init(label: "Emails", link: "/admin/auth/emails/"),
-        ])
+        ]
     }
 
     func renderPage(
         id: String,
         identityId: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Manage user emails",
-            description: "Management user email list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthEmailConfirmation(
                 state: .init(
                     id: id,
                     identityId: identityId,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: breadcrumb(id: id),
+                    nonceToken: nonceToken
                 )
+            )
+        )
+    }
+
+    func renderInvalidNoncePage() async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Remove user email",
+            content: NewAdminStatusView(
+                state: .init(
+                    title: "Form expired",
+                    message:
+                        "This form is no longer valid. Please reload the page."
+                ),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
@@ -61,17 +77,11 @@ struct AdminRemoveAuthEmailDefaultPresenter:
         id: String,
         error: OpenAPIRepositoryError,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove user email",
-            description:
-                "Remove confirmation for a management user email",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthEmailError(
                 state: .init(
                     info: error.errorTitle,

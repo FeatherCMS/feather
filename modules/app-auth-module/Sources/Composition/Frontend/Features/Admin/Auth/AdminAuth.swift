@@ -22,7 +22,7 @@ struct AdminAuth {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetAuthHome(
+        AdminGetAuthOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -84,7 +84,7 @@ struct AdminAuth {
         )
         .controller.route(on: router)
 
-        AdminCredentials(
+        AdminCredential(
             renderingEngine: renderingEngine
         )
         .route(on: router)

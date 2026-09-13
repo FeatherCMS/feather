@@ -16,7 +16,6 @@ struct UserRoleNotesField: StringSchemaRepresentable {
 struct UserRoleCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "id": UserRoleIdField(),
             "name": UserRoleNameField().reference(required: false),
             "notes": UserRoleNotesField().reference(required: false),
         ]

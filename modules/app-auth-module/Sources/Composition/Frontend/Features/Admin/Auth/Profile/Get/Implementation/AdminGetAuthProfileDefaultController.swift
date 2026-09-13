@@ -33,7 +33,7 @@ struct AdminGetAuthProfileDefaultController:
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         guard let account = context.account else {
-            return runtime.presenter.renderDeniedPage(
+            return try await runtime.presenter.renderDeniedPage(
                 permissions: []
             )
         }
@@ -44,7 +44,7 @@ struct AdminGetAuthProfileDefaultController:
                 to: AuthPermissions.Profile.read
             )
         else {
-            return runtime.presenter.renderDeniedPage(
+            return try await runtime.presenter.renderDeniedPage(
                 permissions: permissions
             )
         }
@@ -54,7 +54,7 @@ struct AdminGetAuthProfileDefaultController:
             account: account,
             accountProfile: accountProfile
         )
-        return runtime.presenter.renderPage(
+        return try await runtime.presenter.renderPage(
             state: .init(
                 profile: profile,
                 canEdit: permissions.contains(
@@ -66,12 +66,11 @@ struct AdminGetAuthProfileDefaultController:
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Account", link: "/admin/account/"),
-            ]
-        )
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Account", link: "/admin/account/"),
+            .init(label: "Profile", link: "/admin/auth/profile/"),
+        ]
     }
 }

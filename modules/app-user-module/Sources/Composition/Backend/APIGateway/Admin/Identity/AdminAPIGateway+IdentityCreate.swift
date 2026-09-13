@@ -24,7 +24,8 @@ extension AdminAPIGateway {
                 status: Identity.Status(
                     rawValue: body.status?.rawValue ?? "invited"
                 )
-                    ?? .invited
+                    ?? .invited,
+                roleIds: body.roleIds
             )
         )
 

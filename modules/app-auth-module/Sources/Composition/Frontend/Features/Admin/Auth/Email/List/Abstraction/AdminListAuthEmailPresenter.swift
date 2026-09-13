@@ -20,11 +20,11 @@ protocol AdminListAuthEmailPresenter: Sendable {
 
     func renderPage(
         state: AuthEmailTable.State
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderError(
         error: OpenAPIRepositoryError
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderRemoveConfirmation(
         selectedIds: [String],
@@ -32,5 +32,6 @@ protocol AdminListAuthEmailPresenter: Sendable {
         search: String?,
         userID: String?,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
+    func renderInvalidNoncePage() async throws -> HTMLResponse
 }

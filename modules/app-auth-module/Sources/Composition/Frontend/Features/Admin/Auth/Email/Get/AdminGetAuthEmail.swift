@@ -30,6 +30,7 @@ struct AdminGetAuthEmail {
                     ),
                     presenter: AdminGetAuthEmailDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

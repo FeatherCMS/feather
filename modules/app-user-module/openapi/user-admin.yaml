@@ -265,6 +265,8 @@ components:
           $ref: '#/components/schemas/UserIdentityNameField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
+        roleIds:
+          $ref: '#/components/schemas/UserIdentityRoleIdsField'
       required:
       - name
     UserIdentityNameField:
@@ -279,6 +281,13 @@ components:
       - deactivated
       - anonymized
       example: active
+    UserIdentityRoleIdsField:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserRoleIdField'
+    UserRoleIdField:
+      type: string
+      example: role_manager
     UserIdentityDetailSchema:
       type: object
       properties:
@@ -292,6 +301,7 @@ components:
           $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
       required:
       - id
+      - name
       - status
     UserIdentityIDField:
       type: string
@@ -376,6 +386,7 @@ components:
           $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
       required:
       - id
+      - name
       - status
       - roles
     UserIdentityListItemSearchQuerySchema:
@@ -468,13 +479,6 @@ components:
           $ref: '#/components/schemas/UserIdentityStatusField'
         roleIds:
           $ref: '#/components/schemas/UserIdentityRoleIdsField'
-    UserIdentityRoleIdsField:
-      type: array
-      items:
-        $ref: '#/components/schemas/UserRoleIdField'
-    UserRoleIdField:
-      type: string
-      example: role_manager
     UserIdentityPatchSchema:
       type: object
       properties:
@@ -487,15 +491,10 @@ components:
     UserRoleCreateSchema:
       type: object
       properties:
-        id:
-          type: string
-          example: role_manager
         name:
           $ref: '#/components/schemas/UserRoleNameField'
         notes:
           $ref: '#/components/schemas/UserRoleNotesField'
-      required:
-      - id
     UserRoleNotesField:
       type: string
       example: Management role.

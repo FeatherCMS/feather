@@ -31,6 +31,7 @@ struct AdminListAuthEmail {
                     ),
                     presenter: AdminListAuthEmailDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

@@ -21,11 +21,11 @@ protocol AdminEditAuthAccessControlPresenter: Sendable {
     func deniedPage(
         permissions: Set<String>,
         message: String
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderPage(
         state: AdminEditAuthAccessControlState,
         permissions: Set<String>,
         search: String
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

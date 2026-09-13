@@ -16,13 +16,16 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime(request, context)
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.create)
         else {
             return try await presenter.renderForbiddenPage()
         }
-        return try await presenter.renderAddPage(state: .empty())
+        let roleOptions = (try? await interactor.loadRoleOptions()) ?? []
+        return try await presenter.renderAddPage(
+            state: .empty(roleOptions: roleOptions)
+        )
     }
 
     func postAddUserIdentity(
@@ -36,6 +39,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
             return try await presenter.renderForbiddenPage()
                 .response(from: request, context: context)
         }
+        let roleOptions = (try? await interactor.loadRoleOptions()) ?? []
         var lastPayload: AdminAddUserIdentityFormInput?
 
         do {
@@ -63,7 +67,8 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
             return
                 try await presenter.renderValidationError(
                     input: lastPayload,
-                    error: error
+                    error: error,
+                    roleOptions: roleOptions
                 )
                 .response(from: request, context: context)
         }
@@ -71,7 +76,8 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
             return
                 try await presenter.renderAddError(
                     input: lastPayload,
-                    error: error
+                    error: error,
+                    roleOptions: roleOptions
                 )
                 .response(from: request, context: context)
         }

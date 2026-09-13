@@ -2,6 +2,11 @@ import FeatherAdmin
 
 struct AdminAddUserIdentityDefaultInteractor: AdminAddUserIdentityInteractor {
     let repository: any AdminAddUserIdentityRepository
+    let roleRepository: any AdminUserIdentityRoleRepository
+
+    func loadRoleOptions() async throws -> [UserIdentityRoleOptionModel] {
+        try await roleRepository.list()
+    }
 
     func add(
         input: AdminAddUserIdentityFormInput
@@ -11,7 +16,7 @@ struct AdminAddUserIdentityDefaultInteractor: AdminAddUserIdentityInteractor {
                 payload: .init(
                     name: input.normalizedName,
                     status: input.normalizedStatus,
-                    roleIds: []
+                    roleIds: input.roleIds ?? []
                 )
             )
         }

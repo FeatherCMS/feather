@@ -1,5 +1,6 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
 import FeatherValidation
@@ -33,17 +34,25 @@ struct AdminGetAuthMagicLinkDefaultController: AdminGetAuthMagicLinkController {
             context
         )
         let permissions = context.currentUserPermissions
+        guard context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.read)
+        else {
+            return try await presenter.renderError(
+                id: id,
+                error: .forbidden,
+                permissions: permissions
+            )
+        }
         do {
             let link = try await interactor.execute(
                 entity: .init(id: id)
             )
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 link: link,
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return presenter.renderError(
+            return try await presenter.renderError(
                 id: id,
                 error: error,
                 permissions: permissions

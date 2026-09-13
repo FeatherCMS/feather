@@ -31,6 +31,7 @@ struct AdminEditAuthEmail {
                     ),
                     presenter: AdminEditAuthEmailDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

@@ -1,3 +1,4 @@
+import AuthContracts
 import FeatherAdmin
 import HTML
 import Hummingbird
@@ -18,25 +19,35 @@ struct AdminRemoveAuthSessionDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let identityId = try context.requiredID()
         let sessionId = try context.requiredParameter("sessionId")
+        guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.delete)
+        else {
+            return try await presenter.errorPage(
+                identityId: identityId,
+                sessionId: sessionId,
+                error: .forbidden,
+                permissions: context.currentUserPermissions
+            )
+        }
 
         do {
             let session = try await interactor.get(
                 identityId: identityId,
                 sessionId: sessionId
             )
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 state: .init(
                     model: session,
                     breadcrumb: presenter.breadcrumb(
                         identityId: identityId,
                         sessionId: sessionId
-                    )
+                    ),
+                    nonceToken: nil
                 ),
                 permissions: context.currentUserPermissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return presenter.errorPage(
+            return try await presenter.errorPage(
                 identityId: identityId,
                 sessionId: sessionId,
                 error: error,
@@ -52,6 +63,30 @@ struct AdminRemoveAuthSessionDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let identityId = try context.requiredID()
         let sessionId = try context.requiredParameter("sessionId")
+        guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.delete)
+        else {
+            return
+                try await presenter.errorPage(
+                    identityId: identityId,
+                    sessionId: sessionId,
+                    error: .forbidden,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
+        }
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
+            return try await presenter.renderInvalidNoncePage()
+                .response(from: request, context: context)
+        }
 
         do {
             try await interactor.execute(
@@ -65,20 +100,17 @@ struct AdminRemoveAuthSessionDefaultController:
                     updatedAt: 0
                 )
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/user/identities/\(identityId)/",
-                        title: "Removed",
-                        message: "Session removed successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/user/identities/\(identityId)/",
+                notification: .init(
+                    title: "Removed",
+                    message: "Session removed successfully."
+                )
             )
         }
         catch let error as OpenAPIRepositoryError {
             return
-                try presenter.errorPage(
+                try await presenter.errorPage(
                     identityId: identityId,
                     sessionId: sessionId,
                     error: error,

@@ -19,6 +19,7 @@ import WebComponents
 
 struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func formState(
@@ -53,12 +54,12 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
             .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-        ])
+        ]
     }
 
     func renderPage(
@@ -66,16 +67,15 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
         isEdited: Bool,
         form: AuthMagicLinkForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        var form = form
+        form.nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit user magic link",
-            description: "Edit a management user magic link",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthMagicLinkEdit(
                 state: .init(
                     id: id,
@@ -91,16 +91,11 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
         id: String,
         error: OpenAPIRepositoryError,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit user magic link",
-            description: "Edit a management user magic link",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthMagicLinkError(
                 state: .init(
                     info: error.errorTitle,

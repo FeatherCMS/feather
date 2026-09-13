@@ -21,11 +21,6 @@ public struct AccountAdmin {
         )
         .controller.route(on: router)
 
-        AdminEditAccountProfile(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
         AdminListAccountInvitation(
             renderingEngine: renderingEngine
         )

@@ -33,6 +33,7 @@ struct AdminEditAuthProfile {
                     ),
                     presenter: AdminEditAuthProfileDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

@@ -21,27 +21,23 @@ struct AdminEditAuthAccessControlDefaultPresenter:
     AdminEditAuthAccessControlPresenter
 {
     let request: Request
-    let renderEngine: RenderingEngine
+    let context: DefaultRequestContext
+    let renderEngine: any RenderingEngine
 
     func deniedPage(
         permissions: Set<String>,
         message: String
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "No permission",
-            description: "No permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: PermissionDeniedView(
+            content: NewAdminStatusView(
                 state: .init(
-                    info: "No permission",
-                    message: message,
-                    breadcrumb: breadcrumb()
-                )
+                    title: "No permission",
+                    message: message
+                ),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
@@ -50,17 +46,15 @@ struct AdminEditAuthAccessControlDefaultPresenter:
         state: AdminEditAuthAccessControlState,
         permissions: Set<String>,
         search: String
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let normalizedSearch = normalizedSearch(search)
-        return renderEngine.renderAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Access Control",
-            description: "Manage access control assignments",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthAccessControlMatrix(
                 state: .init(
                     isEdited: state.isEdited,
@@ -70,7 +64,8 @@ struct AdminEditAuthAccessControlDefaultPresenter:
                     permissions: state.permissions,
                     selectedPairs: state.selectedPairs,
                     search: normalizedSearch,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: breadcrumb(),
+                    nonceToken: nonceToken
                 )
             )
         )
@@ -82,12 +77,10 @@ struct AdminEditAuthAccessControlDefaultPresenter:
         (search ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Auth", link: "/admin/auth/"),
-            ]
-        )
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Auth", link: "/admin/auth/"),
+        ]
     }
 }

@@ -30,6 +30,7 @@ struct AdminAddAuthMagicLink {
                     ),
                     presenter: AdminAddAuthMagicLinkDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

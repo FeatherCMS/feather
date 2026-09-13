@@ -22,7 +22,8 @@ protocol AdminAddAuthMagicLinkPresenter: Sendable {
     func renderPage(
         form: AuthMagicLinkForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
+    func renderForbiddenPage() async throws -> HTMLResponse
 
     func formState(
         credentialId: String,
@@ -30,7 +31,7 @@ protocol AdminAddAuthMagicLinkPresenter: Sendable {
         isPersistent: Bool
     ) -> AuthMagicLinkForm.State
 
-    func breadcrumb() -> AdminBreadcrumb.State
+    func breadcrumb() -> [NewAdminBreadcrumb.Link]
 
     func format(
         error: OpenAPIRepositoryError

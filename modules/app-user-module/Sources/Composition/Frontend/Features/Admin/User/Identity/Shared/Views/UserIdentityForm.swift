@@ -19,7 +19,9 @@ struct UserIdentityForm: Component {
             roleIdsError = errors["roleIds"] ?? errors["roleIds[]"]
         }
 
-        static func empty() -> Self {
+        static func empty(
+            roleOptions: [UserIdentityRoleOptionModel] = []
+        ) -> Self {
             .init(
                 name: .init(name: "name", label: "Name", isRequired: true),
                 status: .init(
@@ -29,7 +31,9 @@ struct UserIdentityForm: Component {
                     options: statusOptions,
                     isRequired: true
                 ),
-                roleOptions: [],
+                roleOptions: roleOptions.map {
+                    .init(label: $0.name, value: $0.id)
+                },
                 roleIdsError: nil,
                 error: nil
             )

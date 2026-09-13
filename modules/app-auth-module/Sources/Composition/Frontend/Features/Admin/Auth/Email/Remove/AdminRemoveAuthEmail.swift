@@ -30,6 +30,7 @@ struct AdminRemoveAuthEmail {
                     ),
                     presenter: AdminRemoveAuthEmailDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

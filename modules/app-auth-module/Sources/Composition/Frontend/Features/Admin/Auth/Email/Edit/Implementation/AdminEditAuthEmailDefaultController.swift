@@ -1,5 +1,6 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
 import FeatherValidation
@@ -34,10 +35,18 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
             context
         )
         let permissions = context.currentUserPermissions
+        guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.update)
+        else {
+            return try await presenter.renderError(
+                id: id,
+                error: .forbidden,
+                permissions: permissions
+            )
+        }
         do {
             let link = try await interactor.get(id: id)
             let identities = (try? await interactor.listIdentities()) ?? []
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 id: id,
                 isEdited: isEdited,
                 form: presenter.formState(
@@ -49,7 +58,7 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return presenter.renderError(
+            return try await presenter.renderError(
                 id: id,
                 error: error,
                 permissions: permissions
@@ -66,12 +75,39 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
             request,
             context
         )
+        guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.update)
+        else {
+            return
+                try await presenter.renderError(
+                    id: id,
+                    error: .forbidden,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
+        }
         var lastPayload: AdminEditAuthEmailFormInput?
         do {
-            let payload = try await request.decode(
-                as: AdminEditAuthEmailFormInput.self,
+            let nonceRequest = try await request.decode(
+                as: NonceRequest<AdminEditAuthEmailFormInput>.self,
                 context: context
             )
+            guard
+                await AdminNonceStore.shared.consume(
+                    nonceRequest.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                var state = presenter.formState(identityId: id, email: "")
+                state.error = "This form has expired. Please reload the page."
+                return try await updateResponse(
+                    request: request,
+                    context: context,
+                    id: id,
+                    presenter: presenter,
+                    state: state
+                )
+            }
+            let payload = nonceRequest.input
             lastPayload = payload
             try await payload.validate()
             try await interactor.execute(
@@ -81,15 +117,12 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
                     email: payload.normalizedEmail
                 )
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/auth/emails/\(id)/edit/",
-                        title: "Saved",
-                        message: "User email edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/auth/emails/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "User email edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -100,7 +133,7 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
                 email: lastPayload?.normalizedEmail ?? ""
             )
             state.apply(errors: errs)
-            return try updateResponse(
+            return try await updateResponse(
                 request: request,
                 context: context,
                 id: id,
@@ -114,7 +147,7 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
                 email: lastPayload?.normalizedEmail ?? ""
             )
             state.error = presenter.format(error: error)
-            return try updateResponse(
+            return try await updateResponse(
                 request: request,
                 context: context,
                 id: id,
@@ -128,7 +161,7 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
                 email: lastPayload?.normalizedEmail ?? ""
             )
             state.error = error.displayMessage
-            return try updateResponse(
+            return try await updateResponse(
                 request: request,
                 context: context,
                 id: id,
@@ -144,8 +177,8 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
         id: String,
         presenter: any AdminEditAuthEmailPresenter,
         state: AuthEmailForm.State
-    ) throws -> Response {
-        try presenter.renderPage(
+    ) async throws -> Response {
+        try await presenter.renderPage(
             id: id,
             isEdited: false,
             form: state,

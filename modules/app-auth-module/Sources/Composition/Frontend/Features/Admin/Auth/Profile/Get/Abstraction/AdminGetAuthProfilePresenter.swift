@@ -21,9 +21,9 @@ protocol AdminGetAuthProfilePresenter: Sendable {
     func renderPage(
         state: AuthProfileDetails.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderDeniedPage(
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

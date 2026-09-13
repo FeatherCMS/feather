@@ -21,16 +21,16 @@ protocol AdminGetAuthMagicLinkPresenter: Sendable {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State
+    ) -> [NewAdminBreadcrumb.Link]
 
     func renderPage(
         link: AuthMagicLinkDetailsModel,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderError(
         id: String,
         error: OpenAPIRepositoryError,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

@@ -20,53 +20,43 @@ struct AdminGetAuthProfileDefaultPresenter:
     AdminGetAuthProfilePresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(
         state: AuthProfileDetails.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Profile",
-            description: "View your profile details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthProfileDetails(state: state)
         )
     }
 
     func renderDeniedPage(
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "No permission",
-            description: "No permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: PermissionDeniedView(
+            content: NewAdminStatusView(
                 state: .init(
-                    info: "No permission",
-                    message: "Your identity cannot view the profile.",
-                    breadcrumb: breadcrumb()
-                )
+                    title: "No permission",
+                    message: "Your identity cannot view the profile."
+                ),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Account", link: "/admin/account/"),
-            ]
-        )
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Account", link: "/admin/account/"),
+            .init(label: "Profile", link: "/admin/auth/profile/"),
+        ]
     }
 }

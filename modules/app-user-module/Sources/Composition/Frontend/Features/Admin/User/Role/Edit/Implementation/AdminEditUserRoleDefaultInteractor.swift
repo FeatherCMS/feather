@@ -19,7 +19,6 @@ struct AdminEditUserRoleDefaultInteractor: AdminEditUserRoleInteractor {
             try await repository.update(
                 id: id,
                 payload: .init(
-                    id: id,
                     name: input.normalizedName,
                     notes: input.normalizedNotes
                 )

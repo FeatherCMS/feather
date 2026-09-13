@@ -10,10 +10,13 @@ import UserDomain
 
 public struct WriteIdentity: Scope {
     public let identity: any IdentityRepository
+    public let role: any RoleRepository
 
     public init(
-        identity: any IdentityRepository
+        identity: any IdentityRepository,
+        role: any RoleRepository
     ) {
         self.identity = identity
+        self.role = role
     }
 }

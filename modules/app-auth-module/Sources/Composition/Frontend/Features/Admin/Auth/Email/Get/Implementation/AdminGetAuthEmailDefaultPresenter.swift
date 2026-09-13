@@ -19,34 +19,31 @@ import WebComponents
 
 struct AdminGetAuthEmailDefaultPresenter: AdminGetAuthEmailPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
             .init(label: "Emails", link: "/admin/auth/emails/"),
-        ])
+        ]
     }
 
     func renderPage(
         link: AuthEmailDetailsModel,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "User email details",
-            description: "Management user email details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthEmailDetails(
                 state: .init(
                     link: link,
+                    permissions: permissions,
                     breadcrumb: breadcrumb(id: link.id)
                 )
             )
@@ -57,16 +54,11 @@ struct AdminGetAuthEmailDefaultPresenter: AdminGetAuthEmailPresenter {
         id: String,
         error: OpenAPIRepositoryError,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "User email details",
-            description: "Management user email details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthEmailError(
                 state: .init(
                     info: error.errorTitle,

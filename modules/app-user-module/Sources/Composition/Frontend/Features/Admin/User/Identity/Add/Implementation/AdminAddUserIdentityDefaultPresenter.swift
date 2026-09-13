@@ -30,10 +30,21 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
 
     func renderValidationError(
         input: AdminAddUserIdentityFormInput?,
-        error: ValidationError
+        error: ValidationError,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse {
         var state = UserIdentityForm.State.empty()
-        if let input { state = .from(name: input.name, status: input.status) }
+        if let input {
+            state = .from(
+                name: input.name,
+                status: input.status,
+                roleIds: input.roleIds ?? [],
+                roleOptions: roleOptions
+            )
+        }
+        else {
+            state = .empty(roleOptions: roleOptions)
+        }
         var errors: [String: String] = [:]
         for failure in error.failures { errors[failure.key] = failure.message }
         state.apply(errors: errors)
@@ -45,7 +56,8 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
 
     func renderAddError(
         input: AdminAddUserIdentityFormInput?,
-        error: AdminAddUserIdentityError
+        error: AdminAddUserIdentityError,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse {
         switch error {
         case .unauthorized: return try await renderUnauthorizedPage()
@@ -54,14 +66,16 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
             return try await renderFormError(
                 input: input,
                 message: "A user identity with this name already exists.",
-                status: .conflict
+                status: .conflict,
+                roleOptions: roleOptions
             )
         case .unavailable:
             return try await renderFormError(
                 input: input,
                 message:
                     "The user identity could not be created. Please try again.",
-                status: .serviceUnavailable
+                status: .serviceUnavailable,
+                roleOptions: roleOptions
             )
         }
     }
@@ -117,10 +131,21 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
     private func renderFormError(
         input: AdminAddUserIdentityFormInput?,
         message: String,
-        status: HTTPResponse.Status
+        status: HTTPResponse.Status,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse {
         var state = UserIdentityForm.State.empty()
-        if let input { state = .from(name: input.name, status: input.status) }
+        if let input {
+            state = .from(
+                name: input.name,
+                status: input.status,
+                roleIds: input.roleIds ?? [],
+                roleOptions: roleOptions
+            )
+        }
+        else {
+            state = .empty(roleOptions: roleOptions)
+        }
         state.error = message
         return try await renderAddPage(state: state, status: status)
     }

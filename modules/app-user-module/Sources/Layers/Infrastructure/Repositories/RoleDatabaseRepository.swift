@@ -26,9 +26,11 @@ extension RoleTable.Row {
 public struct RoleDatabaseRepository: RoleRepository {
 
     public let context: DatabaseTransactionContext
+    public let idGenerator: any IDGenerator
 
     public init(context: DatabaseTransactionContext) {
         self.context = context
+        self.idGenerator = context.idGenerator
     }
 
     public func findBy(
@@ -51,7 +53,7 @@ public struct RoleDatabaseRepository: RoleRepository {
         let table = RoleTable(connection: context.connection)
         let saved = try await table.save(
             row: .init(
-                id: model.id,
+                id: model.id ?? idGenerator.generate(),
                 name: model.name,
                 notes: model.notes,
                 createdAt: .init(timeIntervalSince1970: 0),

@@ -19,34 +19,31 @@ import WebComponents
 
 struct AdminGetAuthMagicLinkDefaultPresenter: AdminGetAuthMagicLinkPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
             .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-        ])
+        ]
     }
 
     func renderPage(
         link: AuthMagicLinkDetailsModel,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "User magic link details",
-            description: "Management user magic link details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthMagicLinkDetails(
                 state: .init(
                     link: link,
+                    permissions: permissions,
                     breadcrumb: breadcrumb(id: link.id)
                 )
             )
@@ -57,16 +54,11 @@ struct AdminGetAuthMagicLinkDefaultPresenter: AdminGetAuthMagicLinkPresenter {
         id: String,
         error: OpenAPIRepositoryError,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "User magic link details",
-            description: "Management user magic link details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthMagicLinkError(
                 state: .init(
                     info: error.errorTitle,

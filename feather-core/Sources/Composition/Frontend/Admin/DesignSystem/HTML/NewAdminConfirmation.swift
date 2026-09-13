@@ -22,6 +22,7 @@ public struct NewAdminConfirmation: Component {
     public let cancel: String
     public let submitLabel: String
     public let cancelLabel: String
+    public let nonceToken: String?
     public let hiddenFields: [HiddenField]
 
     public init(
@@ -32,6 +33,7 @@ public struct NewAdminConfirmation: Component {
         cancel: String,
         submitLabel: String = "Remove",
         cancelLabel: String = "Cancel",
+        nonceToken: String? = nil,
         hiddenFields: [HiddenField] = []
     ) {
         self.breadcrumb = breadcrumb
@@ -41,6 +43,7 @@ public struct NewAdminConfirmation: Component {
         self.cancel = cancel
         self.submitLabel = submitLabel
         self.cancelLabel = cancelLabel
+        self.nonceToken = nonceToken
         self.hiddenFields = hiddenFields
     }
 
@@ -85,6 +88,9 @@ public struct NewAdminConfirmation: Component {
                 .class("admin-confirmation-items")
             }
             Form {
+                if let nonceToken {
+                    Input().type(.hidden).name("_nonce").value(nonceToken)
+                }
                 for field in hiddenFields {
                     Input()
                         .type(.hidden)

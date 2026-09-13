@@ -18,7 +18,8 @@ struct AdminAddUserIdentityOpenAPIRepository: AdminAddUserIdentityRepository {
                     body: .json(
                         .init(
                             name: payload.name,
-                            status: .init(rawValue: payload.status) ?? .invited
+                            status: .init(rawValue: payload.status) ?? .invited,
+                            roleIds: payload.roleIds
                         )
                     )
                 )

@@ -35,6 +35,7 @@ struct AdminEditAuthAccessControl {
                     ),
                     presenter: AdminEditAuthAccessControlDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

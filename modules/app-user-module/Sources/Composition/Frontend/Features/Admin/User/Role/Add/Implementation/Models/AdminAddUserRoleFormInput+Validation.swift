@@ -3,21 +3,6 @@ import FeatherValidation
 
 enum AdminAddUserRoleFormFieldValidator {
 
-    static func id(
-        _ value: String?,
-        required: Bool
-    ) -> Validator<String> {
-        .init(
-            key: "id",
-            value: value,
-            required: required,
-            invocation: .all,
-            rules: [
-                .trimmedNonempty(message: "ID is required.")
-            ]
-        )
-    }
-
     static func name(
         _ value: String?,
         required: Bool
@@ -51,8 +36,7 @@ extension AdminAddUserRoleFormInput {
 
     private var validator: GroupValidator {
         GroupValidator {
-            AdminAddUserRoleFormFieldValidator.id(id, required: true)
-            AdminAddUserRoleFormFieldValidator.name(name, required: false)
+            AdminAddUserRoleFormFieldValidator.name(name, required: true)
             AdminAddUserRoleFormFieldValidator.notes(notes, required: false)
         }
     }

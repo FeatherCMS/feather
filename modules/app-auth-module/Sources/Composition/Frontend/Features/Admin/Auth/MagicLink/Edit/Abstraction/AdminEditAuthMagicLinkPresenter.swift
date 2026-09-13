@@ -27,20 +27,20 @@ protocol AdminEditAuthMagicLinkPresenter: Sendable {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State
+    ) -> [NewAdminBreadcrumb.Link]
 
     func renderPage(
         id: String,
         isEdited: Bool,
         form: AuthMagicLinkForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderError(
         id: String,
         error: OpenAPIRepositoryError,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func format(
         error: OpenAPIRepositoryError

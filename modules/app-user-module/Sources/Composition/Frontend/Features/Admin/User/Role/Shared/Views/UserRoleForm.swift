@@ -5,20 +5,17 @@ import WebComponents
 
 struct UserRoleForm: Component {
     struct State: Sendable {
-        var id: NewAdminFormFieldInput.State?
         var name: NewAdminFormFieldInput.State
         var notes: NewAdminFormFieldTextArea.State
         var error: String?
 
         mutating func apply(errors: [String: String]) {
-            if let id { self.id?.error = errors[id.name] }
             name.error = errors[name.name]
             notes.error = errors[notes.name]
         }
 
         static func addEmpty() -> Self {
             .init(
-                id: .init(name: "id", label: "ID", isRequired: true),
                 name: .init(name: "name", label: "Name", isRequired: true),
                 notes: .init(name: "notes", label: "Notes", style: .small),
                 error: nil
@@ -27,7 +24,6 @@ struct UserRoleForm: Component {
 
         static func edit(name: String, notes: String) -> Self {
             .init(
-                id: nil,
                 name: .init(
                     name: "name",
                     label: "Name",
@@ -46,12 +42,6 @@ struct UserRoleForm: Component {
 
         static func from(input: AdminAddUserRoleFormInput) -> Self {
             .init(
-                id: .init(
-                    name: "id",
-                    label: "ID",
-                    value: input.normalizedID,
-                    isRequired: true
-                ),
                 name: .init(
                     name: "name",
                     label: "Name",
@@ -70,7 +60,6 @@ struct UserRoleForm: Component {
 
         static func from(input: AdminEditUserRoleFormInput) -> Self {
             .init(
-                id: nil,
                 name: .init(
                     name: "name",
                     label: "Name",
@@ -99,9 +88,6 @@ struct UserRoleForm: Component {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
-            }
-            if let id = state.id {
-                context.render(NewAdminFormFieldInput(state: id))
             }
             context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldTextArea(state: state.notes))

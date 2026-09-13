@@ -19,26 +19,41 @@ import WebComponents
 
 struct AdminAddAuthMagicLinkDefaultPresenter: AdminAddAuthMagicLinkPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(
         form: AuthMagicLinkForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        var form = form
+        form.nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add user magic link",
-            description: "Add a user magic link in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthMagicLinkAdd(
                 state: .init(
                     form: form,
                     breadcrumb: breadcrumb()
                 )
+            )
+        )
+    }
+
+    func renderForbiddenPage() async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Add magic link",
+            content: NewAdminStatusView(
+                state: .init(
+                    title: "Forbidden",
+                    message: "Your account cannot add magic links."
+                ),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
@@ -73,12 +88,12 @@ struct AdminAddAuthMagicLinkDefaultPresenter: AdminAddAuthMagicLinkPresenter {
         )
     }
 
-    func breadcrumb() -> AdminBreadcrumb.State {
-        .init(links: [
+    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
             .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-        ])
+        ]
     }
 
     func format(

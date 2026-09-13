@@ -20,54 +20,47 @@ struct AdminEditAuthProfileDefaultPresenter:
     AdminEditAuthProfilePresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(
         state: AuthProfileEdit.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        var state = state
+        state.form.nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit profile",
-            description: "Edit your profile",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthProfileEdit(state: state)
         )
     }
 
     func renderDeniedPage(
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "No permission",
-            description: "No permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: PermissionDeniedView(
+            content: NewAdminStatusView(
                 state: .init(
-                    info: "No permission",
-                    message: "Your identity cannot edit the profile.",
-                    breadcrumb: breadcrumb()
-                )
+                    title: "No permission",
+                    message: "Your identity cannot edit the profile."
+                ),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Account", link: "/admin/account/"),
-                .init(label: "Profile", link: "/admin/auth/profile/"),
-            ]
-        )
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Account", link: "/admin/account/"),
+            .init(label: "Profile", link: "/admin/auth/profile/"),
+        ]
     }
 }

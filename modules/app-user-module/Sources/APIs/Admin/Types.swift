@@ -287,25 +287,35 @@ public enum Components {
     public enum Schemas {
         /// - Remark: Generated from `#/components/schemas/UserIdentityCreateSchema`.
         public struct UserIdentityCreateSchema: Codable, Hashable, Sendable {
-            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/UserIdentityCreateSchema/name`.
+            public var name: Components.Schemas.UserIdentityNameField
             /// - Remark: Generated from `#/components/schemas/UserIdentityCreateSchema/status`.
             public var status: Components.Schemas.UserIdentityStatusField?
+            /// - Remark: Generated from `#/components/schemas/UserIdentityCreateSchema/roleIds`.
+            public var roleIds: Components.Schemas.UserIdentityRoleIdsField?
             /// Creates a new `UserIdentityCreateSchema`.
             ///
             /// - Parameters:
+            ///   - name:
             ///   - status:
+            ///   - roleIds:
             public init(
-                name: Swift.String = "User",
-                status: Components.Schemas.UserIdentityStatusField? = nil
+                name: Components.Schemas.UserIdentityNameField,
+                status: Components.Schemas.UserIdentityStatusField? = nil,
+                roleIds: Components.Schemas.UserIdentityRoleIdsField? = nil
             ) {
                 self.name = name
                 self.status = status
+                self.roleIds = roleIds
             }
             public enum CodingKeys: String, CodingKey {
                 case name
                 case status
+                case roleIds
             }
         }
+        /// - Remark: Generated from `#/components/schemas/UserIdentityNameField`.
+        public typealias UserIdentityNameField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityStatusField`.
         @frozen
         public enum UserIdentityStatusField: String, Codable, Hashable,
@@ -317,11 +327,17 @@ public enum Components {
             case deactivated = "deactivated"
             case anonymized = "anonymized"
         }
+        /// - Remark: Generated from `#/components/schemas/UserIdentityRoleIdsField`.
+        public typealias UserIdentityRoleIdsField = [Components.Schemas
+            .UserRoleIdField]
+        /// - Remark: Generated from `#/components/schemas/UserRoleIdField`.
+        public typealias UserRoleIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityDetailSchema`.
         public struct UserIdentityDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserIdentityDetailSchema/id`.
             public var id: Components.Schemas.UserIdentityIDField
-            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/UserIdentityDetailSchema/name`.
+            public var name: Components.Schemas.UserIdentityNameField
             /// - Remark: Generated from `#/components/schemas/UserIdentityDetailSchema/status`.
             public var status: Components.Schemas.UserIdentityStatusField
             /// - Remark: Generated from `#/components/schemas/UserIdentityDetailSchema/roleIds`.
@@ -330,11 +346,12 @@ public enum Components {
             ///
             /// - Parameters:
             ///   - id:
+            ///   - name:
             ///   - status:
             ///   - roleIds:
             public init(
                 id: Components.Schemas.UserIdentityIDField,
-                name: Swift.String = "User",
+                name: Components.Schemas.UserIdentityNameField,
                 status: Components.Schemas.UserIdentityStatusField,
                 roleIds: Components.Schemas.UserIdentityRoleIDListSchema? = nil
             ) {
@@ -352,7 +369,6 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/UserIdentityIDField`.
         public typealias UserIdentityIDField = Swift.String
-        public typealias UserIdentityNameField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityRoleIDListSchema`.
         public typealias UserIdentityRoleIDListSchema = [Swift.String]
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
@@ -481,7 +497,8 @@ public enum Components {
         public struct UserIdentityListItemSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/id`.
             public var id: Components.Schemas.UserIdentityIDField
-            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/name`.
+            public var name: Components.Schemas.UserIdentityNameField
             /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/status`.
             public var status: Components.Schemas.UserIdentityStatusField
             /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSchema/roles`.
@@ -490,11 +507,12 @@ public enum Components {
             ///
             /// - Parameters:
             ///   - id:
+            ///   - name:
             ///   - status:
             ///   - roles:
             public init(
                 id: Components.Schemas.UserIdentityIDField,
-                name: Swift.String = "User",
+                name: Components.Schemas.UserIdentityNameField,
                 status: Components.Schemas.UserIdentityStatusField,
                 roles: Components.Schemas.UserIdentityRoleIDListSchema
             ) {
@@ -700,7 +718,8 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema`.
         public struct UserIdentityUpdateSchema: Codable, Hashable, Sendable {
-            public var name: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema/name`.
+            public var name: Components.Schemas.UserIdentityNameField?
             /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema/status`.
             public var status: Components.Schemas.UserIdentityStatusField?
             /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema/roleIds`.
@@ -708,10 +727,11 @@ public enum Components {
             /// Creates a new `UserIdentityUpdateSchema`.
             ///
             /// - Parameters:
+            ///   - name:
             ///   - status:
             ///   - roleIds:
             public init(
-                name: Swift.String? = nil,
+                name: Components.Schemas.UserIdentityNameField? = nil,
                 status: Components.Schemas.UserIdentityStatusField? = nil,
                 roleIds: Components.Schemas.UserIdentityRoleIdsField? = nil
             ) {
@@ -725,14 +745,10 @@ public enum Components {
                 case roleIds
             }
         }
-        /// - Remark: Generated from `#/components/schemas/UserIdentityRoleIdsField`.
-        public typealias UserIdentityRoleIdsField = [Components.Schemas
-            .UserRoleIdField]
-        /// - Remark: Generated from `#/components/schemas/UserRoleIdField`.
-        public typealias UserRoleIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema`.
         public struct UserIdentityPatchSchema: Codable, Hashable, Sendable {
-            public var name: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema/name`.
+            public var name: Components.Schemas.UserIdentityNameField?
             /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema/status`.
             public var status: Components.Schemas.UserIdentityStatusField?
             /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema/roleIds`.
@@ -740,10 +756,11 @@ public enum Components {
             /// Creates a new `UserIdentityPatchSchema`.
             ///
             /// - Parameters:
+            ///   - name:
             ///   - status:
             ///   - roleIds:
             public init(
-                name: Swift.String? = nil,
+                name: Components.Schemas.UserIdentityNameField? = nil,
                 status: Components.Schemas.UserIdentityStatusField? = nil,
                 roleIds: Components.Schemas.UserIdentityRoleIdsField? = nil
             ) {
@@ -759,8 +776,6 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema`.
         public struct UserRoleCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema/id`.
-            public var id: Swift.String
             /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema/name`.
             public var name: Components.Schemas.UserRoleNameField?
             /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema/notes`.
@@ -768,20 +783,16 @@ public enum Components {
             /// Creates a new `UserRoleCreateSchema`.
             ///
             /// - Parameters:
-            ///   - id:
             ///   - name:
             ///   - notes:
             public init(
-                id: Swift.String,
                 name: Components.Schemas.UserRoleNameField? = nil,
                 notes: Components.Schemas.UserRoleNotesField? = nil
             ) {
-                self.id = id
                 self.name = name
                 self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
-                case id
                 case name
                 case notes
             }

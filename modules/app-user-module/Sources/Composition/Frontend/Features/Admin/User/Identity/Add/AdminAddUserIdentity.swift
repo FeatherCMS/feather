@@ -11,6 +11,9 @@ struct AdminAddUserIdentity {
                     interactor: AdminAddUserIdentityDefaultInteractor(
                         repository: AdminAddUserIdentityOpenAPIRepository(
                             api: context.userAdminAPI()
+                        ),
+                        roleRepository: AdminUserIdentityRoleOpenAPIRepository(
+                            api: context.userAdminAPI()
                         )
                     ),
                     presenter: AdminAddUserIdentityDefaultPresenter(

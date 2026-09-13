@@ -19,26 +19,41 @@ import WebComponents
 
 struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(
         form: AuthEmailForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        var form = form
+        form.nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add user email",
-            description: "Add a user email in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AuthEmailAdd(
                 state: .init(
                     form: form,
                     breadcrumb: breadcrumb()
                 )
+            )
+        )
+    }
+
+    func renderForbiddenPage() async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Add email",
+            content: NewAdminStatusView(
+                state: .init(
+                    title: "Forbidden",
+                    message: "Your account cannot add user emails."
+                ),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
@@ -66,12 +81,12 @@ struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
         )
     }
 
-    func breadcrumb() -> AdminBreadcrumb.State {
-        .init(links: [
+    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "Auth", link: "/admin/auth/"),
             .init(label: "Emails", link: "/admin/auth/emails/"),
-        ])
+        ]
     }
 
     func format(

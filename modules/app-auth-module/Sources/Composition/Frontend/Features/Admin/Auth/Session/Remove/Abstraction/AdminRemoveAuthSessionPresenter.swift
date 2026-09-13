@@ -6,17 +6,18 @@ protocol AdminRemoveAuthSessionPresenter: Sendable {
     func renderPage(
         state: AuthSessionRemoveConfirmation.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
+    func renderInvalidNoncePage() async throws -> HTMLResponse
 
     func errorPage(
         identityId: String,
         sessionId: String,
         error: OpenAPIRepositoryError,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func breadcrumb(
         identityId: String,
         sessionId: String
-    ) -> AdminBreadcrumb.State
+    ) -> [NewAdminBreadcrumb.Link]
 }
