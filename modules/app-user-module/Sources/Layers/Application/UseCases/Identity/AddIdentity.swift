@@ -35,12 +35,12 @@ public struct AddIdentity: UseCase {
     public struct Input: DTO {
         public let name: String
         public let status: Identity.Status
-        public let roleIds: [String]?
+        public let roleIds: [String]
 
         public init(
             name: String = "User",
             status: Identity.Status,
-            roleIds: [String]? = nil
+            roleIds: [String] = []
         ) {
             self.name = name
             self.status = status
@@ -62,7 +62,7 @@ public struct AddIdentity: UseCase {
             let model = try await scope.identity.insert(
                 Identity.create(name: input.name, status: input.status)
             )
-            let roleIds = input.roleIds ?? []
+            let roleIds = input.roleIds
             for roleId in roleIds {
                 guard try await scope.role.findBy(id: roleId) != nil
                 else {

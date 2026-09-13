@@ -38,7 +38,7 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
             state = .from(
                 name: input.name,
                 status: input.status,
-                roleIds: input.roleIds ?? [],
+                roleIds: input.roleIds,
                 roleOptions: roleOptions
             )
         }
@@ -139,7 +139,7 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
             state = .from(
                 name: input.name,
                 status: input.status,
-                roleIds: input.roleIds ?? [],
+                roleIds: input.roleIds,
                 roleOptions: roleOptions
             )
         }

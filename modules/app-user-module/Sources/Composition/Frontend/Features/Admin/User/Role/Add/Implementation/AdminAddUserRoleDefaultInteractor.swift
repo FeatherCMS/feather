@@ -20,6 +20,8 @@ struct AdminAddUserRoleDefaultInteractor: AdminAddUserRoleInteractor {
             case .unauthorized: throw AdminAddUserRoleError.unauthorized
             case .forbidden: throw AdminAddUserRoleError.forbidden
             case .conflict: throw AdminAddUserRoleError.conflict
+            case .failure(let failure) where failure.statusCode == 409:
+                throw AdminAddUserRoleError.conflict
             default: throw AdminAddUserRoleError.unavailable
             }
         }

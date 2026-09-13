@@ -7,14 +7,7 @@ public struct AdminAddUserIdentityFormInput: Decodable, Sendable, Equatable,
 
     public let name: String
     public let status: String
-    public let roleIds: [String]?
-
-    private enum CodingKeys: String, CodingKey {
-        case name
-        case status
-        // URL-encoded array fields named `roleIds[]` decode as `roleIds`.
-        case roleIds
-    }
+    public let roleIds: [String]
 
     var normalizedName: String {
         name.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -27,7 +20,7 @@ public struct AdminAddUserIdentityFormInput: Decodable, Sendable, Equatable,
     public init(
         name: String = "",
         status: String,
-        roleIds: [String]? = nil
+        roleIds: [String] = []
     ) {
         self.name = name
         self.status = status

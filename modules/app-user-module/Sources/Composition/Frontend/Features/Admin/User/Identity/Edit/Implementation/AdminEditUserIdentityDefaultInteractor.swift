@@ -29,7 +29,7 @@ struct AdminEditUserIdentityDefaultInteractor: AdminEditUserIdentityInteractor {
                 payload: .init(
                     name: input.normalizedName,
                     status: input.normalizedStatus,
-                    roleIds: input.roleIds ?? []
+                    roleIds: input.roleIds
                 )
             )
         }

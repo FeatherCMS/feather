@@ -12,17 +12,6 @@ struct RedirectRuleDetails: Component {
     func html(context: inout RenderContext) -> Section {
         Section {
             context.render(
-                NewAdminBreadcrumb(links: RedirectRuleRoutes.breadcrumb)
-            )
-            context.render(
-                NewAdminPageHeader(
-                    state: .init(
-                        title: "Redirect rule details",
-                        description: "Review the redirect rule configuration."
-                    )
-                )
-            )
-            context.render(
                 NewAdminDetailView(
                     breadcrumb: RedirectRuleRoutes.breadcrumb,
                     pageHeader: .init(

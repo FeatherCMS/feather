@@ -1,3 +1,4 @@
+import FeatherContracts
 import FeatherValidation
 
 private enum SystemVariableAddFormValidator {
@@ -17,10 +18,19 @@ private enum SystemVariableAddFormValidator {
     static func name(_ value: String?) -> Validator<String> {
         .init(
             key: "name",
-            value: value,
+            value: value?.emptyToNil,
             required: false,
             invocation: .all,
-            rules: []
+            rules: [
+                .min(
+                    length: 4,
+                    message: "Name must be at least 4 characters."
+                ),
+                .max(
+                    length: 254,
+                    message: "Name must be shorter than 255 characters."
+                )
+            ]
         )
     }
 
@@ -30,17 +40,27 @@ private enum SystemVariableAddFormValidator {
             value: value,
             required: false,
             invocation: .all,
-            rules: []
+            rules: [
+                .max(
+                    length: 254,
+                    message: "Value must be shorter than 255 characters."
+                )
+            ]
         )
     }
 
     static func notes(_ value: String?) -> Validator<String> {
         .init(
             key: "notes",
-            value: value,
+            value: value?.emptyToNil,
             required: false,
             invocation: .all,
-            rules: []
+            rules: [
+                .max(
+                    length: 254,
+                    message: "Notes must be shorter than 255 characters."
+                )
+            ]
         )
     }
 }

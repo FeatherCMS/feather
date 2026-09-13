@@ -36,7 +36,7 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
                 UserIdentityEditForm.State.from(
                     name: $0.normalizedName,
                     status: $0.normalizedStatus,
-                    roleIds: $0.roleIds ?? [],
+                    roleIds: $0.roleIds,
                     roleOptions: roleOptions
                 )
             } ?? .empty()
@@ -132,7 +132,7 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
                 UserIdentityEditForm.State.from(
                     name: $0.normalizedName,
                     status: $0.normalizedStatus,
-                    roleIds: $0.roleIds ?? [],
+                    roleIds: $0.roleIds,
                     roleOptions: roleOptions
                 )
             } ?? .empty()

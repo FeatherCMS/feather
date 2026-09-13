@@ -94,13 +94,13 @@ struct UserIdentityTableContent: Component {
                                         layout: .init(
                                             name: "user-identities",
                                             columns: [
-                                                .fixed(220),
+                                                .fixed(260),
                                                 .fixed(220),
                                                 .fixed(120),
-                                                .fraction(1),
+                                                .fixed(180),
                                                 .fixed(220),
                                             ],
-                                            minimumWidth: 960
+                                            minimumWidth: 1000
                                         ),
                                         hasSelection: canDelete,
                                         table: Table {

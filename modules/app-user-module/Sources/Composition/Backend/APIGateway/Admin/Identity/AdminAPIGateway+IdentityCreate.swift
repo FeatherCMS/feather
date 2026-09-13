@@ -25,7 +25,7 @@ extension AdminAPIGateway {
                     rawValue: body.status?.rawValue ?? "invited"
                 )
                     ?? .invited,
-                roleIds: body.roleIds
+                roleIds: Array(body.roleIds ?? [])
             )
         )
 

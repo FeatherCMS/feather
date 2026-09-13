@@ -13,7 +13,15 @@ enum AdminAddUserRoleFormFieldValidator {
             required: required,
             invocation: .all,
             rules: [
-                .trimmedNonempty(message: "Name is required.")
+                .trimmedNonempty(message: "Name is required."),
+                .min(
+                    length: 4,
+                    message: "Name must be at least 4 characters."
+                ),
+                .max(
+                    length: 254,
+                    message: "Name must be shorter than 255 characters."
+                )
             ]
         )
     }
@@ -27,7 +35,12 @@ enum AdminAddUserRoleFormFieldValidator {
             value: value,
             required: required,
             invocation: .all,
-            rules: []
+            rules: [
+                .max(
+                    length: 254,
+                    message: "Notes must be shorter than 255 characters."
+                )
+            ]
         )
     }
 }
