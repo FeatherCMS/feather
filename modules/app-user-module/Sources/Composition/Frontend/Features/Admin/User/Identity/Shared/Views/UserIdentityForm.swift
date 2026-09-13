@@ -98,7 +98,7 @@ struct UserIdentityForm: Component {
             if !state.roleOptions.isEmpty {
                 context.render(
                     NewAdminFormFieldCheckboxGroup(
-                        name: "roleIds",
+                        name: "roleIds[]",
                         label: "Roles",
                         options: state.roleOptions,
                         error: state.roleIdsError

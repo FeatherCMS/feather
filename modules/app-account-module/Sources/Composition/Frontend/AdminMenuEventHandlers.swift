@@ -28,15 +28,8 @@ public enum AccountAdminMenuEventHandlers {
                     menuKey: "account",
                     label: "Profile",
                     icon: "user",
-                    link: "/admin/auth/profile/",
-                    permission: "auth:profile:read"
-                ),
-                .init(
-                    menuKey: "account",
-                    label: "Settings",
-                    icon: "settings",
-                    link: "/admin/account/settings/",
-                    permission: "account:settings:read"
+                    link: "/admin/account/profile/",
+                    permission: "account:profile:read"
                 ),
                 .init(
                     menuKey: "account",

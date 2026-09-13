@@ -77,6 +77,8 @@ let package = Package(
         ),
 
         .package(path: "../../feather-core"),
+        .package(path: "../app-auth-module"),
+        .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
         .package(path: "../app-user-module"),
 
@@ -190,6 +192,8 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
 
+                .product(name: "AuthDomain", package: "app-auth-module"),
+                .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
@@ -206,8 +210,15 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
+                .product(name: "AuthAdminAPI", package: "app-auth-module"),
+                .product(name: "AuthAppAPI", package: "app-auth-module"),
+                .product(name: "MediaFrontend", package: "app-media-module"),
+                .product(name: "SystemAdminAPI", package: "app-system-module"),
                 .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemFrontend", package: "app-system-module"),
+                .product(name: "UserAdminAPI", package: "app-user-module"),
                 .product(name: "UserContracts", package: "app-user-module"),
+                .product(name: "UserAppAPI", package: "app-user-module"),
                 .product(name: "UserFrontend", package: "app-user-module"),
 
                 .target(name: "AccountContracts"),

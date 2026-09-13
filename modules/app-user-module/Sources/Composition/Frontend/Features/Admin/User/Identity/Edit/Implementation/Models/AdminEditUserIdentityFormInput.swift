@@ -9,6 +9,12 @@ public struct AdminEditUserIdentityFormInput: Decodable, Sendable, Equatable,
     public let status: String
     public let roleIds: [String]?
 
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case status
+        case roleIds = "roleIds[]"
+    }
+
     var normalizedStatus: String {
         status.trimmingCharacters(in: .whitespacesAndNewlines)
     }

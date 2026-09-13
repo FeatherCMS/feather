@@ -10,7 +10,7 @@ import UserApplication
 
 public struct GetCurrentUser: UseCase {
     struct Action: PermissionAction {
-        let key = PermissionKey("auth:profile:read")
+        let key = PermissionKey("account:profile:read")
     }
 
     let authorizer: any Authorizer

@@ -8,12 +8,14 @@ protocol AdminEditUserIdentityPresenter: Sendable {
     func renderValidationError(
         id: String,
         input: AdminEditUserIdentityFormInput?,
-        error: ValidationError
+        error: ValidationError,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse
     func renderEditError(
         id: String,
         input: AdminEditUserIdentityFormInput?,
-        error: AdminEditUserIdentityError
+        error: AdminEditUserIdentityError,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse
     func renderSuccess() -> Response
     func renderUnauthorizedPage() async throws -> HTMLResponse

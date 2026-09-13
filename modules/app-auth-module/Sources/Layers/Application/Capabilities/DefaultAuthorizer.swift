@@ -48,14 +48,14 @@ public struct DefaultAuthorizer: Authorizer {
         var result = permissions
 
         if result.contains("user:identities:me") {
-            result.insert("auth:profile:read")
-            result.insert("auth:profile:update")
+            result.insert("account:profile:read")
+            result.insert("account:profile:update")
             result.insert("identity:settings:read")
             result.insert("identity:settings:update")
         }
 
-        if result.contains("auth:profile:update") {
-            result.insert("auth:profile:read")
+        if result.contains("account:profile:update") {
+            result.insert("account:profile:read")
         }
 
         if result.contains("identity:settings:update") {

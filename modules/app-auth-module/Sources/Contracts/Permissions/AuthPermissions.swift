@@ -77,18 +77,6 @@ public enum AuthPermissions: PermissionProvider {
         }
     }
 
-    public enum Profile: PermissionProvider {
-        public static let read = PermissionKey("auth:profile:read")
-        public static let update = PermissionKey("auth:profile:update")
-
-        public static func allPermissions() -> Set<PermissionKey> {
-            [
-                read,
-                update,
-            ]
-        }
-    }
-
     public enum Sessions: PermissionProvider {
         public static let create = PermissionKey("auth:sessions:create")
         public static let read = PermissionKey("auth:sessions:read")
@@ -115,7 +103,6 @@ public enum AuthPermissions: PermissionProvider {
         result.formUnion(MagicLinks.allPermissions())
         result.formUnion(Emails.allPermissions())
         result.formUnion(AccessControl.allPermissions())
-        result.formUnion(Profile.allPermissions())
         result.formUnion(Sessions.allPermissions())
         return result
     }

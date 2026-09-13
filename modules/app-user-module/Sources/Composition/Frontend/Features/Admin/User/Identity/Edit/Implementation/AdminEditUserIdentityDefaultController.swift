@@ -37,7 +37,8 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
             return try await presenter.renderEditError(
                 id: id,
                 input: nil,
-                error: error
+                error: error,
+                roleOptions: []
             )
         }
     }
@@ -53,6 +54,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
                 .response(from: request, context: context)
         }
         let id = try context.requiredID()
+        let roleOptions = (try? await interactor.loadRoleOptions()) ?? []
         var lastPayload: AdminEditUserIdentityFormInput?
         do {
             let payload = try await request.decode(
@@ -79,7 +81,8 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
                 try await presenter.renderValidationError(
                     id: id,
                     input: lastPayload,
-                    error: error
+                    error: error,
+                    roleOptions: roleOptions
                 )
                 .response(from: request, context: context)
         }
@@ -88,7 +91,8 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
                 try await presenter.renderEditError(
                     id: id,
                     input: lastPayload,
-                    error: error
+                    error: error,
+                    roleOptions: roleOptions
                 )
                 .response(from: request, context: context)
         }

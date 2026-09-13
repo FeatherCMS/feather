@@ -37,13 +37,6 @@ struct AdminGetAuthOverviewComponent: Component {
             href: "/admin/auth/access-control/",
             icon: "lock"
         ),
-        Destination(
-            title: "Profile",
-            description:
-                "Inspect and update the current administrator profile.",
-            href: "/admin/auth/profile/",
-            icon: "user"
-        ),
     ]
 
     func rules() -> [any Rule] {

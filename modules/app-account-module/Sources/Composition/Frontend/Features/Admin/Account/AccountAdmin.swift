@@ -1,5 +1,8 @@
+import AccountAppAPI
 import FeatherAdmin
+import Foundation
 import Hummingbird
+import MediaFrontend
 
 public struct AccountAdmin {
     public let renderingEngine: any RenderingEngine
@@ -11,12 +14,49 @@ public struct AccountAdmin {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetAccountHome(
+        router.get("/admin/account/profile/image/") { _, context in
+            do {
+                let profile = try await AdminGetAccountProfileOpenAPIRepository(
+                    api: context.accountAppAPI(),
+                    mediaAPI: context.mediaAdminAPI()
+                )
+                .get()
+                guard let asset = profile.profileImageAsset else {
+                    return Response(status: .notFound)
+                }
+                let prefix = "media/assets/"
+                let storageKey =
+                    asset.storageKey.hasPrefix(prefix)
+                    ? String(asset.storageKey.dropFirst(prefix.count))
+                    : asset.storageKey
+                let encodedStorageKey =
+                    storageKey.addingPercentEncoding(
+                        withAllowedCharacters: .urlPathAllowed
+                    ) ?? storageKey
+                return Response(
+                    status: .seeOther,
+                    headers: [
+                        .location:
+                            "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/assets/\(encodedStorageKey)"
+                    ]
+                )
+            }
+            catch {
+                return Response(status: .notFound)
+            }
+        }
+
+        AdminGetAccountOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
-        AdminEditSettings(
+        AdminGetAccountProfile(
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+
+        AdminEditAccountProfile(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

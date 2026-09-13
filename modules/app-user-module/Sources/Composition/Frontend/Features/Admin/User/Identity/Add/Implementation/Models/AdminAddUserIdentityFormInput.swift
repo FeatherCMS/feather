@@ -12,8 +12,7 @@ public struct AdminAddUserIdentityFormInput: Decodable, Sendable, Equatable,
     private enum CodingKeys: String, CodingKey {
         case name
         case status
-        case roleIds
-        case roleIdsArray = "roleIds[]"
+        case roleIds = "roleIds[]"
     }
 
     var normalizedName: String {
@@ -32,30 +31,6 @@ public struct AdminAddUserIdentityFormInput: Decodable, Sendable, Equatable,
         self.name = name
         self.status = status
         self.roleIds = roleIds
-    }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.decode(String.self, forKey: .name)
-        status = try container.decode(String.self, forKey: .status)
-        if let values = try? container.decodeIfPresent(
-            [String].self,
-            forKey: .roleIds
-        ) {
-            roleIds = values
-        }
-        else if let value = try? container.decodeIfPresent(
-            String.self,
-            forKey: .roleIds
-        ) {
-            roleIds = [value]
-        }
-        else {
-            roleIds = try container.decodeIfPresent(
-                [String].self,
-                forKey: .roleIdsArray
-            )
-        }
     }
 
 }

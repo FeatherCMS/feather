@@ -69,16 +69,6 @@ struct AdminAuth {
         )
         .controller.route(on: router)
 
-        AdminGetAuthProfile(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
-        AdminEditAuthProfile(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
         AdminEditAuthAccessControl(
             renderingEngine: renderingEngine
         )

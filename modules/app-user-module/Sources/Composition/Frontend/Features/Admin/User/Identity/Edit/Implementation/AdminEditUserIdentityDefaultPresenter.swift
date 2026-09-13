@@ -28,14 +28,16 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
     func renderValidationError(
         id: String,
         input: AdminEditUserIdentityFormInput?,
-        error: ValidationError
+        error: ValidationError,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse {
         var state =
             input.map {
                 UserIdentityForm.State.from(
                     name: $0.normalizedName,
                     status: $0.normalizedStatus,
-                    roleIds: $0.roleIds ?? []
+                    roleIds: $0.roleIds ?? [],
+                    roleOptions: roleOptions
                 )
             } ?? .empty()
         var errors: [String: String] = [:]
@@ -48,7 +50,8 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
     func renderEditError(
         id: String,
         input: AdminEditUserIdentityFormInput?,
-        error: AdminEditUserIdentityError
+        error: AdminEditUserIdentityError,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse {
         switch error {
         case .notFound:
@@ -69,7 +72,8 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
                 id: id,
                 input: input,
                 message: "A user identity with this name already exists.",
-                status: .conflict
+                status: .conflict,
+                roleOptions: roleOptions
             )
         case .unavailable:
             return try await renderFormError(
@@ -77,7 +81,8 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
                 input: input,
                 message:
                     "The user identity could not be updated. Please try again.",
-                status: .serviceUnavailable
+                status: .serviceUnavailable,
+                roleOptions: roleOptions
             )
         }
     }
@@ -119,14 +124,16 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
         id: String,
         input: AdminEditUserIdentityFormInput?,
         message: String,
-        status: HTTPResponse.Status
+        status: HTTPResponse.Status,
+        roleOptions: [UserIdentityRoleOptionModel]
     ) async throws -> HTMLResponse {
         var state =
             input.map {
                 UserIdentityForm.State.from(
                     name: $0.normalizedName,
                     status: $0.normalizedStatus,
-                    roleIds: $0.roleIds ?? []
+                    roleIds: $0.roleIds ?? [],
+                    roleOptions: roleOptions
                 )
             } ?? .empty()
         state.error = message
