@@ -16,7 +16,7 @@ extension AdminGetUserIdentityController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/user/identities/{id}/",
+            RouterPath(UserIdentityRoutes.detailsPattern.description + "/"),
             use: getUserIdentity
         )
     }

@@ -16,7 +16,7 @@ extension AdminListUserIdentityController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/user/identities",
+            UserIdentityRoutes.list,
             use: getUserIdentities
         )
     }

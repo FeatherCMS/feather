@@ -15,7 +15,7 @@ extension AdminGetUserRoleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/user/roles/{id}/",
+            RouterPath(UserRoleRoutes.detailsPattern.description + "/"),
             use: getUserRole
         )
     }

@@ -12,7 +12,8 @@ public struct AdminAddUserIdentityFormInput: Decodable, Sendable, Equatable,
     private enum CodingKeys: String, CodingKey {
         case name
         case status
-        case roleIds = "roleIds[]"
+        // URL-encoded array fields named `roleIds[]` decode as `roleIds`.
+        case roleIds
     }
 
     var normalizedName: String {

@@ -20,11 +20,11 @@ extension AdminRemoveAccountInvitationController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/account/invitations/{id}/remove/",
+            RouterPath(AccountAdminRoutes.invitationRemovePattern.description + "/"),
             use: getRemoveAccountInvitation
         )
         router.post(
-            "/admin/account/invitations/{id}/remove/",
+            RouterPath(AccountAdminRoutes.invitationRemovePattern.description + "/"),
             use: postRemoveAccountInvitation
         )
     }

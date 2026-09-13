@@ -1,5 +1,6 @@
 import FeatherAdmin
 import HTML
+import Hummingbird
 import SGML
 import WebBuilders
 import WebComponents
@@ -18,8 +19,21 @@ struct AdminGetAccountOverviewComponent: Component {
 
             H1("Account module")
             Ul {
-                Li { A("Profile").href("/admin/account/profile/") }
-                Li { A("Invitations").href("/admin/account/invitations/") }
+                Li {
+                    A("Profile").href(
+                        AccountAdminRoutes.profile.description + "/"
+                    )
+                }
+                Li {
+                    A("Settings").href(
+                        AccountAdminRoutes.settings.description + "/"
+                    )
+                }
+                Li {
+                    A("Invitations").href(
+                        AccountAdminRoutes.invitations.description + "/"
+                    )
+                }
             }
         }
         .class("cms-section")

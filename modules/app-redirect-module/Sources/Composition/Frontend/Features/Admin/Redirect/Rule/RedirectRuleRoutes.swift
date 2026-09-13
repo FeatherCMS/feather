@@ -2,22 +2,23 @@ import FeatherAdmin
 import Hummingbird
 
 enum RedirectRuleRoutes {
-    private static let redirect = RouterPath("admin")
-        .appendingPath(RouterPath("redirect"))
-    static let list = redirect.appendingPath(RouterPath("rules"))
+    static let list = RedirectAdminRoutes.redirect.appendingPath(
+        RouterPath("rules")
+    )
     static let add = list.appendingPath(RouterPath("add"))
     static let remove = list.appendingPath(RouterPath("remove"))
+    static let detailsPattern = details(RouterPath("{id}"))
+    static let editPattern = edit(RouterPath("{id}"))
+    static let removePattern = remove(RouterPath("{id}"))
 
     static var breadcrumb: [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Redirect", link: redirect.description),
+        RedirectAdminRoutes.breadcrumb + [
             .init(label: "Rules", link: list.description),
         ]
     }
 
     static var redirectBreadcrumb: [NewAdminBreadcrumb.Link] {
-        breadcrumb.dropLast()
+        RedirectAdminRoutes.breadcrumb
     }
 
     static func details(_ id: RouterPath) -> RouterPath {

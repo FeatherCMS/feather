@@ -2,24 +2,22 @@ import FeatherAdmin
 import Hummingbird
 
 enum UserRoleRoutes {
-    private static let user = RouterPath("admin")
-        .appendingPath(RouterPath("user"))
-    static let list = user.appendingPath(RouterPath("roles"))
+    static let list = UserAdminRoutes.user.appendingPath(
+        RouterPath("roles")
+    )
     static let add = list.appendingPath(RouterPath("add"))
     static let remove = list.appendingPath(RouterPath("remove"))
+    static let detailsPattern = details(RouterPath("{id}"))
+    static let editPattern = edit(RouterPath("{id}"))
+    static let removePattern = remove(RouterPath("{id}"))
 
     static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
-        userBreadcrumb
+        UserAdminRoutes.breadcrumb
     }
 
     static var breadcrumb: [NewAdminBreadcrumb.Link] {
-        userBreadcrumb + [.init(label: "Roles", link: list.description)]
-    }
-
-    static var userBreadcrumb: [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
+        UserAdminRoutes.breadcrumb + [
+            .init(label: "Roles", link: list.description)
         ]
     }
 

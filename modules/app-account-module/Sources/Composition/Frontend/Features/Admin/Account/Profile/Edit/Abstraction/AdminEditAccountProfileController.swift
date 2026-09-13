@@ -33,11 +33,11 @@ extension AdminEditAccountProfileController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/account/profile/edit/",
+            RouterPath(AccountAdminRoutes.profileEdit.description + "/"),
             use: getEditAccountProfile
         )
         router.post(
-            "/admin/account/profile/edit/",
+            RouterPath(AccountAdminRoutes.profileEdit.description + "/"),
             use: postEditAccountProfile
         )
     }

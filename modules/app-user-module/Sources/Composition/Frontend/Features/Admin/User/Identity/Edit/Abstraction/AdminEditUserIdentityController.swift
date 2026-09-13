@@ -20,11 +20,11 @@ extension AdminEditUserIdentityController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/user/identities/{id}/edit/",
+            RouterPath(UserIdentityRoutes.editPattern.description + "/"),
             use: getEditUserIdentity
         )
         router.post(
-            "/admin/user/identities/{id}/edit/",
+            RouterPath(UserIdentityRoutes.editPattern.description + "/"),
             use: postEditUserIdentity
         )
     }

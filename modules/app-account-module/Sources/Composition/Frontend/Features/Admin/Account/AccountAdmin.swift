@@ -14,7 +14,7 @@ public struct AccountAdmin {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.get("/admin/account/profile/image/") { _, context in
+        router.get(RouterPath(AccountAdminRoutes.profileImage.description + "/")) { _, context in
             do {
                 let profile = try await AdminGetAccountProfileOpenAPIRepository(
                     api: context.accountAppAPI(),
@@ -57,6 +57,11 @@ public struct AccountAdmin {
         .controller.route(on: router)
 
         AdminEditAccountProfile(
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+
+        AdminEditSettings(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

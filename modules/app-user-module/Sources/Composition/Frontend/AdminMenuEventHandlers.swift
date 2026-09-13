@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
+import Hummingbird
 import SystemContracts
 
 public enum UserAdminMenuEventHandlers {
@@ -28,14 +29,14 @@ public enum UserAdminMenuEventHandlers {
                     menuKey: "user",
                     label: "Identities",
                     icon: "users",
-                    link: "/admin/user/identities/",
+                    link: UserIdentityRoutes.list.description + "/",
                     permission: "user:identities:list"
                 ),
                 .init(
                     menuKey: "user",
                     label: "Roles",
                     icon: "users",
-                    link: "/admin/user/roles/",
+                    link: UserRoleRoutes.list.description + "/",
                     permission: "user:roles:list"
                 ),
             ]

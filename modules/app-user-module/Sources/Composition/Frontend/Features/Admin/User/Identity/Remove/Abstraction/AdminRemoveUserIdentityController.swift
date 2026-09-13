@@ -30,19 +30,19 @@ extension AdminRemoveUserIdentityController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/user/identities/{id}/remove/",
+            RouterPath(UserIdentityRoutes.removePattern.description + "/"),
             use: getRemoveUserIdentity
         )
         router.post(
-            "/admin/user/identities/{id}/remove/",
+            RouterPath(UserIdentityRoutes.removePattern.description + "/"),
             use: postRemoveUserIdentity
         )
         router.get(
-            "/admin/user/identities/remove/",
+            RouterPath(UserIdentityRoutes.remove.description + "/"),
             use: getRemoveUserIdentities
         )
         router.post(
-            "/admin/user/identities/remove/",
+            RouterPath(UserIdentityRoutes.remove.description + "/"),
             use: postRemoveUserIdentities
         )
     }

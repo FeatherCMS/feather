@@ -15,7 +15,7 @@ extension AdminGetAccountOverviewController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/account/",
+            RouterPath(AccountAdminRoutes.account.description + "/"),
             use: getOverview
         )
     }

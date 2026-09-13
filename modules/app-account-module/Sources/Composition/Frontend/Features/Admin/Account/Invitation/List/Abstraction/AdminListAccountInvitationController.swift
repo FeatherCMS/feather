@@ -25,15 +25,15 @@ extension AdminListAccountInvitationController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/account/invitations",
+            AccountAdminRoutes.invitations,
             use: getAccountInvitations
         )
         router.get(
-            "/admin/account/invitations/remove/",
+            RouterPath(AccountAdminRoutes.invitationRemoveBulk.description + "/"),
             use: getAccountInvitationsRemoveConfirmation
         )
         router.post(
-            "/admin/account/invitations/remove/",
+            RouterPath(AccountAdminRoutes.invitationRemoveBulk.description + "/"),
             use: postAccountInvitationsRemove
         )
     }

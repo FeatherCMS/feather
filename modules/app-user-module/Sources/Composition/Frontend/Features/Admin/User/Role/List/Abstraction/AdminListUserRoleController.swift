@@ -16,7 +16,7 @@ extension AdminListUserRoleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/user/roles",
+            UserRoleRoutes.list,
             use: getUserRoles
         )
     }

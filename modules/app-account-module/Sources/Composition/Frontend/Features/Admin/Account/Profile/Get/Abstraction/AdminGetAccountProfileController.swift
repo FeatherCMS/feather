@@ -28,7 +28,7 @@ extension AdminGetAccountProfileController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/account/profile/",
+            RouterPath(AccountAdminRoutes.profile.description + "/"),
             use: getAccountProfile
         )
     }

@@ -22,11 +22,11 @@ extension AdminAddRedirectRuleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/redirect/rules/add/",
+            RouterPath(RedirectRuleRoutes.add.description + "/"),
             use: getAddRedirectRule
         )
         router.post(
-            "/admin/redirect/rules/add/",
+            RouterPath(RedirectRuleRoutes.add.description + "/"),
             use: postAddRedirectRule
         )
     }

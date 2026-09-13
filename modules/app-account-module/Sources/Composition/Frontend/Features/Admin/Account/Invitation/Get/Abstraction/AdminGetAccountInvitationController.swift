@@ -15,7 +15,7 @@ extension AdminGetAccountInvitationController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/account/invitations/{id}/",
+            RouterPath(AccountAdminRoutes.invitationDetailsPattern.description + "/"),
             use: getAccountInvitation
         )
     }

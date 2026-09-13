@@ -16,7 +16,7 @@ extension AdminGetRedirectRuleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/redirect/rules/{id}/",
+            RouterPath(RedirectRuleRoutes.detailsPattern.description + "/"),
             use: getRedirectRule
         )
     }

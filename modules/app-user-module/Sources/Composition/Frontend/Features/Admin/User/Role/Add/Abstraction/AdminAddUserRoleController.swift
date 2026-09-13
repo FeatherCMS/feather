@@ -20,11 +20,11 @@ extension AdminAddUserRoleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/user/roles/add/",
+            RouterPath(UserRoleRoutes.add.description + "/"),
             use: getAddUserRole
         )
         router.post(
-            "/admin/user/roles/add/",
+            RouterPath(UserRoleRoutes.add.description + "/"),
             use: postAddUserRole
         )
     }

@@ -16,7 +16,7 @@ extension AdminGetRedirectOverviewController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/redirect/",
+            RouterPath(RedirectAdminRoutes.redirect.description + "/"),
             use: getOverview
         )
     }
