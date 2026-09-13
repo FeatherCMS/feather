@@ -17,9 +17,28 @@ struct UserIdentityTable: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: UserIdentityRoutes.listBreadcrumb))
-            context.render(NewAdminPageHeader(state: .init(title: "User identities", description: "Manage identities and their assigned roles.")))
-            context.render(UserIdentityTableContent(permissions: permissions, identities: identities, pageState: pageState, search: search, role: role))
-        }.class("cms-section")
+            context.render(
+                NewAdminBreadcrumb(links: UserIdentityRoutes.listBreadcrumb)
+            )
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "User identities",
+                        description:
+                            "Manage identities and their assigned roles."
+                    )
+                )
+            )
+            context.render(
+                UserIdentityTableContent(
+                    permissions: permissions,
+                    identities: identities,
+                    pageState: pageState,
+                    search: search,
+                    role: role
+                )
+            )
+        }
+        .class("cms-section")
     }
 }

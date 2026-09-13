@@ -13,7 +13,9 @@ struct AdminListRedirectRuleDefaultInteractor:
         page: Int,
         search: String?,
         statusCode: StatusCode?
-    ) async throws -> NewAdminListModel<Components.Schemas.RedirectRuleListItemSchema> {
+    ) async throws -> NewAdminListModel<
+        Components.Schemas.RedirectRuleListItemSchema
+    > {
         do {
             let response = try await repository.listRedirectRules(
                 page: page,
@@ -29,7 +31,8 @@ struct AdminListRedirectRuleDefaultInteractor:
                     total: body.data.total
                 )
             )
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }

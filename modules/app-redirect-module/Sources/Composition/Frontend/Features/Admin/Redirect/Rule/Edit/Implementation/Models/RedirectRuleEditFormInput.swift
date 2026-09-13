@@ -2,7 +2,9 @@ import FeatherAdmin
 import Foundation
 import RedirectContracts
 
-public struct RedirectRuleFormInput: Decodable, Sendable, Equatable, Hashable {
+public struct RedirectRuleEditFormInput: Decodable, Sendable, Equatable,
+    Hashable
+{
 
     public let source: String
     public let destination: String

@@ -46,12 +46,13 @@ struct AdminEditSystemVariableDefaultPresenter:
                         .description,
                     removeHref: actions.allows(
                         SystemPermissions.Variables.delete
-                    ) ? NewAdminLocation.remove(
-                        path: SystemVariableRoutes.remove.description,
-                        ids: [id],
-                        returnTo: SystemVariableRoutes.edit(RouterPath(id))
-                            .description
-                    ) : nil,
+                    )
+                        ? NewAdminLocation.remove(
+                            path: SystemVariableRoutes.remove.description,
+                            ids: [id],
+                            returnTo: SystemVariableRoutes.edit(RouterPath(id))
+                                .description
+                        ) : nil,
                     nonceToken: nonceToken
                 )
             ),
@@ -70,9 +71,10 @@ struct AdminEditSystemVariableDefaultPresenter:
             errors[failure.key] = failure.message
         }
 
-        var state = input.map {
-            SystemVariableEditForm.State.from(input: $0)
-        } ?? .empty()
+        var state =
+            input.map {
+                SystemVariableEditForm.State.from(input: $0)
+            } ?? .empty()
         state.apply(errors: errors)
 
         return try await renderEditPage(
@@ -105,7 +107,8 @@ struct AdminEditSystemVariableDefaultPresenter:
                 id: id,
                 input: input,
                 permissions: permissions,
-                message: "The system variable could not be saved. Please try again.",
+                message:
+                    "The system variable could not be saved. Please try again.",
                 status: .serviceUnavailable
             )
         }
@@ -116,7 +119,8 @@ struct AdminEditSystemVariableDefaultPresenter:
             content: NewAdminStatusView(
                 state: .init(
                     title: "Form expired",
-                    message: "This form is no longer valid. Please reload the page and try again."
+                    message:
+                        "This form is no longer valid. Please reload the page and try again."
                 ),
                 icon: FeatherIcons.alertCircle()
             ),
@@ -196,9 +200,10 @@ struct AdminEditSystemVariableDefaultPresenter:
         message: String,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
-        var state = input.map {
-            SystemVariableEditForm.State.from(input: $0)
-        } ?? .empty()
+        var state =
+            input.map {
+                SystemVariableEditForm.State.from(input: $0)
+            } ?? .empty()
         state.apply(error: message)
 
         return try await renderEditPage(

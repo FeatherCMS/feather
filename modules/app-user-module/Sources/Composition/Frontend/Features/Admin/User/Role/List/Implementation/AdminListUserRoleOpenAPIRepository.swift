@@ -14,7 +14,8 @@ struct AdminListUserRoleOpenAPIRepository: AdminListUserRoleRepository {
         page: Int,
         size: Int,
         search: String?
-    ) async throws -> UserAdminAPI.Components.Responses
+    ) async throws
+        -> UserAdminAPI.Components.Responses
         .UserRoleListItemSearchSchemaSearchResponse
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in

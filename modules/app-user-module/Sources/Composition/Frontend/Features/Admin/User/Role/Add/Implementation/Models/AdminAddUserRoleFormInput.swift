@@ -1,7 +1,8 @@
 import FeatherAdmin
 import Foundation
 
-public struct AdminAddUserRoleFormInput: Decodable, Sendable, Equatable, Hashable
+public struct AdminAddUserRoleFormInput: Decodable, Sendable, Equatable,
+    Hashable
 {
 
     public let id: String

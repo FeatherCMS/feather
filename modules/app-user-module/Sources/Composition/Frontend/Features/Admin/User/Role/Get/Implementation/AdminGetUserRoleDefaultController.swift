@@ -15,8 +15,11 @@ struct AdminGetUserRoleDefaultController: AdminGetUserRoleController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: UserPermissions.Roles.read) else {
-            return try await runtime.presenter.renderErrorPage(error: .forbidden)
+        guard context.isCurrentUserAllowed(to: UserPermissions.Roles.read)
+        else {
+            return try await runtime.presenter.renderErrorPage(
+                error: .forbidden
+            )
         }
         let id = try context.requiredID()
         do {
@@ -25,7 +28,8 @@ struct AdminGetUserRoleDefaultController: AdminGetUserRoleController {
                 role: role,
                 permissions: context.currentUserAdminListActions
             )
-        } catch let error as AdminGetUserRoleError {
+        }
+        catch let error as AdminGetUserRoleError {
             return try await runtime.presenter.renderErrorPage(error: error)
         }
     }

@@ -12,7 +12,8 @@ struct AdminEditSystemVariableDefaultInteractor:
     ) async throws -> SystemVariableEditModel {
         do {
             return try await repository.load(id: id)
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }
@@ -31,7 +32,8 @@ struct AdminEditSystemVariableDefaultInteractor:
                     notes: input.normalizedNotes
                 )
             )
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }

@@ -17,7 +17,9 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: UserPermissions.Identities.create) else {
+        guard
+            context.isCurrentUserAllowed(to: UserPermissions.Identities.create)
+        else {
             return try await presenter.renderForbiddenPage()
         }
         return try await presenter.renderAddPage(state: .empty())
@@ -28,8 +30,11 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: UserPermissions.Identities.create) else {
-            return try await presenter.renderForbiddenPage().response(from: request, context: context)
+        guard
+            context.isCurrentUserAllowed(to: UserPermissions.Identities.create)
+        else {
+            return try await presenter.renderForbiddenPage()
+                .response(from: request, context: context)
         }
         var lastPayload: AdminAddUserIdentityFormInput?
 
@@ -40,8 +45,14 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
             )
             let input = payload.input
             lastPayload = input
-            guard await AdminNonceStore.shared.consume(payload.nonce, sessionToken: context.sessionToken) else {
-                return try await presenter.renderInvalidNoncePage().response(from: request, context: context)
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return try await presenter.renderInvalidNoncePage()
+                    .response(from: request, context: context)
             }
             try await input.validate()
 
@@ -49,10 +60,20 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
             return presenter.renderSuccess()
         }
         catch let error as ValidationError {
-            return try await presenter.renderValidationError(input: lastPayload, error: error).response(from: request, context: context)
+            return
+                try await presenter.renderValidationError(
+                    input: lastPayload,
+                    error: error
+                )
+                .response(from: request, context: context)
         }
         catch let error as AdminAddUserIdentityError {
-            return try await presenter.renderAddError(input: lastPayload, error: error).response(from: request, context: context)
+            return
+                try await presenter.renderAddError(
+                    input: lastPayload,
+                    error: error
+                )
+                .response(from: request, context: context)
         }
     }
 }

@@ -60,7 +60,10 @@ struct AdminRemoveUserIdentityOpenAPIRepository:
             case .unauthorized: throw OpenAPIRepositoryError.unauthorized
             case .forbidden: throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
-                throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }

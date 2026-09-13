@@ -16,9 +16,13 @@ struct AdminRemoveSystemPermissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Permissions.delete)
+        guard
+            context.isCurrentUserAllowed(
+                to: SystemPermissions.Permissions.delete
+            )
         else {
-            return try await presenter
+            return
+                try await presenter
                 .renderErrorPage(
                     error: .forbidden,
                     cancel: SystemPermissionRoutes.list.description
@@ -43,7 +47,8 @@ struct AdminRemoveSystemPermissionDefaultController:
         }
 
         do {
-            return try await presenter
+            return
+                try await presenter
                 .renderRemovePage(
                     page: page,
                     search: search,
@@ -52,8 +57,10 @@ struct AdminRemoveSystemPermissionDefaultController:
                     returnTo: request.queryString("returnTo")
                 )
                 .response(from: request, context: context)
-        } catch let error as AdminRemoveSystemPermissionError {
-            return try await presenter
+        }
+        catch let error as AdminRemoveSystemPermissionError {
+            return
+                try await presenter
                 .renderErrorPage(
                     error: error,
                     cancel: SystemPermissionRoutes.list.description
@@ -67,9 +74,13 @@ struct AdminRemoveSystemPermissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Permissions.delete)
+        guard
+            context.isCurrentUserAllowed(
+                to: SystemPermissions.Permissions.delete
+            )
         else {
-            return try await presenter
+            return
+                try await presenter
                 .renderErrorPage(
                     error: .forbidden,
                     cancel: SystemPermissionRoutes.list.description
@@ -84,11 +95,14 @@ struct AdminRemoveSystemPermissionDefaultController:
                 context: context
             )
             returnTo = payload.input.normalizedReturnTo
-            guard await AdminNonceStore.shared.consume(
-                payload.nonce,
-                sessionToken: context.sessionToken
-            ) else {
-                return try await presenter
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return
+                    try await presenter
                     .renderInvalidNoncePage(
                         cancel: NewAdminLocation.removeCancel(
                             path: SystemPermissionRoutes.list.description,
@@ -120,8 +134,10 @@ struct AdminRemoveSystemPermissionDefaultController:
                 ),
                 count: ids.count
             )
-        } catch let error as AdminRemoveSystemPermissionError {
-            return try await presenter
+        }
+        catch let error as AdminRemoveSystemPermissionError {
+            return
+                try await presenter
                 .renderErrorPage(
                     error: error,
                     cancel: NewAdminLocation.removeCancel(

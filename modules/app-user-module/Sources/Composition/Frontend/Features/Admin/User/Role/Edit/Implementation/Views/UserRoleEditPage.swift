@@ -14,19 +14,27 @@ struct UserRoleEditPage: Component {
     func html(context: inout RenderContext) -> Section {
         Section {
             context.render(NewAdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
-            context.render(NewAdminPageHeader(state: .init(
-                title: "Edit user role",
-                description: "Update this user role."
-            )))
-            context.render(UserRoleForm(
-                state: form,
-                action: UserRoleRoutes.edit(RouterPath(id)).description,
-                submitLabel: "Save changes",
-                viewHref: UserRoleRoutes.details(RouterPath(id)).description,
-                removeHref: permissions.allows(UserPermissions.Roles.delete)
-                    ? UserRoleRoutes.remove(RouterPath(id)).description : nil,
-                nonceToken: nonceToken
-            ))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Edit user role",
+                        description: "Update this user role."
+                    )
+                )
+            )
+            context.render(
+                UserRoleForm(
+                    state: form,
+                    action: UserRoleRoutes.edit(RouterPath(id)).description,
+                    submitLabel: "Save changes",
+                    viewHref: UserRoleRoutes.details(RouterPath(id))
+                        .description,
+                    removeHref: permissions.allows(UserPermissions.Roles.delete)
+                        ? UserRoleRoutes.remove(RouterPath(id)).description
+                        : nil,
+                    nonceToken: nonceToken
+                )
+            )
         }
         .class("cms-section")
     }

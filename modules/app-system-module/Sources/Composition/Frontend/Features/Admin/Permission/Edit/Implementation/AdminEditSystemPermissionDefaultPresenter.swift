@@ -84,7 +84,8 @@ struct AdminEditSystemPermissionDefaultPresenter:
             return try await renderFormError(
                 id: id,
                 input: input,
-                message: "The system permission could not be saved. Please try again.",
+                message:
+                    "The system permission could not be saved. Please try again.",
                 status: .serviceUnavailable
             )
         }
@@ -109,7 +110,8 @@ struct AdminEditSystemPermissionDefaultPresenter:
             content: NewAdminStatusView(
                 state: .init(
                     title: "Form expired",
-                    message: "This form is no longer valid. Please reload the page and try again."
+                    message:
+                        "This form is no longer valid. Please reload the page and try again."
                 ),
                 icon: FeatherIcons.alertCircle()
             ),

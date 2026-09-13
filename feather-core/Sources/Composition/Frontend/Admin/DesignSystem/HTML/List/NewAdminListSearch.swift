@@ -15,7 +15,7 @@ public struct NewAdminListSearch: Component {
                 FlexWrap(.nowrap)
                 MarginBottom(0.px)
                 Width(100.percent)
-                MaxWidth(100.percent)
+                MaxWidth(640.px)
             }
             Custom(
                 ".table-search-form input[type='search'], .table-search-form select"
@@ -32,8 +32,25 @@ public struct NewAdminListSearch: Component {
                 FontSize(0.9.rem)
             }
             Custom(".table-search-form select") {
+                Width(190.px)
+                Flex(0, .number(0), .auto)
                 PaddingRight(34.px)
                 UnsafeRawProperty(name: "appearance", value: "none")
+                UnsafeRawProperty(
+                    name: "background-image",
+                    value:
+                        "linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%)"
+                )
+                UnsafeRawProperty(
+                    name: "background-position",
+                    value:
+                        "calc(100% - 19px) 50%, calc(100% - 14px) 50%"
+                )
+                UnsafeRawProperty(name: "background-size", value: "5px 5px")
+                UnsafeRawProperty(
+                    name: "background-repeat",
+                    value: "no-repeat"
+                )
             }
             Custom(".table-search-form input[type='search']") {
                 MinWidth(0.px)
@@ -96,10 +113,17 @@ public struct NewAdminListSearch: Component {
                 Outline(0.px, .none)
             }
         }
-        Media(.minWidth(769.px)) {
+        Media(.maxWidth(768.px)) {
             Class("table-search-form") {
-                Width(40.percent)
-                MaxWidth(40.percent)
+                FlexWrap(.wrap)
+                Width(100.percent)
+                MaxWidth(100.percent)
+            }
+            Custom(".table-search-form select") {
+                Width(100.percent)
+            }
+            Custom(".table-search-form .table-search-input") {
+                Width(100.percent)
             }
         }
     }
@@ -155,6 +179,9 @@ public struct NewAdminListSearch: Component {
             for item in state.queryItems {
                 Input().type(.hidden).name(item.name).value(item.value)
             }
+            for field in additionalFields {
+                field
+            }
             Div {
                 Input()
                     .type(.search)
@@ -169,9 +196,6 @@ public struct NewAdminListSearch: Component {
                     .if(state.search.isEmpty) { $0.class("is-hidden") }
             }
             .class("table-search-input")
-            for field in additionalFields {
-                field
-            }
             context.render(
                 NewAdminSubmitButton(
                     "Search",

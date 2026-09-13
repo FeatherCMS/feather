@@ -5,10 +5,10 @@ protocol AdminEditRedirectRuleRepository: Sendable {
 
     func load(
         id: String
-    ) async throws -> RedirectRuleDetailsModel
+    ) async throws -> RedirectRuleEditModel
 
     func update(
         id: String,
-        input: RedirectRuleFormInput
+        input: RedirectRuleEditFormInput
     ) async throws
 }

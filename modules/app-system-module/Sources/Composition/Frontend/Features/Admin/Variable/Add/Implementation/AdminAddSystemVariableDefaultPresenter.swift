@@ -45,9 +45,10 @@ struct AdminAddSystemVariableDefaultPresenter:
             errors[failure.key] = failure.message
         }
 
-        var state = input.map {
-            SystemVariableAddForm.State.from(input: $0)
-        } ?? .empty()
+        var state =
+            input.map {
+                SystemVariableAddForm.State.from(input: $0)
+            } ?? .empty()
         state.apply(errors: errors)
 
         return try await renderAddPage(
@@ -84,7 +85,8 @@ struct AdminAddSystemVariableDefaultPresenter:
         case .unavailable:
             return try await renderFormError(
                 input: input,
-                message: "The system variable could not be created. Please try again.",
+                message:
+                    "The system variable could not be created. Please try again.",
                 status: .serviceUnavailable
             )
         }
@@ -121,7 +123,8 @@ struct AdminAddSystemVariableDefaultPresenter:
             content: NewAdminStatusView(
                 state: .init(
                     title: "Form expired",
-                    message: "This form is no longer valid. Please reload the page and try again."
+                    message:
+                        "This form is no longer valid. Please reload the page and try again."
                 ),
                 icon: FeatherIcons.alertCircle()
             ),
@@ -147,9 +150,10 @@ struct AdminAddSystemVariableDefaultPresenter:
         message: String,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
-        var state = input.map {
-            SystemVariableAddForm.State.from(input: $0)
-        } ?? .empty()
+        var state =
+            input.map {
+                SystemVariableAddForm.State.from(input: $0)
+            } ?? .empty()
         state.apply(error: message)
 
         return try await renderAddPage(

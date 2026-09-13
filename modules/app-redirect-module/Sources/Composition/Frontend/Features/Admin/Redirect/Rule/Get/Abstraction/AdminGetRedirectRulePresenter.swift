@@ -9,5 +9,6 @@ protocol AdminGetRedirectRulePresenter: Sendable {
         permissions: NewAdminListActions
     ) async throws -> HTMLResponse
 
-    func renderErrorPage(error: AdminGetRedirectRuleError) async throws -> HTMLResponse
+    func renderErrorPage(error: AdminGetRedirectRuleError) async throws
+        -> HTMLResponse
 }

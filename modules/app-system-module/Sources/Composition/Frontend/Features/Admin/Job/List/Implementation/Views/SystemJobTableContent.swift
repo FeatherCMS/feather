@@ -19,7 +19,9 @@ struct SystemJobTableContent: Component {
     }
 
     func html(context: inout RenderContext) -> Div {
-        context.render(
+        let isFiltered = !(search?.isEmpty ?? true)
+
+        return context.render(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
@@ -33,12 +35,13 @@ struct SystemJobTableContent: Component {
                     else if jobs.isEmpty {
                         context.render(
                             NewAdminListEmptyState(
-                                message: search?.isEmpty ?? true
-                                    ? "No worker jobs yet."
-                                    : "No worker jobs match your search.",
+                                resourceName: "worker jobs",
+                                isFiltered: isFiltered,
+                                filteredMessage:
+                                    "No worker jobs match your search.",
                                 icon: FeatherIcons.inbox(),
                                 action: {
-                                    if !(search?.isEmpty ?? true) {
+                                    if isFiltered {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset search",
@@ -60,7 +63,8 @@ struct SystemJobTableContent: Component {
                                         Tr {
                                             Th("Job").columnWidth(percent: 30)
                                             Th("Parameters")
-                                            Th("Status").columnWidth(percent: 20)
+                                            Th("Status")
+                                                .columnWidth(percent: 20)
                                             Th("Actions")
                                         }
                                     }

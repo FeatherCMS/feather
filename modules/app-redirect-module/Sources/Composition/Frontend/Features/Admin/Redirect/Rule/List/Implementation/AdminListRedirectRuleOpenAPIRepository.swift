@@ -29,7 +29,10 @@ struct AdminListRedirectRuleOpenAPIRepository:
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
-                            page: .init(size: AdminListRedirectRule.pageSize, number: page),
+                            page: .init(
+                                size: AdminListRedirectRule.pageSize,
+                                number: page
+                            ),
                             filters: .init(
                                 search: search,
                                 statusCode: statusCode?.rawValue

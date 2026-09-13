@@ -13,7 +13,8 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
         let allJobs: [Components.Schemas.SystemJobSchema]
         do {
             allJobs = try await repository.list()
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             switch error {
             case .unauthorized: throw AdminListSystemJobError.unauthorized
             case .forbidden: throw AdminListSystemJobError.forbidden
@@ -22,7 +23,8 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
             }
         }
         let normalizedSearch = search?.emptyToNil ?? ""
-        let filteredJobs = normalizedSearch.isEmpty
+        let filteredJobs =
+            normalizedSearch.isEmpty
             ? allJobs
             : allJobs.filter { job in
                 [
@@ -39,7 +41,8 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
         let pageSize = AdminListSystemJob.pageSize
         let normalizedPage = max(1, page)
         let start = (normalizedPage - 1) * pageSize
-        let items = start < filteredJobs.count
+        let items =
+            start < filteredJobs.count
             ? Array(
                 filteredJobs[start..<min(start + pageSize, filteredJobs.count)]
             )

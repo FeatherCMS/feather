@@ -15,7 +15,8 @@ struct AdminAddUserRoleDefaultInteractor: AdminAddUserRoleInteractor {
                     notes: input.normalizedNotes
                 )
             )
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             switch error {
             case .unauthorized: throw AdminAddUserRoleError.unauthorized
             case .forbidden: throw AdminAddUserRoleError.forbidden

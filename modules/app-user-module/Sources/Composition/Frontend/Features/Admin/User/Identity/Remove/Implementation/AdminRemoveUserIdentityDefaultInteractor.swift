@@ -28,7 +28,9 @@ struct AdminRemoveUserIdentityDefaultInteractor:
         }
     }
 
-    private func map(_ error: OpenAPIRepositoryError) -> AdminRemoveUserIdentityError {
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminRemoveUserIdentityError
+    {
         switch error {
         case .notFound: .notFound
         case .unauthorized: .unauthorized

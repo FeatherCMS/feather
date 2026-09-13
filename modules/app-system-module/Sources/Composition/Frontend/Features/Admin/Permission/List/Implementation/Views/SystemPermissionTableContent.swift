@@ -28,6 +28,7 @@ struct SystemPermissionTableContent: Component {
 
     func html(context: inout RenderContext) -> Div {
         let canDelete = actions.allows(SystemPermissions.Permissions.delete)
+        let isFiltered = !(search?.isEmpty ?? true)
 
         return context.render(
             NewAdminList(
@@ -43,12 +44,13 @@ struct SystemPermissionTableContent: Component {
                     else if permissions.isEmpty {
                         context.render(
                             NewAdminListEmptyState(
-                                message: search?.isEmpty ?? true
-                                    ? "No system permissions yet."
-                                    : "No system permissions match your search.",
+                                resourceName: "system permissions",
+                                isFiltered: isFiltered,
+                                filteredMessage:
+                                    "No system permissions match your search.",
                                 icon: FeatherIcons.inbox(),
                                 action: {
-                                    if !(search?.isEmpty ?? true) {
+                                    if isFiltered {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset search",
@@ -59,7 +61,7 @@ struct SystemPermissionTableContent: Component {
                                             )
                                         )
                                     }
-                                    else if search?.isEmpty ?? true,
+                                    else if !isFiltered,
                                         actions.allows(
                                             SystemPermissions.Permissions.create
                                         )
@@ -81,7 +83,8 @@ struct SystemPermissionTableContent: Component {
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
-                                        path: SystemPermissionRoutes.remove.description,
+                                        path: SystemPermissionRoutes.remove
+                                            .description,
                                         ids: [],
                                         returnTo: returnTo
                                     ),

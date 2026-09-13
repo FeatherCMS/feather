@@ -28,7 +28,8 @@ struct AdminEditUserRoleDefaultInteractor: AdminEditUserRoleInteractor {
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    private func map(_ error: OpenAPIRepositoryError) -> AdminEditUserRoleError {
+    private func map(_ error: OpenAPIRepositoryError) -> AdminEditUserRoleError
+    {
         switch error {
         case .notFound: .notFound
         case .unauthorized: .unauthorized

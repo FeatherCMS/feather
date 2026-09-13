@@ -11,5 +11,6 @@ protocol AdminListRedirectRulePresenter: Sendable {
         statusCode: String?
     ) async throws -> HTMLResponse
 
-    func renderErrorPage(error: AdminListRedirectRuleError) async throws -> HTMLResponse
+    func renderErrorPage(error: AdminListRedirectRuleError) async throws
+        -> HTMLResponse
 }

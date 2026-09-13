@@ -61,9 +61,11 @@ struct SystemPermissionDetailsView: Component {
                     href: NewAdminLocation.remove(
                         path: SystemPermissionRoutes.remove.description,
                         ids: [state.permission.id],
-                        returnTo: SystemPermissionRoutes.details(
-                            RouterPath(state.permission.id)
-                        ).description
+                        returnTo:
+                            SystemPermissionRoutes.details(
+                                RouterPath(state.permission.id)
+                            )
+                            .description
                     ),
                     style: .destructive
                 )

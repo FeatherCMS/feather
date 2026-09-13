@@ -43,7 +43,12 @@ struct UserIdentityForm: Component {
         ) -> Self {
             let selected = Set(roleIds)
             return .init(
-                name: .init(name: "name", label: "Name", value: name, isRequired: true),
+                name: .init(
+                    name: "name",
+                    label: "Name",
+                    value: name,
+                    isRequired: true
+                ),
                 status: .init(
                     name: "status",
                     label: "Status",
@@ -52,15 +57,21 @@ struct UserIdentityForm: Component {
                     isRequired: true
                 ),
                 roleOptions: roleOptions.map {
-                    .init(label: $0.name, value: $0.id, isSelected: selected.contains($0.id))
+                    .init(
+                        label: $0.name,
+                        value: $0.id,
+                        isSelected: selected.contains($0.id)
+                    )
                 },
                 roleIdsError: nil,
                 error: nil
             )
         }
 
-        private static var statusOptions: [NewAdminFormFieldSelect.SelectOption] {
-            UserAdminAPI.Components.Schemas.UserIdentityStatusField.allCases.map {
+        private static var statusOptions: [NewAdminFormFieldSelect.SelectOption]
+        {
+            UserAdminAPI.Components.Schemas.UserIdentityStatusField.allCases.map
+            {
                 .init(label: $0.rawValue.capitalized, value: $0.rawValue)
             }
         }
@@ -75,21 +86,43 @@ struct UserIdentityForm: Component {
 
     func html(context: inout RenderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
-            if let error = state.error { P(error).class("new-admin-form__error") }
+            if let error = state.error {
+                P(error).class("new-admin-form__error")
+            }
             context.render(NewAdminFormFieldInput(state: state.name))
             context.render(NewAdminFormFieldSelect(state: state.status))
             if !state.roleOptions.isEmpty {
-                context.render(NewAdminFormFieldCheckboxGroup(
-                    name: "roleIds",
-                    label: "Roles",
-                    options: state.roleOptions,
-                    error: state.roleIdsError
-                ))
+                context.render(
+                    NewAdminFormFieldCheckboxGroup(
+                        name: "roleIds",
+                        label: "Roles",
+                        options: state.roleOptions,
+                        error: state.roleIdsError
+                    )
+                )
             }
             Div {
-                context.render(NewAdminSubmitButton(submitLabel, style: .primary))
-                if let viewHref { context.render(NewAdminButton("View", href: viewHref, style: .secondary)) }
-                if let removeHref { context.render(NewAdminButton("Remove", href: removeHref, style: .destructive)) }
+                context.render(
+                    NewAdminSubmitButton(submitLabel, style: .primary)
+                )
+                if let viewHref {
+                    context.render(
+                        NewAdminButton(
+                            "View",
+                            href: viewHref,
+                            style: .secondary
+                        )
+                    )
+                }
+                if let removeHref {
+                    context.render(
+                        NewAdminButton(
+                            "Remove",
+                            href: removeHref,
+                            style: .destructive
+                        )
+                    )
+                }
             }
             .class("new-admin-form__actions")
         }

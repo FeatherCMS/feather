@@ -16,9 +16,25 @@ struct UserRoleTable: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: UserRoleRoutes.listBreadcrumb))
-            context.render(NewAdminPageHeader(state: .init(title: "User roles", description: "Manage roles assigned to user identities.")))
-            context.render(UserRoleTableContent(roles: roles, permissions: permissions, pageState: pageState, search: search))
+            context.render(
+                NewAdminBreadcrumb(links: UserRoleRoutes.listBreadcrumb)
+            )
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "User roles",
+                        description: "Manage roles assigned to user identities."
+                    )
+                )
+            )
+            context.render(
+                UserRoleTableContent(
+                    roles: roles,
+                    permissions: permissions,
+                    pageState: pageState,
+                    search: search
+                )
+            )
         }
         .class("cms-section")
     }

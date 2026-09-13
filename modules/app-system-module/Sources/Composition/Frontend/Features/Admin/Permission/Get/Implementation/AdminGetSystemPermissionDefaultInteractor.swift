@@ -11,7 +11,8 @@ struct AdminGetSystemPermissionDefaultInteractor:
     ) async throws -> SystemPermissionDetailsModel {
         do {
             return try await repository.get(id: entity.id)
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             switch error {
             case .notFound: throw AdminGetSystemPermissionError.notFound
             case .unauthorized: throw AdminGetSystemPermissionError.unauthorized

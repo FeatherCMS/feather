@@ -15,11 +15,13 @@ struct AdminGetUserIdentityDefaultInteractor: AdminGetUserIdentityInteractor {
 
     func roleNames(for ids: [String]) async throws -> [String] {
         do {
-            let roleLookup = try await roleRepository.list().reduce(into: [String: String]()) {
-                $0[$1.id] = $1.name
-            }
+            let roleLookup = try await roleRepository.list()
+                .reduce(into: [String: String]()) {
+                    $0[$1.id] = $1.name
+                }
             return ids.compactMap { roleLookup[$0] }
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }
@@ -29,12 +31,15 @@ struct AdminGetUserIdentityDefaultInteractor: AdminGetUserIdentityInteractor {
     ) async throws -> AdminGetUserIdentityModel {
         do {
             return .init(details: try await repository.load(id: id))
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }
 
-    private func map(_ error: OpenAPIRepositoryError) -> AdminGetUserIdentityError {
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminGetUserIdentityError
+    {
         switch error {
         case .notFound: .notFound
         case .unauthorized: .unauthorized

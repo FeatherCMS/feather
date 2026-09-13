@@ -35,8 +35,8 @@ public struct NewAdminStatusView: Component {
         self.action = action
     }
 
-    public func rules() -> [any Rule] {
-        Media {
+    public func selectors() -> [any Selector] {
+        [
             Class("admin-status-view") {
                 Display(.flex)
                 FlexDirection(.row)
@@ -66,45 +66,42 @@ public struct NewAdminStatusView: Component {
                     value:
                         "calc(100% - 25px) 50%, calc(100% - 20px) 50%"
                 )
-                UnsafeRawProperty(
-                    name: "background-size",
-                    value: "5px 5px"
-                )
+                UnsafeRawProperty(name: "background-size", value: "5px 5px")
                 UnsafeRawProperty(
                     name: "background-repeat",
                     value: "no-repeat"
                 )
-            }
+            },
             Custom(".admin-status-view h1, .admin-status-view p") {
                 Margin(0)
-            }
+            },
             Custom(".admin-status-view-content") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(4.px)
                 FlexGrow(1)
-            }
+            },
             Custom(".admin-status-view h1") {
                 FontSize(1.rem)
                 LineHeight(1.2)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
-            }
+            },
             Custom(".admin-status-view p") {
                 FontSize(0.9.rem)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 LineHeight(1.5)
-            }
+            },
             Custom(".admin-status-view-icon") {
                 Display(.block)
                 Width(20.px)
                 Height(20.px)
                 FlexShrink(0)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-            }
+            },
             Custom(".admin-status-view .button") {
                 MarginLeft(.auto)
-            }
-        }
+            },
+        ]
     }
 
     public func html(context: inout RenderContext) -> Div {

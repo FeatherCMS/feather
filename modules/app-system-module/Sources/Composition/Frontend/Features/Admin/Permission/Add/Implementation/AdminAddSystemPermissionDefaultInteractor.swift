@@ -12,7 +12,8 @@ struct AdminAddSystemPermissionDefaultInteractor:
     ) async throws {
         do {
             try await repository.create(entity: entity)
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }

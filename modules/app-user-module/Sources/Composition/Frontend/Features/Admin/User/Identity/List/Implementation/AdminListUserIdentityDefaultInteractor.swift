@@ -10,9 +10,16 @@ struct AdminListUserIdentityDefaultInteractor: AdminListUserIdentityInteractor {
         size: Int,
         search: String?,
         role: String?
-    ) async throws -> NewAdminListModel<Components.Schemas.UserIdentityListItemSchema> {
+    ) async throws -> NewAdminListModel<
+        Components.Schemas.UserIdentityListItemSchema
+    > {
         do {
-            let response = try await repository.list(page: page, size: size, search: search, role: role)
+            let response = try await repository.list(
+                page: page,
+                size: size,
+                search: search,
+                role: role
+            )
             let body = try response.body.json
             return .init(
                 items: body.data.items,
@@ -22,7 +29,8 @@ struct AdminListUserIdentityDefaultInteractor: AdminListUserIdentityInteractor {
                     total: body.data.total
                 )
             )
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             switch error {
             case .unauthorized: throw AdminListUserIdentityError.unauthorized
             case .forbidden: throw AdminListUserIdentityError.forbidden

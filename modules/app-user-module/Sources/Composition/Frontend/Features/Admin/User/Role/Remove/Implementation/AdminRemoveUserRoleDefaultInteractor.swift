@@ -18,7 +18,9 @@ struct AdminRemoveUserRoleDefaultInteractor: AdminRemoveUserRoleInteractor {
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    private func map(_ error: OpenAPIRepositoryError) -> AdminRemoveUserRoleError {
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminRemoveUserRoleError
+    {
         switch error {
         case .notFound: .notFound
         case .unauthorized: .unauthorized

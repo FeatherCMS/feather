@@ -56,7 +56,8 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
         case .notFound:
             state = .init(
                 title: "System permissions not found",
-                message: "One or more selected permissions may have been removed."
+                message:
+                    "One or more selected permissions may have been removed."
             )
         case .unauthorized:
             state = .init(
@@ -100,7 +101,8 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
             content: NewAdminStatusView(
                 state: .init(
                     title: "Confirmation expired",
-                    message: "This confirmation is no longer valid. Please try again."
+                    message:
+                        "This confirmation is no longer valid. Please try again."
                 ),
                 icon: FeatherIcons.alertCircle(),
                 action: NewAdminButton("Back", href: cancel, style: .secondary)

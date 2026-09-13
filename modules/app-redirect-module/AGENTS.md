@@ -8,9 +8,10 @@ and views where applicable. Operation models and views live under
 protocols only.
 
 The module overview lives under `Overview/Get`, with its implementation models
-and views under that operation's `Implementation` directory. Redirect rule
-form inputs and reusable rule detail models live under `Rule/Shared/Models`,
-and reusable form components live under `Rule/Shared/Views`.
+and views under that operation's `Implementation` directory. Each rule
+operation owns its feature-specific models and views under that operation's
+`Implementation/Models` and `Implementation/Views` directories. Do not create
+a `Rule/Shared` folder.
 
 The request flow is Router → Controller → Interactor → OpenAPI Repository →
 API client. Controllers own route parameters, permissions, request decoding,

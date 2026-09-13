@@ -37,12 +37,13 @@ struct SystemPermissionEditPage: Component {
                     viewHref:
                         SystemPermissionRoutes.details(RouterPath(state.id))
                         .description,
-                removeHref: NewAdminLocation.remove(
-                    path: SystemPermissionRoutes.remove.description,
-                    ids: [state.id],
-                    returnTo: SystemPermissionRoutes.edit(RouterPath(state.id))
-                        .description
-                ),
+                    removeHref: NewAdminLocation.remove(
+                        path: SystemPermissionRoutes.remove.description,
+                        ids: [state.id],
+                        returnTo:
+                            SystemPermissionRoutes.edit(RouterPath(state.id))
+                            .description
+                    ),
                     nonceToken: state.nonceToken
                 )
             )

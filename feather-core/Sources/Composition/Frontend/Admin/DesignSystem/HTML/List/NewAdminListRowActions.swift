@@ -10,15 +10,21 @@ public struct NewAdminListRowActions: Component {
     public func rules() -> [any Rule] {
         Media {
             Class("action-cell") {
-                WhiteSpace(.nowrap)
+                Display(.flex)
+                FlexWrap(.wrap)
+                AlignItems(.center)
+                JustifyContent(.flexEnd)
+                Gap(4.px)
+                WhiteSpace(.normal)
                 TextAlign(.right)
             }
             Custom(".action-cell .button ~ .button") {
-                MarginLeft(4.px)
+                MarginLeft(0.px)
             }
         }
         Media(.maxWidth(768.px)) {
             Custom(".action-table td.action-cell") {
+                Display(.block)
                 WhiteSpace(.normal)
                 TextAlign(.left)
             }
@@ -71,7 +77,7 @@ public struct NewAdminListRowActions: Component {
         }
 
         return Td {
-            for (index, action) in visibleActions.enumerated() {
+            for action in visibleActions {
                 if let copyText = action.copyText {
                     context.render(
                         NewAdminControlButton(
@@ -93,9 +99,6 @@ public struct NewAdminListRowActions: Component {
                     )
                 }
 
-                if index < visibleActions.count - 1 {
-                    Span(" ")
-                }
             }
         }
         .data("label", label)

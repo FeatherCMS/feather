@@ -28,7 +28,9 @@ enum SystemJobRoutes {
             query.append("page=\(page)")
         }
         if let search = search?.emptyToNil {
-            query.append("search=\(search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? search)")
+            query.append(
+                "search=\(search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? search)"
+            )
         }
         let path = list.description + "/"
         return query.isEmpty ? path : "\(path)?\(query.joined(separator: "&"))"

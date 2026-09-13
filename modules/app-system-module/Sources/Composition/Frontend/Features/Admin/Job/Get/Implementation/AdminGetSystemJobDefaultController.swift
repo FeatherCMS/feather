@@ -16,7 +16,9 @@ struct AdminGetSystemJobDefaultController: AdminGetSystemJobController {
         let runtime = buildRuntime(request, context)
         guard context.isCurrentUserAllowed(to: SystemPermissions.Jobs.read)
         else {
-            return try await runtime.presenter.renderErrorPage(error: .forbidden)
+            return try await runtime.presenter.renderErrorPage(
+                error: .forbidden
+            )
         }
         let id = try context.requiredID()
         do {

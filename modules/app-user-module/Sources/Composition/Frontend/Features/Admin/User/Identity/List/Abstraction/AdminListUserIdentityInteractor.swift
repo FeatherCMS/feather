@@ -9,5 +9,7 @@ protocol AdminListUserIdentityInteractor: Sendable {
         size: Int,
         search: String?,
         role: String?
-    ) async throws -> NewAdminListModel<Components.Schemas.UserIdentityListItemSchema>
+    ) async throws -> NewAdminListModel<
+        Components.Schemas.UserIdentityListItemSchema
+    >
 }

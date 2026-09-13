@@ -10,7 +10,7 @@ struct AdminAddRedirectRuleOpenAPIRepository: AdminAddRedirectRuleRepository {
     let api: RedirectAdminAPIClient
 
     func create(
-        input: RedirectRuleFormInput
+        input: RedirectRuleAddFormInput
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.redirectRuleCreate(

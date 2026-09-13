@@ -75,7 +75,8 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Cursor(.pointer)
             },
-            Custom(".new-admin-form-checkbox-group__option input:focus-visible") {
+            Custom(".new-admin-form-checkbox-group__option input:focus-visible")
+            {
                 Outline(
                     2.px,
                     .solid,

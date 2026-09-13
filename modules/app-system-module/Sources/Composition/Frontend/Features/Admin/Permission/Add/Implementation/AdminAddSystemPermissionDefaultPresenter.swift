@@ -64,7 +64,8 @@ struct AdminAddSystemPermissionDefaultPresenter:
         case .unavailable:
             return try await renderFormError(
                 input: input,
-                message: "The system permission could not be created. Please try again.",
+                message:
+                    "The system permission could not be created. Please try again.",
                 status: .serviceUnavailable
             )
         }
@@ -89,7 +90,8 @@ struct AdminAddSystemPermissionDefaultPresenter:
             content: NewAdminStatusView(
                 state: .init(
                     title: "Form expired",
-                    message: "This form is no longer valid. Please reload the page and try again."
+                    message:
+                        "This form is no longer valid. Please reload the page and try again."
                 ),
                 icon: FeatherIcons.alertCircle()
             ),

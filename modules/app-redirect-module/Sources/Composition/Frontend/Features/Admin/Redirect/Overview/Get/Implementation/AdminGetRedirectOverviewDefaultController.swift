@@ -2,7 +2,9 @@ import FeatherAdmin
 import Foundation
 import Hummingbird
 
-struct AdminGetRedirectOverviewDefaultController: AdminGetRedirectOverviewController {
+struct AdminGetRedirectOverviewDefaultController:
+    AdminGetRedirectOverviewController
+{
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminGetRedirectOverviewInteractor,

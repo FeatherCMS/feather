@@ -14,6 +14,8 @@ struct AdminGetUserOverviewDefaultController: AdminGetUserOverviewController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
-        return try await presenter.renderPage(model: try await interactor.getOverview())
+        return try await presenter.renderPage(
+            model: try await interactor.getOverview()
+        )
     }
 }

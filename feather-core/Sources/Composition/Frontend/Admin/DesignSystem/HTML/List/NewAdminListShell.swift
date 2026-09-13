@@ -26,6 +26,7 @@ public struct NewAdminListShell<Table: FlowContent>: Component {
             }
             Custom(".cms-table") {
                 Width(100.percent)
+                TableLayout(.fixed)
                 BorderCollapse(.collapse)
                 MinWidth(680.px)
             }

@@ -13,7 +13,8 @@ struct AdminRemoveSystemPermissionDefaultInteractor:
                 result.append(try await repository.get(id: id).name ?? "")
             }
             return result
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }
@@ -23,7 +24,8 @@ struct AdminRemoveSystemPermissionDefaultInteractor:
             for id in ids {
                 try await repository.delete(id: id)
             }
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }

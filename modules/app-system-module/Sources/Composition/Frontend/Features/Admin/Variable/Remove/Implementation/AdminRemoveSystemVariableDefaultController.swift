@@ -55,7 +55,8 @@ struct AdminRemoveSystemVariableDefaultController:
                 .response(from: request, context: context)
         }
         catch let error as AdminRemoveSystemVariableError {
-            return try await presenter
+            return
+                try await presenter
                 .renderErrorPage(
                     error: error,
                     cancel: SystemVariableRoutes.list.description
@@ -92,7 +93,8 @@ struct AdminRemoveSystemVariableDefaultController:
                     sessionToken: context.sessionToken
                 )
             else {
-                return try await presenter
+                return
+                    try await presenter
                     .renderInvalidNoncePage(
                         cancel: NewAdminLocation.removeCancel(
                             path: SystemVariableRoutes.list.description,

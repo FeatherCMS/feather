@@ -18,7 +18,8 @@ struct AdminAddSystemVariableDefaultInteractor: AdminAddSystemVariableInteractor
                     notes: input.normalizedNotes
                 )
             )
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }

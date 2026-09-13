@@ -4,9 +4,18 @@ import Foundation
 import Hummingbird
 
 protocol AdminEditUserRolePresenter: Sendable {
-    func renderEditPage(id: String, state: UserRoleForm.State) async throws -> HTMLResponse
-    func renderValidationError(id: String, input: AdminEditUserRoleFormInput?, error: ValidationError) async throws -> HTMLResponse
-    func renderEditError(id: String, input: AdminEditUserRoleFormInput?, error: AdminEditUserRoleError) async throws -> HTMLResponse
+    func renderEditPage(id: String, state: UserRoleForm.State) async throws
+        -> HTMLResponse
+    func renderValidationError(
+        id: String,
+        input: AdminEditUserRoleFormInput?,
+        error: ValidationError
+    ) async throws -> HTMLResponse
+    func renderEditError(
+        id: String,
+        input: AdminEditUserRoleFormInput?,
+        error: AdminEditUserRoleError
+    ) async throws -> HTMLResponse
     func renderSuccess(id: String) -> Response
     func renderUnauthorizedPage() async throws -> HTMLResponse
     func renderForbiddenPage() async throws -> HTMLResponse

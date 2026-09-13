@@ -13,7 +13,8 @@ struct AdminListUserIdentityOpenAPIRepository:
         size: Int,
         search: String?,
         role: String?
-    ) async throws -> UserAdminAPI.Components.Responses
+    ) async throws
+        -> UserAdminAPI.Components.Responses
         .UserIdentityListItemSearchSchemaSearchResponse
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in

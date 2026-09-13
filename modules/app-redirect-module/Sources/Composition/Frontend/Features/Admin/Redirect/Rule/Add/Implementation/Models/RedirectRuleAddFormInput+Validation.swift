@@ -3,7 +3,7 @@ import FeatherValidation
 import Foundation
 import RedirectContracts
 
-enum RedirectRuleFormFieldValidator {
+enum RedirectRuleAddFormFieldValidator {
 
     static func source(
         _ value: String?,
@@ -46,11 +46,14 @@ enum RedirectRuleFormFieldValidator {
             invocation: .all,
             rules: [
                 .trimmedNonempty(message: "Status code is required."),
-                .init(message: "Status code must be 301, 302, 307, or 308.") { value in
-                    guard let code = Int(value), StatusCode(rawValue: code) != nil else {
+                .init(message: "Status code must be 301, 302, 307, or 308.") {
+                    value in
+                    guard let code = Int(value),
+                        StatusCode(rawValue: code) != nil
+                    else {
                         throw RuleError.invalid
                     }
-                }
+                },
             ]
         )
     }
@@ -69,20 +72,20 @@ enum RedirectRuleFormFieldValidator {
     }
 }
 
-extension RedirectRuleFormInput {
+extension RedirectRuleAddFormInput {
 
     private var validator: GroupValidator {
         GroupValidator {
-            RedirectRuleFormFieldValidator.source(source, required: true)
-            RedirectRuleFormFieldValidator.destination(
+            RedirectRuleAddFormFieldValidator.source(source, required: true)
+            RedirectRuleAddFormFieldValidator.destination(
                 destination,
                 required: true
             )
-            RedirectRuleFormFieldValidator.statusCode(
+            RedirectRuleAddFormFieldValidator.statusCode(
                 statusCode,
                 required: true
             )
-            RedirectRuleFormFieldValidator.notes(notes, required: false)
+            RedirectRuleAddFormFieldValidator.notes(notes, required: false)
         }
     }
 

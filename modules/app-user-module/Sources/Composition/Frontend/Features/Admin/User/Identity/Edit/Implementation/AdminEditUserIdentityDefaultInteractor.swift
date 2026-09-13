@@ -36,7 +36,9 @@ struct AdminEditUserIdentityDefaultInteractor: AdminEditUserIdentityInteractor {
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    private func map(_ error: OpenAPIRepositoryError) -> AdminEditUserIdentityError {
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminEditUserIdentityError
+    {
         switch error {
         case .notFound: .notFound
         case .unauthorized: .unauthorized

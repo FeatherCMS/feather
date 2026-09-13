@@ -16,7 +16,9 @@ struct AdminRemoveRedirectRuleDefaultInteractor:
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    private func map(_ error: OpenAPIRepositoryError) -> AdminRemoveRedirectRuleError {
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminRemoveRedirectRuleError
+    {
         switch error {
         case .notFound: .notFound
         case .unauthorized: .unauthorized

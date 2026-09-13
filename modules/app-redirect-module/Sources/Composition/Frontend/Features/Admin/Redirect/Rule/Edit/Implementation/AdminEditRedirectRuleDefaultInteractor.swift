@@ -8,20 +8,22 @@ struct AdminEditRedirectRuleDefaultInteractor:
 
     func load(
         id: String
-    ) async throws -> RedirectRuleDetailsModel {
+    ) async throws -> RedirectRuleEditModel {
         do { return try await repository.load(id: id) }
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
     func update(
         id: String,
-        input: RedirectRuleFormInput
+        input: RedirectRuleEditFormInput
     ) async throws {
         do { try await repository.update(id: id, input: input) }
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    private func map(_ error: OpenAPIRepositoryError) -> AdminEditRedirectRuleError {
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminEditRedirectRuleError
+    {
         switch error {
         case .notFound: .notFound
         case .unauthorized: .unauthorized

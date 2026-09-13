@@ -13,7 +13,7 @@ struct AdminEditRedirectRuleOpenAPIRepository:
 
     func load(
         id: String
-    ) async throws -> RedirectRuleDetailsModel {
+    ) async throws -> RedirectRuleEditModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.redirectRuleGet(
                 path: .init(redirectRuleId: id),
@@ -46,7 +46,7 @@ struct AdminEditRedirectRuleOpenAPIRepository:
 
     func update(
         id: String,
-        input: RedirectRuleFormInput
+        input: RedirectRuleEditFormInput
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.redirectRuleUpdate(

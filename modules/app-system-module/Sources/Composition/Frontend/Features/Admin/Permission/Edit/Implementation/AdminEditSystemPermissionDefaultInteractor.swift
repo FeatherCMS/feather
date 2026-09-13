@@ -11,7 +11,8 @@ struct AdminEditSystemPermissionDefaultInteractor:
     ) async throws -> SystemPermissionDetailsModel {
         do {
             return try await repository.load(id: id)
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }
@@ -22,7 +23,8 @@ struct AdminEditSystemPermissionDefaultInteractor:
     ) async throws {
         do {
             try await repository.update(id: id, input: input)
-        } catch let error as OpenAPIRepositoryError {
+        }
+        catch let error as OpenAPIRepositoryError {
             throw map(error)
         }
     }

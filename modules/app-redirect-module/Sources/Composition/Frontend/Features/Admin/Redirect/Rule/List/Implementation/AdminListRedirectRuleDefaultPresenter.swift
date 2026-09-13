@@ -19,36 +19,54 @@ struct AdminListRedirectRuleDefaultPresenter: AdminListRedirectRulePresenter {
             request: request,
             context: context,
             title: "Redirect rules",
-            content: RedirectRuleTable(state: .init(
-                permissions: permissions,
-                rules: model.items,
-                pageState: model.pageState,
-                search: search,
-                statusCode: statusCode
-            ))
+            content: RedirectRuleTable(
+                state: .init(
+                    permissions: permissions,
+                    rules: model.items,
+                    pageState: model.pageState,
+                    search: search,
+                    statusCode: statusCode
+                )
+            )
         )
     }
 
-    func renderErrorPage(error: AdminListRedirectRuleError) async throws -> HTMLResponse {
+    func renderErrorPage(error: AdminListRedirectRuleError) async throws
+        -> HTMLResponse
+    {
         let state: NewAdminStatusView.State
         switch error {
         case .unauthorized:
-            state = .init(title: "Session expired", message: "Please sign in again to view redirect rules.")
+            state = .init(
+                title: "Session expired",
+                message: "Please sign in again to view redirect rules."
+            )
         case .forbidden:
-            state = .init(title: "Forbidden", message: "Your account cannot access redirect rules.")
+            state = .init(
+                title: "Forbidden",
+                message: "Your account cannot access redirect rules."
+            )
         case .unavailable:
-            state = .init(title: "Redirect rules unavailable", message: "The request could not be completed. Please try again.")
+            state = .init(
+                title: "Redirect rules unavailable",
+                message: "The request could not be completed. Please try again."
+            )
         }
         let page = try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Redirect rules",
-            content: NewAdminStatusView(state: state, icon: FeatherIcons.alertCircle())
+            content: NewAdminStatusView(
+                state: state,
+                icon: FeatherIcons.alertCircle()
+            )
         )
         return HTMLResponse(content: page.content, status: status(for: error))
     }
 
-    private func status(for error: AdminListRedirectRuleError) -> HTTPResponse.Status {
+    private func status(for error: AdminListRedirectRuleError)
+        -> HTTPResponse.Status
+    {
         switch error {
         case .unauthorized: .unauthorized
         case .forbidden: .forbidden

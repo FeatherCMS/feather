@@ -5,8 +5,14 @@ import Hummingbird
 
 protocol AdminAddUserRolePresenter: Sendable {
     func renderAddPage(state: UserRoleForm.State) async throws -> HTMLResponse
-    func renderValidationError(input: AdminAddUserRoleFormInput?, error: ValidationError) async throws -> HTMLResponse
-    func renderAddError(input: AdminAddUserRoleFormInput?, error: AdminAddUserRoleError) async throws -> HTMLResponse
+    func renderValidationError(
+        input: AdminAddUserRoleFormInput?,
+        error: ValidationError
+    ) async throws -> HTMLResponse
+    func renderAddError(
+        input: AdminAddUserRoleFormInput?,
+        error: AdminAddUserRoleError
+    ) async throws -> HTMLResponse
     func renderSuccess() -> Response
     func renderUnauthorizedPage() async throws -> HTMLResponse
     func renderForbiddenPage() async throws -> HTMLResponse

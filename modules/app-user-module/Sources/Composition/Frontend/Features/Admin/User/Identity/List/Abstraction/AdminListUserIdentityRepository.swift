@@ -9,7 +9,8 @@ protocol AdminListUserIdentityRepository: Sendable {
         size: Int,
         search: String?,
         role: String?
-    ) async throws -> UserAdminAPI.Components.Responses
+    ) async throws
+        -> UserAdminAPI.Components.Responses
         .UserIdentityListItemSearchSchemaSearchResponse
 
 }

@@ -27,6 +27,7 @@ struct SystemVariableTableContent: Component {
 
     func html(context: inout RenderContext) -> Div {
         let canDelete = permissions.allows(SystemPermissions.Variables.delete)
+        let isFiltered = !(search?.isEmpty ?? true)
 
         return context.render(
             NewAdminList(
@@ -42,12 +43,13 @@ struct SystemVariableTableContent: Component {
                     else if variables.isEmpty {
                         context.render(
                             NewAdminListEmptyState(
-                                message: search?.isEmpty ?? true
-                                    ? "No system variables yet."
-                                    : "No system variables match your search.",
+                                resourceName: "system variables",
+                                isFiltered: isFiltered,
+                                filteredMessage:
+                                    "No system variables match your search.",
                                 icon: FeatherIcons.inbox(),
                                 action: {
-                                    if !(search?.isEmpty ?? true) {
+                                    if isFiltered {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset search",
@@ -57,7 +59,7 @@ struct SystemVariableTableContent: Component {
                                             )
                                         )
                                     }
-                                    else if search?.isEmpty ?? true,
+                                    else if !isFiltered,
                                         permissions.allows(
                                             SystemPermissions.Variables.create
                                         )
@@ -79,7 +81,8 @@ struct SystemVariableTableContent: Component {
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
-                                        path: SystemVariableRoutes.remove.description,
+                                        path: SystemVariableRoutes.remove
+                                            .description,
                                         ids: [],
                                         returnTo: returnTo
                                     ),
@@ -117,8 +120,10 @@ struct SystemVariableTableContent: Component {
                                                     context.render(
                                                         SystemVariableRow(
                                                             state: .init(
-                                                                variable: variable,
-                                                                returnTo: returnTo
+                                                                variable:
+                                                                    variable,
+                                                                returnTo:
+                                                                    returnTo
                                                             ),
                                                             permissions:
                                                                 permissions

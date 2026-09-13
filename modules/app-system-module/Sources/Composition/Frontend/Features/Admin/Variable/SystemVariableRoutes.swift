@@ -2,7 +2,9 @@ import FeatherAdmin
 import Hummingbird
 
 enum SystemVariableRoutes {
-    static let list = SystemAdminRoutes.system.appendingPath(RouterPath("variables"))
+    static let list = SystemAdminRoutes.system.appendingPath(
+        RouterPath("variables")
+    )
     static let add = list.appendingPath(RouterPath("add"))
     static let remove = list.appendingPath(RouterPath("remove"))
 

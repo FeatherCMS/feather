@@ -14,11 +14,13 @@ protocol AdminRemoveUserIdentityController: Sendable {
     ) async throws -> Response
 
     func getRemoveUserIdentities(
-        request: Request, context: DefaultRequestContext
+        request: Request,
+        context: DefaultRequestContext
     ) async throws -> Response
 
     func postRemoveUserIdentities(
-        request: Request, context: DefaultRequestContext
+        request: Request,
+        context: DefaultRequestContext
     ) async throws -> Response
 }
 
@@ -35,7 +37,13 @@ extension AdminRemoveUserIdentityController {
             "/admin/user/identities/{id}/remove/",
             use: postRemoveUserIdentity
         )
-        router.get("/admin/user/identities/remove/", use: getRemoveUserIdentities)
-        router.post("/admin/user/identities/remove/", use: postRemoveUserIdentities)
+        router.get(
+            "/admin/user/identities/remove/",
+            use: getRemoveUserIdentities
+        )
+        router.post(
+            "/admin/user/identities/remove/",
+            use: postRemoveUserIdentities
+        )
     }
 }

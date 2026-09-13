@@ -1,6 +1,7 @@
 import FeatherContracts
 
-public struct SystemVariableAddFormInput: Decodable, Sendable, Equatable, Hashable
+public struct SystemVariableAddFormInput: Decodable, Sendable, Equatable,
+    Hashable
 {
     let key: String
     let value: String
