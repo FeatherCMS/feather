@@ -2,9 +2,9 @@ import FeatherAdmin
 
 struct AdminAddUserIdentityDefaultInteractor: AdminAddUserIdentityInteractor {
     let repository: any AdminAddUserIdentityRepository
-    let roleRepository: any AdminUserIdentityRoleRepository
+    let roleRepository: any AdminAddUserIdentityRoleRepository
 
-    func loadRoleOptions() async throws -> [UserIdentityRoleOptionModel] {
+    func loadRoleOptions() async throws -> [UserIdentityAddRoleOptionModel] {
         try await roleRepository.list()
     }
 

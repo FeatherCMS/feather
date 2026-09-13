@@ -7,9 +7,6 @@ enum UserIdentityRoutes {
     )
     static let add = list.appendingPath(RouterPath("add"))
     static let remove = list.appendingPath(RouterPath("remove"))
-    static let detailsPattern = details(RouterPath("{id}"))
-    static let editPattern = edit(RouterPath("{id}"))
-    static let removePattern = remove(RouterPath("{id}"))
 
     static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
         UserAdminRoutes.breadcrumb

@@ -25,19 +25,19 @@ extension AdminRemoveUserRoleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            RouterPath(UserRoleRoutes.removePattern.description + "/"),
+            UserRoleRoutes.remove(RouterPath("{id}")),
             use: getRemoveUserRole
         )
         router.post(
-            RouterPath(UserRoleRoutes.removePattern.description + "/"),
+            UserRoleRoutes.remove(RouterPath("{id}")),
             use: postRemoveUserRole
         )
         router.get(
-            RouterPath(UserRoleRoutes.remove.description + "/"),
+            UserRoleRoutes.remove,
             use: getRemoveUserRoles
         )
         router.post(
-            RouterPath(UserRoleRoutes.remove.description + "/"),
+            UserRoleRoutes.remove,
             use: postRemoveUserRoles
         )
     }

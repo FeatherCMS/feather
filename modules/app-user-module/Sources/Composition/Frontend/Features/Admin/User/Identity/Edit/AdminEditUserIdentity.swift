@@ -14,7 +14,7 @@ struct AdminEditUserIdentity {
                                 api: context.userAdminAPI()
                             ),
                         roleRepository:
-                            AdminUserIdentityRoleOpenAPIRepository(
+                            AdminEditUserIdentityRoleOpenAPIRepository(
                                 api: context.userAdminAPI()
                             )
                     ),

@@ -27,6 +27,6 @@ extension AdminListAuthCredentialController {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.get("/admin/auth/credentials/", use: getCredentials)
+        router.get(AuthCredentialRoutes.list, use: getCredentials)
     }
 }

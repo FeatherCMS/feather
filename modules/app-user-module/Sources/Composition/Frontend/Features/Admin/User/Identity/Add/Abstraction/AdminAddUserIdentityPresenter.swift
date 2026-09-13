@@ -3,17 +3,17 @@ import FeatherValidation
 import Hummingbird
 
 protocol AdminAddUserIdentityPresenter: Sendable {
-    func renderAddPage(state: UserIdentityForm.State) async throws
+    func renderAddPage(state: UserIdentityAddForm.State) async throws
         -> HTMLResponse
     func renderValidationError(
         input: AdminAddUserIdentityFormInput?,
         error: ValidationError,
-        roleOptions: [UserIdentityRoleOptionModel]
+        roleOptions: [UserIdentityAddRoleOptionModel]
     ) async throws -> HTMLResponse
     func renderAddError(
         input: AdminAddUserIdentityFormInput?,
         error: AdminAddUserIdentityError,
-        roleOptions: [UserIdentityRoleOptionModel]
+        roleOptions: [UserIdentityAddRoleOptionModel]
     ) async throws -> HTMLResponse
     func renderSuccess() -> Response
     func renderUnauthorizedPage() async throws -> HTMLResponse

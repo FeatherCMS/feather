@@ -9,6 +9,6 @@ protocol AdminEditUserRoleRepository: Sendable {
 
     func update(
         id: String,
-        payload: UserRoleFormPayloadModel
+        payload: UserRoleEditFormPayloadModel
     ) async throws
 }

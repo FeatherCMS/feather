@@ -4,6 +4,6 @@ import Foundation
 protocol AdminAddUserRoleRepository: Sendable {
 
     func create(
-        payload: UserRoleFormPayloadModel
+        payload: UserRoleAddFormPayloadModel
     ) async throws
 }

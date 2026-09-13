@@ -62,23 +62,33 @@ public struct AddIdentity: UseCase {
             let model = try await scope.identity.insert(
                 Identity.create(name: input.name, status: input.status)
             )
-            if let roleIds = input.roleIds {
-                for roleId in roleIds {
-                    guard try await scope.role.findBy(id: roleId) != nil
-                    else {
-                        throw Error(message: "Role not found: \(roleId)")
-                    }
+            let roleIds = input.roleIds ?? []
+            for roleId in roleIds {
+                guard try await scope.role.findBy(id: roleId) != nil
+                else {
+                    throw Error(message: "Role not found: \(roleId)")
                 }
-                try await scope.identity.replaceRoleIds(
-                    identityId: model.id,
-                    roleIds: roleIds
-                )
             }
+            try await scope.identity.replaceRoleIds(
+                identityId: model.id,
+                roleIds: roleIds
+            )
             try await events.trigger(
                 event: UserIdentityDidInsert(identityID: model.id),
                 using: context
             )
-            return model.asDetail
+            let persistedRoleIds = try await scope.identity.findRoleIdsBy(
+                identityId: model.id
+            )
+            let detail = model.asDetail
+            return .init(
+                id: detail.id,
+                name: detail.name,
+                roleIds: persistedRoleIds,
+                status: detail.status,
+                createdAt: detail.createdAt,
+                updatedAt: detail.updatedAt
+            )
         }
     }
 }

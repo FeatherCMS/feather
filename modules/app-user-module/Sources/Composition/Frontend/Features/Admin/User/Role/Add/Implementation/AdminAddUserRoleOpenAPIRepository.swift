@@ -9,7 +9,7 @@ struct AdminAddUserRoleOpenAPIRepository: AdminAddUserRoleRepository {
     let api: UserAdminAPIClient
 
     func create(
-        payload: UserRoleFormPayloadModel
+        payload: UserRoleAddFormPayloadModel
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =

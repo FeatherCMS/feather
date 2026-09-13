@@ -3,7 +3,7 @@ import Foundation
 
 protocol AdminAddUserIdentityInteractor: Sendable {
 
-    func loadRoleOptions() async throws -> [UserIdentityRoleOptionModel]
+    func loadRoleOptions() async throws -> [UserIdentityAddRoleOptionModel]
 
     func add(
         input: AdminAddUserIdentityFormInput

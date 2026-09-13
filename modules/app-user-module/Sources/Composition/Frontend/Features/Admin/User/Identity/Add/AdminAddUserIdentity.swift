@@ -12,7 +12,7 @@ struct AdminAddUserIdentity {
                         repository: AdminAddUserIdentityOpenAPIRepository(
                             api: context.userAdminAPI()
                         ),
-                        roleRepository: AdminUserIdentityRoleOpenAPIRepository(
+                        roleRepository: AdminAddUserIdentityRoleOpenAPIRepository(
                             api: context.userAdminAPI()
                         )
                     ),

@@ -9,12 +9,12 @@ struct AdminAddUserRoleDefaultPresenter: AdminAddUserRolePresenter {
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderAddPage(state: UserRoleForm.State) async throws -> HTMLResponse {
+    func renderAddPage(state: UserRoleAddForm.State) async throws -> HTMLResponse {
         try await renderAddPage(state: state, status: .ok)
     }
 
     private func renderAddPage(
-        state: UserRoleForm.State,
+        state: UserRoleAddForm.State,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
@@ -30,7 +30,7 @@ struct AdminAddUserRoleDefaultPresenter: AdminAddUserRolePresenter {
         input: AdminAddUserRoleFormInput?,
         error: ValidationError
     ) async throws -> HTMLResponse {
-        var state = input.map(UserRoleForm.State.from(input:)) ?? .addEmpty()
+        var state = input.map(UserRoleAddForm.State.from(input:)) ?? .addEmpty()
         var errors: [String: String] = [:]
         for failure in error.failures { errors[failure.key] = failure.message }
         state.apply(errors: errors)
@@ -117,7 +117,7 @@ struct AdminAddUserRoleDefaultPresenter: AdminAddUserRolePresenter {
         message: String,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
-        var state = input.map(UserRoleForm.State.from(input:)) ?? .addEmpty()
+        var state = input.map(UserRoleAddForm.State.from(input:)) ?? .addEmpty()
         state.error = message
         return try await renderAddPage(state: state, status: status)
     }

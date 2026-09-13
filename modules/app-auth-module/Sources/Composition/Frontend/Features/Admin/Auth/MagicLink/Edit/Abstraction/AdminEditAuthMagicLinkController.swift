@@ -35,11 +35,11 @@ extension AdminEditAuthMagicLinkController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/magic-links/{id}/edit/",
+            AuthMagicLinkRoutes.edit(RouterPath("{id}")),
             use: getEditAuthMagicLink
         )
         router.post(
-            "/admin/auth/magic-links/{id}/edit/",
+            AuthMagicLinkRoutes.edit(RouterPath("{id}")),
             use: postEditAuthMagicLink
         )
     }

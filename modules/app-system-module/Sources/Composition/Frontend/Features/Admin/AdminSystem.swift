@@ -17,21 +17,21 @@ public struct AdminSystem {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetStyle()
+        AdminViewStyle()
             .route(on: router)
 
-        AdminGetDashboard(
+        AdminViewDashboard(
             renderingEngine: renderingEngine,
             events: adminEvents
         )
         .controller.route(on: router)
 
-        AdminGetSystemOverview(
+        AdminViewSystemOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
-        AdminGetDesignSystem(
+        AdminViewDesignSystem(
             renderingEngine: renderingEngine,
             events: adminEvents
         )
@@ -42,7 +42,7 @@ public struct AdminSystem {
         )
         .controller.route(on: router)
 
-        AdminGetSystemPermission(
+        AdminViewSystemPermission(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -82,7 +82,7 @@ public struct AdminSystem {
         )
         .controller.route(on: router)
 
-        AdminGetSystemVariable(
+        AdminViewSystemVariable(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -92,7 +92,7 @@ public struct AdminSystem {
         )
         .controller.route(on: router)
 
-        AdminGetSystemJob(
+        AdminViewSystemJob(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

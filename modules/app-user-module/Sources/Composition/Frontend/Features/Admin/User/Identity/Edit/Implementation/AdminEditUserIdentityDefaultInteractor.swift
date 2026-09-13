@@ -3,7 +3,7 @@ import Foundation
 
 struct AdminEditUserIdentityDefaultInteractor: AdminEditUserIdentityInteractor {
     let identityRepository: any AdminEditUserIdentityRepository
-    let roleRepository: any AdminUserIdentityRoleRepository
+    let roleRepository: any AdminEditUserIdentityRoleRepository
 
     func load(
         id: String
@@ -13,7 +13,7 @@ struct AdminEditUserIdentityDefaultInteractor: AdminEditUserIdentityInteractor {
     }
 
     func loadRoleOptions() async throws
-        -> [UserIdentityRoleOptionModel]
+        -> [UserIdentityEditRoleOptionModel]
     {
         do { return try await roleRepository.list() }
         catch let error as OpenAPIRepositoryError { throw map(error) }

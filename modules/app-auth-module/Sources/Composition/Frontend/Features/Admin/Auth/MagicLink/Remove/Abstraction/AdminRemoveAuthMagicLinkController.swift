@@ -35,11 +35,11 @@ extension AdminRemoveAuthMagicLinkController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/magic-links/{id}/remove/",
+            AuthMagicLinkRoutes.remove(RouterPath("{id}")),
             use: getRemoveAuthMagicLink
         )
         router.post(
-            "/admin/auth/magic-links/{id}/remove/",
+            AuthMagicLinkRoutes.remove(RouterPath("{id}")),
             use: postRemoveAuthMagicLink
         )
     }

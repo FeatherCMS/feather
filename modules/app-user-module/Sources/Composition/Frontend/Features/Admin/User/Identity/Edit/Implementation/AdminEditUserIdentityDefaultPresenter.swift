@@ -9,7 +9,7 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderEditPage(id: String, state: UserIdentityForm.State) async throws
+    func renderEditPage(id: String, state: UserIdentityEditForm.State) async throws
         -> HTMLResponse
     {
         let nonceToken = await AdminNonceStore.shared.issue(
@@ -29,11 +29,11 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
         id: String,
         input: AdminEditUserIdentityFormInput?,
         error: ValidationError,
-        roleOptions: [UserIdentityRoleOptionModel]
+        roleOptions: [UserIdentityEditRoleOptionModel]
     ) async throws -> HTMLResponse {
         var state =
             input.map {
-                UserIdentityForm.State.from(
+                UserIdentityEditForm.State.from(
                     name: $0.normalizedName,
                     status: $0.normalizedStatus,
                     roleIds: $0.roleIds ?? [],
@@ -51,7 +51,7 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
         id: String,
         input: AdminEditUserIdentityFormInput?,
         error: AdminEditUserIdentityError,
-        roleOptions: [UserIdentityRoleOptionModel]
+        roleOptions: [UserIdentityEditRoleOptionModel]
     ) async throws -> HTMLResponse {
         switch error {
         case .notFound:
@@ -125,11 +125,11 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
         input: AdminEditUserIdentityFormInput?,
         message: String,
         status: HTTPResponse.Status,
-        roleOptions: [UserIdentityRoleOptionModel]
+        roleOptions: [UserIdentityEditRoleOptionModel]
     ) async throws -> HTMLResponse {
         var state =
             input.map {
-                UserIdentityForm.State.from(
+                UserIdentityEditForm.State.from(
                     name: $0.normalizedName,
                     status: $0.normalizedStatus,
                     roleIds: $0.roleIds ?? [],

@@ -8,7 +8,7 @@ struct AdminAddUserIdentityOpenAPIRepository: AdminAddUserIdentityRepository {
     let api: UserAdminAPIClient
 
     func create(
-        payload: UserIdentityFormPayloadModel
+        payload: UserIdentityAddFormPayloadModel
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =

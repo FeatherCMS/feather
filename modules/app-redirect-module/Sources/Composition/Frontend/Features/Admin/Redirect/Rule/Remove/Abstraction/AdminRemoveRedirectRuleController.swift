@@ -32,19 +32,19 @@ extension AdminRemoveRedirectRuleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            RouterPath(RedirectRuleRoutes.removePattern.description + "/"),
+            RedirectRuleRoutes.remove(RouterPath("{id}")),
             use: getRemoveRedirectRule
         )
         router.post(
-            RouterPath(RedirectRuleRoutes.removePattern.description + "/"),
+            RedirectRuleRoutes.remove(RouterPath("{id}")),
             use: postRemoveRedirectRule
         )
         router.get(
-            RouterPath(RedirectRuleRoutes.remove.description + "/"),
+            RedirectRuleRoutes.remove,
             use: getRemoveRedirectRules
         )
         router.post(
-            RouterPath(RedirectRuleRoutes.remove.description + "/"),
+            RedirectRuleRoutes.remove,
             use: postRemoveRedirectRules
         )
     }

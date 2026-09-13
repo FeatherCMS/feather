@@ -12,7 +12,7 @@ public struct AdminRedirect {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetRedirectOverview(
+        AdminViewRedirectOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -22,7 +22,7 @@ public struct AdminRedirect {
         )
         .controller.route(on: router)
 
-        AdminGetRedirectRule(
+        AdminViewRedirectRule(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

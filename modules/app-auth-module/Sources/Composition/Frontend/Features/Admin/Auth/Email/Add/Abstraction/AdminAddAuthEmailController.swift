@@ -35,11 +35,11 @@ extension AdminAddAuthEmailController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/emails/add/",
+            AuthEmailRoutes.add,
             use: getAddAuthEmail
         )
         router.post(
-            "/admin/auth/emails/add/",
+            AuthEmailRoutes.add,
             use: postAddAuthEmail
         )
     }

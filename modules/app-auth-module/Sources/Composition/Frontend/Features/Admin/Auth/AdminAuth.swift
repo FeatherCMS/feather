@@ -22,7 +22,7 @@ struct AdminAuth {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetAuthOverview(
+        AdminViewAuthOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -32,7 +32,7 @@ struct AdminAuth {
         )
         .controller.route(on: router)
 
-        AdminGetAuthEmail(
+        AdminViewAuthEmail(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -49,7 +49,7 @@ struct AdminAuth {
         )
         .controller.route(on: router)
 
-        AdminGetAuthMagicLink(
+        AdminViewAuthMagicLink(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

@@ -9,6 +9,6 @@ protocol AdminEditUserIdentityRepository: Sendable {
 
     func update(
         id: String,
-        payload: UserIdentityFormPayloadModel
+        payload: UserIdentityEditFormPayloadModel
     ) async throws
 }

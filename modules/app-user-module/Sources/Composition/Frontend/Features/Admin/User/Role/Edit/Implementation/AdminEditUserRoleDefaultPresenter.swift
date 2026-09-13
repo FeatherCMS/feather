@@ -9,7 +9,7 @@ struct AdminEditUserRoleDefaultPresenter: AdminEditUserRolePresenter {
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderEditPage(id: String, state: UserRoleForm.State) async throws
+    func renderEditPage(id: String, state: UserRoleEditForm.State) async throws
         -> HTMLResponse
     {
         let nonceToken = await AdminNonceStore.shared.issue(
@@ -31,7 +31,7 @@ struct AdminEditUserRoleDefaultPresenter: AdminEditUserRolePresenter {
         error: ValidationError
     ) async throws -> HTMLResponse {
         var state =
-            input.map(UserRoleForm.State.from(input:))
+            input.map(UserRoleEditForm.State.from(input:))
             ?? .edit(name: "", notes: "")
         var errors: [String: String] = [:]
         for failure in error.failures { errors[failure.key] = failure.message }
@@ -117,7 +117,7 @@ struct AdminEditUserRoleDefaultPresenter: AdminEditUserRolePresenter {
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
         var state =
-            input.map(UserRoleForm.State.from(input:))
+            input.map(UserRoleEditForm.State.from(input:))
             ?? .edit(name: "", notes: "")
         state.error = message
         return try await renderEditPage(id: id, state: state).withStatus(status)

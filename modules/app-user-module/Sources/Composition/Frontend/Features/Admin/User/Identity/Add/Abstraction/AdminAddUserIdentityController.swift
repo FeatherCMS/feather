@@ -21,11 +21,11 @@ extension AdminAddUserIdentityController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            RouterPath(UserIdentityRoutes.add.description + "/"),
+            UserIdentityRoutes.add,
             use: getAddUserIdentity
         )
         router.post(
-            RouterPath(UserIdentityRoutes.add.description + "/"),
+            UserIdentityRoutes.add,
             use: postAddUserIdentity
         )
     }

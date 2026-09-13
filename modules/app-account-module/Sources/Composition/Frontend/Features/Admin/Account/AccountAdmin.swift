@@ -16,7 +16,7 @@ public struct AccountAdmin {
     ) {
         router.get(RouterPath(AccountAdminRoutes.profileImage.description + "/")) { _, context in
             do {
-                let profile = try await AdminGetAccountProfileOpenAPIRepository(
+                let profile = try await AdminViewAccountProfileOpenAPIRepository(
                     api: context.accountAppAPI(),
                     mediaAPI: context.mediaAdminAPI()
                 )
@@ -46,12 +46,12 @@ public struct AccountAdmin {
             }
         }
 
-        AdminGetAccountOverview(
+        AdminViewAccountOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
-        AdminGetAccountProfile(
+        AdminViewAccountProfile(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -71,7 +71,7 @@ public struct AccountAdmin {
         )
         .controller.route(on: router)
 
-        AdminGetAccountInvitation(
+        AdminViewAccountInvitation(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

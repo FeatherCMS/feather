@@ -9,14 +9,14 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderAddPage(state: UserIdentityForm.State) async throws
+    func renderAddPage(state: UserIdentityAddForm.State) async throws
         -> HTMLResponse
     {
         try await renderAddPage(state: state, status: .ok)
     }
 
     private func renderAddPage(
-        state: UserIdentityForm.State,
+        state: UserIdentityAddForm.State,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
@@ -31,9 +31,9 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
     func renderValidationError(
         input: AdminAddUserIdentityFormInput?,
         error: ValidationError,
-        roleOptions: [UserIdentityRoleOptionModel]
+        roleOptions: [UserIdentityAddRoleOptionModel]
     ) async throws -> HTMLResponse {
-        var state = UserIdentityForm.State.empty()
+        var state = UserIdentityAddForm.State.empty()
         if let input {
             state = .from(
                 name: input.name,
@@ -57,7 +57,7 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
     func renderAddError(
         input: AdminAddUserIdentityFormInput?,
         error: AdminAddUserIdentityError,
-        roleOptions: [UserIdentityRoleOptionModel]
+        roleOptions: [UserIdentityAddRoleOptionModel]
     ) async throws -> HTMLResponse {
         switch error {
         case .unauthorized: return try await renderUnauthorizedPage()
@@ -132,9 +132,9 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
         input: AdminAddUserIdentityFormInput?,
         message: String,
         status: HTTPResponse.Status,
-        roleOptions: [UserIdentityRoleOptionModel]
+        roleOptions: [UserIdentityAddRoleOptionModel]
     ) async throws -> HTMLResponse {
-        var state = UserIdentityForm.State.empty()
+        var state = UserIdentityAddForm.State.empty()
         if let input {
             state = .from(
                 name: input.name,

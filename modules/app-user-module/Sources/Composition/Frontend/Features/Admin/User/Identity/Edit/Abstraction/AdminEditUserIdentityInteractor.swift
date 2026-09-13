@@ -8,7 +8,7 @@ protocol AdminEditUserIdentityInteractor: Sendable {
     ) async throws -> AdminEditUserIdentityModel
 
     func loadRoleOptions() async throws
-        -> [UserIdentityRoleOptionModel]
+        -> [UserIdentityEditRoleOptionModel]
 
     func edit(
         id: String,

@@ -35,11 +35,11 @@ extension AdminEditAuthAccessControlController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/access-control/",
+            AuthAccessControlRoutes.accessControl,
             use: getAuthAccessControl
         )
         router.post(
-            "/admin/auth/access-control/",
+            AuthAccessControlRoutes.accessControl,
             use: postAuthAccessControl
         )
     }

@@ -25,9 +25,12 @@ protocol AdminEditAuthCredentialController: Sendable {
 
 extension AdminEditAuthCredentialController {
     func route(on router: Router<DefaultRequestContext>) {
-        router.get("/admin/auth/credentials/{id}/edit", use: getEditCredential)
+        router.get(
+            AuthCredentialRoutes.edit(RouterPath("{id}")),
+            use: getEditCredential
+        )
         router.post(
-            "/admin/auth/credentials/{id}/edit",
+            AuthCredentialRoutes.edit(RouterPath("{id}")),
             use: postEditCredential
         )
     }

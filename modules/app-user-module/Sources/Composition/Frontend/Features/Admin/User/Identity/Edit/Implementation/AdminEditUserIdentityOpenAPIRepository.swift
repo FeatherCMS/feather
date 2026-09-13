@@ -43,7 +43,7 @@ struct AdminEditUserIdentityOpenAPIRepository:
 
     func update(
         id: String,
-        payload: UserIdentityFormPayloadModel
+        payload: UserIdentityEditFormPayloadModel
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.userIdentityPatch(

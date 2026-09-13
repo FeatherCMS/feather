@@ -22,11 +22,11 @@ extension AdminEditRedirectRuleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            RouterPath(RedirectRuleRoutes.editPattern.description + "/"),
+            RedirectRuleRoutes.edit(RouterPath("{id}")),
             use: getEditRedirectRule
         )
         router.post(
-            RouterPath(RedirectRuleRoutes.editPattern.description + "/"),
+            RedirectRuleRoutes.edit(RouterPath("{id}")),
             use: postEditRedirectRule
         )
     }

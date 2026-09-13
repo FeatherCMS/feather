@@ -53,7 +53,7 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
 
     func update(
         id: String,
-        payload: UserRoleFormPayloadModel
+        payload: UserRoleEditFormPayloadModel
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =

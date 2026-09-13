@@ -26,11 +26,11 @@ protocol AdminRemoveAuthCredentialController: Sendable {
 extension AdminRemoveAuthCredentialController {
     func route(on router: Router<DefaultRequestContext>) {
         router.get(
-            "/admin/auth/credentials/{id}/remove",
+            AuthCredentialRoutes.remove(RouterPath("{id}")),
             use: getRemoveCredential
         )
         router.post(
-            "/admin/auth/credentials/{id}/remove",
+            AuthCredentialRoutes.remove(RouterPath("{id}")),
             use: postRemoveCredential
         )
     }

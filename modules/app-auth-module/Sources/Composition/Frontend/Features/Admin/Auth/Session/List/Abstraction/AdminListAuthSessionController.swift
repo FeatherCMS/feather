@@ -11,7 +11,7 @@ protocol AdminListAuthSessionController: Sendable {
 extension AdminListAuthSessionController {
     func route(on router: Router<DefaultRequestContext>) {
         router.get(
-            "/admin/user/identities/{id}/sessions/",
+            AuthSessionRoutes.list(RouterPath("{id}")),
             use: get
         )
     }

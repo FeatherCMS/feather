@@ -40,15 +40,15 @@ extension AdminListAuthEmailController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/emails",
+            AuthEmailRoutes.list,
             use: getAuthEmails
         )
         router.get(
-            "/admin/auth/emails/remove/",
+            AuthEmailRoutes.remove,
             use: getAuthEmailsRemoveConfirmation
         )
         router.post(
-            "/admin/auth/emails/remove/",
+            AuthEmailRoutes.remove,
             use: postAuthEmailsRemove
         )
     }
