@@ -103,6 +103,15 @@ struct SystemVariableTableContent: Component {
                                 ),
                                 table: context.render(
                                     NewAdminListShell(
+                                        layout: .init(
+                                            name: "system-variables",
+                                            columns: [
+                                                .fraction(1),
+                                                .fraction(2),
+                                                .fixed(220),
+                                            ]
+                                        ),
+                                        hasSelection: canDelete,
                                         table: Table {
                                             Thead {
                                                 Tr {
@@ -112,13 +121,7 @@ struct SystemVariableTableContent: Component {
                                                         )
                                                     }
                                                     Th("Key")
-                                                        .columnWidth(
-                                                            percent: 50
-                                                        )
                                                     Th("Value")
-                                                        .columnWidth(
-                                                            percent: 50
-                                                        )
                                                     Th("Actions")
                                                 }
                                             }

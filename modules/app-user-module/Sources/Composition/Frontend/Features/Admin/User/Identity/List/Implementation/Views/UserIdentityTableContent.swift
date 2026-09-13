@@ -91,6 +91,18 @@ struct UserIdentityTableContent: Component {
                                 ),
                                 table: context.render(
                                     NewAdminListShell(
+                                        layout: .init(
+                                            name: "user-identities",
+                                            columns: [
+                                                .fixed(220),
+                                                .fixed(220),
+                                                .fixed(120),
+                                                .fraction(1),
+                                                .fixed(220),
+                                            ],
+                                            minimumWidth: 960
+                                        ),
+                                        hasSelection: canDelete,
                                         table: Table {
                                             Thead {
                                                 Tr {
@@ -100,25 +112,10 @@ struct UserIdentityTableContent: Component {
                                                         )
                                                     }
                                                     Th("ID")
-                                                        .columnWidth(
-                                                            percent: 20
-                                                        )
                                                     Th("Name")
-                                                        .columnWidth(
-                                                            percent: 24
-                                                        )
                                                     Th("Status")
-                                                        .columnWidth(
-                                                            percent: 10
-                                                        )
                                                     Th("Roles")
-                                                        .columnWidth(
-                                                            percent: 20
-                                                        )
                                                     Th("Actions")
-                                                        .columnWidth(
-                                                            percent: 26
-                                                        )
                                                 }
                                             }
                                             Tbody {

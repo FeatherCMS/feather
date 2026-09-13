@@ -86,6 +86,14 @@ struct UserRoleTableContent: Component {
                                 ),
                                 table: context.render(
                                     NewAdminListShell(
+                                        layout: .init(
+                                            name: "user-roles",
+                                            columns: [
+                                                .fraction(1),
+                                                .fixed(220),
+                                            ]
+                                        ),
+                                        hasSelection: canDelete,
                                         table: Table {
                                             Thead {
                                                 Tr {
@@ -95,13 +103,7 @@ struct UserRoleTableContent: Component {
                                                         )
                                                     }
                                                     Th("Name")
-                                                        .columnWidth(
-                                                            percent: 74
-                                                        )
                                                     Th("Actions")
-                                                        .columnWidth(
-                                                            percent: 25
-                                                        )
                                                 }
                                             }
                                             Tbody {

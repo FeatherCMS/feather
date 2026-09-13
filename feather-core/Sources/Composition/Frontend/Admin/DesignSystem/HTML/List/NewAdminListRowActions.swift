@@ -14,7 +14,7 @@ public struct NewAdminListRowActions: Component {
                 FlexWrap(.wrap)
                 AlignItems(.center)
                 JustifyContent(.flexStart)
-                Gap(4.px)
+                Gap(8.px)
                 WhiteSpace(.normal)
                 TextAlign(.left)
             }

@@ -48,10 +48,8 @@ struct SystemPermissionRow: Component {
             }
             Td(permission.key)
                 .data("label", "Key")
-                .columnWidth(percent: 50)
             Td(permission.name?.emptyToNil ?? "—")
                 .data("label", "Name")
-                .columnWidth(percent: 50)
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",

@@ -28,12 +28,10 @@ struct SystemJobRow: Component {
         return Tr {
             Td(payload.name)
                 .data("label", "Job")
-                .columnWidth(percent: 30)
             Td(payload.parameterSummary.emptyToNil ?? "—")
                 .data("label", "Parameters")
             Td(statusLabel(job.status))
                 .data("label", "Status")
-                .columnWidth(percent: 20)
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",

@@ -103,6 +103,17 @@ struct RedirectRuleTableContent: Component {
                                 ),
                                 table: context.render(
                                     NewAdminListShell(
+                                        layout: .init(
+                                            name: "redirect-rules",
+                                            columns: [
+                                                .fraction(1),
+                                                .fraction(2),
+                                                .fixed(190),
+                                                .fixed(220),
+                                            ],
+                                            minimumWidth: 760
+                                        ),
+                                        hasSelection: canDelete,
                                         table: Table {
                                             Thead {
                                                 Tr {
@@ -112,21 +123,9 @@ struct RedirectRuleTableContent: Component {
                                                         )
                                                     }
                                                     Th("Source")
-                                                        .columnWidth(
-                                                            percent: 24
-                                                        )
                                                     Th("Destination")
-                                                        .columnWidth(
-                                                            percent: 40
-                                                        )
                                                     Th("Status")
-                                                        .columnWidth(
-                                                            percent: 10
-                                                        )
                                                     Th("Actions")
-                                                        .columnWidth(
-                                                            percent: 26
-                                                        )
                                                 }
                                             }
                                             Tbody {

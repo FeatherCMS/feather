@@ -64,13 +64,21 @@ struct SystemJobTableContent: Component {
                     else {
                         context.render(
                             NewAdminListShell(
+                                layout: .init(
+                                    name: "system-jobs",
+                                    columns: [
+                                        .fraction(1),
+                                        .fraction(2),
+                                        .fixed(100),
+                                        .fixed(220),
+                                    ]
+                                ),
                                 table: Table {
                                     Thead {
                                         Tr {
-                                            Th("Job").columnWidth(percent: 30)
+                                            Th("Job")
                                             Th("Parameters")
                                             Th("Status")
-                                                .columnWidth(percent: 20)
                                             Th("Actions")
                                         }
                                     }

@@ -10,21 +10,38 @@ struct UserIdentityRow: Component {
     let identity: Components.Schemas.UserIdentityListItemSchema
     let permissions: NewAdminListActions
 
+    private var statusChip: NewAdminChip {
+        switch identity.status {
+        case .invited:
+            NewAdminChip(label: "Invited", color: .blue)
+        case .active:
+            NewAdminChip(label: "Active", color: .green)
+        case .suspended:
+            NewAdminChip(label: "Suspended", color: .orange)
+        case .deactivated:
+            NewAdminChip(label: "Deactivated", color: .red)
+        case .anonymized:
+            NewAdminChip(label: "Anonymized", color: .purple)
+        }
+    }
+
     func html(context: inout RenderContext) -> Tr {
         Tr {
             if permissions.allows(UserPermissions.Identities.delete) {
                 context.render(NewAdminListRowCheckbox(id: identity.id))
             }
-            Td(identity.id).data("label", "ID").columnWidth(percent: 20)
-            Td(identity.name).data("label", "Name").columnWidth(percent: 24)
-            Td(identity.status.rawValue).data("label", "Status")
-                .columnWidth(percent: 10)
+            Td(identity.id).data("label", "ID")
+            Td(identity.name).data("label", "Name")
+            Td {
+                context.render(statusChip)
+            }
+            .data("label", "Status")
             Td(
                 identity.roles.isEmpty
                     ? "No roles assigned"
                     : identity.roles.joined(separator: ", ")
             )
-            .data("label", "Roles").columnWidth(percent: 20)
+            .data("label", "Roles")
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",

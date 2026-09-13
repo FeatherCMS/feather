@@ -12,16 +12,37 @@ struct RedirectRuleRow: Component {
     let returnTo: String
     let permissions: NewAdminListActions
 
+    private var statusChip: NewAdminChip {
+        guard let statusCode = StatusCode(rawValue: rule.statusCode) else {
+            return NewAdminChip(
+                label: String(rule.statusCode),
+                color: .red
+            )
+        }
+
+        return switch statusCode {
+        case .movedPermanently:
+            NewAdminChip(label: "301 Moved Permanently", color: .green)
+        case .found:
+            NewAdminChip(label: "302 Found", color: .blue)
+        case .temporaryRedirect:
+            NewAdminChip(label: "307 Temporary Redirect", color: .orange)
+        case .permanentRedirect:
+            NewAdminChip(label: "308 Permanent Redirect", color: .red)
+        }
+    }
+
     func html(context: inout RenderContext) -> Tr {
         Tr {
             if permissions.allows(RedirectPermissions.Rules.delete) {
                 context.render(NewAdminListRowCheckbox(id: rule.id))
             }
-            Td(rule.source).data("label", "Source").columnWidth(percent: 24)
+            Td(rule.source).data("label", "Source")
             Td(rule.destination).data("label", "Destination")
-                .columnWidth(percent: 40)
-            Td(String(rule.statusCode)).data("label", "Status")
-                .columnWidth(percent: 10)
+            Td {
+                context.render(statusChip)
+            }
+            .data("label", "Status")
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",
