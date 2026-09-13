@@ -58,8 +58,12 @@ struct SystemPermissionDetailsView: Component {
             result.append(
                 .init(
                     label: "Remove",
-                    href: SystemPermissionRoutes.removeFromDetails(
-                        state.permission.id
+                    href: NewAdminLocation.remove(
+                        path: SystemPermissionRoutes.remove.description,
+                        ids: [state.permission.id],
+                        returnTo: SystemPermissionRoutes.details(
+                            RouterPath(state.permission.id)
+                        ).description
                     ),
                     style: .destructive
                 )

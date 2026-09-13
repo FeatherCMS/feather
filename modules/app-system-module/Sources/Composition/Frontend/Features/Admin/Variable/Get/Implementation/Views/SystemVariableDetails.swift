@@ -59,8 +59,12 @@ struct SystemVariableDetails: Component {
             result.append(
                 .init(
                     label: "Remove",
-                    href: SystemVariableRoutes.removeFromDetails(
-                        state.variable.id
+                    href: NewAdminLocation.remove(
+                        path: SystemVariableRoutes.remove.description,
+                        ids: [state.variable.id],
+                        returnTo: SystemVariableRoutes.details(
+                            RouterPath(state.variable.id)
+                        ).description
                     ),
                     style: .destructive
                 )

@@ -18,6 +18,14 @@ struct SystemPermissionTableContent: Component {
         search ?? ""
     }
 
+    private var returnTo: String {
+        NewAdminLocation.url(
+            path: SystemPermissionRoutes.list.description,
+            page: pageState.page,
+            search: search
+        )
+    }
+
     func html(context: inout RenderContext) -> Div {
         let canDelete = actions.allows(SystemPermissions.Permissions.delete)
 
@@ -72,8 +80,11 @@ struct SystemPermissionTableContent: Component {
                         context.render(
                             NewAdminListSelectionForm(
                                 state: .init(
-                                    action: SystemPermissionRoutes.remove
-                                        .description,
+                                    action: NewAdminLocation.remove(
+                                        path: SystemPermissionRoutes.remove.description,
+                                        ids: [],
+                                        returnTo: returnTo
+                                    ),
                                     pageState: pageState,
                                     search: searchValue,
                                     button: .init(
@@ -109,7 +120,8 @@ struct SystemPermissionTableContent: Component {
                                                         SystemPermissionRow(
                                                             permission:
                                                                 permission,
-                                                            actions: actions
+                                                            actions: actions,
+                                                            returnTo: returnTo
                                                         )
                                                     )
                                                 }

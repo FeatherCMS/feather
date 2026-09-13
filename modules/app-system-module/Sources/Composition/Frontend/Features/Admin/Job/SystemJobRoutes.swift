@@ -4,17 +4,18 @@ import Foundation
 import Hummingbird
 
 enum SystemJobRoutes {
-    private static let admin = RouterPath("admin")
-    private static let system = admin.appendingPath(RouterPath("system"))
+    static let list = SystemAdminRoutes.system.appendingPath(
+        RouterPath("jobs")
+    )
 
-    static let list = system.appendingPath(RouterPath("jobs"))
+    static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
+        SystemAdminRoutes.breadcrumb
+    }
 
-    static var breadcrumb: NewAdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "System", link: "/admin/system/"),
-            .init(label: "Worker jobs", link: list.description),
-        ])
+    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+        SystemAdminRoutes.breadcrumb + [
+            .init(label: "Worker jobs", link: list.description)
+        ]
     }
 
     static func details(_ id: RouterPath) -> RouterPath {

@@ -82,9 +82,9 @@ struct AdminGetSystemOverviewComponent: Component {
         Section {
             context.render(
                 NewAdminBreadcrumb(
-                    state: .init(links: [
+                    links: [
                         .init(label: "Admin", link: "/admin/")
-                    ])
+                    ]
                 )
             )
             context.render(

@@ -15,7 +15,10 @@ struct SystemVariableRow: Component {
         let value: String
         let actions: [NewAdminListRowActions.Action]
 
-        init(variable: Components.Schemas.SystemVariableListItemSchema) {
+        init(
+            variable: Components.Schemas.SystemVariableListItemSchema,
+            returnTo: String
+        ) {
             self.id = variable.id
             self.key = variable.key
             self.value = variable.value
@@ -36,7 +39,11 @@ struct SystemVariableRow: Component {
                 ),
                 .init(
                     "Remove",
-                    href: SystemVariableRoutes.remove(variable.id),
+                    href: NewAdminLocation.remove(
+                        path: SystemVariableRoutes.remove.description,
+                        ids: [variable.id],
+                        returnTo: returnTo
+                    ),
                     style: .destructive,
                     permission: SystemPermissions.Variables.delete
                 ),

@@ -17,6 +17,14 @@ struct SystemVariableTableContent: Component {
         search ?? ""
     }
 
+    private var returnTo: String {
+        NewAdminLocation.url(
+            path: SystemVariableRoutes.list.description,
+            page: pageState.page,
+            search: search
+        )
+    }
+
     func html(context: inout RenderContext) -> Div {
         let canDelete = permissions.allows(SystemPermissions.Variables.delete)
 
@@ -70,8 +78,11 @@ struct SystemVariableTableContent: Component {
                         context.render(
                             NewAdminListSelectionForm(
                                 state: .init(
-                                    action: SystemVariableRoutes.remove
-                                        .description,
+                                    action: NewAdminLocation.remove(
+                                        path: SystemVariableRoutes.remove.description,
+                                        ids: [],
+                                        returnTo: returnTo
+                                    ),
                                     pageState: pageState,
                                     search: searchValue,
                                     button: .init(
@@ -106,8 +117,8 @@ struct SystemVariableTableContent: Component {
                                                     context.render(
                                                         SystemVariableRow(
                                                             state: .init(
-                                                                variable:
-                                                                    variable
+                                                                variable: variable,
+                                                                returnTo: returnTo
                                                             ),
                                                             permissions:
                                                                 permissions

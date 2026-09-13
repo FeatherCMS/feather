@@ -15,7 +15,7 @@ public struct NewAdminConfirmation: Component {
         }
     }
 
-    public let breadcrumb: NewAdminBreadcrumb.State
+    public let breadcrumb: [NewAdminBreadcrumb.Link]
     public let pageHeader: NewAdminPageHeader.State
     public let selectedItems: [String]
     public let action: String
@@ -25,7 +25,7 @@ public struct NewAdminConfirmation: Component {
     public let hiddenFields: [HiddenField]
 
     public init(
-        breadcrumb: NewAdminBreadcrumb.State,
+        breadcrumb: [NewAdminBreadcrumb.Link],
         pageHeader: NewAdminPageHeader.State,
         selectedItems: [String] = [],
         action: String,
@@ -71,7 +71,7 @@ public struct NewAdminConfirmation: Component {
 
     public func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(state: breadcrumb))
+            context.render(NewAdminBreadcrumb(links: breadcrumb))
             context.render(NewAdminPageHeader(state: pageHeader))
             if !selectedItems.isEmpty {
                 Div {

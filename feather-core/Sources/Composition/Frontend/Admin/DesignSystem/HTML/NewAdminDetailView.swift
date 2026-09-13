@@ -23,12 +23,12 @@ public struct NewAdminDetailView: Component {
             self.style = style
         }
     }
-    public let breadcrumb: NewAdminBreadcrumb.State
+    public let breadcrumb: [NewAdminBreadcrumb.Link]
     public let pageHeader: NewAdminPageHeader.State
     public let fields: [Field]
     public let actions: [Action]
     public init(
-        breadcrumb: NewAdminBreadcrumb.State,
+        breadcrumb: [NewAdminBreadcrumb.Link],
         pageHeader: NewAdminPageHeader.State,
         fields: [Field],
         actions: [Action] = []
@@ -40,7 +40,7 @@ public struct NewAdminDetailView: Component {
     }
     public func html(context: inout RenderContext) -> Section {
         Section {
-            context.render(NewAdminBreadcrumb(state: breadcrumb))
+            context.render(NewAdminBreadcrumb(links: breadcrumb))
             context.render(NewAdminPageHeader(state: pageHeader))
             Div {
                 for field in fields {

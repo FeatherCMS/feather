@@ -16,7 +16,7 @@ struct SystemPermissionAddPage: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(
-                NewAdminBreadcrumb(state: SystemPermissionRoutes.breadcrumb)
+                NewAdminBreadcrumb(links: SystemPermissionRoutes.breadcrumb)
             )
             context.render(
                 NewAdminPageHeader(

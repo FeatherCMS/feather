@@ -37,12 +37,10 @@ struct AdminRemoveSystemPermissionDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListRemoveRedirect.location(
+                    .location: NewAdminLocation.url(
                         path: SystemPermissionRoutes.list.description,
                         page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
+                        search: search
                     )
                 ]
             )
@@ -54,8 +52,7 @@ struct AdminRemoveSystemPermissionDefaultController:
                     search: search,
                     ids: ids,
                     names: try await interactor.names(ids: ids),
-                    fromDetails: request.queryString("from") == "details",
-                    fromEdit: request.queryString("from") == "edit"
+                    returnTo: request.queryString("returnTo")
                 )
                 .response(from: request, context: context)
         }
@@ -90,13 +87,15 @@ struct AdminRemoveSystemPermissionDefaultController:
         }
         var page = request.queryPage()
         var search = request.querySearch()
+        var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: ListRemoveFormInput.self,
+                as: NewAdminListRemoveFormInput.self,
                 context: context
             )
             page = payload.normalizedPage
             search = payload.normalizedSearch
+            returnTo = payload.normalizedReturnTo
             guard
                 await AdminNonceStore.shared.consume(
                     payload.nonce,
@@ -108,7 +107,10 @@ struct AdminRemoveSystemPermissionDefaultController:
                         info: "Forbidden",
                         message:
                             "This confirmation has expired. Please try again.",
-                        cancel: SystemPermissionRoutes.list.description
+                        cancel: NewAdminLocation.removeCancel(
+                            path: SystemPermissionRoutes.list.description,
+                            returnTo: returnTo
+                        )
                     )
                     .response(from: request, context: context)
             }
@@ -116,23 +118,19 @@ struct AdminRemoveSystemPermissionDefaultController:
                 return Response(
                     status: .seeOther,
                     headers: [
-                        .location: ListRemoveRedirect.location(
+                        .location: NewAdminLocation.url(
                             path: SystemPermissionRoutes.list.description,
                             page: page,
-                            search: search,
-                            title: nil,
-                            message: nil
+                            search: search
                         )
                     ]
                 )
             }
             try await interactor.delete(ids: payload.normalizedIds)
-            let location = ListRemoveRedirect.location(
+            let location = NewAdminLocation.url(
                 path: SystemPermissionRoutes.list.description,
                 page: page,
-                search: search,
-                title: nil,
-                message: nil
+                search: search
             )
             return AdminNotificationFlash.redirect(
                 to: location,
@@ -149,7 +147,10 @@ struct AdminRemoveSystemPermissionDefaultController:
                 try await presenter.renderErrorPage(
                     info: "Unable to remove system permissions.",
                     message: error.displayMessage,
-                    cancel: SystemPermissionRoutes.list.description
+                    cancel: NewAdminLocation.removeCancel(
+                        path: SystemPermissionRoutes.list.description,
+                        returnTo: returnTo
+                    )
                 )
                 .response(from: request, context: context)
         }
@@ -158,12 +159,9 @@ struct AdminRemoveSystemPermissionDefaultController:
                 try await presenter.renderErrorPage(
                     info: "Unable to remove system permissions.",
                     message: error.displayMessage,
-                    cancel: ListRemoveRedirect.location(
+                    cancel: NewAdminLocation.removeCancel(
                         path: SystemPermissionRoutes.list.description,
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
+                        returnTo: returnTo
                     )
                 )
                 .response(from: request, context: context)

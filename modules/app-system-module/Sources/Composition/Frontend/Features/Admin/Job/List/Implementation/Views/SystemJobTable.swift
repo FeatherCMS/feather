@@ -20,7 +20,7 @@ struct SystemJobTable: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(state: SystemJobRoutes.breadcrumb))
+            context.render(NewAdminBreadcrumb(links: SystemJobRoutes.listBreadcrumb))
             context.render(
                 NewAdminPageHeader(
                     state: .init(

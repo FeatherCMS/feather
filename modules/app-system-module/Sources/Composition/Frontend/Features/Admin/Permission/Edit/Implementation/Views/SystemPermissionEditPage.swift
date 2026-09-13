@@ -18,7 +18,7 @@ struct SystemPermissionEditPage: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(
-                NewAdminBreadcrumb(state: SystemPermissionRoutes.breadcrumb)
+                NewAdminBreadcrumb(links: SystemPermissionRoutes.breadcrumb)
             )
             context.render(
                 NewAdminPageHeader(
@@ -37,7 +37,12 @@ struct SystemPermissionEditPage: Component {
                     viewHref:
                         SystemPermissionRoutes.details(RouterPath(state.id))
                         .description,
-                    removeHref: SystemPermissionRoutes.removeFromEdit(state.id),
+                removeHref: NewAdminLocation.remove(
+                    path: SystemPermissionRoutes.remove.description,
+                    ids: [state.id],
+                    returnTo: SystemPermissionRoutes.edit(RouterPath(state.id))
+                        .description
+                ),
                     nonceToken: state.nonceToken
                 )
             )

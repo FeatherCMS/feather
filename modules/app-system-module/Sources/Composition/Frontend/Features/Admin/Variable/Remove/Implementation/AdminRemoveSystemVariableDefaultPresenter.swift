@@ -31,11 +31,14 @@ struct AdminRemoveSystemVariableDefaultPresenter:
         search: String?,
         ids: [String],
         names: [String],
-        fromDetails: Bool,
-        fromEdit: Bool
+        returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
+        )
+        let cancel = NewAdminLocation.removeCancel(
+            path: SystemVariableRoutes.list.description,
+            returnTo: returnTo
         )
         return try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -50,16 +53,13 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 ),
                 selectedItems: names,
                 action: SystemVariableRoutes.remove.description,
-                cancel: SystemVariableRoutes.removeCancel(
-                    ids: ids,
-                    page: page,
-                    search: search,
-                    fromDetails: fromDetails,
-                    fromEdit: fromEdit
-                ),
+                cancel: cancel,
                 hiddenFields: ids.map {
                     .init(name: "ids", value: $0)
-                } + [.init(name: "_nonce", value: nonceToken)]
+                } + [
+                    .init(name: "_nonce", value: nonceToken),
+                    .init(name: "returnTo", value: cancel),
+                ]
             )
         )
     }

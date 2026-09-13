@@ -36,12 +36,10 @@ struct AdminRemoveSystemVariableDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListRemoveRedirect.location(
+                    .location: NewAdminLocation.url(
                         path: SystemVariableRoutes.list.description,
                         page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
+                        search: search
                     )
                 ]
             )
@@ -52,8 +50,7 @@ struct AdminRemoveSystemVariableDefaultController:
                 search: search,
                 ids: ids,
                 names: try await interactor.names(ids: ids),
-                fromDetails: request.queryString("from") == "details",
-                fromEdit: request.queryString("from") == "edit"
+                returnTo: request.queryString("returnTo")
             )
             .response(from: request, context: context)
     }
@@ -74,15 +71,13 @@ struct AdminRemoveSystemVariableDefaultController:
                 )
                 .response(from: request, context: context)
         }
-        var errorPage = (
-            page: request.queryPage(), search: request.querySearch()
-        )
+        var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: ListRemoveFormInput.self,
+                as: NewAdminListRemoveFormInput.self,
                 context: context
             )
-            errorPage = (payload.normalizedPage, payload.normalizedSearch)
+            returnTo = payload.normalizedReturnTo
             guard
                 await AdminNonceStore.shared.consume(
                     payload.nonce,
@@ -94,12 +89,10 @@ struct AdminRemoveSystemVariableDefaultController:
             if !payload.normalizedIds.isEmpty {
                 try await interactor.delete(ids: payload.normalizedIds)
             }
-            let location = ListRemoveRedirect.location(
+            let location = NewAdminLocation.url(
                 path: SystemVariableRoutes.list.description,
                 page: payload.normalizedPage,
-                search: payload.normalizedSearch,
-                title: nil,
-                message: nil
+                search: payload.normalizedSearch
             )
             guard !payload.normalizedIds.isEmpty else {
                 return Response(
@@ -122,12 +115,9 @@ struct AdminRemoveSystemVariableDefaultController:
                 try await presenter.renderErrorPage(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    cancel: ListRemoveRedirect.location(
+                    cancel: NewAdminLocation.removeCancel(
                         path: SystemVariableRoutes.list.description,
-                        page: errorPage.page,
-                        search: errorPage.search,
-                        title: nil,
-                        message: nil
+                        returnTo: returnTo
                     )
                 )
                 .response(from: request, context: context)
@@ -137,12 +127,9 @@ struct AdminRemoveSystemVariableDefaultController:
                 try await presenter.renderErrorPage(
                     info: "Unable to remove system variables.",
                     message: error.displayMessage,
-                    cancel: ListRemoveRedirect.location(
+                    cancel: NewAdminLocation.removeCancel(
                         path: SystemVariableRoutes.list.description,
-                        page: errorPage.page,
-                        search: errorPage.search,
-                        title: nil,
-                        message: nil
+                        returnTo: returnTo
                     )
                 )
                 .response(from: request, context: context)

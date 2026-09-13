@@ -10,7 +10,7 @@ struct SystemVariableEditPage: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(
-                NewAdminBreadcrumb(state: SystemVariableRoutes.breadcrumb)
+                NewAdminBreadcrumb(links: SystemVariableRoutes.breadcrumb)
             )
             context.render(
                 NewAdminPageHeader(

@@ -15,11 +15,14 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
         search: String?,
         ids: [String],
         names: [String],
-        fromDetails: Bool,
-        fromEdit: Bool
+        returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
+        )
+        let cancel = NewAdminLocation.removeCancel(
+            path: SystemPermissionRoutes.list.description,
+            returnTo: returnTo
         )
         return try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -34,15 +37,12 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
                 ),
                 selectedItems: names,
                 action: SystemPermissionRoutes.remove.description,
-                cancel: cancelURL(
-                    ids: ids,
-                    page: page,
-                    search: search,
-                    fromDetails: fromDetails,
-                    fromEdit: fromEdit
-                ),
+                cancel: cancel,
                 hiddenFields: ids.map { .init(name: "ids", value: $0) }
-                    + [.init(name: "_nonce", value: nonceToken)]
+                    + [
+                        .init(name: "_nonce", value: nonceToken),
+                        .init(name: "returnTo", value: cancel),
+                    ]
             )
         )
     }
@@ -61,29 +61,6 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
                 icon: FeatherIcons.alertCircle(),
                 action: NewAdminButton("Back", href: cancel, style: .secondary)
             )
-        )
-    }
-
-    private func cancelURL(
-        ids: [String],
-        page: Int,
-        search: String?,
-        fromDetails: Bool,
-        fromEdit: Bool
-    ) -> String {
-        if fromDetails, ids.count == 1 {
-            return SystemPermissionRoutes.details(RouterPath(ids[0]))
-                .description
-        }
-        if fromEdit, ids.count == 1 {
-            return SystemPermissionRoutes.edit(RouterPath(ids[0])).description
-        }
-        return ListRemoveRedirect.location(
-            path: SystemPermissionRoutes.list.description,
-            page: page,
-            search: search,
-            title: nil,
-            message: nil
         )
     }
 }

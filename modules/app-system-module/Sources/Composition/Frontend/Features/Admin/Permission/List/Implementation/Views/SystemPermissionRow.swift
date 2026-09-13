@@ -10,6 +10,7 @@ import WebComponents
 struct SystemPermissionRow: Component {
     let permission: Components.Schemas.SystemPermissionListItemSchema
     let actions: NewAdminListActions
+    let returnTo: String
 
     private var rowActions: [NewAdminListRowActions.Action] {
         [
@@ -29,7 +30,11 @@ struct SystemPermissionRow: Component {
             ),
             .init(
                 "Remove",
-                href: SystemPermissionRoutes.removeFromList(permission.id),
+                href: NewAdminLocation.remove(
+                    path: SystemPermissionRoutes.remove.description,
+                    ids: [permission.id],
+                    returnTo: returnTo
+                ),
                 style: .destructive,
                 permission: SystemPermissions.Permissions.delete
             ),
