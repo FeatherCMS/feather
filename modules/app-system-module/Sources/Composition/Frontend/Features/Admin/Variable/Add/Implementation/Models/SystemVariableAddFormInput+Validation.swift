@@ -49,8 +49,8 @@ extension SystemVariableAddFormInput {
     private var validator: GroupValidator {
         GroupValidator {
             SystemVariableAddFormValidator.key(key)
-            SystemVariableAddFormValidator.name(name)
             SystemVariableAddFormValidator.value(value)
+            SystemVariableAddFormValidator.name(name)
             SystemVariableAddFormValidator.notes(notes)
         }
     }
@@ -58,5 +58,4 @@ extension SystemVariableAddFormInput {
     func validate() async throws(ValidationError) {
         try await validator.validate()
     }
-
 }

@@ -44,10 +44,11 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
 
         do {
             let payload = try await request.decode(
-                as: SystemVariableAddFormInput.self,
+                as: NonceRequest<SystemVariableAddFormInput>.self,
                 context: context
             )
-            lastPayload = payload
+            let formInput = payload.input
+            lastPayload = formInput
             guard
                 await AdminNonceStore.shared.consume(
                     payload.nonce,
@@ -58,7 +59,10 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
                     .renderInvalidNoncePage()
                     .response(from: request, context: context)
             }
-            try await runtime.interactor.add(input: payload)
+            try await formInput.validate()
+            try await runtime.interactor.add(
+                input: formInput
+            )
 
             return runtime.presenter.renderSuccess()
         }
