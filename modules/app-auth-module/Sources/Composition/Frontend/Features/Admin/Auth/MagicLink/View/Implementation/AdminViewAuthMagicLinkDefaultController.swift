@@ -17,7 +17,8 @@ import UserFrontend
 import WebBuilders
 import WebComponents
 
-struct AdminViewAuthMagicLinkDefaultController: AdminViewAuthMagicLinkController {
+struct AdminViewAuthMagicLinkDefaultController: AdminViewAuthMagicLinkController
+{
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminViewAuthMagicLinkInteractor,

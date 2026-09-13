@@ -9,7 +9,8 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderEditPage(id: String, state: UserIdentityEditForm.State) async throws
+    func renderEditPage(id: String, state: UserIdentityEditForm.State)
+        async throws
         -> HTMLResponse
     {
         let nonceToken = await AdminNonceStore.shared.issue(

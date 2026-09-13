@@ -134,4 +134,3 @@ struct UserIdentityEditForm: Component {
         return form.html(context: &context)
     }
 }
-

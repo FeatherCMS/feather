@@ -15,7 +15,8 @@ struct AdminViewSystemPermissionDefaultInteractor:
         catch let error as OpenAPIRepositoryError {
             switch error {
             case .notFound: throw AdminViewSystemPermissionError.notFound
-            case .unauthorized: throw AdminViewSystemPermissionError.unauthorized
+            case .unauthorized:
+                throw AdminViewSystemPermissionError.unauthorized
             case .forbidden: throw AdminViewSystemPermissionError.forbidden
             case .failure, .transport, .conflict:
                 throw AdminViewSystemPermissionError.unavailable

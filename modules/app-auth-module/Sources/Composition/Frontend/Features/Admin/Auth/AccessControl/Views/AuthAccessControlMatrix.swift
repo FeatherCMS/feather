@@ -1,6 +1,5 @@
 import AuthAdminAPI
 import AuthAppAPI
-import CSS
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
@@ -34,6 +33,14 @@ struct AuthAccessControlMatrix: Component {
 
     let state: State
 
+    private var matrixLayout: NewAdminListTableLayout {
+        .init(
+            name: "auth-access-control",
+            columns: [.fraction(2)] + state.roles.map { _ in .fraction(1) },
+            minimumWidth: 320 + state.roles.count * 160
+        )
+    }
+
     func html(context: inout RenderContext) -> some BasicTag {
         let visiblePermissions = state.permissions.filter {
             state.search.isEmpty
@@ -41,7 +48,10 @@ struct AuthAccessControlMatrix: Component {
                     .localizedCaseInsensitiveContains(state.search)
         }
         let groupedPermissions = groupPermissions(visiblePermissions)
-        let table = matrixTable(groups: groupedPermissions)
+        let table = matrixTable(
+            groups: groupedPermissions,
+            context: &context
+        )
 
         return Section {
             context.render(NewAdminBreadcrumb(links: state.breadcrumb))
@@ -89,10 +99,7 @@ struct AuthAccessControlMatrix: Component {
                 ) {
                     context.render(
                         NewAdminListShell(
-                            layout: .init(
-                                name: "auth-access-control",
-                                columns: [.fraction(2), .fraction(1)]
-                            ),
+                            layout: matrixLayout,
                             table: table
                         )
                     )
@@ -122,10 +129,7 @@ struct AuthAccessControlMatrix: Component {
                 )
                 context.render(
                     NewAdminListShell(
-                        layout: .init(
-                            name: "auth-access-control",
-                            columns: [.fraction(2), .fraction(1)]
-                        ),
+                        layout: matrixLayout,
                         table: table
                     )
                 )
@@ -144,7 +148,8 @@ private struct PermissionGroup: Sendable {
 
 extension AuthAccessControlMatrix {
     fileprivate func matrixTable(
-        groups: [PermissionGroup]
+        groups: [PermissionGroup],
+        context: inout RenderContext
     ) -> Table {
         Table {
             Thead {
@@ -178,23 +183,21 @@ extension AuthAccessControlMatrix {
                             }
 
                             Th {
-                                Input()
-                                    .type(.checkbox)
-                                    .ariaLabel(
-                                        "Select all \(group.title) permissions for \(role.name ?? "")"
+                                context.render(
+                                    NewAdminCheckbox(
+                                        ariaLabel:
+                                            "Select all \(group.title) permissions for \(role.name ?? "")",
+                                        isChecked: allSelected,
+                                        isDisabled: state.canEdit == false,
+                                        onChange:
+                                            "this.closest('form').querySelectorAll('input.\(rowClass)').forEach(function(input) { input.checked = this.checked; }, this)",
+                                        classes: [
+                                            "role-permission-matrix-group-toggle",
+                                            "acl-select-all",
+                                            "acl-select-all-\(groupToken)-\(roleToken)",
+                                        ]
                                     )
-                                    .class(
-                                        "role-permission-matrix-group-toggle",
-                                        "acl-select-all",
-                                        "acl-select-all-\(groupToken)-\(roleToken)"
-                                    )
-                                    .if(allSelected) { $0.checked() }
-                                    .if(state.canEdit == false) {
-                                        $0.disabled()
-                                    }
-                                    .onChange(
-                                        "this.closest('form').querySelectorAll('input.\(rowClass)').forEach(function(input) { input.checked = this.checked; }, this)"
-                                    )
+                                )
                             }
                             .class(
                                 "role-permission-matrix-checkbox",
@@ -215,20 +218,19 @@ extension AuthAccessControlMatrix {
                                     "acl-select-row-\(groupToken)-\(roleToken)"
 
                                 Td {
-                                    Input()
-                                        .type(.checkbox)
-                                        .name("pairs")
-                                        .value(pair)
-                                        .class(
-                                            "acl-select-row",
-                                            rowClass
+                                    context.render(
+                                        NewAdminCheckbox(
+                                            name: "pairs",
+                                            value: pair,
+                                            isChecked: state.selectedPairs
+                                                .contains(pair),
+                                            isDisabled: state.canEdit == false,
+                                            classes: [
+                                                "acl-select-row",
+                                                rowClass,
+                                            ]
                                         )
-                                        .if(
-                                            state.selectedPairs.contains(pair)
-                                        ) { $0.checked() }
-                                        .if(state.canEdit == false) {
-                                            $0.disabled()
-                                        }
+                                    )
                                 }
                                 .class("role-permission-matrix-checkbox")
                             }

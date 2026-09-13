@@ -50,41 +50,6 @@ public struct NewAdminFormFieldCheckbox: Component {
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 Cursor(.pointer)
             },
-            Custom(".new-admin-form-checkbox input") {
-                Width(18.px)
-                Height(18.px)
-                Margin(0.px)
-                FlexShrink(0)
-                UnsafeRawProperty(name: "appearance", value: "none")
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Tertiary.border)
-                )
-                BorderRadius(4.px)
-                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
-                Cursor(.pointer)
-            },
-            Custom(".new-admin-form-checkbox input:checked") {
-                Background(.variable(TokenKey.Colors.Link.default))
-                BorderColor(.variable(TokenKey.Colors.Link.default))
-            },
-            Custom(".new-admin-form-checkbox input:focus-visible") {
-                Outline(
-                    2.px,
-                    .solid,
-                    .color(.variable(TokenKey.Colors.Link.hover))
-                )
-                OutlineOffset(2.px)
-            },
-            Custom(".new-admin-form-checkbox input:checked::after") {
-                Content(.string("\"✓\""))
-                Display(.block)
-                Color(.white)
-                FontSize(13.px)
-                LineHeight(16.px)
-                TextAlign(.center)
-            },
             Custom(".new-admin-form-checkbox .field-help") {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 FontSize(0.86.rem)
@@ -100,15 +65,17 @@ public struct NewAdminFormFieldCheckbox: Component {
         let errorID = "\(state.name)-error"
         return Section {
             Label {
-                Input()
-                    .type(.checkbox)
-                    .name(state.name)
-                    .id(state.name)
-                    .value("true")
-                    .ariaInvalid(state.error == nil ? .false : .true)
-                    .if(state.error != nil) { $0.ariaErrorMessage(errorID) }
-                    .if(state.isChecked) { $0.checked() }
-                    .if(state.isDisabled) { $0.disabled() }
+                context.render(
+                    NewAdminCheckbox(
+                        name: state.name,
+                        value: "true",
+                        id: state.name,
+                        isChecked: state.isChecked,
+                        isDisabled: state.isDisabled,
+                        isInvalid: state.error != nil,
+                        errorID: state.error == nil ? nil : errorID
+                    )
+                )
                 Span(state.label)
             }
             .class("new-admin-form-checkbox__label")

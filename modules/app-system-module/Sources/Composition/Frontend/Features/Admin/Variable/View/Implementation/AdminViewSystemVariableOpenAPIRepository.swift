@@ -4,7 +4,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SystemAdminAPI
 
-struct AdminViewSystemVariableOpenAPIRepository: AdminViewSystemVariableRepository
+struct AdminViewSystemVariableOpenAPIRepository:
+    AdminViewSystemVariableRepository
 {
     let api: SystemAdminAPIClient
 

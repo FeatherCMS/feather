@@ -15,7 +15,8 @@ import UserFrontend
 import WebBuilders
 import WebComponents
 
-struct AdminViewAccountProfileDefaultInteractor: AdminViewAccountProfileInteractor
+struct AdminViewAccountProfileDefaultInteractor:
+    AdminViewAccountProfileInteractor
 {
     let accountProfileRepository: any AdminViewAccountProfileRepository
 

@@ -29,11 +29,15 @@ extension AdminListAccountInvitationController {
             use: getAccountInvitations
         )
         router.get(
-            RouterPath(AccountAdminRoutes.invitationRemoveBulk.description + "/"),
+            RouterPath(
+                AccountAdminRoutes.invitationRemoveBulk.description + "/"
+            ),
             use: getAccountInvitationsRemoveConfirmation
         )
         router.post(
-            RouterPath(AccountAdminRoutes.invitationRemoveBulk.description + "/"),
+            RouterPath(
+                AccountAdminRoutes.invitationRemoveBulk.description + "/"
+            ),
             use: postAccountInvitationsRemove
         )
     }

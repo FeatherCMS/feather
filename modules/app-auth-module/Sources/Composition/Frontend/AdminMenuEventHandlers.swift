@@ -49,8 +49,9 @@ public enum AuthAdminMenuEventHandlers {
                 .init(
                     menuKey: "auth",
                     label: "Access Control",
-                    icon: "key",
-                    link: AuthAccessControlRoutes.accessControl.description + "/",
+                    icon: "unlock",
+                    link: AuthAccessControlRoutes.accessControl.description
+                        + "/",
                     permission: "auth:access-control:list"
                 ),
             ]

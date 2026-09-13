@@ -57,7 +57,8 @@ struct AdminViewUserRoleDefaultPresenter: AdminViewUserRolePresenter {
         return HTMLResponse(content: page.content, status: status(for: error))
     }
 
-    private func status(for error: AdminViewUserRoleError) -> HTTPResponse.Status
+    private func status(for error: AdminViewUserRoleError)
+        -> HTTPResponse.Status
     {
         switch error {
         case .notFound: .notFound

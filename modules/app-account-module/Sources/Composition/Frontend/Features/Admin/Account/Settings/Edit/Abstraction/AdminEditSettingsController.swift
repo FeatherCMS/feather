@@ -28,11 +28,15 @@ extension AdminEditSettingsController {
             use: postEditSettings
         )
         router.get(
-            RouterPath(AccountAdminRoutes.userSettingsPattern.description + "/"),
+            RouterPath(
+                AccountAdminRoutes.userSettingsPattern.description + "/"
+            ),
             use: getEditSettings
         )
         router.post(
-            RouterPath(AccountAdminRoutes.userSettingsPattern.description + "/"),
+            RouterPath(
+                AccountAdminRoutes.userSettingsPattern.description + "/"
+            ),
             use: postEditSettings
         )
     }

@@ -59,35 +59,6 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
                 Cursor(.pointer)
                 LineHeight(1.35)
             },
-            Custom(".new-admin-form-checkbox-group__option input") {
-                Width(18.px)
-                Height(18.px)
-                Margin(0.px)
-                FlexShrink(0)
-                UnsafeRawProperty(name: "appearance", value: "none")
-                AccentColor(.variable(TokenKey.Colors.Link.hover))
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Tertiary.border)
-                )
-                BorderRadius(4.px)
-                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
-                Cursor(.pointer)
-            },
-            Custom(".new-admin-form-checkbox-group__option input:focus-visible")
-            {
-                Outline(
-                    2.px,
-                    .solid,
-                    .color(.variable(TokenKey.Colors.Link.hover))
-                )
-                OutlineOffset(2.px)
-            },
-            Custom(".new-admin-form-checkbox-group__option input:checked") {
-                Background(.variable(TokenKey.Colors.Link.default))
-                BorderColor(.variable(TokenKey.Colors.Link.default))
-            },
             Custom(".new-admin-form-checkbox-group.has-error input") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Secondary.border)
@@ -107,14 +78,16 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
             Div {
                 for option in options {
                     Label {
-                        Input()
-                            .type(.checkbox)
-                            .name(name)
-                            .value(option.value)
-                            .ariaLabel(option.label)
-                            .ariaInvalid(error == nil ? .false : .true)
-                            .if(error != nil) { $0.ariaErrorMessage(errorID) }
-                            .if(option.isSelected) { $0.checked() }
+                        context.render(
+                            NewAdminCheckbox(
+                                name: name,
+                                value: option.value,
+                                ariaLabel: option.label,
+                                isChecked: option.isSelected,
+                                isInvalid: error != nil,
+                                errorID: error == nil ? nil : errorID
+                            )
+                        )
                         Span(option.label)
                     }
                     .class("new-admin-form-checkbox-group__option")

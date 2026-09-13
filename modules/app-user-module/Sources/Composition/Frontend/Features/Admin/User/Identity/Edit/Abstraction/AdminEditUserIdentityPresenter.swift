@@ -3,7 +3,8 @@ import FeatherValidation
 import Hummingbird
 
 protocol AdminEditUserIdentityPresenter: Sendable {
-    func renderEditPage(id: String, state: UserIdentityEditForm.State) async throws
+    func renderEditPage(id: String, state: UserIdentityEditForm.State)
+        async throws
         -> HTMLResponse
     func renderValidationError(
         id: String,

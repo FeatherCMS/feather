@@ -14,13 +14,16 @@ public struct AccountAdmin {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.get(RouterPath(AccountAdminRoutes.profileImage.description + "/")) { _, context in
+        router.get(
+            RouterPath(AccountAdminRoutes.profileImage.description + "/")
+        ) { _, context in
             do {
-                let profile = try await AdminViewAccountProfileOpenAPIRepository(
-                    api: context.accountAppAPI(),
-                    mediaAPI: context.mediaAdminAPI()
-                )
-                .get()
+                let profile =
+                    try await AdminViewAccountProfileOpenAPIRepository(
+                        api: context.accountAppAPI(),
+                        mediaAPI: context.mediaAdminAPI()
+                    )
+                    .get()
                 guard let asset = profile.profileImageAsset else {
                     return Response(status: .notFound)
                 }

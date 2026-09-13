@@ -1,7 +1,8 @@
 import FeatherAdmin
 import Foundation
 
-struct AdminViewSystemVariableDefaultInteractor: AdminViewSystemVariableInteractor
+struct AdminViewSystemVariableDefaultInteractor:
+    AdminViewSystemVariableInteractor
 {
     let repository: any AdminViewSystemVariableRepository
 

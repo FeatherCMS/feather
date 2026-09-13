@@ -97,7 +97,7 @@ struct UserIdentityTableContent: Component {
                                                 .fixed(260),
                                                 .fixed(220),
                                                 .fixed(120),
-                                                .fixed(180),
+                                                .fraction(1),
                                                 .fixed(220),
                                             ],
                                             minimumWidth: 1000

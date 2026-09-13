@@ -29,7 +29,7 @@ private enum SystemVariableAddFormValidator {
                 .max(
                     length: 254,
                     message: "Name must be shorter than 255 characters."
-                )
+                ),
             ]
         )
     }

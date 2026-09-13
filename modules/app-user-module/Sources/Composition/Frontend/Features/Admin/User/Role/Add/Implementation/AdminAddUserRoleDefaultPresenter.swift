@@ -9,7 +9,9 @@ struct AdminAddUserRoleDefaultPresenter: AdminAddUserRolePresenter {
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderAddPage(state: UserRoleAddForm.State) async throws -> HTMLResponse {
+    func renderAddPage(state: UserRoleAddForm.State) async throws
+        -> HTMLResponse
+    {
         try await renderAddPage(state: state, status: .ok)
     }
 

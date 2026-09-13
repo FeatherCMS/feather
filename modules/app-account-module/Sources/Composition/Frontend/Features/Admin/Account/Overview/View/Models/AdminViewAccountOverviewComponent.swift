@@ -20,19 +20,22 @@ struct AdminViewAccountOverviewComponent: Component {
             H1("Account module")
             Ul {
                 Li {
-                    A("Profile").href(
-                        AccountAdminRoutes.profile.description + "/"
-                    )
+                    A("Profile")
+                        .href(
+                            AccountAdminRoutes.profile.description + "/"
+                        )
                 }
                 Li {
-                    A("Settings").href(
-                        AccountAdminRoutes.settings.description + "/"
-                    )
+                    A("Settings")
+                        .href(
+                            AccountAdminRoutes.settings.description + "/"
+                        )
                 }
                 Li {
-                    A("Invitations").href(
-                        AccountAdminRoutes.invitations.description + "/"
-                    )
+                    A("Invitations")
+                        .href(
+                            AccountAdminRoutes.invitations.description + "/"
+                        )
                 }
             }
         }

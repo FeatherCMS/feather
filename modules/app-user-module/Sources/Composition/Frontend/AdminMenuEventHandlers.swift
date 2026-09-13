@@ -14,7 +14,7 @@ public enum UserAdminMenuEventHandlers {
                     key: "user",
                     groupKey: "admin",
                     label: "User",
-                    icon: "users",
+                    icon: "user",
                     priority: 100
                 )
             ]
@@ -35,7 +35,7 @@ public enum UserAdminMenuEventHandlers {
                 .init(
                     menuKey: "user",
                     label: "Roles",
-                    icon: "users",
+                    icon: "shield",
                     link: UserRoleRoutes.list.description + "/",
                     permission: "user:roles:list"
                 ),

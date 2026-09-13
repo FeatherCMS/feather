@@ -1,6 +1,6 @@
 import FeatherAdmin
-import Hummingbird
 import HTML
+import Hummingbird
 import SGML
 import WebBuilders
 import WebComponents
@@ -60,9 +60,11 @@ struct SettingsEdit: Component {
                 P("Settings edited successfully.").class("success")
             }
 
-            let action = state.userID.map {
-                AccountAdminRoutes.userSettings(RouterPath($0)).description + "/"
-            } ?? AccountAdminRoutes.settings.description + "/"
+            let action =
+                state.userID.map {
+                    AccountAdminRoutes.userSettings(RouterPath($0)).description
+                        + "/"
+                } ?? AccountAdminRoutes.settings.description + "/"
             context.render(SettingsForm(state: state.form, action: action))
         }
         .class("cms-section")

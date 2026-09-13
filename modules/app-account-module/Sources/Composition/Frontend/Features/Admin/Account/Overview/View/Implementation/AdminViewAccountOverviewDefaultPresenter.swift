@@ -3,7 +3,8 @@ import HTML
 import Hummingbird
 import SGML
 
-struct AdminViewAccountOverviewDefaultPresenter: AdminViewAccountOverviewPresenter
+struct AdminViewAccountOverviewDefaultPresenter:
+    AdminViewAccountOverviewPresenter
 {
     let request: Request
     let renderingEngine: any RenderingEngine

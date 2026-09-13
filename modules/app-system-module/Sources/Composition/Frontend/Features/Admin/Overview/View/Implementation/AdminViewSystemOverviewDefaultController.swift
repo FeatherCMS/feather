@@ -1,7 +1,8 @@
 import FeatherAdmin
 import Hummingbird
 
-struct AdminViewSystemOverviewDefaultController: AdminViewSystemOverviewController
+struct AdminViewSystemOverviewDefaultController:
+    AdminViewSystemOverviewController
 {
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (

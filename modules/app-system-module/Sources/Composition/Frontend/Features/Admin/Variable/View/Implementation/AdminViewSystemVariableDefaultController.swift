@@ -3,7 +3,8 @@ import HTML
 import Hummingbird
 import SystemContracts
 
-struct AdminViewSystemVariableDefaultController: AdminViewSystemVariableController
+struct AdminViewSystemVariableDefaultController:
+    AdminViewSystemVariableController
 {
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (

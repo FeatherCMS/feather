@@ -7,7 +7,8 @@ import SystemContracts
 import WebBuilders
 import WebComponents
 
-struct AdminViewSystemVariableDefaultPresenter: AdminViewSystemVariablePresenter {
+struct AdminViewSystemVariableDefaultPresenter: AdminViewSystemVariablePresenter
+{
     let request: Request
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine

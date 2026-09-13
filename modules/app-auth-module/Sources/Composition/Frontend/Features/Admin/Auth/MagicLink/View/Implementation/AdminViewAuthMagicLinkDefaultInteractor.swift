@@ -17,7 +17,8 @@ import UserFrontend
 import WebBuilders
 import WebComponents
 
-struct AdminViewAuthMagicLinkDefaultInteractor: AdminViewAuthMagicLinkInteractor {
+struct AdminViewAuthMagicLinkDefaultInteractor: AdminViewAuthMagicLinkInteractor
+{
     let repository: any AdminViewAuthMagicLinkRepository
 
     func execute(

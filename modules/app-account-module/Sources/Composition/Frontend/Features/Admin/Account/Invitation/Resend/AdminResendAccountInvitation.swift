@@ -19,7 +19,9 @@ struct AdminResendAccountInvitation {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            RouterPath(AccountAdminRoutes.invitationResendPattern.description + "/"),
+            RouterPath(
+                AccountAdminRoutes.invitationResendPattern.description + "/"
+            ),
             use: controller.resend
         )
     }

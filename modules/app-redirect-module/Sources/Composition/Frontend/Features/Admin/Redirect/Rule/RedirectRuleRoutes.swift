@@ -10,7 +10,7 @@ enum RedirectRuleRoutes {
 
     static var breadcrumb: [NewAdminBreadcrumb.Link] {
         RedirectAdminRoutes.breadcrumb + [
-            .init(label: "Rules", link: list.description),
+            .init(label: "Rules", link: list.description)
         ]
     }
 
