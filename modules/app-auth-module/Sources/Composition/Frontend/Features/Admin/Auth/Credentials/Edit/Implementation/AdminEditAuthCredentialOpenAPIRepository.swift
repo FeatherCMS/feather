@@ -32,13 +32,9 @@ struct AdminEditAuthCredentialOpenAPIRepository:
             switch response {
             case .ok(let value): return try value.body.json
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view auth emails."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot access auth emails."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let status, let body):
                 throw try await api.failure(
                     statusCode: status,
@@ -63,17 +59,11 @@ struct AdminEditAuthCredentialOpenAPIRepository:
                     email: item.email
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User credential not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this credential."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot access credentials."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -102,17 +92,11 @@ struct AdminEditAuthCredentialOpenAPIRepository:
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User credential not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to update this credential."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot update credentials."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

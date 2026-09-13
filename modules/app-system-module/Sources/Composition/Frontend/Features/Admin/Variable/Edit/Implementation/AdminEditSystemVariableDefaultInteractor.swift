@@ -11,7 +11,11 @@ struct AdminEditSystemVariableDefaultInteractor:
     func load(
         id: String
     ) async throws -> SystemVariableEditModel {
-        try await repository.load(id: id)
+        do {
+            return try await repository.load(id: id)
+        } catch let error as OpenAPIRepositoryError {
+            throw map(error)
+        }
     }
 
     func edit(
@@ -19,14 +23,35 @@ struct AdminEditSystemVariableDefaultInteractor:
         input: SystemVariableEditFormInput
     ) async throws {
         try await input.validate()
-        try await repository.update(
-            id: id,
-            input: .init(
-                key: input.normalizedKey,
-                value: input.normalizedValue,
-                name: input.normalizedName,
-                notes: input.normalizedNotes
+        do {
+            try await repository.update(
+                id: id,
+                input: .init(
+                    key: input.normalizedKey,
+                    value: input.normalizedValue,
+                    name: input.normalizedName,
+                    notes: input.normalizedNotes
+                )
             )
-        )
+        } catch let error as OpenAPIRepositoryError {
+            throw map(error)
+        }
+    }
+
+    private func map(
+        _ error: OpenAPIRepositoryError
+    ) -> AdminEditSystemVariableError {
+        switch error {
+        case .notFound:
+            .notFound
+        case .unauthorized:
+            .unauthorized
+        case .forbidden:
+            .forbidden
+        case .conflict:
+            .conflict
+        case .failure, .transport:
+            .unavailable
+        }
     }
 }

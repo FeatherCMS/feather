@@ -20,9 +20,7 @@ struct AdminListAuthSessionDefaultController:
         guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.list)
         else {
             return runtime.presenter.renderError(
-                error: .forbidden(
-                    message: "Your identity cannot access user sessions."
-                ),
+                error: .forbidden,
                 identityID: try context.requiredID(),
                 permissions: permissions
             )

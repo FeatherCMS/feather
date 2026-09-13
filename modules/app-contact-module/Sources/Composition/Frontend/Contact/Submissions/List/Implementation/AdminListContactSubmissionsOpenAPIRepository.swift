@@ -14,9 +14,7 @@ struct AdminListContactSubmissionsOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let formsResponse = try await client.contactFormList()
             guard case .ok(let formsValue) = formsResponse else {
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view contact forms."
-                )
+                throw OpenAPIRepositoryError.forbidden
             }
             var result: [AdminContactSubmissionDirectoryItem] = []
             for form in try formsValue.body.json {
@@ -26,10 +24,7 @@ struct AdminListContactSubmissionsOpenAPIRepository {
                     )
                 guard case .ok(let submissionsValue) = submissionsResponse
                 else {
-                    throw OpenAPIRepositoryError.forbidden(
-                        message:
-                            "Your account cannot view contact form submissions."
-                    )
+                    throw OpenAPIRepositoryError.forbidden
                 }
                 result.append(
                     contentsOf: try submissionsValue.body.json.map {

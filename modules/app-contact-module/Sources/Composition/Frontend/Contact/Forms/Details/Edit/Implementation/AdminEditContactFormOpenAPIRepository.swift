@@ -68,17 +68,11 @@ struct AdminEditContactFormOpenAPIRepository {
                         }
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to edit contact forms."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit contact forms."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This contact form could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

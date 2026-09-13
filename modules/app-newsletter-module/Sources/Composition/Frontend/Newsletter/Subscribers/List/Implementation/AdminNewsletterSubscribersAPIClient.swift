@@ -21,13 +21,9 @@ struct AdminNewsletterSubscribersAPIClient {
                     .init(id: $0.id, name: $0.name)
                 }
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view campaigns."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view campaigns."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -41,9 +37,7 @@ struct AdminNewsletterSubscribersAPIClient {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let newslettersResponse = try await client.newsletterCampaignList()
             guard case .ok(let newslettersValue) = newslettersResponse else {
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view newsletters."
-                )
+                throw OpenAPIRepositoryError.forbidden
             }
             var grouped: [String: AdminNewsletterSubscriberListItem] = [:]
             for newsletter in try newslettersValue.body.json {

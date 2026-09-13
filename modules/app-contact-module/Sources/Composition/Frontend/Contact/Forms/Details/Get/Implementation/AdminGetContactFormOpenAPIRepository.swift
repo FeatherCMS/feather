@@ -26,13 +26,9 @@ struct AdminGetContactFormOpenAPIRepository {
                         .init(id: $0.id, key: $0.key, label: $0.label)
                     }
                 case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized(
-                        message: "Please sign in again to view contact fields."
-                    )
+                    throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden(
-                        message: "Your account cannot view contact fields."
-                    )
+                    throw OpenAPIRepositoryError.forbidden
                 case .undocumented(let statusCode, let response):
                     throw try await api.failure(
                         statusCode: statusCode,
@@ -60,17 +56,11 @@ struct AdminGetContactFormOpenAPIRepository {
                         }
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view this contact form."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view this contact form."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This contact form could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

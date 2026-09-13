@@ -46,17 +46,11 @@ struct AdminRemoveBlogPostOpenAPIRepository:
                     tagIds: Array(page.tagIds)
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Blog post not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this blog post."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot delete blog posts."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

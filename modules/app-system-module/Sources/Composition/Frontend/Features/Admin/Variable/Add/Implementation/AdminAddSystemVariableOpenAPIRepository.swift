@@ -21,21 +21,13 @@ struct AdminAddSystemVariableOpenAPIRepository: AdminAddSystemVariableRepository
             case .created:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to create this system variable."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot create system variables."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
-                    responseBody: response.body,
-                    conflictMessage:
-                        "A system variable with this key already exists. Choose a different key."
+                    responseBody: response.body
                 )
             }
         }

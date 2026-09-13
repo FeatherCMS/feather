@@ -21,9 +21,7 @@ struct AdminRemoveContactFormEmailDefaultInteractor:
         let selected = Set(emailIds)
         let remaining = current.mails.filter { !selected.contains($0.id) }
         guard remaining.count != current.mails.count else {
-            throw OpenAPIRepositoryError.notFound(
-                message: "The selected contact form emails could not be found."
-            )
+            throw OpenAPIRepositoryError.notFound
         }
         _ = try await repository.update(
             id: id,

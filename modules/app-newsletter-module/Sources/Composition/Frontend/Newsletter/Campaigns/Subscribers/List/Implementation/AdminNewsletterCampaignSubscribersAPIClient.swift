@@ -30,13 +30,9 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
                     )
                 }
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view subscribers."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view subscribers."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -64,13 +60,9 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
             switch response {
             case .created: return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to create subscribers."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot create subscribers."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -102,17 +94,11 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
                     status: item.status
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This subscriber could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view this subscriber."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view this subscriber."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -145,17 +131,11 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
             switch response {
             case .ok: return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This subscriber could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to edit subscribers."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit subscribers."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -185,9 +165,7 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
             let item = try await list(newsletterId: newsletterId)
                 .first(where: { $0.id == subscriberId })
         else {
-            throw OpenAPIRepositoryError.notFound(
-                message: "This subscriber could not be found."
-            )
+            throw OpenAPIRepositoryError.notFound
         }
         return item.email
     }

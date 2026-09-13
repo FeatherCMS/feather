@@ -16,9 +16,7 @@ struct AdminRemoveContactFormFieldOpenAPIRepository {
         try await AdminListContactFormFieldsOpenAPIRepository(api: api)
             .list(formId: formId).first { $0.id == id }
             ?? {
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This form field could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             }()
     }
     func remove(formId: String, id: String) async throws {

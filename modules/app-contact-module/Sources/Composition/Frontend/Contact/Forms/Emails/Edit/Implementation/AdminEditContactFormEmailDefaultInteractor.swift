@@ -19,9 +19,7 @@ struct AdminEditContactFormEmailDefaultInteractor:
     func update(id: String, email: AdminContactFormEmail) async throws {
         let current = try await repository.get(id: id)
         guard current.mails.contains(where: { $0.id == email.id }) else {
-            throw OpenAPIRepositoryError.notFound(
-                message: "This contact form email could not be found."
-            )
+            throw OpenAPIRepositoryError.notFound
         }
         _ = try await repository.update(
             id: id,

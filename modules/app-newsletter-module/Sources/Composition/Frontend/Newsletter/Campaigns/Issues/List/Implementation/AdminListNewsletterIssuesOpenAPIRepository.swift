@@ -45,13 +45,9 @@ struct AdminListNewsletterIssuesOpenAPIRepository {
                 }
                 return items
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view campaign issues."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view campaign issues."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -89,13 +85,9 @@ struct AdminListNewsletterIssuesOpenAPIRepository {
                 )
             }
         case .unauthorized:
-            throw OpenAPIRepositoryError.unauthorized(
-                message: "Please sign in again to view delivery statuses."
-            )
+            throw OpenAPIRepositoryError.unauthorized
         case .forbidden:
-            throw OpenAPIRepositoryError.forbidden(
-                message: "Your account cannot view delivery statuses."
-            )
+            throw OpenAPIRepositoryError.forbidden
         case .notFound: return []
         case .undocumented(let statusCode, let response):
             throw try await api.failure(

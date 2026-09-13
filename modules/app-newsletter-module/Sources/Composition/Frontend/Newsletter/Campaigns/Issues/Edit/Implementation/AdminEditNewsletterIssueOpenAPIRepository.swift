@@ -33,17 +33,11 @@ struct AdminEditNewsletterIssueOpenAPIRepository {
                     error: nil
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This campaign issue could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view campaign issues."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view campaign issues."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -74,17 +68,11 @@ struct AdminEditNewsletterIssueOpenAPIRepository {
             switch response {
             case .ok: return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This campaign issue could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to edit campaign issues."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit campaign issues."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

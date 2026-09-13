@@ -29,19 +29,11 @@ struct AdminGetSystemPermissionOpenAPIRepository:
                     notes: permission.notes
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "System permission not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to load this system permission."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot access system permissions."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

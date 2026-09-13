@@ -12,7 +12,7 @@ protocol AdminAddSystemVariableController: Sendable {
     func postAddSystemVariable(
         request: Request,
         context: DefaultRequestContext
-    ) async throws -> Response
+    ) async throws -> HTMLResponse
 }
 
 extension AdminAddSystemVariableController {

@@ -48,15 +48,9 @@ struct AdminGetBlogAuthorOpenAPIRepository: AdminGetBlogAuthorRepository {
                 case .ok(let linksOk):
                     items = try linksOk.body.json.data.items
                 case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized(
-                        message:
-                            "Please sign in again to load blog author links."
-                    )
+                    throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden(
-                        message:
-                            "Your account cannot access blog author links."
-                    )
+                    throw OpenAPIRepositoryError.forbidden
                 case .undocumented(let statusCode, let undocumentedResponse):
                     throw try await api.failure(
                         statusCode: statusCode,
@@ -80,18 +74,11 @@ struct AdminGetBlogAuthorOpenAPIRepository: AdminGetBlogAuthorRepository {
                     items: items
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Blog author not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this blog author."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot access blog authors."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

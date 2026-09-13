@@ -108,13 +108,9 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
             case .ok(let ok):
                 return try ok.body.json.data.items
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: listFoldersUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access media folders."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -138,13 +134,9 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
             case .created(let created):
                 return try created.body.json
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: createFolderUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot create media folders."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -165,17 +157,11 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
             case .ok(let ok):
                 return try ok.body.json
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Media folder not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: getFolderUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access media folders."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -198,17 +184,11 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Media folder not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: updateFolderUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit media folders."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -241,17 +221,11 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
             case .ok(let ok):
                 return try ok.body.json
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Media asset not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: getAssetUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access media assets."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -274,17 +248,11 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
             case .ok(let ok):
                 return try ok.body.json.items
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Media asset not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: getVariantsUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access media asset variants."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -326,13 +294,9 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
             case .created(let created):
                 return try created.body.json
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: createAssetUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot create media assets."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -379,17 +343,11 @@ public struct AdminMediaAssetOpenAPIRepository: Sendable {
             case .ok(let ok):
                 return try ok.body.json
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Media asset not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: updateAssetUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit media assets."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -433,13 +391,9 @@ extension AdminMediaAssetOpenAPIRepository {
                     pageSize: body.query.page.size
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: searchAssetsUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access media assets."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

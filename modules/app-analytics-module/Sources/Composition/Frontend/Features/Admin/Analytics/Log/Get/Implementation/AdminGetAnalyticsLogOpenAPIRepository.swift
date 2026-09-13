@@ -25,17 +25,11 @@ struct AdminGetAnalyticsLogOpenAPIRepository: AdminGetAnalyticsLogRepository {
             case .ok(let okResponse):
                 return try okResponse.body.json
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Analytics log not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: unauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access analytics logs."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

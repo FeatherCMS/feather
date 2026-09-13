@@ -11,7 +11,6 @@ protocol AdminEditSystemVariablePresenter: Sendable {
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
-        info: String,
-        message: String
+        error: AdminEditSystemVariableError
     ) async throws -> HTMLResponse
 }

@@ -24,13 +24,9 @@ struct AdminListContactFormFieldsOpenAPIRepository {
                 case .ok(let value):
                     return try value.body.json.map(Self.map)
                 case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized(
-                        message: "Please sign in again to view form fields."
-                    )
+                    throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden(
-                        message: "Your account cannot view form fields."
-                    )
+                    throw OpenAPIRepositoryError.forbidden
                 case .undocumented(let statusCode, let response):
                     throw try await api.failure(
                         statusCode: statusCode,
@@ -42,13 +38,9 @@ struct AdminListContactFormFieldsOpenAPIRepository {
             case .ok(let value):
                 return try value.body.json.map(Self.map)
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view form fields."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view form fields."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

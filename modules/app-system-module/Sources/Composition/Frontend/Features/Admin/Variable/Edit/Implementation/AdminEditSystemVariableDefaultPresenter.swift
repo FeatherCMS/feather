@@ -44,12 +44,41 @@ struct AdminEditSystemVariableDefaultPresenter:
     }
 
     func renderErrorPage(
-        info: String,
-        message: String
+        error: AdminEditSystemVariableError
     ) async throws -> HTMLResponse {
-        try await renderPage(
+        let state: NewAdminStatusView.State
+
+        switch error {
+        case .notFound:
+            state = .init(
+                title: "System variable not found",
+                message: "This system variable may have been removed."
+            )
+        case .unauthorized:
+            state = .init(
+                title: "Session expired",
+                message: "Please sign in again."
+            )
+        case .forbidden:
+            state = .init(
+                title: "Forbidden",
+                message: "Your account cannot edit system variables."
+            )
+        case .conflict:
+            state = .init(
+                title: "Unable to save changes",
+                message: "A system variable with this key already exists."
+            )
+        case .unavailable:
+            state = .init(
+                title: "System variable unavailable",
+                message: "The request could not be completed. Please try again."
+            )
+        }
+
+        return try await renderPage(
             content: NewAdminStatusView(
-                state: .init(title: info, message: message),
+                state: state,
                 icon: FeatherIcons.alertCircle()
             )
         )

@@ -15,9 +15,7 @@ struct AdminRemoveContactFieldOpenAPIRepository {
         try await AdminListContactFieldsOpenAPIRepository(api: api)
             .list().first { $0.id == id }
             ?? {
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This contact field could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             }()
     }
 

@@ -33,17 +33,11 @@ struct AdminGetUserIdentityOpenAPIRepository: AdminGetUserIdentityRepository {
                     roleIds: Array(identity.roleIds ?? [])
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User identity not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: getUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot access user identities."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

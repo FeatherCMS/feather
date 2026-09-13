@@ -33,17 +33,11 @@ struct AdminGetContactFormSubmissionOpenAPIRepository {
                     values: values
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This submission could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view this submission."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view this submission."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

@@ -27,17 +27,11 @@ struct AdminEditMediaFolderOpenAPIRepository {
             case .ok(let ok):
                 return try ok.body.json
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Media folder not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: loadUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access media folders."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -60,17 +54,11 @@ struct AdminEditMediaFolderOpenAPIRepository {
             case .ok(let ok):
                 return try ok.body.json
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Media folder not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: updateUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit media folders."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

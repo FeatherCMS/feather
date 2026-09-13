@@ -52,17 +52,11 @@ struct AdminRemoveAuthSessionOpenAPIRepository:
         case .ok(let ok):
             let _ = try ok.body.json
         case .notFound:
-            throw OpenAPIRepositoryError.notFound(
-                message: "User identity not found."
-            )
+            throw OpenAPIRepositoryError.notFound
         case .unauthorized:
-            throw OpenAPIRepositoryError.unauthorized(
-                message: loadIdentityUnauthorizedMessage
-            )
+            throw OpenAPIRepositoryError.unauthorized
         case .forbidden:
-            throw OpenAPIRepositoryError.forbidden(
-                message: "Your identity cannot read user identities."
-            )
+            throw OpenAPIRepositoryError.forbidden
         case .undocumented(let statusCode, let response):
             throw try await userAPI.failure(
                 statusCode: statusCode,
@@ -76,17 +70,11 @@ struct AdminRemoveAuthSessionOpenAPIRepository:
         case .ok(let ok):
             items = try ok.body.json.items
         case .notFound:
-            throw OpenAPIRepositoryError.notFound(
-                message: "User identity not found."
-            )
+            throw OpenAPIRepositoryError.notFound
         case .unauthorized:
-            throw OpenAPIRepositoryError.unauthorized(
-                message: loadSessionsUnauthorizedMessage
-            )
+            throw OpenAPIRepositoryError.unauthorized
         case .forbidden:
-            throw OpenAPIRepositoryError.forbidden(
-                message: "Your identity cannot read user auth sessions."
-            )
+            throw OpenAPIRepositoryError.forbidden
         case .undocumented(let statusCode, let response):
             throw try await api.failure(
                 statusCode: statusCode,
@@ -96,9 +84,7 @@ struct AdminRemoveAuthSessionOpenAPIRepository:
 
         guard let session = items.first(where: { $0.id == sessionId })
         else {
-            throw OpenAPIRepositoryError.notFound(
-                message: "User identity session not found."
-            )
+            throw OpenAPIRepositoryError.notFound
         }
 
         return .init(

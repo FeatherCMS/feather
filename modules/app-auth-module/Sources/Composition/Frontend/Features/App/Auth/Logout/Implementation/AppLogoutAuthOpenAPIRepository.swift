@@ -32,13 +32,9 @@ struct AppLogoutAuthOpenAPIRepository: AppLogoutAuthRepository {
             case .noContent:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: unauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot sign out from this session."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await appClient.failure(
                     statusCode: statusCode,

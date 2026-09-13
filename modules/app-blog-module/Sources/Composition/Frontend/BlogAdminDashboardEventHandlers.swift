@@ -72,13 +72,9 @@ public enum BlogAdminDashboardEventHandlers {
             switch response {
             case .ok(let value): return try value.body.json.data.total
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: unauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: forbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -104,13 +100,9 @@ public enum BlogAdminDashboardEventHandlers {
             switch response {
             case .ok(let value): return try value.body.json.data.total
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: unauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: forbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -136,13 +128,9 @@ public enum BlogAdminDashboardEventHandlers {
             switch response {
             case .ok(let value): return try value.body.json.data.total
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: unauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: forbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

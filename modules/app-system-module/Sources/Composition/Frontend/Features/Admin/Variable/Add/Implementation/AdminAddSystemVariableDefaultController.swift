@@ -21,10 +21,7 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
         else {
-            return try await runtime.presenter.renderErrorPage(
-                info: "Forbidden",
-                message: "Your account cannot create system variables."
-            )
+            return try await runtime.presenter.renderForbiddenPage()
         }
         return try await runtime.presenter.renderAddPage(
             state: .empty()
@@ -34,17 +31,12 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
     func postAddSystemVariable(
         request: Request,
         context: DefaultRequestContext
-    ) async throws -> Response {
+    ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
         else {
-            return try await runtime.presenter
-                .renderErrorPage(
-                    info: "Forbidden",
-                    message: "Your account cannot create system variables."
-                )
-                .response(from: request, context: context)
+            return try await runtime.presenter.renderForbiddenPage()
         }
         var lastPayload: SystemVariableAddFormInput?
 
@@ -60,52 +52,26 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
                     sessionToken: context.sessionToken
                 )
             else {
-                throw HTTPError(.forbidden)
+                return try await runtime.presenter.renderInvalidNoncePage()
             }
             try await runtime.interactor.add(input: payload)
 
-            return AdminNotificationFlash.redirect(
-                to: SystemVariableRoutes.list.description,
-                notification: .init(
-                    title: "Added",
-                    message: "System variable added successfully."
-                )
-            )
+            return try await runtime.presenter.renderSuccess()
         }
         catch let error as ValidationError {
-            var errors: [String: String] = [:]
-            for failure in error.failures {
-                errors[failure.key] = failure.message
-            }
-            var state = formState(input: lastPayload)
-            state.apply(errors: errors)
             return try await runtime.presenter
-                .renderAddPage(state: state)
-                .response(from: request, context: context)
+                .renderValidationError(
+                    input: lastPayload,
+                    error: error
+                )
         }
-        catch let error as HTTPError {
-            throw error
-        }
-        catch let error as OpenAPIRepositoryError {
-            var state = formState(input: lastPayload)
-            state.apply(error: error.errorDescription)
+        catch let error as AdminAddSystemVariableError {
             return try await runtime.presenter
-                .renderAddPage(state: state)
-                .response(from: request, context: context)
+                .renderAddError(
+                    input: lastPayload,
+                    error: error
+                )
         }
-        catch {
-            var state = formState(input: lastPayload)
-            state.apply(error: error.displayMessage)
-            return try await runtime.presenter
-                .renderAddPage(state: state)
-                .response(from: request, context: context)
-        }
-    }
-
-    private func formState(
-        input: SystemVariableAddFormInput?
-    ) -> SystemVariableAddForm.State {
-        input.map { SystemVariableAddForm.State.from(input: $0) } ?? .empty()
     }
 
 }

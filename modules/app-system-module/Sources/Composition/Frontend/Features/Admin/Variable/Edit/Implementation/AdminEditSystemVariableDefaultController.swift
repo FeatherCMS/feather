@@ -23,8 +23,7 @@ struct AdminEditSystemVariableDefaultController:
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
         else {
             return try await runtime.presenter.renderErrorPage(
-                info: "Forbidden",
-                message: "Your account cannot edit system variables."
+                error: .forbidden
             )
         }
         let id = try context.requiredID()
@@ -37,16 +36,9 @@ struct AdminEditSystemVariableDefaultController:
                 permissions: permissions
             )
         }
-        catch let error as OpenAPIRepositoryError {
+        catch let error as AdminEditSystemVariableError {
             return try await runtime.presenter.renderErrorPage(
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
-        }
-        catch {
-            return try await runtime.presenter.renderErrorPage(
-                info: "Unable to load system variable.",
-                message: error.displayMessage
+                error: error
             )
         }
     }
@@ -61,8 +53,7 @@ struct AdminEditSystemVariableDefaultController:
         else {
             return try await runtime.presenter
                 .renderErrorPage(
-                    info: "Forbidden",
-                    message: "Your account cannot edit system variables."
+                    error: .forbidden
                 )
                 .response(from: request, context: context)
         }
@@ -112,20 +103,26 @@ struct AdminEditSystemVariableDefaultController:
         catch let error as HTTPError {
             throw error
         }
-        catch let error as OpenAPIRepositoryError {
+        catch let error as AdminEditSystemVariableError {
             var state = formState(input: lastPayload)
-            state.apply(error: error.errorDescription)
-            return try await runtime.presenter
-                .renderEditPage(
-                    id: id,
-                    state: state,
-                    permissions: permissions
+
+            switch error {
+            case .notFound:
+                state.apply(error: "This system variable no longer exists.")
+            case .unauthorized:
+                throw HTTPError(.unauthorized)
+            case .forbidden:
+                throw HTTPError(.forbidden)
+            case .conflict:
+                state.apply(
+                    error: "A system variable with this key already exists."
                 )
-                .response(from: request, context: context)
-        }
-        catch {
-            var state = formState(input: lastPayload)
-            state.apply(error: error.displayMessage)
+            case .unavailable:
+                state.apply(
+                    error: "The system variable could not be saved. Please try again."
+                )
+            }
+
             return try await runtime.presenter
                 .renderEditPage(
                     id: id,

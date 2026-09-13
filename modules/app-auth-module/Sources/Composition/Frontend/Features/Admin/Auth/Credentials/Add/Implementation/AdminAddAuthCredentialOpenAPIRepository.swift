@@ -33,13 +33,9 @@ struct AdminAddAuthCredentialOpenAPIRepository: AdminAddAuthCredentialRepository
                     .init(id: String($0.email), label: $0.email)
                 }
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view auth emails."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot access auth emails."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -57,9 +53,7 @@ struct AdminAddAuthCredentialOpenAPIRepository: AdminAddAuthCredentialRepository
                 $0.email == payload.email
             })
         else {
-            throw OpenAPIRepositoryError.notFound(
-                message: "Auth email not found."
-            )
+            throw OpenAPIRepositoryError.notFound
         }
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.authCredentialCreate(
@@ -76,13 +70,9 @@ struct AdminAddAuthCredentialOpenAPIRepository: AdminAddAuthCredentialRepository
             case .created:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to create credentials."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot create credentials."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -102,13 +92,9 @@ struct AdminAddAuthCredentialOpenAPIRepository: AdminAddAuthCredentialRepository
             switch response {
             case .ok(let ok): return try ok.body.json
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view auth emails."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot access auth emails."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

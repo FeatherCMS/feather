@@ -19,17 +19,11 @@ struct AdminEditContactFormSubmissionOpenAPIRepository {
             switch response {
             case .ok: return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This submission could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to update submissions."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot update submissions."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

@@ -29,19 +29,11 @@ struct AdminGetSystemVariableOpenAPIRepository: AdminGetSystemVariableRepository
                     notes: variable.notes
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "System variable not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to load this system variable."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot access system variables."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

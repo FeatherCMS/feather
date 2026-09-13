@@ -45,18 +45,11 @@ struct AdminGetWebMetadataOpenAPIRepository: AdminGetWebMetadataRepository {
                 )
                 return model
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Web metadata not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this web metadata."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot access web metadata."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

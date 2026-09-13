@@ -31,15 +31,9 @@ struct AdminGetAnalyticsNotFoundOpenAPIRepository:
             case .ok(let okResponse):
                 return try okResponse.body.json
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to view analytics-not-found insights."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot access analytics-not-found insights."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

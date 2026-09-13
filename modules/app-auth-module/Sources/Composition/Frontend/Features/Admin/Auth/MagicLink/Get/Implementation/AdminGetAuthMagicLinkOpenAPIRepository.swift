@@ -41,19 +41,11 @@ struct AdminGetAuthMagicLinkOpenAPIRepository:
                     isPersistent: item.isPersistent
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User magic link not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to load this user magic link."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your identity cannot access user magic links."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

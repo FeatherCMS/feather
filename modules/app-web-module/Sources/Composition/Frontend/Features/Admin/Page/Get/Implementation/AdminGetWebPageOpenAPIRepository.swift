@@ -36,17 +36,11 @@ struct AdminGetWebPageOpenAPIRepository: AdminGetWebPageRepository {
                     )
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Web page not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this web page."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access web pages."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

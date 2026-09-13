@@ -19,17 +19,11 @@ struct AdminResendAccountInvitationOpenAPIRepository:
             case .ok:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to resend this invitation."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot resend invitations."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User invitation not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

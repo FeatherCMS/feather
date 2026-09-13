@@ -16,9 +16,7 @@ struct AdminEditContactFieldOpenAPIRepository {
         try await AdminListContactFieldsOpenAPIRepository(api: api)
             .list().first { $0.id == id }
             ?? {
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This form field could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             }()
     }
     func update(id: String, form: ContactFieldFormInput)
@@ -42,17 +40,11 @@ struct AdminEditContactFieldOpenAPIRepository {
             switch response {
             case .ok: return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This form field could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to edit form fields."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit form fields."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

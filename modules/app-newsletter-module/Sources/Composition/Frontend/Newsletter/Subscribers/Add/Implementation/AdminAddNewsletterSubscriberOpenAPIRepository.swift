@@ -22,13 +22,9 @@ struct AdminAddNewsletterSubscriberOpenAPIRepository {
                     .init(id: $0.id, name: $0.name)
                 }
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view campaigns."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view campaigns."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -60,13 +56,9 @@ struct AdminAddNewsletterSubscriberOpenAPIRepository {
                 switch response {
                 case .created: continue
                 case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized(
-                        message: "Please sign in again to add subscribers."
-                    )
+                    throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden(
-                        message: "Your account cannot add subscribers."
-                    )
+                    throw OpenAPIRepositoryError.forbidden
                 case .undocumented(let statusCode, let response):
                     throw try await api.failure(
                         statusCode: statusCode,

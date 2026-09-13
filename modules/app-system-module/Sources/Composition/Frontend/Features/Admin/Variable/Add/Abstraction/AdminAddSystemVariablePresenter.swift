@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherValidation
 import Hummingbird
 
 protocol AdminAddSystemVariablePresenter: Sendable {
@@ -7,9 +8,22 @@ protocol AdminAddSystemVariablePresenter: Sendable {
         state: SystemVariableAddForm.State
     ) async throws -> HTMLResponse
 
-    func renderErrorPage(
-        info: String,
-        message: String
+    func renderValidationError(
+        input: SystemVariableAddFormInput?,
+        error: ValidationError
     ) async throws -> HTMLResponse
+
+    func renderSuccess() async throws -> HTMLResponse
+
+    func renderAddError(
+        input: SystemVariableAddFormInput?,
+        error: AdminAddSystemVariableError
+    ) async throws -> HTMLResponse
+
+    func renderUnauthorizedPage() async throws -> HTMLResponse
+
+    func renderForbiddenPage() async throws -> HTMLResponse
+
+    func renderInvalidNoncePage() async throws -> HTMLResponse
 
 }

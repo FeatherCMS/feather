@@ -40,19 +40,11 @@ struct AdminRemoveBlogAuthorLinkOpenAPIRepository:
                     notes: item.notes
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Blog author link not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to load this blog author link."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot delete blog author links."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

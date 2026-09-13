@@ -29,18 +29,11 @@ struct AdminRemoveRedirectRuleOpenAPIRepository:
                     notes: rule.notes
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Redirect rule not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this redirect rule."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot delete redirect rules."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

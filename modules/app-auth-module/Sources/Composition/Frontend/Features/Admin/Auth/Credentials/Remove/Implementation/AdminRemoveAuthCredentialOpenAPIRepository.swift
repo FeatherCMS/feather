@@ -36,17 +36,11 @@ struct AdminRemoveAuthCredentialOpenAPIRepository:
                     email: item.email
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User credential not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this credential."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot access credentials."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

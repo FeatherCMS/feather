@@ -20,13 +20,9 @@ struct AdminNewsletterCampaignAPIClient {
                     .init(id: $0.id, name: $0.name, fromEmail: $0.fromEmail)
                 }
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view newsletters."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view newsletters."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -50,17 +46,11 @@ struct AdminNewsletterCampaignAPIClient {
                     fromEmail: item.fromEmail
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to view this newsletter."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot view this newsletter."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This newsletter could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -87,17 +77,11 @@ struct AdminNewsletterCampaignAPIClient {
                     fromEmail: item.fromEmail
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to edit newsletters."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit newsletters."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This newsletter could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
