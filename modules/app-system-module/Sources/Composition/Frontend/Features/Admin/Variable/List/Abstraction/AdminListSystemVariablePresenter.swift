@@ -14,8 +14,7 @@ protocol AdminListSystemVariablePresenter: Sendable {
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
-        title: String,
-        message: String
+        error: AdminListSystemVariableError
     ) async throws -> HTMLResponse
 
 }

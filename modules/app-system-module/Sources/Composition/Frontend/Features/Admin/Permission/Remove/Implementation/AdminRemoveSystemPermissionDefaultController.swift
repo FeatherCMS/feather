@@ -90,12 +90,12 @@ struct AdminRemoveSystemPermissionDefaultController:
         var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: NewAdminListRemoveFormInput.self,
+                as: NonceRequest<NewAdminListRemoveFormInput>.self,
                 context: context
             )
-            page = payload.normalizedPage
-            search = payload.normalizedSearch
-            returnTo = payload.normalizedReturnTo
+            page = payload.input.normalizedPage
+            search = payload.input.normalizedSearch
+            returnTo = payload.input.normalizedReturnTo
             guard
                 await AdminNonceStore.shared.consume(
                     payload.nonce,
@@ -114,7 +114,7 @@ struct AdminRemoveSystemPermissionDefaultController:
                     )
                     .response(from: request, context: context)
             }
-            guard !payload.normalizedIds.isEmpty else {
+            guard !payload.input.normalizedIds.isEmpty else {
                 return Response(
                     status: .seeOther,
                     headers: [
@@ -126,7 +126,7 @@ struct AdminRemoveSystemPermissionDefaultController:
                     ]
                 )
             }
-            try await interactor.delete(ids: payload.normalizedIds)
+            try await interactor.delete(ids: payload.input.normalizedIds)
             let location = NewAdminLocation.url(
                 path: SystemPermissionRoutes.list.description,
                 page: page,
@@ -136,9 +136,9 @@ struct AdminRemoveSystemPermissionDefaultController:
                 to: location,
                 notification: .init(
                     title: "Removed",
-                    message: payload.normalizedIds.count == 1
+                    message: payload.input.normalizedIds.count == 1
                         ? "System permission removed successfully."
-                        : "\(payload.normalizedIds.count) system permissions removed successfully."
+                        : "\(payload.input.normalizedIds.count) system permissions removed successfully."
                 )
             )
         }

@@ -11,10 +11,6 @@ struct AdminListSystemVariableDefaultPresenter:
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    private var requestNotification: AdminNotification? {
-        AdminNotificationFlash.notification(from: request)
-    }
-
     func renderListPage(
         model: NewAdminListModel<
             Components.Schemas.SystemVariableListItemSchema
@@ -40,19 +36,51 @@ struct AdminListSystemVariableDefaultPresenter:
     }
 
     func renderErrorPage(
-        title: String,
-        message: String
+        error: AdminListSystemVariableError
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        let state: NewAdminStatusView.State
+
+        switch error {
+        case .unauthorized:
+            state = .init(
+                title: "Session expired",
+                message: "Please sign in again to view system variables."
+            )
+        case .forbidden:
+            state = .init(
+                title: "Forbidden",
+                message: "Your account cannot access system variables."
+            )
+        case .unavailable:
+            state = .init(
+                title: "System variables unavailable",
+                message: "The request could not be completed. Please try again."
+            )
+        }
+
+        let page = try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Variables",
             content: NewAdminStatusView(
-                state: .init(title: title, message: message),
+                state: state,
                 icon: FeatherIcons.alertCircle()
-            ),
-
+            )
         )
+        return HTMLResponse(content: page.content, status: status(for: error))
+    }
+
+    private func status(
+        for error: AdminListSystemVariableError
+    ) -> HTTPResponse.Status {
+        switch error {
+        case .unauthorized:
+            .unauthorized
+        case .forbidden:
+            .forbidden
+        case .unavailable:
+            .serviceUnavailable
+        }
     }
 
 }

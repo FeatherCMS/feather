@@ -19,8 +19,7 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
         guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.read)
         else {
             return try await runtime.presenter.renderErrorPage(
-                info: "Forbidden",
-                message: "Your account cannot access system variables."
+                error: .forbidden
             )
         }
         let id = try context.requiredID()
@@ -33,10 +32,9 @@ struct AdminGetSystemVariableDefaultController: AdminGetSystemVariableController
                 permissions: context.currentUserAdminListActions,
             )
         }
-        catch let error as OpenAPIRepositoryError {
+        catch let error as AdminGetSystemVariableError {
             return try await runtime.presenter.renderErrorPage(
-                info: error.errorTitle,
-                message: error.errorDescription,
+                error: error
             )
         }
     }

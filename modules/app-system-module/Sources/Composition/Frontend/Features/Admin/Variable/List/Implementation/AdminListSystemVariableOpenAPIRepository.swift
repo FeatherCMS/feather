@@ -7,10 +7,7 @@ struct AdminListSystemVariableOpenAPIRepository:
     AdminListSystemVariableRepository
 {
     let api: SystemAdminAPIClient
-    private let listUnauthorizedMessage =
-        "Please sign in again to view system variables."
-    private let listForbiddenMessage =
-        "Your account cannot access system variables."
+
     init(api: SystemAdminAPIClient) {
         self.api = api
     }

@@ -30,18 +30,58 @@ struct AdminGetSystemVariableDefaultPresenter: AdminGetSystemVariablePresenter {
     }
 
     func renderErrorPage(
-        info: String,
-        message: String
+        error: AdminGetSystemVariableError
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        let state: NewAdminStatusView.State
+
+        switch error {
+        case .notFound:
+            state = .init(
+                title: "System variable not found",
+                message: "This system variable may have been removed."
+            )
+        case .unauthorized:
+            state = .init(
+                title: "Session expired",
+                message: "Please sign in again to view system variables."
+            )
+        case .forbidden:
+            state = .init(
+                title: "Forbidden",
+                message: "Your account cannot access system variables."
+            )
+        case .unavailable:
+            state = .init(
+                title: "System variable unavailable",
+                message: "The request could not be completed. Please try again."
+            )
+        }
+
+        let page = try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "System variable details",
             content: NewAdminStatusView(
-                state: .init(title: info, message: message),
+                state: state,
                 icon: FeatherIcons.alertCircle()
             )
         )
+        return HTMLResponse(content: page.content, status: status(for: error))
+    }
+
+    private func status(
+        for error: AdminGetSystemVariableError
+    ) -> HTTPResponse.Status {
+        switch error {
+        case .notFound:
+            .notFound
+        case .unauthorized:
+            .unauthorized
+        case .forbidden:
+            .forbidden
+        case .unavailable:
+            .serviceUnavailable
+        }
     }
 
 }

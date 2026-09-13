@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherValidation
 import Foundation
 import SystemAdminAPI
 
@@ -22,7 +21,6 @@ struct AdminEditSystemVariableDefaultInteractor:
         id: String,
         input: SystemVariableEditFormInput
     ) async throws {
-        try await input.validate()
         do {
             try await repository.update(
                 id: id,

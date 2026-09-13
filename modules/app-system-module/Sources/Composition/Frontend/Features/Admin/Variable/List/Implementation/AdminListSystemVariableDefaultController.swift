@@ -26,8 +26,7 @@ struct AdminListSystemVariableDefaultController:
         )
         guard canAccess else {
             return try await presenter.renderErrorPage(
-                title: "Forbidden",
-                message: "Your account cannot access system variables."
+                error: .forbidden
             )
         }
         do {
@@ -41,10 +40,9 @@ struct AdminListSystemVariableDefaultController:
                 search: search
             )
         }
-        catch {
+        catch let error as AdminListSystemVariableError {
             return try await presenter.renderErrorPage(
-                title: "Unable to load system variables.",
-                message: error.displayMessage
+                error: error
             )
         }
     }

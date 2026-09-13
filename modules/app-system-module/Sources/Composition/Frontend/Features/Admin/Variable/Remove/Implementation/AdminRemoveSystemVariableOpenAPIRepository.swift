@@ -43,15 +43,26 @@ struct AdminRemoveSystemVariableOpenAPIRepository:
                     )
                 )
             )
-            guard case .ok(let result) = response else { return [] }
-            let byID = Dictionary(
-                uniqueKeysWithValues: try result.body.json.data.items.map {
-                    ($0.id, $0)
+            switch response {
+            case .ok(let result):
+                let byID = Dictionary(
+                    uniqueKeysWithValues: try result.body.json.data.items.map {
+                        ($0.id, $0)
+                    }
+                )
+                return ids.map { id in
+                    byID[id]?.name ?? byID[id]?.key
+                        ?? "Variable not found (id: \(id))"
                 }
-            )
-            return ids.map { id in
-                byID[id]?.name ?? byID[id]?.key
-                    ?? "Variable not found (id: \(id))"
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }

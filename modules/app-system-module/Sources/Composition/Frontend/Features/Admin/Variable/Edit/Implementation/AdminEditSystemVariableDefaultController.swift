@@ -63,80 +63,45 @@ struct AdminEditSystemVariableDefaultController:
 
         do {
             let payload = try await request.decode(
-                as: SystemVariableEditFormInput.self,
+                as: NonceRequest<SystemVariableEditFormInput>.self,
                 context: context
             )
-            lastPayload = payload
+            lastPayload = payload.input
             guard
                 await AdminNonceStore.shared.consume(
                     payload.nonce,
                     sessionToken: context.sessionToken
                 )
             else {
-                throw HTTPError(.forbidden)
+                return try await runtime.presenter
+                    .renderInvalidNoncePage()
+                    .response(from: request, context: context)
             }
-            try await runtime.interactor.edit(id: id, input: payload)
+            try await payload.input.validate()
+            try await runtime.interactor.edit(id: id, input: payload.input)
 
-            return AdminNotificationFlash.redirect(
-                to: SystemVariableRoutes.edit(RouterPath(id)).description,
-                notification: .init(
-                    title: "Saved",
-                    message: "System variable edited successfully."
-                )
-            )
+            return runtime.presenter.renderSuccess(id: id)
         }
         catch let error as ValidationError {
-            var errors: [String: String] = [:]
-            for failure in error.failures {
-                errors[failure.key] = failure.message
-            }
-            var state = formState(input: lastPayload)
-            state.apply(errors: errors)
             return try await runtime.presenter
-                .renderEditPage(
+                .renderValidationError(
                     id: id,
-                    state: state,
-                    permissions: permissions
+                    input: lastPayload,
+                    permissions: permissions,
+                    error: error
                 )
                 .response(from: request, context: context)
-        }
-        catch let error as HTTPError {
-            throw error
         }
         catch let error as AdminEditSystemVariableError {
-            var state = formState(input: lastPayload)
-
-            switch error {
-            case .notFound:
-                state.apply(error: "This system variable no longer exists.")
-            case .unauthorized:
-                throw HTTPError(.unauthorized)
-            case .forbidden:
-                throw HTTPError(.forbidden)
-            case .conflict:
-                state.apply(
-                    error: "A system variable with this key already exists."
-                )
-            case .unavailable:
-                state.apply(
-                    error: "The system variable could not be saved. Please try again."
-                )
-            }
-
             return try await runtime.presenter
-                .renderEditPage(
+                .renderEditError(
                     id: id,
-                    state: state,
-                    permissions: permissions
+                    input: lastPayload,
+                    permissions: permissions,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
-    }
-
-    private func formState(
-        input: SystemVariableEditFormInput?
-    ) -> SystemVariableEditForm.State {
-        input.map { SystemVariableEditForm.State.from(input: $0) } ?? .empty()
     }
 
 }
