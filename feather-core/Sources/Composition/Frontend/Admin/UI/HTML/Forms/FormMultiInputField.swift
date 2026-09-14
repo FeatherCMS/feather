@@ -141,6 +141,12 @@ public struct FormMultiInputField: Component {
             UnsafeRawProperty(name: "outline", value: "none")
             UnsafeRawProperty(name: "box-shadow", value: "none")
         }
+        Class("form-multi-input-field__help") {
+            Display(.block)
+            MarginTop(6.px)
+            FontSize(13.px)
+            //            Color(.variable("cms-light-font"))
+        }
     }
 
     public func html(context: inout RenderContext) -> Section {
@@ -180,7 +186,9 @@ public struct FormMultiInputField: Component {
             .class("form-multi-input-field__values")
 
             if let help = state.help {
-                Span(help).id(helpID).class("field-help")
+                Span(help)
+                    .id(helpID)
+                    .class("field-help", "form-multi-input-field__help")
             }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
@@ -188,6 +196,7 @@ public struct FormMultiInputField: Component {
             Script(script())
         }
         .class("form-multi-input-field")
+        .data("name", state.name)
         .if(state.error != nil) { $0.class("has-error") }
         .if(state.wrapperClass != nil) {
             if let wrapperClass = state.wrapperClass {
@@ -262,6 +271,7 @@ public struct FormMultiInputField: Component {
                 }
 
                 function add(value) {
+                    if (input.disabled) return;
                     var normalized = value.trim();
                     if (!normalized) return;
                     var duplicate = currentValues().some(function (item) {
@@ -323,6 +333,7 @@ public struct FormMultiInputField: Component {
                 }
 
                 control.addEventListener("click", function (event) {
+                    if (input.disabled) return;
                     var remove = event.target.closest(".form-multi-input-field__remove");
                     if (!remove) return;
                     var valueToRemove = remove.dataset.value;
@@ -333,11 +344,25 @@ public struct FormMultiInputField: Component {
                     input.required = currentValues().length === 0;
                     input.focus();
                 });
+
+                root.addEventListener("webapp:multi-input-set-enabled", function (
+                    event
+                ) {
+                    var isEnabled = !!(event.detail && event.detail.isEnabled);
+                    input.disabled = !isEnabled;
+                    root.classList.toggle("form-multi-input-field--disabled", !isEnabled);
+                    if (!isEnabled) {
+                        input.value = "";
+                        values.replaceChildren();
+                        control.querySelectorAll(
+                            ".form-multi-input-field__chip"
+                        ).forEach(function (chip) { chip.remove(); });
+                    }
+                });
             }
 
             function initAll() {
                 document.querySelectorAll(".form-multi-input-field").forEach(function (root) {
-                    root.dataset.name = root.querySelector(".form-multi-input-field__values input")?.name || "\#(state.name)";
                     initialize(root);
                 });
             }

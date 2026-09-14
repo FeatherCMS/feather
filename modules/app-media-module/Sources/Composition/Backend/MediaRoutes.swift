@@ -69,6 +69,21 @@ public func registerMediaAssetRoutes<C: RequestContext>(
             var buffer = ByteBufferAllocator()
                 .buffer(capacity: result.data.count)
             buffer.writeBytes(result.data)
+
+            if request.uri.queryParameters["download"].map(String.init) == "1" {
+                let filename = mediaDownloadFilename(storageKey: storageKey)
+                return Response(
+                    status: .ok,
+                    headers: [
+                        .contentType: mediaContentType(for: result.type),
+                        .cacheControl: "public, max-age=31536000, immutable",
+                        .contentDisposition:
+                            "attachment; filename=\"\(filename)\"",
+                    ],
+                    body: .init(byteBuffer: buffer)
+                )
+            }
+
             return Response(
                 status: .ok,
                 headers: [
@@ -117,6 +132,20 @@ public func registerMediaAssetRoutes<C: RequestContext>(
             return Response(status: .notFound)
         }
     }
+}
+
+private func mediaDownloadFilename(
+    storageKey: String
+) -> String {
+    let filename =
+        storageKey.split(separator: "/").last.map(String.init) ?? "download"
+    let allowed = CharacterSet(
+        charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_"
+    )
+    let sanitized = String(
+        filename.unicodeScalars.map { allowed.contains($0) ? Character(String($0)) : "-" }
+    )
+    return sanitized.isEmpty ? "download" : sanitized
 }
 
 private func extractMediaRouteStorageKey(

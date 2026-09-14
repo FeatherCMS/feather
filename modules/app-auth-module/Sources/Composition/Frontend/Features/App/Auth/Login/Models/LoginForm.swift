@@ -29,6 +29,7 @@ struct LoginForm: Component {
         var email: EmailField.State
         var password: PasswordField.State
         var isPersistent: CheckboxField.State
+        var redirectPath: String
 
         mutating func apply(
             errors: [String: String]
@@ -47,6 +48,10 @@ struct LoginForm: Component {
 
     func html(context: inout RenderContext) -> Form {
         Form {
+            Input()
+                .type(.hidden)
+                .name("redirect")
+                .value(state.redirectPath)
             Section {
                 context.render(EmailField(state: state.email))
             }
@@ -72,7 +77,11 @@ struct LoginForm: Component {
         }
         .encType(.urlencoded)
         .method(.post)
-        .action("/login/")
+        .action(
+            state.redirectPath == "/"
+                ? "/login/"
+                : "/login/?redirect=\(state.redirectPath.queryEncoded())"
+        )
         .class("cms-form")
         .class("login-form")
     }

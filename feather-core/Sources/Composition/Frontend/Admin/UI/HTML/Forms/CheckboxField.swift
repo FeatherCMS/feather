@@ -18,6 +18,7 @@ public struct CheckboxField: Component {
         var error: String?
         var id: String
         var labelPosition: LabelPosition
+        var isRequired: Bool
         var isDisabled: Bool
         var wrapperClass: String?
         var inputClass: String?
@@ -29,6 +30,7 @@ public struct CheckboxField: Component {
             error: String? = nil,
             id: String? = nil,
             labelPosition: LabelPosition = .after,
+            isRequired: Bool = false,
             isDisabled: Bool = false,
             wrapperClass: String? = nil,
             inputClass: String? = nil
@@ -39,6 +41,7 @@ public struct CheckboxField: Component {
             self.error = error
             self.id = id ?? name
             self.labelPosition = labelPosition
+            self.isRequired = isRequired
             self.isDisabled = isDisabled
             self.wrapperClass = wrapperClass
             self.inputClass = inputClass
@@ -51,6 +54,7 @@ public struct CheckboxField: Component {
             error: String? = nil,
             id: String? = nil,
             labelPosition: LabelPosition = .after,
+            isRequired: Bool = false,
             isDisabled: Bool = false,
             wrapperClass: String? = nil,
             inputClass: String? = nil
@@ -62,6 +66,7 @@ public struct CheckboxField: Component {
                 error: error,
                 id: id,
                 labelPosition: labelPosition,
+                isRequired: isRequired,
                 isDisabled: isDisabled,
                 wrapperClass: wrapperClass,
                 inputClass: inputClass
@@ -84,6 +89,7 @@ public struct CheckboxField: Component {
         error: String? = nil,
         id: String? = nil,
         labelPosition: LabelPosition = .after,
+        isRequired: Bool = false,
         isDisabled: Bool = false,
         wrapperClass: String? = nil,
         inputClass: String? = nil
@@ -95,6 +101,7 @@ public struct CheckboxField: Component {
             error: error,
             id: id,
             labelPosition: labelPosition,
+            isRequired: isRequired,
             isDisabled: isDisabled,
             wrapperClass: wrapperClass,
             inputClass: inputClass
@@ -181,6 +188,9 @@ public struct CheckboxField: Component {
         }
         if state.isChecked {
             input = input.checked()
+        }
+        if state.isRequired {
+            input = input.required()
         }
         if state.isDisabled {
             input = input.disabled()

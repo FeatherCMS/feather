@@ -26,6 +26,7 @@ protocol AppLoginAuthPresenter: Sendable {
     func formState(
         email: String,
         password: String,
-        isPersistent: Bool
+        isPersistent: Bool,
+        redirectPath: String
     ) -> LoginForm.State
 }
