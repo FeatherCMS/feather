@@ -34,6 +34,5 @@ struct AdminNewsletterCampaignTabs: Component, FlowContent {
                 isCurrent: active == .issues
             ),
         ])
-        .content()
     }
 }
