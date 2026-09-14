@@ -69,7 +69,7 @@ struct WebPageForm: Component, FlowContent {
                 P(error).class("error")
             }
 
-            AdminPillTabs(links: metadataTabLinks()).content()
+            AdminPillTabs(links: metadataTabLinks())
 
             Div {
 

@@ -30,6 +30,5 @@ struct AdminContactFormTabs: Component, FlowContent {
                 isCurrent: active == .submissions
             ),
         ])
-        .content()
     }
 }
