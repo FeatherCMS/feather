@@ -48,7 +48,7 @@ struct AdminListWebPageDefaultController:
             model = emptyModel
             error = nil
         }
-        return presenter.renderListPage(
+        return try await presenter.renderListPage(
             model: model,
             isAdded: request.hasQueryFlag("added"),
             isEdited: request.hasQueryFlag("edited"),
@@ -66,7 +66,7 @@ struct AdminListWebPageDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
-        let selectedIds = request.queryStrings("selectedIds")
+        let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
         guard !selectedIds.isEmpty else {
@@ -84,7 +84,7 @@ struct AdminListWebPageDefaultController:
             )
         }
         return
-            try presenter.renderRemoveConfirmation(
+            try await presenter.renderRemoveConfirmation(
                 page: page,
                 search: search,
                 selectedIds: selectedIds,

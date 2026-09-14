@@ -11,5 +11,5 @@ protocol AdminListWebMetadataPresenter: Sendable {
         search: String?,
         referenceType: String?,
         error: String?
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

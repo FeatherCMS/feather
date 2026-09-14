@@ -1,0 +1,10 @@
+import FeatherAdmin
+import Foundation
+import OpenAPIRuntime
+
+protocol AdminViewWebPageInteractor: Sendable {
+
+    func execute(
+        entity: AdminViewWebPageModel
+    ) async throws -> WebPageDetailsModel
+}

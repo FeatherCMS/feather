@@ -10,6 +10,7 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
     AdminRemoveWebMenuItemPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
@@ -17,16 +18,11 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
         id: String,
         label: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove item",
-            description: "Remove confirmation for a management item",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuItemConfirmation(
                 state: .init(
                     menuId: menuId,
@@ -44,16 +40,11 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove item",
-            description: "Remove confirmation for a management item",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuItemError(
                 state: .init(
                     info: info,
@@ -67,9 +58,8 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
     func breadcrumb(
         menuId: String,
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
                 .init(label: "Menus", link: "/admin/web/menus/"),
@@ -79,6 +69,5 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
                     link: "/admin/web/menus/\(menuId)/items/"
                 ),
             ]
-        )
     }
 }

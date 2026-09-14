@@ -2,11 +2,11 @@ import FeatherAdmin
 
 public struct AdminWebMetadataEditConfiguration: Sendable {
     public let title: String
-    public let breadcrumb: AdminBreadcrumb.State
+    public let breadcrumb: [NewAdminBreadcrumb.Link]
 
     public init(
         title: String,
-        breadcrumb: AdminBreadcrumb.State
+        breadcrumb: [NewAdminBreadcrumb.Link]
     ) {
         self.title = title
         self.breadcrumb = breadcrumb

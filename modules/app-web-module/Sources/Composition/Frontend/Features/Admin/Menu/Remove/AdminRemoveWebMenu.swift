@@ -16,6 +16,7 @@ struct AdminRemoveWebMenu {
                     ),
                     presenter: AdminRemoveWebMenuDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

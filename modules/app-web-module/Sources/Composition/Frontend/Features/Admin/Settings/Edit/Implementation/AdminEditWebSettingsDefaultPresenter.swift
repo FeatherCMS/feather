@@ -7,21 +7,17 @@ struct AdminEditWebSettingsDefaultPresenter:
     AdminEditWebSettingsPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(
         state: WebSettingsEdit.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Settings",
-            description: "Edit web settings",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebSettingsEdit(state: state)
         )
     }
@@ -30,32 +26,23 @@ struct AdminEditWebSettingsDefaultPresenter:
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "No permission",
-            description: "No permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: PermissionDeniedView(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb()
-                )
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.lock()
             )
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
             ]
-        )
     }
+
 }

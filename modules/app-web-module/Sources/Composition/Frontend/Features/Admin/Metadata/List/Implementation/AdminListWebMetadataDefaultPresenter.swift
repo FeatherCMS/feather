@@ -12,6 +12,7 @@ struct AdminListWebMetadataDefaultPresenter:
     AdminListWebMetadataPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
     let referenceTypeOptions: [WebMetadataReferenceTypeOption]
 
@@ -22,20 +23,15 @@ struct AdminListWebMetadataDefaultPresenter:
         search: String?,
         referenceType: String?,
         error: String?
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let canAccess = permissions.contains(
             WebPermissions.Metadata.list.rawValue
         )
         if let error {
-            return renderEngine.renderAdminPage(
+            return try await renderEngine.renderNewAdminPage(
                 request: request,
+                context: context,
                 title: "Manage web metadata",
-                description: "Management web metadata list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
                 content: WebMetadataError(
                     state: .init(
                         info: "Unable to load web metadata.",
@@ -45,15 +41,10 @@ struct AdminListWebMetadataDefaultPresenter:
                 )
             )
         }
-        return renderEngine.renderAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Manage web metadata",
-            description: "Management web metadata list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMetadataTable(
                 state: .init(
                     isEdited: isEdited,
@@ -75,12 +66,10 @@ struct AdminListWebMetadataDefaultPresenter:
         )
     }
 
-    private func webMetadataBreadcrumbState() -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    private func webMetadataBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
+        [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
             ]
-        )
     }
 }

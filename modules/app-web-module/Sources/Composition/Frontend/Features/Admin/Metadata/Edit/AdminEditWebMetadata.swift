@@ -21,6 +21,7 @@ struct AdminEditWebMetadata {
                     ),
                     presenter: AdminEditWebMetadataDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

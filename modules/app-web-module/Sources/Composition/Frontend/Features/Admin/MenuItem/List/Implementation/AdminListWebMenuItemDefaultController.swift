@@ -50,7 +50,7 @@ struct AdminListWebMenuItemDefaultController:
             model = emptyModel
             error = nil
         }
-        return presenter.renderListPage(
+        return try await presenter.renderListPage(
             menuId: menuId,
             model: model,
             isAdded: request.hasQueryFlag("added"),
@@ -68,7 +68,7 @@ struct AdminListWebMenuItemDefaultController:
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let menuId = try context.requiredID()
-        let selectedIds = request.queryStrings("selectedIds")
+        let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
         guard !selectedIds.isEmpty else {
@@ -86,7 +86,7 @@ struct AdminListWebMenuItemDefaultController:
             )
         }
         return
-            try presenter.renderRemoveConfirmation(
+            try await presenter.renderRemoveConfirmation(
                 menuId: menuId,
                 page: page,
                 search: search,

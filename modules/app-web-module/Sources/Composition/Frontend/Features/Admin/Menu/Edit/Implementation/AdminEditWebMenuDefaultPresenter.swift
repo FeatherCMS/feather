@@ -8,6 +8,7 @@ import WebComponents
 
 struct AdminEditWebMenuDefaultPresenter: AdminEditWebMenuPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(
@@ -15,16 +16,11 @@ struct AdminEditWebMenuDefaultPresenter: AdminEditWebMenuPresenter {
         state: WebMenuForm.State,
         isEdited: Bool,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit menu",
-            description: "Edit a management menu",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuEdit(
                 state: .init(
                     id: id,
@@ -41,16 +37,11 @@ struct AdminEditWebMenuDefaultPresenter: AdminEditWebMenuPresenter {
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit menu",
-            description: "Edit a management menu",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuError(
                 state: .init(
                     info: info,
@@ -63,13 +54,11 @@ struct AdminEditWebMenuDefaultPresenter: AdminEditWebMenuPresenter {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
                 .init(label: "Menus", link: "/admin/web/menus/"),
             ]
-        )
     }
 }

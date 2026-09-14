@@ -22,7 +22,7 @@ struct AdminEditWebMenuDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let menu = try await runtime.interactor.load(id: id)
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 id: id,
                 state: formState(
                     key: menu.key,
@@ -34,7 +34,7 @@ struct AdminEditWebMenuDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -83,7 +83,7 @@ struct AdminEditWebMenuDefaultController:
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
@@ -99,7 +99,7 @@ struct AdminEditWebMenuDefaultController:
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
@@ -115,7 +115,7 @@ struct AdminEditWebMenuDefaultController:
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,

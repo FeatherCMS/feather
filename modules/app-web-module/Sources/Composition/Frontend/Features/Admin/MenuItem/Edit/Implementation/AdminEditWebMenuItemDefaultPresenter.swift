@@ -8,6 +8,7 @@ import WebComponents
 
 struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(
@@ -16,16 +17,11 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
         state: WebMenuItemForm.State,
         isEdited: Bool,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit item",
-            description: "Edit a management item",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuItemEdit(
                 state: .init(
                     menuId: menuId,
@@ -44,16 +40,11 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit item",
-            description: "Edit a management item",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuItemError(
                 state: .init(
                     info: info,
@@ -67,9 +58,8 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
     func breadcrumb(
         menuId: String,
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
                 .init(label: "Menus", link: "/admin/web/menus/"),
@@ -79,6 +69,5 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
                     link: "/admin/web/menus/\(menuId)/items/"
                 ),
             ]
-        )
     }
 }

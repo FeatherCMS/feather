@@ -12,6 +12,7 @@ struct AdminListWebMenuItemDefaultPresenter:
     AdminListWebMenuItemPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderListPage(
@@ -23,20 +24,15 @@ struct AdminListWebMenuItemDefaultPresenter:
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let canAccess = permissions.contains(
             WebPermissions.MenuItems.list.rawValue
         )
         if let error {
-            return renderEngine.renderAdminPage(
+            return try await renderEngine.renderNewAdminPage(
                 request: request,
+                context: context,
                 title: "Manage items",
-                description: "Management item list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
                 content: WebMenuItemError(
                     state: .init(
                         info: "Unable to load web menu items.",
@@ -46,15 +42,10 @@ struct AdminListWebMenuItemDefaultPresenter:
                 )
             )
         }
-        return renderEngine.renderAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Manage items",
-            description: "Management item list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuItemTable(
                 state: .init(
                     menuId: menuId,
@@ -89,46 +80,41 @@ struct AdminListWebMenuItemDefaultPresenter:
         search: String?,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove selected items",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: webMenuItemBreadcrumbState(menuId: menuId),
+            content: NewAdminConfirmation(
+                breadcrumb: webMenuItemBreadcrumbState(menuId: menuId),
+                pageHeader: .init(
                     title: "Remove selected items",
-                    message:
-                        "Are you sure you want to remove these selected items? This action cannot be undone.",
-                    action: "/admin/web/menus/\(menuId)/items/remove/",
-                    cancelLink: ListRemoveRedirect.location(
-                        path: "/admin/web/menus/\(menuId)/",
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: selectedIds
-                )
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: selectedIds,
+                action: WebMenuItemRoutes.remove(RouterPath(menuId)).description,
+                cancel: ListRemoveRedirect.location(
+                    path: WebMenuItemRoutes.list(RouterPath(menuId)).description,
+                    page: page,
+                    search: search,
+                    title: nil,
+                    message: nil
+                ),
+                hiddenFields: selectedIds.map {
+                    .init(name: "ids", value: $0)
+                }
             )
         )
     }
 
     private func webMenuItemBreadcrumbState(
         menuId: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
                 .init(label: "Menus", link: "/admin/web/menus/"),
                 .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
             ]
-        )
     }
 }

@@ -9,6 +9,7 @@ import WebComponents
 
 struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(
@@ -16,19 +17,14 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         state: WebMetadataForm.State,
         isEdited: Bool,
         permissions: Set<String>,
-        navigationTabs: [AdminPillTabs.Link],
+        navigationTabs: [NewAdminPillTab.Link],
         configuration: AdminWebMetadataEditConfiguration?
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let title = configuration?.title ?? "Edit web metadata"
-        return renderingEngine.renderAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "\(title)",
-            description: "Edit a management web metadata",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMetadataEdit(
                 state: .init(
                     id: id,
@@ -49,17 +45,12 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         message: String,
         permissions: Set<String>,
         configuration: AdminWebMetadataEditConfiguration?
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let title = configuration?.title ?? "Edit web metadata"
-        return renderingEngine.renderAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "\(title)",
-            description: "Edit a management web metadata",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMetadataError(
                 state: .init(
                     info: info,
@@ -72,23 +63,19 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
+    ) -> [NewAdminBreadcrumb.Link] {
         let path = request.uri.path
         if let marker = path.range(of: "/edit/metadata/") {
             let detailsPath = String(path[..<marker.lowerBound]) + "/edit/"
-            return .init(
-                links: [
+            return [
                     .init(label: "Admin", link: "/admin/"),
                     .init(label: "Details", link: detailsPath),
                 ]
-            )
         }
-        return .init(
-            links: [
+        return [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
                 .init(label: "Metadata", link: "/admin/web/metadata/"),
             ]
-        )
     }
 }

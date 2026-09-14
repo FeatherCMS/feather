@@ -16,6 +16,7 @@ struct AdminRemoveWebPage {
                     ),
                     presenter: AdminRemoveWebPageDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

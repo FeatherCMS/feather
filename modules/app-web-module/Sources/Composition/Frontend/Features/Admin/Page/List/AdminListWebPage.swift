@@ -16,6 +16,7 @@ struct AdminListWebPage {
                     ),
                     presenter: AdminListWebPageDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

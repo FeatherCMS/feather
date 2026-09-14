@@ -13,7 +13,7 @@ protocol AdminListWebMenuItemPresenter: Sendable {
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderRemoveConfirmation(
         menuId: String,
@@ -21,5 +21,5 @@ protocol AdminListWebMenuItemPresenter: Sendable {
         search: String?,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

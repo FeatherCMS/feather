@@ -16,7 +16,7 @@ struct AdminAddWebPageDefaultController: AdminAddWebPageController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
-        return runtime.presenter.renderAddPage(
+        return try await runtime.presenter.renderAddPage(
             state: formState(slugPrefix: slugPrefix(context: context)),
             permissions: context.currentUserPermissions
         )
@@ -63,7 +63,7 @@ struct AdminAddWebPageDefaultController: AdminAddWebPageController {
                 slugPrefix: slugPrefix(context: context)
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -79,7 +79,7 @@ struct AdminAddWebPageDefaultController: AdminAddWebPageController {
                 slugPrefix: slugPrefix(context: context)
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -95,7 +95,7 @@ struct AdminAddWebPageDefaultController: AdminAddWebPageController {
                 slugPrefix: slugPrefix(context: context)
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions

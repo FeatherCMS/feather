@@ -21,7 +21,7 @@ public struct AdminWeb {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetWebHome(
+        AdminViewWebOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -36,7 +36,7 @@ public struct AdminWeb {
         )
         .controller.route(on: router)
 
-        AdminGetWebPage(
+        AdminViewWebPage(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -68,7 +68,7 @@ public struct AdminWeb {
         )
         .controller.route(on: router)
 
-        AdminGetWebMetadata(
+        AdminViewWebMetadata(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -84,7 +84,7 @@ public struct AdminWeb {
         )
         .controller.route(on: router)
 
-        AdminGetWebMenu(
+        AdminViewWebMenu(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -109,7 +109,7 @@ public struct AdminWeb {
         )
         .controller.route(on: router)
 
-        AdminGetWebMenuItem(
+        AdminViewWebMenuItem(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

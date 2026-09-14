@@ -7,7 +7,7 @@ protocol AdminAddWebMenuPresenter: Sendable {
     func renderAddPage(
         state: WebMenuForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
-    func breadcrumb() -> AdminBreadcrumb.State
+    func breadcrumb() -> [NewAdminBreadcrumb.Link]
 }

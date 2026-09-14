@@ -9,7 +9,7 @@ protocol AdminRemoveWebMenuItemPresenter: Sendable {
         id: String,
         label: String,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderErrorPage(
         menuId: String,
@@ -17,10 +17,10 @@ protocol AdminRemoveWebMenuItemPresenter: Sendable {
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func breadcrumb(
         menuId: String,
         id: String
-    ) -> AdminBreadcrumb.State
+    ) -> [NewAdminBreadcrumb.Link]
 }

@@ -21,14 +21,14 @@ struct AdminRemoveWebPageDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let page = try await runtime.interactor.get(id: id)
-            return runtime.presenter.renderRemovePage(
+            return try await runtime.presenter.renderRemovePage(
                 id: id,
                 source: page.title,
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -58,7 +58,7 @@ struct AdminRemoveWebPageDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderErrorPage(
                     id: id,
                     info: error.errorTitle,

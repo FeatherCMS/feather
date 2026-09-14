@@ -8,22 +8,18 @@ import WebComponents
 
 struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(
         menuId: String,
         state: WebMenuItemForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add item",
-            description: "Add an item in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuItemAdd(
                 state: .init(
                     menuId: menuId,
@@ -36,9 +32,8 @@ struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
 
     func breadcrumb(
         menuId: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
                 .init(label: "Menus", link: "/admin/web/menus/"),
@@ -48,6 +43,5 @@ struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
                     link: "/admin/web/menus/\(menuId)/items/"
                 ),
             ]
-        )
     }
 }

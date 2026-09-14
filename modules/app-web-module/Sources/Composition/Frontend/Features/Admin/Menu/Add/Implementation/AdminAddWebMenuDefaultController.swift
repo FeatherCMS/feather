@@ -16,7 +16,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
-        return runtime.presenter.renderAddPage(
+        return try await runtime.presenter.renderAddPage(
             state: formState(),
             permissions: context.currentUserPermissions
         )
@@ -61,7 +61,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -75,7 +75,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -89,7 +89,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions

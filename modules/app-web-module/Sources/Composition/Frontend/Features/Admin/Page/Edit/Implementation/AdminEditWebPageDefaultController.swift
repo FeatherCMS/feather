@@ -22,7 +22,7 @@ struct AdminEditWebPageDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let page = try await runtime.interactor.load(id: id)
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 id: id,
                 state: formState(
                     title: page.title,
@@ -37,7 +37,7 @@ struct AdminEditWebPageDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -87,7 +87,7 @@ struct AdminEditWebPageDefaultController:
                 imageAssetId: lastPayload?.normalizedImageAssetId,
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
@@ -104,7 +104,7 @@ struct AdminEditWebPageDefaultController:
                 imageAssetId: lastPayload?.normalizedImageAssetId,
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
@@ -121,7 +121,7 @@ struct AdminEditWebPageDefaultController:
                 imageAssetId: lastPayload?.normalizedImageAssetId,
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,

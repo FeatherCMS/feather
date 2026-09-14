@@ -12,6 +12,7 @@ struct AdminListWebPageDefaultPresenter:
     AdminListWebPagePresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderListPage(
@@ -24,19 +25,14 @@ struct AdminListWebPageDefaultPresenter:
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let canAccess = permissions.contains(WebPermissions.Pages.list.rawValue)
         let canEdit = permissions.contains(WebPermissions.Pages.update.rawValue)
         if let error {
-            return renderEngine.renderAdminPage(
+            return try await renderEngine.renderNewAdminPage(
                 request: request,
+                context: context,
                 title: "Manage web pages",
-                description: "Management web page list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
                 content: WebPageError(
                     state: .init(
                         info: "Unable to load web pages.",
@@ -46,15 +42,10 @@ struct AdminListWebPageDefaultPresenter:
                 )
             )
         }
-        return renderEngine.renderAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Manage web pages",
-            description: "Management web page list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebPageTable(
                 state: .init(
                     isAdded: isAdded,
@@ -87,42 +78,37 @@ struct AdminListWebPageDefaultPresenter:
         search: String?,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove selected pages",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: webPageBreadcrumbState(),
+            content: NewAdminConfirmation(
+                breadcrumb: webPageBreadcrumbState(),
+                pageHeader: .init(
                     title: "Remove selected pages",
-                    message:
-                        "Are you sure you want to remove these selected pages? This action cannot be undone.",
-                    action: "/admin/web/pages/remove/",
-                    cancelLink: ListRemoveRedirect.location(
-                        path: "/admin/web/pages/",
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: selectedIds
-                )
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: selectedIds,
+                action: WebPageRoutes.remove.description,
+                cancel: ListRemoveRedirect.location(
+                    path: WebPageRoutes.list.description,
+                    page: page,
+                    search: search,
+                    title: nil,
+                    message: nil
+                ),
+                hiddenFields: selectedIds.map {
+                    .init(name: "ids", value: $0)
+                }
             )
         )
     }
 
-    private func webPageBreadcrumbState() -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    private func webPageBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
+        [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
             ]
-        )
     }
 }

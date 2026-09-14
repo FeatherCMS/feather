@@ -43,7 +43,7 @@ struct AdminEditWebMenuItemDefaultController:
                 notes: item.notes
             )
             state.error = permissionLoadError
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 menuId: menuId,
                 id: id,
                 state: state,
@@ -52,7 +52,7 @@ struct AdminEditWebMenuItemDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 menuId: menuId,
                 id: id,
                 info: error.errorTitle,
@@ -104,7 +104,7 @@ struct AdminEditWebMenuItemDefaultController:
                     notes: payload.normalizedNotes
                 )
                 state.error = permissionLoadError
-                return try runtime.presenter
+                return try await runtime.presenter
                     .renderEditPage(
                         menuId: menuId,
                         id: id,
@@ -133,7 +133,7 @@ struct AdminEditWebMenuItemDefaultController:
                 state.apply(errors: [
                     "permission": "Select a valid permission."
                 ])
-                return try runtime.presenter
+                return try await runtime.presenter
                     .renderEditPage(
                         menuId: menuId,
                         id: id,
@@ -158,7 +158,7 @@ struct AdminEditWebMenuItemDefaultController:
                 state.apply(errors: [
                     "priority": "Priority must be a valid integer."
                 ])
-                return try runtime.presenter
+                return try await runtime.presenter
                     .renderEditPage(
                         menuId: menuId,
                         id: id,
@@ -202,7 +202,7 @@ struct AdminEditWebMenuItemDefaultController:
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     menuId: menuId,
                     id: id,
@@ -224,7 +224,7 @@ struct AdminEditWebMenuItemDefaultController:
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     menuId: menuId,
                     id: id,
@@ -246,7 +246,7 @@ struct AdminEditWebMenuItemDefaultController:
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     menuId: menuId,
                     id: id,

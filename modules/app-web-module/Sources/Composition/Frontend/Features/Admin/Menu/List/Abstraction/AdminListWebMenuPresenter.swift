@@ -12,12 +12,12 @@ protocol AdminListWebMenuPresenter: Sendable {
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderRemoveConfirmation(
         page: Int,
         search: String?,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

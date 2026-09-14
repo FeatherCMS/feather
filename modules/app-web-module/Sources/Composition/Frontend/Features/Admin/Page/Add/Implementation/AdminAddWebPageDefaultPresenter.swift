@@ -8,21 +8,17 @@ import WebComponents
 
 struct AdminAddWebPageDefaultPresenter: AdminAddWebPagePresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(
         state: WebPageForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add page",
-            description: "Add a page in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebPageAdd(
                 state: .init(
                     form: state,
@@ -32,13 +28,11 @@ struct AdminAddWebPageDefaultPresenter: AdminAddWebPagePresenter {
         )
     }
 
-    func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
+    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Web", link: "/admin/web/"),
                 .init(label: "Pages", link: "/admin/web/pages/"),
             ]
-        )
     }
 }

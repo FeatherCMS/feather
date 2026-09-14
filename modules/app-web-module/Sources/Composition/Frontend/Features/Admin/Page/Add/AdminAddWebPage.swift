@@ -16,6 +16,7 @@ struct AdminAddWebPage {
                     ),
                     presenter: AdminAddWebPageDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )
