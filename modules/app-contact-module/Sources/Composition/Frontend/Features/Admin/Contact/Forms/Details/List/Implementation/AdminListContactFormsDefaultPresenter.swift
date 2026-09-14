@@ -16,13 +16,10 @@ struct AdminListContactFormsDefaultPresenter: AdminListContactFormsPresenter {
     func renderList(
         items: [AdminContactFormDetailsItem],
         search: String,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
         isPicker: Bool,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let page = request.queryPage()
         let pageSize = 20
         let pageState = NewAdminListPageState(
@@ -33,15 +30,12 @@ struct AdminListContactFormsDefaultPresenter: AdminListContactFormsPresenter {
         let start = (page - 1) * pageSize
         let end = min(start + pageSize, items.count)
         let pageItems = start < items.count ? Array(items[start..<end]) : []
-        return renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Contact forms",
-            permissions: permissions,
             content: ContactFormTable(
                 state: .init(
-                    isAdded: isAdded,
-                    isEdited: isEdited,
-                    isRemoved: isRemoved,
                     items: pageItems,
                     pageState: pageState,
                     search: search,

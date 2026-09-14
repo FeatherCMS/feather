@@ -12,10 +12,10 @@ protocol AdminRemoveContactFormSubmissionsPresenter: Sendable {
         formId: String,
         item: AdminContactFormSubmissionItem,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
     func renderConfirmation(
         formId: String,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

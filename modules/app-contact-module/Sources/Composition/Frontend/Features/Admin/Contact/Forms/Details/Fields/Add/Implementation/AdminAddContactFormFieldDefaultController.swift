@@ -23,7 +23,7 @@ struct AdminAddContactFormFieldDefaultController:
     {
         let (interactor, presenter) = buildRuntime(request, context)
         let formId = context.parameters.get("formId", as: String.self) ?? ""
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             model: try await interactor.getAddContactFormField(formId: formId),
             permissions: context.currentUserPermissions
         )
@@ -58,7 +58,7 @@ struct AdminAddContactFormFieldDefaultController:
             )
         }
         return
-            try presenter.renderPage(
+            try await presenter.renderPage(
                 model: model,
                 permissions: context.currentUserPermissions
             )

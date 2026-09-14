@@ -22,14 +22,14 @@ struct AdminListContactFormEmailsDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let formId = try context.requiredParameter("formId")
         do {
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 item: try await interactor.get(id: formId),
                 error: nil,
                 permissions: context.currentUserPermissions
             )
         }
         catch {
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 item: .init(
                     id: formId,
                     name: "",

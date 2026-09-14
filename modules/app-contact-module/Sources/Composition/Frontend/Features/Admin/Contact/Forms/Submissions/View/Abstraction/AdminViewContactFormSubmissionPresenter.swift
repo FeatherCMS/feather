@@ -13,5 +13,5 @@ protocol AdminViewContactFormSubmissionPresenter: Sendable {
         item: AdminContactFormSubmissionItem,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

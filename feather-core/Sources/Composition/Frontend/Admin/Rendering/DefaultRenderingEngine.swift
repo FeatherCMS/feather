@@ -188,68 +188,6 @@ public struct DefaultRenderingEngine: RenderingEngine {
         )
     }
 
-    public func renderNewAdminPage<T: Component>(
-        request: Request,
-        title: String,
-        permissions: Set<String>,
-        content: T
-    ) -> HTMLResponse {
-        var context = RenderContext()
-        let legacySidebar = adminSidebarState(
-            request: request,
-            permissions: permissions
-        )
-        let menuGroups = legacySidebar.groups.map { group in
-            NewAdminSidebar.Group(
-                label: group.label,
-                menus: group.menus.map { menu in
-                    NewAdminSidebar.Group.Menu(
-                        parent: .init(
-                            icon: menu.current.icon,
-                            label: menu.current.label,
-                            link: menu.current.link,
-                            isCurrent: menu.current.isCurrent
-                        ),
-                        children: menu.children.map { item in
-                            .init(
-                                icon: item.icon,
-                                label: item.label,
-                                link: item.link,
-                                isCurrent: item.isCurrent
-                            )
-                        }
-                    )
-                }
-            )
-        }
-        let notification =
-            AdminNotificationFlash.notification(from: request)
-            ?? AdminToastRedirect.payload(from: request)
-            .flatMap { payload in
-                guard
-                    let kind = AdminNotification.Kind(
-                        rawValue: payload.type
-                    )
-                else { return nil }
-                return AdminNotification(
-                    kind: kind,
-                    title: payload.title,
-                    message: payload.message,
-                    position: payload.position
-                )
-            }
-        let layout = NewAdminBaseLayout(
-            content: content,
-            menuGroups: menuGroups,
-            notification: notification
-        )
-        return .init(
-            context.render(
-                NewAdminHTML(title: title, body: .init(content: layout))
-            )
-        )
-    }
-
     private func normalizedURL(
         base: String,
         path: String

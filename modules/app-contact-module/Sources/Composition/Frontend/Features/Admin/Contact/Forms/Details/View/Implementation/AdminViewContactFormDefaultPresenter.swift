@@ -17,11 +17,11 @@ struct AdminViewContactFormDefaultPresenter: AdminViewContactFormPresenter {
         item: AdminContactFormDetailsItem,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Contact form",
-            permissions: permissions,
             content: ContactFormDetailsView(
                 item: item,
                 permissions: .init(Set(permissions.map(PermissionKey.init))),

@@ -9,5 +9,5 @@ import WebComponents
 
 protocol AdminRemoveContactSubmissionsPresenter: Sendable {
     func renderConfirmation(selectedIds: [String], permissions: Set<String>)
-        -> HTMLResponse
+        async throws -> HTMLResponse
 }

@@ -20,11 +20,11 @@ struct AdminEditContactFormSubmissionDefaultPresenter:
         id: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Contact form submission",
-            permissions: permissions,
             content: ContactFormSubmissionDetailsView(
                 state: .init(
                     formId: formId,
@@ -37,7 +37,6 @@ struct AdminEditContactFormSubmissionDefaultPresenter:
                         values: [:]
                     ),
                     error: message,
-                    isEdited: false,
                     breadcrumb: ContactAdminRoutes.breadcrumb,
                     permissions: .init(Set(permissions.map(PermissionKey.init)))
                 )

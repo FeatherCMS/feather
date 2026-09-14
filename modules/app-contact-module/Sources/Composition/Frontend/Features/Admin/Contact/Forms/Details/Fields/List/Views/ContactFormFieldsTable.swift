@@ -14,8 +14,6 @@ struct ContactFormFieldsTable: Component {
         let pageState: NewAdminListPageState
         let search: String
         let error: String?
-        let isEdited: Bool
-        let isRemoved: Bool
         let permissions: NewAdminListActions
         let breadcrumb: [NewAdminBreadcrumb.Link]
     }

@@ -14,5 +14,5 @@ protocol AdminListContactFormSubmissionsPresenter: Sendable {
         search: String,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

@@ -14,12 +14,13 @@ struct AdminRemoveContactSubmissionsDefaultPresenter:
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
     func renderConfirmation(selectedIds: [String], permissions: Set<String>)
+        async throws
         -> HTMLResponse
     {
-        renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove contact submissions",
-            permissions: permissions,
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(

@@ -9,9 +9,6 @@ import WebComponents
 
 struct ContactFormTable: Component {
     struct State {
-        let isAdded: Bool
-        let isEdited: Bool
-        let isRemoved: Bool
         let items: [AdminContactFormDetailsItem]
         let pageState: NewAdminListPageState
         let search: String

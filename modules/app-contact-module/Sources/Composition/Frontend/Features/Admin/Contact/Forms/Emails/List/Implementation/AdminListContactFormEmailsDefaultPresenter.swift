@@ -19,11 +19,11 @@ struct AdminListContactFormEmailsDefaultPresenter:
         item: AdminContactFormDetailsItem,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Contact form emails",
-            permissions: permissions,
             content: ContactFormEmailsTable(
                 state: .init(
                     id: item.id,

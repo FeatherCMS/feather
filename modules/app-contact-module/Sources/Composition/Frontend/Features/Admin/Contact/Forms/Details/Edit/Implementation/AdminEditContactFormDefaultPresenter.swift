@@ -16,15 +16,14 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
         item: AdminContactFormDetailsItem,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit contact form",
-            permissions: permissions,
             content: ContactFormEditPage(
                 state: .init(
                     id: item.id,
-                    isEdited: request.hasQueryFlag("edited"),
                     isReadOnly: !permissions.contains("contact:forms:update"),
                     form: .init(
                         name: item.name,

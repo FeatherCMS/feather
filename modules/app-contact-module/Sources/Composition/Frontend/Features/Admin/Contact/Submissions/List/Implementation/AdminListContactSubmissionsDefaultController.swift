@@ -29,7 +29,7 @@ struct AdminListContactSubmissionsDefaultController:
                         || $0.status.localizedCaseInsensitiveContains(search)
                         || $0.createdAt.localizedCaseInsensitiveContains(search)
                 }
-            return presenter.render(
+            return try await presenter.render(
                 items: items,
                 search: search,
                 error: nil,
@@ -37,7 +37,7 @@ struct AdminListContactSubmissionsDefaultController:
             )
         }
         catch {
-            return presenter.render(
+            return try await presenter.render(
                 items: [],
                 search: search,
                 error: error.displayMessage,

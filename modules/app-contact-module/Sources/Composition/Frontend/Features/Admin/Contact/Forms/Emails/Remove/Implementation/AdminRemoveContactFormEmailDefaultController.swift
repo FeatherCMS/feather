@@ -27,13 +27,13 @@ struct AdminRemoveContactFormEmailDefaultController:
             guard let mail = form.mails.first(where: { $0.id == mailId }) else {
                 throw HTTPError(.notFound)
             }
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 formId: formId,
                 mail: mail,
                 permissions: context.currentUserPermissions
             )
         }
-        return presenter.renderConfirmation(
+        return try await presenter.renderConfirmation(
             formId: formId,
             selectedIds: request.queryStrings("selectedIds"),
             permissions: context.currentUserPermissions

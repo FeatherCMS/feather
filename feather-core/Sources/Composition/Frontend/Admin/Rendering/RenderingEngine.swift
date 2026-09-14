@@ -29,16 +29,6 @@ public protocol RenderingEngine: Sendable {
         content: T
     ) async throws -> HTMLResponse
 
-    /// Synchronous bridge for feature presenters that already receive the
-    /// current permission set. This keeps their controller contracts stable
-    /// while rendering them with the new admin shell.
-    func renderNewAdminPage<T: Component>(
-        request: Request,
-        title: String,
-        permissions: Set<String>,
-        content: T
-    ) -> HTMLResponse
-
     func adminSidebarState(
         request: Request,
         permissions: Set<String>

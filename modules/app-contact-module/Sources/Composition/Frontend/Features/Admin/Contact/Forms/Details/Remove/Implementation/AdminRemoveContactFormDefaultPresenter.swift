@@ -13,12 +13,13 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
     let renderingEngine: any RenderingEngine
 
     func renderConfirmation(id: String, name: String, permissions: Set<String>)
+        async throws
         -> HTMLResponse
     {
-        renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove contact form",
-            permissions: permissions,
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(
@@ -37,11 +38,11 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
     func renderConfirmation(
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove contact forms",
-            permissions: permissions,
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(

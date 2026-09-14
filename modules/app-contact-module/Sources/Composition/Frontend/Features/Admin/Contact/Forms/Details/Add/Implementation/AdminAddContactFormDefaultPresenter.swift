@@ -16,11 +16,11 @@ struct AdminAddContactFormDefaultPresenter: AdminAddContactFormPresenter {
         item: AdminContactFormDetailsItem,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add contact form",
-            permissions: permissions,
             content: ContactFormAddPage(
                 state: .init(
                     form: .init(

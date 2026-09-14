@@ -19,7 +19,7 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
     {
         let (interactor, presenter) = buildRuntime(request, context)
         let availableFields = (try? await interactor.availableFields()) ?? []
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             item: .init(
                 id: "",
                 name: "",

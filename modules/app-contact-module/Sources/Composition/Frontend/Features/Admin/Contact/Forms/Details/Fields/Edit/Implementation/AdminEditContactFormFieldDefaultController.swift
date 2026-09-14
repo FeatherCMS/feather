@@ -22,7 +22,7 @@ struct AdminEditContactFormFieldDefaultController:
         let formId = context.parameters.get("formId", as: String.self) ?? ""
         let id = try context.requiredParameter("fieldId")
         do {
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 formId: formId,
                 field: try await interactor.get(formId: formId, id: id),
                 error: nil,
@@ -30,7 +30,7 @@ struct AdminEditContactFormFieldDefaultController:
             )
         }
         catch {
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 formId: formId,
                 field: .init(
                     id: id,
@@ -73,7 +73,7 @@ struct AdminEditContactFormFieldDefaultController:
         }
         catch {
             return
-                try presenter.renderPage(
+                try await presenter.renderPage(
                     formId: formId,
                     field: .init(
                         id: id,

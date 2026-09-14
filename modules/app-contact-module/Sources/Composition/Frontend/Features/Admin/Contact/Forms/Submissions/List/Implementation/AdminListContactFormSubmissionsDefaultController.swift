@@ -30,7 +30,7 @@ struct AdminListContactFormSubmissionsDefaultController:
                         || $0.status.localizedCaseInsensitiveContains(search)
                         || $0.createdAt.localizedCaseInsensitiveContains(search)
                 }
-            return presenter.renderList(
+            return try await presenter.renderList(
                 formId: formId,
                 items: items,
                 search: search,
@@ -39,7 +39,7 @@ struct AdminListContactFormSubmissionsDefaultController:
             )
         }
         catch {
-            return presenter.renderList(
+            return try await presenter.renderList(
                 formId: formId,
                 items: [],
                 search: search,

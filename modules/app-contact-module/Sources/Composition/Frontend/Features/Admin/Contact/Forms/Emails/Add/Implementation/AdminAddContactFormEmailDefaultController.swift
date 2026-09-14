@@ -26,7 +26,7 @@ struct AdminAddContactFormEmailDefaultController:
             let fields = form.availableFields.filter {
                 form.selectedFieldIDs.contains($0.id)
             }
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 formId: formId,
                 availableFields: fields,
                 error: nil,
@@ -34,7 +34,7 @@ struct AdminAddContactFormEmailDefaultController:
             )
         }
         catch {
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 formId: formId,
                 availableFields: [],
                 error: error.displayMessage,

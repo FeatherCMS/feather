@@ -8,7 +8,6 @@ import WebComponents
 struct ContactFormEditPage: Component {
     struct State {
         let id: String
-        let isEdited: Bool
         let isReadOnly: Bool
         let form: ContactFormForm.State
         let breadcrumb: [NewAdminBreadcrumb.Link]
@@ -33,16 +32,6 @@ struct ContactFormEditPage: Component {
                     )
                 )
             )
-            if state.isEdited && !state.isReadOnly {
-                context.render(
-                    NewAdminNotification(
-                        notification: .init(
-                            title: "Form updated",
-                            message: "Contact form updated successfully."
-                        )
-                    )
-                )
-            }
             context.render(
                 ContactFormForm(
                     state: state.form,

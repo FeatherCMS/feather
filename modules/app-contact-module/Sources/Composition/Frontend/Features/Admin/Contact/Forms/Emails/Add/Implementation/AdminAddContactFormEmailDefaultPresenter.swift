@@ -19,11 +19,11 @@ struct AdminAddContactFormEmailDefaultPresenter:
         availableFields: [AdminContactFormFieldOption],
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add contact form email",
-            permissions: permissions,
             content: SubmissionMailAdd(
                 formId: formId,
                 mail: .init(

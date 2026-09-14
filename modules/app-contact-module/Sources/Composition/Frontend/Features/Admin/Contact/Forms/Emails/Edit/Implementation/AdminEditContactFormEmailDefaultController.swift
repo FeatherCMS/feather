@@ -30,7 +30,7 @@ struct AdminEditContactFormEmailDefaultController:
             let fields = form.availableFields.filter {
                 form.selectedFieldIDs.contains($0.id)
             }
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 formId: formId,
                 mail: mail,
                 availableFields: fields,
@@ -39,7 +39,7 @@ struct AdminEditContactFormEmailDefaultController:
             )
         }
         catch {
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 formId: formId,
                 mail: .init(
                     id: mailId,

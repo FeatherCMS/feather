@@ -20,7 +20,7 @@ struct AdminListContactFormFieldsDefaultPresenter:
         search: String,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let page = request.queryPage()
         let pageSize = 20
         let pageState = NewAdminListPageState(
@@ -31,10 +31,10 @@ struct AdminListContactFormFieldsDefaultPresenter:
         let start = (page - 1) * pageSize
         let end = min(start + pageSize, fields.count)
         let pageItems = start < fields.count ? Array(fields[start..<end]) : []
-        return renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Contact form fields",
-            permissions: permissions,
             content: ContactFormFieldsTable(
                 state: .init(
                     formId: formId,
@@ -42,8 +42,6 @@ struct AdminListContactFormFieldsDefaultPresenter:
                     pageState: pageState,
                     search: search,
                     error: error,
-                    isEdited: request.hasQueryFlag("edited"),
-                    isRemoved: request.hasQueryFlag("removed"),
                     permissions: .init(
                         Set(permissions.map(PermissionKey.init))
                     ),

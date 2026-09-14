@@ -13,5 +13,5 @@ protocol AdminEditContactFormFieldPresenter: Sendable {
         field: AdminContactFormFieldRow,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

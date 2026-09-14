@@ -16,11 +16,11 @@ struct AdminAddContactFormFieldDefaultPresenter:
     func renderPage(
         model: AdminAddContactFormFieldModel,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add contact form field",
-            permissions: permissions,
             content: ContactFormFieldAddPage(
                 state: .init(
                     formId: model.formId,

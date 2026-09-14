@@ -18,11 +18,11 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
         formId: String,
         item: AdminContactFormSubmissionItem,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove contact form submission",
-            permissions: permissions,
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(
@@ -47,11 +47,11 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
         formId: String,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove contact form submissions",
-            permissions: permissions,
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(

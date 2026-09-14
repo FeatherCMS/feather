@@ -18,11 +18,11 @@ struct AdminEditContactFormFieldDefaultPresenter:
         field: AdminContactFormFieldRow,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderNewAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit contact form field",
-            permissions: permissions,
             content: ContactFormFieldEditPage(
                 state: .init(
                     formId: formId,

@@ -41,8 +41,6 @@ struct AdminListContactFieldsDefaultPresenter:
                     pageState: pageState,
                     search: search,
                     error: error,
-                    isEdited: request.hasQueryFlag("edited"),
-                    isRemoved: request.hasQueryFlag("removed"),
                     permissions: .init(
                         Set(permissions.map(PermissionKey.init))
                     ),

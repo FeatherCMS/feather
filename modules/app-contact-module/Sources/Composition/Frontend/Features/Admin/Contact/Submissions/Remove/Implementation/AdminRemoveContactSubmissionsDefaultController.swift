@@ -20,7 +20,7 @@ struct AdminRemoveContactSubmissionsDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderConfirmation(
+        return try await presenter.renderConfirmation(
             selectedIds: request.queryStrings("selectedIds"),
             permissions: context.currentUserPermissions
         )

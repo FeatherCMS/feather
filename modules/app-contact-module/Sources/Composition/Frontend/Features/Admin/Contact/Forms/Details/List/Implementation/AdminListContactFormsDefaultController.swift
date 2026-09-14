@@ -26,24 +26,18 @@ struct AdminListContactFormsDefaultController: AdminListContactFormsController {
                     search.isEmpty
                         || $0.name.localizedCaseInsensitiveContains(search)
                 }
-            return presenter.renderList(
+            return try await presenter.renderList(
                 items: items,
                 search: search,
-                isAdded: request.hasQueryFlag("added"),
-                isEdited: request.hasQueryFlag("edited"),
-                isRemoved: request.hasQueryFlag("removed"),
                 isPicker: request.hasQueryFlag("picker"),
                 error: nil,
                 permissions: context.currentUserPermissions
             )
         }
         catch {
-            return presenter.renderList(
+            return try await presenter.renderList(
                 items: [],
                 search: search,
-                isAdded: false,
-                isEdited: false,
-                isRemoved: false,
                 isPicker: request.hasQueryFlag("picker"),
                 error: error.displayMessage,
                 permissions: context.currentUserPermissions

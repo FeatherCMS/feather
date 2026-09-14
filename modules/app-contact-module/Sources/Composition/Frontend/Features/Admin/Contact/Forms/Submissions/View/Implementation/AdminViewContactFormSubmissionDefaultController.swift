@@ -23,7 +23,7 @@ struct AdminViewContactFormSubmissionDefaultController:
         let formId = try context.requiredParameter("formId")
         let submissionId = try context.requiredParameter("submissionId")
         do {
-            return presenter.renderDetailsPage(
+            return try await presenter.renderDetailsPage(
                 formId: formId,
                 item: try await interactor.get(
                     formId: formId,
@@ -34,7 +34,7 @@ struct AdminViewContactFormSubmissionDefaultController:
             )
         }
         catch {
-            return presenter.renderDetailsPage(
+            return try await presenter.renderDetailsPage(
                 formId: formId,
                 item: .init(
                     id: submissionId,

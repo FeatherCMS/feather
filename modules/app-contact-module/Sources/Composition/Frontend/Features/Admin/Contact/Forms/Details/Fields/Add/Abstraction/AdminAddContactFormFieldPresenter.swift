@@ -11,5 +11,5 @@ protocol AdminAddContactFormFieldPresenter: Sendable {
     func renderPage(
         model: AdminAddContactFormFieldModel,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

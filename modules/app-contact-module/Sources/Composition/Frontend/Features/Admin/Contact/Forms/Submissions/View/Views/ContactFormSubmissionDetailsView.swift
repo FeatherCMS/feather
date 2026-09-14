@@ -12,7 +12,6 @@ struct ContactFormSubmissionDetailsView: Component {
         let formId: String
         let item: AdminContactFormSubmissionItem
         let error: String?
-        let isEdited: Bool
         let breadcrumb: [NewAdminBreadcrumb.Link]
         let permissions: NewAdminListActions
     }
@@ -38,16 +37,6 @@ struct ContactFormSubmissionDetailsView: Component {
             )
             if let error = state.error {
                 P(error).class("new-admin-form__error")
-            }
-            if state.isEdited {
-                context.render(
-                    NewAdminNotification(
-                        notification: .init(
-                            title: "Submission updated",
-                            message: "Submission status updated successfully."
-                        )
-                    )
-                )
             }
             context.render(
                 NewAdminDetailField(

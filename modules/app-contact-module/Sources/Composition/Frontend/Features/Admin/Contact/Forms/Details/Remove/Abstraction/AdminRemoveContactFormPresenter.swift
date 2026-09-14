@@ -9,9 +9,9 @@ import WebComponents
 
 protocol AdminRemoveContactFormPresenter: Sendable {
     func renderConfirmation(id: String, name: String, permissions: Set<String>)
-        -> HTMLResponse
+        async throws -> HTMLResponse
     func renderConfirmation(
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

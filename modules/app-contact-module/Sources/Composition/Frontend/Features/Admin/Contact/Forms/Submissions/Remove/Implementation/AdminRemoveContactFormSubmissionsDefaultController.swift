@@ -22,7 +22,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let formId = try context.requiredParameter("formId")
         let submissionId = try context.requiredParameter("submissionId")
-        return presenter.renderConfirmation(
+        return try await presenter.renderConfirmation(
             formId: formId,
             item: try await interactor.get(formId: formId, id: submissionId),
             permissions: context.currentUserPermissions
@@ -53,7 +53,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderConfirmation(
+        return try await presenter.renderConfirmation(
             formId: try context.requiredParameter("formId"),
             selectedIds: request.queryStrings("selectedIds"),
             permissions: context.currentUserPermissions

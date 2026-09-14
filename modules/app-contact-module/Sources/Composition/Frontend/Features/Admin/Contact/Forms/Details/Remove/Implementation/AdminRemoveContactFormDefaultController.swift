@@ -21,13 +21,13 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
         let (interactor, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
         guard selectedIds.count == 1, let formId = selectedIds.first else {
-            return presenter.renderConfirmation(
+            return try await presenter.renderConfirmation(
                 selectedIds: selectedIds,
                 permissions: context.currentUserPermissions
             )
         }
         let item = try await interactor.get(id: formId)
-        return presenter.renderConfirmation(
+        return try await presenter.renderConfirmation(
             id: formId,
             name: item.name,
             permissions: context.currentUserPermissions

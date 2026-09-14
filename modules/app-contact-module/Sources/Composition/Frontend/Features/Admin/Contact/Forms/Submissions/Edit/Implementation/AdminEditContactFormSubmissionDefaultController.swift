@@ -46,7 +46,7 @@ struct AdminEditContactFormSubmissionDefaultController:
         }
         catch {
             return
-                try presenter.renderError(
+                try await presenter.renderError(
                     formId: formId,
                     id: submissionId,
                     message: error.displayMessage,

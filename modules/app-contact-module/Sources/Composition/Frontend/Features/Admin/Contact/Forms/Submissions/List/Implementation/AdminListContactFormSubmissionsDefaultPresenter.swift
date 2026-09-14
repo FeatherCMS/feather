@@ -21,7 +21,7 @@ struct AdminListContactFormSubmissionsDefaultPresenter:
         search: String,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let page = request.queryPage()
         let pageSize = 20
         let pageState = NewAdminListPageState(
@@ -32,10 +32,10 @@ struct AdminListContactFormSubmissionsDefaultPresenter:
         let start = (page - 1) * pageSize
         let end = min(start + pageSize, items.count)
         let pageItems = start < items.count ? Array(items[start..<end]) : []
-        return renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Contact form submissions",
-            permissions: permissions,
             content: ContactFormSubmissionsTable(
                 state: .init(
                     formId: formId,

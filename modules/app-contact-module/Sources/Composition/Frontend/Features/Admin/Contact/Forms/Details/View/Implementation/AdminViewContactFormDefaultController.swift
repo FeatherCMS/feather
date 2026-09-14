@@ -20,14 +20,14 @@ struct AdminViewContactFormDefaultController: AdminViewContactFormController {
         let (interactor, presenter) = buildRuntime(request, context)
         let formId = try context.requiredParameter("formId")
         do {
-            return presenter.renderDetailsPage(
+            return try await presenter.renderDetailsPage(
                 item: try await interactor.get(id: formId),
                 error: nil,
                 permissions: context.currentUserPermissions
             )
         }
         catch {
-            return presenter.renderDetailsPage(
+            return try await presenter.renderDetailsPage(
                 item: .init(
                     id: formId,
                     name: "",
