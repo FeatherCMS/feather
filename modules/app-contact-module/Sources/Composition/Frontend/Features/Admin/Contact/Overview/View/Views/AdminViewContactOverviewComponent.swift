@@ -75,7 +75,10 @@ struct AdminViewContactOverviewComponent: Component {
         Section {
             context.render(
                 NewAdminBreadcrumb(links: [
-                    .init(label: "Admin", link: ContactAdminRoutes.admin.description + "/")
+                    .init(
+                        label: "Admin",
+                        link: ContactAdminRoutes.admin.description + "/"
+                    )
                 ])
             )
             context.render(

@@ -1,5 +1,5 @@
-import FeatherAdmin
 import ContactContracts
+import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
 import HTML
@@ -21,7 +21,7 @@ struct AdminListContactFieldsDefaultPresenter:
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Contact form fields",

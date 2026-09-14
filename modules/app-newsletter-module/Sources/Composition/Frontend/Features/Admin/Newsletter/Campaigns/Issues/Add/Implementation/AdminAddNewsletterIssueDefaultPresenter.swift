@@ -16,21 +16,11 @@ struct AdminAddNewsletterIssueDefaultPresenter:
     func renderPage(
         model: AdminAddNewsletterIssueModel,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        let breadcrumb = AdminBreadcrumb.State(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Campaigns", link: "/admin/newsletter/campaigns/"),
-            .init(label: "Campaign", link: "/admin/newsletter/campaigns/"),
-        ])
-        return renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add campaign issue",
-            description: "Add campaign issue",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: NewsletterIssueAddView(
                 state: .init(
                     subject: model.subject,
@@ -38,8 +28,7 @@ struct AdminAddNewsletterIssueDefaultPresenter:
                     scheduledAt: model.scheduledAt,
                     newsletterId: model.newsletterId,
                     issueId: nil,
-                    error: model.error,
-                    breadcrumb: breadcrumb
+                    error: model.error
                 )
             )
         )

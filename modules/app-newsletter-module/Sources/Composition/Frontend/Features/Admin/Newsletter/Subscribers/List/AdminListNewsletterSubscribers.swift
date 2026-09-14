@@ -20,7 +20,7 @@ struct AdminListNewsletterSubscribers {
                 ),
                 AdminListNewsletterSubscribersDefaultPresenter(
                     request: request,
-                        context: context,
+                    context: context,
                     renderingEngine: renderingEngine
                 )
             )

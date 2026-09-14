@@ -99,6 +99,7 @@ let package = Package(
             from: "0.8.0"
         ),
         .package(path: "../../feather-core"),
+        .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
     ],
     targets: [
@@ -217,7 +218,8 @@ let package = Package(
                 .target(name: "WebAdminAPI"),
                 .target(name: "WebAppAPI"),
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
-                .product(name: "SystemFrontend", package: "app-system-module")
+                .product(name: "SystemFrontend", package: "app-system-module"),
+                .product(name: "MediaFrontend", package: "app-media-module")
             ],
             path: "Sources/Composition/Frontend",
             resources: [

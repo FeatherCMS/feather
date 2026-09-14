@@ -19,7 +19,7 @@ struct AdminEditNewsletterCampaignSubscriber {
                 ),
                 AdminEditNewsletterCampaignSubscriberDefaultPresenter(
                     request: request,
-                        context: context,
+                    context: context,
                     renderingEngine: renderingEngine
                 )
             )

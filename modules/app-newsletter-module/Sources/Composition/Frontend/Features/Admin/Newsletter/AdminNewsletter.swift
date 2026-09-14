@@ -14,7 +14,7 @@ public struct AdminNewsletter {
 
         AdminListNewsletterCampaigns(renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminGetNewsletterCampaign(renderingEngine: renderingEngine)
+        AdminViewNewsletterCampaign(renderingEngine: renderingEngine)
             .controller.route(on: router)
         AdminEditNewsletterCampaign(renderingEngine: renderingEngine)
             .controller.route(on: router)
@@ -26,7 +26,7 @@ public struct AdminNewsletter {
 
         AdminListNewsletterIssues(renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminGetNewsletterIssue(renderingEngine: renderingEngine)
+        AdminViewNewsletterIssue(renderingEngine: renderingEngine)
             .controller.route(on: router)
         AdminAddNewsletterIssue(renderingEngine: renderingEngine)
             .controller.route(on: router)
@@ -36,6 +36,10 @@ public struct AdminNewsletter {
             .controller.route(on: router)
         AdminTestNewsletterIssueEmail().controller.route(on: router)
 
+        AdminViewNewsletterCampaignSubscriber(renderingEngine: renderingEngine)
+            .controller.route(on: router)
+        AdminListNewsletterCampaignSubscribers(renderingEngine: renderingEngine)
+            .controller.route(on: router)
         AdminListNewsletterSubscribers(renderingEngine: renderingEngine)
             .controller.route(on: router)
         AdminAddNewsletterSubscriber(renderingEngine: renderingEngine)

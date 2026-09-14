@@ -33,7 +33,7 @@ struct AdminEditContactFieldDefaultPresenter:
                         .init(
                             label: "Fields",
                             link: "/admin/contact/fields/"
-                        ), .init(label: "Edit", link: "")
+                        ), .init(label: "Edit", link: ""),
                     ])
                 )
             )

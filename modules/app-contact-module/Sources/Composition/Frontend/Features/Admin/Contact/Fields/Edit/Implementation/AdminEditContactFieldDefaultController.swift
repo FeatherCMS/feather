@@ -56,7 +56,8 @@ struct AdminEditContactFieldDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.update)
         else {
-            return try await presenter
+            return
+                try await presenter
                 .renderForbiddenPage()
                 .response(from: request, context: context)
         }

@@ -12,5 +12,5 @@ protocol AdminAddNewsletterSubscriberPresenter: Sendable {
         model: AdminAddNewsletterSubscriberModel,
         isAdded: Bool,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

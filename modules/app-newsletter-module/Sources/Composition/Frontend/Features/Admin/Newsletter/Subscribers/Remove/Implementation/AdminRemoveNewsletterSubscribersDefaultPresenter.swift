@@ -1,11 +1,6 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
+import FeatherContracts
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminRemoveNewsletterSubscribersDefaultPresenter:
     AdminRemoveNewsletterSubscribersPresenter
@@ -19,36 +14,34 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
         search: String?,
         campaignId: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        let cancel = NewAdminLocation.url(
+            path: NewsletterAdminRoutes.subscribers.description,
+            search: search,
+            queryItems: campaignId?.emptyToNil.map { [("campaignId", $0)] }
+                ?? []
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove subscribers",
-            description: "Confirm subscriber removal",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(
-                            label: "Campaigns",
-                            link: "/admin/newsletter/campaigns/"
-                        ),
-                        .init(
-                            label: "Subscribers",
-                            link: "/admin/newsletter/subscribers/"
-                        ),
-                    ]),
+            content: NewAdminConfirmation(
+                breadcrumb: NewsletterAdminRoutes.breadcrumb + [
+                    .init(
+                        label: "Subscribers",
+                        link: NewsletterAdminRoutes.subscribers.description
+                    )
+                ],
+                pageHeader: .init(
                     title: "Remove selected subscribers",
-                    message:
-                        "Are you sure you want to remove the selected subscribers? This action cannot be undone.",
-                    action: "/admin/newsletter/subscribers/remove/",
-                    cancelLink: "/admin/newsletter/subscribers/",
-                    selectedIds: ids
-                )
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: ids,
+                action: NewsletterAdminRoutes.subscriberRemove.description,
+                cancel: cancel,
+                hiddenFields: ids.map { .init(name: "selectedIds", value: $0) }
+                    + (campaignId?.emptyToNil
+                        .map { [.init(name: "campaignId", value: $0)] } ?? [])
             )
         )
     }

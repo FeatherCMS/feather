@@ -21,7 +21,7 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.render(
+        return try await presenter.render(
             ids: request.queryStrings("selectedIds"),
             search: request.querySearch(),
             campaignId: request.queryString("campaignId"),
@@ -41,15 +41,16 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
             ids: payload.normalizedSelectedIds,
             campaignId: payload.campaignId?.emptyToNil
         )
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/newsletter/subscribers/",
-                    title: "Removed",
-                    message: "Selected subscribers removed successfully."
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: NewAdminLocation.url(
+                path: NewsletterAdminRoutes.subscribers.description,
+                queryItems: payload.campaignId?.emptyToNil
+                    .map { [("campaignId", $0)] } ?? []
+            ),
+            notification: .init(
+                title: "Removed",
+                message: "Selected subscribers removed successfully."
+            )
         )
     }
 }

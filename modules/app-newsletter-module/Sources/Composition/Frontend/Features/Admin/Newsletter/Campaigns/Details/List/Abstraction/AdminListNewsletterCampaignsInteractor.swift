@@ -8,5 +8,8 @@ import WebBuilders
 import WebComponents
 
 protocol AdminListNewsletterCampaignsInteractor: Sendable {
-    func list() async throws -> [AdminNewsletterCampaignItem]
+    func list(
+        page: Int,
+        search: String?
+    ) async throws -> NewAdminListModel<AdminNewsletterCampaignItem>
 }

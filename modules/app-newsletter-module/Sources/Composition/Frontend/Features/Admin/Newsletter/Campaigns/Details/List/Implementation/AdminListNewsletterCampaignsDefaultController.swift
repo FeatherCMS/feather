@@ -1,12 +1,6 @@
 import FeatherAdmin
-import FeatherValidation
-import Foundation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterContracts
 
 struct AdminListNewsletterCampaignsDefaultController:
     AdminListNewsletterCampaignsController
@@ -21,34 +15,45 @@ struct AdminListNewsletterCampaignsDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let search = request.querySearch() ?? ""
+        let permissions = context.currentUserAdminListActions
+        guard permissions.allows(Permissions.Campaigns.list) else {
+            return try await presenter.render(
+                model: .init(
+                    items: [],
+                    pageState: .init(page: 1, pageSize: 20, total: 0)
+                ),
+                isPicker: request.hasQueryFlag("picker"),
+                error: "Your account cannot access newsletter campaigns.",
+                permissions: permissions,
+                search: request.querySearch()
+            )
+        }
         do {
-            let items = try await interactor.list()
-                .filter {
-                    search.isEmpty
-                        || $0.name.localizedCaseInsensitiveContains(search)
-                }
-            return presenter.render(
-                items: items,
-                isAdded: request.hasQueryFlag("added"),
-                isEdited: request.hasQueryFlag("edited"),
-                isRemoved: request.hasQueryFlag("removed"),
+            return try await presenter.render(
+                model: try await interactor.list(
+                    page: request.queryPage(),
+                    search: request.querySearch()
+                ),
                 isPicker: request.hasQueryFlag("picker"),
                 error: nil,
-                permissions: context.currentUserPermissions,
-                search: search
+                permissions: permissions,
+                search: request.querySearch()
             )
         }
         catch {
-            return presenter.render(
-                items: [],
-                isAdded: false,
-                isEdited: false,
-                isRemoved: false,
+            return try await presenter.render(
+                model: .init(
+                    items: [],
+                    pageState: .init(
+                        page: request.queryPage(),
+                        pageSize: 20,
+                        total: 0
+                    )
+                ),
                 isPicker: request.hasQueryFlag("picker"),
                 error: error.displayMessage,
-                permissions: context.currentUserPermissions,
-                search: search
+                permissions: permissions,
+                search: request.querySearch()
             )
         }
     }

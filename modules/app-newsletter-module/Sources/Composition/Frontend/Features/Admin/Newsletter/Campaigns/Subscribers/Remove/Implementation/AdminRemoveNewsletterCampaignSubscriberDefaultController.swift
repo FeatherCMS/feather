@@ -25,7 +25,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             newsletterId: newsletterId,
             subscriberId: subscriberId
         )
-        return presenter.render(
+        return try await presenter.render(
             newsletterId: newsletterId,
             subscriberId: subscriberId,
             email: item.email,
@@ -41,16 +41,16 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             newsletterId: newsletterId,
             subscriberId: try context.requiredParameter("subscriberId")
         )
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath:
-                        "/admin/newsletter/\(newsletterId)/subscribers/",
-                    title: "Removed",
-                    message: "Subscriber removed successfully."
+        return AdminNotificationFlash.redirect(
+            to:
+                NewsletterAdminRoutes.campaignSubscribers(
+                    RouterPath(newsletterId)
                 )
-            ]
+                .description,
+            notification: .init(
+                title: "Removed",
+                message: "Subscriber removed successfully."
+            )
         )
     }
     func removeSelected(request: Request, context: DefaultRequestContext)
@@ -66,16 +66,16 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             newsletterId: newsletterId,
             subscriberIds: payload.normalizedSelectedIds
         )
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath:
-                        "/admin/newsletter/\(newsletterId)/subscribers/",
-                    title: "Removed",
-                    message: "Subscribers removed successfully."
+        return AdminNotificationFlash.redirect(
+            to:
+                NewsletterAdminRoutes.campaignSubscribers(
+                    RouterPath(newsletterId)
                 )
-            ]
+                .description,
+            notification: .init(
+                title: "Removed",
+                message: "Subscribers removed successfully."
+            )
         )
     }
 }

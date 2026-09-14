@@ -13,5 +13,5 @@ protocol AdminEditNewsletterIssuePresenter: Sendable {
         issueId: String?,
         permissions: Set<String>,
         error: String?
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

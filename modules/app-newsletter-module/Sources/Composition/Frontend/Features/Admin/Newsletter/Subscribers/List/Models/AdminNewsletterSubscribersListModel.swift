@@ -12,4 +12,5 @@ struct AdminNewsletterSubscribersListModel: Sendable {
     let campaigns: [AdminNewsletterSubscriberCampaign]
     let search: String
     let campaignId: String
+    let pageState: NewAdminListPageState
 }

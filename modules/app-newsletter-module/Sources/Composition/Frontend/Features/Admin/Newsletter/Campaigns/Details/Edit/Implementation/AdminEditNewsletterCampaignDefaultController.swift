@@ -1,11 +1,6 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterContracts
 
 struct AdminEditNewsletterCampaignDefaultController:
     AdminEditNewsletterCampaignController
@@ -20,15 +15,23 @@ struct AdminEditNewsletterCampaignDefaultController:
     {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredParameter("newsletterId")
+        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.update)
+        else {
+            return try await presenter.render(
+                item: .init(id: id, name: "", fromEmail: ""),
+                error: "Your account cannot edit newsletter campaigns.",
+                permissions: context.currentUserPermissions
+            )
+        }
         do {
-            return presenter.render(
+            return try await presenter.render(
                 item: try await interactor.get(id: id),
                 error: nil,
                 permissions: context.currentUserPermissions
             )
         }
         catch {
-            return presenter.render(
+            return try await presenter.render(
                 item: .init(id: id, name: "", fromEmail: ""),
                 error: error.displayMessage,
                 permissions: context.currentUserPermissions
@@ -40,6 +43,10 @@ struct AdminEditNewsletterCampaignDefaultController:
     {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredParameter("newsletterId")
+        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.update)
+        else {
+            return Response(status: .forbidden)
+        }
         let form = try await request.decode(
             as: NewsletterEditForm.self,
             context: context
@@ -50,20 +57,17 @@ struct AdminEditNewsletterCampaignDefaultController:
                 name: form.name,
                 fromEmail: form.fromEmail
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/newsletter/campaigns/",
-                        title: "Updated",
-                        message: "Campaign updated successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: NewsletterAdminRoutes.campaigns.description,
+                notification: .init(
+                    title: "Updated",
+                    message: "Campaign updated successfully."
+                )
             )
         }
         catch {
             return
-                try presenter.render(
+                try await presenter.render(
                     item: .init(
                         id: id,
                         name: form.name,

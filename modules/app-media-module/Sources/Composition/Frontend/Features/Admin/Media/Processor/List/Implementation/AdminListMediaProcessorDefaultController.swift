@@ -55,12 +55,14 @@ struct AdminListMediaProcessorDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: MediaPermissions.Processors.delete)
+        guard
+            context.isCurrentUserAllowed(to: MediaPermissions.Processors.delete)
         else {
-            return try await presenter.renderErrorPage(
-                message: "Your account cannot remove media processors."
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderErrorPage(
+                    message: "Your account cannot remove media processors."
+                )
+                .response(from: request, context: context)
         }
         let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
@@ -77,19 +79,21 @@ struct AdminListMediaProcessorDefaultController:
             )
         }
         do {
-            return try await presenter.renderRemoveConfirmation(
-                pageState: .init(page: page, pageSize: 20, total: 0),
-                search: search,
-                selectedIds: selectedIds,
-                returnTo: request.queryString("returnTo")
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderRemoveConfirmation(
+                    pageState: .init(page: page, pageSize: 20, total: 0),
+                    search: search,
+                    selectedIds: selectedIds,
+                    returnTo: request.queryString("returnTo")
+                )
+                .response(from: request, context: context)
         }
         catch {
-            return try await presenter.renderErrorPage(
-                message: error.displayMessage
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderErrorPage(
+                    message: error.displayMessage
+                )
+                .response(from: request, context: context)
         }
     }
 
@@ -98,12 +102,14 @@ struct AdminListMediaProcessorDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: MediaPermissions.Processors.delete)
+        guard
+            context.isCurrentUserAllowed(to: MediaPermissions.Processors.delete)
         else {
-            return try await presenter.renderErrorPage(
-                message: "Your account cannot remove media processors."
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderErrorPage(
+                    message: "Your account cannot remove media processors."
+                )
+                .response(from: request, context: context)
         }
         var returnTo = request.queryString("returnTo")
         do {
@@ -112,17 +118,20 @@ struct AdminListMediaProcessorDefaultController:
                 context: context
             )
             returnTo = payload.input.normalizedReturnTo
-            guard await AdminNonceStore.shared.consume(
-                payload.nonce,
-                sessionToken: context.sessionToken
-            ) else {
-                return try await presenter.renderInvalidNoncePage(
-                    cancel: NewAdminLocation.removeCancel(
-                        path: MediaProcessorRoutes.list.description,
-                        returnTo: returnTo
-                    )
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
                 )
-                .response(from: request, context: context)
+            else {
+                return
+                    try await presenter.renderInvalidNoncePage(
+                        cancel: NewAdminLocation.removeCancel(
+                            path: MediaProcessorRoutes.list.description,
+                            returnTo: returnTo
+                        )
+                    )
+                    .response(from: request, context: context)
             }
 
             let ids = payload.input.normalizedIds
@@ -150,10 +159,11 @@ struct AdminListMediaProcessorDefaultController:
             )
         }
         catch {
-            return try await presenter.renderErrorPage(
-                message: error.displayMessage
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderErrorPage(
+                    message: error.displayMessage
+                )
+                .response(from: request, context: context)
         }
     }
 }

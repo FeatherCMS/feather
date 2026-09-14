@@ -1,11 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminRemoveNewsletterCampaignSubscriberDefaultPresenter:
     AdminRemoveNewsletterCampaignSubscriberPresenter
@@ -13,33 +7,45 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultPresenter:
     let request: Request
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
+
     func render(
         newsletterId: String,
         subscriberId: String,
         email: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove campaign subscriber",
-            description: "Remove campaign subscriber",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: NewsletterCampaignSubscriberRemoveView(
-                email: email,
-                subscriberId: subscriberId,
-                newsletterId: newsletterId,
-                breadcrumb: .init(links: [
-                    .init(label: "Admin", link: "/admin/"),
+            content: NewAdminConfirmation(
+                breadcrumb: NewsletterAdminRoutes.breadcrumb + [
                     .init(
-                        label: "Campaigns",
-                        link: "/admin/newsletter/campaigns/"
-                    ),
-                    .init(label: "Remove", link: ""),
-                ])
+                        label: "Subscribers",
+                        link:
+                            NewsletterAdminRoutes.campaignSubscribers(
+                                RouterPath(newsletterId)
+                            )
+                            .description
+                    )
+                ],
+                pageHeader: .init(
+                    title: "Remove campaign subscriber",
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: [email],
+                action:
+                    NewsletterAdminRoutes.campaignSubscriberRemove(
+                        newsletterID: RouterPath(newsletterId),
+                        subscriberID: RouterPath(subscriberId)
+                    )
+                    .description,
+                cancel:
+                    NewsletterAdminRoutes.campaignSubscribers(
+                        RouterPath(newsletterId)
+                    )
+                    .description,
+                submitLabel: "Remove subscriber"
             )
         )
     }

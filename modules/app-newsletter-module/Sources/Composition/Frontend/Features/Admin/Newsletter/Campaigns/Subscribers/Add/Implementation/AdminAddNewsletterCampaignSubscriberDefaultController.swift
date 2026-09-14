@@ -19,7 +19,7 @@ struct AdminAddNewsletterCampaignSubscriberDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.render(
+        return try await presenter.render(
             newsletterId: try context.requiredParameter("newsletterId"),
             form: .init(
                 email: "",
@@ -42,21 +42,21 @@ struct AdminAddNewsletterCampaignSubscriberDefaultController:
         )
         do {
             try await interactor.create(newsletterId: newsletterId, form: form)
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath:
-                            "/admin/newsletter/\(newsletterId)/subscribers/",
-                        title: "Added",
-                        message: "Subscriber added successfully."
+            return AdminNotificationFlash.redirect(
+                to:
+                    NewsletterAdminRoutes.campaignSubscribers(
+                        RouterPath(newsletterId)
                     )
-                ]
+                    .description,
+                notification: .init(
+                    title: "Added",
+                    message: "Subscriber added successfully."
+                )
             )
         }
         catch {
             return
-                try presenter.render(
+                try await presenter.render(
                     newsletterId: newsletterId,
                     form: form,
                     error: error.displayMessage,

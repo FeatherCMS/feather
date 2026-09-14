@@ -19,7 +19,7 @@ struct AdminRemoveNewsletterCampaign {
                 ),
                 AdminRemoveNewsletterCampaignDefaultPresenter(
                     request: request,
-                        context: context,
+                    context: context,
                     renderingEngine: renderingEngine
                 )
             )

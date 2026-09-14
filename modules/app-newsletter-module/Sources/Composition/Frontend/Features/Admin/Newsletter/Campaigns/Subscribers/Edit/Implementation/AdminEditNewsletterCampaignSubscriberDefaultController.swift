@@ -22,7 +22,7 @@ struct AdminEditNewsletterCampaignSubscriberDefaultController:
         let newsletterId = try context.requiredParameter("newsletterId")
         let subscriberId = try context.requiredParameter("subscriberId")
         do {
-            return presenter.render(
+            return try await presenter.render(
                 newsletterId: newsletterId,
                 item: try await interactor.get(
                     newsletterId: newsletterId,
@@ -33,7 +33,7 @@ struct AdminEditNewsletterCampaignSubscriberDefaultController:
             )
         }
         catch {
-            return presenter.render(
+            return try await presenter.render(
                 newsletterId: newsletterId,
                 item: .init(
                     id: subscriberId,
@@ -63,21 +63,21 @@ struct AdminEditNewsletterCampaignSubscriberDefaultController:
                 subscriberId: subscriberId,
                 form: form
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath:
-                            "/admin/newsletter/\(newsletterId)/subscribers/",
-                        title: "Updated",
-                        message: "Subscriber updated successfully."
+            return AdminNotificationFlash.redirect(
+                to:
+                    NewsletterAdminRoutes.campaignSubscribers(
+                        RouterPath(newsletterId)
                     )
-                ]
+                    .description,
+                notification: .init(
+                    title: "Updated",
+                    message: "Subscriber updated successfully."
+                )
             )
         }
         catch {
             return
-                try presenter.render(
+                try await presenter.render(
                     newsletterId: newsletterId,
                     item: .init(
                         id: subscriberId,

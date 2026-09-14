@@ -22,7 +22,13 @@ protocol AdminAddNewsletterCampaignController: Sendable {
 
 extension AdminAddNewsletterCampaignController {
     func route(on router: Router<DefaultRequestContext>) {
-        router.get(NewsletterAdminRoutes.campaignAdd, use: getAddNewsletterCampaign)
-        router.post(NewsletterAdminRoutes.campaignAdd, use: postAddNewsletterCampaign)
+        router.get(
+            NewsletterAdminRoutes.campaignAdd,
+            use: getAddNewsletterCampaign
+        )
+        router.post(
+            NewsletterAdminRoutes.campaignAdd,
+            use: postAddNewsletterCampaign
+        )
     }
 }

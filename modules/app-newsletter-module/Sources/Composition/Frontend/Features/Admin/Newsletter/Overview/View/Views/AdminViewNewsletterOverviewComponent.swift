@@ -69,7 +69,10 @@ struct AdminViewNewsletterOverviewComponent: Component {
         Section {
             context.render(
                 NewAdminBreadcrumb(links: [
-                    .init(label: "Admin", link: NewsletterAdminRoutes.admin.description + "/")
+                    .init(
+                        label: "Admin",
+                        link: NewsletterAdminRoutes.admin.description + "/"
+                    )
                 ])
             )
             context.render(

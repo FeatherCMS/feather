@@ -18,16 +18,11 @@ struct AdminAddNewsletterSubscriberDefaultPresenter:
         model: AdminAddNewsletterSubscriberModel,
         isAdded: Bool,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add subscriber",
-            description: "Add newsletter subscriber",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AdminAddNewsletterSubscriberView(
                 model: model,
                 isAdded: isAdded,
@@ -38,7 +33,6 @@ struct AdminAddNewsletterSubscriberDefaultPresenter:
                         label: "Subscribers",
                         link: "/admin/newsletter/subscribers/"
                     ),
-                    .init(label: "Add", link: ""),
                 ])
             )
         )

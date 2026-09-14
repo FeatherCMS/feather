@@ -19,7 +19,7 @@ struct AdminRemoveNewsletterIssueDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.render(
+        return try await presenter.render(
             newsletterId: try context.requiredParameter("newsletterId"),
             issueId: try context.requiredParameter("issueId"),
             permissions: context.currentUserPermissions
@@ -34,15 +34,13 @@ struct AdminRemoveNewsletterIssueDefaultController:
             newsletterId: newsletterId,
             issueId: try context.requiredParameter("issueId")
         )
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/newsletter/\(newsletterId)/issues/",
-                    title: "Removed",
-                    message: "Campaign issue removed successfully."
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: NewsletterAdminRoutes.campaignIssues(RouterPath(newsletterId))
+                .description,
+            notification: .init(
+                title: "Removed",
+                message: "Campaign issue removed successfully."
+            )
         )
     }
 }

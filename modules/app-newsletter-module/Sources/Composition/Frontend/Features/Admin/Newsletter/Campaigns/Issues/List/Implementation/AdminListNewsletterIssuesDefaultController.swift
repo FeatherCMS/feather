@@ -1,11 +1,6 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterContracts
 
 struct AdminListNewsletterIssuesDefaultController:
     AdminListNewsletterIssuesController
@@ -21,20 +16,46 @@ struct AdminListNewsletterIssuesDefaultController:
     {
         let (interactor, presenter) = buildRuntime(request, context)
         let newsletterId = try context.requiredParameter("newsletterId")
-        do {
-            return presenter.render(
+        let permissions = context.currentUserAdminListActions
+        guard permissions.allows(Permissions.Issues.list) else {
+            return try await presenter.render(
                 newsletterId: newsletterId,
-                items: try await interactor.list(newsletterId: newsletterId),
+                model: .init(
+                    items: [],
+                    pageState: .init(page: 1, pageSize: 20, total: 0)
+                ),
+                error: "Your account cannot access campaign issues.",
+                permissions: permissions,
+                search: request.querySearch()
+            )
+        }
+        do {
+            return try await presenter.render(
+                newsletterId: newsletterId,
+                model: try await interactor.list(
+                    newsletterId: newsletterId,
+                    page: request.queryPage(),
+                    search: request.querySearch()
+                ),
                 error: nil,
-                permissions: context.currentUserPermissions
+                permissions: permissions,
+                search: request.querySearch()
             )
         }
         catch {
-            return presenter.render(
+            return try await presenter.render(
                 newsletterId: newsletterId,
-                items: [],
+                model: .init(
+                    items: [],
+                    pageState: .init(
+                        page: request.queryPage(),
+                        pageSize: 20,
+                        total: 0
+                    )
+                ),
                 error: error.displayMessage,
-                permissions: context.currentUserPermissions
+                permissions: permissions,
+                search: request.querySearch()
             )
         }
     }

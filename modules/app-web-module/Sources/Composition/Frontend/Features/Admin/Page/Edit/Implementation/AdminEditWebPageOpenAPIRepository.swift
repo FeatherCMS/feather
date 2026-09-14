@@ -1,11 +1,13 @@
 import FeatherAdmin
 import Foundation
 import Hummingbird
+import MediaFrontend
 import OpenAPIRuntime
 import WebAdminAPI
 
 struct AdminEditWebPageOpenAPIRepository: AdminEditWebPageRepository {
     let api: WebAdminAPIClient
+    let mediaAPI: MediaAdminAPIClient
 
     func load(
         id: String
@@ -86,7 +88,11 @@ struct AdminEditWebPageOpenAPIRepository: AdminEditWebPageRepository {
     private func loadImageAsset(
         assetId: String?
     ) async throws -> AdminMediaAssetReferenceModel? {
-        _ = assetId
-        return nil
+        guard let assetId, !assetId.isEmpty else { return nil }
+        let asset = try? await AdminViewMediaAssetOpenAPIRepository(
+            api: mediaAPI
+        )
+        .getAsset(id: assetId)
+        return asset.map(AdminMediaAssetReferenceModel.init(schema:))
     }
 }

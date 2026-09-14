@@ -1,8 +1,6 @@
 import FeatherAdmin
-import FeatherValidation
 import HTML
 import Hummingbird
-import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
@@ -12,40 +10,46 @@ struct NewsletterCampaignAddView: Component {
         let name: String
         let fromEmail: String
         let error: String?
-        let breadcrumb: AdminBreadcrumb.State
     }
+
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(state: state.breadcrumb))
-            H1("Add campaign")
-            if let error = state.error { P(error).class("error") }
-            Form {
-                Section {
-                    Label {
-                        context.render(
-                            AdminFieldLabel(label: "Name", required: true)
-                        )
-                        Input().type(.text).class("text-input").name("name")
-                            .value(state.name).id("name").required()
-                    }
-                }
-                Section {
-                    Label {
-                        context.render(
-                            AdminFieldLabel(label: "From email", required: true)
-                        )
-                        Input().type(.email).class("text-input")
-                            .name("fromEmail").value(state.fromEmail)
-                            .id("fromEmail").required()
-                    }
-                }
-                Section {
-                    Div { Button("Add").type(.submit) }.class("button-row")
-                }
-            }
-            .method(.post).action("/admin/newsletter/add/").class("cms-form")
+            context.render(
+                NewAdminBreadcrumb(
+                    links: NewsletterAdminRoutes.breadcrumb + [
+                        .init(
+                            label: "Campaigns",
+                            link: NewsletterAdminRoutes.campaigns.description
+                        ),
+                        .init(
+                            label: "Add",
+                            link: NewsletterAdminRoutes.campaignAdd.description
+                        ),
+                    ]
+                )
+            )
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Add campaign",
+                        description: "Create a newsletter campaign."
+                    )
+                )
+            )
+            context.render(
+                NewsletterCampaignForm(
+                    state: .init(
+                        name: state.name,
+                        fromEmail: state.fromEmail,
+                        error: state.error,
+                        success: nil
+                    ),
+                    action: NewsletterAdminRoutes.campaignAdd.description,
+                    submitLabel: "Add campaign"
+                )
+            )
         }
         .class("cms-section")
     }

@@ -23,8 +23,8 @@ struct AdminRemoveContactFormSubmissions {
                     presenter:
                         AdminRemoveContactFormSubmissionsDefaultPresenter(
                             request: request,
-                        context: context,
-                        renderingEngine: renderingEngine
+                            context: context,
+                            renderingEngine: renderingEngine
                         )
                 )
             }

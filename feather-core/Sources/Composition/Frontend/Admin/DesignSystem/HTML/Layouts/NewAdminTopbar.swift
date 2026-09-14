@@ -71,7 +71,7 @@ public struct NewAdminTopBar: Component {
             .ariaLabel("Toggle account menu")
 
             Ul {
-                Li { A("Profile").href("/admin/auth/profile/") }
+                Li { A("Profile").href("/admin/account/profile/") }
                 Li { A("Settings").href("/admin/account/settings/") }
                 Li { A("Logout").href("/logout") }
             }

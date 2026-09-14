@@ -30,7 +30,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
                     .init(label: "Admin", link: "/admin/"),
                     .init(label: "Contact", link: "/admin/contact/"),
                     .init(label: "Fields", link: ""),
-                    .init(label: "Remove", link: "")
+                    .init(label: "Remove", link: ""),
                 ])
             )
         )
@@ -50,7 +50,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
                         .init(label: "Admin", link: "/admin/"),
                         .init(label: "Contact", link: "/admin/contact/"),
                         .init(label: "Fields", link: "/admin/contact/fields/"),
-                        .init(label: "Remove", link: "")
+                        .init(label: "Remove", link: ""),
                     ]),
                     title: "Remove contact fields",
                     message:

@@ -1,11 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminAddNewsletterCampaignDefaultPresenter:
     AdminAddNewsletterCampaignPresenter
@@ -17,27 +11,16 @@ struct AdminAddNewsletterCampaignDefaultPresenter:
     func renderPage(
         model: AdminAddNewsletterCampaignModel,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        let breadcrumb = AdminBreadcrumb.State(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Campaigns", link: "/admin/newsletter/campaigns/"),
-            .init(label: "Campaigns", link: "/admin/newsletter/campaigns/"),
-        ])
-        return renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add campaign",
-            description: "Add campaign",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: NewsletterCampaignAddView(
                 state: .init(
                     name: model.name,
                     fromEmail: model.fromEmail,
-                    error: model.error,
-                    breadcrumb: breadcrumb
+                    error: model.error
                 )
             )
         )

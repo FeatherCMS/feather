@@ -1,11 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminListNewsletterCampaignSubscribersDefaultPresenter:
     AdminListNewsletterCampaignSubscribersPresenter
@@ -16,43 +10,38 @@ struct AdminListNewsletterCampaignSubscribersDefaultPresenter:
 
     func render(
         newsletterId: String,
-        items: [AdminNewsletterCampaignSubscriberItem],
+        model: NewAdminListModel<AdminNewsletterCampaignSubscriberItem>,
         search: String?,
         error: String?,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        let view = NewsletterCampaignSubscribersTable(
-            state: .init(
-                newsletterId: newsletterId,
-                isAdded: request.hasQueryFlag("added"),
-                isEdited: request.hasQueryFlag("edited"),
-                isRemoved: request.hasQueryFlag("removed"),
-                items: items,
-                search: search ?? "",
-                canRemove: permissions.contains(
-                    "newsletter:subscribers:delete"
-                ),
-                error: error,
-                breadcrumb: .init(links: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(
-                        label: "Campaigns",
-                        link: "/admin/newsletter/campaigns/"
-                    ),
-                    .init(label: "Subscribers", link: ""),
-                ])
-            )
-        )
-        return renderingEngine.renderAdminPage(
-            request: request,
-            title: "Campaign subscribers",
-            description: "Manage campaign subscribers",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
+        permissions: NewAdminListActions
+    ) async throws -> HTMLResponse {
+        if let error {
+            return try await renderingEngine.renderNewAdminPage(
                 request: request,
-                permissions: permissions
-            ),
-            content: view
+                context: context,
+                title: "Campaign subscribers",
+                content: NewAdminStatusView(
+                    state: .init(
+                        title: "Subscribers unavailable",
+                        message: error
+                    ),
+                    icon: FeatherIcons.alertCircle()
+                )
+            )
+        }
+        return try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Campaign subscribers",
+            content: NewsletterCampaignSubscribersTable(
+                state: .init(
+                    newsletterId: newsletterId,
+                    items: model.items,
+                    pageState: model.pageState,
+                    search: search,
+                    permissions: permissions
+                )
+            )
         )
     }
 }

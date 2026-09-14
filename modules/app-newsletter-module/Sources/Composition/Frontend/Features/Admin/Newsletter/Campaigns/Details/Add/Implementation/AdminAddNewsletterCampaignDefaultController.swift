@@ -2,6 +2,7 @@ import FeatherAdmin
 import FeatherValidation
 import HTML
 import Hummingbird
+import NewsletterContracts
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -23,7 +24,18 @@ struct AdminAddNewsletterCampaignDefaultController:
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        return presenter.renderPage(
+        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.create)
+        else {
+            return try await presenter.renderPage(
+                model: .init(
+                    name: "",
+                    fromEmail: "",
+                    error: "Your account cannot create newsletter campaigns."
+                ),
+                permissions: context.currentUserPermissions
+            )
+        }
+        return try await presenter.renderPage(
             model: try await interactor.getAddNewsletterCampaign(),
             permissions: context.currentUserPermissions
         )
@@ -36,6 +48,20 @@ struct AdminAddNewsletterCampaignDefaultController:
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.create)
+        else {
+            return
+                try await presenter.renderPage(
+                    model: .init(
+                        name: "",
+                        fromEmail: "",
+                        error:
+                            "Your account cannot create newsletter campaigns."
+                    ),
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
+        }
         let payload = try await request.decode(
             as: NewsletterCampaignAddForm.self,
             context: context
@@ -44,19 +70,16 @@ struct AdminAddNewsletterCampaignDefaultController:
             payload: payload
         )
         if model.error == nil {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/newsletter/campaigns/",
-                        title: "Added",
-                        message: "Campaign added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: NewsletterAdminRoutes.campaigns.description,
+                notification: .init(
+                    title: "Added",
+                    message: "Campaign added successfully."
+                )
             )
         }
         return
-            try presenter.renderPage(
+            try await presenter.renderPage(
                 model: model,
                 permissions: context.currentUserPermissions
             )

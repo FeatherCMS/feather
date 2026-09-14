@@ -1,5 +1,5 @@
-import FeatherAdmin
 import ContactContracts
+import FeatherAdmin
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -35,7 +35,8 @@ struct AdminAddContactFieldDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.create)
         else {
-            return try await presenter
+            return
+                try await presenter
                 .renderForbiddenPage()
                 .response(from: request, context: context)
         }

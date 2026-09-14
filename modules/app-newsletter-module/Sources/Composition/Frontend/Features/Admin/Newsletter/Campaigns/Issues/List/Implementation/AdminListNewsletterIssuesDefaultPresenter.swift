@@ -1,11 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminListNewsletterIssuesDefaultPresenter:
     AdminListNewsletterIssuesPresenter
@@ -16,31 +10,36 @@ struct AdminListNewsletterIssuesDefaultPresenter:
 
     func render(
         newsletterId: String,
-        items: [AdminNewsletterIssueItem],
+        model: NewAdminListModel<AdminNewsletterIssueItem>,
         error: String?,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        let breadcrumb = AdminBreadcrumb.State(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Newsletter", link: "/admin/newsletter/"),
-            .init(label: "Campaigns", link: "/admin/newsletter/campaigns/"),
-        ])
-        return renderingEngine.renderAdminPage(
-            request: request,
-            title: "Campaign issues",
-            description: "Manage campaign issues",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
+        permissions: NewAdminListActions,
+        search: String?
+    ) async throws -> HTMLResponse {
+        if let error {
+            return try await renderingEngine.renderNewAdminPage(
                 request: request,
-                permissions: permissions
-            ),
-            content: AdminNewsletterIssuesListView(
+                context: context,
+                title: "Campaign issues",
+                content: NewAdminStatusView(
+                    state: .init(
+                        title: "Campaign issues unavailable",
+                        message: error
+                    ),
+                    icon: FeatherIcons.alertCircle()
+                )
+            )
+        }
+        return try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Campaign issues",
+            content: NewsletterIssuesTable(
                 state: .init(
                     newsletterId: newsletterId,
-                    items: items,
-                    error: error,
+                    items: model.items,
+                    pageState: model.pageState,
                     permissions: permissions,
-                    breadcrumb: breadcrumb
+                    search: search
                 )
             )
         )

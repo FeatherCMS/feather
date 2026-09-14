@@ -1,5 +1,6 @@
 import FeatherAdmin
 import Hummingbird
+import MediaFrontend
 import OpenAPIRuntime
 
 struct AdminEditWebPage {
@@ -11,7 +12,8 @@ struct AdminEditWebPage {
                 (
                     interactor: AdminEditWebPageDefaultInteractor(
                         repository: AdminEditWebPageOpenAPIRepository(
-                            api: context.webAdminAPI()
+                            api: context.webAdminAPI(),
+                            mediaAPI: context.mediaAdminAPI()
                         )
                     ),
                     presenter: AdminEditWebPageDefaultPresenter(

@@ -1,11 +1,6 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterContracts
 
 struct AdminRemoveNewsletterCampaignDefaultController:
     AdminRemoveNewsletterCampaignController
@@ -19,7 +14,14 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.render(
+        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
+        else {
+            return try await presenter.render(
+                id: "",
+                permissions: context.currentUserPermissions
+            )
+        }
+        return try await presenter.render(
             id: try context.requiredParameter("newsletterId"),
             permissions: context.currentUserPermissions
         )
@@ -28,18 +30,17 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
+        else { return Response(status: .forbidden) }
         try await interactor.remove(
             id: try context.requiredParameter("newsletterId")
         )
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/newsletter/campaigns/",
-                    title: "Removed",
-                    message: "Campaign removed successfully."
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: NewsletterAdminRoutes.campaigns.description,
+            notification: .init(
+                title: "Removed",
+                message: "Campaign removed successfully."
+            )
         )
     }
     func removeSelected(request: Request, context: DefaultRequestContext)
@@ -50,16 +51,15 @@ struct AdminRemoveNewsletterCampaignDefaultController:
             as: ListRemoveFormInput.self,
             context: context
         )
+        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
+        else { return Response(status: .forbidden) }
         try await interactor.remove(ids: payload.normalizedSelectedIds)
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/newsletter/campaigns/",
-                    title: "Removed",
-                    message: "Campaigns removed successfully."
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: NewsletterAdminRoutes.campaigns.description,
+            notification: .init(
+                title: "Removed",
+                message: "Campaigns removed successfully."
+            )
         )
     }
 }

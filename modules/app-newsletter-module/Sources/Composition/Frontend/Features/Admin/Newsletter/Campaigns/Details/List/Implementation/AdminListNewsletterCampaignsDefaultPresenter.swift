@@ -1,10 +1,7 @@
 import FeatherAdmin
-import FeatherValidation
 import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
+import NewsletterContracts
 import WebComponents
 
 struct AdminListNewsletterCampaignsDefaultPresenter:
@@ -15,40 +12,37 @@ struct AdminListNewsletterCampaignsDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func render(
-        items: [AdminNewsletterCampaignItem],
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
+        model: NewAdminListModel<AdminNewsletterCampaignItem>,
         isPicker: Bool,
         error: String?,
-        permissions: Set<String>,
-        search: String
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
-            request: request,
-            title: "Campaigns",
-            description: "Manage campaigns",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
+        permissions: NewAdminListActions,
+        search: String?
+    ) async throws -> HTMLResponse {
+        if let error {
+            return try await renderingEngine.renderNewAdminPage(
                 request: request,
-                permissions: permissions
-            ),
-            content: NewsletterTable(
+                context: context,
+                title: "Campaigns",
+                content: NewAdminStatusView(
+                    state: .init(
+                        title: "Campaigns unavailable",
+                        message: error
+                    ),
+                    icon: FeatherIcons.alertCircle()
+                )
+            )
+        }
+        return try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: isPicker ? "Select newsletter campaign" : "Campaigns",
+            content: NewsletterCampaignsTable(
                 state: .init(
-                    isAdded: isAdded,
-                    isEdited: isEdited,
-                    isRemoved: isRemoved,
-                    items: items,
+                    items: model.items,
+                    pageState: model.pageState,
                     search: search,
-                    permissions: permissions,
-                    isPicker: isPicker,
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(
-                            label: "Campaigns",
-                            link: "/admin/newsletter/campaigns/"
-                        ),
-                    ])
+                    actions: permissions,
+                    isPicker: isPicker
                 )
             )
         )

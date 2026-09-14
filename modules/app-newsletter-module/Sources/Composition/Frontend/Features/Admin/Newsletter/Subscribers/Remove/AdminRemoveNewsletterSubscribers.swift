@@ -20,7 +20,7 @@ struct AdminRemoveNewsletterSubscribers {
                 ),
                 AdminRemoveNewsletterSubscribersDefaultPresenter(
                     request: request,
-                        context: context,
+                    context: context,
                     renderingEngine: renderingEngine
                 )
             )

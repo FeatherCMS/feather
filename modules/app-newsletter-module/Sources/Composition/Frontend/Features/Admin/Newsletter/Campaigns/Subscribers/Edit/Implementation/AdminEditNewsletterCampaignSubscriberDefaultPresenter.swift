@@ -19,7 +19,7 @@ struct AdminEditNewsletterCampaignSubscriberDefaultPresenter:
         item: AdminNewsletterCampaignSubscriberItem,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let view = NewsletterCampaignSubscriberFormView(
             state: .init(
                 newsletterId: newsletterId,
@@ -40,15 +40,10 @@ struct AdminEditNewsletterCampaignSubscriberDefaultPresenter:
                 editAction: nil
             )
         )
-        return renderingEngine.renderAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit campaign subscriber",
-            description: "Edit campaign subscriber",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: view
         )
     }

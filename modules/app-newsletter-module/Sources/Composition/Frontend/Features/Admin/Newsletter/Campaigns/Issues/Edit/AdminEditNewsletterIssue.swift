@@ -20,7 +20,7 @@ struct AdminEditNewsletterIssue {
                 ),
                 AdminEditNewsletterIssueDefaultPresenter(
                     request: request,
-                        context: context,
+                    context: context,
                     renderingEngine: renderingEngine
                 )
             )

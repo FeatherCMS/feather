@@ -13,5 +13,5 @@ protocol AdminAddNewsletterCampaignSubscriberPresenter: Sendable {
         form: NewsletterCampaignSubscriberForm,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

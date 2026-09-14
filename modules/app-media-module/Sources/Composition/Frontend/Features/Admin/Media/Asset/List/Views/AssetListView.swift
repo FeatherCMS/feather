@@ -181,7 +181,9 @@ struct AssetListView: Component {
             Width(2.5.rem)
             Height(2.5.rem)
         }
-        Custom(".media-assets-card-preview.media-assets-folder-icon svg") {
+        Custom(
+            ".media-assets-card-preview.media-assets-folder-icon svg, .media-assets-card-preview .media-assets-folder-icon svg"
+        ) {
             Width(5.rem)
             Height(5.rem)
         }
@@ -699,7 +701,7 @@ extension AssetListView {
                                         )
                                     }
                                     Th("Preview")
-                                    Th("File name")
+                                    Th("Name")
                                     Th("Type")
                                     Th("Size")
                                     Th("Actions")
@@ -966,7 +968,7 @@ extension AssetListView {
             Td {
                 A("Up to parent").href(browsePath(parentId: parentId))
             }
-            .data("label", "File name")
+            .data("label", "Name")
             Td("")
                 .data("label", "Type")
             Td("-")
@@ -1007,7 +1009,7 @@ extension AssetListView {
             Td {
                 context.render(
                     NewAdminRowButton(
-                        "Open",
+                        "View",
                         href: browsePath(parentId: folder.id),
                         style: .ghost(.secondary)
                     )
@@ -1258,7 +1260,7 @@ extension AssetListView {
             A(folder.name)
                 .href(browsePath(parentId: folder.id))
         }
-        .data("label", "File name")
+        .data("label", "Name")
     }
 
     fileprivate func assetTitleCell(
@@ -1269,16 +1271,13 @@ extension AssetListView {
 
         Td {
             Span {
-                A(fileName(for: item.asset))
-                    .href(originalURL)
-                    .target(.blank)
-                    .ariaLabel("Open \(displayTitle(for: item.asset))")
+                Span(fileName(for: item.asset))
                 A {
                     FeatherIcons.externalLink()
                 }
                 .href(originalURL)
                 .target(.blank)
-                .ariaLabel("Open \(displayTitle(for: item.asset))")
+                .ariaLabel("Preview \(displayTitle(for: item.asset))")
                 .style(
                     "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;"
                 )
@@ -1287,6 +1286,6 @@ extension AssetListView {
                 "display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;line-height:1.25;"
             )
         }
-        .data("label", "File name")
+        .data("label", "Name")
     }
 }

@@ -17,34 +17,21 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
         item: AdminNewsletterCampaignItem,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit campaign",
-            description: "Edit campaign",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: NewsletterEdit(
+            content: NewsletterCampaignEditPage(
                 state: .init(
                     id: item.id,
-                    isEdited: false,
                     form: .init(
                         name: item.name,
                         fromEmail: item.fromEmail,
                         error: error,
                         success: nil
                     ),
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(
-                            label: "Campaigns",
-                            link: "/admin/newsletter/campaigns/"
-                        ),
-                        .init(label: "Edit", link: ""),
-                    ])
+                    isDetails: false
                 )
             )
         )

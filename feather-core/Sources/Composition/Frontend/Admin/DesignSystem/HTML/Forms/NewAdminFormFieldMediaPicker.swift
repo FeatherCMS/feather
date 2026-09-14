@@ -177,7 +177,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
                     JustifyContent(.center)
                     Padding(24.px)
                     Background(
-                        .variable(TokenKey.Colors.Materials.Secondary.tint)
+                        .variable(TokenKey.Colors.Materials.Primary.tint)
                     )
                     ZIndex(.number(2000))
                 }

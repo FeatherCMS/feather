@@ -21,14 +21,14 @@ struct AdminAddNewsletterSubscriberDefaultController:
     {
         let (interactor, presenter) = buildRuntime(request, context)
         do {
-            return presenter.render(
+            return try await presenter.render(
                 model: try await interactor.get(),
                 isAdded: request.hasQueryFlag("added"),
                 permissions: context.currentUserPermissions
             )
         }
         catch {
-            return presenter.render(
+            return try await presenter.render(
                 model: .init(
                     email: "",
                     firstName: "",
@@ -54,19 +54,16 @@ struct AdminAddNewsletterSubscriberDefaultController:
         do {
             let model = try await interactor.post(form: form)
             if model.error == nil {
-                return Response(
-                    status: .seeOther,
-                    headers: [
-                        .location: AdminToastRedirect.location(
-                            defaultPath: "/admin/newsletter/subscribers/",
-                            title: "Added",
-                            message: "Subscriber added successfully."
-                        )
-                    ]
+                return AdminNotificationFlash.redirect(
+                    to: NewsletterAdminRoutes.subscribers.description,
+                    notification: .init(
+                        title: "Added",
+                        message: "Subscriber added successfully."
+                    )
                 )
             }
             return
-                try presenter.render(
+                try await presenter.render(
                     model: model,
                     isAdded: false,
                     permissions: context.currentUserPermissions
@@ -85,7 +82,7 @@ struct AdminAddNewsletterSubscriberDefaultController:
                     error: error.displayMessage
                 )
             return
-                try presenter.render(
+                try await presenter.render(
                     model: .init(
                         email: form.email,
                         firstName: form.firstName,

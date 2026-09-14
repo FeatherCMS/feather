@@ -18,16 +18,11 @@ struct AdminEditNewsletterIssueDefaultPresenter:
         issueId: String?,
         permissions: Set<String>,
         error: String?
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit campaign issue",
-            description: "Edit campaign issue",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: NewsletterIssueAddView(
                 state: .init(
                     subject: model.subject,
@@ -35,19 +30,7 @@ struct AdminEditNewsletterIssueDefaultPresenter:
                     scheduledAt: model.scheduledAt,
                     newsletterId: model.newsletterId,
                     issueId: issueId,
-                    error: error,
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(
-                            label: "Campaigns",
-                            link: "/admin/newsletter/campaigns/"
-                        ),
-                        .init(
-                            label: "Issues",
-                            link:
-                                "/admin/newsletter/\(model.newsletterId)/issues/"
-                        ),
-                    ])
+                    error: error
                 )
             )
         )

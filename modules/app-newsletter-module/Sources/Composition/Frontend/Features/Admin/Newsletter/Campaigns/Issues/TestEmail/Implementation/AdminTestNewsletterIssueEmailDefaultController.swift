@@ -45,17 +45,20 @@ struct AdminTestNewsletterIssueEmailDefaultController:
                     body: body
                 )
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath: issueId.map {
-                        "/admin/newsletter/\(newsletterId)/issues/\($0)/edit/"
-                    } ?? "/admin/newsletter/\(newsletterId)/issues/add/",
-                    title: "Sent",
-                    message: "Test email queued successfully."
+        return AdminNotificationFlash.redirect(
+            to: issueId.map {
+                NewsletterAdminRoutes.issueEdit(
+                    newsletterID: RouterPath(newsletterId),
+                    issueID: RouterPath($0)
                 )
-            ]
+                .description
+            }
+                ?? NewsletterAdminRoutes.issueAdd(RouterPath(newsletterId))
+                .description,
+            notification: .init(
+                title: "Sent",
+                message: "Test email queued successfully."
+            )
         )
     }
 }

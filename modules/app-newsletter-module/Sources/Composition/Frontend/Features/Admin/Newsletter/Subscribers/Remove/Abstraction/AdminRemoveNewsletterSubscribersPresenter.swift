@@ -13,5 +13,5 @@ protocol AdminRemoveNewsletterSubscribersPresenter: Sendable {
         search: String?,
         campaignId: String?,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

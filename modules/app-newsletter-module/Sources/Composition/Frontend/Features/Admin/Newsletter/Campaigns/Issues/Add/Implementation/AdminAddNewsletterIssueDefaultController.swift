@@ -28,7 +28,7 @@ struct AdminAddNewsletterIssueDefaultController:
         else {
             return HTMLResponse(content: "Bad request", status: .badRequest)
         }
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             model: try await interactor.getAddNewsletterIssue(
                 newsletterId: newsletterId
             ),
@@ -57,20 +57,20 @@ struct AdminAddNewsletterIssueDefaultController:
             payload: payload
         )
         if model.error == nil {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath:
-                            "/admin/newsletter/\(model.newsletterId)/issues/",
-                        title: "Added",
-                        message: "Campaign issue added successfully."
+            return AdminNotificationFlash.redirect(
+                to:
+                    NewsletterAdminRoutes.campaignIssues(
+                        RouterPath(model.newsletterId)
                     )
-                ]
+                    .description,
+                notification: .init(
+                    title: "Added",
+                    message: "Campaign issue added successfully."
+                )
             )
         }
         return
-            try presenter.renderPage(
+            try await presenter.renderPage(
                 model: model,
                 permissions: context.currentUserPermissions
             )

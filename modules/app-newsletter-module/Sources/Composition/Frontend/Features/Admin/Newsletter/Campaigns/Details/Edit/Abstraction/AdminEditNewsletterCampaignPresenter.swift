@@ -12,5 +12,5 @@ protocol AdminEditNewsletterCampaignPresenter: Sendable {
         item: AdminNewsletterCampaignItem,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

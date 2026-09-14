@@ -13,7 +13,7 @@ struct AdminListNewsletterSubscribersDefaultInteractor:
 {
     let repository: AdminListNewsletterSubscribersOpenAPIRepository
 
-    func list(search: String?, campaignId: String?) async throws
+    func list(search: String?, campaignId: String?, page: Int) async throws
         -> AdminNewsletterSubscribersListModel
     {
         let campaigns = try await repository.campaigns()
@@ -27,11 +27,18 @@ struct AdminListNewsletterSubscribersDefaultInteractor:
                 && (campaignId?.isEmpty != false
                     || $0.newsletters.contains { $0.id == campaignId })
         }
+        let pageSize = 20
+        let start = max(0, (page - 1) * pageSize)
         return .init(
-            items: filtered,
+            items: Array(filtered.dropFirst(start).prefix(pageSize)),
             campaigns: campaigns,
             search: normalizedSearch,
-            campaignId: campaignId ?? ""
+            campaignId: campaignId ?? "",
+            pageState: .init(
+                page: page,
+                pageSize: pageSize,
+                total: filtered.count
+            )
         )
     }
 }

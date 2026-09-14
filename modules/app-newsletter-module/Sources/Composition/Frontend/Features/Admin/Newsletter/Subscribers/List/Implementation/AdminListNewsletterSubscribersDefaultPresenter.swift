@@ -1,11 +1,6 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
+import FeatherContracts
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminListNewsletterSubscribersDefaultPresenter:
     AdminListNewsletterSubscribersPresenter
@@ -18,28 +13,31 @@ struct AdminListNewsletterSubscribersDefaultPresenter:
         model: AdminNewsletterSubscribersListModel,
         error: String?,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
-            request: request,
-            title: "Subscribers",
-            description: "Manage campaign subscribers",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
+    ) async throws -> HTMLResponse {
+        let actions = NewAdminListActions(
+            Set(permissions.map(PermissionKey.init))
+        )
+        if let error {
+            return try await renderingEngine.renderNewAdminPage(
                 request: request,
-                permissions: permissions
-            ),
-            content: AdminNewsletterSubscribersListView(
-                model: model,
-                breadcrumb: .init(links: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(
-                        label: "Campaigns",
-                        link: "/admin/newsletter/campaigns/"
+                context: context,
+                title: "Subscribers",
+                content: NewAdminStatusView(
+                    state: .init(
+                        title: "Subscribers unavailable",
+                        message: error
                     ),
-                    .init(label: "Subscribers", link: ""),
-                ]),
-                error: error,
-                canRemove: permissions.contains("newsletter:subscribers:delete")
+                    icon: FeatherIcons.alertCircle()
+                )
+            )
+        }
+        return try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Subscribers",
+            content: NewsletterSubscribersTable(
+                model: model,
+                permissions: actions
             )
         )
     }

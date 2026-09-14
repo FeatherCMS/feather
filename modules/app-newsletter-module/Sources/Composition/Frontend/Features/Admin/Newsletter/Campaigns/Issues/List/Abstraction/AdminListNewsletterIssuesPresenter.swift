@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherValidation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -10,8 +9,9 @@ import WebComponents
 protocol AdminListNewsletterIssuesPresenter: Sendable {
     func render(
         newsletterId: String,
-        items: [AdminNewsletterIssueItem],
+        model: NewAdminListModel<AdminNewsletterIssueItem>,
         error: String?,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        permissions: NewAdminListActions,
+        search: String?
+    ) async throws -> HTMLResponse
 }

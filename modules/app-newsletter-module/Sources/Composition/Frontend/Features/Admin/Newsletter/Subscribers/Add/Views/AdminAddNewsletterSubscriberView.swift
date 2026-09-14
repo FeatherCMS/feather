@@ -1,8 +1,6 @@
 import FeatherAdmin
-import FeatherValidation
 import HTML
 import Hummingbird
-import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
@@ -14,36 +12,63 @@ struct AdminAddNewsletterSubscriberView: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(state: breadcrumb))
-            H1("Add subscriber")
-            if isAdded { P("Subscriber added successfully.") }
-            if let error = model.error { P(error).class("error") }
-            Form {
-                Label {
-                    context.render(
-                        AdminFieldLabel(label: "Email", required: true)
+            context.render(
+                NewAdminBreadcrumb(
+                    links: NewsletterAdminRoutes.breadcrumb + [
+                        .init(
+                            label: "Subscribers",
+                            link: NewsletterAdminRoutes.subscribers.description
+                        )
+                    ]
+                )
+            )
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Add subscriber",
+                        description: "Create a newsletter subscriber."
                     )
-                    Input().type(.email).class("text-input").name("email")
-                        .value(model.email).required()
-                }
-                Label {
-                    context.render(
-                        AdminFieldLabel(label: "First name", required: false)
-                    )
-                    Input().type(.text).class("text-input").name("firstName")
-                        .value(model.firstName)
-                }
-                Label {
-                    context.render(
-                        AdminFieldLabel(label: "Last name", required: false)
-                    )
-                    Input().type(.text).class("text-input").name("lastName")
-                        .value(model.lastName)
+                )
+            )
+            let form = NewAdminForm(
+                action: NewsletterAdminRoutes.subscriberAdd.description
+            ) {
+                if let error = model.error {
+                    P(error).class("new-admin-form__error")
                 }
                 context.render(
-                    AdminAutocompleteField(
+                    NewAdminFormFieldInput(
                         state: .init(
-                            key: "campaignIds",
+                            name: "email",
+                            label: "Email",
+                            value: model.email,
+                            type: .email,
+                            isRequired: true
+                        )
+                    )
+                )
+                context.render(
+                    NewAdminFormFieldInput(
+                        state: .init(
+                            name: "firstName",
+                            label: "First name",
+                            value: model.firstName
+                        )
+                    )
+                )
+                context.render(
+                    NewAdminFormFieldInput(
+                        state: .init(
+                            name: "lastName",
+                            label: "Last name",
+                            value: model.lastName
+                        )
+                    )
+                )
+                context.render(
+                    NewAdminAutocompleteField(
+                        state: .init(
+                            name: "campaignIds",
                             label: "Campaigns",
                             placeholder: "Select campaigns",
                             options: model.campaigns.map {
@@ -51,22 +76,21 @@ struct AdminAddNewsletterSubscriberView: Component {
                                     label: $0.name,
                                     value: $0.id,
                                     isSelected: model.selectedCampaignIds
-                                        .contains(
-                                            $0.id
-                                        )
+                                        .contains($0.id)
                                 )
                             },
-                            error: nil,
-                            selectionMode: .multiple,
-                            isEnabled: true
+                            selectionMode: .multiple
                         )
                     )
                 )
-                Div { Button("Add subscriber").type(.submit) }
-                    .class("button-row")
+                Div {
+                    context.render(
+                        NewAdminSubmitButton("Add subscriber", style: .primary)
+                    )
+                }
+                .class("new-admin-form__actions")
             }
-            .method(.post).action("/admin/newsletter/subscribers/add/")
-            .class("cms-form")
+            context.render(form)
         }
         .class("cms-section")
     }

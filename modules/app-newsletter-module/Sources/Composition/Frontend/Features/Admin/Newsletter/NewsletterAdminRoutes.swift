@@ -18,7 +18,7 @@ enum NewsletterAdminRoutes {
 
     static let breadcrumb: [NewAdminBreadcrumb.Link] = [
         .init(label: "Admin", link: "/admin/"),
-        .init(label: "Newsletter", link: newsletter.description + "/")
+        .init(label: "Newsletter", link: newsletter.description + "/"),
     ]
 
     private static let campaignID = RouterPath(":newsletterId")
@@ -145,7 +145,8 @@ enum NewsletterAdminRoutes {
         campaignSubscriberDetails(
             newsletterID: newsletterID,
             subscriberID: subscriberID
-        ).appendingPath(RouterPath("edit"))
+        )
+        .appendingPath(RouterPath("edit"))
     }
 
     static func campaignSubscriberRemove(
@@ -155,7 +156,8 @@ enum NewsletterAdminRoutes {
         campaignSubscriberDetails(
             newsletterID: newsletterID,
             subscriberID: subscriberID
-        ).appendingPath(RouterPath("remove"))
+        )
+        .appendingPath(RouterPath("remove"))
     }
 
 }

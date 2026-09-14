@@ -43,9 +43,11 @@ struct AdminEditMediaProcessorDefaultPresenter: AdminEditMediaProcessorPresenter
                     ? NewAdminLocation.remove(
                         path: MediaProcessorRoutes.remove.description,
                         ids: [model.id],
-                        returnTo: MediaProcessorRoutes.edit(
-                            RouterPath(model.id)
-                        ).description
+                        returnTo:
+                            MediaProcessorRoutes.edit(
+                                RouterPath(model.id)
+                            )
+                            .description
                     ) : nil
             )
         )

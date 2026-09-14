@@ -17,7 +17,7 @@ enum ContactAdminRoutes {
 
     static let breadcrumb: [NewAdminBreadcrumb.Link] = [
         .init(label: "Admin", link: "/admin/"),
-        .init(label: "Contact", link: contact.description + "/")
+        .init(label: "Contact", link: contact.description + "/"),
     ]
 
     private static let formID = RouterPath(":formId")
@@ -130,7 +130,8 @@ enum ContactAdminRoutes {
         formSubmissionDetails(
             formID: formID,
             submissionID: submissionID
-        ).appendingPath(RouterPath("edit"))
+        )
+        .appendingPath(RouterPath("edit"))
     }
 
     static func formSubmissionRemove(
@@ -140,7 +141,8 @@ enum ContactAdminRoutes {
         formSubmissionDetails(
             formID: formID,
             submissionID: submissionID
-        ).appendingPath(RouterPath("remove"))
+        )
+        .appendingPath(RouterPath("remove"))
     }
 
     static func formSubmissionRemove(_ id: RouterPath) -> RouterPath {

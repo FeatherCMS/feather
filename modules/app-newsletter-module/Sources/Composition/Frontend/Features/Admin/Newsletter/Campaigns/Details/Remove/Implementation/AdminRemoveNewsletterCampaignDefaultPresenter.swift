@@ -1,10 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
 import WebComponents
 
 struct AdminRemoveNewsletterCampaignDefaultPresenter:
@@ -13,32 +8,28 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
     let request: Request
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
-    func render(id: String, permissions: Set<String>) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    func render(id: String, permissions: Set<String>) async throws
+        -> HTMLResponse
+    {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove campaign",
-            description: "Remove campaign",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: AdminConfirmationDialog(
-                state: .init(
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(
-                            label: "Campaigns",
-                            link: "/admin/newsletter/campaigns/"
-                        ),
-                    ]),
+            content: NewAdminConfirmation(
+                breadcrumb: NewsletterAdminRoutes.breadcrumb + [
+                    .init(
+                        label: "Campaigns",
+                        link: NewsletterAdminRoutes.campaigns.description
+                    )
+                ],
+                pageHeader: .init(
                     title: "Remove campaign",
-                    message:
-                        "Are you sure you want to remove this campaign? This action cannot be undone.",
-                    submitLabel: "Remove campaign",
-                    actionURL: "/admin/newsletter/\(id)/remove/",
-                    cancelURL: "/admin/newsletter/campaigns/"
-                )
+                    description: "This action cannot be undone."
+                ),
+                action: NewsletterAdminRoutes.campaignRemove(RouterPath(id))
+                    .description,
+                cancel: NewsletterAdminRoutes.campaigns.description,
+                submitLabel: "Remove campaign"
             )
         )
     }

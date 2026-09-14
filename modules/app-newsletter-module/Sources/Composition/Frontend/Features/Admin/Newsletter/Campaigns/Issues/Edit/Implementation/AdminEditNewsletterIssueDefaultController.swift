@@ -22,7 +22,7 @@ struct AdminEditNewsletterIssueDefaultController:
         let newsletterId = try context.requiredParameter("newsletterId")
         let issueId = try context.requiredParameter("issueId")
         do {
-            return presenter.render(
+            return try await presenter.render(
                 model: try await interactor.get(
                     newsletterId: newsletterId,
                     issueId: issueId
@@ -33,7 +33,7 @@ struct AdminEditNewsletterIssueDefaultController:
             )
         }
         catch {
-            return presenter.render(
+            return try await presenter.render(
                 model: .init(
                     subject: "",
                     content: "",
@@ -63,21 +63,21 @@ struct AdminEditNewsletterIssueDefaultController:
                 issueId: issueId,
                 form: form
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath:
-                            "/admin/newsletter/\(newsletterId)/issues/",
-                        title: "Updated",
-                        message: "Campaign issue updated successfully."
+            return AdminNotificationFlash.redirect(
+                to:
+                    NewsletterAdminRoutes.campaignIssues(
+                        RouterPath(newsletterId)
                     )
-                ]
+                    .description,
+                notification: .init(
+                    title: "Updated",
+                    message: "Campaign issue updated successfully."
+                )
             )
         }
         catch {
             return
-                try presenter.render(
+                try await presenter.render(
                     model: .init(
                         subject: form.subject,
                         content: form.content,
