@@ -50,15 +50,12 @@ struct AdminRemoveWebMenuItemDefaultController:
         let permissions = context.currentUserPermissions
         do {
             try await runtime.interactor.delete(menuId: menuId, id: id)
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/menus/\(menuId)/items/",
-                        title: "Removed",
-                        message: "Item removed successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/menus/\(menuId)/items/",
+                notification: .init(
+                    title: "Removed",
+                    message: "Item removed successfully."
+                )
             )
         }
         catch let error as OpenAPIRepositoryError {

@@ -50,11 +50,6 @@ struct AdminListWebPageDefaultController:
         }
         return try await presenter.renderListPage(
             model: model,
-            isAdded: request.hasQueryFlag("added"),
-            isEdited: request.hasQueryFlag("edited"),
-            isRemoved: request.hasQueryFlag("removed"),
-            isPublished: request.hasQueryFlag("published"),
-            isUnpublished: request.hasQueryFlag("unpublished"),
             permissions: permissions,
             search: search,
             error: error
@@ -73,12 +68,10 @@ struct AdminListWebPageDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListRemoveRedirect.location(
+                    .location: NewAdminLocation.url(
                         path: "/admin/web/pages/",
                         page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
+                        search: search
                     )
                 ]
             )
@@ -105,19 +98,20 @@ struct AdminListWebPageDefaultController:
         if !payload.normalizedSelectedIds.isEmpty {
             try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: ListRemoveRedirect.location(
-                    path: "/admin/web/pages/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
-                    title: !payload.normalizedSelectedIds.isEmpty
-                        ? "Removed" : nil,
-                    message: !payload.normalizedSelectedIds.isEmpty
-                        ? "Web page removed successfully." : nil
-                )
-            ]
+        let location = NewAdminLocation.url(
+            path: "/admin/web/pages/",
+            page: payload.normalizedPage,
+            search: payload.normalizedSearch
+        )
+        guard !payload.normalizedSelectedIds.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        return AdminNotificationFlash.redirect(
+            to: location,
+            notification: .init(
+                title: "Removed",
+                message: "Web page removed successfully."
+            )
         )
     }
 
@@ -146,17 +140,9 @@ struct AdminListWebPageDefaultController:
             referenceID: id,
             status: targetStatus
         )
-        let toast = statusToastContent(for: targetStatus)
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminStatusActionRedirect.location(
-                    defaultPath: "/admin/web/pages/",
-                    returnTo: payload.normalizedReturnTo,
-                    title: toast.title,
-                    message: toast.message
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: payload.normalizedReturnTo ?? "/admin/web/pages/",
+            notification: statusNotification(for: targetStatus)
         )
     }
 
@@ -183,16 +169,25 @@ struct AdminListWebPageDefaultController:
             : metadata.normalizedStatus
     }
 
-    private func statusToastContent(
+    private func statusNotification(
         for status: String
-    ) -> (title: String, message: String) {
+    ) -> AdminNotification {
         switch status {
         case "published":
-            return ("Published", "Web page published successfully.")
+            return .init(
+                title: "Published",
+                message: "Web page published successfully."
+            )
         case "archived":
-            return ("Archived", "Web page archived successfully.")
+            return .init(
+                title: "Archived",
+                message: "Web page archived successfully."
+            )
         default:
-            return ("Draft", "Web page moved to draft successfully.")
+            return .init(
+                title: "Draft",
+                message: "Web page moved to draft successfully."
+            )
         }
     }
 }

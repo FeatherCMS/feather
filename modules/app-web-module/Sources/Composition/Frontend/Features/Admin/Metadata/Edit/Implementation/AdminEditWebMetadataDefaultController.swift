@@ -100,7 +100,6 @@ struct AdminEditWebMetadataDefaultController:
                     structuredDataCodeInjection: entry
                         .structuredDataCodeInjection
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions,
                 navigationTabs: navigationTabs,
                 configuration: configuration
@@ -158,15 +157,12 @@ struct AdminEditWebMetadataDefaultController:
             try await payload.validate()
             try await runtime.interactor.update(id: metadataID, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: request.uri.path,
-                        title: "Saved",
-                        message: "Web metadata edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: request.uri.path,
+                notification: .init(
+                    title: "Saved",
+                    message: "Web metadata edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -200,7 +196,6 @@ struct AdminEditWebMetadataDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions,
                     navigationTabs: navigationTabs,
                     configuration: configuration
@@ -234,7 +229,6 @@ struct AdminEditWebMetadataDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions,
                     navigationTabs: navigationTabs,
                     configuration: configuration
@@ -268,7 +262,6 @@ struct AdminEditWebMetadataDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions,
                     navigationTabs: navigationTabs,
                     configuration: configuration

@@ -47,7 +47,6 @@ struct AdminEditWebMenuItemDefaultController:
                 menuId: menuId,
                 id: id,
                 state: state,
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
         }
@@ -109,7 +108,6 @@ struct AdminEditWebMenuItemDefaultController:
                         menuId: menuId,
                         id: id,
                         state: state,
-                        isEdited: false,
                         permissions: permissions
                     )
                     .response(from: request, context: context)
@@ -138,7 +136,6 @@ struct AdminEditWebMenuItemDefaultController:
                         menuId: menuId,
                         id: id,
                         state: state,
-                        isEdited: false,
                         permissions: permissions
                     )
                     .response(from: request, context: context)
@@ -163,7 +160,6 @@ struct AdminEditWebMenuItemDefaultController:
                         menuId: menuId,
                         id: id,
                         state: state,
-                        isEdited: false,
                         permissions: permissions
                     )
                     .response(from: request, context: context)
@@ -174,16 +170,12 @@ struct AdminEditWebMenuItemDefaultController:
                 input: payload
             )
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath:
-                            "/admin/web/menus/\(menuId)/items/\(id)/edit/",
-                        title: "Saved",
-                        message: "Item edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/menus/\(menuId)/items/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "Item edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -207,7 +199,6 @@ struct AdminEditWebMenuItemDefaultController:
                     menuId: menuId,
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -229,7 +220,6 @@ struct AdminEditWebMenuItemDefaultController:
                     menuId: menuId,
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -251,7 +241,6 @@ struct AdminEditWebMenuItemDefaultController:
                     menuId: menuId,
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)

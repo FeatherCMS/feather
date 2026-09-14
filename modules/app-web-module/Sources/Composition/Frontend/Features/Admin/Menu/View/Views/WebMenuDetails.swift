@@ -12,8 +12,6 @@ struct WebMenuDetails: Component {
         let menu: WebMenuDetailsModel
         let breadcrumb: [NewAdminBreadcrumb.Link]
         let permissions: Set<String>
-        let isAdded: Bool
-        let isRemoved: Bool
     }
 
     let state: State

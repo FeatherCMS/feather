@@ -14,8 +14,6 @@ struct WebPageDetails: Component {
         let rule: WebPageDetailsModel
         let breadcrumb: [NewAdminBreadcrumb.Link]
         let permissions: Set<String>
-        let isPublished: Bool
-        let isUnpublished: Bool
     }
 
     let state: State
@@ -31,12 +29,6 @@ struct WebPageDetails: Component {
                     )
                 )
             )
-            if state.isPublished {
-                P("Web page published successfully.")
-            }
-            if state.isUnpublished {
-                P("Web page unpublished successfully.")
-            }
             Div {
                 detailField(label: "ID", value: state.rule.id)
                 detailField(label: "Title", value: state.rule.title)
@@ -64,7 +56,7 @@ struct WebPageDetails: Component {
                     WebPermissions.Pages.update.rawValue
                 ) {
                     context.render(
-                        AdminStatusActionForm(
+                        NewAdminStatusActionForm(
                             action: "/admin/web/pages/\(state.rule.id)/status/",
                             returnTo: "/admin/web/pages/\(state.rule.id)/",
                             status: isPublished ? "draft" : "published",

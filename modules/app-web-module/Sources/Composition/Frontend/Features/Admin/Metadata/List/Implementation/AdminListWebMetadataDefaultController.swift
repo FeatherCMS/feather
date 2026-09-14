@@ -58,7 +58,6 @@ struct AdminListWebMetadataDefaultController:
         }
         return try await presenter.renderListPage(
             model: model,
-            isEdited: request.hasQueryFlag("edited"),
             permissions: permissions,
             search: search,
             referenceType: normalizedReferenceType,

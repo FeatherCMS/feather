@@ -20,17 +20,13 @@ struct AdminViewWebMenuDefaultController: AdminViewWebMenuController {
         do {
             let rule = try await runtime.interactor.execute(
                 entity: .init(
-                    id: id,
-                    isAdded: request.hasQueryFlag("added"),
-                    isRemoved: request.hasQueryFlag("removed")
+                    id: id
                 )
             )
             return try await runtime.presenter.renderDetailsPage(
                 rule: rule,
                 breadcrumb: runtime.presenter.breadcrumb(id: id),
-                permissions: permissions,
-                isAdded: request.hasQueryFlag("added"),
-                isRemoved: request.hasQueryFlag("removed")
+                permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {

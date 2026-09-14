@@ -8,7 +8,6 @@ protocol AdminEditWebMenuItemPresenter: Sendable {
         menuId: String,
         id: String,
         state: WebMenuItemForm.State,
-        isEdited: Bool,
         permissions: Set<String>
     ) async throws -> HTMLResponse
 

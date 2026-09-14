@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherValidation
+import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -12,7 +13,6 @@ struct WebMetadataEdit: Component {
 
     struct State {
         let id: String
-        let isEdited: Bool
         let form: WebMetadataForm.State
         let breadcrumb: [NewAdminBreadcrumb.Link]
         let action: String
@@ -25,20 +25,15 @@ struct WebMetadataEdit: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            Div {
-                H1 {
-                Span(state.title)
-                context.render(
-                    AdminPreviewLink(
-                        slug: state.form.slug.value,
-                        label: "Preview page"
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: state.title,
+                        description: "Edit the metadata used when this page is rendered and shared.",
+                        previewHref: previewPath
                     )
                 )
-                }
-                .class("admin-page-header")
-                P("Edit the metadata used when this page is rendered and shared.")
-            }
-            if state.isEdited { P("Web metadata edited successfully.") }
+            )
             context.render(NewAdminPillTab(links: state.navigationTabs))
             context.render(
                 WebMetadataForm(
@@ -49,5 +44,11 @@ struct WebMetadataEdit: Component {
             )
         }
         .class("cms-section")
+    }
+
+    private var previewPath: String? {
+        guard let slug = state.form.slug.value else { return nil }
+        let normalizedSlug = slug.trimmingCharacters(in: .whitespacesAndNewlines)
+        return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
     }
 }

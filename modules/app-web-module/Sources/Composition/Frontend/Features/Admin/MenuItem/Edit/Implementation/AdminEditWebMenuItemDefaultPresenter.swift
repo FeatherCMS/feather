@@ -15,7 +15,6 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
         menuId: String,
         id: String,
         state: WebMenuItemForm.State,
-        isEdited: Bool,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -26,7 +25,6 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
                 state: .init(
                     menuId: menuId,
                     id: id,
-                    isEdited: isEdited,
                     form: state,
                     breadcrumb: breadcrumb(menuId: menuId, id: id)
                 )

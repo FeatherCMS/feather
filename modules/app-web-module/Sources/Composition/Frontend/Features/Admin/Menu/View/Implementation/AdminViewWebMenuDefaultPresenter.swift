@@ -14,9 +14,7 @@ struct AdminViewWebMenuDefaultPresenter: AdminViewWebMenuPresenter {
     func renderDetailsPage(
         rule: WebMenuDetailsModel,
         breadcrumb: [NewAdminBreadcrumb.Link],
-        permissions: Set<String>,
-        isAdded: Bool,
-        isRemoved: Bool
+        permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -26,9 +24,7 @@ struct AdminViewWebMenuDefaultPresenter: AdminViewWebMenuPresenter {
                 state: .init(
                     menu: rule,
                     breadcrumb: breadcrumb,
-                    permissions: permissions,
-                    isAdded: isAdded,
-                    isRemoved: isRemoved
+                    permissions: permissions
                 )
             )
         )

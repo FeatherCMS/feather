@@ -8,7 +8,6 @@ import WebComponents
 struct WebSettingsEdit: Component {
 
     struct State {
-        let isEdited: Bool
         let canEdit: Bool
         let form: WebSettingsForm.State
         let breadcrumb: [NewAdminBreadcrumb.Link]
@@ -31,10 +30,6 @@ struct WebSettingsEdit: Component {
                 P(
                     "You can view these settings, but create and update permission for variables is required to save changes."
                 )
-            }
-
-            if state.isEdited {
-                P("Settings edited successfully.").class("success")
             }
 
             context.render(WebSettingsForm(state: state.form))

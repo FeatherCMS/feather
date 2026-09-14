@@ -18,14 +18,17 @@ struct AdminListWebMetadataDefaultPresenter:
 
     func renderListPage(
         model: AdminListWebMetadataModel,
-        isEdited: Bool,
         permissions: Set<String>,
         search: String?,
         referenceType: String?,
         error: String?
     ) async throws -> HTMLResponse {
-        let canAccess = permissions.contains(
-            WebPermissions.Metadata.list.rawValue
+        let actions = NewAdminListActions(
+            Set(
+                WebPermissions.Metadata.allPermissions().filter {
+                    permissions.contains($0.rawValue)
+                }
+            )
         )
         if let error {
             return try await renderEngine.renderNewAdminPage(
@@ -41,25 +44,36 @@ struct AdminListWebMetadataDefaultPresenter:
                 )
             )
         }
+        guard actions.allows(WebPermissions.Metadata.list) else {
+            return try await renderEngine.renderNewAdminPage(
+                request: request,
+                context: context,
+                title: "Manage web metadata",
+                content: WebMetadataError(
+                    state: .init(
+                        info: "Forbidden",
+                        message: "Your account cannot access web metadata.",
+                        breadcrumb: webMetadataBreadcrumbState()
+                    )
+                )
+            )
+        }
         return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Manage web metadata",
             content: WebMetadataTable(
                 state: .init(
-                    isEdited: isEdited,
-                    canAccess: canAccess,
-                    permissions: permissions,
-                    rules: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
+                    permissions: actions,
+                    metadata: model.items,
+                    pageState: .init(
+                        page: model.page,
+                        pageSize: model.pageSize,
+                        total: model.total
+                    ),
+                    search: search,
+                    referenceType: referenceType,
                     referenceTypeOptions: referenceTypeOptions,
-                    search: search ?? "",
-                    referenceType: referenceType ?? "",
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your account cannot access web metadata.",
                     breadcrumb: webMetadataBreadcrumbState()
                 )
             )

@@ -39,15 +39,12 @@ struct AdminAddWebPageDefaultController: AdminAddWebPageController {
             try await payload.validate()
             try await runtime.interactor.execute(input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/pages/",
-                        title: "Added",
-                        message: "Web page added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/pages/",
+                notification: .init(
+                    title: "Added",
+                    message: "Web page added successfully."
+                )
             )
         }
         catch let error as ValidationError {

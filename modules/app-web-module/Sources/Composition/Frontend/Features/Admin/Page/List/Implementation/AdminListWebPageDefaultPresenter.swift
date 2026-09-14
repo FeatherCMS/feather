@@ -17,17 +17,17 @@ struct AdminListWebPageDefaultPresenter:
 
     func renderListPage(
         model: AdminListWebPageModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
-        isPublished: Bool,
-        isUnpublished: Bool,
         permissions: Set<String>,
         search: String?,
         error: String?
     ) async throws -> HTMLResponse {
-        let canAccess = permissions.contains(WebPermissions.Pages.list.rawValue)
-        let canEdit = permissions.contains(WebPermissions.Pages.update.rawValue)
+        let actions = NewAdminListActions(
+            Set(
+                WebPermissions.Pages.allPermissions().filter {
+                    permissions.contains($0.rawValue)
+                }
+            )
+        )
         if let error {
             return try await renderEngine.renderNewAdminPage(
                 request: request,
@@ -42,31 +42,34 @@ struct AdminListWebPageDefaultPresenter:
                 )
             )
         }
+        guard actions.allows(WebPermissions.Pages.list) else {
+            return try await renderEngine.renderNewAdminPage(
+                request: request,
+                context: context,
+                title: "Manage web pages",
+                content: WebPageError(
+                    state: .init(
+                        info: "Forbidden",
+                        message: "Your account cannot access web pages.",
+                        breadcrumb: webPageBreadcrumbState()
+                    )
+                )
+            )
+        }
         return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Manage web pages",
             content: WebPageTable(
                 state: .init(
-                    isAdded: isAdded,
-                    isEdited: isEdited,
-                    isRemoved: isRemoved,
-                    isPublished: isPublished,
-                    isUnpublished: isUnpublished,
-                    canAccess: canAccess,
-                    canEdit: canEdit,
-                    permissions: permissions,
-                    canAdd: permissions.contains(
-                        WebPermissions.Pages.create.rawValue
+                    permissions: actions,
+                    pages: model.items,
+                    pageState: .init(
+                        page: model.page,
+                        pageSize: model.pageSize,
+                        total: model.total
                     ),
-                    rules: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
-                    search: search ?? "",
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your account cannot access web pages.",
+                    search: search,
                     breadcrumb: webPageBreadcrumbState()
                 )
             )
@@ -91,12 +94,10 @@ struct AdminListWebPageDefaultPresenter:
                 ),
                 selectedItems: selectedIds,
                 action: WebPageRoutes.remove.description,
-                cancel: ListRemoveRedirect.location(
+                cancel: NewAdminLocation.url(
                     path: WebPageRoutes.list.description,
                     page: page,
-                    search: search,
-                    title: nil,
-                    message: nil
+                    search: search
                 ),
                 hiddenFields: selectedIds.map {
                     .init(name: "ids", value: $0)

@@ -14,9 +14,7 @@ struct AdminViewWebPageDefaultPresenter: AdminViewWebPagePresenter {
     func renderDetailsPage(
         rule: WebPageDetailsModel,
         breadcrumb: [NewAdminBreadcrumb.Link],
-        permissions: Set<String>,
-        isPublished: Bool,
-        isUnpublished: Bool
+        permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -26,9 +24,7 @@ struct AdminViewWebPageDefaultPresenter: AdminViewWebPagePresenter {
                 state: .init(
                     rule: rule,
                     breadcrumb: breadcrumb,
-                    permissions: permissions,
-                    isPublished: isPublished,
-                    isUnpublished: isUnpublished
+                    permissions: permissions
                 )
             )
         )

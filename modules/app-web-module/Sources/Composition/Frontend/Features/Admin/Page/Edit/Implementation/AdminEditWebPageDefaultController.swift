@@ -32,7 +32,6 @@ struct AdminEditWebPageDefaultController:
                     imageAsset: page.imageAsset,
                     metadata: page.metadata
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
         }
@@ -64,15 +63,12 @@ struct AdminEditWebPageDefaultController:
             try await payload.validate()
             try await runtime.interactor.update(id: id, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/pages/\(id)/edit/",
-                        title: "Saved",
-                        message: "Page edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/pages/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "Page edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -91,7 +87,6 @@ struct AdminEditWebPageDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -108,7 +103,6 @@ struct AdminEditWebPageDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -125,7 +119,6 @@ struct AdminEditWebPageDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)

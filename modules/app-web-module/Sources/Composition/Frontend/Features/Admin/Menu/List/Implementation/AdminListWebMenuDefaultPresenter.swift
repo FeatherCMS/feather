@@ -17,14 +17,18 @@ struct AdminListWebMenuDefaultPresenter:
 
     func renderListPage(
         model: AdminListWebMenuModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
         permissions: Set<String>,
         search: String?,
         error: String?
     ) async throws -> HTMLResponse {
-        let canAccess = permissions.contains(WebPermissions.Menus.list.rawValue)
+        let actions = NewAdminListActions(
+            Set(
+                WebPermissions.Menus.allPermissions().filter {
+                    permissions.contains($0.rawValue)
+                }
+            )
+        )
+        let canAccess = actions.allows(WebPermissions.Menus.list)
         if let error {
             return try await renderEngine.renderNewAdminPage(
                 request: request,
@@ -39,28 +43,34 @@ struct AdminListWebMenuDefaultPresenter:
                 )
             )
         }
+        guard canAccess else {
+            return try await renderEngine.renderNewAdminPage(
+                request: request,
+                context: context,
+                title: "Manage menus",
+                content: WebMenuError(
+                    state: .init(
+                        info: "Forbidden",
+                        message: "Your account cannot access web menus.",
+                        breadcrumb: webMenuBreadcrumbState()
+                    )
+                )
+            )
+        }
         return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Manage menus",
             content: WebMenuTable(
                 state: .init(
-                    isAdded: isAdded,
-                    isEdited: isEdited,
-                    isRemoved: isRemoved,
-                    canAccess: canAccess,
-                    permissions: permissions,
-                    canAdd: permissions.contains(
-                        WebPermissions.Menus.create.rawValue
+                    permissions: actions,
+                    menus: model.items,
+                    pageState: .init(
+                        page: model.page,
+                        pageSize: model.pageSize,
+                        total: model.total
                     ),
-                    rules: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
                     search: search ?? "",
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your account cannot access web menus.",
                     breadcrumb: webMenuBreadcrumbState()
                 )
             )
@@ -85,12 +95,10 @@ struct AdminListWebMenuDefaultPresenter:
                 ),
                 selectedItems: selectedIds,
                 action: WebMenuRoutes.remove.description,
-                cancel: ListRemoveRedirect.location(
+                cancel: NewAdminLocation.url(
                     path: WebMenuRoutes.list.description,
                     page: page,
-                    search: search,
-                    title: nil,
-                    message: nil
+                    search: search
                 ),
                 hiddenFields: selectedIds.map {
                     .init(name: "ids", value: $0)

@@ -7,7 +7,6 @@ protocol AdminEditWebPagePresenter: Sendable {
     func renderEditPage(
         id: String,
         state: WebPageForm.State,
-        isEdited: Bool,
         permissions: Set<String>
     ) async throws -> HTMLResponse
 

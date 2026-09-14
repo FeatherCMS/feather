@@ -24,9 +24,7 @@ struct AdminViewWebPageDefaultController: AdminViewWebPageController {
             return try await runtime.presenter.renderDetailsPage(
                 rule: rule,
                 breadcrumb: runtime.presenter.breadcrumb(id: id),
-                permissions: permissions,
-                isPublished: request.hasQueryFlag("published"),
-                isUnpublished: request.hasQueryFlag("unpublished")
+                permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {

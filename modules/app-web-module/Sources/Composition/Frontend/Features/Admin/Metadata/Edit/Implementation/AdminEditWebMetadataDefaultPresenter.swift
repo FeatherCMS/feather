@@ -15,7 +15,6 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
     func renderEditPage(
         id: String,
         state: WebMetadataForm.State,
-        isEdited: Bool,
         permissions: Set<String>,
         navigationTabs: [NewAdminPillTab.Link],
         configuration: AdminWebMetadataEditConfiguration?
@@ -28,7 +27,6 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
             content: WebMetadataEdit(
                 state: .init(
                     id: id,
-                    isEdited: isEdited,
                     form: state,
                     breadcrumb: configuration?.breadcrumb ?? breadcrumb(id: id),
                     action: request.uri.path,

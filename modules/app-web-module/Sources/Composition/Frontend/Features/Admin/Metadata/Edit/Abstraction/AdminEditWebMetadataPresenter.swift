@@ -7,7 +7,6 @@ protocol AdminEditWebMetadataPresenter: Sendable {
     func renderEditPage(
         id: String,
         state: WebMetadataForm.State,
-        isEdited: Bool,
         permissions: Set<String>,
         navigationTabs: [NewAdminPillTab.Link],
         configuration: AdminWebMetadataEditConfiguration?

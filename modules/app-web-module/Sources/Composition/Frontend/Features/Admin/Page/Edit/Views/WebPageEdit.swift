@@ -13,7 +13,6 @@ struct WebPageEdit: Component {
 
     struct State {
         let id: String
-        let isEdited: Bool
         let form: WebPageForm.State
         let breadcrumb: [NewAdminBreadcrumb.Link]
     }
@@ -24,26 +23,15 @@ struct WebPageEdit: Component {
         Section {
             context.render(NewAdminBreadcrumb(links: state.breadcrumb))
 
-            H1 {
-                Span("Edit page")
-                if let slug = state.form.metadata.slug.value,
-                    !slug.trimmingCharacters(in: .whitespacesAndNewlines)
-                        .isEmpty
-                {
-                    A {
-                        FeatherIcons.externalLink()
-                    }
-                    .href(
-                        "/\(slug.trimmingCharacters(in: .whitespacesAndNewlines))/"
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Edit page",
+                        description: "Update the page content and publication settings.",
+                        previewHref: previewPath
                     )
-                    .target(.blank)
-                    .ariaLabel("Preview page")
-                    .style(
-                        "display:inline-flex;align-items:center;justify-content:center;width:1rem;height:1rem;margin-left:0.4rem;vertical-align:middle;"
-                    )
-                }
-            }
-            if state.isEdited { P("Page edited successfully.") }
+                )
+            )
             context.render(
                 WebPageForm(
                     state: state.form,
@@ -57,5 +45,11 @@ struct WebPageEdit: Component {
             )
         }
         .class("cms-section")
+    }
+
+    private var previewPath: String? {
+        guard let slug = state.form.metadata.slug.value else { return nil }
+        let normalizedSlug = slug.trimmingCharacters(in: .whitespacesAndNewlines)
+        return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
     }
 }

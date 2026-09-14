@@ -12,7 +12,6 @@ struct WebMenuEdit: Component {
 
     struct State {
         let id: String
-        let isEdited: Bool
         let form: WebMenuForm.State
         let breadcrumb: [NewAdminBreadcrumb.Link]
     }
@@ -31,7 +30,6 @@ struct WebMenuEdit: Component {
                 )
             )
             context.render(AdminWebMenuTabs(menuID: state.id, active: .details))
-            if state.isEdited { P("Menu edited successfully.") }
             context.render(
                 WebMenuForm(
                     state: state.form,

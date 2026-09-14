@@ -14,7 +14,6 @@ struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
     func renderEditPage(
         id: String,
         state: WebPageForm.State,
-        isEdited: Bool,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -24,7 +23,6 @@ struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
             content: WebPageEdit(
                 state: .init(
                     id: id,
-                    isEdited: isEdited,
                     form: state,
                     breadcrumb: breadcrumb(id: id)
                 )

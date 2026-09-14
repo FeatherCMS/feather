@@ -8,9 +8,7 @@ protocol AdminViewWebMenuPresenter: Sendable {
     func renderDetailsPage(
         rule: WebMenuDetailsModel,
         breadcrumb: [NewAdminBreadcrumb.Link],
-        permissions: Set<String>,
-        isAdded: Bool,
-        isRemoved: Bool
+        permissions: Set<String>
     ) async throws -> HTMLResponse
 
     func renderErrorPage(

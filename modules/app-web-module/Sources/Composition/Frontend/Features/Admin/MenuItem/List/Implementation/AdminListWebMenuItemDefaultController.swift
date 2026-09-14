@@ -53,9 +53,6 @@ struct AdminListWebMenuItemDefaultController:
         return try await presenter.renderListPage(
             menuId: menuId,
             model: model,
-            isAdded: request.hasQueryFlag("added"),
-            isEdited: request.hasQueryFlag("edited"),
-            isRemoved: request.hasQueryFlag("removed"),
             permissions: permissions,
             search: search,
             error: error
@@ -75,12 +72,10 @@ struct AdminListWebMenuItemDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListRemoveRedirect.location(
+                    .location: NewAdminLocation.url(
                         path: "/admin/web/menus/\(menuId)/",
                         page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
+                        search: search
                     )
                 ]
             )
@@ -112,19 +107,20 @@ struct AdminListWebMenuItemDefaultController:
                 ids: payload.normalizedSelectedIds
             )
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: ListRemoveRedirect.location(
-                    path: "/admin/web/menus/\(menuId)/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
-                    title: !payload.normalizedSelectedIds.isEmpty
-                        ? "Removed" : nil,
-                    message: !payload.normalizedSelectedIds.isEmpty
-                        ? "Item removed successfully." : nil
-                )
-            ]
+        let location = NewAdminLocation.url(
+            path: "/admin/web/menus/\(menuId)/",
+            page: payload.normalizedPage,
+            search: payload.normalizedSearch
+        )
+        guard !payload.normalizedSelectedIds.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        return AdminNotificationFlash.redirect(
+            to: location,
+            notification: .init(
+                title: "Removed",
+                message: "Item removed successfully."
+            )
         )
     }
 

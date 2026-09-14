@@ -39,15 +39,12 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
             try await payload.validate()
             try await runtime.interactor.execute(input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/menus/",
-                        title: "Added",
-                        message: "Menu added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/menus/",
+                notification: .init(
+                    title: "Added",
+                    message: "Menu added successfully."
+                )
             )
         }
         catch let error as ValidationError {

@@ -46,15 +46,12 @@ struct AdminRemoveWebPageDefaultController:
         let permissions = context.currentUserPermissions
         do {
             try await runtime.interactor.delete(id: id)
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/pages/",
-                        title: "Removed",
-                        message: "Web page removed successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/pages/",
+                notification: .init(
+                    title: "Removed",
+                    message: "Web page removed successfully."
+                )
             )
         }
         catch let error as OpenAPIRepositoryError {

@@ -6,9 +6,6 @@ protocol AdminListWebMenuPresenter: Sendable {
 
     func renderListPage(
         model: AdminListWebMenuModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
         permissions: Set<String>,
         search: String?,
         error: String?

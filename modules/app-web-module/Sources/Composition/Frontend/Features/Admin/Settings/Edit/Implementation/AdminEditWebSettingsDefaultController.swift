@@ -39,7 +39,6 @@ struct AdminEditWebSettingsDefaultController:
             let canEdit = canEdit(permissions: permissions)
             return try await presenter.renderPage(
                 state: .init(
-                    isEdited: false,
                     canEdit: canEdit,
                     form: makeFormState(
                         canEdit: canEdit,
@@ -53,7 +52,6 @@ struct AdminEditWebSettingsDefaultController:
         let canEdit = canEdit(permissions: permissions)
         return try await presenter.renderPage(
             state: .init(
-                isEdited: request.hasQueryFlag("edited"),
                 canEdit: canEdit,
                 form: makeFormState(from: settings, canEdit: canEdit),
                 breadcrumb: breadcrumb()
@@ -112,7 +110,6 @@ struct AdminEditWebSettingsDefaultController:
             return
                 try await presenter.renderPage(
                     state: .init(
-                        isEdited: false,
                         canEdit: canEdit,
                         form: form,
                         breadcrumb: breadcrumb()
@@ -152,7 +149,6 @@ struct AdminEditWebSettingsDefaultController:
             return
                 try await presenter.renderPage(
                     state: .init(
-                        isEdited: false,
                         canEdit: canEdit,
                         form: form,
                         breadcrumb: breadcrumb()
@@ -161,15 +157,12 @@ struct AdminEditWebSettingsDefaultController:
                 )
                 .response(from: request, context: context)
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/web/settings/",
-                    title: "Saved",
-                    message: "Settings edited successfully."
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: "/admin/web/settings/",
+            notification: .init(
+                title: "Saved",
+                message: "Settings edited successfully."
+            )
         )
     }
 

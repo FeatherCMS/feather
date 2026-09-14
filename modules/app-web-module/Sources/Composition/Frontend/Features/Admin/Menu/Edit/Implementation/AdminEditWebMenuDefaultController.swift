@@ -29,7 +29,6 @@ struct AdminEditWebMenuDefaultController:
                     name: menu.name,
                     notes: menu.notes
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
         }
@@ -61,15 +60,12 @@ struct AdminEditWebMenuDefaultController:
             try await payload.validate()
             try await runtime.interactor.update(id: id, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/menus/\(id)/edit/",
-                        title: "Saved",
-                        message: "Menu edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/menus/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "Menu edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -87,7 +83,6 @@ struct AdminEditWebMenuDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -103,7 +98,6 @@ struct AdminEditWebMenuDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -119,7 +113,6 @@ struct AdminEditWebMenuDefaultController:
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)

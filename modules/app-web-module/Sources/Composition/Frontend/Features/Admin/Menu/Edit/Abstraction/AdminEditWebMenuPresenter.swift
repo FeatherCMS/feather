@@ -7,7 +7,6 @@ protocol AdminEditWebMenuPresenter: Sendable {
     func renderEditPage(
         id: String,
         state: WebMenuForm.State,
-        isEdited: Bool,
         permissions: Set<String>
     ) async throws -> HTMLResponse
 
